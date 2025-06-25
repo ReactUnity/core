@@ -33,7 +33,7 @@ const updateSubContext = (instance: AsyncSubContext) => {
   }
 };
 
-const hostConfig: AsyncReconcilerConfig & { [key: string]: any } = {
+const hostConfig: AsyncReconcilerConfig = {
   ...commonReconciler,
 
   getRootHostContext: (rootContainer) => {
@@ -111,14 +111,12 @@ const hostConfig: AsyncReconcilerConfig & { [key: string]: any } = {
   supportsHydration: false,
   supportsPersistence: false,
   supportsMicrotasks: true,
-  supportsTestSelectors: false,
 
   isPrimaryRenderer: true,
   warnsIfNotActing: true,
 
   prepareForCommit: () => null,
   resetAfterCommit: () => {},
-  shouldDeprioritizeSubtree: () => false,
 
   clearContainer(container) {
     UnityBridge.clearContainer(container);
@@ -221,11 +219,19 @@ const hostConfig: AsyncReconcilerConfig & { [key: string]: any } = {
   //     Mutation
   // -------------------
 
-  prepareUpdate(instance, type, oldProps, newProps) {
-    return diffProperties(oldProps, newProps) as any;
-  },
+  commitUpdate(instance, type, prevProps, nextProps) {
+    let updatePayload: Record<string, any> | null = null;
 
-  commitUpdate(instance, updatePayload, type) {
+    if (typeof prevProps === 'string') {
+      // React 18 compatibility
+      updatePayload = type as any;
+      type = prevProps as any;
+    } else {
+      // React 19+
+      updatePayload = diffProperties(prevProps, nextProps);
+      if (!updatePayload) return;
+    }
+
     const props = getAllowedProps(updatePayload, type);
     if (instance.type === 'native') {
       // instance.commands.push(['u', { r: instance.refId, t: type, ...convertPropsToSerializable(props) }]);
@@ -354,6 +360,16 @@ const hostConfig: AsyncReconcilerConfig & { [key: string]: any } = {
       updateSubContext(instance);
     }
   },
+
+  // Keep for old versions of React
+  ...{
+    supportsTestSelectors: false,
+    shouldDeprioritizeSubtree: () => false,
+    prepareUpdate(instance, type, oldProps, newProps) {
+      return diffProperties(oldProps, newProps) as any;
+    },
+  },
 };
 
-export const asyncReconciler = Reconciler(hostConfig);
+let asyncReconciler: ReturnType<typeof Reconciler> | null = null;
+export const getAsyncReconciler = () => (asyncReconciler ??= Reconciler(hostConfig));

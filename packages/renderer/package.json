@@ -6,9 +6,7 @@
   "typings": "dist/index.d.ts",
   "main": "dist/index.js",
   "sideEffects": false,
-  "files": [
-    "dist"
-  ],
+  "files": ["dist"],
   "exports": {
     ".": "./dist/index.js",
     "./test": "./dist/test.js",
@@ -35,24 +33,19 @@
     "type": "git",
     "url": "https://github.com/ReactUnity/renderer"
   },
-  "keywords": [
-    "react",
-    "react-renderer",
-    "unity",
-    "unity3d"
-  ],
+  "keywords": ["react", "react-renderer", "unity", "unity3d"],
   "dependencies": {
-    "react-reconciler": "^0.29.2",
-    "use-sync-external-store": "^1.2.2"
+    "react-reconciler": "^0.32.0",
+    "use-sync-external-store": "^1.5.0"
   },
   "peerDependencies": {
-    "react": "^18.0.0"
+    "react": "^19.0.0"
   },
   "devDependencies": {
-    "@reactunity/scripts": "^0.19.1",
-    "@types/react-reconciler": "^0.28.8",
-    "react-unity-webgl": "^9.6.0",
+    "@reactunity/scripts": "^0.19.2",
+    "@types/react-reconciler": "^0.32.0",
+    "react-unity-webgl": "^9.9.0",
     "rimraf": "^6.0.1",
-    "typescript": "^5.6.3"
+    "typescript": "^5.8.3"
   }
 }

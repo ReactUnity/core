@@ -9,4 +9,5 @@ declare global {
   var fetch: typeof Tfetch;
   var XMLHttpRequest: typeof TXHR;
   var WebSocket: ReactUnity.Scripting.DomProxies.WebSocketProxy;
+  var performance: { now: () => number } | undefined;
 }

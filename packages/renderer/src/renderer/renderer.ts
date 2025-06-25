@@ -1,17 +1,17 @@
 import * as React from 'react';
 import { createElement } from 'react';
+import Reconciler from 'react-reconciler';
 import { ConcurrentRoot, LegacyRoot } from 'react-reconciler/constants';
 import { NativeContainerInstance } from '../models/renderer';
 import { version } from '../version';
 import { DefaultView } from '../views/default-view';
 import { ObjectsRepo } from './async/objects';
-import { asyncReconciler } from './async/reconciler';
+import { getAsyncReconciler } from './async/reconciler';
 import { AsyncContainerInstance, AsyncNativeInstance } from './async/types';
 import { isDevelopment } from './constants';
-import { syncReconciler } from './sync/reconciler';
+import { getSyncReconciler } from './sync/reconciler';
 
-
-const containerMap = new Map<NativeContainerInstance | number, { hostRoot: any, asyncJobCallback: () => void }>();
+const containerMap = new Map<NativeContainerInstance | number, { hostRoot: any; asyncJobCallback: () => void }>();
 
 interface RenderOptions {
   /* Unity element to render React on. It is the element `ReactUnity` component is attached to by default. */
@@ -32,10 +32,7 @@ interface RenderOptions {
 
 let renderCount = 0;
 
-export function render(
-  element: React.ReactNode,
-  options: RenderOptions = {},
-) {
+export function render(element: React.ReactNode, options: RenderOptions = {}) {
   renderCount++;
   const hostContainer = options?.hostContainer || HostContainer;
   const cacheKey = hostContainer.InstanceId >= 0 ? hostContainer.InstanceId : hostContainer;
@@ -49,10 +46,11 @@ export function render(
     const mode = options?.mode === 'legacy' ? LegacyRoot : ConcurrentRoot;
 
     if (isAsync) {
+      const asyncReconciler = getAsyncReconciler();
       const fiberCache = isDevelopment ? new ObjectsRepo() : null;
 
       if (isDevelopment) {
-        findFiberByHostInstance = (instance: AsyncNativeInstance) => !instance ? null : fiberCache.getObject(instance.refId);
+        findFiberByHostInstance = (instance: AsyncNativeInstance) => (!instance ? null : fiberCache.getObject(instance.refId));
       }
 
       let scheduled = false;
@@ -84,10 +82,37 @@ export function render(
         hostContainerInstance.context.FlushCommands(serialized);
       };
 
-      hostRoot = asyncReconciler.createContainer(hostContainerInstance, mode, null, false, undefined, '', (error) => console.error(error), null);
-    }
-    else {
-      hostRoot = syncReconciler.createContainer(hostContainer, mode, null, false, undefined, '', (error) => console.error(error), null);
+      hostRoot = asyncReconciler.createContainer(
+        hostContainerInstance,
+        mode,
+        null,
+        false,
+        undefined,
+        '',
+        (error) => console.error(error),
+        () => {},
+        // @ts-expect-error the types for `react-reconciler` are not up to date with the library.
+        // See https://github.com/facebook/react/blob/c0464aedb16b1c970d717651bba8d1c66c578729/packages/react-reconciler/src/ReactFiberReconciler.js#L236-L259
+        () => {},
+        () => {},
+        null,
+      );
+    } else {
+      hostRoot = getSyncReconciler().createContainer(
+        hostContainer,
+        mode,
+        null,
+        false,
+        undefined,
+        '',
+        (error) => console.error(error),
+        () => {},
+        // @ts-expect-error the types for `react-reconciler` are not up to date with the library.
+        // See https://github.com/facebook/react/blob/c0464aedb16b1c970d717651bba8d1c66c578729/packages/react-reconciler/src/ReactFiberReconciler.js#L236-L259
+        () => {},
+        () => {},
+        null,
+      );
     }
     containerMap.set(cacheKey, { hostRoot, asyncJobCallback });
   }
@@ -102,8 +127,18 @@ export function render(
     element = createElement(DefaultView, viewWrapperProps, element);
   }
 
-  const rc = isAsync ? asyncReconciler : syncReconciler;
-  rc.updateContainer(element as any, hostRoot, null);
+  const rc = isAsync ? getAsyncReconciler() : getSyncReconciler();
+  if (
+    'updateContainerSync' in rc &&
+    typeof rc.updateContainerSync === 'function' &&
+    'flushSyncWork' in rc &&
+    typeof rc.flushSyncWork === 'function'
+  ) {
+    rc.updateContainerSync(element as any, hostRoot, null, () => {});
+    rc.flushSyncWork();
+  } else {
+    rc.updateContainer(element as any, hostRoot, null, () => {});
+  }
 
   rc.injectIntoDevTools({
     bundleType: isDevelopment ? 1 : 0,
@@ -120,13 +155,10 @@ export function render(
  * @deprecated Instead, import `render` directly from `@reactunity/renderer`
  */
 export const Renderer = {
-  render(
-    element: React.ReactNode,
-    options: RenderOptions = {},
-  ) {
+  render(element: React.ReactNode, options: RenderOptions = {}) {
     return render(element, options);
   },
 };
 
-export const batchedUpdates = asyncReconciler.batchedUpdates;
-export const flushSync = asyncReconciler.flushSync;
+export const batchedUpdates: ReturnType<typeof Reconciler>['batchedUpdates'] = (...args) => getAsyncReconciler().batchedUpdates(...args);
+export const flushSync: ReturnType<typeof Reconciler>['flushSync'] = (...args) => getAsyncReconciler().flushSync(...(args as []));

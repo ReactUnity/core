@@ -1,4 +1,5 @@
-import { ReactUnity } from './generated';
+import type Reconciler from 'react-reconciler';
+import type { ReactUnity } from './generated';
 
 export type Unique<T, K> = T & { $type: K };
 
@@ -14,10 +15,28 @@ export type Props = React.RefAttributes<NativeInstance> & {
 
 export type SuspenseInstance = NativeInstance;
 export type HydratableInstance = NativeInstance;
+export type FormInstance = NativeInstance;
 export type PublicInstance = any;
 
 export type HostContext = Record<string, unknown>;
-export type UpdatePayload = Record<string, unknown>;
 export type ChildSet = Record<string, unknown>;
 export type TimeoutHandle = number;
+export type TransitionStatus = null | 'NotPendingTransition';
 export type NoTimeout = -1;
+
+export type CommonConfig = Reconciler.HostConfig<
+  InstanceTag,
+  Props,
+  NativeContainerInstance,
+  NativeInstance,
+  NativeTextInstance,
+  SuspenseInstance,
+  HydratableInstance,
+  FormInstance,
+  PublicInstance,
+  HostContext,
+  ChildSet,
+  TimeoutHandle,
+  NoTimeout,
+  TransitionStatus
+>;

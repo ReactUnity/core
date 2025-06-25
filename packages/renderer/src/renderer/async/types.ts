@@ -1,7 +1,14 @@
 import type Reconciler from 'react-reconciler';
 import { ReactUnity } from '../../models/generated';
 import {
-  ChildSet, HydratableInstance, InstanceTag, NoTimeout, Props, TimeoutHandle, UpdatePayload
+  ChildSet,
+  FormInstance,
+  HydratableInstance,
+  InstanceTag,
+  NoTimeout,
+  Props,
+  TimeoutHandle,
+  TransitionStatus,
 } from '../../models/renderer';
 import { BatchCommand } from './commands';
 import { ObjectsRepo } from './objects';
@@ -35,15 +42,17 @@ export type SvgContext = {
   parent: SvgContext;
 };
 
-export type RichTextNode = ({
-  tag: string;
-  attributes: Record<string, any>;
-  children: RichTextNode[];
-  hidden?: boolean;
-} | {
-  text: string;
-  hidden?: boolean;
-});
+export type RichTextNode =
+  | {
+      tag: string;
+      attributes: Record<string, any>;
+      children: RichTextNode[];
+      hidden?: boolean;
+    }
+  | {
+      text: string;
+      hidden?: boolean;
+    };
 
 export type AsyncContainerInstance = AsyncNativeInstance & {
   component: ReactUnity.IReactComponent;
@@ -52,4 +61,19 @@ export type AsyncContainerInstance = AsyncNativeInstance & {
 
 type AsyncPublicInstance = ReactUnity.IReactComponent;
 
-export type AsyncReconcilerConfig = Reconciler.HostConfig<InstanceTag, Props, AsyncContainerInstance, AsyncInstance, AsyncInstance, AsyncNativeInstance, HydratableInstance, AsyncPublicInstance, AsyncHostContext, UpdatePayload, ChildSet, TimeoutHandle, NoTimeout>;
+export type AsyncReconcilerConfig = Reconciler.HostConfig<
+  InstanceTag,
+  Props,
+  AsyncContainerInstance,
+  AsyncInstance,
+  AsyncInstance,
+  AsyncNativeInstance,
+  HydratableInstance,
+  FormInstance,
+  AsyncPublicInstance,
+  AsyncHostContext,
+  ChildSet,
+  TimeoutHandle,
+  NoTimeout,
+  TransitionStatus
+>;

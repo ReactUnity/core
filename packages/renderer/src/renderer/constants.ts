@@ -1,5 +1,7 @@
+import { createContext } from 'react';
 import { ContinuousEventPriority, DefaultEventPriority, DiscreteEventPriority, IdleEventPriority } from 'react-reconciler/constants';
 import { PoolKey } from '../models/base';
+import { CommonConfig, TransitionStatus } from '../models/renderer';
 import { styleStringSymbol } from './diffing';
 
 declare const process;
@@ -36,7 +38,7 @@ export function stringizePoolKey(key: PoolKey) {
 }
 
 export function getAllowedProps(props, type) {
-  const { children, tag, pool, ...rest } = props;
+  const { children, tag, pool, ref, ...rest } = props;
 
   if (textTypes[type] && 'children' in props) {
     rest.children = !children || typeof children === 'boolean' ? null : Array.isArray(children) ? children.join('') : String(children);
@@ -49,13 +51,15 @@ export function getAllowedProps(props, type) {
 
 declare const queueMicrotask: (callback: (...args: any[]) => any) => void;
 
+const HostTransitionContext = createContext<TransitionStatus>(null) as any;
+
+const NoEventPriority = 0;
+let currentUpdatePriority: number = NoEventPriority;
+
 export const commonReconciler = {
   // -------------------
   //     Scheduling
   // -------------------
-
-  now: Date.now,
-  getCurrentEventPriority: () => UnityBridge.CurrentEventPriority || eventPriorities.default,
 
   noTimeout: -1 as const,
   scheduleTimeout: (callback, delay) => setTimeout(callback as any, delay),
@@ -76,14 +80,39 @@ export const commonReconciler = {
 
   afterActiveInstanceBlur() {},
 
-  getInstanceFromNode(node) {
-    return undefined;
-  },
-  getInstanceFromScope(scopeInstance) {
-    return undefined;
-  },
+  prepareScopeUpdate: () => {},
+  getInstanceFromScope: () => undefined,
+  getInstanceFromNode: () => undefined,
 
-  prepareScopeUpdate(scopeInstance, instance) {},
-};
+  // React 19
+
+  setCurrentUpdatePriority: (newPriority: number) => (currentUpdatePriority = newPriority),
+  getCurrentUpdatePriority: () => currentUpdatePriority,
+  resolveUpdatePriority: () => currentUpdatePriority || UnityBridge.CurrentEventPriority || eventPriorities.default,
+  maySuspendCommit: () => false,
+  requestPostPaintCallback: () => {},
+  preloadInstance: () => true,
+  resetFormInstance: () => {},
+  resolveEventTimeStamp: () => -1.1,
+  resolveEventType: () => null,
+  shouldAttemptEagerTransition: () => false,
+  startSuspendingCommit: () => {},
+  suspendInstance: () => {},
+  trackSchedulerEvent: () => {},
+  waitForCommitToBeReady: () => null,
+  NotPendingTransition: null,
+  HostTransitionContext,
+
+  // Keep these for React 18 compatibility
+  ...{
+    now:
+      typeof performance !== 'undefined' && typeof performance.now === 'function'
+        ? () => performance.now()
+        : typeof Date !== 'undefined' && typeof Date.now === 'function'
+          ? () => Date.now()
+          : () => 0,
+    getCurrentEventPriority: () => UnityBridge.CurrentEventPriority || eventPriorities.default,
+  },
+} satisfies Partial<CommonConfig>;
 
 export const isDevelopment = process.env.NODE_ENV === 'development';

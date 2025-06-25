@@ -1,6 +1,6 @@
 // Original file: https://github.com/jeffreylanters/react-unity-webgl/blob/main/module/declarations/global.d.ts
 
-import type { UnityInstance } from 'react-unity-webgl/typings/unity-instance';
+import type { UnityInstance } from 'react-unity-webgl/declarations/unity-instance';
 
 /**
  * Type declaration for global types.
@@ -11,10 +11,7 @@ declare global {
    * @param eventName The name of the event.
    * @param parameters The parameters to pass to the event.
    */
-  function dispatchReactUnityEvent(
-    eventName: string,
-    ...parameters: (string | number | undefined)[]
-  ): void;
+  function dispatchReactUnityEvent(eventName: string, ...parameters: (string | number | undefined)[]): void;
 
   /**
    * Creates a new UnityInstance.
@@ -26,7 +23,7 @@ declare global {
   function createUnityInstance(
     canvasHtmlElement: HTMLCanvasElement,
     arguments: any,
-    onProgress?: (progression: number) => void
+    onProgress?: (progression: number) => void,
   ): Promise<UnityInstance>;
 
   /**
