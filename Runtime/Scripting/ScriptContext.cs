@@ -289,6 +289,7 @@ namespace ReactUnity.Scripting
                     global.decodeURI          = function(x) {   return EncodingHelpers.decodeURI(x + '')            };
                     global.encodeURIComponent = function(x) {   return EncodingHelpers.encodeURIComponent(x + '')   };
                     global.decodeURIComponent = function(x) {   return EncodingHelpers.decodeURIComponent(x + '')   };
+                    global.TextEncoder        = typeof TextEncoder !== 'undefined' ? TextEncoder : function TextEncoder(){};
                 ", "ReactUnity/shims/encoding");
             }
 

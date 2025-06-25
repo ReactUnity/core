@@ -12,7 +12,9 @@ function getSelection() {
     const activeObject = Interop.UnityEditor.Selection.activeGameObject;
     if (!activeObject) return null;
     return activeObject.GetComponent('ReactElement') as RC;
-  } else if (Inspector) {
+  }
+
+  if (Inspector) {
     return Inspector.target as RC;
   }
 
@@ -40,7 +42,7 @@ export function SelectionProvider({ children }: { children?: React.ReactNode }) 
   }, []);
 
   return React.createElement(ctx.Provider, { value: selection }, children);
-};
+}
 
 export function useSelection() {
   const context = React.useContext(ctx);

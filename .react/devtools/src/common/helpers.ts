@@ -18,7 +18,7 @@ export function convertLengthToYoga(value: UE.UIElements.StyleLength): Yoga.Yoga
 }
 
 export function convertYogaToLength(value: Yoga.YogaValue): UE.UIElements.StyleLength {
-  var len = new StyleLength(0);
+  const len = new StyleLength(0);
   len.keyword = StyleKeyword.Initial;
 
   if (!value || value.Unit == YogaUnit.Auto) len.keyword = StyleKeyword.Auto;
@@ -38,13 +38,12 @@ export function convertLengthToFloat(value: UE.UIElements.StyleLength): number {
 }
 
 export function convertFloatToLength(value: number): UE.UIElements.StyleLength {
-  var len = new StyleLength(0);
+  const len = new StyleLength(0);
   len.keyword = StyleKeyword.Initial;
 
-  if (!value) {
-    return len;
-  }
-  else if (value < 1) {
+  if (!value) return len;
+
+  if (value < 1) {
     len.value = new Length(Math.fround(+value * 100), LengthUnit.Percent);
   } else {
     len.value = new Length(Math.fround(+value), LengthUnit.Pixel);

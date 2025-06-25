@@ -10,11 +10,11 @@
     "postyalc": "yarn"
   },
   "dependencies": {
-    "@reactunity/renderer": "^0.18.0",
-    "react": "^18.2.0"
+    "@reactunity/renderer": "^0.20.1",
+    "react": "^19.1.0"
   },
   "devDependencies": {
-    "@reactunity/scripts": "^0.18.2",
-    "typescript": "^5.4.4"
+    "@reactunity/scripts": "^0.20.0",
+    "typescript": "^5.8.3"
   }
 }

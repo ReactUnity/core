@@ -27,7 +27,6 @@
     if (module.startsWith('@reactunity/material/')) return Material;
   };
 
-
   globalThis.react = globalThis.React = react;
   globalThis.render = render;
   globalThis.ReactUnity = ReactUnity;
@@ -38,13 +37,11 @@
   var defaultComponent;
 
   let result = (function (module, exports, render, require) {
-
     /*INJECT_CODE*/
 
     if (typeof App === 'function') defaultComponent = App;
     else if (typeof Example === 'function') defaultComponent = Example;
   })(module, exports, render, require);
-
 
   if (!renderCalled) {
     const renderElement = exports.default || result || exports.App || exports.Example || defaultComponent;

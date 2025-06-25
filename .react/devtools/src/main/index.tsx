@@ -8,26 +8,30 @@ import style from './index.module.scss';
 
 function App() {
   const selection = useSelection();
-  return <view className={style.host}>
-    {selection ? <>
-      <GlobalStyle />
-      <Classes />
-      <GroupedStyles />
-    </> :
-      <NotSelectedView />}
-  </view>;
+  return (
+    <view className={style.host}>
+      {selection ? (
+        <>
+          <GlobalStyle />
+          <Classes />
+          <GroupedStyles />
+        </>
+      ) : (
+        <NotSelectedView />
+      )}
+    </view>
+  );
 }
 
 function NotSelectedView() {
-  return <view>
-    <image source="url(resource:ReactUnity/editor/logo)" className={style.logo}></image>
-
+  return (
     <view>
-      Select an element in the scene to edit its styles
-    </view>
-    <span>Only works for UGUI, for UI Document use builtin UI Toolkit Editor</span>
+      <image source="url(resource:ReactUnity/editor/logo)" className={style.logo} />
 
-  </view>;
+      <view>Select an element in the scene to edit its styles</view>
+      <span>Only works for UGUI, for UI Document use builtin UI Toolkit Editor</span>
+    </view>
+  );
 }
 
 render(
@@ -35,5 +39,5 @@ render(
     <SelectionProvider>
       <App />
     </SelectionProvider>
-  </StyleContext>
+  </StyleContext>,
 );

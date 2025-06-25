@@ -416,7 +416,7 @@ namespace ReactUnity.Editor.Developer
                 "new", "class", "throw", "catch", "if", "else", "do", "while", "for", "switch",
                 "return", "this", "var", "true", "false", "void", "default", "case", "break",
                 "continue", "enum", "null", "delete", "as", "public", "let", "package",
-                "interface", "static", "private", "protected", "yield", "declare",
+                "interface", "static", "private", "protected", "yield", "declare", "eval"
             };
 
             var isKeyword = keywords.Contains(originalName);

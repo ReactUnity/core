@@ -19,23 +19,20 @@ const pluginTypes: Array<PluginType> = [
     packageName: 'com.unity.editorcoroutines',
     name: 'Unity Editor Coroutines',
     required: true,
-    tooltip:
-      `Required for running editor windows with ReactUnity (like this window). It is installed by default and highly recommended to keep it installed.`,
+    tooltip: `Required for running editor windows with ReactUnity (like this window). It is installed by default and highly recommended to keep it installed.`,
   },
   {
     packageName: 'com.unity.vectorgraphics',
     name: 'Unity Vector Graphics',
     required: false,
-    tooltip:
-      `Required for SVG rendering.`,
+    tooltip: `Required for SVG rendering.`,
   },
   {
     packageName: 'com.nosuchstudio.rtltmpro',
     name: 'RTLTMPro',
     required: false,
     scoped: true,
-    tooltip:
-      `Right-To-Left Text Mesh Pro for Unity. This plugin adds support for Persian and Arabic languages to TextMeshPro.`,
+    tooltip: `Right-To-Left Text Mesh Pro for Unity. This plugin adds support for Persian and Arabic languages to TextMeshPro.`,
   },
 ];
 
@@ -71,7 +68,7 @@ export function AdditionalPlugins() {
   const installPlugin = useCallback((x: PluginType) => {
     const update = () => {
       setIsLoading(false);
-      setUpdatePlugins(x => x + 1);
+      setUpdatePlugins((x) => x + 1);
     };
     if (x.scoped) Window.InstallScopedPlugin(x.packageName, update);
     else Window.InstallUnityPlugin(x.packageName, update);
@@ -80,62 +77,62 @@ export function AdditionalPlugins() {
     setIsLoading(true);
   }, []);
 
-
   useEffect(() => {
     setPlugins(null);
     initPlugins().then(() => setPlugins(pluginTypes));
   }, [updatePlugins]);
 
-
   return (
     <section style={{ flexDirection: 'column', alignItems: 'stretch' }}>
       Additional Plugins
+      {!plugins && (
+        <div>
+          <spinner />
+        </div>
+      )}
+      {!!plugins &&
+        plugins.map((x, i) => (
+          <section key={i} style={{ margin: '10px 0 0 0' }}>
+            <view tooltip={x.tooltip} style={{ flexDirection: 'row' }}>
+              <button className={styles.infoButton}>{info}</button>
 
-      {!plugins && <div>
-        <spinner />
-      </div>}
+              <view>
+                {x.name + (x.required ? ' (Required)' : ' (Optional)')}
+                <text className={styles.packageName}>{x.packageName}</text>
+              </view>
+            </view>
 
-      {!!plugins && plugins.map((x, i) => <section key={i} style={{ margin: '10px 0 0 0' }}>
-        <view tooltip={x.tooltip} style={{ flexDirection: 'row' }}>
-          <button className={styles.infoButton}>
-            {info}
-          </button>
+            <view style={{ flexGrow: 1, flexShrink: 1, flexBasis: 0 }} />
 
-          <view>
-            {x.name + (x.required ? ' (Required)' : ' (Optional)')}
-            <text className={styles.packageName}>{x.packageName}</text>
-          </view>
-        </view>
+            {!x.installed ? (x.required ? error : warn) : x.hasUpdate ? warn : check}
 
-        <view style={{ flexGrow: 1, flexShrink: 1, flexBasis: 0 }} />
+            {!x.installed && <>Not installed</>}
 
-        {!x.installed ?
-          (x.required ? error : warn) :
-          x.hasUpdate ? warn : check}
+            {!!x.installed ? (
+              <>
+                {'Installed Version ' + x.version}
 
-        {!x.installed && <>
-          Not installed
-        </>}
+                {!x.required && <button onClick={() => Window.UninstallUnityPlugin(x.packageName)}>Uninstall</button>}
 
-        {!!x.installed ? <>
-          {'Installed Version ' + x.version}
-
-          {!x.required && <button onClick={() => Window.UninstallUnityPlugin(x.packageName)}>
-            Uninstall
-          </button>}
-
-          {x.hasUpdate && <>
-            {x.required ? <>Update to get the latest version</> :
-              <button onClick={() => installPlugin(x)}>
-                {(loadingPlugin === x.packageName ? 'Updating to ' : 'Update to ') + x.latestVersion}
-              </button>}
-          </>}
-        </> : <>
-          <button onClick={() => installPlugin(x)}>
-            {loadingPlugin === x.packageName ? 'Installing' : 'Install'}
-          </button>
-        </>}
-      </section>)}
+                {x.hasUpdate && (
+                  <>
+                    {x.required ? (
+                      <>Update to get the latest version</>
+                    ) : (
+                      <button onClick={() => installPlugin(x)}>
+                        {(loadingPlugin === x.packageName ? 'Updating to ' : 'Update to ') + x.latestVersion}
+                      </button>
+                    )}
+                  </>
+                )}
+              </>
+            ) : (
+              <>
+                <button onClick={() => installPlugin(x)}>{loadingPlugin === x.packageName ? 'Installing' : 'Install'}</button>
+              </>
+            )}
+          </section>
+        ))}
     </section>
   );
 }

@@ -3,14 +3,8 @@
   "compilerOptions": {
     "baseUrl": "./",
     "jsxImportSource": "@reactunity/renderer/editor",
-    "types": [
-      "@reactunity/scripts/main",
-    ]
+    "types": ["@reactunity/scripts/main"]
   },
-  "files": [
-    "./src/index.ts"
-  ],
-  "include": [
-    "src"
-  ]
+  "files": ["./src/index.ts"],
+  "include": ["src"]
 }

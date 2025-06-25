@@ -1,7 +1,7 @@
-import { ReactUnity } from "@reactunity/renderer";
-import { EditorElements } from "@reactunity/renderer/editor";
-import React, { useCallback, useEffect, useRef, useState } from "react";
-import { useSelection } from "src/context/selection";
+import { ReactUnity } from '@reactunity/renderer';
+import { EditorElements } from '@reactunity/renderer/editor';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
+import { useSelection } from 'src/context/selection';
 import style from './index.module.scss';
 
 const stylesheets: Record<string, ReactUnity.Styling.StyleSheet> = {};
@@ -28,7 +28,7 @@ export function GlobalStyle() {
     };
   }, [savedInput, selection]);
 
-  const inputRef = useRef<ReactUnity.UIToolkit.TextFieldComponent>();
+  const inputRef = useRef<ReactUnity.UIToolkit.TextFieldComponent>(undefined);
 
   const save: EditorElements['button']['onButtonClick'] = () => {
     setSavedInput(inputRef.current.Value);
@@ -40,15 +40,12 @@ export function GlobalStyle() {
   };
 
   const keyup: EditorElements['input']['onKeyDown'] = (ev) => {
-    if (ev.ctrlKey &&
-      (ev.keyCode === Interop.UnityEngine.KeyCode.Return ||
-        ev.keyCode === Interop.UnityEngine.KeyCode.KeypadEnter)) {
+    if (ev.ctrlKey && (ev.keyCode === Interop.UnityEngine.KeyCode.Return || ev.keyCode === Interop.UnityEngine.KeyCode.KeypadEnter)) {
       ev.PreventDefault();
       ev.StopImmediatePropagation();
       ev.StopPropagation();
       save(null);
-    }
-    else if (ev.keyCode === Interop.UnityEngine.KeyCode.Escape) {
+    } else if (ev.keyCode === Interop.UnityEngine.KeyCode.Escape) {
       ev.PreventDefault();
       ev.StopImmediatePropagation();
       ev.StopPropagation();
@@ -58,18 +55,20 @@ export function GlobalStyle() {
 
   const closeCallback = useCallback(() => setShow(false), []);
 
-  return <view className={style.host}>
-    <button onButtonClick={() => setShow(x => !x)}>Edit Global Styles</button>
+  return (
+    <view className={style.host}>
+      <button onButtonClick={() => setShow((x) => !x)}>Edit Global Styles</button>
 
-    <dialog show={show} onClose={closeCallback} title="Global Styles" className={style.dialog}>
-      <scroll className={style.scroll}>
-        <input className={style.input} value={savedInput} ref={inputRef} multiline onKeyUp={keyup} />
-      </scroll>
+      <dialog show={show} onClose={closeCallback} title="Global Styles" className={style.dialog}>
+        <scroll className={style.scroll}>
+          <input className={style.input} value={savedInput} ref={inputRef} multiline onKeyUp={keyup} />
+        </scroll>
 
-      <view className={style.actions}>
-        <button onButtonClick={cancel}>Cancel (Esc)</button>
-        <button onButtonClick={save}>Save (Ctrl + Enter)</button>
-      </view>
-    </dialog>
-  </view>;
+        <view className={style.actions}>
+          <button onButtonClick={cancel}>Cancel (Esc)</button>
+          <button onButtonClick={save}>Save (Ctrl + Enter)</button>
+        </view>
+      </dialog>
+    </view>
+  );
 }

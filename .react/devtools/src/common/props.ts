@@ -33,28 +33,28 @@ export type StylePropPart = 'left' | 'right' | 'top' | 'bottom' | 'start' | 'end
 export const fourDirectionParts: StylePropPart[] = ['', 'top', 'right', 'bottom', 'left'];
 
 export const CornerHack = {
-  'left': 'TopLeft',
-  'top': 'TopRight',
-  'right': 'BottomRight',
-  'bottom': 'BottomLeft',
+  left: 'TopLeft',
+  top: 'TopRight',
+  right: 'BottomRight',
+  bottom: 'BottomLeft',
   '': '',
 };
 
 export const CornerLabels = {
-  'left': 'TL',
-  'top': 'TR',
-  'right': 'BR',
-  'bottom': 'BL',
+  left: 'TL',
+  top: 'TR',
+  right: 'BR',
+  bottom: 'BL',
   '': '',
 };
 
 export const PartCapitalize = {
-  'left': 'Left',
-  'right': 'Right',
-  'top': 'Top',
-  'bottom': 'Bottom',
-  'start': 'Start',
-  'end': 'End',
+  left: 'Left',
+  right: 'Right',
+  top: 'Top',
+  bottom: 'Bottom',
+  start: 'Start',
+  end: 'End',
   '': '',
 };
 
@@ -71,7 +71,7 @@ export const styleProps: StylePropGroup[] = [
       { name: 'opacity', component: sliderComponent(), label: 'Opacity' },
       { name: 'zIndex', component: sliderintComponent(), label: 'Z-Index' },
       { name: 'visibility', component: 'toggle', label: 'Visibility' },
-    ]
+    ],
   },
   {
     label: 'Text',
@@ -95,7 +95,7 @@ export const styleProps: StylePropGroup[] = [
       { name: 'translate', component: YogaValue2Field, label: 'Translate' },
       { name: 'scale', component: 'vector3', label: 'Scale' },
       { name: 'rotate', component: 'vector3', label: 'Rotate' },
-    ]
+    ],
   },
 
   {
@@ -145,21 +145,61 @@ export const styleProps: StylePropGroup[] = [
 
   {
     props: [
-      { name: 'borderRadius', ...borderRadiusField, label: 'Border Radius', arrangement: 'corner', partTemplate: (part) => `border${CornerHack[part]}Radius` },
-      { name: 'borderColor', component: 'color', arrangement: 'rect', partTemplate: (part) => `border${PartCapitalize[part]}Color`, label: 'Border Color' },
-      { name: 'BorderWidth', component: 'float', arrangement: 'rect', getter: floatDefaultGetter, partTemplate: (part) => `Border${PartCapitalize[part]}Width`, label: 'Border Width', source: 'layout' },
+      {
+        name: 'borderRadius',
+        ...borderRadiusField,
+        label: 'Border Radius',
+        arrangement: 'corner',
+        partTemplate: (part) => `border${CornerHack[part]}Radius`,
+      },
+      {
+        name: 'borderColor',
+        component: 'color',
+        arrangement: 'rect',
+        partTemplate: (part) => `border${PartCapitalize[part]}Color`,
+        label: 'Border Color',
+      },
+      {
+        name: 'BorderWidth',
+        component: 'float',
+        arrangement: 'rect',
+        getter: floatDefaultGetter,
+        partTemplate: (part) => `Border${PartCapitalize[part]}Width`,
+        label: 'Border Width',
+        source: 'layout',
+      },
     ],
   },
 
   {
     props: [
-      { name: 'Margin', ...lengthField, arrangement: 'rect', partTemplate: (part) => `Margin${PartCapitalize[part]}`, label: 'Margin', source: 'layout' },
-      { name: 'Padding', ...lengthField, arrangement: 'rect', partTemplate: (part) => `Padding${PartCapitalize[part]}`, label: 'Padding', source: 'layout' },
-      { name: 'Position', ...lengthField, arrangement: 'rect', partTemplate: (part) => PartCapitalize[part], label: 'Position', source: 'layout' },
-    ]
+      {
+        name: 'Margin',
+        ...lengthField,
+        arrangement: 'rect',
+        partTemplate: (part) => `Margin${PartCapitalize[part]}`,
+        label: 'Margin',
+        source: 'layout',
+      },
+      {
+        name: 'Padding',
+        ...lengthField,
+        arrangement: 'rect',
+        partTemplate: (part) => `Padding${PartCapitalize[part]}`,
+        label: 'Padding',
+        source: 'layout',
+      },
+      {
+        name: 'Position',
+        ...lengthField,
+        arrangement: 'rect',
+        partTemplate: (part) => PartCapitalize[part],
+        label: 'Position',
+        source: 'layout',
+      },
+    ],
   },
 ];
-
 
 export const allProps = [];
 
@@ -177,8 +217,7 @@ for (let pIndex = 0; pIndex < styleProps.length; pIndex++) {
         const { arrangement, partTemplate, ...rest } = prop;
         allProps.push({ ...rest, name: partName, partlessName: prop.name, label: partName } as StyleProp);
       }
-    }
-    else {
+    } else {
       allProps.push(prop);
     }
   }

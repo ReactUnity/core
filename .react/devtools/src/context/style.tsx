@@ -1,5 +1,5 @@
 import { ReactUnity } from '@reactunity/renderer';
-import React, { useContext, useMemo, useRef } from "react";
+import React, { useContext, useMemo, useRef } from 'react';
 
 type Cmp = ReactUnity.IReactComponent;
 type Styles = Record<string, object>;
@@ -15,7 +15,7 @@ const styleContext = React.createContext<ContextType>(null);
 export const useStyleContext = () => useContext(styleContext);
 
 interface ElementProps {
-  element: Cmp,
+  element: Cmp;
   styles: Styles;
   ind: number;
   sheet: any;
@@ -24,13 +24,13 @@ interface ElementProps {
 type State = ElementProps[];
 
 const findElementId = (state: State, el: Cmp) => {
-  let ind = state.findIndex(x => x.element === el);
+  let ind = state.findIndex((x) => x.element === el);
 
   if (ind < 0) {
     ind = state.length;
     const st = { element: el, styles: {}, ind } as ElementProps;
     state.push(st);
-    el.SetData('devtools-el', ind + '');
+    el.SetData('devtools-el', String(ind));
   }
 
   return ind;
@@ -54,8 +54,7 @@ const buildSheet = (state: ElementProps) => {
     }
   }
 
-  if (values.length)
-    sheet.AddRules(selector, valuesDic);
+  if (values.length) sheet.AddRules(selector, valuesDic);
 
   state.sheet = sheet;
 
@@ -77,33 +76,34 @@ const changed = (state: ElementProps) => {
 export function StyleContext({ children }) {
   const state = useRef<State>([]);
 
-  const ctx = useMemo(() => ({
-    setProp: (el: Cmp, prop: string, value: any) => {
-      const ind = findElementId(state.current, el);
-      state.current[ind].styles[prop] = value;
-      changed(state.current[ind]);
-    },
-    removeProp: (el: Cmp, prop: string) => {
-      const ind = findElementId(state.current, el);
-      Reflect.deleteProperty(state.current[ind].styles, prop);
-      changed(state.current[ind]);
-    },
-    hasProp: (el: Cmp, prop: string) => {
-      const ind = findElementId(state.current, el);
-      return Object.prototype.hasOwnProperty.call(state.current[ind].styles, prop);
-    },
-    getProp: (el: Cmp, prop: string) => {
-      const ind = findElementId(state.current, el);
-      return state.current[ind].styles[prop];
-    },
-    getStyles: (el: Cmp) => {
-      const ind = findElementId(state.current, el);
-      return state.current[ind].styles;
-    },
-    getElementId: (el: Cmp) => findElementId(state.current, el),
-  }), []);
+  const ctx = useMemo(
+    () => ({
+      setProp: (el: Cmp, prop: string, value: any) => {
+        const ind = findElementId(state.current, el);
+        state.current[ind].styles[prop] = value;
+        changed(state.current[ind]);
+      },
+      removeProp: (el: Cmp, prop: string) => {
+        const ind = findElementId(state.current, el);
+        Reflect.deleteProperty(state.current[ind].styles, prop);
+        changed(state.current[ind]);
+      },
+      hasProp: (el: Cmp, prop: string) => {
+        const ind = findElementId(state.current, el);
+        return Object.prototype.hasOwnProperty.call(state.current[ind].styles, prop);
+      },
+      getProp: (el: Cmp, prop: string) => {
+        const ind = findElementId(state.current, el);
+        return state.current[ind].styles[prop];
+      },
+      getStyles: (el: Cmp) => {
+        const ind = findElementId(state.current, el);
+        return state.current[ind].styles;
+      },
+      getElementId: (el: Cmp) => findElementId(state.current, el),
+    }),
+    [],
+  );
 
-  return <styleContext.Provider value={ctx}>
-    {children}
-  </styleContext.Provider>;
+  return <styleContext.Provider value={ctx}>{children}</styleContext.Provider>;
 }
