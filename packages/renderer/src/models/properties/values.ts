@@ -5,7 +5,9 @@ import { KnownColors } from './colors';
 
 type PositioningLiteralHorizontal = 'left' | 'right' | 'center';
 type PositioningLiteralVertical = 'top' | 'bottom' | 'center';
-export type PositioningLiteral = PositioningLiteralVertical | PositioningLiteralHorizontal
+export type PositioningLiteral =
+  | PositioningLiteralVertical
+  | PositioningLiteralHorizontal
   | `${PositioningLiteralVertical} ${PositioningLiteralHorizontal}`
   | `${PositioningLiteralHorizontal} ${PositioningLiteralVertical}`;
 
@@ -17,15 +19,13 @@ export type Vector2Aux = (string & {}) | Array2Aux<number> | PositioningLiteral;
 export type Vector3Aux = (string & {}) | Array3Aux<number>;
 export type RectOffsetAux = Array4Aux<number>;
 
-
 // Color
 
 export type KnownColor = keyof KnownColors;
 
-export type HexColor = (string & {}); // `#${string}`;
+export type HexColor = string & {}; // `#${string}`;
 export type ColorAux = KnownColor | HexColor | number | Array4Aux<number> | UnityEngine.Color;
 export type NumberAux = (string & {}) | number;
-
 
 // Other
 

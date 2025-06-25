@@ -15,19 +15,15 @@ export function convertPropsToSerializable(props: any) {
 
       if (value == null) {
         (res.p ||= {})[key] = null;
-      }
-      else if (key === 'style') {
+      } else if (key === 'style') {
         (res.p ||= {})[key] = convertPropsToSerializable(value);
-      }
-      else if (key[0] === 'o' && key[1] === 'n' && typeof value === 'function') {
+      } else if (key[0] === 'o' && key[1] === 'n' && typeof value === 'function') {
         const ind = callbacksRepo.addObject(value);
         (res.e ||= {})[key] = ind;
-      }
-      else if (typeof value === 'object' || typeof value === 'function') {
+      } else if (typeof value === 'object' || typeof value === 'function') {
         const ind = objectsRepo.addObject(value);
         (res.o ||= {})[key] = ind;
-      }
-      else {
+      } else {
         (res.p ||= {})[key] = value;
       }
     }

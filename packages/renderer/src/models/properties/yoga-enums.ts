@@ -1,4 +1,3 @@
-
 export type FlexDirection = 'column' | 'column-reverse' | 'row' | 'row-reverse';
 export type YogaAlign = 'auto' | 'flex-start' | 'center' | 'flex-end' | 'stretch' | 'baseline' | 'space-between' | 'space-around';
 export type YogaJustify = 'flex-start' | 'center' | 'flex-end' | 'space-between' | 'space-around';

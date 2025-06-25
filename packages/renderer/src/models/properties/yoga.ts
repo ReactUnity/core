@@ -1,7 +1,5 @@
-
 import { Array2Aux, Array4Aux, PositioningLiteral } from './values';
 import { Direction, Display, FlexDirection, Overflow, Position, Wrap, YogaAlign, YogaJustify } from './yoga-enums';
-
 
 // boolean, null and undefined are all mapped to undefined
 // pt, px and no unit is mapped to Point unit, e.g. 50px -> 50 Points
@@ -9,7 +7,6 @@ import { Direction, Display, FlexDirection, Overflow, Position, Wrap, YogaAlign,
 export type YogaValueAux = 'auto' | number | null | undefined | boolean | (string & {});
 export type YogaValue2Aux = Array2Aux<YogaValueAux> | PositioningLiteral;
 export type YogaValue4Aux = Array4Aux<YogaValueAux>;
-
 
 export interface Layout {
   overflow?: Overflow;
@@ -73,4 +70,5 @@ export interface LayoutExtended {
   flexWrap?: Wrap;
 }
 
-export type LayoutCssCompatible = Omit<Layout, 'styleDirection' | 'position' | 'wrap' | 'margin' | 'padding' | 'borderWidth'> & LayoutExtended;
+export type LayoutCssCompatible = Omit<Layout, 'styleDirection' | 'position' | 'wrap' | 'margin' | 'padding' | 'borderWidth'> &
+  LayoutExtended;

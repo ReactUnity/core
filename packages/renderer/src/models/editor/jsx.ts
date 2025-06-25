@@ -1,4 +1,3 @@
-
 import * as rc from 'react';
 import { BaseElements, Textable } from '../base';
 import { ReactUnity, UnityEngine } from '../generated';
@@ -82,8 +81,8 @@ export interface EditorElements extends BaseElements<BaseElement<any>> {
 }
 
 declare global {
-  interface ReactUnityCustomElements { }
-  interface ReactUnityCustomAttributes { }
+  interface ReactUnityCustomElements {}
+  interface ReactUnityCustomAttributes {}
 
   namespace JSX {
     interface IntrinsicAttributes extends ReactUnityCustomAttributes {}

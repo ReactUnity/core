@@ -18,14 +18,12 @@ export class ErrorBoundary extends React.Component<any, any> {
 
   render() {
     if (this.state.hasError) {
-      return <view
-        id='__react-unity-error-boundary'
-        style={{ color: 'crimson', padding: 20, fontSize: 16 }}>
-        <view style={{ marginBottom: '12px' }}>
-          {this.state.error?.message || ''}
+      return (
+        <view id="__react-unity-error-boundary" style={{ color: 'crimson', padding: 20, fontSize: 16 }}>
+          <view style={{ marginBottom: '12px' }}>{this.state.error?.message || ''}</view>
+          <view>{this.state.error?.stack || ''}</view>
         </view>
-        <view>{this.state.error?.stack || ''}</view>
-      </view>;
+      );
     }
 
     return this.props.children;

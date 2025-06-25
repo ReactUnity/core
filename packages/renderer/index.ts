@@ -7,12 +7,14 @@ export * from './src/models/generated';
 export * from './src/models/properties';
 export * from './src/models/renderer';
 export {
-  Renderer, batchedUpdates, flushSync,
-  render, batchedUpdates as unstable_batchedUpdates
+  Renderer,
+  batchedUpdates,
+  flushSync,
+  render,
+  batchedUpdates as unstable_batchedUpdates,
 } from './src/renderer/renderer';
 
 import { batchedUpdates, flushSync, render } from './src/renderer/renderer';
-
 
 const ReactUnityRenderer = {
   batchedUpdates,

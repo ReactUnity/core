@@ -48,7 +48,6 @@ export interface StyleCmpProps extends ContentSrcProps {
   importance?: number;
 }
 
-
 export type StyleCmpDef = StyleCmpProps & RefAttributes<ReactUnity.Styling.StyleComponent> & { children?: Textable | Textable[] };
 export type ScriptCmpDef = ContentSrcProps & RefAttributes<ReactUnity.Scripting.ScriptComponent> & { children?: Textable | Textable[] };
 export type HtmlCmpDef = ContentSrcProps & RefAttributes<ReactUnity.Html.HtmlComponent> & { children?: never };
@@ -58,4 +57,4 @@ export interface BaseElements<BaseCmpType> extends RichTextElements, SVGElements
   style: BaseCmpType & StyleCmpDef;
   script: BaseCmpType & ScriptCmpDef;
   html: BaseCmpType & HtmlCmpDef;
-};
+}

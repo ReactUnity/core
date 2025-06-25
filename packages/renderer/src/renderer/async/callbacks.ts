@@ -14,14 +14,12 @@ export class CallbacksRepo extends ObjectsRepo<AsyncCallback> {
       args = [];
       const length = argsAsArray.Length;
       for (let index = 0; index < length; index++) args.push(argsAsArray.GetValue(index));
-    }
-    else if (typeof argsAsList.Count === 'number') {
+    } else if (typeof argsAsList.Count === 'number') {
       // C# List
       args = [];
       const length = argsAsList.Count;
       for (let index = 0; index < length; index++) args.push(argsAsList[index]);
-    }
-    else if (typeof argsAsList.Count === 'function') {
+    } else if (typeof argsAsList.Count === 'function') {
       // C# IList
       args = [];
       const length = (argsAsList.Count as any)();

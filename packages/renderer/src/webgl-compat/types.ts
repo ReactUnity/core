@@ -15,12 +15,12 @@ export type EventSystemHook = {
   readonly onMount: () => () => void;
 };
 
-export type UnityContextType = UnityContextHook & EventSystemHook & {
-  unityConfig: UnityConfig;
-  unityInstance: UnityInstance | null;
-  htmlCanvasElement: any | undefined | null;
-  send: (gameObjectName: string, methodName: string, parameter?: ReactUnityEventParameter) => void;
-  setFullscreen: (enabled: boolean) => void;
-  quitUnityInstance: () => Promise<void>;
-};
-
+export type UnityContextType = UnityContextHook &
+  EventSystemHook & {
+    unityConfig: UnityConfig;
+    unityInstance: UnityInstance | null;
+    htmlCanvasElement: any | undefined | null;
+    send: (gameObjectName: string, methodName: string, parameter?: ReactUnityEventParameter) => void;
+    setFullscreen: (enabled: boolean) => void;
+    quitUnityInstance: () => Promise<void>;
+  };

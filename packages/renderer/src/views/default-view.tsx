@@ -8,10 +8,5 @@ interface Props {
 }
 
 export function DefaultView({ children, withHelpers, renderCount }: Props) {
-  return <>
-    {!withHelpers ? children :
-      <ErrorBoundary key={renderCount}>
-        {children}
-      </ErrorBoundary>}
-  </>;
+  return <>{!withHelpers ? children : <ErrorBoundary key={renderCount}>{children}</ErrorBoundary>}</>;
 }

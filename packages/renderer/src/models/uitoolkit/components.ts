@@ -88,7 +88,7 @@ export interface Toggle extends BaseField<boolean, Cmp.ToggleComponent> {
   text?: string;
 }
 
-export interface Slider extends BaseSlider<number> { }
+export interface Slider extends BaseSlider<number> {}
 export interface Range extends BaseField<number, Cmp.RangeComponent> {
   min?: number;
   max?: number;
@@ -101,4 +101,4 @@ export interface IMGUI extends View<Cmp.IMGUIComponent> {
   cullingEnabled?: boolean;
 }
 
-export interface Svg extends View<Cmp.SvgComponent>, ContentSrcProps { }
+export interface Svg extends View<Cmp.SvgComponent>, ContentSrcProps {}

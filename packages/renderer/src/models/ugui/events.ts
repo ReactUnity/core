@@ -83,4 +83,4 @@ export interface Events<T = BaseCmp> extends BaseEvents<T> {
    * @alias onDeselect
    */
   onBlur?: BaseEventCallback<T>;
-};
+}

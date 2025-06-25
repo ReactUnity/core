@@ -1,11 +1,11 @@
-
 import type * as React from 'react';
 import { Style } from './properties';
 
-type SVGProps<T> = React.Attributes & Omit<React.SVGAttributes<T>, keyof React.DOMAttributes<T> | keyof React.AriaAttributes | 'style'> & {
-  style?: Style | React.CSSProperties | string | undefined;
-  children?: any;
-};
+type SVGProps<T> = React.Attributes &
+  Omit<React.SVGAttributes<T>, keyof React.DOMAttributes<T> | keyof React.AriaAttributes | 'style'> & {
+    style?: Style | React.CSSProperties | string | undefined;
+    children?: any;
+  };
 
 export type SVGEelement = SVGProps<SVGSVGElement>;
 

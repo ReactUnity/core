@@ -1,12 +1,13 @@
 import { RichTextNode } from '../async/types';
 
 function kebabize(str: string): string {
-  return str.split('').map((letter, idx) => {
-    return letter.toUpperCase() === letter
-      ? `${idx !== 0 ? '-' : ''}${letter.toLowerCase()}`
-      : letter;
-  }).join('');
-};
+  return str
+    .split('')
+    .map((letter, idx) => {
+      return letter.toUpperCase() === letter ? `${idx !== 0 ? '-' : ''}${letter.toLowerCase()}` : letter;
+    })
+    .join('');
+}
 
 export function stringifyStyle(style: any): string {
   if (typeof style === 'string') return style;
@@ -28,7 +29,6 @@ export function stringifyStyle(style: any): string {
 
   return acc.join('');
 }
-
 
 export function stringifySVG(node: RichTextNode): string {
   if (node.hidden) return '';
@@ -72,8 +72,7 @@ export function stringifySVG(node: RichTextNode): string {
       acc.push(tag);
       acc.push('>');
     }
-  }
-  else {
+  } else {
     if (tag) acc.push(' />');
   }
 

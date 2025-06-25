@@ -69,6 +69,4 @@ type EventMapCapture<TSender = BaseCmp> = {
   [eventName in keyof EventMap as `${eventName}Capture`]: EventMap<TSender>[eventName];
 };
 
-
-export interface Events<TSender = BaseCmp> extends EventMap<TSender>, EventMapCapture<TSender> {
-}
+export interface Events<TSender = BaseCmp> extends EventMap<TSender>, EventMapCapture<TSender> {}

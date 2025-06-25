@@ -4,7 +4,6 @@ import { AnchorTarget, ScrollDirection } from '../properties';
 import { AssetReference, AssetReferenceOrHttp } from '../properties/values';
 import { ActionCallback, Events } from './events';
 
-
 export interface View<T = ReactUnity.UGUI.UGUIComponent> extends Events<T>, BaseCmpProps {
   active?: boolean;
   eventViewport?: UnityEngine.RectTransform | UnityEngine.GameObject | ReactUnity.UGUI.UGUIComponent;
@@ -21,7 +20,6 @@ export interface Label extends View<ReactUnity.UGUI.LabelComponent> {
 export interface Icon extends View<ReactUnity.UGUI.IconComponent> {
   set?: ReactUnity.Styling.IconSet | string;
 }
-
 
 export interface Scroll extends View<ReactUnity.UGUI.ScrollComponent> {
   onValueChanged?: (ev: UnityEngine.Vector2, sender: ReactUnity.UGUI.ScrollComponent) => void;
@@ -63,12 +61,12 @@ export interface Image<T = ReactUnity.UGUI.ImageComponent> extends BaseImage<T> 
   preserveAspect?: boolean;
 }
 
-export interface RawImage extends BaseImage<ReactUnity.UGUI.RawImageComponent> { }
+export interface RawImage extends BaseImage<ReactUnity.UGUI.RawImageComponent> {}
 export interface Video extends BaseImage<ReactUnity.UGUI.VideoComponent> {
   src?: AssetReference;
   source?: AssetReference;
 }
-export interface SvgImage<T = ReactUnity.UGUI.SvgImageComponent> extends Image<T> { }
+export interface SvgImage<T = ReactUnity.UGUI.SvgImageComponent> extends Image<T> {}
 
 export interface Render<T = ReactUnity.UGUI.RenderComponent> extends BaseImage<T> {
   width: number;
@@ -97,4 +95,4 @@ export interface Portal<T = ReactUnity.UGUI.PortalComponent> extends View<T> {
   onUnmount?: (camera: UnityEngine.Transform, sender: T) => void;
 }
 
-export interface Svg<T = ReactUnity.UGUI.SvgComponent> extends SvgImage<T>, ContentSrcProps { }
+export interface Svg<T = ReactUnity.UGUI.SvgComponent> extends SvgImage<T>, ContentSrcProps {}

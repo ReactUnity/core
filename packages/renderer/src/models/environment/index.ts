@@ -1,4 +1,3 @@
-
 import { ReactUnity } from '../generated';
 import './dom/global';
 export * from './interop';

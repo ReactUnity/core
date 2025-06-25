@@ -1,4 +1,3 @@
-
 export type BatchUpdateProps = {
   [key: string]: string | number | object;
 };
@@ -33,15 +32,14 @@ type ApplyUpdatesParams = SerializableUpdateProps & {
  */
 
 export type CreateInstanceCommand = ['c', ApplyUpdatesParams & { k?: string }];
-export type CreateTextInstanceCommand = ['t', { r: number, c?: string }];
-export type AppendChildCommand = ['a', { p: number, c: number }];
-export type RemoveChildCommand = ['r', { p: number, c: number }];
-export type InsertChildCommand = ['i', { p: number, c: number, i?: number }];
+export type CreateTextInstanceCommand = ['t', { r: number; c?: string }];
+export type AppendChildCommand = ['a', { p: number; c: number }];
+export type RemoveChildCommand = ['r', { p: number; c: number }];
+export type InsertChildCommand = ['i', { p: number; c: number; i?: number }];
 export type ApplyUpdatesCommand = ['u', ApplyUpdatesParams];
-export type TextUpdateCommand = ['x', { r: number, c: string }];
-export type ToggleHideCommand = ['h', { r: number, h: boolean }];
+export type TextUpdateCommand = ['x', { r: number; c: string }];
+export type ToggleHideCommand = ['h', { r: number; h: boolean }];
 export type ClearContainerCommand = ['o'];
-
 
 export type CreateInstanceCommandShort = [
   /* c */ 0,
@@ -52,29 +50,12 @@ export type CreateInstanceCommandShort = [
   /* Pool Key */ string?,
 ];
 
-export type CreateTextInstanceCommandShort = [
-  /* t */ 1,
-  /* Ref ID */ number,
-  /* Text Content */ string?,
-];
+export type CreateTextInstanceCommandShort = [/* t */ 1, /* Ref ID */ number, /* Text Content */ string?];
 
-export type AppendChildCommandShort = [
-  /* a */ 2,
-  /* Parent Ref ID */ number,
-  /* Child Ref ID */ number,
-];
+export type AppendChildCommandShort = [/* a */ 2, /* Parent Ref ID */ number, /* Child Ref ID */ number];
 
-export type RemoveChildCommandShort = [
-  /* r */ 3,
-  /* Parent Ref ID */ number,
-  /* Child Ref ID */ number,
-];
-export type InsertChildCommandShort = [
-  /* i */ 4,
-  /* Parent Ref ID */ number,
-  /* Child Ref ID */ number,
-  /* Index */ number?,
-];
+export type RemoveChildCommandShort = [/* r */ 3, /* Parent Ref ID */ number, /* Child Ref ID */ number];
+export type InsertChildCommandShort = [/* i */ 4, /* Parent Ref ID */ number, /* Child Ref ID */ number, /* Index */ number?];
 
 export type ApplyUpdatesCommandShort = [
   /* u */ 5,
@@ -84,22 +65,11 @@ export type ApplyUpdatesCommandShort = [
   // /* Text Content */ string?,
 ];
 
-export type TextUpdateCommandShort = [
-  /* x */ 6,
-  /* Ref ID */ number,
-  /* Text Content */ string,
-];
+export type TextUpdateCommandShort = [/* x */ 6, /* Ref ID */ number, /* Text Content */ string];
 
-export type ToggleHideCommandShort = [
-  /* h */ 7,
-  /* Ref ID */ number,
-  /* Hidden */ boolean,
-];
+export type ToggleHideCommandShort = [/* h */ 7, /* Ref ID */ number, /* Hidden */ boolean];
 
-export type ClearContainerCommandShort = [
-  /* o */ 8,
-];
-
+export type ClearContainerCommandShort = [/* o */ 8];
 
 export type BatchCommandLong =
   | CreateInstanceCommand
@@ -113,7 +83,6 @@ export type BatchCommandLong =
   | ClearContainerCommand
   | null;
 
-
 export type BatchCommandShort =
   | CreateInstanceCommandShort
   | CreateTextInstanceCommandShort
@@ -126,7 +95,4 @@ export type BatchCommandShort =
   | ClearContainerCommandShort
   | null;
 
-export type BatchCommand =
-  | BatchCommandLong
-  | BatchCommandShort
-  | null;
+export type BatchCommand = BatchCommandLong | BatchCommandShort | null;

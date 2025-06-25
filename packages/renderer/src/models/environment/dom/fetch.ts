@@ -1,7 +1,7 @@
 import { AbortSignal, Blob, FormData, URLSearchParams } from './common';
 
 export declare class Body {
-  constructor(body?: any, opts?: { size?: number | undefined, timeout?: number | undefined });
+  constructor(body?: any, opts?: { size?: number | undefined; timeout?: number | undefined });
   arrayBuffer(): Promise<ArrayBuffer>;
   blob(): Promise<Blob>;
   bodyUsed: boolean;
@@ -51,7 +51,7 @@ export interface RequestInit {
 }
 
 export type RequestContext =
-  'audio'
+  | 'audio'
   | 'beacon'
   | 'cspreport'
   | 'download'
@@ -88,13 +88,7 @@ export type RequestMode = 'cors' | 'no-cors' | 'same-origin';
 export type RequestRedirect = 'error' | 'follow' | 'manual';
 export type RequestCredentials = 'omit' | 'include' | 'same-origin';
 
-export type RequestCache =
-  'default'
-  | 'force-cache'
-  | 'no-cache'
-  | 'no-store'
-  | 'only-if-cached'
-  | 'reload';
+export type RequestCache = 'default' | 'force-cache' | 'no-cache' | 'no-store' | 'only-if-cached' | 'reload';
 
 export declare class Headers implements Iterable<[string, string]> {
   constructor(init?: HeadersInit);
@@ -139,13 +133,7 @@ export declare class Response extends Body {
   url: string;
 }
 
-export type ResponseType =
-  'basic'
-  | 'cors'
-  | 'default'
-  | 'error'
-  | 'opaque'
-  | 'opaqueredirect';
+export type ResponseType = 'basic' | 'cors' | 'default' | 'error' | 'opaque' | 'opaqueredirect';
 
 export interface ResponseInit {
   headers?: HeadersInit | undefined;
@@ -163,18 +151,10 @@ interface URLLike {
 export type HeadersInit = Headers | string[][] | { [key: string]: string };
 // HeaderInit is exported to support backwards compatibility. See PR #34382
 export type HeaderInit = HeadersInit;
-export type BodyInit =
-  ArrayBuffer
-  | ArrayBufferView
-  | string
-  | URLSearchParams
-  | FormData;
+export type BodyInit = ArrayBuffer | ArrayBufferView | string | URLSearchParams | FormData;
 export type RequestInfo = string | URLLike | Request;
 
-export declare function fetch(
-  url: RequestInfo,
-  init?: RequestInit
-): Promise<Response>;
+export declare function fetch(url: RequestInfo, init?: RequestInit): Promise<Response>;
 
 export declare namespace fetch {
   function isRedirect(code: number): boolean;

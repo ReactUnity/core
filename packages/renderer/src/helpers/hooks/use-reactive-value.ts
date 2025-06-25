@@ -5,14 +5,16 @@ import { ReactUnity } from '../../models/generated';
 type IsEqual<T = any> = (a: T, b: T) => boolean;
 
 function createSubscriber<T>(obj: ReactUnity.Reactive.IReactive<T>, isEqual?: IsEqual<T>) {
-  const isReactive = obj && typeof obj === 'object' && ('Value' in obj);
+  const isReactive = obj && typeof obj === 'object' && 'Value' in obj;
   let snapshot = isReactive ? obj.Value : undefined;
 
   return {
     subscribe: (onStoreChange: () => void) => {
       snapshot = isReactive ? obj.Value : undefined;
 
-      const remove = isReactive && typeof obj.AddListener === 'function' &&
+      const remove =
+        isReactive &&
+        typeof obj.AddListener === 'function' &&
         obj?.AddListener(() => {
           const prev = snapshot;
           snapshot = isReactive ? obj.Value : undefined;
@@ -22,8 +24,7 @@ function createSubscriber<T>(obj: ReactUnity.Reactive.IReactive<T>, isEqual?: Is
           }
         });
 
-      if (isReactive && typeof remove !== 'function')
-        console.warn('The reactive value does not provide a change listener');
+      if (isReactive && typeof remove !== 'function') console.warn('The reactive value does not provide a change listener');
 
       return () => remove?.();
     },

@@ -1,4 +1,3 @@
-
 import { RefAttributes } from 'react';
 import { BaseElements, Textable } from '../base';
 import { ReactUnity } from '../generated';
@@ -35,8 +34,8 @@ export interface UGUIElements extends BaseElements<BaseCmp> {
 }
 
 declare global {
-  interface ReactUnityCustomElements { }
-  interface ReactUnityCustomAttributes { }
+  interface ReactUnityCustomElements {}
+  interface ReactUnityCustomAttributes {}
 
   namespace JSX {
     interface IntrinsicAttributes extends ReactUnityCustomAttributes {}

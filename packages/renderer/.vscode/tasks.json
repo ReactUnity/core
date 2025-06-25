@@ -12,12 +12,7 @@
       "id": "script",
       "description": "The script to run",
       "type": "pickString",
-      "options": [
-        "build",
-        "build:base",
-        "watch",
-        "lint"
-      ]
+      "options": ["build", "build:base", "watch", "lint"]
     }
   ]
 }
