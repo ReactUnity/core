@@ -6,8 +6,7 @@ import type { UnityConfig, UnityProps, WebGLContextAttributes } from 'react-unit
 export { UnityContext, useUnityContext } from './use-unity-context';
 export type { UnityProps, UnityConfig, WebGLContextAttributes, UnityConfig as IUnityConfig };
 
-export const Unity = forwardRef<{}, UnityProps>(
-  function Unity(props, ref) {
-    useImperativeHandle(ref, () => ({}));
-    return <></>;
-  });
+export const Unity = forwardRef<Record<string, unknown>, UnityProps>(function Unity(props, ref) {
+  useImperativeHandle(ref, () => ({}));
+  return <></>;
+});

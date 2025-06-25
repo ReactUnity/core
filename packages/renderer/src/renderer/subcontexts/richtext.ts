@@ -1,10 +1,10 @@
 import { RichTextNode } from '../async/types';
 
 export function parametrizeValue(value: string | number) {
-  if (typeof value === 'number') return value + '';
-  value = value + '';
+  if (typeof value === 'number') return String(value);
+  value = String(value);
 
-  if (value.includes(' ') || value.includes('-')) return '"' + value + '"';
+  if (value.includes(' ') || value.includes('-')) return `"${value}"`;
   return value;
 }
 
@@ -42,7 +42,6 @@ export function stringifyRichText(node: RichTextNode): string {
     }
     acc.push('>');
   }
-
 
   if (node.children?.length > 0) {
     for (const child of node.children) {

@@ -10,19 +10,19 @@ import { createEventSystem } from './use-event-system';
 
 const createUnityContext = (unityConfig: UnityConfig): UnityContextType => {
   let unityInstance: UnityInstance | null = typeof ReactUnityWebGLCompat !== 'undefined' ? ReactUnityWebGLCompat : null;
-  let setUnityInstance = (instance: UnityInstance | null) => unityInstance = instance;
+  const setUnityInstance = (instance: UnityInstance | null) => (unityInstance = instance);
 
   let loadingProgression = 1;
-  let setLoadingProgression = (progression: number) => loadingProgression = progression;
+  const setLoadingProgression = (progression: number) => (loadingProgression = progression);
 
   let isLoaded = loadingProgression === 1;
-  let setIsLoaded = (loaded: boolean) => {
+  const setIsLoaded = (loaded: boolean) => {
     isLoaded = loaded;
     if (loaded) setLoadingProgression(1);
   };
 
   let initialisationError: Error | null = null;
-  let setInitialisationError = (error: Error | null) => initialisationError = error;
+  const setInitialisationError = (error: Error | null) => (initialisationError = error);
 
   const eventSystem = createEventSystem();
   const unityProvider = {
@@ -33,59 +33,45 @@ const createUnityContext = (unityConfig: UnityConfig): UnityContextType => {
     unityConfig,
   };
 
-  const requestFullscreen =
-    (enabled: boolean) => {
-      if (unityInstance === null) {
-        console.warn(errorMessages.requestFullscreenNoUnityInstance);
-        return;
-      }
-      unityInstance.SetFullscreen(enabled === true ? 1 : 0);
-    };
+  const requestFullscreen = (enabled: boolean) => {
+    if (unityInstance === null) {
+      console.warn(errorMessages.requestFullscreenNoUnityInstance);
+      return;
+    }
+    unityInstance.SetFullscreen(enabled === true ? 1 : 0);
+  };
 
   const requestPointerLock = () => {
-    if (
-      unityInstance === null ||
-      typeof unityInstance.Module.canvas === 'undefined'
-    ) {
+    if (unityInstance === null || typeof unityInstance.Module.canvas === 'undefined') {
       console.warn(errorMessages.requestPointerLockNoUnityInstanceOrCanvas);
       return;
     }
     return unityInstance.Module.canvas.requestPointerLock();
   };
 
-  const sendMessage =
-    (
-      gameObjectName: string,
-      methodName: string,
-      parameter?: ReactUnityEventParameter
-    ) => {
-      if (unityInstance === null) {
-        console.warn(errorMessages.sendMessageNoUnityInstance);
-        return;
-      }
-      unityInstance.SendMessage(gameObjectName, methodName, parameter);
-    };
+  const sendMessage = (gameObjectName: string, methodName: string, parameter?: ReactUnityEventParameter) => {
+    if (unityInstance === null) {
+      console.warn(errorMessages.sendMessageNoUnityInstance);
+      return;
+    }
+    unityInstance.SendMessage(gameObjectName, methodName, parameter);
+  };
 
-  const takeScreenshot =
-    (dataType?: string, quality?: number): string | undefined => {
-      if (
-        unityInstance === null ||
-        typeof unityInstance.Module.canvas === 'undefined'
-      ) {
-        console.warn(errorMessages.screenshotNoUnityInstanceOrCanvas);
-        return;
-      }
-      return unityInstance.Module.canvas.toDataURL(dataType, quality);
-    };
+  const takeScreenshot = (dataType?: string, quality?: number): string | undefined => {
+    if (unityInstance === null || typeof unityInstance.Module.canvas === 'undefined') {
+      console.warn(errorMessages.screenshotNoUnityInstanceOrCanvas);
+      return;
+    }
+    return unityInstance.Module.canvas.toDataURL(dataType, quality);
+  };
 
-  const unload =
-    (): Promise<void> => {
-      if (unityInstance === null) {
-        console.warn(errorMessages.quitNoUnityInstance);
-        return Promise.reject();
-      }
-      return unityInstance.Quit();
-    };
+  const unload = (): Promise<void> => {
+    if (unityInstance === null) {
+      console.warn(errorMessages.quitNoUnityInstance);
+      return Promise.reject();
+    }
+    return unityInstance.Quit();
+  };
 
   return {
     unityProvider,
@@ -126,8 +112,10 @@ export class UnityContext implements UnityContextType {
     Object.assign(this, createUnityContext(unityConfig));
   }
 
-  addEventListener: ((eventName: string, callback: (...parameters: ReactUnityEventParameter[]) => ReactUnityEventParameter) => void) & ((eventName: string, callback: EventCallback) => void);
-  removeEventListener: ((eventName: string, callback: (...parameters: ReactUnityEventParameter[]) => ReactUnityEventParameter) => void) & ((eventName: string, callback?: EventCallback) => void);
+  addEventListener: ((eventName: string, callback: (...parameters: ReactUnityEventParameter[]) => ReactUnityEventParameter) => void) &
+    ((eventName: string, callback: EventCallback) => void);
+  removeEventListener: ((eventName: string, callback: (...parameters: ReactUnityEventParameter[]) => ReactUnityEventParameter) => void) &
+    ((eventName: string, callback?: EventCallback) => void);
   unityProvider: UnityProvider;
   loadingProgression: number;
   isLoaded: boolean;

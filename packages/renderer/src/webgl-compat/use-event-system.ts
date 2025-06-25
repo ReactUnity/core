@@ -9,15 +9,9 @@ type EventListener = {
   callback: EventCallback;
 };
 
-const mountedEventDispatchers: ((
-  eventName: string,
-  ...parameters: ReactUnityEventParameter[]
-) => ReactUnityEventParameter)[] = [];
+const mountedEventDispatchers: ((eventName: string, ...parameters: ReactUnityEventParameter[]) => ReactUnityEventParameter)[] = [];
 
-const dispatchReactUnityEvent = (
-  eventName: string,
-  ...parameters: ReactUnityEventParameter[]
-): ReactUnityEventParameter => {
+const dispatchReactUnityEvent = (eventName: string, ...parameters: ReactUnityEventParameter[]): ReactUnityEventParameter => {
   let returnValue: ReactUnityEventParameter = undefined;
   mountedEventDispatchers.forEach((dispatchEvent) => {
     returnValue = dispatchEvent(eventName, ...parameters);
@@ -25,7 +19,7 @@ const dispatchReactUnityEvent = (
   return returnValue;
 };
 
-declare var window;
+declare const window;
 
 if (typeof globalThis !== 'undefined' || typeof window !== 'undefined') {
   (globalThis || window).dispatchReactUnityEvent = dispatchReactUnityEvent;
@@ -34,56 +28,33 @@ if (typeof globalThis !== 'undefined' || typeof window !== 'undefined') {
 export const createEventSystem = (): EventSystemHook => {
   let eventListeners: EventListener[] = [];
 
-  const addEventListener =
-    (
-      eventName: string,
-      callback: EventCallback
-    ) => {
-      eventListeners = [
-        ...eventListeners,
-        { eventName, callback },
-      ];
-    };
+  const addEventListener = (eventName: string, callback: EventCallback) => {
+    eventListeners = [...eventListeners, { eventName, callback }];
+  };
 
-  const removeEventListener =
-    (
-      eventName: string,
-      callback?: EventCallback
-    ) => {
-      eventListeners = eventListeners.filter(
-        (eventListener) => !(
-          eventListener.eventName === eventName &&
-          (!callback || eventListener.callback === callback)
-        ));
-    };
+  const removeEventListener = (eventName: string, callback?: EventCallback) => {
+    eventListeners = eventListeners.filter(
+      (eventListener) => !(eventListener.eventName === eventName && (!callback || eventListener.callback === callback)),
+    );
+  };
 
-  const removeAllEventListeners =
-    () => {
-      eventListeners = [];
-    };
+  const removeAllEventListeners = () => {
+    eventListeners = [];
+  };
 
-  const dispatchEvent =
-    (
-      eventName: string,
-      ...parameters: ReactUnityEventParameter[]
-    ): ReactUnityEventParameter => {
-      const eventListener = eventListeners.find(
-        (eventListener) => eventListener.eventName === eventName
-      );
-      if (typeof eventListener === 'undefined') {
-        console.warn(errorMessages.noEventListener, { eventName });
-        return;
-      }
-      return eventListener.callback(...parameters);
-    };
+  const dispatchEvent = (eventName: string, ...parameters: ReactUnityEventParameter[]): ReactUnityEventParameter => {
+    const eventListener = eventListeners.find((eventListener) => eventListener.eventName === eventName);
+    if (typeof eventListener === 'undefined') {
+      console.warn(errorMessages.noEventListener, { eventName });
+      return;
+    }
+    return eventListener.callback(...parameters);
+  };
 
   const onMount = () => {
     mountedEventDispatchers.push(dispatchEvent);
     return () => {
-      mountedEventDispatchers.splice(
-        mountedEventDispatchers.indexOf(dispatchEvent),
-        1
-      );
+      mountedEventDispatchers.splice(mountedEventDispatchers.indexOf(dispatchEvent), 1);
     };
   };
 

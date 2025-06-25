@@ -1,9 +1,8 @@
 import { ReactUnity, UnityEngine } from '../generated';
 import { View } from './components';
 
-
 type PropertiesOnly<T> = {
-  [K in keyof T as T[K] extends Function ? never : K]?: T[K];
+  [K in keyof T as T[K] extends (...args: any[]) => any ? never : K]?: T[K];
 };
 
 export interface Particles extends View<ReactUnity.UGUI.UGUIComponent> {

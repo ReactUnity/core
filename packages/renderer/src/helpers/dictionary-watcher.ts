@@ -63,7 +63,7 @@ export interface DictionaryWatcher<T = Record<string, any>> {
   useSelector<Res>(selector: (store: T) => Res, isEqual?: IsEqual<Res>): Res;
 }
 
-type Prop = (string | symbol | number);
+type Prop = string | symbol | number;
 type IsEqual<T = any> = (a: T, b: T) => boolean;
 
 /**
@@ -71,33 +71,29 @@ type IsEqual<T = any> = (a: T, b: T) => boolean;
  * @param dictionary The dictionary to be watched. Must implement the EventDictionary type in the C#
  * @param displayName A displayName to identify this context easier in case of problems
  */
-export function createDictionaryWatcher<
-  ValueType = any,
-  RecordType = Record<string, ValueType>
->(
+export function createDictionaryWatcher<ValueType = any, RecordType = Record<string, ValueType>>(
   dictionary: ReactUnity.Reactive.ReactiveRecord<ValueType>,
   displayName?: string,
 ): DictionaryWatcher<RecordType> {
   const ctx = createContext<RecordType>(undefined);
   if (displayName) ctx.displayName = displayName;
 
-
   const createSubscriber = (fields?: Set<Prop>, isEqual?: IsEqual) => {
-    let snapshot: RecordType = ({ ...dictionary }) as any;
+    let snapshot: RecordType = { ...dictionary } as any;
 
     return {
       subscribe: (onStoreChange: () => void) => {
-        snapshot = ({ ...dictionary }) as any;
+        snapshot = { ...dictionary } as any;
 
         const remove = dictionary?.AddListener(() => {
           const prev = snapshot;
-          snapshot = ({ ...dictionary }) as any;
+          snapshot = { ...dictionary } as any;
 
           if (!fields) onStoreChange();
           else {
             const it = fields.values();
             for (let field = it.next().value; field; field = it.next().value) {
-              if (isEqual ? !isEqual(prev[field], snapshot[field]) : (prev[field] !== snapshot[field])) {
+              if (isEqual ? !isEqual(prev[field], snapshot[field]) : prev[field] !== snapshot[field]) {
                 onStoreChange();
                 break;
               }
@@ -127,7 +123,7 @@ export function createDictionaryWatcher<
     const context = useContext(ctx);
     if (context === undefined) {
       if (displayName) throw new Error(`${displayName}.useContext must be used within a ${displayName}.Provider`);
-      else throw new Error('useContext must be used within a provider');
+      throw new Error('useContext must be used within a provider');
     }
     return context;
   }
@@ -137,7 +133,10 @@ export function createDictionaryWatcher<
     const fieldsRef = useRef(fields);
     const [allFieldsSubscribed, setAllFieldsSubscribed] = useState(false);
     subscribeToAllFields ||= allFieldsSubscribed;
-    const subscriber = useMemo(() => subscribeToAllFields ? defaultSubscriber : createSubscriber(fieldsRef.current, fieldEqual), [subscribeToAllFields, fieldEqual]);
+    const subscriber = useMemo(
+      () => (subscribeToAllFields ? defaultSubscriber : createSubscriber(fieldsRef.current, fieldEqual)),
+      [subscribeToAllFields, fieldEqual],
+    );
     const value: any = useSyncExternalStore(subscriber.subscribe, subscriber.getSnapshot, subscriber.getSnapshot);
 
     const proxy = new Proxy(value, {
@@ -163,7 +162,13 @@ export function createDictionaryWatcher<
   }
 
   function useSelector<Res>(selector: (store: RecordType) => Res, isEqual?: IsEqual<Res>) {
-    return useSyncExternalStoreWithSelector(defaultSubscriber.subscribe, defaultSubscriber.getSnapshot, defaultSubscriber.getSnapshot, selector, isEqual);
+    return useSyncExternalStoreWithSelector(
+      defaultSubscriber.subscribe,
+      defaultSubscriber.getSnapshot,
+      defaultSubscriber.getSnapshot,
+      selector,
+      isEqual,
+    );
   }
 
   return { context: ctx, Provider, useValue, useContext: useDictionaryContext, useSelector };

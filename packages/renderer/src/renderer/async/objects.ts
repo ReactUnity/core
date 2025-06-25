@@ -1,7 +1,5 @@
-
 export class ObjectsRepo<T = any> {
-
-  indices: {}[] = [{}];
+  indices: Record<string, unknown>[] = [{}];
   objects = new WeakMap<object, T>();
 
   setObject = (index: number, item: T) => {

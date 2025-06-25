@@ -17,21 +17,32 @@ export interface EventInit {
 export interface AbortSignal {
   aborted: boolean;
 
-  addEventListener: (type: 'abort', listener: ((this: AbortSignal, event: any) => any), options?: boolean | {
-    capture?: boolean | undefined;
-    once?: boolean | undefined;
-    passive?: boolean | undefined;
-  }) => void;
+  addEventListener: (
+    type: 'abort',
+    listener: (this: AbortSignal, event: any) => any,
+    options?:
+      | boolean
+      | {
+          capture?: boolean | undefined;
+          once?: boolean | undefined;
+          passive?: boolean | undefined;
+        },
+  ) => void;
 
-  removeEventListener: (type: 'abort', listener: ((this: AbortSignal, event: any) => any), options?: boolean | {
-    capture?: boolean | undefined;
-  }) => void;
+  removeEventListener: (
+    type: 'abort',
+    listener: (this: AbortSignal, event: any) => any,
+    options?:
+      | boolean
+      | {
+          capture?: boolean | undefined;
+        },
+  ) => void;
 
   dispatchEvent: (event: any) => boolean;
 
   onabort: null | ((this: AbortSignal, event: any) => any);
 }
-
 
 export interface AddEventListenerOptions extends EventListenerOptions {
   once?: boolean;
@@ -39,9 +50,7 @@ export interface AddEventListenerOptions extends EventListenerOptions {
   signal?: AbortSignal;
 }
 
-export interface EventListener {
-  (evt: Event): void;
-}
+export type EventListener = (evt: Event) => void;
 
 export interface EventListenerObject {
   handleEvent(object: Event): void;
@@ -72,11 +81,10 @@ export interface FormData {
   set(name: string, value: string | Blob, fileName?: string): void;
 }
 
-export declare var FormData: {
+export declare const FormData: {
   prototype: FormData;
-  new(form?: HTMLFormElement): FormData;
+  new (form?: HTMLFormElement): FormData;
 };
-
 
 /** The URL interface represents an object providing static methods used for creating object URLs. */
 export interface URL {
@@ -96,13 +104,12 @@ export interface URL {
   toJSON(): string;
 }
 
-export declare var URL: {
+export declare const URL: {
   prototype: URL;
-  new(url: string | URL, base?: string | URL): URL;
+  new (url: string | URL, base?: string | URL): URL;
   createObjectURL(obj: Blob): string;
   revokeObjectURL(url: string): void;
 };
-
 
 export interface URLSearchParams {
   readonly size: number;
@@ -117,7 +124,7 @@ export interface URLSearchParams {
   forEach(callbackfn: (value: string, key: string, parent: URLSearchParams) => void, thisArg?: any): void;
 }
 
-export declare var URLSearchParams: {
+export declare const URLSearchParams: {
   prototype: URLSearchParams;
-  new(init?: string[][] | Record<string, string> | string | URLSearchParams): URLSearchParams;
+  new (init?: string[][] | Record<string, string> | string | URLSearchParams): URLSearchParams;
 };

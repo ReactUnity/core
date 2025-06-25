@@ -22,11 +22,16 @@ export const textTypes = {
 
 export function stringizePoolKey(key: PoolKey) {
   switch (typeof key) {
-    case 'string': return key;
-    case 'boolean': return key ? 'default' : '';
-    case 'number': return key.toString();
-    case 'undefined': return null;
-    default: return '';
+    case 'string':
+      return key;
+    case 'boolean':
+      return key ? 'default' : '';
+    case 'number':
+      return key.toString();
+    case 'undefined':
+      return null;
+    default:
+      return '';
   }
 }
 
@@ -34,7 +39,7 @@ export function getAllowedProps(props, type) {
   const { children, tag, pool, ...rest } = props;
 
   if (textTypes[type] && 'children' in props) {
-    rest.children = (!children || typeof children === 'boolean') ? null : Array.isArray(children) ? children.join('') : children + '';
+    rest.children = !children || typeof children === 'boolean' ? null : Array.isArray(children) ? children.join('') : String(children);
   }
 
   if (typeof props.style === 'string') rest[styleStringSymbol] = props.style;
@@ -42,8 +47,7 @@ export function getAllowedProps(props, type) {
   return rest;
 }
 
-declare const queueMicrotask: (callback: ((...args: any[]) => any)) => void;
-
+declare const queueMicrotask: (callback: (...args: any[]) => any) => void;
 
 export const commonReconciler = {
   // -------------------
@@ -55,16 +59,22 @@ export const commonReconciler = {
 
   noTimeout: -1 as const,
   scheduleTimeout: (callback, delay) => setTimeout(callback as any, delay),
-  scheduleMicrotask: typeof queueMicrotask === 'function' ? queueMicrotask :
-    callback => Promise.resolve(null).then(callback)
-      .catch((error) => setTimeout(() => { throw error; }, 0)),
+  scheduleMicrotask:
+    typeof queueMicrotask === 'function'
+      ? queueMicrotask
+      : (callback) =>
+          Promise.resolve(null)
+            .then(callback)
+            .catch((error) =>
+              setTimeout(() => {
+                throw error;
+              }, 0),
+            ),
   cancelTimeout: (handle) => clearTimeout(handle),
 
-  beforeActiveInstanceBlur() {
-  },
+  beforeActiveInstanceBlur() {},
 
-  afterActiveInstanceBlur() {
-  },
+  afterActiveInstanceBlur() {},
 
   getInstanceFromNode(node) {
     return undefined;
@@ -73,8 +83,7 @@ export const commonReconciler = {
     return undefined;
   },
 
-  prepareScopeUpdate(scopeInstance, instance) {
-  },
+  prepareScopeUpdate(scopeInstance, instance) {},
 };
 
 export const isDevelopment = process.env.NODE_ENV === 'development';

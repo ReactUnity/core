@@ -22,13 +22,12 @@ const updateSubContext = (instance: AsyncSubContext) => {
 
   if (!root) return;
 
-  var content = rend(root.subContext.node);
+  const content = rend(root.subContext.node);
 
   if (instance.type === 'richtext') {
     // instance.hostContext.commands.push(['x', { r: root.refId, c: content }]);
     instance.hostContext.commands.push([6, root.refId, content]);
-  }
-  else if (instance.type === 'svg') {
+  } else if (instance.type === 'svg') {
     // instance.hostContext.commands.push(['u', { r: root.refId, t: 'svg', ...convertPropsToSerializable({ innerContent: content }) }]);
     instance.hostContext.commands.push([5, root.refId, 'svg', convertPropsToSerializable({ innerContent: content })]);
   }
@@ -104,8 +103,7 @@ const hostConfig: AsyncReconcilerConfig & { [key: string]: any } = {
     return parentCtx;
   },
   getPublicInstance: (instance) => {
-    if (instance.type === 'native')
-      return instance.context.GetRef(instance.refId, instance.commands.length > 0);
+    if (instance.type === 'native') return instance.context.GetRef(instance.refId, instance.commands.length > 0);
     return null;
   },
 
@@ -119,7 +117,7 @@ const hostConfig: AsyncReconcilerConfig & { [key: string]: any } = {
   warnsIfNotActing: true,
 
   prepareForCommit: () => null,
-  resetAfterCommit: () => { },
+  resetAfterCommit: () => {},
   shouldDeprioritizeSubtree: () => false,
 
   clearContainer(container) {
@@ -167,7 +165,8 @@ const hostConfig: AsyncReconcilerConfig & { [key: string]: any } = {
 
       return res;
     }
-    else if (ctx.type === 'richtext' || ctx.type === 'svg') {
+
+    if (ctx.type === 'richtext' || ctx.type === 'svg') {
       return {
         ...ctx,
         node: {
@@ -189,7 +188,8 @@ const hostConfig: AsyncReconcilerConfig & { [key: string]: any } = {
 
       return { ...ctx, refId };
     }
-    else if (ctx.type === 'richtext' || ctx.type === 'svg') {
+
+    if (ctx.type === 'richtext' || ctx.type === 'svg') {
       return {
         ...ctx,
         node: { text },
@@ -204,21 +204,18 @@ const hostConfig: AsyncReconcilerConfig & { [key: string]: any } = {
     if (parent.type === 'native' && child.type === 'native') {
       // parent.commands.push(['a', { p: parent.refId, c: child.refId }]);
       parent.commands.push([2, parent.refId, child.refId]);
-    }
-    else if (
-      (parent.type === 'richtext' && child.type === 'richtext') ||
-      (parent.type === 'svg' && child.type === 'svg')
-    ) {
-      if ('children' in parent.node)
-        parent.node.children.push(child.node);
+    } else if ((parent.type === 'richtext' && child.type === 'richtext') || (parent.type === 'svg' && child.type === 'svg')) {
+      if ('children' in parent.node) parent.node.children.push(child.node);
       child.root = parent.root;
       child.parent = parent;
       updateSubContext(child);
     }
   },
   finalizeInitialChildren: () => false,
-  commitMount: (instance) => { },
-  shouldSetTextContent(type) { return textTypes[type]; },
+  commitMount: (instance) => {},
+  shouldSetTextContent(type) {
+    return textTypes[type];
+  },
 
   // -------------------
   //     Mutation
@@ -233,21 +230,17 @@ const hostConfig: AsyncReconcilerConfig & { [key: string]: any } = {
     if (instance.type === 'native') {
       // instance.commands.push(['u', { r: instance.refId, t: type, ...convertPropsToSerializable(props) }]);
       instance.commands.push([5, instance.refId, type, convertPropsToSerializable(props)]);
-    }
-    else if (instance.type === 'richtext' || instance.type === 'svg') {
-      if ('attributes' in instance.node)
-        instance.node.attributes = { ...instance.node.attributes, ...props };
+    } else if (instance.type === 'richtext' || instance.type === 'svg') {
+      if ('attributes' in instance.node) instance.node.attributes = { ...instance.node.attributes, ...props };
       updateSubContext(instance);
     }
   },
-
 
   commitTextUpdate(instance, oldText, newText) {
     if (instance.type === 'native') {
       // instance.commands.push(['x', { r: instance.refId, c: newText }]);
       instance.commands.push([6, instance.refId, newText]);
-    }
-    else if (instance.type === 'richtext' || instance.type === 'svg') {
+    } else if (instance.type === 'richtext' || instance.type === 'svg') {
       (instance.node as { text: string }).text = newText;
       updateSubContext(instance);
     }
@@ -260,13 +253,8 @@ const hostConfig: AsyncReconcilerConfig & { [key: string]: any } = {
     if (parent.type === 'native' && child.type === 'native') {
       // child.commands.push(['a', { p: parent.refId, c: child.refId }]);
       child.commands.push([2, parent.refId, child.refId]);
-    }
-    else if (
-      (parent.type === 'richtext' && child.type === 'richtext') ||
-      (parent.type === 'svg' && child.type === 'svg')
-    ) {
-      if ('children' in parent.node)
-        parent.node.children.push(child.node);
+    } else if ((parent.type === 'richtext' && child.type === 'richtext') || (parent.type === 'svg' && child.type === 'svg')) {
+      if ('children' in parent.node) parent.node.children.push(child.node);
       child.root = parent.root;
       child.parent = parent;
       updateSubContext(child);
@@ -284,10 +272,10 @@ const hostConfig: AsyncReconcilerConfig & { [key: string]: any } = {
     if (parent.type === 'native' && child.type === 'native' && beforeChild.type === 'native') {
       // child.commands.push(['i', { p: parent.refId, c: child.refId, i: beforeChild.refId }]);
       child.commands.push([4, parent.refId, child.refId, beforeChild.refId]);
-    }
-    else if (
+    } else if (
       (parent.type === 'richtext' && child.type === 'richtext' && beforeChild.type === 'richtext') ||
-      (parent.type === 'svg' && child.type === 'svg' && beforeChild.type === 'svg')) {
+      (parent.type === 'svg' && child.type === 'svg' && beforeChild.type === 'svg')
+    ) {
       if ('children' in parent.node) {
         const index = parent.node.children.indexOf(beforeChild.node);
         if (index >= 0) parent.node.children.splice(index, 0, child.node);
@@ -310,11 +298,7 @@ const hostConfig: AsyncReconcilerConfig & { [key: string]: any } = {
     if (parent.type === 'native' && child.type === 'native') {
       // child.commands.push(['r', { p: parent.refId, c: child.refId }]);
       child.commands.push([3, parent.refId, child.refId]);
-    }
-    else if (
-      (parent.type === 'richtext' && child.type === 'richtext') ||
-      (parent.type === 'svg' && child.type === 'svg')
-    ) {
+    } else if ((parent.type === 'richtext' && child.type === 'richtext') || (parent.type === 'svg' && child.type === 'svg')) {
       if ('children' in parent.node) {
         const index = parent.node.children.indexOf(child.node);
         if (index >= 0) parent.node.children.splice(index, 1);
@@ -328,9 +312,9 @@ const hostConfig: AsyncReconcilerConfig & { [key: string]: any } = {
       child.commands.push([3, parent.refId, child.refId]);
   },
 
-  resetTextContent: () => { },
-  preparePortalMount: () => { },
-  detachDeletedInstance: () => { },
+  resetTextContent: () => {},
+  preparePortalMount: () => {},
+  detachDeletedInstance: () => {},
 
   // Required for Suspense
 
@@ -338,8 +322,7 @@ const hostConfig: AsyncReconcilerConfig & { [key: string]: any } = {
     if (instance.type === 'native') {
       // instance.commands.push(['h', { r: instance.refId, h: true }]);
       instance.commands.push([7, instance.refId, true]);
-    }
-    else if (instance.type === 'richtext' || instance.type === 'svg') {
+    } else if (instance.type === 'richtext' || instance.type === 'svg') {
       instance.node.hidden = true;
       updateSubContext(instance);
     }
@@ -348,8 +331,7 @@ const hostConfig: AsyncReconcilerConfig & { [key: string]: any } = {
     if (instance.type === 'native') {
       // instance.commands.push(['h', { r: instance.refId, h: true }]);
       instance.commands.push([7, instance.refId, true]);
-    }
-    else if (instance.type === 'richtext' || instance.type === 'svg') {
+    } else if (instance.type === 'richtext' || instance.type === 'svg') {
       instance.node.hidden = true;
       updateSubContext(instance);
     }
@@ -358,8 +340,7 @@ const hostConfig: AsyncReconcilerConfig & { [key: string]: any } = {
     if (instance.type === 'native') {
       // instance.commands.push(['h', { r: instance.refId, h: false }]);
       instance.commands.push([7, instance.refId, false]);
-    }
-    else if (instance.type === 'richtext' || instance.type === 'svg') {
+    } else if (instance.type === 'richtext' || instance.type === 'svg') {
       instance.node.hidden = false;
       updateSubContext(instance);
     }
@@ -368,8 +349,7 @@ const hostConfig: AsyncReconcilerConfig & { [key: string]: any } = {
     if (instance.type === 'native') {
       // instance.commands.push(['h', { r: instance.refId, h: false }]);
       instance.commands.push([7, instance.refId, false]);
-    }
-    else if (instance.type === 'richtext' || instance.type === 'svg') {
+    } else if (instance.type === 'richtext' || instance.type === 'svg') {
       instance.node.hidden = false;
       updateSubContext(instance);
     }

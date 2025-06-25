@@ -1,8 +1,17 @@
-import { AddEventListenerOptions, Blob, BufferSource, EventInit, EventListenerOptions, EventListenerOrEventListenerObject, FormData, URL, URLSearchParams } from './common';
+import {
+  AddEventListenerOptions,
+  Blob,
+  BufferSource,
+  EventInit,
+  EventListenerOptions,
+  EventListenerOrEventListenerObject,
+  FormData,
+  URL,
+  URLSearchParams,
+} from './common';
 
 type XMLHttpRequestBodyInit = Blob | BufferSource | FormData | URLSearchParams | string;
 type XMLHttpRequestResponseType = '' | 'arraybuffer' | 'blob' | 'document' | 'json' | 'text';
-
 
 /** Use XMLHttpRequest (XHR) objects to interact with servers. You can retrieve data from a URL without having to do a full page refresh. This enables a Web page to update just part of a page without disrupting what the user is doing. */
 export interface XMLHttpRequest extends XMLHttpRequestEventTarget {
@@ -92,15 +101,23 @@ export interface XMLHttpRequest extends XMLHttpRequestEventTarget {
   readonly LOADING: number;
   readonly OPENED: number;
   readonly UNSENT: number;
-  addEventListener<K extends keyof XMLHttpRequestEventMap>(type: K, listener: (this: XMLHttpRequest, ev: XMLHttpRequestEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+  addEventListener<K extends keyof XMLHttpRequestEventMap>(
+    type: K,
+    listener: (this: XMLHttpRequest, ev: XMLHttpRequestEventMap[K]) => any,
+    options?: boolean | AddEventListenerOptions,
+  ): void;
   addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
-  removeEventListener<K extends keyof XMLHttpRequestEventMap>(type: K, listener: (this: XMLHttpRequest, ev: XMLHttpRequestEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+  removeEventListener<K extends keyof XMLHttpRequestEventMap>(
+    type: K,
+    listener: (this: XMLHttpRequest, ev: XMLHttpRequestEventMap[K]) => any,
+    options?: boolean | EventListenerOptions,
+  ): void;
   removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
 }
 
-export declare var XMLHttpRequest: {
+export declare const XMLHttpRequest: {
   prototype: XMLHttpRequest;
-  new(): XMLHttpRequest;
+  new (): XMLHttpRequest;
   readonly DONE: number;
   readonly HEADERS_RECEIVED: number;
   readonly LOADING: number;
@@ -109,17 +126,17 @@ export declare var XMLHttpRequest: {
 };
 
 interface XMLHttpRequestEventTargetEventMap {
-  'abort': ProgressEvent<XMLHttpRequestEventTarget>;
-  'error': ProgressEvent<XMLHttpRequestEventTarget>;
-  'load': ProgressEvent<XMLHttpRequestEventTarget>;
-  'loadend': ProgressEvent<XMLHttpRequestEventTarget>;
-  'loadstart': ProgressEvent<XMLHttpRequestEventTarget>;
-  'progress': ProgressEvent<XMLHttpRequestEventTarget>;
-  'timeout': ProgressEvent<XMLHttpRequestEventTarget>;
+  abort: ProgressEvent<XMLHttpRequestEventTarget>;
+  error: ProgressEvent<XMLHttpRequestEventTarget>;
+  load: ProgressEvent<XMLHttpRequestEventTarget>;
+  loadend: ProgressEvent<XMLHttpRequestEventTarget>;
+  loadstart: ProgressEvent<XMLHttpRequestEventTarget>;
+  progress: ProgressEvent<XMLHttpRequestEventTarget>;
+  timeout: ProgressEvent<XMLHttpRequestEventTarget>;
 }
 
 interface XMLHttpRequestEventMap extends XMLHttpRequestEventTargetEventMap {
-  'readystatechange': Event;
+  readystatechange: Event;
 }
 
 interface XMLHttpRequestEventTarget extends EventTarget {
@@ -130,27 +147,43 @@ interface XMLHttpRequestEventTarget extends EventTarget {
   onloadstart: ((this: XMLHttpRequest, ev: ProgressEvent) => any) | null;
   onprogress: ((this: XMLHttpRequest, ev: ProgressEvent) => any) | null;
   ontimeout: ((this: XMLHttpRequest, ev: ProgressEvent) => any) | null;
-  addEventListener<K extends keyof XMLHttpRequestEventTargetEventMap>(type: K, listener: (this: XMLHttpRequestEventTarget, ev: XMLHttpRequestEventTargetEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+  addEventListener<K extends keyof XMLHttpRequestEventTargetEventMap>(
+    type: K,
+    listener: (this: XMLHttpRequestEventTarget, ev: XMLHttpRequestEventTargetEventMap[K]) => any,
+    options?: boolean | AddEventListenerOptions,
+  ): void;
   addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
-  removeEventListener<K extends keyof XMLHttpRequestEventTargetEventMap>(type: K, listener: (this: XMLHttpRequestEventTarget, ev: XMLHttpRequestEventTargetEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+  removeEventListener<K extends keyof XMLHttpRequestEventTargetEventMap>(
+    type: K,
+    listener: (this: XMLHttpRequestEventTarget, ev: XMLHttpRequestEventTargetEventMap[K]) => any,
+    options?: boolean | EventListenerOptions,
+  ): void;
   removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
 }
 
-declare var XMLHttpRequestEventTarget: {
+declare const XMLHttpRequestEventTarget: {
   prototype: XMLHttpRequestEventTarget;
-  new(): XMLHttpRequestEventTarget;
+  new (): XMLHttpRequestEventTarget;
 };
 
 interface XMLHttpRequestUpload extends XMLHttpRequestEventTarget {
-  addEventListener<K extends keyof XMLHttpRequestEventTargetEventMap>(type: K, listener: (this: XMLHttpRequestUpload, ev: XMLHttpRequestEventTargetEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+  addEventListener<K extends keyof XMLHttpRequestEventTargetEventMap>(
+    type: K,
+    listener: (this: XMLHttpRequestUpload, ev: XMLHttpRequestEventTargetEventMap[K]) => any,
+    options?: boolean | AddEventListenerOptions,
+  ): void;
   addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
-  removeEventListener<K extends keyof XMLHttpRequestEventTargetEventMap>(type: K, listener: (this: XMLHttpRequestUpload, ev: XMLHttpRequestEventTargetEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+  removeEventListener<K extends keyof XMLHttpRequestEventTargetEventMap>(
+    type: K,
+    listener: (this: XMLHttpRequestUpload, ev: XMLHttpRequestEventTargetEventMap[K]) => any,
+    options?: boolean | EventListenerOptions,
+  ): void;
   removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
 }
 
-declare var XMLHttpRequestUpload: {
+declare const XMLHttpRequestUpload: {
   prototype: XMLHttpRequestUpload;
-  new(): XMLHttpRequestUpload;
+  new (): XMLHttpRequestUpload;
 };
 
 /** Events measuring progress of an underlying process, like an HTTP request (for an XMLHttpRequest, or the loading of the underlying resource of an <img>, <audio>, <video>, <style> or <link>). */
@@ -161,9 +194,9 @@ interface ProgressEvent<T extends EventTarget = EventTarget> extends Event {
   readonly total: number;
 }
 
-declare var ProgressEvent: {
+declare const ProgressEvent: {
   prototype: ProgressEvent;
-  new(type: string, eventInitDict?: ProgressEventInit): ProgressEvent;
+  new (type: string, eventInitDict?: ProgressEventInit): ProgressEvent;
 };
 
 interface ProgressEventInit extends EventInit {
