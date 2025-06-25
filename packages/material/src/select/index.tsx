@@ -1,7 +1,19 @@
 import { ReactUnity } from '@reactunity/renderer';
 import { UGUIElements } from '@reactunity/renderer/ugui';
 import clsx from 'clsx';
-import { createContext, Fragment, memo, ReactNode, useCallback, useContext, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
+import {
+  Fragment,
+  ReactNode,
+  createContext,
+  memo,
+  useCallback,
+  useContext,
+  useEffect,
+  useLayoutEffect,
+  useMemo,
+  useRef,
+  useState,
+} from 'react';
 import { Toggle } from '..';
 import { Button } from '../button';
 import { InputField, InputFieldRef, InputFieldVariant } from '../input';
@@ -30,25 +42,39 @@ export type SelectProps<T = any> = {
   hideCaret?: boolean;
   separator?: ReactNode;
   chips?: boolean;
-} &
-  ({
-    multiple: true;
-    onChange?: (val: T[], all: boolean, any: boolean) => void;
-    initialValue?: T[];
-  } | {
-    multiple?: false;
-    onChange?: (val: T, all: boolean, any: boolean) => void;
-    initialValue?: T;
-  })
-  & UGUIElements['button'];
+} & (
+  | {
+      multiple: true;
+      onChange?: (val: T[], all: boolean, any: boolean) => void;
+      initialValue?: T[];
+    }
+  | {
+      multiple?: false;
+      onChange?: (val: T, all: boolean, any: boolean) => void;
+      initialValue?: T;
+    }
+) &
+  UGUIElements['button'];
 
 function _Select<T = any>({
-  keepOpen = 'auto', onChange, name, children, initialValue, multiple, separator, chips,
-  variant, placeholder, float, className, hideCaret, ...otherProps
+  keepOpen = 'auto',
+  onChange,
+  name,
+  children,
+  initialValue,
+  multiple,
+  separator,
+  chips,
+  variant,
+  placeholder,
+  float,
+  className,
+  hideCaret,
+  ...otherProps
 }: SelectProps<T>): React.ReactElement {
   const init = useRef(initialValue);
-  const selectAllRef = useRef<ToggleEl>();
-  const fieldRef = useRef<InputFieldRef>();
+  const selectAllRef = useRef<ToggleEl>(undefined);
+  const fieldRef = useRef<InputFieldRef>(undefined);
   const shouldKeepOpen = keepOpen === 'auto' ? multiple : !!keepOpen;
 
   const onChangeRef = useAutoRef(onChange);
@@ -81,43 +107,61 @@ function _Select<T = any>({
 
   const [opened, setOpened] = useState(false);
 
-  const toggle = useCallback(() => setOpened(st => !st), [setOpened]);
+  const toggle = useCallback(() => setOpened((st) => !st), [setOpened]);
   const close = useCallback(() => setOpened(false), [setOpened]);
 
   if (typeof separator === 'undefined' && !chips) {
     separator = <text className={style.defaultSeparator}>,</text>;
   }
 
-  const setFieldRef: ((val: InputFieldRef) => void) = useCallback((val) => {
-    fieldRef.current = val;
-    fieldRef.current?.setEmpty(multiple ? (init.current as T[])?.length === 0 : typeof init.current === 'undefined');
-  }, [multiple]);
+  const setFieldRef: (val: InputFieldRef) => void = useCallback(
+    (val) => {
+      fieldRef.current = val;
+      fieldRef.current?.setEmpty(multiple ? (init.current as T[])?.length === 0 : typeof init.current === 'undefined');
+    },
+    [multiple],
+  );
 
-  return <InputField className={clsx(className, style.host, 'mat-select-field', style[variant], chips && style.chips, opened && [style.opened, 'mat-select-opened'])}
-    variant={variant} placeholder={placeholder} float={float} name={name || '<SelectField>'} ref={setFieldRef}>
+  return (
+    <InputField
+      className={clsx(
+        className,
+        style.host,
+        'mat-select-field',
+        style[variant],
+        chips && style.chips,
+        opened && [style.opened, 'mat-select-opened'],
+      )}
+      variant={variant}
+      placeholder={placeholder}
+      float={float}
+      name={name || '<SelectField>'}
+      ref={setFieldRef}
+    >
+      <button name="<Select>" onClick={toggle} className={clsx(style.trigger, 'mat-input-field-target')} {...otherProps}>
+        <view className={style.triggerContent}>
+          {selectedElements.map((x, i) => (
+            <Fragment key={i}>
+              {i > 0 && separator}
+              <view className={style.triggerPart}>{x.getTemplate()}</view>
+            </Fragment>
+          ))}
+        </view>
 
-    <button name="<Select>" onClick={toggle} className={clsx(style.trigger, 'mat-input-field-target')} {...otherProps}>
-      <view className={style.triggerContent}>
-        {selectedElements.map((x, i) => <Fragment key={i}>
-          {i > 0 && separator}
-          <view className={style.triggerPart}>{x.getTemplate()}</view>
-        </Fragment>)}
-      </view>
+        <view className={clsx(style.menuRoot, opened && style.opened)}>
+          <button name="<SelectBackdrop>" onClick={close} className={clsx(style.backdrop)} />
 
-      <view className={clsx(style.menuRoot, opened && style.opened)}>
-        <button name="<SelectBackdrop>" onClick={close} className={clsx(style.backdrop)} />
+          <SelectContext.Provider value={state}>
+            <scroll name="<SelectMenu>" className={clsx(style.menu, getElevationClass(4))}>
+              {children}
+            </scroll>
+          </SelectContext.Provider>
+        </view>
+      </button>
 
-        <SelectContext.Provider value={state}>
-          <scroll name="<SelectMenu>" className={clsx(style.menu, getElevationClass(4))}>
-            {children}
-          </scroll>
-        </SelectContext.Provider>
-      </view>
-    </button>
-
-    {!hideCaret &&
-      <icon className={clsx(style.caret, 'mat-select-caret')}>{'keyboard_arrow_down'}</icon>}
-  </InputField>;
+      {!hideCaret && <icon className={clsx(style.caret, 'mat-select-caret')}>{'keyboard_arrow_down'}</icon>}
+    </InputField>
+  );
 }
 
 export interface OptionProps {
@@ -145,25 +189,30 @@ function _Option({ className, children, value, triggerTemplate, showToggle = 'au
     ctx?.triggerUpdate();
   }, [triggerTemplate, ctx]);
 
-  const selectionRef = useMemo<SelectSelectionElement>(() => ({
-    get selected() { return selectedRef.current; },
-    set selected(val: boolean) {
-      selectedRef.current = val;
-      setSelected(val);
-    },
-    value,
-    addOnChange: (callback) => {
-      if (!callback) return;
-      onChangeRef.current.push(callback);
-      return () => {
-        const ind = onChangeRef.current.indexOf(callback);
-        if (ind >= 0) onChangeRef.current.splice(ind, 1);
-      };
-    },
-    getTemplate: () => {
-      return getTemplateRef.current();
-    },
-  }), [value, setSelected, selectedRef]);
+  const selectionRef = useMemo<SelectSelectionElement>(
+    () => ({
+      get selected() {
+        return selectedRef.current;
+      },
+      set selected(val: boolean) {
+        selectedRef.current = val;
+        setSelected(val);
+      },
+      value,
+      addOnChange: (callback) => {
+        if (!callback) return;
+        onChangeRef.current.push(callback);
+        return () => {
+          const ind = onChangeRef.current.indexOf(callback);
+          if (ind >= 0) onChangeRef.current.splice(ind, 1);
+        };
+      },
+      getTemplate: () => {
+        return getTemplateRef.current();
+      },
+    }),
+    [value, setSelected, selectedRef],
+  );
 
   useLayoutEffect(() => {
     return ctx?.register(selectionRef);
@@ -180,11 +229,23 @@ function _Option({ className, children, value, triggerTemplate, showToggle = 'au
     }
   }, [setSelected]);
 
-  return <Button onClick={onClick} variant="text"
-    className={clsx(style.option, 'mat-select-option', selected && ['mat-select-option-selected', style.selected], className)}>
-    {shouldShowToggle && <Toggle className={clsx(style.toggle, 'mat-select-option-toggle')} type={ctx.allowMultiple ? 'checkbox' : 'radio'} checked={selected} independent />}
-    {children}
-  </Button>;
+  return (
+    <Button
+      onClick={onClick}
+      variant="text"
+      className={clsx(style.option, 'mat-select-option', selected && ['mat-select-option-selected', style.selected], className)}
+    >
+      {shouldShowToggle && (
+        <Toggle
+          className={clsx(style.toggle, 'mat-select-option-toggle')}
+          type={ctx.allowMultiple ? 'checkbox' : 'radio'}
+          checked={selected}
+          independent
+        />
+      )}
+      {children}
+    </Button>
+  );
 }
 
 type SelectType = typeof _Select & {

@@ -5,31 +5,15 @@
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "typings": "dist/index.d.ts",
-  "sideEffects": [
-    "./src/styles",
-    "./src/styles/**/*.*",
-    "./dist/src/styles",
-    "./dist/src/styles/**/*.*",
-    "**/*.css",
-    "**/*.scss"
-  ],
+  "sideEffects": ["./src/styles", "./src/styles/**/*.*", "./dist/src/styles", "./dist/src/styles/**/*.*", "**/*.css", "**/*.scss"],
   "author": "Gokhan Kurt <krtgkn@gmail.com>",
   "repository": {
     "type": "git",
     "url": "https://github.com/ReactUnity/material"
   },
-  "keywords": [
-    "react",
-    "material",
-    "material-design",
-    "material-ui",
-    "unity",
-    "unity3d"
-  ],
+  "keywords": ["react", "material", "material-design", "material-ui", "unity", "unity3d"],
   "license": "MIT",
-  "files": [
-    "dist"
-  ],
+  "files": ["dist"],
   "exports": {
     ".": "./dist/index.js",
     "./styles": {
@@ -55,16 +39,17 @@
     "memoize-one": "^6.0.0"
   },
   "devDependencies": {
-    "@reactunity/renderer": "^0.19.1",
-    "@reactunity/scripts": "^0.19.2",
-    "concurrently": "^9.1.0",
+    "@reactunity/renderer": "^0.20.1",
+    "@reactunity/scripts": "^0.20.0",
+    "@types/react": "^19.1.8",
+    "concurrently": "^9.2.0",
     "copyfiles": "^2.4.1",
     "onchange": "^7.1.0",
     "rimraf": "^6.0.1",
-    "typescript": "^5.6.3"
+    "typescript": "^5.8.3"
   },
   "peerDependencies": {
     "@reactunity/renderer": "*",
-    "react": "^18.0.0"
+    "react": "^19.1.0"
   }
 }

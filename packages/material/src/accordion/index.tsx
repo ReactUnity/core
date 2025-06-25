@@ -6,7 +6,6 @@ import { getElevationClass, getOnlyChildOfType } from '../util/helpers';
 import { MdBase } from '../util/types';
 import style from './index.module.scss';
 
-
 type ViewProps = UGUIElements['view'];
 type Props = ViewProps & MdBase;
 
@@ -18,8 +17,8 @@ function _Accordion({ children, className, elevation = 1, ...props }: Props) {
 
   const [opened, setOpened] = useState(false);
 
-  const expanderRef = useRef<ReactUnity.UGUI.UGUIComponent>();
-  const wrapperRef = useRef<ReactUnity.UGUI.UGUIComponent>();
+  const expanderRef = useRef<ReactUnity.UGUI.UGUIComponent>(undefined);
+  const wrapperRef = useRef<ReactUnity.UGUI.UGUIComponent>(undefined);
 
   const onResize = (ev, sender: ReactUnity.UGUI.UGUIComponent) => {
     if (!expanderRef.current) return;
@@ -34,22 +33,25 @@ function _Accordion({ children, className, elevation = 1, ...props }: Props) {
     expanderRef.current.Style.Set('opacity', opened ? 1 : 0);
   }, [opened]);
 
-  return <view name="<Accordion>"
-    className={clsx(className, style.host, opened && [style.expanded, 'mat-expanded'], getElevationClass(elevation), 'mat-accordion')}
-    {...props}>
+  return (
+    <view
+      name="<Accordion>"
+      className={clsx(className, style.host, opened && [style.expanded, 'mat-expanded'], getElevationClass(elevation), 'mat-accordion')}
+      {...props}
+    >
+      <view name="<AccordionHeader>" className={clsx(style.header, 'mat-accordion-header')} onPointerClick={() => setOpened((x) => !x)}>
+        {summary}
 
-    <view name="<AccordionHeader>" className={clsx(style.header, 'mat-accordion-header')} onPointerClick={() => setOpened(x => !x)}>
-      {summary}
+        <icon>expand_more</icon>
+      </view>
 
-      <icon>expand_more</icon>
-    </view>
-
-    <view className={clsx(style.expander, 'mat-accordion-expander')} ref={expanderRef} style={expanderBaseStyle}>
-      <view onResize={onResize} ref={wrapperRef} className={style.contentWrapper}>
-        {content}
+      <view className={clsx(style.expander, 'mat-accordion-expander')} ref={expanderRef} style={expanderBaseStyle}>
+        <view onResize={onResize} ref={wrapperRef} className={style.contentWrapper}>
+          {content}
+        </view>
       </view>
     </view>
-  </view>;
+  );
 }
 
 function _Summary({ className, ...props }: ViewProps) {

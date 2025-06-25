@@ -1,4 +1,4 @@
-import { PositioningLiteral, ReactUnity, render, YogaValue2Aux } from '@reactunity/renderer';
+import { PositioningLiteral, ReactUnity, YogaValue2Aux, render } from '@reactunity/renderer';
 import clsx from 'clsx';
 import React, { ReactNode, useCallback, useLayoutEffect, useRef } from 'react';
 import { useAutoRef } from '../util/hooks/use-auto-ref';
@@ -9,7 +9,7 @@ export type TooltipPosition = 'left' | 'right' | 'top' | 'bottom' | 'center';
 type Position = PositioningLiteral | [number | string, number | string] | string;
 type NormalizedPosition = readonly [string, string];
 
-const positions: Record<TooltipPosition, { anchor?: YogaValue2Aux, pivot?: Position }> = {
+const positions: Record<TooltipPosition, { anchor?: YogaValue2Aux; pivot?: Position }> = {
   left: { anchor: 'left', pivot: 'right' },
   right: { anchor: 'right', pivot: 'left' },
   top: { anchor: 'top', pivot: 'bottom' },
@@ -31,8 +31,7 @@ export type TooltipProps = {
    */
   delay?: number;
 };
-export type TooltipPropsCallback = ((el: ReactUnity.UGUI.UGUIComponent) => TooltipProps);
-
+export type TooltipPropsCallback = (el: ReactUnity.UGUI.UGUIComponent) => TooltipProps;
 
 function parseFromPositioningLiteral(str: string) {
   let x: number;
@@ -52,8 +51,7 @@ function parseFromPositioningLiteral(str: string) {
       else if (values.includes('center')) x = 0.5;
       else return;
     }
-  }
-  else if (values.includes('bottom')) {
+  } else if (values.includes('bottom')) {
     x = 0.5;
     y = 1;
     if (hasDouble) {
@@ -62,29 +60,24 @@ function parseFromPositioningLiteral(str: string) {
       else if (values.includes('center')) x = 0.5;
       else return;
     }
-  }
-  else if (values.includes('left')) {
+  } else if (values.includes('left')) {
     if (hasDouble && !values.includes('center')) return;
     x = 0;
     y = 0.5;
-  }
-  else if (values.includes('right')) {
+  } else if (values.includes('right')) {
     if (hasDouble && !values.includes('center')) return;
     x = 1;
     y = 0.5;
-  }
-  else if (values.includes('center')) {
+  } else if (values.includes('center')) {
     if (hasDouble && values[0] !== values[1]) return;
     x = 0.5;
     y = 0.5;
-  }
-  else {
+  } else {
     return;
   }
 
-  return [(x * 100) + '%', (y * 100) + '%'] as const;
+  return [x * 100 + '%', y * 100 + '%'] as const;
 }
-
 
 function convert2DValue(val: Position): NormalizedPosition | undefined {
   if (!val) return;
@@ -129,8 +122,7 @@ function convertToTransform(val: Position, negate = false): string {
   return `${cx} ${cy}`;
 }
 
-
-function addTooltip(target: ReactUnity.UGUI.UGUIComponent, props: TooltipProps, withBackdrop: boolean, hide: (() => void)) {
+function addTooltip(target: ReactUnity.UGUI.UGUIComponent, props: TooltipProps, withBackdrop: boolean, hide: () => void) {
   target = props.target ? props.target.current : target;
   if (!target) return null;
 
@@ -167,8 +159,8 @@ function addTooltip(target: ReactUnity.UGUI.UGUIComponent, props: TooltipProps, 
 }
 
 export function useTooltip(props: TooltipProps | TooltipPropsCallback, trigger: TooltipTrigger = 'auto') {
-  const tooltipRef = useRef<ReactUnity.UGUI.UGUIComponent>();
-  const timeoutRef = useRef<ReturnType<typeof setTimeout>>();
+  const tooltipRef = useRef<ReactUnity.UGUI.UGUIComponent>(undefined);
+  const timeoutRef = useRef<ReturnType<typeof setTimeout>>(undefined);
   const callbacksRef = useRef<(() => void)[]>([]);
   const elementsRef = useRef<ReactUnity.UGUI.UGUIComponent[]>([]);
   const propsRef = useAutoRef(props);
@@ -177,7 +169,6 @@ export function useTooltip(props: TooltipProps | TooltipPropsCallback, trigger: 
     for (const cb of callbacks) cb?.();
     callbacks.length = 0;
   }, []);
-
 
   const hide = useCallback(() => {
     if (timeoutRef.current >= 0) {
@@ -189,59 +180,65 @@ export function useTooltip(props: TooltipProps | TooltipPropsCallback, trigger: 
     tooltipRef.current = null;
   }, []);
 
-  const show = useCallback((target: ReactUnity.UGUI.UGUIComponent, properties?: TooltipProps, withBackdrop: boolean = false) => {
-    hide();
-    return tooltipRef.current = addTooltip(target, properties, withBackdrop, hide);
-  }, [hide]);
+  const show = useCallback(
+    (target: ReactUnity.UGUI.UGUIComponent, properties?: TooltipProps, withBackdrop = false) => {
+      hide();
+      return (tooltipRef.current = addTooltip(target, properties, withBackdrop, hide));
+    },
+    [hide],
+  );
 
-  const showWithCurrent = useCallback((ev: any, sender: ReactUnity.UGUI.UGUIComponent) => {
-    const calculatedProps = typeof propsRef.current === 'function' ? propsRef.current(sender) : propsRef.current;
-    const withBackdrop = trigger === 'click';
-    const delay = calculatedProps.delay;
+  const showWithCurrent = useCallback(
+    (ev: any, sender: ReactUnity.UGUI.UGUIComponent) => {
+      const calculatedProps = typeof propsRef.current === 'function' ? propsRef.current(sender) : propsRef.current;
+      const withBackdrop = trigger === 'click';
+      const delay = calculatedProps.delay;
 
-    if (delay > 0) {
-      timeoutRef.current = setTimeout(() => {
-        setImmediate(() => {
-          show(sender, calculatedProps, withBackdrop);
-        });
-      }, delay);
-    } else {
-      show(sender, calculatedProps, withBackdrop);
-    }
-  }, [show, trigger, propsRef]);
+      if (delay > 0) {
+        timeoutRef.current = setTimeout(() => {
+          setImmediate(() => {
+            show(sender, calculatedProps, withBackdrop);
+          });
+        }, delay);
+      } else {
+        show(sender, calculatedProps, withBackdrop);
+      }
+    },
+    [show, trigger, propsRef],
+  );
 
   useLayoutEffect(() => {
     return clearAll;
   }, [trigger, clearAll]);
 
-  const register = useCallback((el: ReactUnity.UGUI.UGUIComponent) => {
-    if (!el) return;
-    elementsRef.current.push(el);
+  const register = useCallback(
+    (el: ReactUnity.UGUI.UGUIComponent) => {
+      if (!el) return;
+      elementsRef.current.push(el);
 
-    const callbacks = callbacksRef.current;
+      const callbacks = callbacksRef.current;
 
-    if (trigger === 'click') {
-      callbacks.push(UnityBridge.addEventListener(el, 'onPointerClick', showWithCurrent));
-    }
-    else if (trigger === 'press' || trigger === 'active') {
-      // TODO: improve active to handle key presses
-      callbacks.push(UnityBridge.addEventListener(el, 'onPointerDown', showWithCurrent));
-      callbacks.push(UnityBridge.addEventListener(el, 'onPointerUp', hide));
-    }
-    else if (trigger === 'focus') {
-      callbacks.push(UnityBridge.addEventListener(el, 'onSelect', showWithCurrent));
-      callbacks.push(UnityBridge.addEventListener(el, 'onDeselect', hide));
-    }
-    else if (trigger === 'hover') {
-      callbacks.push(UnityBridge.addEventListener(el, 'onPointerEnter', showWithCurrent));
-      callbacks.push(UnityBridge.addEventListener(el, 'onPointerExit', hide));
-    }
-    else { // auto
-      // TODO: improve auto to handle mobile/gamepad differently (active and focus)
-      callbacks.push(UnityBridge.addEventListener(el, 'onPointerEnter', showWithCurrent));
-      callbacks.push(UnityBridge.addEventListener(el, 'onPointerExit', hide));
-    }
-  }, [trigger, showWithCurrent, hide]);
+      if (trigger === 'click') {
+        callbacks.push(UnityBridge.addEventListener(el, 'onPointerClick', showWithCurrent));
+      } else if (trigger === 'press' || trigger === 'active') {
+        // TODO: improve active to handle key presses
+        callbacks.push(UnityBridge.addEventListener(el, 'onPointerDown', showWithCurrent));
+        callbacks.push(UnityBridge.addEventListener(el, 'onPointerUp', hide));
+      } else if (trigger === 'focus') {
+        callbacks.push(UnityBridge.addEventListener(el, 'onSelect', showWithCurrent));
+        callbacks.push(UnityBridge.addEventListener(el, 'onDeselect', hide));
+      } else if (trigger === 'hover') {
+        callbacks.push(UnityBridge.addEventListener(el, 'onPointerEnter', showWithCurrent));
+        callbacks.push(UnityBridge.addEventListener(el, 'onPointerExit', hide));
+      } else {
+        // auto
+        // TODO: improve auto to handle mobile/gamepad differently (active and focus)
+        callbacks.push(UnityBridge.addEventListener(el, 'onPointerEnter', showWithCurrent));
+        callbacks.push(UnityBridge.addEventListener(el, 'onPointerExit', hide));
+      }
+    },
+    [trigger, showWithCurrent, hide],
+  );
 
   return { register, show, hide, clearAll } as const;
 }

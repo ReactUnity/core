@@ -19,7 +19,7 @@ export type ModalProps = Omit<Props, 'children'>;
 export function Modal({ open, children, className, onClickBackdrop, onEscape, onCloseButton }: Props) {
   useRootClass(open && [style.body, 'mat-modal-open']);
 
-  const portalRef = useRef<ReactUnity.UGUI.PortalComponent>();
+  const portalRef = useRef<ReactUnity.UGUI.PortalComponent>(undefined);
   const initialOpen = useRef(open);
   const openedOnce = useRef(open);
 
@@ -43,20 +43,27 @@ export function Modal({ open, children, className, onClickBackdrop, onEscape, on
 
   useEffect(() => {
     openedOnce.current = openedOnce.current || open;
-    if (open && portalRef.current)
-      portalRef.current.SetProperty('active', !!open);
+    if (open && portalRef.current) portalRef.current.SetProperty('active', !!open);
   }, [open]);
 
-  return <portal className={clsx(style.host, 'mat-modal', className, open && style.opened, !open && openedOnce.current && style.closed)}
-    onPointerClick={onClickBackdrop ? click : null} onKeyDown={onEscape ? keyup : null} active={initialOpen.current}
-    onAnimationEnd={onAnimationEnd} ref={portalRef}>
-    <view className={clsx(style.content, 'mat-modal-content')} onPointerClick={clickContent}>
-      {children}
+  return (
+    <portal
+      className={clsx(style.host, 'mat-modal', className, open && style.opened, !open && openedOnce.current && style.closed)}
+      onPointerClick={onClickBackdrop ? click : null}
+      onKeyDown={onEscape ? keyup : null}
+      active={initialOpen.current}
+      onAnimationEnd={onAnimationEnd}
+      ref={portalRef}
+    >
+      <view className={clsx(style.content, 'mat-modal-content')} onPointerClick={clickContent}>
+        {children}
 
-      {onCloseButton &&
-        <button className={style.close} onClick={onCloseButton}>
-          <icon>close</icon>
-        </button>}
-    </view>
-  </portal>;
+        {onCloseButton && (
+          <button className={style.close} onClick={onCloseButton}>
+            <icon>close</icon>
+          </button>
+        )}
+      </view>
+    </portal>
+  );
 }

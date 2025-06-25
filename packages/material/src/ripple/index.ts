@@ -54,22 +54,28 @@ export function addRipple(containerElement: ReactUnity.UGUI.UGUIComponent, press
 }
 
 export function useRipple({ onPointerDown, onPointerUp, noRipple, centered, target }: RippleBaseProps) {
-  const rippleRef = useRef<ReactUnity.UGUI.UGUIComponent>();
+  const rippleRef = useRef<ReactUnity.UGUI.UGUIComponent>(undefined);
 
-  const pointerDown: Props['onPointerDown'] = useCallback((ev, sender) => {
-    onPointerDown?.call(null, ev, sender);
+  const pointerDown: Props['onPointerDown'] = useCallback(
+    (ev, sender) => {
+      onPointerDown?.call(null, ev, sender);
 
-    if (!noRipple) {
+      if (!noRipple) {
+        rippleRef.current?.Remove();
+        rippleRef.current = addRipple(target ? target.current : sender, centered ? null : ev.pressPosition);
+      }
+    },
+    [noRipple, onPointerDown, centered, target],
+  );
+
+  const pointerUp: Props['onPointerUp'] = useCallback(
+    (...args) => {
+      onPointerUp?.apply(null, args);
       rippleRef.current?.Remove();
-      rippleRef.current = addRipple(target ? target.current : sender, centered ? null : ev.pressPosition);
-    }
-  }, [noRipple, onPointerDown, centered, target]);
-
-  const pointerUp: Props['onPointerUp'] = useCallback((...args) => {
-    onPointerUp?.apply(null, args);
-    rippleRef.current?.Remove();
-    rippleRef.current = null;
-  }, [onPointerUp]);
+      rippleRef.current = null;
+    },
+    [onPointerUp],
+  );
 
   return { onPointerDown: pointerDown, onPointerUp: pointerUp };
 }
