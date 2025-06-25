@@ -1,4 +1,7 @@
 import * as React from 'react';
+import { Textable } from '../models/base';
+import { ReactUnity } from '../models/generated';
+import { Icon } from '../models/ugui';
 
 const componentCache = {};
 
@@ -30,8 +33,10 @@ type IconsNames = {
   [key in DefaultIconNames]: any;
 };
 
+type IconProps = Icon & React.RefAttributes<ReactUnity.UGUI.IconComponent> & { children?: Textable | Textable[] };
+
 type IconsHelper = {
-  [Key in keyof IconsNames as Keyify<Key>]: React.FunctionComponent<JSX.IntrinsicElements['icon']>;
+  [Key in keyof IconsNames as Keyify<Key>]: React.FunctionComponent<IconProps>;
 };
 
 export type DefaultIconNames =

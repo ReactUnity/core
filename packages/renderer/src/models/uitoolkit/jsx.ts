@@ -42,11 +42,6 @@ export interface UIToolkitElements extends BaseElements<BaseElement<any>> {
 declare global {
   interface ReactUnityCustomElements {}
   interface ReactUnityCustomAttributes {}
-
-  namespace JSX {
-    interface IntrinsicAttributes extends ReactUnityCustomAttributes {}
-    interface IntrinsicElements extends UIToolkitElements, ReactUnityCustomElements {}
-  }
 }
 
 export namespace JSX {

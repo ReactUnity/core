@@ -39,7 +39,7 @@ declare global {
 
   namespace JSX {
     interface IntrinsicAttributes extends ReactUnityCustomAttributes {}
-    interface IntrinsicElements extends UGUIElements, ReactUnityCustomElements {}
+    interface IntrinsicElements extends ReactUnityCustomElements {}
   }
 }
 

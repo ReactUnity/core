@@ -83,11 +83,6 @@ export interface EditorElements extends BaseElements<BaseElement<any>> {
 declare global {
   interface ReactUnityCustomElements {}
   interface ReactUnityCustomAttributes {}
-
-  namespace JSX {
-    interface IntrinsicAttributes extends ReactUnityCustomAttributes {}
-    interface IntrinsicElements extends EditorElements, ReactUnityCustomElements {}
-  }
 }
 
 export namespace JSX {

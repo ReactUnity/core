@@ -69,7 +69,7 @@ export const createEventSystem = (): EventSystemHook => {
 };
 
 export const useEventSystem = () => {
-  const ref = useRef<EventSystemHook>();
+  const ref = useRef<EventSystemHook>(undefined);
   if (!ref.current) {
     ref.current = createEventSystem();
   }

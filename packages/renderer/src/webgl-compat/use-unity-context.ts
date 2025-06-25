@@ -96,7 +96,7 @@ const createUnityContext = (unityConfig: UnityConfig): UnityContextType => {
 };
 
 export const useUnityContext = (unityConfig: UnityConfig) => {
-  const ref = useRef<UnityContextType>();
+  const ref = useRef<UnityContextType>(undefined);
   if (!ref.current) {
     ref.current = createUnityContext(unityConfig);
   }
