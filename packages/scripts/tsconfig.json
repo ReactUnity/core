@@ -24,8 +24,6 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": true,
-    "types": [
-      "@reactunity/scripts/main"
-    ]
+    "types": ["@reactunity/scripts/main"]
   }
 }

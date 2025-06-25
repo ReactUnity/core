@@ -6,9 +6,8 @@
  * LICENSE file in the root directory of this source tree.
  */
 // @remove-on-eject-end
-'use strict';
 
-const path = require('path');
+const path = require('node:path');
 const fs = require('fs-extra');
 const paths = require('../../config/paths');
 
@@ -26,7 +25,7 @@ function cleanBuildDirectory(cleanMetaFiles = false) {
       for (const key of keys) {
         const file = manifest.files[key];
         const filePath = path.join(paths.appBuild, file);
-        const metaFile = filePath + '.meta';
+        const metaFile = `${filePath}.meta`;
 
         fs.removeSync(filePath);
 
@@ -36,7 +35,7 @@ function cleanBuildDirectory(cleanMetaFiles = false) {
         }
       }
 
-      const manifestMeta = paths.appManifest + '.meta';
+      const manifestMeta = `${paths.appManifest}.meta`;
       fs.removeSync(paths.appManifest);
 
       if (fs.existsSync(manifestMeta)) {
@@ -49,7 +48,9 @@ function cleanBuildDirectory(cleanMetaFiles = false) {
       return metaFiles;
     }
   } catch (err) {
-    console.log('Skipped clearing output directory because asset manifest was not found. Please clean the output directory manually if necessary.');
+    console.log(
+      'Skipped clearing output directory because asset manifest was not found. Please clean the output directory manually if necessary.',
+    );
     return [];
   }
 }
@@ -65,23 +66,21 @@ function cleanUnusedMetaFiles(metaFiles) {
 
         fs.removeSync(metaFile);
       } catch (err) {
-        console.log('Error while cleaning meta file: ' + metaFile);
+        console.log(`Error while cleaning meta file: ${metaFile}`);
       }
     }
-  } catch (err) {
-  }
+  } catch (err) {}
 }
-
 
 function cleanEmptyFoldersRecursively(parent, folder, skipFirst) {
   if (!fs.existsSync(folder)) return;
-  var isDir = fs.statSync(folder).isDirectory();
+  const isDir = fs.statSync(folder).isDirectory();
   if (!isDir) return;
 
-  var files = fs.readdirSync(folder);
+  let files = fs.readdirSync(folder);
   if (files.length > 0) {
-    files.forEach(function (file) {
-      var fullPath = path.join(folder, file);
+    files.forEach((file) => {
+      const fullPath = path.join(folder, file);
       cleanEmptyFoldersRecursively(folder, fullPath, false);
     });
 
@@ -90,12 +89,12 @@ function cleanEmptyFoldersRecursively(parent, folder, skipFirst) {
     files = fs.readdirSync(folder);
   }
 
-  if (!skipFirst && files.length == 0) {
+  if (!skipFirst && !files.length) {
     fs.rmdirSync(folder);
 
     if (parent) {
       const folderName = path.basename(folder);
-      const dirMeta = path.join(parent, folderName + '.meta');
+      const dirMeta = path.join(parent, `${folderName}.meta`);
       fs.removeSync(dirMeta);
     }
     return;
