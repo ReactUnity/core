@@ -1,6 +1,6 @@
 {
   "name": "@reactunity/scripts",
-  "version": "0.19.2",
+  "version": "0.20.0",
   "description": "Configuration and scripts for React Unity.",
   "repository": {
     "type": "git",
@@ -13,18 +13,34 @@
   "bugs": {
     "url": "https://github.com/ReactUnity/scripts/issues"
   },
-  "files": ["bin", "config", "lib", "scripts", "tsconfig.json"],
+  "files": [
+    "bin",
+    "config",
+    "lib",
+    "scripts",
+    "tsconfig.json"
+  ],
   "bin": {
     "react-unity-scripts": "./bin/react-unity-scripts.js"
   },
   "types": "./lib/types/main.d.ts",
   "typesVersions": {
     "*": {
-      "main": ["./lib/types/main.d.ts"],
-      "editor": ["./lib/types/editor.d.ts"],
-      "tests": ["./lib/types/tests.d.ts"],
-      "ugui": ["./lib/types/ugui.d.ts"],
-      "uitoolkit": ["./lib/types/uitoolkit.d.ts"]
+      "main": [
+        "./lib/types/main.d.ts"
+      ],
+      "editor": [
+        "./lib/types/editor.d.ts"
+      ],
+      "tests": [
+        "./lib/types/tests.d.ts"
+      ],
+      "ugui": [
+        "./lib/types/ugui.d.ts"
+      ],
+      "uitoolkit": [
+        "./lib/types/uitoolkit.d.ts"
+      ]
     }
   },
   "tsconfig": "./tsconfig.json",
