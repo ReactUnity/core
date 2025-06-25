@@ -28,13 +28,12 @@ function servePreviewerIfExists() {
     const previewerPath = path.dirname(require.resolve('@reactunity/previewer', { paths: [paths.appPath] }));
     console.log('Using @reactunity/previewer');
     return [{ directory: path.join(previewerPath, 'public') }];
-  } catch (err) { }
+  } catch (err) {}
   return [];
 }
 
 module.exports = function (proxy, allowedHost) {
-  const disableFirewall =
-    !proxy || process.env.DANGEROUSLY_DISABLE_HOST_CHECK === 'true';
+  const disableFirewall = !proxy || process.env.DANGEROUSLY_DISABLE_HOST_CHECK === 'true';
   return {
     // WebpackDevServer 2.4.3 introduced a security fix that prevents remote
     // websites from potentially accessing local content through DNS rebinding:
@@ -101,7 +100,7 @@ module.exports = function (proxy, allowedHost) {
       ...servePreviewerIfExists(),
 
       // Serve the fallback of web previewer as the index page
-      { directory: path.join(__dirname, 'public'), },
+      { directory: path.join(__dirname, 'public') },
     ],
     client: {
       webSocketURL: {

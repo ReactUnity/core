@@ -8,7 +8,7 @@ module.exports = function (api, opts) {
   const jsxImportSource = process.env.JSX_IMPORT_SOURCE;
 
   if (jsxImportSource) {
-    const preset = original.presets.find(x => x[0] === babelPresetReact);
+    const preset = original.presets.find((x) => x[0] === babelPresetReact);
 
     if (preset && preset[1]) {
       preset[1].importSource = jsxImportSource;
