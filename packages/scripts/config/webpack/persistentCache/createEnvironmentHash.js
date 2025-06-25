@@ -1,5 +1,5 @@
 
-const { createHash } = require('crypto');
+const { createHash } = require('node:crypto');
 
 module.exports = (env) => {
   const hash = createHash('md5');

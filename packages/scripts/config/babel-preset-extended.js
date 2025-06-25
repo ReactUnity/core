@@ -10,7 +10,7 @@ module.exports = (api, opts) => {
   if (jsxImportSource) {
     const preset = original.presets.find((x) => x[0] === babelPresetReact);
 
-    if (preset && preset[1]) {
+    if (preset?.[1]) {
       preset[1].importSource = jsxImportSource;
     }
   }

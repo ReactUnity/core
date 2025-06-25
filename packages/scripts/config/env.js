@@ -1,7 +1,7 @@
 
 
-const fs = require('fs');
-const path = require('path');
+const fs = require('node:fs');
+const path = require('node:path');
 const paths = require('./paths');
 
 // Make sure that including paths.js after env.js will read .env variables.

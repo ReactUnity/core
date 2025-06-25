@@ -1,5 +1,5 @@
-const fs = require('fs');
-const path = require('path');
+const fs = require('node:fs');
+const path = require('node:path');
 const webpack = require('webpack');
 const resolve = require('resolve');
 const CaseSensitivePathsPlugin = require('case-sensitive-paths-webpack-plugin');
@@ -53,7 +53,7 @@ const usePostcssPluginIfExists = (name, options = {}) => {
   try {
     if (require.resolve(name)) {
       if (!warnedAboutPlugin[name]) {
-        console.log('Using plugin ' + name);
+        console.log(`Using plugin ${name}`);
         warnedAboutPlugin[name] = true;
       }
       return { [name]: options };
