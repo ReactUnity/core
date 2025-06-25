@@ -49,16 +49,16 @@ export const InputField = forwardRef<InputFieldRef, InputFieldProps>(function In
         'mat-input-field',
         className,
         style[variant],
-        'mat-text-field-' + variant,
+        `mat-text-field-${variant}`,
         !!placeholder && style.hasPlaceholder,
-        style['float-' + (float || 'auto')],
+        style[`float-${float || 'auto'}`],
         `float-${float || 'auto'}`,
         !emptyRef.current && [style.float, 'float'],
       )}
     >
       <view className={clsx(style.content, 'mat-input-content')}>{children}</view>
 
-      {variant === 'outlined' && <view className={clsx(style.inputFrame, 'mat-input-frame')}></view>}
+      {variant === 'outlined' && <view className={clsx(style.inputFrame, 'mat-input-frame')} />}
 
       {!!placeholder && (
         <view className={clsx(style.placeholder, 'mat-input-placeholder')}>

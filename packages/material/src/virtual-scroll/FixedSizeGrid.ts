@@ -39,30 +39,28 @@ export const FixedSizeGrid = createGridComponent({
         return maxOffset;
       case 'end':
         return minOffset;
-      case 'center':
+      case 'center': {
         // "Centered" offset is usually the average of the min and max.
         // But near the edges of the list, this doesn't hold true.
         const middleOffset = Math.round(minOffset + (maxOffset - minOffset) / 2);
         if (middleOffset < Math.ceil(width / 2)) {
           return 0; // near the beginning
-        } else if (middleOffset > lastColumnOffset + Math.floor(width / 2)) {
+        }if (middleOffset > lastColumnOffset + Math.floor(width / 2)) {
           return lastColumnOffset; // near the end
-        } else {
-          return middleOffset;
         }
-      case 'auto':
+          return middleOffset;
+      }
       default:
         if (scrollLeft >= minOffset && scrollLeft <= maxOffset) {
           return scrollLeft;
-        } else if (minOffset > maxOffset) {
+        }if (minOffset > maxOffset) {
           // Because we only take into account the scrollbar size when calculating minOffset
           // this value can be larger than maxOffset when at the end of the list
           return minOffset;
-        } else if (scrollLeft < minOffset) {
+        }if (scrollLeft < minOffset) {
           return minOffset;
-        } else {
-          return maxOffset;
         }
+          return maxOffset;
     }
   },
 
@@ -91,30 +89,28 @@ export const FixedSizeGrid = createGridComponent({
         return maxOffset;
       case 'end':
         return minOffset;
-      case 'center':
+      case 'center': {
         // "Centered" offset is usually the average of the min and max.
         // But near the edges of the list, this doesn't hold true.
         const middleOffset = Math.round(minOffset + (maxOffset - minOffset) / 2);
         if (middleOffset < Math.ceil(height / 2)) {
           return 0; // near the beginning
-        } else if (middleOffset > lastRowOffset + Math.floor(height / 2)) {
+        }if (middleOffset > lastRowOffset + Math.floor(height / 2)) {
           return lastRowOffset; // near the end
-        } else {
-          return middleOffset;
         }
-      case 'auto':
+          return middleOffset;
+      }
       default:
         if (scrollTop >= minOffset && scrollTop <= maxOffset) {
           return scrollTop;
-        } else if (minOffset > maxOffset) {
+        }if (minOffset > maxOffset) {
           // Because we only take into account the scrollbar size when calculating minOffset
           // this value can be larger than maxOffset when at the end of the list
           return minOffset;
-        } else if (scrollTop < minOffset) {
+        }if (scrollTop < minOffset) {
           return minOffset;
-        } else {
-          return maxOffset;
         }
+          return maxOffset;
     }
   },
 
@@ -158,17 +154,13 @@ export const FixedSizeGrid = createGridComponent({
     if (process.env.NODE_ENV !== 'production') {
       if (typeof columnWidth !== 'number') {
         throw Error(
-          'An invalid "columnWidth" prop has been specified. ' +
-            'Value should be a number. ' +
-            `"${columnWidth === null ? 'null' : typeof columnWidth}" was specified.`,
+          `An invalid "columnWidth" prop has been specified. Value should be a number. "${columnWidth === null ? 'null' : typeof columnWidth}" was specified.`,
         );
       }
 
       if (typeof rowHeight !== 'number') {
         throw Error(
-          'An invalid "rowHeight" prop has been specified. ' +
-            'Value should be a number. ' +
-            `"${rowHeight === null ? 'null' : typeof rowHeight}" was specified.`,
+          `An invalid "rowHeight" prop has been specified. Value should be a number. "${rowHeight === null ? 'null' : typeof rowHeight}" was specified.`,
         );
       }
     }

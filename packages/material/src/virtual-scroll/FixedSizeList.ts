@@ -39,21 +39,18 @@ export const FixedSizeList = createListComponent({
         const middleOffset = Math.round(minOffset + (maxOffset - minOffset) / 2);
         if (middleOffset < Math.ceil(size / 2)) {
           return 0; // near the beginning
-        } else if (middleOffset > lastItemOffset + Math.floor(size / 2)) {
+        }if (middleOffset > lastItemOffset + Math.floor(size / 2)) {
           return lastItemOffset; // near the end
-        } else {
-          return middleOffset;
         }
+          return middleOffset;
       }
-      case 'auto':
       default:
         if (scrollOffset >= minOffset && scrollOffset <= maxOffset) {
           return scrollOffset;
-        } else if (scrollOffset < minOffset) {
+        }if (scrollOffset < minOffset) {
           return minOffset;
-        } else {
-          return maxOffset;
         }
+          return maxOffset;
     }
   },
 
@@ -88,9 +85,7 @@ export const FixedSizeList = createListComponent({
     if (process.env.NODE_ENV !== 'production') {
       if (typeof itemSize !== 'number') {
         throw Error(
-          'An invalid "itemSize" prop has been specified. ' +
-            'Value should be a number. ' +
-            `"${itemSize === null ? 'null' : typeof itemSize}" was specified.`,
+          `An invalid "itemSize" prop has been specified. Value should be a number. "${itemSize === null ? 'null' : typeof itemSize}" was specified.`,
         );
       }
     }

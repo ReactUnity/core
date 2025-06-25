@@ -92,7 +92,7 @@ const _Slider = forwardRef<SliderRef, SliderProps>(function _Slider(
         if (fillRef.current) {
           const ratio = (curValue.current - min) / range;
           fillRef.current.Style.Set(sizeProp === 'width' ? 'height' : 'width', null);
-          fillRef.current.Style.Set(sizeProp, ratio * 100 + '%');
+          fillRef.current.Style.Set(sizeProp, `${ratio * 100}%`);
         }
 
         childRef.current?.(steppedVal);
@@ -188,7 +188,7 @@ const _Slider = forwardRef<SliderRef, SliderProps>(function _Slider(
           name="<Slider-Fill>"
           className={clsx(style.fill, 'mat-slider-fill')}
           ref={fillRef}
-          style={{ [sizeProp]: (100 * (curValue.current - min)) / range + '%' }}
+          style={{ [sizeProp]: `${(100 * (curValue.current - min)) / range}%` }}
         >
           <view name="<Slider-Thumb-Container>" className={clsx(style.thumbContainer, 'mat-slider-thumb-container')}>
             <view name="<Slider-Thumb>" className={clsx(style.thumb, 'mat-slider-thumb')}>

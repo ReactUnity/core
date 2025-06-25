@@ -72,7 +72,7 @@ const _Toggle = React.forwardRef<ToggleEl, Props>(function _Toggle(
 
   return (
     <label
-      className={clsx(className, style.label, 'mat-toggle-label', style[type], 'mat-toggle-' + type, 'mat-variant-' + variant)}
+      className={clsx(className, style.label, 'mat-toggle-label', style[type], `mat-toggle-${type}`, `mat-variant-${variant}`)}
       {...ripple}
     >
       <NativeToggle name="<Toggle>" ref={innerRef} {...ripple} className={clsx(style.toggle, 'mat-toggle')} {...props}>

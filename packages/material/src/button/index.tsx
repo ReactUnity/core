@@ -28,7 +28,7 @@ const _Button = forwardRef<ReactUnity.UGUI.ButtonComponent, Props>(function _But
       {...props}
       {...ripple}
       ref={ref}
-      className={clsx(className, style.host, getElevationClass(elevation), 'mat-button', style[variant], 'mat-variant-' + variant)}
+      className={clsx(className, style.host, getElevationClass(elevation), 'mat-button', style[variant], `mat-variant-${variant}`)}
     >
       {children}
     </button>

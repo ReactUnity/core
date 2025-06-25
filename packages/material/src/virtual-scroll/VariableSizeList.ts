@@ -53,12 +53,11 @@ const findNearestItem = (props: Props<any>, instanceProps: InstanceProps, offset
   if (lastMeasuredItemOffset >= offset) {
     // If we've already measured items within this range just use a binary search as it's faster.
     return findNearestItemBinarySearch(props, instanceProps, lastMeasuredIndex, 0, offset);
-  } else {
+  }
     // If we haven't yet measured this high, fallback to an exponential search with an inner binary search.
     // The exponential search avoids pre-computing sizes for the full set of items as a binary search would.
     // The overall complexity for this approach is O(log n).
     return findNearestItemExponentialSearch(props, instanceProps, Math.max(0, lastMeasuredIndex), offset);
-  }
 };
 
 const findNearestItemBinarySearch = (
@@ -74,7 +73,7 @@ const findNearestItemBinarySearch = (
 
     if (currentOffset === offset) {
       return middle;
-    } else if (currentOffset < offset) {
+    }if (currentOffset < offset) {
       low = middle + 1;
     } else if (currentOffset > offset) {
       high = middle - 1;
@@ -83,9 +82,8 @@ const findNearestItemBinarySearch = (
 
   if (low > 0) {
     return low - 1;
-  } else {
-    return 0;
   }
+    return 0;
 };
 
 const findNearestItemExponentialSearch = (props: Props<any>, instanceProps: InstanceProps, index: number, offset: number): number => {
@@ -163,15 +161,13 @@ export const VariableSizeList = createListComponent({
         return minOffset;
       case 'center':
         return Math.round(minOffset + (maxOffset - minOffset) / 2);
-      case 'auto':
       default:
         if (scrollOffset >= minOffset && scrollOffset <= maxOffset) {
           return scrollOffset;
-        } else if (scrollOffset < minOffset) {
+        }if (scrollOffset < minOffset) {
           return minOffset;
-        } else {
-          return maxOffset;
         }
+          return maxOffset;
     }
   },
 
@@ -229,9 +225,7 @@ export const VariableSizeList = createListComponent({
     if (process.env.NODE_ENV !== 'production') {
       if (typeof itemSize !== 'function') {
         throw Error(
-          'An invalid "itemSize" prop has been specified. ' +
-            'Value should be a function. ' +
-            `"${itemSize === null ? 'null' : typeof itemSize}" was specified.`,
+          `An invalid "itemSize" prop has been specified. Value should be a function. "${itemSize === null ? 'null' : typeof itemSize}" was specified.`,
         );
       }
     }

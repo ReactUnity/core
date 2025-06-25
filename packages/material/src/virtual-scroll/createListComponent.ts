@@ -158,6 +158,7 @@ export function createListComponent({
     // Always use explicit constructor for React components.
     // It produces less code after transpilation. (#26)
     // eslint-disable-next-line no-useless-constructor, @typescript-eslint/no-useless-constructor
+    // biome-ignore lint/complexity/noUselessConstructor: <explanation>
     constructor(props: Props<T>) {
       super(props);
     }
@@ -226,11 +227,12 @@ export function createListComponent({
               case 'positive-ascending':
                 outerRef.ScrollLeft = scrollOffset;
                 break;
-              default:
+              default: {
                 const scrollWidth = outerRef.ScrollWidth;
                 const clientWidth = outerRef.ClientWidth;
                 outerRef.ScrollLeft = scrollWidth - clientWidth - scrollOffset;
                 break;
+              }
             }
           } else {
             outerRef.ScrollLeft = scrollOffset;
@@ -545,9 +547,7 @@ const validateSharedProps = ({ children, direction, height, layout, width }: Pro
         // Valid values
         break;
       default:
-        throw Error(
-          'An invalid "direction" prop has been specified. ' + 'Value should be either "ltr" or "rtl". ' + `"${direction}" was specified.`,
-        );
+        throw Error(`An invalid "direction" prop has been specified. Value should be either "ltr" or "rtl". "${direction}" was specified.`);
     }
 
     switch (layout) {
@@ -557,31 +557,24 @@ const validateSharedProps = ({ children, direction, height, layout, width }: Pro
         break;
       default:
         throw Error(
-          'An invalid "layout" prop has been specified. ' +
-            'Value should be either "horizontal" or "vertical". ' +
-            `"${layout}" was specified.`,
+          `An invalid "layout" prop has been specified. Value should be either "horizontal" or "vertical". "${layout}" was specified.`,
         );
     }
 
     if (children == null) {
       throw Error(
-        'An invalid "children" prop has been specified. ' +
-          'Value should be a React component. ' +
-          `"${children === null ? 'null' : typeof children}" was specified.`,
+        `An invalid "children" prop has been specified. Value should be a React component. "${children === null ? 'null' : typeof children}" was specified.`,
       );
     }
 
     if (isHorizontal && typeof width !== 'number') {
       throw Error(
-        'An invalid "width" prop has been specified. ' +
-          'Horizontal lists must specify a number for width. ' +
-          `"${width === null ? 'null' : typeof width}" was specified.`,
+        `An invalid "width" prop has been specified. Horizontal lists must specify a number for width. "${width === null ? 'null' : typeof width}" was specified.`,
       );
-    } else if (!isHorizontal && typeof height !== 'number') {
+    }
+    if (!isHorizontal && typeof height !== 'number') {
       throw Error(
-        'An invalid "height" prop has been specified. ' +
-          'Vertical lists must specify a number for height. ' +
-          `"${height === null ? 'null' : typeof height}" was specified.`,
+        `An invalid "height" prop has been specified. Vertical lists must specify a number for height. "${height === null ? 'null' : typeof height}" was specified.`,
       );
     }
   }

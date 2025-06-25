@@ -36,11 +36,11 @@ export type TooltipPropsCallback = (el: ReactUnity.UGUI.UGUIComponent) => Toolti
 function parseFromPositioningLiteral(str: string) {
   let x: number;
   let y: number;
-  var values = str.split(' ');
+  const values = str.split(' ');
 
   if (values.length > 2) return;
 
-  var hasDouble = values.length === 2;
+  const hasDouble = values.length === 2;
 
   if (values.includes('top')) {
     x = 0.5;
@@ -76,7 +76,7 @@ function parseFromPositioningLiteral(str: string) {
     return;
   }
 
-  return [x * 100 + '%', y * 100 + '%'] as const;
+  return [`${x * 100}%`, `${y * 100}%`] as const;
 }
 
 function convert2DValue(val: Position): NormalizedPosition | undefined {
@@ -85,10 +85,10 @@ function convert2DValue(val: Position): NormalizedPosition | undefined {
     val = val.trim();
     if (!val) return;
 
-    var sp = parseFromPositioningLiteral(val);
+    const sp = parseFromPositioningLiteral(val);
     if (sp) return sp;
 
-    var values = val.split(' ');
+    const values = val.split(' ');
 
     if (values.length === 2) {
       return values as unknown as NormalizedPosition;
@@ -100,11 +100,11 @@ function convert2DValue(val: Position): NormalizedPosition | undefined {
   if (Array.isArray(val)) {
     if (!val.length) return;
 
-    var v0 = val[0];
-    var v1 = val[1];
+    const v0 = val[0];
+    const v1 = val[1];
 
-    var v0f = typeof v0 === 'number' ? v0 + 'px' : v0;
-    var v1f = typeof v1 === 'number' ? v1 + 'px' : v1;
+    const v0f = typeof v0 === 'number' ? `${v0}px` : v0;
+    const v1f = typeof v1 === 'number' ? `${v1}px` : v1;
 
     return [v0f, v1f] as const;
   }
@@ -116,8 +116,8 @@ function convertToTransform(val: Position, negate = false): string {
   const converted = convert2DValue(val);
   if (!converted) return '';
 
-  const cx = negate ? (converted[0].startsWith('-') ? converted[0].substring(1) : '-' + converted[0]) : converted[0];
-  const cy = negate ? (converted[1].startsWith('-') ? converted[1].substring(1) : '-' + converted[1]) : converted[1];
+  const cx = negate ? (converted[0].startsWith('-') ? converted[0].substring(1) : `-${converted[0]}`) : converted[0];
+  const cy = negate ? (converted[1].startsWith('-') ? converted[1].substring(1) : `-${converted[1]}`) : converted[1];
 
   return `${cx} ${cy}`;
 }
@@ -253,7 +253,7 @@ function propsProxy(data: ReactUnity.Reactive.ReactiveObjectRecord) {
   return new Proxy(data, {
     get(tg, prop) {
       if (typeof prop === 'symbol') return data[prop as any];
-      return data.GetValueOrDefault('tooltip-' + prop);
+      return data.GetValueOrDefault(`tooltip-${prop}`);
     },
   }) as unknown as TooltipProps;
 }

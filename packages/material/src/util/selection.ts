@@ -48,7 +48,7 @@ export class SelectionState<T = any, ElementType extends SelectionElement = Sele
       this.all = all;
       this.any = any;
       return;
-    } else {
+    }
       this.all = false;
       let firstChecked = sender;
 
@@ -77,7 +77,6 @@ export class SelectionState<T = any, ElementType extends SelectionElement = Sele
 
       this.value = firstChecked.value;
       this.any = true;
-    }
   }
 
   triggerChange() {

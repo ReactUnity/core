@@ -293,11 +293,12 @@ export function createGridComponent({
             case 'positive-ascending':
               outerRef.ScrollLeft = scrollLeft;
               break;
-            default:
+            default: {
               const clientWidth = outerRef.ClientWidth;
               const scrollWidth = outerRef.ScrollWidth;
               outerRef.ScrollLeft = scrollWidth - clientWidth - scrollLeft;
               break;
+            }
           }
         } else {
           outerRef.ScrollLeft = Math.max(0, scrollLeft);
@@ -654,9 +655,7 @@ const validateSharedProps = ({ children, direction, height, width }: Props<any>,
   if (process.env.NODE_ENV !== 'production') {
     if (children == null) {
       throw Error(
-        'An invalid "children" prop has been specified. ' +
-          'Value should be a React component. ' +
-          `"${children === null ? 'null' : typeof children}" was specified.`,
+        `An invalid "children" prop has been specified. Value should be a React component. "${children === null ? 'null' : typeof children}" was specified.`,
       );
     }
 
@@ -667,23 +666,19 @@ const validateSharedProps = ({ children, direction, height, width }: Props<any>,
         break;
       default:
         throw Error(
-          'An invalid "direction" prop has been specified. ' + 'Value should be either "ltr" or "rtl". ' + `"${direction}" was specified.`,
+          `An invalid "direction" prop has been specified. Value should be either "ltr" or "rtl". "${direction}" was specified.`,
         );
     }
 
     if (typeof width !== 'number') {
       throw Error(
-        'An invalid "width" prop has been specified. ' +
-          'Grids must specify a number for width. ' +
-          `"${width === null ? 'null' : typeof width}" was specified.`,
+        `An invalid "width" prop has been specified. Grids must specify a number for width. "${width === null ? 'null' : typeof width}" was specified.`,
       );
     }
 
     if (typeof height !== 'number') {
       throw Error(
-        'An invalid "height" prop has been specified. ' +
-          'Grids must specify a number for height. ' +
-          `"${height === null ? 'null' : typeof height}" was specified.`,
+        `An invalid "height" prop has been specified. Grids must specify a number for height. "${height === null ? 'null' : typeof height}" was specified.`,
       );
     }
   }
