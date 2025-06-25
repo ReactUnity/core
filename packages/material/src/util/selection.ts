@@ -1,14 +1,13 @@
-
 export interface SelectionElement {
   get selected(): boolean;
   set selected(val: boolean);
   get value(): any;
 
-  addOnChange: (callback: () => void) => (() => void);
-};
+  addOnChange: (callback: () => void) => () => void;
+}
 
 export class SelectionState<T = any, ElementType extends SelectionElement = SelectionElement> {
-  elements: { el: ElementType, listener: () => void }[] = [];
+  elements: { el: ElementType; listener: () => void }[] = [];
   value: T | T[];
   any: boolean;
   all: boolean;
@@ -43,8 +42,7 @@ export class SelectionState<T = any, ElementType extends SelectionElement = Sele
         if (element.el.selected) {
           res.push(element.el.value);
           any = true;
-        }
-        else all = false;
+        } else all = false;
       }
       this.value = res;
       this.all = all;
@@ -124,7 +122,7 @@ export class SelectionState<T = any, ElementType extends SelectionElement = Sele
   }
 
   unregister(el: ElementType) {
-    const ind = this.elements.findIndex(x => x.el === el);
+    const ind = this.elements.findIndex((x) => x.el === el);
     if (ind >= 0) {
       const item = this.elements[ind];
       this.elements.splice(ind, 1);
@@ -135,8 +133,7 @@ export class SelectionState<T = any, ElementType extends SelectionElement = Sele
   }
 
   setAll(checked?: boolean) {
-    if (!this.allowMultiple && checked)
-      throw new Error('Multiple values cannot be selected for this selection state');
+    if (!this.allowMultiple && checked) throw new Error('Multiple values cannot be selected for this selection state');
 
     checked = !!checked;
 
@@ -161,7 +158,8 @@ export class SelectionState<T = any, ElementType extends SelectionElement = Sele
     for (let index = 0; index < this.elements.length; index++) {
       const { el } = this.elements[index];
 
-      const isSelected = typeof el.value !== 'undefined' &&
+      const isSelected =
+        typeof el.value !== 'undefined' &&
         (this.allowMultiple && Array.isArray(this.value) ? this.value.includes(el.value) : this.value === el.value);
       if (isSelected) res.push(el);
     }

@@ -9,19 +9,30 @@ import style from './index.module.scss';
 
 export type ButtonVariant = 'text' | 'outlined' | 'filled' | 'icon';
 
-type Props = UGUIElements['button'] & MdInteractible & MdBase & {
-  variant?: ButtonVariant;
-};
+type Props = UGUIElements['button'] &
+  MdInteractible &
+  MdBase & {
+    variant?: ButtonVariant;
+  };
 
-const _Button = forwardRef<ReactUnity.UGUI.ButtonComponent, Props>(
-  function _Button({ children, className, elevation, noRipple, onPointerDown, onPointerUp, variant, ...props }, ref) {
-    variant = variant || 'text';
-    const ripple = useRipple({ onPointerDown, onPointerUp, noRipple, centered: variant === 'icon' });
+const _Button = forwardRef<ReactUnity.UGUI.ButtonComponent, Props>(function _Button(
+  { children, className, elevation, noRipple, onPointerDown, onPointerUp, variant, ...props },
+  ref,
+) {
+  variant = variant || 'text';
+  const ripple = useRipple({ onPointerDown, onPointerUp, noRipple, centered: variant === 'icon' });
 
-    return <button name="<Button>" {...props} {...ripple} ref={ref}
-      className={clsx(className, style.host, getElevationClass(elevation), 'mat-button', style[variant], 'mat-variant-' + variant)}>
+  return (
+    <button
+      name="<Button>"
+      {...props}
+      {...ripple}
+      ref={ref}
+      className={clsx(className, style.host, getElevationClass(elevation), 'mat-button', style[variant], 'mat-variant-' + variant)}
+    >
       {children}
-    </button>;
-  });
+    </button>
+  );
+});
 
 export const Button = React.memo(_Button);

@@ -5,13 +5,14 @@ import { getElevationClass } from '../util/helpers';
 import { MdBase } from '../util/types';
 import style from './index.module.scss';
 
-
 type Props = UGUIElements['view'] & MdBase;
 
 function _Paper({ children, className, elevation, ...props }: Props) {
-  return <view name="<Paper>" className={clsx(className, style.host, getElevationClass(elevation), 'mat-paper')} {...props}>
-    {children}
-  </view>;
+  return (
+    <view name="<Paper>" className={clsx(className, style.host, getElevationClass(elevation), 'mat-paper')} {...props}>
+      {children}
+    </view>
+  );
 }
 
 export const Paper = React.memo(_Paper);

@@ -5,14 +5,15 @@ import { getElevationClass } from '../util/helpers';
 import { MdBase } from '../util/types';
 import style from './index.module.scss';
 
-
 type ViewProps = UGUIElements['view'];
 type Props = ViewProps & MdBase;
 
 function _Card({ children, className, elevation = 1, ...props }: Props) {
-  return <view name="<Card>" className={clsx(className, style.host, getElevationClass(elevation), 'mat-card')} {...props}>
-    {children}
-  </view>;
+  return (
+    <view name="<Card>" className={clsx(className, style.host, getElevationClass(elevation), 'mat-card')} {...props}>
+      {children}
+    </view>
+  );
 }
 
 function _Content({ className, ...props }: ViewProps) {
