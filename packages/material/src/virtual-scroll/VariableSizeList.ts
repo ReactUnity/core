@@ -29,7 +29,7 @@ const getItemMetadata = (props: Props<any>, index: number, instanceProps: Instan
     }
 
     for (let i = lastMeasuredIndex + 1; i <= index; i++) {
-      let size = (itemSize as itemSizeGetter)(i);
+      const size = (itemSize as itemSizeGetter)(i);
 
       itemMetadataMap[i] = {
         offset,
@@ -206,7 +206,7 @@ export const VariableSizeList = createListComponent({
       lastMeasuredIndex: -1,
     };
 
-    instance.resetAfterIndex = (index: number, shouldForceUpdate: boolean = true) => {
+    instance.resetAfterIndex = (index: number, shouldForceUpdate = true) => {
       instanceProps.lastMeasuredIndex = Math.min(instanceProps.lastMeasuredIndex, index - 1);
 
       // We could potentially optimize further by only evicting styles after this index,

@@ -88,7 +88,7 @@ const getItemMetadata = (itemType: ItemType, props: Props<any>, index: number, i
     }
 
     for (let i = lastMeasuredIndex + 1; i <= index; i++) {
-      let size = itemSize(i);
+      const size = itemSize(i);
 
       itemMetadataMap[i] = {
         offset,
@@ -312,11 +312,11 @@ export const VariableSizeGrid = createGridComponent({
       rowMetadataMap: {},
     };
 
-    instance.resetAfterColumnIndex = (columnIndex: number, shouldForceUpdate: boolean = true) => {
+    instance.resetAfterColumnIndex = (columnIndex: number, shouldForceUpdate = true) => {
       instance.resetAfterIndices({ columnIndex, shouldForceUpdate });
     };
 
-    instance.resetAfterRowIndex = (rowIndex: number, shouldForceUpdate: boolean = true) => {
+    instance.resetAfterRowIndex = (rowIndex: number, shouldForceUpdate = true) => {
       instance.resetAfterIndices({ rowIndex, shouldForceUpdate });
     };
 
