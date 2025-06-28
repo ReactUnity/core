@@ -293,6 +293,11 @@ namespace ReactUnity.UIToolkit
 #endif
             }
             else TargetElement.transform.position = translate;
+
+            if(computed.pointerEvents == PointerEvents.None) 
+            {
+                TargetElement.pickingMode = PickingMode.Ignore;
+            }
         }
 
         protected override void DestroySelf()

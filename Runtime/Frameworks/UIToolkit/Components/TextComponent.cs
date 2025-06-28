@@ -35,5 +35,15 @@ namespace ReactUnity.UIToolkit
             }
             else base.SetProperty(property, value);
         }
+
+        protected override void ApplyStylesSelf()
+        {
+            base.ApplyStylesSelf();
+
+            var style = ComputedStyle;
+
+            Element.style.unityTextOutlineColor = style.textStrokeColor;
+            Element.style.unityTextOutlineWidth = style.textStrokeWidth;
+        }
     }
 }
