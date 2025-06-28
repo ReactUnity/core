@@ -1,5 +1,7 @@
 #if UNITY_2021_2_OR_NEWER
+using System.Collections.Generic;
 using ReactUnity.Scheduling;
+using ReactUnity.Styling;
 using ReactUnity.Styling.Rules;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -11,6 +13,8 @@ namespace ReactUnity.UIToolkit
     public class ReactRendererUIToolkit : ReactRendererBase
     {
         public VisualElement Root => GetComponent<UIDocument>()?.rootVisualElement;
+        public IconSet DefaultIconSet;
+        public List<IconSet> IconSets;
 
         protected override void ClearRoot()
         {
@@ -27,6 +31,8 @@ namespace ReactUnity.UIToolkit
                 Timer = Timer ?? UnscaledTimer.Instance,
                 MediaProvider = MediaProvider,
                 OnRestart = () => Render(),
+                IconSets = IconSets,
+                DefaultIconSet = DefaultIconSet,
                 OnAudioPlayback = PlayAudio,
                 EngineType = EngineType,
                 Debug = AdvancedOptions.DebugMode != DebugMode.None,
