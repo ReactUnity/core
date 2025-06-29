@@ -159,7 +159,7 @@ jobs:
       - uses: actions/setup-dotnet@v4
         if: matrix.performance
         with:
-          dotnet-version: '3.1.x'
+          dotnet-version: "3.1.x"
           cache: true
 
       - name: Generate Performance Report
@@ -227,7 +227,7 @@ jobs:
           file: ReactUnityTestBadge.svg
 
       - name: Upload Test Result Artifacts
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         if: always()
         with:
           name: "${{ matrix.suite.name }} ${{ matrix.unity.version }}"
@@ -250,7 +250,7 @@ jobs:
           flags: unittests
 
       - name: Upload Code Coverage Artifacts
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         if: always() && matrix.main && matrix.coverage && contains(github.event.head_commit.message, '[coverage]')
         with:
           name: "${{ matrix.suite.name }} ${{ matrix.unity.version }} Code Coverage"
