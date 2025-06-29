@@ -28,6 +28,7 @@ namespace ReactUnity.UIToolkit
         public static Dictionary<string, Func<string, string, UIToolkitContext, IReactComponent>> ComponentCreators
             = new Dictionary<string, Func<string, string, UIToolkitContext, IReactComponent>>()
             {
+                { "portal", (tag, text, context) => new PortalComponent(context, tag) },
                 { "text", (tag, text, context) => new TextComponent<TextElement>(text, context, tag, false) },
                 { "br", (tag, text, context) => new BrComponent(context, tag) },
                 { "richtext", (tag, text, context) => new TextComponent<TextElement>(text, context, tag, false, true) },
