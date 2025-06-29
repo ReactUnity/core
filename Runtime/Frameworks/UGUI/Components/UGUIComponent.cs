@@ -1,5 +1,4 @@
 using System;
-using Yoga;
 using ReactUnity.Helpers;
 using ReactUnity.Styling;
 using ReactUnity.Types;
@@ -9,6 +8,7 @@ using ReactUnity.UGUI.StateHandlers;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using Yoga;
 
 namespace ReactUnity.UGUI
 {
@@ -231,6 +231,7 @@ namespace ReactUnity.UGUI
             Layout.BorderBottomWidth = StylingHelpers.GetStyleFloatDouble(computed, LayoutProperties.BorderBottomWidth, LayoutProperties.BorderWidth);
 
             Layout.Display = StylingHelpers.GetStyleEnumCustom(computed, LayoutProperties.Display);
+            Layout.BoxSizing = StylingHelpers.GetStyleEnumCustom(computed, LayoutProperties.BoxSizing);
             Layout.Overflow = StylingHelpers.GetStyleEnumCustom(computed, LayoutProperties.Overflow);
 
             Layout.AlignContent = StylingHelpers.GetStyleEnumCustom(computed, LayoutProperties.AlignContent);
@@ -458,7 +459,8 @@ namespace ReactUnity.UGUI
 
                 canvas.targetDisplay = root.targetDisplay;
 
-                if (!canvas.worldCamera) {
+                if (!canvas.worldCamera)
+                {
                     canvas.worldCamera = root.worldCamera;
                 }
 

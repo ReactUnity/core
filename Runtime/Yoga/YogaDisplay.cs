@@ -4,5 +4,6 @@ namespace Yoga
     {
         Flex,
         None,
+        Contents,
     }
 }

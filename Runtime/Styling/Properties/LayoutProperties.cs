@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
-using Yoga;
 using ReactUnity.Styling.Converters;
+using Yoga;
 
 namespace ReactUnity.Styling
 {
@@ -11,6 +11,7 @@ namespace ReactUnity.Styling
         public static readonly LayoutProperty<YogaFlexDirection> FlexDirection = new LayoutProperty<YogaFlexDirection>("FlexDirection");
         public static readonly LayoutProperty<YogaJustify> JustifyContent = new LayoutProperty<YogaJustify>("JustifyContent");
         public static readonly LayoutProperty<YogaDisplay> Display = new LayoutProperty<YogaDisplay>("Display");
+        public static readonly LayoutProperty<YogaBoxSizing> BoxSizing = new LayoutProperty<YogaBoxSizing>("BoxSizing");
         public static readonly LayoutProperty<YogaAlign> AlignItems = new LayoutProperty<YogaAlign>("AlignItems");
         public static readonly LayoutProperty<YogaAlign> AlignSelf = new LayoutProperty<YogaAlign>("AlignSelf");
         public static readonly LayoutProperty<YogaAlign> AlignContent = new LayoutProperty<YogaAlign>("AlignContent");
@@ -67,6 +68,7 @@ namespace ReactUnity.Styling
             { "flexDirection", FlexDirection },
             { "justifyContent", JustifyContent },
             { "display", Display },
+            { "boxSizing", BoxSizing },
             { "alignItems", AlignItems },
             { "alignSelf", AlignSelf },
             { "alignContent", AlignContent },
@@ -116,6 +118,7 @@ namespace ReactUnity.Styling
             { "rowGap", RowGap },
             { "columnGap", ColumnGap },
 
+            { "box-sizing", BoxSizing },
             { "flex-direction", FlexDirection },
             { "justify-content", JustifyContent },
             { "align-items", AlignItems },
