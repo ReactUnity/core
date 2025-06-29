@@ -813,8 +813,8 @@
         <member name="M:Microsoft.ClearScript.Extensions.ToRestrictedHostObject(System.Object,System.Type)">
             <summary>
             Converts an object to a host object with a type restriction specified as a
-            <see cref="T:System.Type"/> instance, for use with script code currently running on the calling
-            thread.
+            <c><see cref="T:System.Type"/></c> instance, for use with script code currently running on the
+            calling thread.
             </summary>
             <param name="target">The object to convert to a host object for use with script code.</param>
             <param name="type">The type whose members are to be made accessible from script code.</param>
@@ -823,8 +823,8 @@
         <member name="M:Microsoft.ClearScript.Extensions.ToRestrictedHostObject(System.Object,System.Type,Microsoft.ClearScript.ScriptEngine)">
             <summary>
             Converts an object to a host object with a type restriction specified as a
-            <see cref="T:System.Type"/> instance, for use with script code running in the specified script
-            engine.
+            <c><see cref="T:System.Type"/></c> instance, for use with script code running in the specified
+            script engine.
             </summary>
             <param name="target">The object to convert to a host object for use with script code.</param>
             <param name="type">The type whose members are to be made accessible from script code.</param>
@@ -2016,7 +2016,7 @@
             </summary>
             <remarks>
             When not explicitly assigned to a non-<c>null</c> value, this property returns the
-            <see cref="P:Microsoft.ClearScript.CustomAttributeLoader.Default">default custom attribute loader.</see>.
+            <see cref="P:Microsoft.ClearScript.CustomAttributeLoader.Default">default custom attribute loader</see>.
             </remarks>
         </member>
         <member name="T:Microsoft.ClearScript.HostTypeCollection">
@@ -2323,7 +2323,7 @@
             on the specific behavior of reflection-based method binding.
             </para>
             <para>
-            This property has no effect when <see cref="P:Microsoft.ClearScript.IScriptEngine.DisableDynamicBinding"/> is set to
+            This property has no effect when <c><see cref="P:Microsoft.ClearScript.IScriptEngine.DisableDynamicBinding"/></c> is set to
             <c>true</c>.
             </para>
             </remarks>
@@ -2350,6 +2350,17 @@
             <c><see cref="F:Microsoft.ClearScript.Undefined.Value">Undefined.Value</see></c>.
             </remarks>
         </member>
+        <member name="P:Microsoft.ClearScript.IScriptEngine.NullImportValue">
+            <summary>
+            Gets or sets the script engine's null import value.
+            </summary>
+            <remarks>
+            Some script languages support one or more special <c>null</c> values that represent
+            empty or unassigned object references. When such a value is marshaled to the host, the
+            script engine maps it to the value of this property. The default value is simply
+            <c>null</c>.
+            </remarks>
+        </member>
         <member name="P:Microsoft.ClearScript.IScriptEngine.NullExportValue">
             <summary>
             Gets or sets the script engine's null export value.
@@ -2364,9 +2375,9 @@
             <c><see href="https://microsoft.github.io/ClearScript/Reference/html/F_Microsoft_ClearScript_Windows_Nothing_Value.htm">Nothing.Value</see></c>.
             </para>
             <para>
-            Note that <see cref="F:Microsoft.ClearScript.ScriptMemberFlags.WrapNullResult"/>,
-            <see cref="P:Microsoft.ClearScript.IScriptEngine.EnableNullResultWrapping"/>, and
-            <see href="https://microsoft.github.io/ClearScript/Reference/html/T_Microsoft_ClearScript_Windows_WindowsScriptEngineFlags.htm">MarshalNullAsDispatch</see>
+            Note that <c><see cref="F:Microsoft.ClearScript.ScriptMemberFlags.WrapNullResult"/></c>,
+            <c><see cref="P:Microsoft.ClearScript.IScriptEngine.EnableNullResultWrapping"/></c>, and
+            <c><see href="https://microsoft.github.io/ClearScript/Reference/html/T_Microsoft_ClearScript_Windows_WindowsScriptEngineFlags.htm">MarshalNullAsDispatch</see></c>
             all take precedence over this property.
             </para>
             </remarks>
@@ -3038,7 +3049,7 @@
             <summary>
             Executes script code with an associated document name.
             </summary>
-            <param name="documentName">A document name for the script code. Currently this name is used only as a label in presentation contexts such as debugger user interfaces.</param>
+            <param name="documentName">A document name for the script code. Currently, this name is used only as a label in presentation contexts such as debugger user interfaces.</param>
             <param name="code">The script code to execute.</param>
             <remarks>
             <para>
@@ -3056,7 +3067,7 @@
             <summary>
             Executes script code with an associated document name, optionally discarding the document after execution.
             </summary>
-            <param name="documentName">A document name for the script code. Currently this name is used only as a label in presentation contexts such as debugger user interfaces.</param>
+            <param name="documentName">A document name for the script code. Currently, this name is used only as a label in presentation contexts such as debugger user interfaces.</param>
             <param name="discard"><c>True</c> to discard the script document after execution, <c>false</c> otherwise.</param>
             <param name="code">The script code to execute.</param>
             <remarks>
@@ -3161,7 +3172,7 @@
             <summary>
             Evaluates script code with an associated document name.
             </summary>
-            <param name="documentName">A document name for the script code. Currently this name is used only as a label in presentation contexts such as debugger user interfaces.</param>
+            <param name="documentName">A document name for the script code. Currently, this name is used only as a label in presentation contexts such as debugger user interfaces.</param>
             <param name="code">The script code to evaluate.</param>
             <returns>The result value.</returns>
             <remarks>
@@ -3184,7 +3195,7 @@
             <summary>
             Evaluates script code with an associated document name, optionally discarding the document after execution.
             </summary>
-            <param name="documentName">A document name for the script code. Currently this name is used only as a label in presentation contexts such as debugger user interfaces.</param>
+            <param name="documentName">A document name for the script code. Currently, this name is used only as a label in presentation contexts such as debugger user interfaces.</param>
             <param name="discard"><c>True</c> to discard the script document after execution, <c>false</c> otherwise.</param>
             <param name="code">The script code to evaluate.</param>
             <returns>The result value.</returns>
@@ -3473,7 +3484,7 @@
             Removes a named script object property.
             </summary>
             <param name="name">The name of the property to remove.</param>
-            <returns><c>True</c> if the property was removed successfully, <c>false</c> otherwise.</returns>
+            <returns><c>True</c> if the property was removed, <c>false</c> otherwise.</returns>
         </member>
         <member name="P:Microsoft.ClearScript.IScriptObject.PropertyNames">
             <summary>
@@ -3507,7 +3518,7 @@
             Removes an indexed script object property.
             </summary>
             <param name="index">The index of the property to remove.</param>
-            <returns><c>True</c> if the property was removed successfully, <c>false</c> otherwise.</returns>
+            <returns><c>True</c> if the property was removed, <c>false</c> otherwise.</returns>
         </member>
         <member name="P:Microsoft.ClearScript.IScriptObject.PropertyIndices">
             <summary>
@@ -3589,11 +3600,31 @@
             <param name="destinationIndex">The index within <paramref name="destination"/> at which to store the first copied byte.</param>
             <returns>The number of bytes copied.</returns>
         </member>
+        <member name="M:Microsoft.ClearScript.JavaScript.IArrayBuffer.ReadBytes(System.UInt64,System.UInt64,System.Span{System.Byte},System.UInt64)">
+            <summary>
+            Copies bytes from the <c>ArrayBuffer</c> into the specified byte span.
+            </summary>
+            <param name="offset">The offset within the <c>ArrayBuffer</c> of the first byte to copy.</param>
+            <param name="count">The maximum number of bytes to copy.</param>
+            <param name="destination">The byte span into which to copy the bytes.</param>
+            <param name="destinationIndex">The index within <paramref name="destination"/> at which to store the first copied byte.</param>
+            <returns>The number of bytes copied.</returns>
+        </member>
         <member name="M:Microsoft.ClearScript.JavaScript.IArrayBuffer.WriteBytes(System.Byte[],System.UInt64,System.UInt64,System.UInt64)">
             <summary>
             Copies bytes from the specified byte array into the <c>ArrayBuffer</c>.
             </summary>
             <param name="source">The byte array from which to copy the bytes.</param>
+            <param name="sourceIndex">The index within <paramref name="source"/> of the first byte to copy.</param>
+            <param name="count">The maximum number of bytes to copy.</param>
+            <param name="offset">The offset within the <c>ArrayBuffer</c> at which to store the first copied byte.</param>
+            <returns>The number of bytes copied.</returns>
+        </member>
+        <member name="M:Microsoft.ClearScript.JavaScript.IArrayBuffer.WriteBytes(System.ReadOnlySpan{System.Byte},System.UInt64,System.UInt64,System.UInt64)">
+            <summary>
+            Copies bytes from the specified byte span into the <c>ArrayBuffer</c>.
+            </summary>
+            <param name="source">The byte span from which to copy the bytes.</param>
             <param name="sourceIndex">The index within <paramref name="source"/> of the first byte to copy.</param>
             <param name="count">The maximum number of bytes to copy.</param>
             <param name="offset">The offset within the <c>ArrayBuffer</c> at which to store the first copied byte.</param>
@@ -3614,8 +3645,36 @@
             <summary>
             Invokes a delegate that returns a value, giving it direct access to the <c>ArrayBuffer</c>'s contents.
             </summary>
-            <typeparam name="T">The delegate's return type.</typeparam>
+            <typeparam name="TResult">The delegate's return type.</typeparam>
             <param name="func">The delegate to invoke.</param>
+            <returns>The delegate's return value.</returns>
+            <remarks>
+            This method invokes the specified delegate, passing in the memory address of the
+            <c>ArrayBuffer</c>'s contents. This memory address is valid only while the delegate is
+            executing. The delegate must not access memory outside the <c>ArrayBuffer</c>'s range.
+            </remarks>
+        </member>
+        <member name="M:Microsoft.ClearScript.JavaScript.IArrayBuffer.InvokeWithDirectAccess``1(System.Action{System.IntPtr,``0},``0@)">
+            <summary>
+            Invokes a delegate that takes an argument and returns no value, giving it direct access to the <c>ArrayBuffer</c>'s contents.
+            </summary>
+            <typeparam name="TArg">The delegate's argument type.</typeparam>
+            <param name="action">The delegate to invoke.</param>
+            <param name="arg">The argument to pass to the delegate.</param>
+            <remarks>
+            This method invokes the specified delegate, passing in the memory address of the
+            <c>ArrayBuffer</c>'s contents. This memory address is valid only while the delegate is
+            executing. The delegate must not access memory outside the <c>ArrayBuffer</c>'s range.
+            </remarks>
+        </member>
+        <member name="M:Microsoft.ClearScript.JavaScript.IArrayBuffer.InvokeWithDirectAccess``2(System.Func{System.IntPtr,``0,``1},``0@)">
+            <summary>
+            Invokes a delegate that takes an argument and returns a value, giving it direct access to the <c>ArrayBuffer</c>'s contents.
+            </summary>
+            <typeparam name="TArg">The delegate's argument type.</typeparam>
+            <typeparam name="TResult">The delegate's return type.</typeparam>
+            <param name="func">The delegate to invoke.</param>
+            <param name="arg">The argument to pass to the delegate.</param>
             <returns>The delegate's return value.</returns>
             <remarks>
             This method invokes the specified delegate, passing in the memory address of the
@@ -3661,11 +3720,31 @@
             <param name="destinationIndex">The index within <paramref name="destination"/> at which to store the first copied byte.</param>
             <returns>The number of bytes copied.</returns>
         </member>
+        <member name="M:Microsoft.ClearScript.JavaScript.IArrayBufferView.ReadBytes(System.UInt64,System.UInt64,System.Span{System.Byte},System.UInt64)">
+            <summary>
+            Copies bytes from the view into the specified byte span.
+            </summary>
+            <param name="offset">The offset within the view of the first byte to copy.</param>
+            <param name="count">The maximum number of bytes to copy.</param>
+            <param name="destination">The byte span into which to copy the bytes.</param>
+            <param name="destinationIndex">The index within <paramref name="destination"/> at which to store the first copied byte.</param>
+            <returns>The number of bytes copied.</returns>
+        </member>
         <member name="M:Microsoft.ClearScript.JavaScript.IArrayBufferView.WriteBytes(System.Byte[],System.UInt64,System.UInt64,System.UInt64)">
             <summary>
             Copies bytes from the specified byte array into the view.
             </summary>
             <param name="source">The byte array from which to copy the bytes.</param>
+            <param name="sourceIndex">The index within <paramref name="source"/> of the first byte to copy.</param>
+            <param name="count">The maximum number of bytes to copy.</param>
+            <param name="offset">The offset within the view at which to store the first copied byte.</param>
+            <returns>The number of bytes copied.</returns>
+        </member>
+        <member name="M:Microsoft.ClearScript.JavaScript.IArrayBufferView.WriteBytes(System.ReadOnlySpan{System.Byte},System.UInt64,System.UInt64,System.UInt64)">
+            <summary>
+            Copies bytes from the specified byte span into the view.
+            </summary>
+            <param name="source">The byte span from which to copy the bytes.</param>
             <param name="sourceIndex">The index within <paramref name="source"/> of the first byte to copy.</param>
             <param name="count">The maximum number of bytes to copy.</param>
             <param name="offset">The offset within the view at which to store the first copied byte.</param>
@@ -3686,8 +3765,36 @@
             <summary>
             Invokes a delegate that returns a value, giving it direct access to the view's contents.
             </summary>
-            <typeparam name="T">The delegate's return type.</typeparam>
+            <typeparam name="TResult">The delegate's return type.</typeparam>
             <param name="func">The delegate to invoke.</param>
+            <returns>The delegate's return value.</returns>
+            <remarks>
+            This method invokes the specified delegate, passing in the memory address of the view's
+            contents. This memory address is valid only while the delegate is executing. The
+            delegate must not access memory outside the view's range.
+            </remarks>
+        </member>
+        <member name="M:Microsoft.ClearScript.JavaScript.IArrayBufferView.InvokeWithDirectAccess``1(System.Action{System.IntPtr,``0},``0@)">
+            <summary>
+            Invokes a delegate that takes an argument and returns no value, giving it direct access to the view's contents.
+            </summary>
+            <typeparam name="TArg">The delegate's argument type.</typeparam>
+            <param name="action">The delegate to invoke.</param>
+            <param name="arg">The argument to pass to the delegate.</param>
+            <remarks>
+            This method invokes the specified delegate, passing in the memory address of the view's
+            contents. This memory address is valid only while the delegate is executing. The
+            delegate must not access memory outside the view's range.
+            </remarks>
+        </member>
+        <member name="M:Microsoft.ClearScript.JavaScript.IArrayBufferView.InvokeWithDirectAccess``2(System.Func{System.IntPtr,``0,``1},``0@)">
+            <summary>
+            Invokes a delegate that takes an argument and returns a value, giving it direct access to the view's contents.
+            </summary>
+            <typeparam name="TArg">The delegate's argument type.</typeparam>
+            <typeparam name="TResult">The delegate's return type.</typeparam>
+            <param name="func">The delegate to invoke.</param>
+            <param name="arg">The argument to pass to the delegate.</param>
             <returns>The delegate's return value.</returns>
             <remarks>
             This method invokes the specified delegate, passing in the memory address of the view's
@@ -3806,11 +3913,31 @@
             <param name="destinationIndex">The index within <paramref name="destination"/> at which to store the first copied element.</param>
             <returns>The number of elements copied.</returns>
         </member>
+        <member name="M:Microsoft.ClearScript.JavaScript.ITypedArray`1.Read(System.UInt64,System.UInt64,System.Span{`0},System.UInt64)">
+            <summary>
+            Copies elements from the typed array into the specified span.
+            </summary>
+            <param name="index">The index within the typed array of the first element to copy.</param>
+            <param name="length">The maximum number of elements to copy.</param>
+            <param name="destination">The span into which to copy the elements.</param>
+            <param name="destinationIndex">The index within <paramref name="destination"/> at which to store the first copied element.</param>
+            <returns>The number of elements copied.</returns>
+        </member>
         <member name="M:Microsoft.ClearScript.JavaScript.ITypedArray`1.Write(`0[],System.UInt64,System.UInt64,System.UInt64)">
             <summary>
             Copies elements from the specified array into the typed array.
             </summary>
             <param name="source">The array from which to copy the elements.</param>
+            <param name="sourceIndex">The index within <paramref name="source"/> of the first element to copy.</param>
+            <param name="length">The maximum number of elements to copy.</param>
+            <param name="index">The index within the typed array at which to store the first copied element.</param>
+            <returns>The number of elements copied.</returns>
+        </member>
+        <member name="M:Microsoft.ClearScript.JavaScript.ITypedArray`1.Write(System.ReadOnlySpan{`0},System.UInt64,System.UInt64,System.UInt64)">
+            <summary>
+            Copies elements from the specified span into the typed array.
+            </summary>
+            <param name="source">The span from which to copy the elements.</param>
             <param name="sourceIndex">The index within <paramref name="source"/> of the first element to copy.</param>
             <param name="length">The maximum number of elements to copy.</param>
             <param name="index">The index within the typed array at which to store the first copied element.</param>
@@ -3861,6 +3988,46 @@
             <param name="engine">The script engine in which the promise will be used.</param>
             <returns>A promise that represents the task's asynchronous operation.</returns>
         </member>
+        <member name="M:Microsoft.ClearScript.JavaScript.JavaScriptExtensions.ToPromise``1(System.Threading.Tasks.ValueTask{``0})">
+            <summary>
+            Converts a <c><see cref="T:System.Threading.Tasks.ValueTask`1"/></c> instance to a
+            <see href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise">promise</see>
+            for use with script code currently running on the calling thread.
+            </summary>
+            <typeparam name="T">The task's result type.</typeparam>
+            <param name="valueTask">The task to convert to a promise.</param>
+            <returns>A promise that represents the task's asynchronous operation.</returns>
+        </member>
+        <member name="M:Microsoft.ClearScript.JavaScript.JavaScriptExtensions.ToPromise``1(System.Threading.Tasks.ValueTask{``0},Microsoft.ClearScript.ScriptEngine)">
+            <summary>
+            Converts a <c><see cref="T:System.Threading.Tasks.ValueTask`1"/></c> instance to a
+            <see href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise">promise</see>
+            for use with script code running in the specified script engine.
+            </summary>
+            <typeparam name="T">The task's result type.</typeparam>
+            <param name="valueTask">The task to convert to a promise.</param>
+            <param name="engine">The script engine in which the promise will be used.</param>
+            <returns>A promise that represents the task's asynchronous operation.</returns>
+        </member>
+        <member name="M:Microsoft.ClearScript.JavaScript.JavaScriptExtensions.ToPromise(System.Threading.Tasks.ValueTask)">
+            <summary>
+            Converts a <c><see cref="T:System.Threading.Tasks.ValueTask"/></c> instance to a
+            <see href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise">promise</see>
+            for use with script code currently running on the calling thread.
+            </summary>
+            <param name="valueTask">The task to convert to a promise.</param>
+            <returns>A promise that represents the task's asynchronous operation.</returns>
+        </member>
+        <member name="M:Microsoft.ClearScript.JavaScript.JavaScriptExtensions.ToPromise(System.Threading.Tasks.ValueTask,Microsoft.ClearScript.ScriptEngine)">
+            <summary>
+            Converts a <c><see cref="T:System.Threading.Tasks.ValueTask"/></c> instance to a
+            <see href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise">promise</see>
+            for use with script code running in the specified script engine.
+            </summary>
+            <param name="valueTask">The task to convert to a promise.</param>
+            <param name="engine">The script engine in which the promise will be used.</param>
+            <returns>A promise that represents the task's asynchronous operation.</returns>
+        </member>
         <member name="M:Microsoft.ClearScript.JavaScript.JavaScriptExtensions.ToTask(System.Object)">
             <summary>
             Converts a
@@ -3886,6 +4053,18 @@
             If the argument implements
             <c><see cref="T:System.Collections.Generic.IEnumerable`1">IEnumerable&lt;Object&gt;</see></c>, this method
             returns it as is.
+            </remarks>
+        </member>
+        <member name="M:Microsoft.ClearScript.JavaScript.JavaScriptExtensions.ToAsyncEnumerable(System.Object)">
+            <summary>
+            Supports managed asynchronous iteration over an
+            <see href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Iteration_protocols#the_async_iterator_and_async_iterable_protocols">async-iterable</see>
+            script object.
+            </summary>
+            <param name="asyncIterable">An async-iterable script object (see remarks).</param>
+            <returns>An <c><see cref="T:System.Collections.Generic.IAsyncEnumerable`1">IAsyncEnumerator&lt;Object&gt;</see></c> implementation that supports managed asynchronous iteration over <paramref name="asyncIterable"/>.</returns>
+            <remarks>
+            If the argument implements <c><see cref="T:System.Collections.Generic.IAsyncEnumerable`1">IAsyncEnumerator&lt;Object&gt;</see></c>, this method returns it as is.
             </remarks>
         </member>
         <member name="T:Microsoft.ClearScript.JavaScript.JavaScriptObjectFlags">
@@ -3921,6 +4100,21 @@
             <see href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Iterators_and_Generators#generator_functions">generator function</see>
             or
             <see href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/async_function*">async generator function</see>.
+            </summary>
+        </member>
+        <member name="F:Microsoft.ClearScript.JavaScript.JavaScriptObjectFlags.Pending">
+            <summary>
+            Indicates that the object is a
+            <see href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise">promise</see>
+            that is not yet settled. If the object is a promise and this attribute is not present,
+            then the promise is fulfilled unless <c><see cref="F:Microsoft.ClearScript.JavaScript.JavaScriptObjectFlags.Rejected"/></c> is present.
+            </summary>
+        </member>
+        <member name="F:Microsoft.ClearScript.JavaScript.JavaScriptObjectFlags.Rejected">
+            <summary>
+            Indicates that the object is a rejected
+            <see href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise">promise</see>.
+            This attribute has no meaning if <c><see cref="F:Microsoft.ClearScript.JavaScript.JavaScriptObjectFlags.Pending"/></c> is present.
             </summary>
         </member>
         <member name="T:Microsoft.ClearScript.JavaScript.JavaScriptObjectKind">
@@ -4129,7 +4323,7 @@
             Removes a property from the <c><see cref="T:Microsoft.ClearScript.PropertyBag"/></c>.
             </summary>
             <param name="key">The name of the property to remove.</param>
-            <returns><c>True</c> if the property was successfully found and removed, <c>false</c> otherwise.</returns>
+            <returns><c>True</c> if the property was found and removed, <c>false</c> otherwise.</returns>
         </member>
         <member name="M:Microsoft.ClearScript.PropertyBag.TryGetValue(System.String,System.Object@)">
             <summary>
@@ -4230,13 +4424,13 @@
             <summary>
             Initializes a new script engine instance.
             </summary>
-            <param name="name">A name to associate with the instance. Currently this name is used only as a label in presentation contexts such as debugger user interfaces.</param>
+            <param name="name">A name to associate with the instance. Currently, this name is used only as a label in presentation contexts such as debugger user interfaces.</param>
         </member>
         <member name="M:Microsoft.ClearScript.ScriptEngine.#ctor(System.String,System.String)">
             <summary>
             Initializes a new script engine instance with the specified list of supported file name extensions.
             </summary>
-            <param name="name">A name to associate with the instance. Currently this name is used only as a label in presentation contexts such as debugger user interfaces.</param>
+            <param name="name">A name to associate with the instance. Currently, this name is used only as a label in presentation contexts such as debugger user interfaces.</param>
             <param name="fileNameExtensions">A semicolon-delimited list of supported file name extensions.</param>
         </member>
         <member name="P:Microsoft.ClearScript.ScriptEngine.Current">
@@ -4299,6 +4493,9 @@
             <inheritdoc/>
         </member>
         <member name="P:Microsoft.ClearScript.ScriptEngine.UndefinedImportValue">
+            <inheritdoc/>
+        </member>
+        <member name="P:Microsoft.ClearScript.ScriptEngine.NullImportValue">
             <inheritdoc/>
         </member>
         <member name="P:Microsoft.ClearScript.ScriptEngine.NullExportValue">
@@ -4843,6 +5040,11 @@
             <param name="info">A structure containing meta-information for the document.</param>
             <param name="contents">A string containing the document's contents.</param>
         </member>
+        <member name="P:Microsoft.ClearScript.StringDocument.StringContents">
+            <summary>
+            Gets the document's contents as a string.
+            </summary>
+        </member>
         <member name="P:Microsoft.ClearScript.StringDocument.Info">
             <summary>
             Gets a structure containing meta-information for the document.
@@ -4916,6 +5118,30 @@
             <summary>
             The value currently held by the <c><see cref="T:Microsoft.ClearScript.ValueRef`1"/></c> instance.
             </summary>
+        </member>
+        <member name="T:Microsoft.ClearScript.Util.AssemblyTableData">
+            <exclude/>
+        </member>
+        <member name="F:Microsoft.ClearScript.Util.AssemblyTableData.Entries">
+            <exclude/>
+        </member>
+        <member name="M:Microsoft.ClearScript.Util.AssemblyTableData.#ctor">
+            <exclude/>
+        </member>
+        <member name="M:Microsoft.ClearScript.Util.AssemblyTableData.#ctor(System.Collections.Concurrent.ConcurrentDictionary{System.String,System.String})">
+            <exclude/>
+        </member>
+        <member name="M:Microsoft.ClearScript.Util.AssemblyTableData.CreateTable">
+            <exclude/>
+        </member>
+        <member name="T:Microsoft.ClearScript.Util.AssemblyTableData.Entry">
+            <exclude/>
+        </member>
+        <member name="P:Microsoft.ClearScript.Util.AssemblyTableData.Entry.Name">
+            <exclude/>
+        </member>
+        <member name="P:Microsoft.ClearScript.Util.AssemblyTableData.Entry.FullName">
+            <exclude/>
         </member>
         <member name="T:Microsoft.ClearScript.Util.IScriptableEnumerator">
             <exclude/>

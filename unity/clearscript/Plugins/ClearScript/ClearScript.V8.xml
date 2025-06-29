@@ -4,6 +4,1824 @@
         <name>ClearScript.V8</name>
     </assembly>
     <members>
+        <member name="T:Microsoft.ClearScript.V8.FastProxy.IV8FastAsyncEnumerator">
+            <summary>
+            Represents a fast asynchronous enumerator.
+            </summary>
+        </member>
+        <member name="M:Microsoft.ClearScript.V8.FastProxy.IV8FastAsyncEnumerator.GetCurrent(Microsoft.ClearScript.V8.FastProxy.V8FastResult@)">
+            <summary>
+            Gets the item at the current position in the collection.
+            </summary>
+            <param name="item">On return, contains the item at the current position in the collection.</param>
+        </member>
+        <member name="M:Microsoft.ClearScript.V8.FastProxy.IV8FastAsyncEnumerator.MoveNextAsync">
+            <summary>
+            Advances the enumerator asynchronously to the next position in the collection.
+            </summary>
+            <returns>A task structure whose result is <c>true</c> if the enumerator was advanced to the next position, <c>false</c> if it was already at the end of the collection.</returns>
+        </member>
+        <member name="T:Microsoft.ClearScript.V8.FastProxy.IV8FastEnumerator">
+            <summary>
+            Represents a fast enumerator.
+            </summary>
+        </member>
+        <member name="M:Microsoft.ClearScript.V8.FastProxy.IV8FastEnumerator.GetCurrent(Microsoft.ClearScript.V8.FastProxy.V8FastResult@)">
+            <summary>
+            Gets the item at the current position in the collection.
+            </summary>
+            <param name="item">On return, contains the item at the current position in the collection.</param>
+        </member>
+        <member name="M:Microsoft.ClearScript.V8.FastProxy.IV8FastEnumerator.MoveNext">
+            <summary>
+            Advances the enumerator to the next position in the collection.
+            </summary>
+            <returns><c>True</c> if the enumerator was advanced to the next position, <c>false</c> if it is already at the end of the collection.</returns>
+        </member>
+        <member name="T:Microsoft.ClearScript.V8.FastProxy.IV8FastHostDynamicProperties">
+            <summary>
+            Represents a set of dynamic properties keyed by name or index.
+            </summary>
+        </member>
+        <member name="P:Microsoft.ClearScript.V8.FastProxy.IV8FastHostDynamicProperties.DynamicPropertyNames">
+            <summary>
+            Enumerates the names of all existing named dynamic properties.
+            </summary>
+        </member>
+        <member name="P:Microsoft.ClearScript.V8.FastProxy.IV8FastHostDynamicProperties.DynamicPropertyIndices">
+            <summary>
+            Enumerates the indices of all existing indexed dynamic properties.
+            </summary>
+        </member>
+        <member name="M:Microsoft.ClearScript.V8.FastProxy.IV8FastHostDynamicProperties.GetDynamicProperty(System.String,Microsoft.ClearScript.V8.FastProxy.V8FastResult@)">
+            <summary>
+            Gets the value of a named dynamic property.
+            </summary>
+            <param name="name">The name of the dynamic property to get.</param>
+            <param name="value">On return, the value of the dynamic property if it was found.</param>
+        </member>
+        <member name="M:Microsoft.ClearScript.V8.FastProxy.IV8FastHostDynamicProperties.SetDynamicProperty(System.String,Microsoft.ClearScript.V8.FastProxy.V8FastArg@)">
+            <summary>
+            Sets the value of a named dynamic property.
+            </summary>
+            <param name="name">The name of the dynamic property to set.</param>
+            <param name="value">The property value.</param>
+        </member>
+        <member name="M:Microsoft.ClearScript.V8.FastProxy.IV8FastHostDynamicProperties.GetDynamicProperty(System.Int32,Microsoft.ClearScript.V8.FastProxy.V8FastResult@)">
+            <summary>
+            Gets the value of an indexed dynamic property.
+            </summary>
+            <param name="index">The index of the dynamic property to get.</param>
+            <param name="value">On return, the value of the dynamic property if it was found.</param>
+        </member>
+        <member name="M:Microsoft.ClearScript.V8.FastProxy.IV8FastHostDynamicProperties.SetDynamicProperty(System.Int32,Microsoft.ClearScript.V8.FastProxy.V8FastArg@)">
+            <summary>
+            Sets the value of an indexed dynamic property.
+            </summary>
+            <param name="index">The index of the dynamic property to set.</param>
+            <param name="value">The property value.</param>
+        </member>
+        <member name="M:Microsoft.ClearScript.V8.FastProxy.IV8FastHostDynamicProperties.HasDynamicProperty(System.String)">
+            <summary>
+            Determines whether a dynamic property with the specified name exists.
+            </summary>
+            <param name="name">The name of the dynamic property for which to search.</param>
+            <returns><c>True</c> if the dynamic property exists, <c>false</c> otherwise.</returns>
+        </member>
+        <member name="M:Microsoft.ClearScript.V8.FastProxy.IV8FastHostDynamicProperties.HasDynamicProperty(System.Int32)">
+            <summary>
+            Determines whether a dynamic property exists at the specified index.
+            </summary>
+            <param name="index">The index of the dynamic property for which to search.</param>
+            <returns><c>True</c> if the dynamic property exists, <c>false</c> otherwise.</returns>
+        </member>
+        <member name="M:Microsoft.ClearScript.V8.FastProxy.IV8FastHostDynamicProperties.DeleteDynamicProperty(System.String)">
+            <summary>
+            Deletes a named dynamic property.
+            </summary>
+            <param name="name">The name of the dynamic property to delete.</param>
+        </member>
+        <member name="M:Microsoft.ClearScript.V8.FastProxy.IV8FastHostDynamicProperties.DeleteDynamicProperty(System.Int32)">
+            <summary>
+            Deletes an indexed dynamic property.
+            </summary>
+            <param name="index">The index of the dynamic property to delete.</param>
+        </member>
+        <member name="T:Microsoft.ClearScript.V8.FastProxy.IV8FastHostFunction">
+            <summary>
+            Represents a fast host function.
+            </summary>
+        </member>
+        <member name="P:Microsoft.ClearScript.V8.FastProxy.IV8FastHostFunction.Operations">
+            <summary>
+            Gets the function's operations interface.
+            </summary>
+        </member>
+        <member name="T:Microsoft.ClearScript.V8.FastProxy.IV8FastHostFunctionOperations">
+            <summary>
+            Represents the operations supported by a fast host function.
+            </summary>
+        </member>
+        <member name="M:Microsoft.ClearScript.V8.FastProxy.IV8FastHostFunctionOperations.Invoke(System.Boolean,Microsoft.ClearScript.V8.FastProxy.V8FastArgs@,Microsoft.ClearScript.V8.FastProxy.V8FastResult@)">
+            <summary>
+            Invokes the function.
+            </summary>
+            <param name="asConstructor"><c>True</c> to invoke the function as a constructor, <c>false</c> otherwise.</param>
+            <param name="args">The arguments to pass to the function.</param>
+            <param name="result">On return, the function's return value.</param>
+        </member>
+        <member name="T:Microsoft.ClearScript.V8.FastProxy.IV8FastHostMethod">
+            <summary>
+            Represents a fast host method.
+            </summary>
+        </member>
+        <member name="P:Microsoft.ClearScript.V8.FastProxy.IV8FastHostMethod.Operations">
+            <summary>
+            Gets the method's operations interface.
+            </summary>
+        </member>
+        <member name="T:Microsoft.ClearScript.V8.FastProxy.IV8FastHostMethodOperations">
+            <summary>
+            Represents the operations supported by a fast host method.
+            </summary>
+        </member>
+        <member name="M:Microsoft.ClearScript.V8.FastProxy.IV8FastHostMethodOperations.Invoke(Microsoft.ClearScript.V8.FastProxy.V8FastArgs@,Microsoft.ClearScript.V8.FastProxy.V8FastResult@)">
+            <summary>
+            Invokes the method.
+            </summary>
+            <param name="args">The arguments to pass to the method.</param>
+            <param name="result">On return, the method's return value.</param>
+        </member>
+        <member name="T:Microsoft.ClearScript.V8.FastProxy.IV8FastHostObject">
+            <summary>
+            Represents a fast host object.
+            </summary>
+        </member>
+        <member name="P:Microsoft.ClearScript.V8.FastProxy.IV8FastHostObject.Operations">
+            <summary>
+            Gets the object's operations interface.
+            </summary>
+        </member>
+        <member name="T:Microsoft.ClearScript.V8.FastProxy.IV8FastHostObjectOperations">
+            <summary>
+            Represents the operations supported by a fast host object.
+            </summary>
+        </member>
+        <member name="M:Microsoft.ClearScript.V8.FastProxy.IV8FastHostObjectOperations.GetFriendlyName(Microsoft.ClearScript.V8.FastProxy.IV8FastHostObject)">
+            <summary>
+            Gets a human-readable name for the specified object.
+            </summary>
+            <param name="instance">The object for which to get a human-readable name.</param>
+            <returns>A human-readable name for the specified object.</returns>
+        </member>
+        <member name="M:Microsoft.ClearScript.V8.FastProxy.IV8FastHostObjectOperations.GetProperty(Microsoft.ClearScript.V8.FastProxy.IV8FastHostObject,System.String,Microsoft.ClearScript.V8.FastProxy.V8FastResult@,System.Boolean@)">
+            <summary>
+            Gets the value of a named property.
+            </summary>
+            <param name="instance">The object to search for the property.</param>
+            <param name="name">The name of the property to get.</param>
+            <param name="value">On return, the value of the property if it was found.</param>
+            <param name="isCacheable">On return, <c>true</c> if the property value is a cacheable constant, <c>false</c> otherwise.</param>
+        </member>
+        <member name="M:Microsoft.ClearScript.V8.FastProxy.IV8FastHostObjectOperations.SetProperty(Microsoft.ClearScript.V8.FastProxy.IV8FastHostObject,System.String,Microsoft.ClearScript.V8.FastProxy.V8FastArg@)">
+            <summary>
+            Sets the value of a named property.
+            </summary>
+            <param name="instance">The object whose property to set.</param>
+            <param name="name">The name of the property to set.</param>
+            <param name="value">The property value.</param>
+        </member>
+        <member name="M:Microsoft.ClearScript.V8.FastProxy.IV8FastHostObjectOperations.QueryProperty(Microsoft.ClearScript.V8.FastProxy.IV8FastHostObject,System.String)">
+            <summary>
+            Gets the attributes of a named property.
+            </summary>
+            <param name="instance">The object to search for the property.</param>
+            <param name="name">The name of the property to query.</param>
+            <returns>A set of property attributes.</returns>
+        </member>
+        <member name="M:Microsoft.ClearScript.V8.FastProxy.IV8FastHostObjectOperations.DeleteProperty(Microsoft.ClearScript.V8.FastProxy.IV8FastHostObject,System.String)">
+            <summary>
+            Deletes a named property.
+            </summary>
+            <param name="instance">The object whose property to delete.</param>
+            <param name="name">The name of the property to delete.</param>
+            <returns><c>True</c> if the property was deleted or does not exist; <c>false</c> if the property exists but is not deletable.</returns>
+        </member>
+        <member name="M:Microsoft.ClearScript.V8.FastProxy.IV8FastHostObjectOperations.GetPropertyNames(Microsoft.ClearScript.V8.FastProxy.IV8FastHostObject)">
+            <summary>
+            Enumerates the names of all existing named properties.
+            </summary>
+            <param name="instance">The object to search for named properties.</param>
+            <returns>A collection containing the names of all existing named properties.</returns>
+        </member>
+        <member name="M:Microsoft.ClearScript.V8.FastProxy.IV8FastHostObjectOperations.GetProperty(Microsoft.ClearScript.V8.FastProxy.IV8FastHostObject,System.Int32,Microsoft.ClearScript.V8.FastProxy.V8FastResult@)">
+            <summary>
+            Gets the value of an indexed property.
+            </summary>
+            <param name="instance">The object to search for the property.</param>
+            <param name="index">The index of the property to get.</param>
+            <param name="value">On return, the value of the property if it was found.</param>
+        </member>
+        <member name="M:Microsoft.ClearScript.V8.FastProxy.IV8FastHostObjectOperations.SetProperty(Microsoft.ClearScript.V8.FastProxy.IV8FastHostObject,System.Int32,Microsoft.ClearScript.V8.FastProxy.V8FastArg@)">
+            <summary>
+            Sets the value of an indexed property.
+            </summary>
+            <param name="instance">The object whose property to set.</param>
+            <param name="index">The index of the property to set.</param>
+            <param name="value">The property value.</param>
+        </member>
+        <member name="M:Microsoft.ClearScript.V8.FastProxy.IV8FastHostObjectOperations.QueryProperty(Microsoft.ClearScript.V8.FastProxy.IV8FastHostObject,System.Int32)">
+            <summary>
+            Gets the attributes of an indexed property.
+            </summary>
+            <param name="instance">The object to search for the property.</param>
+            <param name="index">The index of the property to query.</param>
+            <returns>A set of property attributes.</returns>
+        </member>
+        <member name="M:Microsoft.ClearScript.V8.FastProxy.IV8FastHostObjectOperations.DeleteProperty(Microsoft.ClearScript.V8.FastProxy.IV8FastHostObject,System.Int32)">
+            <summary>
+            Deletes an indexed property.
+            </summary>
+            <param name="instance">The object whose property to delete.</param>
+            <param name="index">The index of the property to delete.</param>
+            <returns><c>True</c> if the property was deleted or does not exist; <c>false</c> if the property exists but is not deletable.</returns>
+        </member>
+        <member name="M:Microsoft.ClearScript.V8.FastProxy.IV8FastHostObjectOperations.GetPropertyIndices(Microsoft.ClearScript.V8.FastProxy.IV8FastHostObject)">
+            <summary>
+            Enumerates the indices of all existing indexed properties.
+            </summary>
+            <param name="instance">The object to search for indexed properties.</param>
+            <returns>A collection containing the indices of all existing indexed properties.</returns>
+        </member>
+        <member name="M:Microsoft.ClearScript.V8.FastProxy.IV8FastHostObjectOperations.CreateEnumerator(Microsoft.ClearScript.V8.FastProxy.IV8FastHostObject)">
+            <summary>
+            Creates a fast enumerator that iterates through the object's contents.
+            </summary>
+            <param name="instance">The object for which to create a fast enumerator.</param>
+            <returns>A fast enumerator for the specified object's contents.</returns>
+        </member>
+        <member name="M:Microsoft.ClearScript.V8.FastProxy.IV8FastHostObjectOperations.CreateAsyncEnumerator(Microsoft.ClearScript.V8.FastProxy.IV8FastHostObject)">
+            <summary>
+            Creates a fast asynchronous enumerator that iterates through the object's contents.
+            </summary>
+            <param name="instance">The object for which to create a fast asynchronous enumerator.</param>
+            <returns>A fast asynchronous enumerator for the specified object's contents.</returns>
+        </member>
+        <member name="T:Microsoft.ClearScript.V8.FastProxy.V8FastArg">
+            <summary>
+            Represents an argument passed to a fast host object from script code.
+            </summary>
+        </member>
+        <member name="P:Microsoft.ClearScript.V8.FastProxy.V8FastArg.IsFalsy">
+            <summary>
+            Determines whether the argument is <see href="https://developer.mozilla.org/en-US/docs/Glossary/Falsy">falsy</see>.
+            </summary>
+        </member>
+        <member name="P:Microsoft.ClearScript.V8.FastProxy.V8FastArg.IsTruthy">
+            <summary>
+            Determines whether the argument is <see href="https://developer.mozilla.org/en-US/docs/Glossary/Truthy">truthy</see>.
+            </summary>
+        </member>
+        <member name="P:Microsoft.ClearScript.V8.FastProxy.V8FastArg.IsUndefined">
+            <summary>
+            Determines whether the argument is <c><see href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/undefined">undefined</see></c>.
+            </summary>
+        </member>
+        <member name="P:Microsoft.ClearScript.V8.FastProxy.V8FastArg.IsNull">
+            <summary>
+            Determines whether the argument is <c><see href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/null">null</see></c>.
+            </summary>
+        </member>
+        <member name="M:Microsoft.ClearScript.V8.FastProxy.V8FastArg.TryGet(System.Boolean@)">
+            <summary>
+            Gets the <c><see cref="T:System.Boolean"/></c> value of the argument if possible.
+            </summary>
+            <param name="value">On return, the <c><see cref="T:System.Boolean"/></c> value of the argument if the operation succeeded.</param>
+            <returns><c>True</c> if the operation succeeded, <c>false</c> otherwise.</returns>
+        </member>
+        <member name="M:Microsoft.ClearScript.V8.FastProxy.V8FastArg.TryGet(System.Char@)">
+            <summary>
+            Gets the <c><see cref="T:System.Char"/></c> value of the argument if possible.
+            </summary>
+            <param name="value">On return, the <c><see cref="T:System.Char"/></c> value of the argument if the operation succeeded.</param>
+            <returns><c>True</c> if the operation succeeded, <c>false</c> otherwise.</returns>
+        </member>
+        <member name="M:Microsoft.ClearScript.V8.FastProxy.V8FastArg.TryGet(System.SByte@)">
+            <summary>
+            Gets the <c><see cref="T:System.SByte"/></c> value of the argument if possible.
+            </summary>
+            <param name="value">On return, the <c><see cref="T:System.SByte"/></c> value of the argument if the operation succeeded.</param>
+            <returns><c>True</c> if the operation succeeded, <c>false</c> otherwise.</returns>
+        </member>
+        <member name="M:Microsoft.ClearScript.V8.FastProxy.V8FastArg.TryGet(System.Byte@)">
+            <summary>
+            Gets the <c><see cref="T:System.Byte"/></c> value of the argument if possible.
+            </summary>
+            <param name="value">On return, the <c><see cref="T:System.Byte"/></c> value of the argument if the operation succeeded.</param>
+            <returns><c>True</c> if the operation succeeded, <c>false</c> otherwise.</returns>
+        </member>
+        <member name="M:Microsoft.ClearScript.V8.FastProxy.V8FastArg.TryGet(System.Int16@)">
+            <summary>
+            Gets the <c><see cref="T:System.Int16"/></c> value of the argument if possible.
+            </summary>
+            <param name="value">On return, the <c><see cref="T:System.Int16"/></c> value of the argument if the operation succeeded.</param>
+            <returns><c>True</c> if the operation succeeded, <c>false</c> otherwise.</returns>
+        </member>
+        <member name="M:Microsoft.ClearScript.V8.FastProxy.V8FastArg.TryGet(System.UInt16@)">
+            <summary>
+            Gets the <c><see cref="T:System.UInt16"/></c> value of the argument if possible.
+            </summary>
+            <param name="value">On return, the <c><see cref="T:System.UInt16"/></c> value of the argument if the operation succeeded.</param>
+            <returns><c>True</c> if the operation succeeded, <c>false</c> otherwise.</returns>
+        </member>
+        <member name="M:Microsoft.ClearScript.V8.FastProxy.V8FastArg.TryGet(System.Int32@)">
+            <summary>
+            Gets the <c><see cref="T:System.Int32"/></c> value of the argument if possible.
+            </summary>
+            <param name="value">On return, the <c><see cref="T:System.Int32"/></c> value of the argument if the operation succeeded.</param>
+            <returns><c>True</c> if the operation succeeded, <c>false</c> otherwise.</returns>
+        </member>
+        <member name="M:Microsoft.ClearScript.V8.FastProxy.V8FastArg.TryGet(System.UInt32@)">
+            <summary>
+            Gets the <c><see cref="T:System.UInt32"/></c> value of the argument if possible.
+            </summary>
+            <param name="value">On return, the <c><see cref="T:System.UInt32"/></c> value of the argument if the operation succeeded.</param>
+            <returns><c>True</c> if the operation succeeded, <c>false</c> otherwise.</returns>
+        </member>
+        <member name="M:Microsoft.ClearScript.V8.FastProxy.V8FastArg.TryGet(System.Int64@)">
+            <summary>
+            Gets the <c><see cref="T:System.Int64"/></c> value of the argument if possible.
+            </summary>
+            <param name="value">On return, the <c><see cref="T:System.Int64"/></c> value of the argument if the operation succeeded.</param>
+            <returns><c>True</c> if the operation succeeded, <c>false</c> otherwise.</returns>
+        </member>
+        <member name="M:Microsoft.ClearScript.V8.FastProxy.V8FastArg.TryGet(System.UInt64@)">
+            <summary>
+            Gets the <c><see cref="T:System.UInt64"/></c> value of the argument if possible.
+            </summary>
+            <param name="value">On return, the <c><see cref="T:System.UInt64"/></c> value of the argument if the operation succeeded.</param>
+            <returns><c>True</c> if the operation succeeded, <c>false</c> otherwise.</returns>
+        </member>
+        <member name="M:Microsoft.ClearScript.V8.FastProxy.V8FastArg.TryGet(System.Single@)">
+            <summary>
+            Gets the <c><see cref="T:System.Single"/></c> value of the argument if possible.
+            </summary>
+            <param name="value">On return, the <c><see cref="T:System.Single"/></c> value of the argument if the operation succeeded.</param>
+            <returns><c>True</c> if the operation succeeded, <c>false</c> otherwise.</returns>
+        </member>
+        <member name="M:Microsoft.ClearScript.V8.FastProxy.V8FastArg.TryGet(System.Double@)">
+            <summary>
+            Gets the <c><see cref="T:System.Double"/></c> value of the argument if possible.
+            </summary>
+            <param name="value">On return, the <c><see cref="T:System.Double"/></c> value of the argument if the operation succeeded.</param>
+            <returns><c>True</c> if the operation succeeded, <c>false</c> otherwise.</returns>
+        </member>
+        <member name="M:Microsoft.ClearScript.V8.FastProxy.V8FastArg.TryGet(System.Decimal@)">
+            <summary>
+            Gets the <c><see cref="T:System.Decimal"/></c> value of the argument if possible.
+            </summary>
+            <param name="value">On return, the <c><see cref="T:System.Decimal"/></c> value of the argument if the operation succeeded.</param>
+            <returns><c>True</c> if the operation succeeded, <c>false</c> otherwise.</returns>
+        </member>
+        <member name="M:Microsoft.ClearScript.V8.FastProxy.V8FastArg.TryGet(System.String@)">
+            <summary>
+            Gets the string value of the argument if possible.
+            </summary>
+            <param name="value">On return, the string value of the argument if the operation succeeded.</param>
+            <returns><c>True</c> if the operation succeeded, <c>false</c> otherwise.</returns>
+        </member>
+        <member name="M:Microsoft.ClearScript.V8.FastProxy.V8FastArg.TryGet(System.ReadOnlySpan{System.Char}@)">
+            <summary>
+            Gets the string value of the argument as a <c><see href="https://learn.microsoft.com/en-us/dotnet/api/system.readonlyspan-1">ReadOnlySpan&#x3C;char&#x3E;</see></c> if possible.
+            </summary>
+            <param name="value">On return, the string value of the argument as a <c><see href="https://learn.microsoft.com/en-us/dotnet/api/system.readonlyspan-1">ReadOnlySpan&#x3C;char&#x3E;</see></c> if the operation succeeded.</param>
+            <returns><c>True</c> if the operation succeeded, <c>false</c> otherwise.</returns>
+        </member>
+        <member name="M:Microsoft.ClearScript.V8.FastProxy.V8FastArg.TryGet(System.DateTime@)">
+            <summary>
+            Gets the <c><see cref="T:System.DateTime"/></c> value of the argument if possible.
+            </summary>
+            <param name="value">On return, the <c><see cref="T:System.DateTime"/></c> value of the argument if the operation succeeded.</param>
+            <returns><c>True</c> if the operation succeeded, <c>false</c> otherwise.</returns>
+        </member>
+        <member name="M:Microsoft.ClearScript.V8.FastProxy.V8FastArg.TryGet(System.Numerics.BigInteger@)">
+            <summary>
+            Gets the <c><see cref="T:System.Numerics.BigInteger"/></c> value of the argument if possible.
+            </summary>
+            <param name="value">On return, the <c><see cref="T:System.Numerics.BigInteger"/></c> value of the argument if the operation succeeded.</param>
+            <returns><c>True</c> if the operation succeeded, <c>false</c> otherwise.</returns>
+        </member>
+        <member name="M:Microsoft.ClearScript.V8.FastProxy.V8FastArg.TryGet``1(System.Nullable{``0}@)">
+            <summary>
+            Gets a nullable value of the given underlying type from the argument if possible.
+            </summary>
+            <typeparam name="T">The underlying type of the nullable value to get.</typeparam>
+            <param name="value">On return, a nullable value of underlying type <typeparamref name="T"/> if the operation succeeded.</param>
+            <returns><c>True</c> if the operation succeeded, <c>false</c> otherwise.</returns>
+        </member>
+        <member name="M:Microsoft.ClearScript.V8.FastProxy.V8FastArg.TryGet``1(``0@)">
+            <summary>
+            Gets a value of the given type from the argument if possible.
+            </summary>
+            <typeparam name="T">The type of value to get.</typeparam>
+            <param name="value">On return, a value of type <typeparamref name="T"/> if the operation succeeded.</param>
+            <returns><c>True</c> if the operation succeeded, <c>false</c> otherwise.</returns>
+        </member>
+        <member name="M:Microsoft.ClearScript.V8.FastProxy.V8FastArg.GetBoolean(System.String)">
+            <summary>
+            Gets the <c><see cref="T:System.Boolean"/></c> value of the argument.
+            </summary>
+            <param name="name">An optional argument or property name.</param>
+            <returns>The <c><see cref="T:System.Boolean"/></c> value of the argument.</returns>
+            <remarks>
+            This method throws an exception if the operation fails.
+            </remarks>
+        </member>
+        <member name="M:Microsoft.ClearScript.V8.FastProxy.V8FastArg.GetChar(System.String)">
+            <summary>
+            Gets the <c><see cref="T:System.Char"/></c> value of the argument.
+            </summary>
+            <param name="name">An optional argument or property name.</param>
+            <returns>The <c><see cref="T:System.Char"/></c> value of the argument.</returns>
+            <remarks>
+            This method throws an exception if the operation fails.
+            </remarks>
+        </member>
+        <member name="M:Microsoft.ClearScript.V8.FastProxy.V8FastArg.GetSByte(System.String)">
+            <summary>
+            Gets the <c><see cref="T:System.SByte"/></c> value of the argument.
+            </summary>
+            <param name="name">An optional argument or property name.</param>
+            <returns>The <c><see cref="T:System.SByte"/></c> value of the argument.</returns>
+            <remarks>
+            This method throws an exception if the operation fails.
+            </remarks>
+        </member>
+        <member name="M:Microsoft.ClearScript.V8.FastProxy.V8FastArg.GetByte(System.String)">
+            <summary>
+            Gets the <c><see cref="T:System.Byte"/></c> value of the argument.
+            </summary>
+            <param name="name">An optional argument or property name.</param>
+            <returns>The <c><see cref="T:System.Byte"/></c> value of the argument.</returns>
+            <remarks>
+            This method throws an exception if the operation fails.
+            </remarks>
+        </member>
+        <member name="M:Microsoft.ClearScript.V8.FastProxy.V8FastArg.GetInt16(System.String)">
+            <summary>
+            Gets the <c><see cref="T:System.Int16"/></c> value of the argument.
+            </summary>
+            <param name="name">An optional argument or property name.</param>
+            <returns>The <c><see cref="T:System.Int16"/></c> value of the argument.</returns>
+            <remarks>
+            This method throws an exception if the operation fails.
+            </remarks>
+        </member>
+        <member name="M:Microsoft.ClearScript.V8.FastProxy.V8FastArg.GetUInt16(System.String)">
+            <summary>
+            Gets the <c><see cref="T:System.UInt16"/></c> value of the argument.
+            </summary>
+            <param name="name">An optional argument or property name.</param>
+            <returns>The <c><see cref="T:System.UInt16"/></c> value of the argument.</returns>
+            <remarks>
+            This method throws an exception if the operation fails.
+            </remarks>
+        </member>
+        <member name="M:Microsoft.ClearScript.V8.FastProxy.V8FastArg.GetInt32(System.String)">
+            <summary>
+            Gets the <c><see cref="T:System.Int32"/></c> value of the argument.
+            </summary>
+            <param name="name">An optional argument or property name.</param>
+            <returns>The <c><see cref="T:System.Int32"/></c> value of the argument.</returns>
+            <remarks>
+            This method throws an exception if the operation fails.
+            </remarks>
+        </member>
+        <member name="M:Microsoft.ClearScript.V8.FastProxy.V8FastArg.GetUInt32(System.String)">
+            <summary>
+            Gets the <c><see cref="T:System.UInt32"/></c> value of the argument.
+            </summary>
+            <param name="name">An optional argument or property name.</param>
+            <returns>The <c><see cref="T:System.UInt32"/></c> value of the argument.</returns>
+            <remarks>
+            This method throws an exception if the operation fails.
+            </remarks>
+        </member>
+        <member name="M:Microsoft.ClearScript.V8.FastProxy.V8FastArg.GetInt64(System.String)">
+            <summary>
+            Gets the <c><see cref="T:System.Int64"/></c> value of the argument.
+            </summary>
+            <param name="name">An optional argument or property name.</param>
+            <returns>The <c><see cref="T:System.Int64"/></c> value of the argument.</returns>
+            <remarks>
+            This method throws an exception if the operation fails.
+            </remarks>
+        </member>
+        <member name="M:Microsoft.ClearScript.V8.FastProxy.V8FastArg.GetUInt64(System.String)">
+            <summary>
+            Gets the <c><see cref="T:System.UInt64"/></c> value of the argument.
+            </summary>
+            <param name="name">An optional argument or property name.</param>
+            <returns>The <c><see cref="T:System.UInt64"/></c> value of the argument.</returns>
+            <remarks>
+            This method throws an exception if the operation fails.
+            </remarks>
+        </member>
+        <member name="M:Microsoft.ClearScript.V8.FastProxy.V8FastArg.GetSingle(System.String)">
+            <summary>
+            Gets the <c><see cref="T:System.Single"/></c> value of the argument.
+            </summary>
+            <param name="name">An optional argument or property name.</param>
+            <returns>The <c><see cref="T:System.Single"/></c> value of the argument.</returns>
+            <remarks>
+            This method throws an exception if the operation fails.
+            </remarks>
+        </member>
+        <member name="M:Microsoft.ClearScript.V8.FastProxy.V8FastArg.GetDouble(System.String)">
+            <summary>
+            Gets the <c><see cref="T:System.Double"/></c> value of the argument.
+            </summary>
+            <param name="name">An optional argument or property name.</param>
+            <returns>The <c><see cref="T:System.Double"/></c> value of the argument.</returns>
+            <remarks>
+            This method throws an exception if the operation fails.
+            </remarks>
+        </member>
+        <member name="M:Microsoft.ClearScript.V8.FastProxy.V8FastArg.GetDecimal(System.String)">
+            <summary>
+            Gets the <c><see cref="T:System.Decimal"/></c> value of the argument.
+            </summary>
+            <param name="name">An optional argument or property name.</param>
+            <returns>The <c><see cref="T:System.Decimal"/></c> value of the argument.</returns>
+            <remarks>
+            This method throws an exception if the operation fails.
+            </remarks>
+        </member>
+        <member name="M:Microsoft.ClearScript.V8.FastProxy.V8FastArg.GetString(System.String)">
+            <summary>
+            Gets the string value of the argument.
+            </summary>
+            <param name="name">An optional argument or property name.</param>
+            <returns>The string value of the argument.</returns>
+            <remarks>
+            This method throws an exception if the operation fails.
+            </remarks>
+        </member>
+        <member name="M:Microsoft.ClearScript.V8.FastProxy.V8FastArg.GetCharSpan(System.String)">
+            <summary>
+            Gets the string value of the argument as a <c><see href="https://learn.microsoft.com/en-us/dotnet/api/system.readonlyspan-1">ReadOnlySpan&#x3C;char&#x3E;</see></c>.
+            </summary>
+            <param name="name">An optional argument or property name.</param>
+            <returns>The string value of the argument as a <c><see href="https://learn.microsoft.com/en-us/dotnet/api/system.readonlyspan-1">ReadOnlySpan&#x3C;char&#x3E;</see></c>.</returns>
+            <remarks>
+            This method throws an exception if the operation fails.
+            </remarks>
+        </member>
+        <member name="M:Microsoft.ClearScript.V8.FastProxy.V8FastArg.GetDateTime(System.String)">
+            <summary>
+            Gets the <c><see cref="T:System.DateTime"/></c> value of the argument.
+            </summary>
+            <param name="name">An optional argument or property name.</param>
+            <returns>The <c><see cref="T:System.DateTime"/></c> value of the argument.</returns>
+            <remarks>
+            This method throws an exception if the operation fails.
+            </remarks>
+        </member>
+        <member name="M:Microsoft.ClearScript.V8.FastProxy.V8FastArg.GetBigInteger(System.String)">
+            <summary>
+            Gets the <c><see cref="T:System.Numerics.BigInteger"/></c> value of the argument.
+            </summary>
+            <param name="name">An optional argument or property name.</param>
+            <returns>The <c><see cref="T:System.Numerics.BigInteger"/></c> value of the argument.</returns>
+            <remarks>
+            This method throws an exception if the operation fails.
+            </remarks>
+        </member>
+        <member name="M:Microsoft.ClearScript.V8.FastProxy.V8FastArg.GetNullable``1(System.String)">
+            <summary>
+            Gets a nullable value of the given underlying type from the argument.
+            </summary>
+            <typeparam name="T">The underlying type of the nullable value to get.</typeparam>
+            <param name="name">An optional argument or property name.</param>
+            <returns>A nullable value of underlying type <typeparamref name="T"/>.</returns>
+            <remarks>
+            This method throws an exception if the operation fails.
+            </remarks>
+        </member>
+        <member name="M:Microsoft.ClearScript.V8.FastProxy.V8FastArg.Get``1(System.String)">
+            <summary>
+            Gets a value of the given type from the argument.
+            </summary>
+            <typeparam name="T">The type of value to get.</typeparam>
+            <param name="name">An optional argument or property name.</param>
+            <returns>A value of type <typeparamref name="T"/>.</returns>
+            <remarks>
+            This method throws an exception if the operation fails.
+            </remarks>
+        </member>
+        <member name="T:Microsoft.ClearScript.V8.FastProxy.V8FastArgs">
+            <summary>
+            Represents a list of arguments passed to a fast host object from script code.
+            </summary>
+        </member>
+        <member name="P:Microsoft.ClearScript.V8.FastProxy.V8FastArgs.Count">
+            <summary>
+            Gets the number of arguments in the list.
+            </summary>
+        </member>
+        <member name="M:Microsoft.ClearScript.V8.FastProxy.V8FastArgs.IsFalsy(System.Int32)">
+            <summary>
+            Determines whether the argument at the specified index is <see href="https://developer.mozilla.org/en-US/docs/Glossary/Falsy">falsy</see>.
+            </summary>
+            <param name="index">The argument index.</param>
+            <returns><c>True</c> if the argument at the specified index is <see href="https://developer.mozilla.org/en-US/docs/Glossary/Falsy">falsy</see>, <c>false</c> otherwise.</returns>
+        </member>
+        <member name="M:Microsoft.ClearScript.V8.FastProxy.V8FastArgs.IsTruthy(System.Int32)">
+            <summary>
+            Determines whether the argument at the specified index is <see href="https://developer.mozilla.org/en-US/docs/Glossary/Truthy">truthy</see>.
+            </summary>
+            <param name="index">The argument index.</param>
+            <returns><c>True</c> if the argument at the specified index is <see href="https://developer.mozilla.org/en-US/docs/Glossary/Truthy">truthy</see>, <c>false</c> otherwise.</returns>
+        </member>
+        <member name="M:Microsoft.ClearScript.V8.FastProxy.V8FastArgs.IsUndefined(System.Int32)">
+            <summary>
+            Determines whether the argument at the specified index is <c><see href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/undefined">undefined</see></c>.
+            </summary>
+            <param name="index">The argument index.</param>
+            <returns><c>True</c> if the argument at the specified index is <c><see href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/undefined">undefined</see></c>, <c>false</c> otherwise.</returns>
+        </member>
+        <member name="M:Microsoft.ClearScript.V8.FastProxy.V8FastArgs.IsNull(System.Int32)">
+            <summary>
+            Determines whether the argument at the specified index is <c><see href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/null">null</see></c>.
+            </summary>
+            <param name="index">The argument index.</param>
+            <returns><c>True</c> if the argument at the specified index is <c><see href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/undefined">undefined</see></c>, <c>false</c> otherwise.</returns>
+        </member>
+        <member name="M:Microsoft.ClearScript.V8.FastProxy.V8FastArgs.TryGet(System.Int32,System.Boolean@)">
+            <summary>
+            Gets the <c><see cref="T:System.Boolean"/></c> value of the argument at the specified index if possible.
+            </summary>
+            <param name="index">The argument index.</param>
+            <param name="value">On return, the <c><see cref="T:System.Boolean"/></c> value of the argument at the specified index if the operation succeeded.</param>
+            <returns><c>True</c> if the operation succeeded, <c>false</c> otherwise.</returns>
+        </member>
+        <member name="M:Microsoft.ClearScript.V8.FastProxy.V8FastArgs.TryGet(System.Int32,System.Char@)">
+            <summary>
+            Gets the <c><see cref="T:System.Char"/></c> value of the argument at the specified index if possible.
+            </summary>
+            <param name="index">The argument index.</param>
+            <param name="value">On return, the <c><see cref="T:System.Char"/></c> value of the argument at the specified index if the operation succeeded.</param>
+            <returns><c>True</c> if the operation succeeded, <c>false</c> otherwise.</returns>
+        </member>
+        <member name="M:Microsoft.ClearScript.V8.FastProxy.V8FastArgs.TryGet(System.Int32,System.SByte@)">
+            <summary>
+            Gets the <c><see cref="T:System.SByte"/></c> value of the argument at the specified index if possible.
+            </summary>
+            <param name="index">The argument index.</param>
+            <param name="value">On return, the <c><see cref="T:System.SByte"/></c> value of the argument at the specified index if the operation succeeded.</param>
+            <returns><c>True</c> if the operation succeeded, <c>false</c> otherwise.</returns>
+        </member>
+        <member name="M:Microsoft.ClearScript.V8.FastProxy.V8FastArgs.TryGet(System.Int32,System.Byte@)">
+            <summary>
+            Gets the <c><see cref="T:System.Byte"/></c> value of the argument at the specified index if possible.
+            </summary>
+            <param name="index">The argument index.</param>
+            <param name="value">On return, the <c><see cref="T:System.Byte"/></c> value of the argument at the specified index if the operation succeeded.</param>
+            <returns><c>True</c> if the operation succeeded, <c>false</c> otherwise.</returns>
+        </member>
+        <member name="M:Microsoft.ClearScript.V8.FastProxy.V8FastArgs.TryGet(System.Int32,System.Int16@)">
+            <summary>
+            Gets the <c><see cref="T:System.Int16"/></c> value of the argument at the specified index if possible.
+            </summary>
+            <param name="index">The argument index.</param>
+            <param name="value">On return, the <c><see cref="T:System.Int16"/></c> value of the argument at the specified index if the operation succeeded.</param>
+            <returns><c>True</c> if the operation succeeded, <c>false</c> otherwise.</returns>
+        </member>
+        <member name="M:Microsoft.ClearScript.V8.FastProxy.V8FastArgs.TryGet(System.Int32,System.UInt16@)">
+            <summary>
+            Gets the <c><see cref="T:System.UInt16"/></c> value of the argument at the specified index if possible.
+            </summary>
+            <param name="index">The argument index.</param>
+            <param name="value">On return, the <c><see cref="T:System.UInt16"/></c> value of the argument at the specified index if the operation succeeded.</param>
+            <returns><c>True</c> if the operation succeeded, <c>false</c> otherwise.</returns>
+        </member>
+        <member name="M:Microsoft.ClearScript.V8.FastProxy.V8FastArgs.TryGet(System.Int32,System.Int32@)">
+            <summary>
+            Gets the <c><see cref="T:System.Int32"/></c> value of the argument at the specified index if possible.
+            </summary>
+            <param name="index">The argument index.</param>
+            <param name="value">On return, the <c><see cref="T:System.Int32"/></c> value of the argument at the specified index if the operation succeeded.</param>
+            <returns><c>True</c> if the operation succeeded, <c>false</c> otherwise.</returns>
+        </member>
+        <member name="M:Microsoft.ClearScript.V8.FastProxy.V8FastArgs.TryGet(System.Int32,System.UInt32@)">
+            <summary>
+            Gets the <c><see cref="T:System.UInt32"/></c> value of the argument at the specified index if possible.
+            </summary>
+            <param name="index">The argument index.</param>
+            <param name="value">On return, the <c><see cref="T:System.UInt32"/></c> value of the argument at the specified index if the operation succeeded.</param>
+            <returns><c>True</c> if the operation succeeded, <c>false</c> otherwise.</returns>
+        </member>
+        <member name="M:Microsoft.ClearScript.V8.FastProxy.V8FastArgs.TryGet(System.Int32,System.Int64@)">
+            <summary>
+            Gets the <c><see cref="T:System.Int64"/></c> value of the argument at the specified index if possible.
+            </summary>
+            <param name="index">The argument index.</param>
+            <param name="value">On return, the <c><see cref="T:System.Int64"/></c> value of the argument at the specified index if the operation succeeded.</param>
+            <returns><c>True</c> if the operation succeeded, <c>false</c> otherwise.</returns>
+        </member>
+        <member name="M:Microsoft.ClearScript.V8.FastProxy.V8FastArgs.TryGet(System.Int32,System.UInt64@)">
+            <summary>
+            Gets the <c><see cref="T:System.UInt64"/></c> value of the argument at the specified index if possible.
+            </summary>
+            <param name="index">The argument index.</param>
+            <param name="value">On return, the <c><see cref="T:System.UInt64"/></c> value of the argument at the specified index if the operation succeeded.</param>
+            <returns><c>True</c> if the operation succeeded, <c>false</c> otherwise.</returns>
+        </member>
+        <member name="M:Microsoft.ClearScript.V8.FastProxy.V8FastArgs.TryGet(System.Int32,System.Single@)">
+            <summary>
+            Gets the <c><see cref="T:System.Single"/></c> value of the argument at the specified index if possible.
+            </summary>
+            <param name="index">The argument index.</param>
+            <param name="value">On return, the <c><see cref="T:System.Single"/></c> value of the argument at the specified index if the operation succeeded.</param>
+            <returns><c>True</c> if the operation succeeded, <c>false</c> otherwise.</returns>
+        </member>
+        <member name="M:Microsoft.ClearScript.V8.FastProxy.V8FastArgs.TryGet(System.Int32,System.Double@)">
+            <summary>
+            Gets the <c><see cref="T:System.Double"/></c> value of the argument at the specified index if possible.
+            </summary>
+            <param name="index">The argument index.</param>
+            <param name="value">On return, the <c><see cref="T:System.Double"/></c> value of the argument at the specified index if the operation succeeded.</param>
+            <returns><c>True</c> if the operation succeeded, <c>false</c> otherwise.</returns>
+        </member>
+        <member name="M:Microsoft.ClearScript.V8.FastProxy.V8FastArgs.TryGet(System.Int32,System.Decimal@)">
+            <summary>
+            Gets the <c><see cref="T:System.Decimal"/></c> value of the argument at the specified index if possible.
+            </summary>
+            <param name="index">The argument index.</param>
+            <param name="value">On return, the <c><see cref="T:System.Decimal"/></c> value of the argument at the specified index if the operation succeeded.</param>
+            <returns><c>True</c> if the operation succeeded, <c>false</c> otherwise.</returns>
+        </member>
+        <member name="M:Microsoft.ClearScript.V8.FastProxy.V8FastArgs.TryGet(System.Int32,System.String@)">
+            <summary>
+            Gets the string value of the argument at the specified index if possible.
+            </summary>
+            <param name="index">The argument index.</param>
+            <param name="value">On return, the string value of the argument at the specified index if the operation succeeded.</param>
+            <returns><c>True</c> if the operation succeeded, <c>false</c> otherwise.</returns>
+        </member>
+        <member name="M:Microsoft.ClearScript.V8.FastProxy.V8FastArgs.TryGet(System.Int32,System.ReadOnlySpan{System.Char}@)">
+            <summary>
+            Gets the string value of the argument at the specified index as a <c><see href="https://learn.microsoft.com/en-us/dotnet/api/system.readonlyspan-1">ReadOnlySpan&#x3C;char&#x3E;</see></c> if possible.
+            </summary>
+            <param name="index">The argument index.</param>
+            <param name="value">On return, the string value of the argument at the specified index as a <c><see href="https://learn.microsoft.com/en-us/dotnet/api/system.readonlyspan-1">ReadOnlySpan&#x3C;char&#x3E;</see></c> if the operation succeeded.</param>
+            <returns><c>True</c> if the operation succeeded, <c>false</c> otherwise.</returns>
+        </member>
+        <member name="M:Microsoft.ClearScript.V8.FastProxy.V8FastArgs.TryGet(System.Int32,System.DateTime@)">
+            <summary>
+            Gets the <c><see cref="T:System.DateTime"/></c> value of the argument at the specified index if possible.
+            </summary>
+            <param name="index">The argument index.</param>
+            <param name="value">On return, the <c><see cref="T:System.DateTime"/></c> value of the argument at the specified index if the operation succeeded.</param>
+            <returns><c>True</c> if the operation succeeded, <c>false</c> otherwise.</returns>
+        </member>
+        <member name="M:Microsoft.ClearScript.V8.FastProxy.V8FastArgs.TryGet(System.Int32,System.Numerics.BigInteger@)">
+            <summary>
+            Gets the <c><see cref="T:System.Numerics.BigInteger"/></c> value of the argument at the specified index if possible.
+            </summary>
+            <param name="index">The argument index.</param>
+            <param name="value">On return, the <c><see cref="T:System.Numerics.BigInteger"/></c> value of the argument at the specified index if the operation succeeded.</param>
+            <returns><c>True</c> if the operation succeeded, <c>false</c> otherwise.</returns>
+        </member>
+        <member name="M:Microsoft.ClearScript.V8.FastProxy.V8FastArgs.TryGet``1(System.Int32,System.Nullable{``0}@)">
+            <summary>
+            Gets a nullable value of the given underlying type from the argument at the specified index if possible.
+            </summary>
+            <typeparam name="T">The underlying type of the nullable value to get.</typeparam>
+            <param name="index">The argument index.</param>
+            <param name="value">On return, a nullable value of underlying type <typeparamref name="T"/> if the operation succeeded.</param>
+            <returns><c>True</c> if the operation succeeded, <c>false</c> otherwise.</returns>
+        </member>
+        <member name="M:Microsoft.ClearScript.V8.FastProxy.V8FastArgs.TryGet``1(System.Int32,``0@)">
+            <summary>
+            Gets a value of the given type from the argument at the specified index if possible.
+            </summary>
+            <typeparam name="T">The type of value to get.</typeparam>
+            <param name="index">The argument index.</param>
+            <param name="value">On return, a value of type <typeparamref name="T"/> if the operation succeeded.</param>
+            <returns><c>True</c> if the operation succeeded, <c>false</c> otherwise.</returns>
+        </member>
+        <member name="M:Microsoft.ClearScript.V8.FastProxy.V8FastArgs.GetBoolean(System.Int32,System.String)">
+            <summary>
+            Gets the <c><see cref="T:System.Boolean"/></c> value of the argument at the specified index.
+            </summary>
+            <param name="index">The argument index.</param>
+            <param name="name">An optional argument or property name.</param>
+            <returns>The <c><see cref="T:System.Boolean"/></c> value of the argument at the specified index.</returns>
+            <remarks>
+            This method throws an exception if the operation fails.
+            </remarks>
+        </member>
+        <member name="M:Microsoft.ClearScript.V8.FastProxy.V8FastArgs.GetChar(System.Int32,System.String)">
+            <summary>
+            Gets the <c><see cref="T:System.Char"/></c> value of the argument at the specified index.
+            </summary>
+            <param name="index">The argument index.</param>
+            <param name="name">An optional argument or property name.</param>
+            <returns>The <c><see cref="T:System.Char"/></c> value of the argument at the specified index.</returns>
+            <remarks>
+            This method throws an exception if the operation fails.
+            </remarks>
+        </member>
+        <member name="M:Microsoft.ClearScript.V8.FastProxy.V8FastArgs.GetSByte(System.Int32,System.String)">
+            <summary>
+            Gets the <c><see cref="T:System.SByte"/></c> value of the argument at the specified index.
+            </summary>
+            <param name="index">The argument index.</param>
+            <param name="name">An optional argument or property name.</param>
+            <returns>The <c><see cref="T:System.SByte"/></c> value of the argument at the specified index.</returns>
+            <remarks>
+            This method throws an exception if the operation fails.
+            </remarks>
+        </member>
+        <member name="M:Microsoft.ClearScript.V8.FastProxy.V8FastArgs.GetByte(System.Int32,System.String)">
+            <summary>
+            Gets the <c><see cref="T:System.Byte"/></c> value of the argument at the specified index.
+            </summary>
+            <param name="index">The argument index.</param>
+            <param name="name">An optional argument or property name.</param>
+            <returns>The <c><see cref="T:System.Byte"/></c> value of the argument at the specified index.</returns>
+            <remarks>
+            This method throws an exception if the operation fails.
+            </remarks>
+        </member>
+        <member name="M:Microsoft.ClearScript.V8.FastProxy.V8FastArgs.GetInt16(System.Int32,System.String)">
+            <summary>
+            Gets the <c><see cref="T:System.Int16"/></c> value of the argument at the specified index.
+            </summary>
+            <param name="index">The argument index.</param>
+            <param name="name">An optional argument or property name.</param>
+            <returns>The <c><see cref="T:System.Int16"/></c> value of the argument at the specified index.</returns>
+            <remarks>
+            This method throws an exception if the operation fails.
+            </remarks>
+        </member>
+        <member name="M:Microsoft.ClearScript.V8.FastProxy.V8FastArgs.GetUInt16(System.Int32,System.String)">
+            <summary>
+            Gets the <c><see cref="T:System.UInt16"/></c> value of the argument at the specified index.
+            </summary>
+            <param name="index">The argument index.</param>
+            <param name="name">An optional argument or property name.</param>
+            <returns>The <c><see cref="T:System.UInt16"/></c> value of the argument at the specified index.</returns>
+            <remarks>
+            This method throws an exception if the operation fails.
+            </remarks>
+        </member>
+        <member name="M:Microsoft.ClearScript.V8.FastProxy.V8FastArgs.GetInt32(System.Int32,System.String)">
+            <summary>
+            Gets the <c><see cref="T:System.Int32"/></c> value of the argument at the specified index.
+            </summary>
+            <param name="index">The argument index.</param>
+            <param name="name">An optional argument or property name.</param>
+            <returns>The <c><see cref="T:System.Int32"/></c> value of the argument at the specified index.</returns>
+            <remarks>
+            This method throws an exception if the operation fails.
+            </remarks>
+        </member>
+        <member name="M:Microsoft.ClearScript.V8.FastProxy.V8FastArgs.GetUInt32(System.Int32,System.String)">
+            <summary>
+            Gets the <c><see cref="T:System.UInt32"/></c> value of the argument at the specified index.
+            </summary>
+            <param name="index">The argument index.</param>
+            <param name="name">An optional argument or property name.</param>
+            <returns>The <c><see cref="T:System.UInt32"/></c> value of the argument at the specified index.</returns>
+            <remarks>
+            This method throws an exception if the operation fails.
+            </remarks>
+        </member>
+        <member name="M:Microsoft.ClearScript.V8.FastProxy.V8FastArgs.GetInt64(System.Int32,System.String)">
+            <summary>
+            Gets the <c><see cref="T:System.Int64"/></c> value of the argument at the specified index.
+            </summary>
+            <param name="index">The argument index.</param>
+            <param name="name">An optional argument or property name.</param>
+            <returns>The <c><see cref="T:System.Int64"/></c> value of the argument at the specified index.</returns>
+            <remarks>
+            This method throws an exception if the operation fails.
+            </remarks>
+        </member>
+        <member name="M:Microsoft.ClearScript.V8.FastProxy.V8FastArgs.GetUInt64(System.Int32,System.String)">
+            <summary>
+            Gets the <c><see cref="T:System.UInt64"/></c> value of the argument at the specified index.
+            </summary>
+            <param name="index">The argument index.</param>
+            <param name="name">An optional argument or property name.</param>
+            <returns>The <c><see cref="T:System.UInt64"/></c> value of the argument at the specified index.</returns>
+            <remarks>
+            This method throws an exception if the operation fails.
+            </remarks>
+        </member>
+        <member name="M:Microsoft.ClearScript.V8.FastProxy.V8FastArgs.GetSingle(System.Int32,System.String)">
+            <summary>
+            Gets the <c><see cref="T:System.Single"/></c> value of the argument at the specified index.
+            </summary>
+            <param name="index">The argument index.</param>
+            <param name="name">An optional argument or property name.</param>
+            <returns>The <c><see cref="T:System.Single"/></c> value of the argument at the specified index.</returns>
+            <remarks>
+            This method throws an exception if the operation fails.
+            </remarks>
+        </member>
+        <member name="M:Microsoft.ClearScript.V8.FastProxy.V8FastArgs.GetDouble(System.Int32,System.String)">
+            <summary>
+            Gets the <c><see cref="T:System.Double"/></c> value of the argument at the specified index.
+            </summary>
+            <param name="index">The argument index.</param>
+            <param name="name">An optional argument or property name.</param>
+            <returns>The <c><see cref="T:System.Double"/></c> value of the argument at the specified index.</returns>
+            <remarks>
+            This method throws an exception if the operation fails.
+            </remarks>
+        </member>
+        <member name="M:Microsoft.ClearScript.V8.FastProxy.V8FastArgs.GetDecimal(System.Int32,System.String)">
+            <summary>
+            Gets the <c><see cref="T:System.Decimal"/></c> value of the argument at the specified index.
+            </summary>
+            <param name="index">The argument index.</param>
+            <param name="name">An optional argument or property name.</param>
+            <returns>The <c><see cref="T:System.Decimal"/></c> value of the argument at the specified index.</returns>
+            <remarks>
+            This method throws an exception if the operation fails.
+            </remarks>
+        </member>
+        <member name="M:Microsoft.ClearScript.V8.FastProxy.V8FastArgs.GetString(System.Int32,System.String)">
+            <summary>
+            Gets the string value of the argument at the specified index.
+            </summary>
+            <param name="index">The argument index.</param>
+            <param name="name">An optional argument or property name.</param>
+            <returns>The string value of the argument at the specified index.</returns>
+            <remarks>
+            This method throws an exception if the operation fails.
+            </remarks>
+        </member>
+        <member name="M:Microsoft.ClearScript.V8.FastProxy.V8FastArgs.GetCharSpan(System.Int32,System.String)">
+            <summary>
+            Gets the string value of the argument at the specified index as a <c><see href="https://learn.microsoft.com/en-us/dotnet/api/system.readonlyspan-1">ReadOnlySpan&#x3C;char&#x3E;</see></c>.
+            </summary>
+            <param name="index">The argument index.</param>
+            <param name="name">An optional argument or property name.</param>
+            <returns>The string value of the argument at the specified index as a <c><see href="https://learn.microsoft.com/en-us/dotnet/api/system.readonlyspan-1">ReadOnlySpan&#x3C;char&#x3E;</see></c>.</returns>
+            <remarks>
+            This method throws an exception if the operation fails.
+            </remarks>
+        </member>
+        <member name="M:Microsoft.ClearScript.V8.FastProxy.V8FastArgs.GetDateTime(System.Int32,System.String)">
+            <summary>
+            Gets the <c><see cref="T:System.DateTime"/></c> value of the argument at the specified index.
+            </summary>
+            <param name="index">The argument index.</param>
+            <param name="name">An optional argument or property name.</param>
+            <returns>The <c><see cref="T:System.DateTime"/></c> value of the argument at the specified index.</returns>
+            <remarks>
+            This method throws an exception if the operation fails.
+            </remarks>
+        </member>
+        <member name="M:Microsoft.ClearScript.V8.FastProxy.V8FastArgs.GetBigInteger(System.Int32,System.String)">
+            <summary>
+            Gets the <c><see cref="T:System.Numerics.BigInteger"/></c> value of the argument at the specified index.
+            </summary>
+            <param name="index">The argument index.</param>
+            <param name="name">An optional argument or property name.</param>
+            <returns>The <c><see cref="T:System.Numerics.BigInteger"/></c> value of the argument at the specified index.</returns>
+            <remarks>
+            This method throws an exception if the operation fails.
+            </remarks>
+        </member>
+        <member name="M:Microsoft.ClearScript.V8.FastProxy.V8FastArgs.GetNullable``1(System.Int32,System.String)">
+            <summary>
+            Gets a nullable value of the given underlying type from the argument at the specified index.
+            </summary>
+            <typeparam name="T">The underlying type of the nullable value to get.</typeparam>
+            <param name="index">The argument index.</param>
+            <param name="name">An optional argument or property name.</param>
+            <returns>A nullable value of underlying type <typeparamref name="T"/>.</returns>
+            <remarks>
+            This method throws an exception if the operation fails.
+            </remarks>
+        </member>
+        <member name="M:Microsoft.ClearScript.V8.FastProxy.V8FastArgs.Get``1(System.Int32,System.String)">
+            <summary>
+            Gets a value of the given type from the argument at the specified index.
+            </summary>
+            <typeparam name="T">The type of value to get.</typeparam>
+            <param name="index">The argument index.</param>
+            <param name="name">An optional argument or property name.</param>
+            <returns>A value of type <typeparamref name="T"/>.</returns>
+            <remarks>
+            This method throws an exception if the operation fails.
+            </remarks>
+        </member>
+        <member name="T:Microsoft.ClearScript.V8.FastProxy.V8FastHostObjectConfigurator`1">
+            <summary>
+            Represents a method that prepares a fast host object configuration.
+            </summary>
+            <typeparam name="TObject">The fast host object type.</typeparam>
+            <param name="configuration">The configuration associated with <typeparamref name="TObject"/>.</param>
+        </member>
+        <member name="T:Microsoft.ClearScript.V8.FastProxy.V8FastHostFieldAccessor`2">
+            <summary>
+            Represents a method that provides access to a field within a fast host object.
+            </summary>
+            <typeparam name="TObject">The fast host object type.</typeparam>
+            <typeparam name="TField">The field type.</typeparam>
+            <param name="instance">The object whose field to access.</param>
+            <returns>A reference to the field.</returns>
+        </member>
+        <member name="T:Microsoft.ClearScript.V8.FastProxy.V8FastHostPropertyGetter`1">
+            <summary>
+            Represents a method that gets the value of a fast host property.
+            </summary>
+            <typeparam name="TObject">The fast host object type.</typeparam>
+            <param name="instance">The object to search for the property.</param>
+            <param name="value">On return, the property value if it was found.</param>
+        </member>
+        <member name="T:Microsoft.ClearScript.V8.FastProxy.V8FastHostPropertySetter`1">
+            <summary>
+            Represents a method that sets the value of a fast host property.
+            </summary>
+            <typeparam name="TObject">The fast host object type.</typeparam>
+            <param name="instance">The object whose property to set.</param>
+            <param name="value">The property value.</param>
+        </member>
+        <member name="T:Microsoft.ClearScript.V8.FastProxy.V8FastHostMethodInvoker`1">
+            <summary>
+            Represents a method that invokes a fast host method.
+            </summary>
+            <typeparam name="TObject">The fast host object type.</typeparam>
+            <param name="instance">The object whose method to invoke.</param>
+            <param name="args">The arguments to pass to the method.</param>
+            <param name="result">On return, the method's return value.</param>
+        </member>
+        <member name="T:Microsoft.ClearScript.V8.FastProxy.V8FastHostFunctionInvoker">
+            <summary>
+            Represents a method that invokes a fast host function.
+            </summary>
+            <param name="asConstructor"><c>True</c> to invoke the function as a constructor, <c>false</c> otherwise.</param>
+            <param name="args">The arguments to pass to the function.</param>
+            <param name="result">On return, the function's return value.</param>
+        </member>
+        <member name="T:Microsoft.ClearScript.V8.FastProxy.V8FastHostDynamicObject`1">
+            <summary>
+            Provides an implementation of <c><see cref="T:Microsoft.ClearScript.V8.FastProxy.IV8FastHostObject"/></c> with a shared configuration and support for dynamic properties.
+            </summary>
+            <typeparam name="TObject">The fast host object type.</typeparam>
+            <remarks>
+            This class is a generic base for fast host object classes derived from it via the
+            <see href="https://en.wikipedia.org/wiki/Curiously_recurring_template_pattern">Curiously Recurring Template Pattern (CRTP)</see>.
+            It uses a shared instance of <c><see cref="T:Microsoft.ClearScript.V8.FastProxy.V8FastHostObjectConfiguration`1"/></c>
+            for each unique type argument. Derived classes are therefore advised to use a static
+            constructor to invoke the <c><see cref="M:Microsoft.ClearScript.V8.FastProxy.V8FastHostDynamicObject`1.Configure(Microsoft.ClearScript.V8.FastProxy.V8FastHostObjectConfigurator{`0})"/></c> method.
+            </remarks>
+        </member>
+        <member name="M:Microsoft.ClearScript.V8.FastProxy.V8FastHostDynamicObject`1.#ctor">
+            <summary>
+            Initializes a new <c><see cref="T:Microsoft.ClearScript.V8.FastProxy.V8FastHostDynamicObject`1"/></c> instance.
+            </summary>
+        </member>
+        <member name="M:Microsoft.ClearScript.V8.FastProxy.V8FastHostDynamicObject`1.Configure(Microsoft.ClearScript.V8.FastProxy.V8FastHostObjectConfigurator{`0})">
+            <summary>
+            Prepares the shared configuration associated with <typeparamref name="TObject"/>.
+            </summary>
+            <param name="configurator">The configuration callback.</param>
+            <remarks>
+            Derived classes are advised to invoke this method from a static constructor. Once
+            prepared, a fast host object configuration cannot be modified.
+            </remarks>
+        </member>
+        <member name="P:Microsoft.ClearScript.V8.FastProxy.V8FastHostDynamicObject`1.DynamicPropertyNames">
+            <inheritdoc/>
+        </member>
+        <member name="P:Microsoft.ClearScript.V8.FastProxy.V8FastHostDynamicObject`1.DynamicPropertyIndices">
+            <inheritdoc/>
+        </member>
+        <member name="M:Microsoft.ClearScript.V8.FastProxy.V8FastHostDynamicObject`1.GetDynamicProperty(System.String,Microsoft.ClearScript.V8.FastProxy.V8FastResult@)">
+            <summary>
+            Gets the value of a named dynamic property.
+            </summary>
+            <param name="name">The name of the dynamic property to get.</param>
+            <param name="value">On return, the value of the dynamic property if it was found.</param>
+        </member>
+        <member name="M:Microsoft.ClearScript.V8.FastProxy.V8FastHostDynamicObject`1.SetDynamicProperty(System.String,Microsoft.ClearScript.V8.FastProxy.V8FastArg@)">
+            <summary>
+            Sets the value of a named dynamic property.
+            </summary>
+            <param name="name">The name of the dynamic property to set.</param>
+            <param name="value">The property value.</param>
+        </member>
+        <member name="M:Microsoft.ClearScript.V8.FastProxy.V8FastHostDynamicObject`1.GetDynamicProperty(System.Int32,Microsoft.ClearScript.V8.FastProxy.V8FastResult@)">
+            <summary>
+            Gets the value of an indexed dynamic property.
+            </summary>
+            <param name="index">The index of the dynamic property to get.</param>
+            <param name="value">On return, the value of the dynamic property if it was found.</param>
+        </member>
+        <member name="M:Microsoft.ClearScript.V8.FastProxy.V8FastHostDynamicObject`1.SetDynamicProperty(System.Int32,Microsoft.ClearScript.V8.FastProxy.V8FastArg@)">
+            <summary>
+            Sets the value of an indexed dynamic property.
+            </summary>
+            <param name="index">The index of the dynamic property to set.</param>
+            <param name="value">The property value.</param>
+        </member>
+        <member name="M:Microsoft.ClearScript.V8.FastProxy.V8FastHostDynamicObject`1.HasDynamicProperty(System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Microsoft.ClearScript.V8.FastProxy.V8FastHostDynamicObject`1.HasDynamicProperty(System.Int32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Microsoft.ClearScript.V8.FastProxy.V8FastHostDynamicObject`1.DeleteDynamicProperty(System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Microsoft.ClearScript.V8.FastProxy.V8FastHostDynamicObject`1.DeleteDynamicProperty(System.Int32)">
+            <inheritdoc/>
+        </member>
+        <member name="T:Microsoft.ClearScript.V8.FastProxy.V8FastHostFunction">
+            <summary>
+            Provides an implementation of <c><see cref="T:Microsoft.ClearScript.V8.FastProxy.IV8FastHostFunction"/></c> with a private configuration.
+            </summary>
+        </member>
+        <member name="M:Microsoft.ClearScript.V8.FastProxy.V8FastHostFunction.#ctor(Microsoft.ClearScript.V8.FastProxy.V8FastHostFunctionInvoker)">
+            <summary>
+            Initializes a new <c><see cref="T:Microsoft.ClearScript.V8.FastProxy.V8FastHostFunction"/></c> instance.
+            </summary>
+            <param name="invoker">The function invocation callback.</param>
+        </member>
+        <member name="M:Microsoft.ClearScript.V8.FastProxy.V8FastHostFunction.#ctor(System.String,Microsoft.ClearScript.V8.FastProxy.V8FastHostFunctionInvoker)">
+            <summary>
+            Initializes a new <c><see cref="T:Microsoft.ClearScript.V8.FastProxy.V8FastHostFunction"/></c> instance with the specified name.
+            </summary>
+            <param name="name">The function name.</param>
+            <param name="invoker">The function invocation callback.</param>
+        </member>
+        <member name="M:Microsoft.ClearScript.V8.FastProxy.V8FastHostFunction.#ctor(System.Int32,Microsoft.ClearScript.V8.FastProxy.V8FastHostFunctionInvoker)">
+            <summary>
+            Initializes a new <c><see cref="T:Microsoft.ClearScript.V8.FastProxy.V8FastHostFunction"/></c> instance with the specified required argument count.
+            </summary>
+            <param name="requiredArgCount">The required argument count for the function.</param>
+            <param name="invoker">The function invocation callback.</param>
+        </member>
+        <member name="M:Microsoft.ClearScript.V8.FastProxy.V8FastHostFunction.#ctor(Microsoft.ClearScript.V8.FastProxy.V8FastHostObjectConfigurator{Microsoft.ClearScript.V8.FastProxy.V8FastHostFunction},Microsoft.ClearScript.V8.FastProxy.V8FastHostFunctionInvoker)">
+            <summary>
+            Initializes a new <c><see cref="T:Microsoft.ClearScript.V8.FastProxy.V8FastHostFunction"/></c> instance with the specified configuration callback.
+            </summary>
+            <param name="configurator">A callback for preparing the configuration associated with the instance.</param>
+            <param name="invoker">The function invocation callback.</param>
+        </member>
+        <member name="M:Microsoft.ClearScript.V8.FastProxy.V8FastHostFunction.#ctor(System.String,System.Int32,Microsoft.ClearScript.V8.FastProxy.V8FastHostFunctionInvoker)">
+            <summary>
+            Initializes a new <c><see cref="T:Microsoft.ClearScript.V8.FastProxy.V8FastHostFunction"/></c> instance with the specified name and required argument count.
+            </summary>
+            <param name="name">The function name.</param>
+            <param name="requiredArgCount">The required argument count for the function.</param>
+            <param name="invoker">The function invocation callback.</param>
+        </member>
+        <member name="M:Microsoft.ClearScript.V8.FastProxy.V8FastHostFunction.#ctor(System.String,Microsoft.ClearScript.V8.FastProxy.V8FastHostObjectConfigurator{Microsoft.ClearScript.V8.FastProxy.V8FastHostFunction},Microsoft.ClearScript.V8.FastProxy.V8FastHostFunctionInvoker)">
+            <summary>
+            Initializes a new <c><see cref="T:Microsoft.ClearScript.V8.FastProxy.V8FastHostFunction"/></c> instance with the specified name and configuration callback.
+            </summary>
+            <param name="name">The function name.</param>
+            <param name="configurator">A callback for preparing the configuration associated with the instance.</param>
+            <param name="invoker">The function invocation callback.</param>
+        </member>
+        <member name="M:Microsoft.ClearScript.V8.FastProxy.V8FastHostFunction.#ctor(System.Int32,Microsoft.ClearScript.V8.FastProxy.V8FastHostObjectConfigurator{Microsoft.ClearScript.V8.FastProxy.V8FastHostFunction},Microsoft.ClearScript.V8.FastProxy.V8FastHostFunctionInvoker)">
+            <summary>
+            Initializes a new <c><see cref="T:Microsoft.ClearScript.V8.FastProxy.V8FastHostFunction"/></c> instance with the specified required argument count and configuration callback.
+            </summary>
+            <param name="requiredArgCount">The required argument count for the function.</param>
+            <param name="configurator">A callback for preparing the configuration associated with the instance.</param>
+            <param name="invoker">The function invocation callback.</param>
+        </member>
+        <member name="M:Microsoft.ClearScript.V8.FastProxy.V8FastHostFunction.#ctor(System.String,System.Int32,Microsoft.ClearScript.V8.FastProxy.V8FastHostObjectConfigurator{Microsoft.ClearScript.V8.FastProxy.V8FastHostFunction},Microsoft.ClearScript.V8.FastProxy.V8FastHostFunctionInvoker)">
+            <summary>
+            Initializes a new <c><see cref="T:Microsoft.ClearScript.V8.FastProxy.V8FastHostFunction"/></c> instance with the specified name, required argument count, and configuration callback.
+            </summary>
+            <param name="name">The function name.</param>
+            <param name="requiredArgCount">The required argument count for the function.</param>
+            <param name="configurator">A callback for preparing the configuration associated with the instance.</param>
+            <param name="invoker">The function invocation callback.</param>
+        </member>
+        <member name="M:Microsoft.ClearScript.V8.FastProxy.V8FastHostFunction.VerifyFunctionCall(System.Boolean)">
+            <summary>
+            Verifies that a fast host function was invoked as a function and not as a constructor.
+            </summary>
+            <param name="asConstructor"><c>True</c> if the function was invoked as a constructor, <c>false</c> otherwise.</param>
+            <remarks>
+            This is a simple utility method that checks <paramref name="asConstructor"/> and throws
+            an exception if it is <c>true</c>. It is intended for use within fast host function
+            invocation callbacks.
+            </remarks>
+        </member>
+        <member name="M:Microsoft.ClearScript.V8.FastProxy.V8FastHostFunction.VerifyConstructorCall(System.Boolean)">
+            <summary>
+            Verifies that a fast host function was invoked as a constructor and not as a function.
+            </summary>
+            <param name="asConstructor"><c>True</c> if the function was invoked as a constructor, <c>false</c> otherwise.</param>
+            <remarks>
+            This is a simple utility method that checks <paramref name="asConstructor"/> and throws
+            an exception if it is <c>false</c>. It is intended for use within fast host function
+            invocation callbacks.
+            </remarks>
+        </member>
+        <member name="T:Microsoft.ClearScript.V8.FastProxy.V8FastHostFunctionOperations`1">
+            <summary>
+            Provides an implementation of <c><see cref="T:Microsoft.ClearScript.V8.FastProxy.IV8FastHostFunctionOperations"/></c> based on a private configuration.
+            </summary>
+            <typeparam name="TFunction">The fast host function type.</typeparam>
+        </member>
+        <member name="M:Microsoft.ClearScript.V8.FastProxy.V8FastHostFunctionOperations`1.#ctor(Microsoft.ClearScript.V8.FastProxy.V8FastHostFunctionInvoker)">
+            <summary>
+            Initializes a new <c><see cref="T:Microsoft.ClearScript.V8.FastProxy.V8FastHostFunctionOperations`1"/></c> instance.
+            </summary>
+            <param name="invoker">The function invocation callback.</param>
+        </member>
+        <member name="M:Microsoft.ClearScript.V8.FastProxy.V8FastHostFunctionOperations`1.#ctor(System.String,Microsoft.ClearScript.V8.FastProxy.V8FastHostFunctionInvoker)">
+            <summary>
+            Initializes a new <c><see cref="T:Microsoft.ClearScript.V8.FastProxy.V8FastHostFunctionOperations`1"/></c> instance with the specified name.
+            </summary>
+            <param name="name">The function name.</param>
+            <param name="invoker">The function invocation callback.</param>
+        </member>
+        <member name="M:Microsoft.ClearScript.V8.FastProxy.V8FastHostFunctionOperations`1.#ctor(System.Int32,Microsoft.ClearScript.V8.FastProxy.V8FastHostFunctionInvoker)">
+            <summary>
+            Initializes a new <c><see cref="T:Microsoft.ClearScript.V8.FastProxy.V8FastHostFunctionOperations`1"/></c> instance with the specified required argument count.
+            </summary>
+            <param name="requiredArgCount">The required argument count for the function.</param>
+            <param name="invoker">The function invocation callback.</param>
+        </member>
+        <member name="M:Microsoft.ClearScript.V8.FastProxy.V8FastHostFunctionOperations`1.#ctor(Microsoft.ClearScript.V8.FastProxy.V8FastHostObjectConfigurator{`0},Microsoft.ClearScript.V8.FastProxy.V8FastHostFunctionInvoker)">
+            <summary>
+            Initializes a new <c><see cref="T:Microsoft.ClearScript.V8.FastProxy.V8FastHostFunctionOperations`1"/></c> instance with the specified configuration callback.
+            </summary>
+            <param name="configurator">A callback for preparing the configuration associated with the instance.</param>
+            <param name="invoker">The function invocation callback.</param>
+        </member>
+        <member name="M:Microsoft.ClearScript.V8.FastProxy.V8FastHostFunctionOperations`1.#ctor(System.String,System.Int32,Microsoft.ClearScript.V8.FastProxy.V8FastHostFunctionInvoker)">
+            <summary>
+            Initializes a new <c><see cref="T:Microsoft.ClearScript.V8.FastProxy.V8FastHostFunctionOperations`1"/></c> instance with the specified name and required argument count.
+            </summary>
+            <param name="name">The function name.</param>
+            <param name="requiredArgCount">The required argument count for the function.</param>
+            <param name="invoker">The function invocation callback.</param>
+        </member>
+        <member name="M:Microsoft.ClearScript.V8.FastProxy.V8FastHostFunctionOperations`1.#ctor(System.String,Microsoft.ClearScript.V8.FastProxy.V8FastHostObjectConfigurator{`0},Microsoft.ClearScript.V8.FastProxy.V8FastHostFunctionInvoker)">
+            <summary>
+            Initializes a new <c><see cref="T:Microsoft.ClearScript.V8.FastProxy.V8FastHostFunctionOperations`1"/></c> instance with the specified name and configuration callback.
+            </summary>
+            <param name="name">The function name.</param>
+            <param name="configurator">A callback for preparing the configuration associated with the instance.</param>
+            <param name="invoker">The function invocation callback.</param>
+        </member>
+        <member name="M:Microsoft.ClearScript.V8.FastProxy.V8FastHostFunctionOperations`1.#ctor(System.Int32,Microsoft.ClearScript.V8.FastProxy.V8FastHostObjectConfigurator{`0},Microsoft.ClearScript.V8.FastProxy.V8FastHostFunctionInvoker)">
+            <summary>
+            Initializes a new <c><see cref="T:Microsoft.ClearScript.V8.FastProxy.V8FastHostFunctionOperations`1"/></c> instance with the specified required argument count and configuration callback.
+            </summary>
+            <param name="requiredArgCount">The required argument count for the function.</param>
+            <param name="configurator">A callback for preparing the configuration associated with the instance.</param>
+            <param name="invoker">The function invocation callback.</param>
+        </member>
+        <member name="M:Microsoft.ClearScript.V8.FastProxy.V8FastHostFunctionOperations`1.#ctor(System.String,System.Int32,Microsoft.ClearScript.V8.FastProxy.V8FastHostObjectConfigurator{`0},Microsoft.ClearScript.V8.FastProxy.V8FastHostFunctionInvoker)">
+            <summary>
+            Initializes a new <c><see cref="T:Microsoft.ClearScript.V8.FastProxy.V8FastHostFunctionOperations`1"/></c> instance with the specified name, required argument count, and configuration callback.
+            </summary>
+            <param name="name">The function name.</param>
+            <param name="requiredArgCount">The required argument count for the function.</param>
+            <param name="configurator">A callback for preparing the configuration associated with the instance.</param>
+            <param name="invoker">The function invocation callback.</param>
+        </member>
+        <member name="T:Microsoft.ClearScript.V8.FastProxy.V8FastHostMethod`1">
+            <summary>
+            Provides an implementation of <c><see cref="T:Microsoft.ClearScript.V8.FastProxy.IV8FastHostMethod"/></c> with a private configuration.
+            </summary>
+            <typeparam name="TObject">The fast host object type that supports the method.</typeparam>
+        </member>
+        <member name="M:Microsoft.ClearScript.V8.FastProxy.V8FastHostMethod`1.#ctor(`0,System.String,Microsoft.ClearScript.V8.FastProxy.V8FastHostMethodInvoker{`0})">
+            <summary>
+            Initializes a new <c><see cref="T:Microsoft.ClearScript.V8.FastProxy.V8FastHostMethod`1"/></c> instance.
+            </summary>
+            <param name="parent">The object whose method the instance represents.</param>
+            <param name="name">The method name.</param>
+            <param name="invoker">The method invocation callback.</param>
+        </member>
+        <member name="M:Microsoft.ClearScript.V8.FastProxy.V8FastHostMethod`1.#ctor(`0,System.String,System.Int32,Microsoft.ClearScript.V8.FastProxy.V8FastHostMethodInvoker{`0})">
+            <summary>
+            Initializes a new <c><see cref="T:Microsoft.ClearScript.V8.FastProxy.V8FastHostMethod`1"/></c> instance with the specified required argument count.
+            </summary>
+            <param name="parent">The object whose method the instance represents.</param>
+            <param name="name">The method name.</param>
+            <param name="requiredArgCount">The required argument count for the method.</param>
+            <param name="invoker">The method invocation callback.</param>
+        </member>
+        <member name="M:Microsoft.ClearScript.V8.FastProxy.V8FastHostMethod`1.#ctor(`0,System.String,Microsoft.ClearScript.V8.FastProxy.V8FastHostObjectConfigurator{Microsoft.ClearScript.V8.FastProxy.V8FastHostMethod{`0}},Microsoft.ClearScript.V8.FastProxy.V8FastHostMethodInvoker{`0})">
+            <summary>
+            Initializes a new <c><see cref="T:Microsoft.ClearScript.V8.FastProxy.V8FastHostMethod`1"/></c> instance with the specified configuration callback.
+            </summary>
+            <param name="parent">The object whose method the instance represents.</param>
+            <param name="name">The method name.</param>
+            <param name="configurator">A callback for preparing the configuration associated with the instance.</param>
+            <param name="invoker">The method invocation callback.</param>
+        </member>
+        <member name="M:Microsoft.ClearScript.V8.FastProxy.V8FastHostMethod`1.#ctor(`0,System.String,System.Int32,Microsoft.ClearScript.V8.FastProxy.V8FastHostObjectConfigurator{Microsoft.ClearScript.V8.FastProxy.V8FastHostMethod{`0}},Microsoft.ClearScript.V8.FastProxy.V8FastHostMethodInvoker{`0})">
+            <summary>
+            Initializes a new <c><see cref="T:Microsoft.ClearScript.V8.FastProxy.V8FastHostMethod`1"/></c> instance with the specified required argument count and configuration callback.
+            </summary>
+            <param name="parent">The object whose method the instance represents.</param>
+            <param name="name">The method name.</param>
+            <param name="requiredArgCount">The required argument count for the method.</param>
+            <param name="configurator">A callback for preparing the configuration associated with the instance.</param>
+            <param name="invoker">The method invocation callback.</param>
+        </member>
+        <member name="T:Microsoft.ClearScript.V8.FastProxy.V8FastHostMethodOperations`2">
+            <summary>
+            Provides an implementation of <c><see cref="T:Microsoft.ClearScript.V8.FastProxy.IV8FastHostMethodOperations"/></c> based on a private configuration.
+            </summary>
+            <typeparam name="TObject">The fast host object type that supports the method.</typeparam>
+            <typeparam name="TMethod">The fast host method type.</typeparam>
+        </member>
+        <member name="M:Microsoft.ClearScript.V8.FastProxy.V8FastHostMethodOperations`2.#ctor(`0,System.String,Microsoft.ClearScript.V8.FastProxy.V8FastHostMethodInvoker{`0})">
+            <summary>
+            Initializes a new <c><see cref="T:Microsoft.ClearScript.V8.FastProxy.V8FastHostMethodOperations`2"/></c> instance.
+            </summary>
+            <param name="target">The object whose method the instance supports.</param>
+            <param name="name">The method name.</param>
+            <param name="invoker">The method invocation callback.</param>
+        </member>
+        <member name="M:Microsoft.ClearScript.V8.FastProxy.V8FastHostMethodOperations`2.#ctor(`0,System.String,System.Int32,Microsoft.ClearScript.V8.FastProxy.V8FastHostMethodInvoker{`0})">
+            <summary>
+            Initializes a new <c><see cref="T:Microsoft.ClearScript.V8.FastProxy.V8FastHostMethodOperations`2"/></c> instance with the specified required argument count.
+            </summary>
+            <param name="target">The object whose method the instance supports.</param>
+            <param name="name">The method name.</param>
+            <param name="requiredArgCount">The required argument count for the method.</param>
+            <param name="invoker">The method invocation callback.</param>
+        </member>
+        <member name="M:Microsoft.ClearScript.V8.FastProxy.V8FastHostMethodOperations`2.#ctor(`0,System.String,Microsoft.ClearScript.V8.FastProxy.V8FastHostObjectConfigurator{`1},Microsoft.ClearScript.V8.FastProxy.V8FastHostMethodInvoker{`0})">
+            <summary>
+            Initializes a new <c><see cref="T:Microsoft.ClearScript.V8.FastProxy.V8FastHostMethodOperations`2"/></c> instance with the specified configuration callback.
+            </summary>
+            <param name="target">The object whose method the instance supports.</param>
+            <param name="name">The method name.</param>
+            <param name="configurator">A callback for preparing the configuration associated with the instance.</param>
+            <param name="invoker">The method invocation callback.</param>
+        </member>
+        <member name="M:Microsoft.ClearScript.V8.FastProxy.V8FastHostMethodOperations`2.#ctor(`0,System.String,System.Int32,Microsoft.ClearScript.V8.FastProxy.V8FastHostObjectConfigurator{`1},Microsoft.ClearScript.V8.FastProxy.V8FastHostMethodInvoker{`0})">
+            <summary>
+            Initializes a new <c><see cref="T:Microsoft.ClearScript.V8.FastProxy.V8FastHostMethodOperations`2"/></c> instance with the specified required argument count and configuration callback.
+            </summary>
+            <param name="target">The object whose method the instance supports.</param>
+            <param name="name">The method name.</param>
+            <param name="requiredArgCount">The required argument count for the method.</param>
+            <param name="configurator">A callback for preparing the configuration associated with the instance.</param>
+            <param name="invoker">The method invocation callback.</param>
+        </member>
+        <member name="T:Microsoft.ClearScript.V8.FastProxy.V8FastHostObject`1">
+            <summary>
+            Provides an implementation of <c><see cref="T:Microsoft.ClearScript.V8.FastProxy.IV8FastHostObject"/></c> with a shared configuration.
+            </summary>
+            <typeparam name="TObject">The fast host object type.</typeparam>
+            <remarks>
+            This class is a generic base for fast host object classes derived from it via the
+            <see href="https://en.wikipedia.org/wiki/Curiously_recurring_template_pattern">Curiously Recurring Template Pattern (CRTP)</see>.
+            It uses a shared instance of <c><see cref="T:Microsoft.ClearScript.V8.FastProxy.V8FastHostObjectConfiguration`1"/></c>
+            for each unique type argument. Derived classes are therefore advised to use a static
+            constructor to invoke the <c><see cref="M:Microsoft.ClearScript.V8.FastProxy.V8FastHostObject`1.Configure(Microsoft.ClearScript.V8.FastProxy.V8FastHostObjectConfigurator{`0})"/></c> method.
+            </remarks>
+        </member>
+        <member name="M:Microsoft.ClearScript.V8.FastProxy.V8FastHostObject`1.#ctor">
+            <summary>
+            Initializes a new <c><see cref="T:Microsoft.ClearScript.V8.FastProxy.V8FastHostObject`1"/></c> instance.
+            </summary>
+        </member>
+        <member name="M:Microsoft.ClearScript.V8.FastProxy.V8FastHostObject`1.Configure(Microsoft.ClearScript.V8.FastProxy.V8FastHostObjectConfigurator{`0})">
+            <summary>
+            Prepares the shared configuration associated with <typeparamref name="TObject"/>.
+            </summary>
+            <param name="configurator">The configuration callback.</param>
+            <remarks>
+            Derived classes are advised to invoke this method from a static constructor. Once
+            prepared, a fast host object configuration cannot be modified.
+            </remarks>
+        </member>
+        <member name="T:Microsoft.ClearScript.V8.FastProxy.V8FastHostObjectConfiguration`1">
+            <summary>
+            Represents a fast host object configuration.
+            </summary>
+            <typeparam name="TObject">The fast host object type.</typeparam>
+            <remarks>
+            This class provides a way to configure the scriptable capabilities of a fast host object or
+            type. It is not a required part of the interface between V8 and fast host objects, but it
+            is used extensively by ClearScript's fast host object implementation infrastructure.
+            </remarks>
+        </member>
+        <member name="M:Microsoft.ClearScript.V8.FastProxy.V8FastHostObjectConfiguration`1.#ctor">
+            <summary>
+            Initializes a new <c><see cref="T:Microsoft.ClearScript.V8.FastProxy.V8FastHostObjectConfiguration`1"/></c> instance.
+            </summary>
+        </member>
+        <member name="P:Microsoft.ClearScript.V8.FastProxy.V8FastHostObjectConfiguration`1.EnumerateIndexedProperties">
+            <summary>
+            Controls whether indexed properties are enumerable.
+            </summary>
+        </member>
+        <member name="M:Microsoft.ClearScript.V8.FastProxy.V8FastHostObjectConfiguration`1.AddPropertyGetter``1(System.String,Microsoft.ClearScript.V8.FastProxy.V8FastHostFieldAccessor{`0,``0})">
+            <summary>
+            Adds a getter for a field-backed read-only property.
+            </summary>
+            <typeparam name="TField">The field type.</typeparam>
+            <param name="name">The property name.</param>
+            <param name="accessor">A callback that provides access to the field.</param>
+            <remarks>
+            Properties configured by this method are not enumerable and cannot be assigned or
+            deleted.
+            </remarks>
+        </member>
+        <member name="M:Microsoft.ClearScript.V8.FastProxy.V8FastHostObjectConfiguration`1.AddPropertyGetter``1(System.String,Microsoft.ClearScript.V8.FastProxy.V8FastHostFieldAccessor{`0,``0},Microsoft.ClearScript.V8.FastProxy.V8FastHostPropertyFlags)">
+            <summary>
+            Adds a getter for a field-backed read-only property with the specified attributes.
+            </summary>
+            <typeparam name="TField">The field type.</typeparam>
+            <param name="name">The property name.</param>
+            <param name="accessor">A callback that provides access to the field.</param>
+            <param name="flags">The attributes of the property configured by this method.</param>
+            <remarks>
+            In the context of this method, the only effective property attributes are
+            <c><see cref="F:Microsoft.ClearScript.V8.FastProxy.V8FastHostPropertyFlags.Cacheable"/></c> and
+            <c><see cref="F:Microsoft.ClearScript.V8.FastProxy.V8FastHostPropertyFlags.Enumerable"/></c>. Properties configured by this
+            method cannot be assigned or deleted.
+            </remarks>
+        </member>
+        <member name="M:Microsoft.ClearScript.V8.FastProxy.V8FastHostObjectConfiguration`1.AddPropertyGetter(System.String,Microsoft.ClearScript.V8.FastProxy.V8FastHostPropertyGetter{`0})">
+            <summary>
+            Adds a getter for a read-only property.
+            </summary>
+            <param name="name">The property name.</param>
+            <param name="getter">A callback that gets the property value.</param>
+            <remarks>
+            Properties configured by this method are not enumerable and cannot be assigned or
+            deleted.
+            </remarks>
+        </member>
+        <member name="M:Microsoft.ClearScript.V8.FastProxy.V8FastHostObjectConfiguration`1.AddPropertyGetter(System.String,Microsoft.ClearScript.V8.FastProxy.V8FastHostPropertyGetter{`0},Microsoft.ClearScript.V8.FastProxy.V8FastHostPropertyFlags)">
+            <summary>
+            Adds a getter for a read-only property with the specified attributes.
+            </summary>
+            <param name="name">The property name.</param>
+            <param name="getter">A callback that gets the property value.</param>
+            <param name="flags">The attributes of the property configured by this method.</param>
+            <remarks>
+            In the context of this method, the only effective property attributes are
+            <c><see cref="F:Microsoft.ClearScript.V8.FastProxy.V8FastHostPropertyFlags.Cacheable"/></c> and
+            <c><see cref="F:Microsoft.ClearScript.V8.FastProxy.V8FastHostPropertyFlags.Enumerable"/></c>. Properties configured by this
+            method cannot be assigned or deleted.
+            </remarks>
+        </member>
+        <member name="M:Microsoft.ClearScript.V8.FastProxy.V8FastHostObjectConfiguration`1.AddPropertyAccessors``1(System.String,Microsoft.ClearScript.V8.FastProxy.V8FastHostFieldAccessor{`0,``0})">
+            <summary>
+            Adds accessors for a field-backed property.
+            </summary>
+            <typeparam name="TField">The field type.</typeparam>
+            <param name="name">The property name.</param>
+            <param name="accessor">A callback that provides access to the field.</param>
+            <remarks>
+            Properties configured by this method are not enumerable and cannot be deleted.
+            </remarks>
+        </member>
+        <member name="M:Microsoft.ClearScript.V8.FastProxy.V8FastHostObjectConfiguration`1.AddPropertyAccessors``1(System.String,Microsoft.ClearScript.V8.FastProxy.V8FastHostFieldAccessor{`0,``0},Microsoft.ClearScript.V8.FastProxy.V8FastHostPropertyFlags)">
+            <summary>
+            Adds accessors for a field-backed property with the specified attributes.
+            </summary>
+            <typeparam name="TField">The field type.</typeparam>
+            <param name="name">The property name.</param>
+            <param name="accessor">A callback that provides access to the field.</param>
+            <param name="flags">The attributes of the property configured by this method.</param>
+            <remarks>
+            In the context of this method, the only effective property attributes are
+            <c><see cref="F:Microsoft.ClearScript.V8.FastProxy.V8FastHostPropertyFlags.Cacheable"/></c> and
+            <c><see cref="F:Microsoft.ClearScript.V8.FastProxy.V8FastHostPropertyFlags.Enumerable"/></c>. Properties configured by this
+            method cannot be deleted.
+            </remarks>
+        </member>
+        <member name="M:Microsoft.ClearScript.V8.FastProxy.V8FastHostObjectConfiguration`1.AddPropertyAccessors(System.String,Microsoft.ClearScript.V8.FastProxy.V8FastHostPropertyGetter{`0},Microsoft.ClearScript.V8.FastProxy.V8FastHostPropertySetter{`0})">
+            <summary>
+            Adds accessors for a property.
+            </summary>
+            <param name="name">The property name.</param>
+            <param name="getter">A callback that gets the property value.</param>
+            <param name="setter">A callback that sets the property value.</param>
+            <remarks>
+            Properties configured by this method are not enumerable and cannot be deleted.
+            </remarks>
+        </member>
+        <member name="M:Microsoft.ClearScript.V8.FastProxy.V8FastHostObjectConfiguration`1.AddPropertyAccessors(System.String,Microsoft.ClearScript.V8.FastProxy.V8FastHostPropertyGetter{`0},Microsoft.ClearScript.V8.FastProxy.V8FastHostPropertySetter{`0},Microsoft.ClearScript.V8.FastProxy.V8FastHostPropertyFlags)">
+            <summary>
+            Adds accessors for a property with the specified attributes.
+            </summary>
+            <param name="name">The property name.</param>
+            <param name="getter">A callback that gets the property value.</param>
+            <param name="setter">A callback that sets the property value.</param>
+            <param name="flags">The attributes of the property configured by this method.</param>
+            <remarks>
+            In the context of this method, the only effective property attributes are
+            <c><see cref="F:Microsoft.ClearScript.V8.FastProxy.V8FastHostPropertyFlags.Cacheable"/></c> and
+            <c><see cref="F:Microsoft.ClearScript.V8.FastProxy.V8FastHostPropertyFlags.Enumerable"/></c>. Properties configured by this
+            method cannot be deleted.
+            </remarks>
+        </member>
+        <member name="M:Microsoft.ClearScript.V8.FastProxy.V8FastHostObjectConfiguration`1.AddMethodGetter(System.String,Microsoft.ClearScript.V8.FastProxy.V8FastHostMethodInvoker{`0})">
+            <summary>
+            Adds a getter for a method.
+            </summary>
+            <param name="name">The method name.</param>
+            <param name="invoker">The method invocation callback.</param>
+            <remarks>
+            Properties configured by this method are not enumerable and cannot be assigned or
+            deleted.
+            </remarks>
+        </member>
+        <member name="M:Microsoft.ClearScript.V8.FastProxy.V8FastHostObjectConfiguration`1.AddMethodGetter(System.String,System.Int32,Microsoft.ClearScript.V8.FastProxy.V8FastHostMethodInvoker{`0})">
+            <summary>
+            Adds a getter for a method with the specified required argument count.
+            </summary>
+            <param name="name">The method name.</param>
+            <param name="requiredArgCount">The required argument count for the method.</param>
+            <param name="invoker">The method invocation callback.</param>
+            <remarks>
+            Properties configured by this method are not enumerable and cannot be assigned or
+            deleted.
+            </remarks>
+        </member>
+        <member name="M:Microsoft.ClearScript.V8.FastProxy.V8FastHostObjectConfiguration`1.AddMethodGetter(System.String,Microsoft.ClearScript.V8.FastProxy.V8FastHostObjectConfigurator{Microsoft.ClearScript.V8.FastProxy.V8FastHostMethod{`0}},Microsoft.ClearScript.V8.FastProxy.V8FastHostMethodInvoker{`0})">
+            <summary>
+            Adds a getter for a method with the specified configuration callback.
+            </summary>
+            <param name="name">The method name.</param>
+            <param name="configurator">A callback for preparing the method's configuration.</param>
+            <param name="invoker">The method invocation callback.</param>
+            <remarks>
+            Properties configured by this method are not enumerable and cannot be assigned or
+            deleted.
+            </remarks>
+        </member>
+        <member name="M:Microsoft.ClearScript.V8.FastProxy.V8FastHostObjectConfiguration`1.AddMethodGetter(System.String,System.Int32,Microsoft.ClearScript.V8.FastProxy.V8FastHostObjectConfigurator{Microsoft.ClearScript.V8.FastProxy.V8FastHostMethod{`0}},Microsoft.ClearScript.V8.FastProxy.V8FastHostMethodInvoker{`0})">
+            <summary>
+            Adds a getter for a method with the specified required argument count and configuration callback.
+            </summary>
+            <param name="name">The method name.</param>
+            <param name="requiredArgCount">The required argument count for the method.</param>
+            <param name="configurator">A callback for preparing the method's configuration.</param>
+            <param name="invoker">The method invocation callback.</param>
+            <remarks>
+            Properties configured by this method are not enumerable and cannot be assigned or
+            deleted.
+            </remarks>
+        </member>
+        <member name="M:Microsoft.ClearScript.V8.FastProxy.V8FastHostObjectConfiguration`1.SetDynamicPropertiesGetter(System.Func{`0,Microsoft.ClearScript.V8.FastProxy.IV8FastHostDynamicProperties})">
+            <summary>
+            Sets a callback that gets the dynamic properties of a <typeparamref name="TObject"/> instance.
+            </summary>
+            <param name="getter">A callback that gets the dynamic properties of a <typeparamref name="TObject"/> instance.</param>
+        </member>
+        <member name="M:Microsoft.ClearScript.V8.FastProxy.V8FastHostObjectConfiguration`1.SetEnumeratorFactory(System.Func{`0,System.Collections.IEnumerator})">
+            <summary>
+            Sets a callback that creates an enumerator for a <typeparamref name="TObject"/> instance in <c><see cref="T:System.Collections.IEnumerator"/></c> form.
+            </summary>
+            <param name="factory">A callback that creates an enumerator for a <typeparamref name="TObject"/> instance in <c><see cref="T:System.Collections.IEnumerator"/></c> form.</param>
+        </member>
+        <member name="M:Microsoft.ClearScript.V8.FastProxy.V8FastHostObjectConfiguration`1.SetEnumeratorFactory``1(System.Func{`0,System.Collections.Generic.IEnumerator{``0}})">
+            <summary>
+            Sets a callback that creates an enumerator for a <typeparamref name="TObject"/> instance in <c><see cref="T:System.Collections.Generic.IEnumerator`1"/></c> form.
+            </summary>
+            <typeparam name="TItem">The enumerator's item type.</typeparam>
+            <param name="factory">A callback that creates an enumerator for a <typeparamref name="TObject"/> instance in <c><see cref="T:System.Collections.Generic.IEnumerator`1"/></c> form.</param>
+        </member>
+        <member name="M:Microsoft.ClearScript.V8.FastProxy.V8FastHostObjectConfiguration`1.SetEnumeratorFactory(System.Func{`0,Microsoft.ClearScript.V8.FastProxy.IV8FastEnumerator})">
+            <summary>
+            Sets a callback that creates an enumerator for a <typeparamref name="TObject"/> instance in <c><see cref="T:Microsoft.ClearScript.V8.FastProxy.IV8FastEnumerator"/></c> form.
+            </summary>
+            <param name="factory">A callback that creates an enumerator for a <typeparamref name="TObject"/> instance in <c><see cref="T:Microsoft.ClearScript.V8.FastProxy.IV8FastEnumerator"/></c> form.</param>
+        </member>
+        <member name="M:Microsoft.ClearScript.V8.FastProxy.V8FastHostObjectConfiguration`1.SetAsyncEnumeratorFactory``1(System.Func{`0,System.Collections.Generic.IAsyncEnumerator{``0}})">
+            <summary>
+            Sets a callback that creates an asynchronous enumerator for a <typeparamref name="TObject"/> instance in <c><see cref="T:System.Collections.Generic.IAsyncEnumerator`1"/></c> form.
+            </summary>
+            <typeparam name="TItem">The asynchronous enumerator's item type.</typeparam>
+            <param name="factory">A callback that creates an asynchronous enumerator for a <typeparamref name="TObject"/> instance in <c><see cref="T:System.Collections.Generic.IAsyncEnumerator`1"/></c> form.</param>
+        </member>
+        <member name="M:Microsoft.ClearScript.V8.FastProxy.V8FastHostObjectConfiguration`1.SetAsyncEnumeratorFactory(System.Func{`0,Microsoft.ClearScript.V8.FastProxy.IV8FastAsyncEnumerator})">
+            <summary>
+            Sets a callback that creates an asynchronous enumerator for a <typeparamref name="TObject"/> instance in <c><see cref="T:Microsoft.ClearScript.V8.FastProxy.IV8FastAsyncEnumerator"/></c> form.
+            </summary>
+            <param name="factory">A callback that creates an asynchronous enumerator for a <typeparamref name="TObject"/> instance in <c><see cref="T:Microsoft.ClearScript.V8.FastProxy.IV8FastAsyncEnumerator"/></c> form.</param>
+        </member>
+        <member name="T:Microsoft.ClearScript.V8.FastProxy.V8FastHostObjectOperations`1">
+            <summary>
+            Provides an implementation of <c><see cref="T:Microsoft.ClearScript.V8.FastProxy.IV8FastHostObjectOperations"/></c> based on a private configuration.
+            </summary>
+            <typeparam name="TObject">The fast host object type.</typeparam>
+        </member>
+        <member name="M:Microsoft.ClearScript.V8.FastProxy.V8FastHostObjectOperations`1.#ctor">
+            <summary>
+            Initializes a new <c><see cref="T:Microsoft.ClearScript.V8.FastProxy.V8FastHostObjectOperations`1"/></c> instance.
+            </summary>
+        </member>
+        <member name="M:Microsoft.ClearScript.V8.FastProxy.V8FastHostObjectOperations`1.#ctor(Microsoft.ClearScript.V8.FastProxy.V8FastHostObjectConfigurator{`0})">
+            <summary>
+            Initializes a new <c><see cref="T:Microsoft.ClearScript.V8.FastProxy.V8FastHostObjectOperations`1"/></c> instance with the specified configuration callback.
+            </summary>
+            <param name="configurator">A callback for preparing the configuration associated with the instance.</param>
+        </member>
+        <member name="M:Microsoft.ClearScript.V8.FastProxy.V8FastHostObjectOperations`1.Configure(Microsoft.ClearScript.V8.FastProxy.V8FastHostObjectConfigurator{`0})">
+            <summary>
+            Prepares the configuration associated with the <c><see cref="T:Microsoft.ClearScript.V8.FastProxy.V8FastHostObjectOperations`1"/></c> instance.
+            </summary>
+            <param name="configurator">A callback for preparing the configuration associated with the <c><see cref="T:Microsoft.ClearScript.V8.FastProxy.V8FastHostObjectOperations`1"/></c> instance.</param>
+            <remarks>
+            Once prepared, a fast host object configuration cannot be modified.
+            </remarks>
+        </member>
+        <member name="T:Microsoft.ClearScript.V8.FastProxy.V8FastHostPropertyFlags">
+            <summary>
+            Defines fast host property attributes.
+            </summary>
+        </member>
+        <member name="F:Microsoft.ClearScript.V8.FastProxy.V8FastHostPropertyFlags.None">
+            <summary>
+            Indicates that no attributes are present.
+            </summary>
+        </member>
+        <member name="F:Microsoft.ClearScript.V8.FastProxy.V8FastHostPropertyFlags.Available">
+            <summary>
+            Indicates that the property exists.
+            </summary>
+        </member>
+        <member name="F:Microsoft.ClearScript.V8.FastProxy.V8FastHostPropertyFlags.Cacheable">
+            <summary>
+            Indicates that the property value is a constant that may be cached for faster retrieval.
+            </summary>
+        </member>
+        <member name="F:Microsoft.ClearScript.V8.FastProxy.V8FastHostPropertyFlags.Enumerable">
+            <summary>
+            Indicates that the property is enumerable via mechanisms such as <c><see href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/for...in">for...in</see></c>.
+            </summary>
+        </member>
+        <member name="F:Microsoft.ClearScript.V8.FastProxy.V8FastHostPropertyFlags.Writable">
+            <summary>
+            Indicates that the property can be assigned.
+            </summary>
+        </member>
+        <member name="F:Microsoft.ClearScript.V8.FastProxy.V8FastHostPropertyFlags.Deletable">
+            <summary>
+            Indicates that the property can be deleted.
+            </summary>
+        </member>
+        <member name="T:Microsoft.ClearScript.V8.FastProxy.V8FastResult">
+            <summary>
+            Represents a result returned from a fast host property getter, method, or function.
+            </summary>
+        </member>
+        <member name="P:Microsoft.ClearScript.V8.FastProxy.V8FastResult.IsSet">
+            <summary>
+            Determines whether the result has been set.
+            </summary>
+            <remarks>
+            Once set, a result cannot be modified.
+            </remarks>
+        </member>
+        <member name="M:Microsoft.ClearScript.V8.FastProxy.V8FastResult.SetUndefined">
+            <summary>
+            Sets the result to <c><see href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/undefined">undefined</see></c>.
+            </summary>
+        </member>
+        <member name="M:Microsoft.ClearScript.V8.FastProxy.V8FastResult.SetNull">
+            <summary>
+            Sets the result to <c><see href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/null">null</see></c>.
+            </summary>
+        </member>
+        <member name="M:Microsoft.ClearScript.V8.FastProxy.V8FastResult.Set(System.Boolean)">
+            <summary>
+            Sets the result to a <c><see cref="T:System.Boolean"/></c> value.
+            </summary>
+            <param name="value">The <c><see cref="T:System.Boolean"/></c> value to assign to the result.</param>
+        </member>
+        <member name="M:Microsoft.ClearScript.V8.FastProxy.V8FastResult.Set(System.Char)">
+            <summary>
+            Sets the result to a <c><see cref="T:System.Char"/></c> value.
+            </summary>
+            <param name="value">The <c><see cref="T:System.Char"/></c> value to assign to the result.</param>
+        </member>
+        <member name="M:Microsoft.ClearScript.V8.FastProxy.V8FastResult.Set(System.SByte)">
+            <summary>
+            Sets the result to a <c><see cref="T:System.SByte"/></c> value.
+            </summary>
+            <param name="value">The <c><see cref="T:System.SByte"/></c> value to assign to the result.</param>
+        </member>
+        <member name="M:Microsoft.ClearScript.V8.FastProxy.V8FastResult.Set(System.Byte)">
+            <summary>
+            Sets the result to a <c><see cref="T:System.Byte"/></c> value.
+            </summary>
+            <param name="value">The <c><see cref="T:System.Byte"/></c> value to assign to the result.</param>
+        </member>
+        <member name="M:Microsoft.ClearScript.V8.FastProxy.V8FastResult.Set(System.Int16)">
+            <summary>
+            Sets the result to a <c><see cref="T:System.Int16"/></c> value.
+            </summary>
+            <param name="value">The <c><see cref="T:System.Int16"/></c> value to assign to the result.</param>
+        </member>
+        <member name="M:Microsoft.ClearScript.V8.FastProxy.V8FastResult.Set(System.UInt16)">
+            <summary>
+            Sets the result to a <c><see cref="T:System.UInt16"/></c> value.
+            </summary>
+            <param name="value">The <c><see cref="T:System.UInt16"/></c> value to assign to the result.</param>
+        </member>
+        <member name="M:Microsoft.ClearScript.V8.FastProxy.V8FastResult.Set(System.Int32)">
+            <summary>
+            Sets the result to a <c><see cref="T:System.Int32"/></c> value.
+            </summary>
+            <param name="value">The <c><see cref="T:System.Int32"/></c> value to assign to the result.</param>
+        </member>
+        <member name="M:Microsoft.ClearScript.V8.FastProxy.V8FastResult.Set(System.UInt32)">
+            <summary>
+            Sets the result to a <c><see cref="T:System.UInt32"/></c> value.
+            </summary>
+            <param name="value">The <c><see cref="T:System.UInt32"/></c> value to assign to the result.</param>
+        </member>
+        <member name="M:Microsoft.ClearScript.V8.FastProxy.V8FastResult.Set(System.Int64)">
+            <summary>
+            Sets the result to a <c><see cref="T:System.Int64"/></c> value.
+            </summary>
+            <param name="value">The <c><see cref="T:System.Int64"/></c> value to assign to the result.</param>
+        </member>
+        <member name="M:Microsoft.ClearScript.V8.FastProxy.V8FastResult.Set(System.UInt64)">
+            <summary>
+            Sets the result to a <c><see cref="T:System.UInt64"/></c> value.
+            </summary>
+            <param name="value">The <c><see cref="T:System.UInt64"/></c> value to assign to the result.</param>
+        </member>
+        <member name="M:Microsoft.ClearScript.V8.FastProxy.V8FastResult.Set(System.Single)">
+            <summary>
+            Sets the result to a <c><see cref="T:System.Single"/></c> value.
+            </summary>
+            <param name="value">The <c><see cref="T:System.Single"/></c> value to assign to the result.</param>
+        </member>
+        <member name="M:Microsoft.ClearScript.V8.FastProxy.V8FastResult.Set(System.Double)">
+            <summary>
+            Sets the result to a <c><see cref="T:System.Double"/></c> value.
+            </summary>
+            <param name="value">The <c><see cref="T:System.Double"/></c> value to assign to the result.</param>
+        </member>
+        <member name="M:Microsoft.ClearScript.V8.FastProxy.V8FastResult.Set(System.Decimal)">
+            <summary>
+            Sets the result to a <c><see cref="T:System.Decimal"/></c> value.
+            </summary>
+            <param name="value">The <c><see cref="T:System.Decimal"/></c> value to assign to the result.</param>
+        </member>
+        <member name="M:Microsoft.ClearScript.V8.FastProxy.V8FastResult.Set(System.String)">
+            <summary>
+            Sets the result to a string value.
+            </summary>
+            <param name="value">The string value to assign to the result.</param>
+        </member>
+        <member name="M:Microsoft.ClearScript.V8.FastProxy.V8FastResult.Set(System.ReadOnlySpan{System.Char})">
+            <summary>
+            Sets the result to a string value, specified as a <c><see href="https://learn.microsoft.com/en-us/dotnet/api/system.readonlyspan-1">ReadOnlySpan&#x3C;char&#x3E;</see></c>.
+            </summary>
+            <param name="value">The string value to assign to the result, specified as a <c><see href="https://learn.microsoft.com/en-us/dotnet/api/system.readonlyspan-1">ReadOnlySpan&#x3C;char&#x3E;</see></c>.</param>
+        </member>
+        <member name="M:Microsoft.ClearScript.V8.FastProxy.V8FastResult.Set(System.DateTime)">
+            <summary>
+            Sets the result to a <c><see cref="T:System.DateTime"/></c> value.
+            </summary>
+            <param name="value">The <c><see cref="T:System.DateTime"/></c> value to assign to the result.</param>
+        </member>
+        <member name="M:Microsoft.ClearScript.V8.FastProxy.V8FastResult.Set(System.Numerics.BigInteger)">
+            <summary>
+            Sets the result to a <c><see cref="T:System.Numerics.BigInteger"/></c> value.
+            </summary>
+            <param name="value">The <c><see cref="T:System.Numerics.BigInteger"/></c> value to assign to the result.</param>
+        </member>
+        <member name="M:Microsoft.ClearScript.V8.FastProxy.V8FastResult.Set``1(System.Nullable{``0})">
+            <summary>
+            Sets the result to a nullable value of the given underlying type.
+            </summary>
+            <typeparam name="T">The underlying type of the nullable value to assign.</typeparam>
+            <param name="value">A nullable value of underlying type <typeparamref name="T"/> to assign to the result.</param>
+        </member>
+        <member name="M:Microsoft.ClearScript.V8.FastProxy.V8FastResult.Set``1(``0)">
+            <summary>
+            Sets the result to a value of the given type.
+            </summary>
+            <typeparam name="T">The type of value to assign to the result.</typeparam>
+            <param name="value">A value of type <typeparamref name="T"/> to assign to the result.</param>
+        </member>
         <member name="T:Microsoft.ClearScript.V8.V8CacheKind">
             <summary>
             Defines caching options for V8 script compilation.
@@ -322,7 +2140,7 @@
             <summary>
             Initializes a new V8 runtime instance with the specified name.
             </summary>
-            <param name="name">A name to associate with the instance. Currently this name is used only as a label in presentation contexts such as debugger user interfaces.</param>
+            <param name="name">A name to associate with the instance. Currently, this name is used only as a label in presentation contexts such as debugger user interfaces.</param>
         </member>
         <member name="M:Microsoft.ClearScript.V8.V8Runtime.#ctor(Microsoft.ClearScript.V8.V8RuntimeConstraints)">
             <summary>
@@ -334,7 +2152,7 @@
             <summary>
             Initializes a new V8 runtime instance with the specified name and resource constraints.
             </summary>
-            <param name="name">A name to associate with the instance. Currently this name is used only as a label in presentation contexts such as debugger user interfaces.</param>
+            <param name="name">A name to associate with the instance. Currently, this name is used only as a label in presentation contexts such as debugger user interfaces.</param>
             <param name="constraints">Resource constraints for the instance.</param>
         </member>
         <member name="M:Microsoft.ClearScript.V8.V8Runtime.#ctor(Microsoft.ClearScript.V8.V8RuntimeFlags)">
@@ -354,14 +2172,14 @@
             <summary>
             Initializes a new V8 runtime instance with the specified name and options.
             </summary>
-            <param name="name">A name to associate with the instance. Currently this name is used only as a label in presentation contexts such as debugger user interfaces.</param>
+            <param name="name">A name to associate with the instance. Currently, this name is used only as a label in presentation contexts such as debugger user interfaces.</param>
             <param name="flags">A value that selects options for the operation.</param>
         </member>
         <member name="M:Microsoft.ClearScript.V8.V8Runtime.#ctor(System.String,Microsoft.ClearScript.V8.V8RuntimeFlags,System.Int32)">
             <summary>
             Initializes a new V8 runtime instance with the specified name, options, and debug port.
             </summary>
-            <param name="name">A name to associate with the instance. Currently this name is used only as a label in presentation contexts such as debugger user interfaces.</param>
+            <param name="name">A name to associate with the instance. Currently, this name is used only as a label in presentation contexts such as debugger user interfaces.</param>
             <param name="flags">A value that selects options for the operation.</param>
             <param name="debugPort">A TCP port on which to listen for a debugger connection.</param>
         </member>
@@ -384,7 +2202,7 @@
             <summary>
             Initializes a new V8 runtime instance with the specified name, resource constraints, and options.
             </summary>
-            <param name="name">A name to associate with the instance. Currently this name is used only as a label in presentation contexts such as debugger user interfaces.</param>
+            <param name="name">A name to associate with the instance. Currently, this name is used only as a label in presentation contexts such as debugger user interfaces.</param>
             <param name="constraints">Resource constraints for the instance.</param>
             <param name="flags">A value that selects options for the operation.</param>
         </member>
@@ -392,7 +2210,7 @@
             <summary>
             Initializes a new V8 runtime instance with the specified name, resource constraints, options, and debug port.
             </summary>
-            <param name="name">A name to associate with the instance. Currently this name is used only as a label in presentation contexts such as debugger user interfaces.</param>
+            <param name="name">A name to associate with the instance. Currently, this name is used only as a label in presentation contexts such as debugger user interfaces.</param>
             <param name="constraints">Resource constraints for the instance.</param>
             <param name="flags">A value that selects options for the operation.</param>
             <param name="debugPort">A TCP port on which to listen for a debugger connection.</param>
@@ -516,7 +2334,7 @@
             <summary>
             Creates a new V8 script engine instance with the specified name.
             </summary>
-            <param name="engineName">A name to associate with the instance. Currently this name is used only as a label in presentation contexts such as debugger user interfaces.</param>
+            <param name="engineName">A name to associate with the instance. Currently, this name is used only as a label in presentation contexts such as debugger user interfaces.</param>
             <returns>A new V8 script engine instance.</returns>
             <remarks>
             The new script engine instance shares the V8 runtime with other instances created by
@@ -564,7 +2382,7 @@
             <summary>
             Creates a new V8 script engine instance with the specified name and options.
             </summary>
-            <param name="engineName">A name to associate with the instance. Currently this name is used only as a label in presentation contexts such as debugger user interfaces.</param>
+            <param name="engineName">A name to associate with the instance. Currently, this name is used only as a label in presentation contexts such as debugger user interfaces.</param>
             <param name="flags">A value that selects options for the operation.</param>
             <returns>A new V8 script engine instance.</returns>
             <remarks>
@@ -583,7 +2401,7 @@
             <summary>
             Creates a new V8 script engine instance with the specified name, options, and debug port.
             </summary>
-            <param name="engineName">A name to associate with the instance. Currently this name is used only as a label in presentation contexts such as debugger user interfaces.</param>
+            <param name="engineName">A name to associate with the instance. Currently, this name is used only as a label in presentation contexts such as debugger user interfaces.</param>
             <param name="flags">A value that selects options for the operation.</param>
             <param name="debugPort">A TCP port on which to listen for a debugger connection.</param>
             <returns>A new V8 script engine instance.</returns>
@@ -610,7 +2428,7 @@
             <summary>
             Creates a compiled script with an associated document name.
             </summary>
-            <param name="documentName">A document name for the compiled script. Currently this name is used only as a label in presentation contexts such as debugger user interfaces.</param>
+            <param name="documentName">A document name for the compiled script. Currently, this name is used only as a label in presentation contexts such as debugger user interfaces.</param>
             <param name="code">The script code to compile.</param>
             <returns>A compiled script that can be executed by multiple V8 script engine instances.</returns>
         </member>
@@ -640,7 +2458,7 @@
             <summary>
             Creates a compiled script with an associated document name, generating cache data for accelerated recompilation.
             </summary>
-            <param name="documentName">A document name for the compiled script. Currently this name is used only as a label in presentation contexts such as debugger user interfaces.</param>
+            <param name="documentName">A document name for the compiled script. Currently, this name is used only as a label in presentation contexts such as debugger user interfaces.</param>
             <param name="code">The script code to compile.</param>
             <param name="cacheKind">The kind of cache data to be generated.</param>
             <param name="cacheBytes">Cache data for accelerated recompilation.</param>
@@ -687,7 +2505,7 @@
             <summary>
             Creates a compiled script with an associated document name, consuming previously generated cache data.
             </summary>
-            <param name="documentName">A document name for the compiled script. Currently this name is used only as a label in presentation contexts such as debugger user interfaces.</param>
+            <param name="documentName">A document name for the compiled script. Currently, this name is used only as a label in presentation contexts such as debugger user interfaces.</param>
             <param name="code">The script code to compile.</param>
             <param name="cacheKind">The kind of cache data to be consumed.</param>
             <param name="cacheBytes">Cache data for accelerated compilation.</param>
@@ -738,7 +2556,7 @@
             <summary>
             Creates a compiled script with an associated document name, consuming previously generated cache data and updating it if necessary.
             </summary>
-            <param name="documentName">A document name for the compiled script. Currently this name is used only as a label in presentation contexts such as debugger user interfaces.</param>
+            <param name="documentName">A document name for the compiled script. Currently, this name is used only as a label in presentation contexts such as debugger user interfaces.</param>
             <param name="code">The script code to compile.</param>
             <param name="cacheKind">The kind of cache data to be processed.</param>
             <param name="cacheBytes">Cache data for accelerated compilation.</param>
@@ -1222,7 +3040,7 @@
             <summary>
             Initializes a new V8 script engine instance with the specified name.
             </summary>
-            <param name="name">A name to associate with the instance. Currently this name is used only as a label in presentation contexts such as debugger user interfaces.</param>
+            <param name="name">A name to associate with the instance. Currently, this name is used only as a label in presentation contexts such as debugger user interfaces.</param>
             <remarks>
             A separate V8 runtime is created for the new script engine instance.
             </remarks>
@@ -1240,7 +3058,7 @@
             <summary>
             Initializes a new V8 script engine instance with the specified name and resource constraints.
             </summary>
-            <param name="name">A name to associate with the instance. Currently this name is used only as a label in presentation contexts such as debugger user interfaces.</param>
+            <param name="name">A name to associate with the instance. Currently, this name is used only as a label in presentation contexts such as debugger user interfaces.</param>
             <param name="constraints">Resource constraints for the V8 runtime (see remarks).</param>
             <remarks>
             A separate V8 runtime is created for the new script engine instance.
@@ -1269,7 +3087,7 @@
             <summary>
             Initializes a new V8 script engine instance with the specified name and options.
             </summary>
-            <param name="name">A name to associate with the instance. Currently this name is used only as a label in presentation contexts such as debugger user interfaces.</param>
+            <param name="name">A name to associate with the instance. Currently, this name is used only as a label in presentation contexts such as debugger user interfaces.</param>
             <param name="flags">A value that selects options for the operation.</param>
             <remarks>
             A separate V8 runtime is created for the new script engine instance.
@@ -1279,7 +3097,7 @@
             <summary>
             Initializes a new V8 script engine instance with the specified name, options, and debug port.
             </summary>
-            <param name="name">A name to associate with the instance. Currently this name is used only as a label in presentation contexts such as debugger user interfaces.</param>
+            <param name="name">A name to associate with the instance. Currently, this name is used only as a label in presentation contexts such as debugger user interfaces.</param>
             <param name="flags">A value that selects options for the operation.</param>
             <param name="debugPort">A TCP port on which to listen for a debugger connection.</param>
             <remarks>
@@ -1311,7 +3129,7 @@
             <summary>
             Initializes a new V8 script engine instance with the specified name, resource constraints, and options.
             </summary>
-            <param name="name">A name to associate with the instance. Currently this name is used only as a label in presentation contexts such as debugger user interfaces.</param>
+            <param name="name">A name to associate with the instance. Currently, this name is used only as a label in presentation contexts such as debugger user interfaces.</param>
             <param name="constraints">Resource constraints for the V8 runtime (see remarks).</param>
             <param name="flags">A value that selects options for the operation.</param>
             <remarks>
@@ -1322,7 +3140,7 @@
             <summary>
             Initializes a new V8 script engine instance with the specified name, resource constraints, options, and debug port.
             </summary>
-            <param name="name">A name to associate with the instance. Currently this name is used only as a label in presentation contexts such as debugger user interfaces.</param>
+            <param name="name">A name to associate with the instance. Currently, this name is used only as a label in presentation contexts such as debugger user interfaces.</param>
             <param name="constraints">Resource constraints for the V8 runtime (see remarks).</param>
             <param name="flags">A value that selects options for the operation.</param>
             <param name="debugPort">A TCP port on which to listen for a debugger connection.</param>
@@ -1452,7 +3270,7 @@
             <summary>
             Creates a compiled script with an associated document name.
             </summary>
-            <param name="documentName">A document name for the compiled script. Currently this name is used only as a label in presentation contexts such as debugger user interfaces.</param>
+            <param name="documentName">A document name for the compiled script. Currently, this name is used only as a label in presentation contexts such as debugger user interfaces.</param>
             <param name="code">The script code to compile.</param>
             <returns>A compiled script that can be executed multiple times without recompilation.</returns>
         </member>
@@ -1482,7 +3300,7 @@
             <summary>
             Creates a compiled script with an associated document name, generating cache data for accelerated recompilation.
             </summary>
-            <param name="documentName">A document name for the compiled script. Currently this name is used only as a label in presentation contexts such as debugger user interfaces.</param>
+            <param name="documentName">A document name for the compiled script. Currently, this name is used only as a label in presentation contexts such as debugger user interfaces.</param>
             <param name="code">The script code to compile.</param>
             <param name="cacheKind">The kind of cache data to be generated.</param>
             <param name="cacheBytes">Cache data for accelerated recompilation.</param>
@@ -1529,7 +3347,7 @@
             <summary>
             Creates a compiled script with an associated document name, consuming previously generated cache data.
             </summary>
-            <param name="documentName">A document name for the compiled script. Currently this name is used only as a label in presentation contexts such as debugger user interfaces.</param>
+            <param name="documentName">A document name for the compiled script. Currently, this name is used only as a label in presentation contexts such as debugger user interfaces.</param>
             <param name="code">The script code to compile.</param>
             <param name="cacheKind">The kind of cache data to be consumed.</param>
             <param name="cacheBytes">Cache data for accelerated compilation.</param>
@@ -1580,7 +3398,7 @@
             <summary>
             Creates a compiled script with an associated document name, consuming previously generated cache data and updating it if necessary.
             </summary>
-            <param name="documentName">A document name for the compiled script. Currently this name is used only as a label in presentation contexts such as debugger user interfaces.</param>
+            <param name="documentName">A document name for the compiled script. Currently, this name is used only as a label in presentation contexts such as debugger user interfaces.</param>
             <param name="code">The script code to compile.</param>
             <param name="cacheKind">The kind of cache data to be processed.</param>
             <param name="cacheBytes">Cache data for accelerated compilation.</param>
@@ -1993,25 +3811,35 @@
         <member name="F:Microsoft.ClearScript.V8.V8ScriptEngineFlags.EnableDynamicModuleImports">
             <summary>
             Specifies that
-            <see href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/import#Dynamic_Imports">dynamic module imports</see>
+            <see href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/import">dynamic module imports</see>
             are to be enabled. This is an experimental feature and may be removed in a future release.
             </summary>
         </member>
-        <member name="F:Microsoft.ClearScript.V8.V8ScriptEngineFlags.MarshalUnsafeLongAsBigInt">
+        <member name="F:Microsoft.ClearScript.V8.V8ScriptEngineFlags.MarshalUnsafeInt64AsBigInt">
             <summary>
-            Specifies that long integers with values greater than
+            Specifies that 64-bit integers with values greater than
             <c><see href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number/MAX_SAFE_INTEGER">Number.MAX_SAFE_INTEGER</see></c>
             or less than
             <c><see href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number/MIN_SAFE_INTEGER">Number.MIN_SAFE_INTEGER</see></c>
             are to be marshaled as
             <c><see href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/BigInt">BigInt</see></c>.
-            This option is ignored if <c><see cref="F:Microsoft.ClearScript.V8.V8ScriptEngineFlags.MarshalAllLongAsBigInt"/></c> is specified.
+            This option is ignored if <c><see cref="F:Microsoft.ClearScript.V8.V8ScriptEngineFlags.MarshalAllInt64AsBigInt"/></c> is specified.
+            </summary>
+        </member>
+        <member name="F:Microsoft.ClearScript.V8.V8ScriptEngineFlags.MarshalUnsafeLongAsBigInt">
+            <summary>
+            Equivalent to <c><see cref="F:Microsoft.ClearScript.V8.V8ScriptEngineFlags.MarshalUnsafeInt64AsBigInt"/></c>.
+            </summary>
+        </member>
+        <member name="F:Microsoft.ClearScript.V8.V8ScriptEngineFlags.MarshalAllInt64AsBigInt">
+            <summary>
+            Specifies that all 64-bit integers are to be marshaled as
+            <c><see href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/BigInt">BigInt</see></c>.
             </summary>
         </member>
         <member name="F:Microsoft.ClearScript.V8.V8ScriptEngineFlags.MarshalAllLongAsBigInt">
             <summary>
-            Specifies that all long integers are to be marshaled as
-            <c><see href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/BigInt">BigInt</see></c>.
+            Equivalent to <c><see cref="F:Microsoft.ClearScript.V8.V8ScriptEngineFlags.MarshalAllInt64AsBigInt"/></c>.
             </summary>
         </member>
         <member name="F:Microsoft.ClearScript.V8.V8ScriptEngineFlags.EnableTaskPromiseConversion">
@@ -2065,6 +3893,33 @@
             Specifies that support for synchronization contexts is to be enabled for task-promise
             interoperability. This option is ignored if
             <c><see cref="F:Microsoft.ClearScript.V8.V8ScriptEngineFlags.EnableTaskPromiseConversion"/></c> is not specified.
+            </summary>
+        </member>
+        <member name="F:Microsoft.ClearScript.V8.V8ScriptEngineFlags.AddPerformanceObject">
+            <summary>
+            Specifies that the
+            <c><see href="https://microsoft.github.io/ClearScript/2024/03/21/performance-api.html">Performance</see></c>
+            object is to be added to the script engine's global namespace. This object provides a
+            set of low-level native facilities for performance-sensitive scripts.
+            </summary>
+        </member>
+        <member name="F:Microsoft.ClearScript.V8.V8ScriptEngineFlags.SetTimerResolution">
+            <summary>
+            Specifies that native timers are to be set to the highest available resolution while
+            the current <c><see cref="T:Microsoft.ClearScript.V8.V8ScriptEngine"/></c> instance is active. This option is
+            ignored if <c><see cref="F:Microsoft.ClearScript.V8.V8ScriptEngineFlags.AddPerformanceObject"/></c> is not specified. It is only a
+            hint and may be ignored on some systems. On platforms that support it, this option can
+            degrade overall system performance or power efficiency, so caution is recommended.
+            </summary>
+        </member>
+        <member name="F:Microsoft.ClearScript.V8.V8ScriptEngineFlags.EnableArrayConversion">
+            <summary>
+            Specifies that the script engine is to perform automatic conversion between .NET and
+            JavaScript arrays. This conversion is bidirectional and lossy. A .NET array constructed
+            from a JavaScript array always has an element type of <c><see cref="T:System.Object"/></c>,
+            making it impossible for script code to specify a strongly typed array as a .NET method
+            argument or property value. Excessive copying of array contents can also impact
+            application performance and/or memory consumption. Caution is recommended.
             </summary>
         </member>
         <member name="T:Microsoft.ClearScript.V8.V8Settings">
