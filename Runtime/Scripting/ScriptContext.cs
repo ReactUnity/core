@@ -242,7 +242,12 @@ namespace ReactUnity.Scripting
             if (!engine.Capabilities.HasFlag(EngineCapabilities.URL))
             {
                 engine.SetGlobal("URL", typeof(URL));
-                engine.SetGlobal("URLSearchParams", typeof(URLSearchParams));
+                engine.SetGlobal("__URLSearchParamsOriginal", typeof(URLSearchParams));
+                engine.Execute(@"
+                    global.URLSearchParams = function URLSearchParams(init) {
+                        return new global.__URLSearchParamsOriginal(init);
+                    }
+                ", "ReactUnity/shims/urlsearchparams");
             }
 
             if (!engine.Capabilities.HasFlag(EngineCapabilities.WebSocket))

@@ -63,12 +63,15 @@ namespace ReactUnity.Scripting
             Runtime.DocumentSettings.ContextCallback = DocumentContextCallback;
 
             Engine = Runtime.CreateScriptEngine(
-                V8ScriptEngineFlags.MarshalAllLongAsBigInt |
-                V8ScriptEngineFlags.MarshalUnsafeLongAsBigInt |
+                V8ScriptEngineFlags.MarshalAllInt64AsBigInt |
+                V8ScriptEngineFlags.MarshalUnsafeInt64AsBigInt |
                 V8ScriptEngineFlags.DisableGlobalMembers |
                 V8ScriptEngineFlags.UseCaseInsensitiveMemberBinding |
                 V8ScriptEngineFlags.EnableTaskPromiseConversion |
                 V8ScriptEngineFlags.EnableValueTaskPromiseConversion |
+                V8ScriptEngineFlags.UseSynchronizationContexts |
+                V8ScriptEngineFlags.AddPerformanceObject |
+                V8ScriptEngineFlags.EnableArrayConversion |
 
                 (debug ? (
                     V8ScriptEngineFlags.EnableDebugging |
