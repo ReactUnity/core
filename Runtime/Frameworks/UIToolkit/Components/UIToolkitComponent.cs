@@ -152,14 +152,15 @@ namespace ReactUnity.UIToolkit
             TargetElement.style.letterSpacing = StylingHelpers.GetStyleFloat(computed, StyleProperties.letterSpacing).value;
             TargetElement.style.wordSpacing = StylingHelpers.GetStyleFloat(computed, StyleProperties.wordSpacing).value;
 #endif
+            TargetElement.style.unityTextOutlineColor = StylingHelpers.GetStyleColor(computed, StyleProperties.textStrokeColor).value;
+            TargetElement.style.unityTextOutlineWidth = StylingHelpers.GetStyleFloat(computed, StyleProperties.textStrokeWidth).value;
 
             if (computed.HasValue(StyleProperties.backgroundImage))
             {
                 var bg = computed.backgroundImage?.Get(0);
 
                 TargetElement.style.backgroundImage = null;
-                bg?.ResolveImage(Context, TargetElement.layout.size, tx =>
-                {
+                bg?.ResolveImage(Context, TargetElement.layout.size, tx => {
                     if (bg != ComputedStyle.backgroundImage?.Get(0)) return;
                     TargetElement.style.backgroundImage = tx?.Texture;
                 });
@@ -186,8 +187,7 @@ namespace ReactUnity.UIToolkit
 
             if (computed.HasValue(StyleProperties.fontFamily))
             {
-                if (computed.fontFamily != null) computed.fontFamily?.Get(Context, x =>
-                {
+                if (computed.fontFamily != null) computed.fontFamily?.Get(Context, x => {
                     if (x?.Font != null)
                     {
                         TargetElement.style.unityFont = x.Font;
@@ -196,7 +196,8 @@ namespace ReactUnity.UIToolkit
 #endif
                     }
 #if REACT_TMP
-                    else if (x?.TmpFontAsset != null) {
+                    else if (x?.TmpFontAsset != null)
+                    {
                         TargetElement.style.unityFont = x?.TmpFontAsset?.sourceFontFile;
 #if REACT_TEXTCORE
                         TargetElement.style.unityFontDefinition = FontDefinition.FromFont(x?.TmpFontAsset?.sourceFontFile);
@@ -294,10 +295,7 @@ namespace ReactUnity.UIToolkit
             }
             else TargetElement.transform.position = translate;
 
-            if(computed.pointerEvents == PointerEvents.None) 
-            {
-                TargetElement.pickingMode = PickingMode.Ignore;
-            }
+            TargetElement.pickingMode = computed.pointerEvents == PointerEvents.None ? PickingMode.Ignore : PickingMode.Position;
         }
 
         protected override void DestroySelf()
