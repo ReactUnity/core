@@ -95,6 +95,12 @@ namespace Yoga
             set => Native.YGNodeStyleSetDisplay(_ygNode, value);
         }
 
+        public YogaBoxSizing BoxSizing
+        {
+            get => Native.YGNodeStyleGetBoxSizing(_ygNode);
+            set => Native.YGNodeStyleSetBoxSizing(_ygNode, value);
+        }
+
         public YogaAlign AlignItems
         {
             get => Native.YGNodeStyleGetAlignItems(_ygNode);

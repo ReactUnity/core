@@ -23,7 +23,8 @@
         "ExCSS.dll",
         "Jint.dll",
         "websocket-sharp.dll",
-        "Newtonsoft.Json.dll"
+        "Newtonsoft.Json.dll",
+        "Acornima.dll"
     ],
     "autoReferenced": true,
     "defineConstraints": [],
@@ -102,6 +103,11 @@
             "name": "Unity",
             "expression": "2023.2",
             "define": "REACT_TMP_X2"
+        },
+        {
+            "name": "com.reactunity.jint",
+            "expression": "0.20.0",
+            "define": "REACT_JINT_ACORNIMA"
         }
     ],
     "noEngineReferences": false
