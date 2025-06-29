@@ -8,7 +8,6 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Reflection;
-using Esprima;
 using Jint;
 using Jint.Native;
 using Jint.Native.Object;
@@ -69,12 +68,21 @@ namespace ReactUnity.Scripting
             {
                 Execute(code, fileName, documentType);
             }
-            catch (ParserException ex)
+#if REACT_JINT_ACORNIMA
+            catch (Acornima.ParseErrorException ex)
             {
                 Debug.LogError($"Parser exception in line {ex.LineNumber} column {ex.Column}");
                 Debug.LogException(ex);
                 return ex;
             }
+#else
+            catch (Esprima.ParserException ex)
+            {
+                Debug.LogError($"Parser exception in line {ex.LineNumber} column {ex.Column}");
+                Debug.LogException(ex);
+                return ex;
+            }
+#endif
             catch (JavaScriptException ex)
             {
                 Debug.LogError($"JS exception in {ex.Location}");
