@@ -20,6 +20,10 @@ export interface Text<TSender = Cmp.TextComponent> extends View<TSender> {
   displayTooltipWhenElided?: boolean;
 }
 
+export interface Icon extends Text<Cmp.TextComponent> {
+  set?: ReactUnity.Styling.IconSet | string;
+}
+
 export interface Scroll<TSender = Cmp.ScrollViewComponent> extends View<TSender> {
   direction?: ScrollDirection;
   alwaysShow?: ScrollDirection;

@@ -15,7 +15,8 @@ export interface UIToolkitElements extends BaseElements<BaseElement<any>> {
   box: BaseElement;
   a: Components.Anchor & rc.RefAttributes<Cmp.UIToolkitComponent> & Children;
   anchor: Components.Anchor & rc.RefAttributes<Cmp.UIToolkitComponent> & Children;
-  text: Components.View & rc.RefAttributes<Cmp.TextComponent> & Children<Textable | Textable[]>;
+  text: Components.Text & rc.RefAttributes<Cmp.TextComponent> & Children<Textable | Textable[]>;
+  icon: Components.Icon & rc.RefAttributes<Cmp.TextComponent> & Children<Textable | Textable[]>;
   richtext: Components.View & rc.RefAttributes<Cmp.TextComponent> & Children<Textable | Textable[]>;
   label: Components.View & rc.RefAttributes<Cmp.TextComponent> & Children<Textable | Textable[]>;
   button: Components.Button & rc.RefAttributes<Cmp.ButtonComponent> & Children;
