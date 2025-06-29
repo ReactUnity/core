@@ -1,5 +1,5 @@
 import { Array2Aux, Array4Aux, PositioningLiteral } from './values';
-import { Direction, Display, FlexDirection, Overflow, Position, Wrap, YogaAlign, YogaJustify } from './yoga-enums';
+import { BoxSizing, Direction, Display, FlexDirection, Overflow, Position, Wrap, YogaAlign, YogaJustify } from './yoga-enums';
 
 // boolean, null and undefined are all mapped to undefined
 // pt, px and no unit is mapped to Point unit, e.g. 50px -> 50 Points
@@ -12,6 +12,7 @@ export interface Layout {
   overflow?: Overflow;
   styleDirection?: Direction;
   display?: Display;
+  boxSizing?: BoxSizing;
   wrap?: Wrap;
   positionType?: Position;
   justifyContent?: YogaJustify;
