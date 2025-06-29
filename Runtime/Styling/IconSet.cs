@@ -8,7 +8,10 @@ namespace ReactUnity.Styling
     public class IconSet : ScriptableObject
     {
         public string Name;
+        [Tooltip("For UGUI Use")]
         public TMPro.TMP_FontAsset FontAsset;
+        [Tooltip("For UIToolkit Use")]
+        public UnityEngine.TextCore.Text.FontAsset ToolkitFontAsset;
         public TextAsset Codepoints;
 
         [NonSerialized]

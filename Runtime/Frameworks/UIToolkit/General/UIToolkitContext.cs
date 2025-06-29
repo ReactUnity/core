@@ -14,6 +14,9 @@ namespace ReactUnity.UIToolkit
             public VisualElement HostElement;
             public Action<AudioClip, float, float> OnAudioPlayback;
             public override bool CalculatesLayout => false;
+
+            public List<IconSet> IconSets;
+            public IconSet DefaultIconSet;
         }
 
         public static Func<string, string, UIToolkitContext, IUIToolkitComponent<VisualElement>> defaultCreator =
@@ -42,6 +45,7 @@ namespace ReactUnity.UIToolkit
                 { "style", (tag, text, context) => new Styling.StyleComponent(context, tag, text) },
                 { "script", (tag, text, context) => new Scripting.ScriptComponent(context, tag, text) },
                 { "html", (tag, text, context) => new Html.HtmlComponent(context, tag) },
+                { "icon", (tag, text, context) => new IconComponent(text, context, tag) },
 #if UNITY_2020_1_OR_NEWER
                 { "helpbox", (tag, text, context) => new UIToolkitComponent<HelpBox>(context, tag) }, // TODO
 #endif
@@ -69,6 +73,10 @@ namespace ReactUnity.UIToolkit
                 { "hover", typeof(HoverStateHandler) },
             };
 
+        public IconSet DefaultIconSet { get; }
+        public Dictionary<string, IconSet> IconSets { get; } = new Dictionary<string, IconSet>() { };
+
+
         private Action<AudioClip, float, float> OnAudioPlayback = null;
 
         public VisualElement HostElement { get; }
@@ -77,6 +85,18 @@ namespace ReactUnity.UIToolkit
         {
             OnAudioPlayback = options.OnAudioPlayback;
             HostElement = options.HostElement;
+
+            if (options.IconSets != null)
+            {
+                if (options.IconSets.Count > 0) IconSets["default"] = options.IconSets[0];
+                foreach (var ic in options.IconSets) IconSets[ic.Name] = ic;
+            }
+
+            DefaultIconSet = options.DefaultIconSet;
+            if (DefaultIconSet == null)
+            {
+                if (IconSets.TryGetValue("default", out var def)) DefaultIconSet = def;
+            }
         }
 
         public virtual void Initialize()

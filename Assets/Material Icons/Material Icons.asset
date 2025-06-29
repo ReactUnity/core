@@ -14,4 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Name: Material Icons
   FontAsset: {fileID: 11400000, guid: 2d3b5da16a7081c4b9d07980bc7922c7, type: 2}
+  ToolkitFontAsset: {fileID: 11400000, guid: f6206075b3056fc44a6a93f14f64c615, type: 2}
   Codepoints: {fileID: 4900000, guid: d8af46a16a86a264c9638732d5ecc1e4, type: 3}
