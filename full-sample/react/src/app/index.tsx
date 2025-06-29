@@ -24,6 +24,7 @@ function App() {
         <button onClick={() => nav('todo')}>Todo App Example</button>
         <button onClick={() => nav('query')}>Tanstack Query</button>
         <button onClick={() => nav('redux')}>Redux</button>
+        <button onClick={() => nav('style-playground')}>Style Playground</button>
       </scroll>
 
       <scroll className={styles.scroll}>
