@@ -209,7 +209,7 @@ jobs:
           esac
 
       - name: Create badge
-        uses: emibcn/badge-action@v1
+        uses: emibcn/badge-action@v2
         with:
           label: Tests
           status: "${{ fromJSON( steps.test-results.outputs.json ).stats.tests_succ }}/${{ fromJSON( steps.test-results.outputs.json ).stats.tests }}"
@@ -235,14 +235,14 @@ jobs:
 
       - name: Fail workflow if tests failed
         if: steps.testRunner.outcome == 'failure' && (fromJSON(steps.test-results.outputs.json).conclusion == 'failure' || fromJSON(steps.test-results.outputs.json).stats.tests == 0)
-        uses: actions/github-script@v3
+        uses: actions/github-script@v7
         with:
           script: |
             core.setFailed('Tests failed!')
 
       - name: Upload Coverage to codecov
         if: matrix.coverage && matrix.main
-        uses: codecov/codecov-action@v3
+        uses: codecov/codecov-action@v5
         with:
           working-directory: ./core
           files: ../CodeCoverage/tests-opencov/PlayMode/TestCoverageResults_0000.xml,../CodeCoverage/tests-opencov/PlayMode/TestCoverageResults_0001.xml,../CodeCoverage/tests-opencov/EditMode/TestCoverageResults_0000.xml,../CodeCoverage/tests-opencov/EditMode/TestCoverageResults_0001.xml
@@ -258,15 +258,15 @@ jobs:
 
       - name: Setup Github Pages
         if: github.ref == 'refs/heads/main' && matrix.performance && always()
-        uses: actions/configure-pages@v2
+        uses: actions/configure-pages@v5
 
       - name: Upload Pages Artifact
         if: github.ref == 'refs/heads/main' && matrix.performance && always()
-        uses: actions/upload-pages-artifact@v1
+        uses: actions/upload-pages-artifact@v3
         with:
           path: "./tests/PerformanceReport/Performance"
 
       - name: Deploy to GitHub Pages
         if: github.ref == 'refs/heads/main' && matrix.performance && always()
         id: deployment
-        uses: actions/deploy-pages@v1
+        uses: actions/deploy-pages@v4
