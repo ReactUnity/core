@@ -1,14 +1,14 @@
 {
   "dependencies": {
     "com.reactunity.clearscript": {
-      "version": "0.17.0",
+      "version": "0.21.1",
       "depth": 0,
       "source": "registry",
       "dependencies": {},
       "url": "https://package.openupm.com"
     },
     "com.reactunity.core": {
-      "version": "0.19.10",
+      "version": "0.21.0",
       "depth": 0,
       "source": "registry",
       "dependencies": {
@@ -18,7 +18,7 @@
       "url": "https://package.openupm.com"
     },
     "com.reactunity.jint": {
-      "version": "0.17.0",
+      "version": "0.21.0",
       "depth": 0,
       "source": "registry",
       "dependencies": {},
