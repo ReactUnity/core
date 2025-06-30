@@ -1,6 +1,6 @@
 //
 // Types in assemblies: LibYoga
-// Generated 09/04/2024 18:59:49
+// Generated 01/07/2025 01:03:16
 //
 /* eslint-disable */
 
@@ -90,6 +90,10 @@ export declare namespace Yoga {
     GetType(): System.Type;
     ToString(): string;
   }
+  export enum YogaBoxSizing {
+    BorderBox = 0,
+    ContentBox = 1,
+  }
   export class YogaCloneNodeFunc {
     constructor(object: any, method: System.IntPtr);
     Method: System.Reflection.MethodInfo;
@@ -156,6 +160,7 @@ export declare namespace Yoga {
   export enum YogaDisplay {
     Flex = 0,
     None = 1,
+    Contents = 2,
   }
   export enum YogaEdge {
     Left = 0,
@@ -258,6 +263,7 @@ export declare namespace Yoga {
     FlexDirection: Yoga.YogaFlexDirection;
     JustifyContent: Yoga.YogaJustify;
     Display: Yoga.YogaDisplay;
+    BoxSizing: Yoga.YogaBoxSizing;
     AlignItems: Yoga.YogaAlign;
     AlignSelf: Yoga.YogaAlign;
     AlignContent: Yoga.YogaAlign;
@@ -274,9 +280,9 @@ export declare namespace Yoga {
     MinWidth: Yoga.YogaValue;
     MinHeight: Yoga.YogaValue;
     AspectRatio: number;
-    Gap: number;
-    ColumnGap: number;
-    RowGap: number;
+    Gap: Yoga.YogaValue;
+    ColumnGap: Yoga.YogaValue;
+    RowGap: Yoga.YogaValue;
     LayoutLeft: number;
     LayoutTop: number;
     LayoutRight: number;

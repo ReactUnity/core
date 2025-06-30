@@ -1,6 +1,6 @@
 //
 // Types in assemblies: ReactUnity, ReactUnity.Editor, ReactUnity.UGUI, ReactUnity.UIToolkit
-// Generated 09/04/2024 18:59:38
+// Generated 01/07/2025 01:03:16
 //
 /* eslint-disable */
 
@@ -370,7 +370,7 @@ export declare namespace ReactUnity {
     RemoveStyle(sheet: ReactUnity.Styling.StyleSheet): void;
     ResolvePath(path: string): string;
     CreateStaticScript(path: string): ReactUnity.ScriptSource;
-    PlayAudio(clip: UnityEngine.AudioClip): void;
+    PlayAudio(clip: UnityEngine.AudioClip, volume: number, pitch: number): void;
     Start(afterStart?: (() => void)): void;
     Dispose(): void;
     HandleUnknownProperty(cmp: ReactUnity.IReactComponent, propertyName: string, value: any): void;
@@ -448,6 +448,7 @@ export declare namespace ReactUnity {
     GetComponentsInParent(t: System.Type): UnityEngine.Component[];
     GetComponents(type: System.Type): UnityEngine.Component[];
     GetComponents(type: System.Type, results: UnityEngine.Component[]): void;
+    GetComponentIndex(): number;
     CompareTag(tag: string): boolean;
     CompareTag(tag: UnityEngine.TagHandle): boolean;
     SendMessageUpwards(methodName: string, value: any, options: UnityEngine.SendMessageOptions): void;
@@ -1217,6 +1218,8 @@ export declare namespace ReactUnity {
         static UseragentStylesheet: UnityEngine.TextAsset;
         IsEditorContext: boolean;
         StateHandlers: Record<string, System.Type>;
+        DefaultIconSet: ReactUnity.Styling.IconSet;
+        IconSets: Record<string, ReactUnity.Styling.IconSet>;
         HostElement: UnityEngine.UIElements.VisualElement;
         CalculatesLayout: boolean;
         Host: ReactUnity.IHostComponent;
@@ -1240,7 +1243,7 @@ export declare namespace ReactUnity {
         Disposables: (() => void)[];
         static ComponentCreators: System.Collections.Generic.Dictionary;
         Initialize(): void;
-        PlayAudio(clip: UnityEngine.AudioClip): void;
+        PlayAudio(clip: UnityEngine.AudioClip, volume: number, pitch: number): void;
         CalculateLayoutRecursively(): void;
         UpdateElementsRecursively(): void;
         LateUpdateElementsRecursively(): void;
@@ -1463,7 +1466,9 @@ export declare namespace ReactUnity {
         Inspector: ReactUnity.Editor.Renderer.ReactInspector;
         Property: ReactUnity.Editor.Renderer.ReactProperty;
         HostElement: UnityEngine.UIElements.VisualElement;
-        OnAudioPlayback: ((obj: UnityEngine.AudioClip) => void);
+        OnAudioPlayback: ((arg1: UnityEngine.AudioClip, arg2: number, arg3: number) => void);
+        IconSets: ReactUnity.Styling.IconSet[];
+        DefaultIconSet: ReactUnity.Styling.IconSet;
         Globals: ReactUnity.Helpers.GlobalRecord;
         Source: ReactUnity.ScriptSource;
         Timer: ReactUnity.Scheduling.ITimer;
@@ -1647,8 +1652,10 @@ export declare namespace ReactUnity {
         userData: any; // System.Object
         canGrabFocus: boolean;
         focusController: UnityEngine.UIElements.FocusController;
+        disablePlayModeTint: boolean;
         usageHints: UnityEngine.UIElements.UsageHints;
         transform: UnityEngine.UIElements.ITransform;
+        scaledPixelsPerPoint: number;
         layout: UnityEngine.Rect;
         contentRect: UnityEngine.Rect;
         worldBound: UnityEngine.Rect;
@@ -1663,6 +1670,7 @@ export declare namespace ReactUnity {
         generateVisualContent: ((obj: UnityEngine.UIElements.MeshGenerationContext) => void);
         dataSource: any; // System.Object
         dataSourcePath: Unity.Properties.PropertyPath;
+        dataSourceType: System.Type;
         experimental: UnityEngine.UIElements.IExperimentalFeatures;
         hierarchy: UnityEngine.UIElements.VisualElement_Hierarchy;
         cacheAsBitmap: boolean;
@@ -2024,8 +2032,10 @@ export declare namespace ReactUnity {
         userData: any; // System.Object
         canGrabFocus: boolean;
         focusController: UnityEngine.UIElements.FocusController;
+        disablePlayModeTint: boolean;
         usageHints: UnityEngine.UIElements.UsageHints;
         transform: UnityEngine.UIElements.ITransform;
+        scaledPixelsPerPoint: number;
         layout: UnityEngine.Rect;
         contentRect: UnityEngine.Rect;
         worldBound: UnityEngine.Rect;
@@ -2040,6 +2050,7 @@ export declare namespace ReactUnity {
         generateVisualContent: ((obj: UnityEngine.UIElements.MeshGenerationContext) => void);
         dataSource: any; // System.Object
         dataSourcePath: Unity.Properties.PropertyPath;
+        dataSourceType: System.Type;
         experimental: UnityEngine.UIElements.IExperimentalFeatures;
         hierarchy: UnityEngine.UIElements.VisualElement_Hierarchy;
         cacheAsBitmap: boolean;
@@ -2823,6 +2834,7 @@ export declare namespace ReactUnity {
       GetComponentsInParent(t: System.Type): UnityEngine.Component[];
       GetComponents(type: System.Type): UnityEngine.Component[];
       GetComponents(type: System.Type, results: UnityEngine.Component[]): void;
+      GetComponentIndex(): number;
       CompareTag(tag: string): boolean;
       CompareTag(tag: UnityEngine.TagHandle): boolean;
       SendMessageUpwards(methodName: string, value: any, options: UnityEngine.SendMessageOptions): void;
@@ -2980,6 +2992,7 @@ export declare namespace ReactUnity {
       GetComponentsInParent(t: System.Type): UnityEngine.Component[];
       GetComponents(type: System.Type): UnityEngine.Component[];
       GetComponents(type: System.Type, results: UnityEngine.Component[]): void;
+      GetComponentIndex(): number;
       CompareTag(tag: string): boolean;
       CompareTag(tag: UnityEngine.TagHandle): boolean;
       SendMessageUpwards(methodName: string, value: any, options: UnityEngine.SendMessageOptions): void;
@@ -3095,6 +3108,8 @@ export declare namespace ReactUnity {
       URL = 64,
       Navigator = 128,
       Encoding = 256,
+      AbortController = 512,
+      QueueMicrotask = 1024,
     }
     export enum JavascriptEngineType {
       Auto = 0,
@@ -3523,6 +3538,7 @@ export declare namespace ReactUnity {
         rel: string;
         type: string;
         href: string;
+        relList: any; // System.Object
         id: string;
         OnAppend(): void;
         OnRemove(): void;
@@ -3608,16 +3624,19 @@ export declare namespace ReactUnity {
         origin: string;
         host: string;
         port: string;
-        search: string;
-        hash: string;
         pathname: string;
         rawPathname: string;
+        search: string;
+        hash: string;
+        searchParams: ReactUnity.Scripting.DomProxies.URLSearchParams;
+        _search: string;
+        _hash: string;
         reload(): void;
         assign(href: string): void;
+        ToString(): string;
         Equals(obj: any): boolean;
         GetHashCode(): number;
         GetType(): System.Type;
-        ToString(): string;
       }
       export class NodeList<T = any> {
         constructor(values: T[]);
@@ -3650,14 +3669,37 @@ export declare namespace ReactUnity {
         origin: string;
         host: string;
         port: string;
-        search: string;
-        hash: string;
         pathname: string;
         rawPathname: string;
+        search: string;
+        hash: string;
+        searchParams: ReactUnity.Scripting.DomProxies.URLSearchParams;
+        _search: string;
+        _hash: string;
+        ToString(): string;
         Equals(obj: any): boolean;
         GetHashCode(): number;
         GetType(): System.Type;
+      }
+      export class URLSearchParams {
+        constructor();
+        constructor(init: string);
+        append(name: string, value: string): void;
+        'delete'(name: string): void;
+        get(name: string): string;
+        getAll(name: string): string[];
+        has(name: string): boolean;
+        set(name: string, value: string): void;
+        sort(): void;
+        keys(): string[];
+        values(): string[];
+        entries(): string[][];
+        forEach(callback: any, thisArg?: any): void;
+        GetEnumerator(): System.Collections.Generic.IEnumerator<string[]>;
         ToString(): string;
+        Equals(obj: any): boolean;
+        GetHashCode(): number;
+        GetType(): System.Type;
       }
       export class WebSocketOpenEventHandler {
         constructor(object: any, method: System.IntPtr);
@@ -3982,6 +4024,21 @@ export declare namespace ReactUnity {
     }
   }
   export namespace Styling {
+    export interface IAssetPool {
+      Assets: ReactUnity.Helpers.SerializableDictionary;
+    }
+    export class AssetPool {
+      constructor();
+      Assets: ReactUnity.Helpers.SerializableDictionary;
+      name: string;
+      hideFlags: UnityEngine.HideFlags;
+      SetDirty(): void;
+      GetInstanceID(): number;
+      GetHashCode(): number;
+      Equals(other: any): boolean;
+      ToString(): string;
+      GetType(): System.Type;
+    }
     export class CssFunctions {
       static Calc: ReactUnity.Styling.ICssFunction;
       static Steps: ReactUnity.Styling.ICssFunction;
@@ -4085,6 +4142,7 @@ export declare namespace ReactUnity {
       hideFlags: UnityEngine.HideFlags;
       Name: string;
       FontAsset: any; // TMPro.TMP_FontAsset
+      ToolkitFontAsset: UnityEngine.TextCore.Text.FontAsset;
       Codepoints: UnityEngine.TextAsset;
       CharacterMap: Record<string, string>;
       ConvertTextContent(text: string): string;
@@ -4220,6 +4278,8 @@ export declare namespace ReactUnity {
       maskSize: ReactUnity.Types.ICssValueList<ReactUnity.Types.BackgroundSize>;
       maskRepeatX: ReactUnity.Types.ICssValueList<ReactUnity.Types.BackgroundRepeat>;
       maskRepeatY: ReactUnity.Types.ICssValueList<ReactUnity.Types.BackgroundRepeat>;
+      filter: ReactUnity.Types.FilterDefinition;
+      backdropFilter: ReactUnity.Types.FilterDefinition;
       transitionProperty: ReactUnity.Types.ICssValueList<ReactUnity.Styling.Animations.TransitionProperty>;
       transitionDuration: ReactUnity.Types.ICssValueList<number>;
       transitionTimingFunction: ReactUnity.Types.ICssValueList<((value: number, start?: number, end?: number) => number)>;
@@ -4239,6 +4299,8 @@ export declare namespace ReactUnity {
       audioClip: ReactUnity.Types.ICssValueList<ReactUnity.Types.AudioReference>;
       audioIterationCount: ReactUnity.Types.ICssValueList<number>;
       audioDelay: ReactUnity.Types.ICssValueList<number>;
+      audioVolume: ReactUnity.Types.ICssValueList<number>;
+      audioPitch: ReactUnity.Types.ICssValueList<number>;
       UpdateParent(parent: ReactUnity.Styling.NodeStyle): void;
       GetRawStyleValue(prop: ReactUnity.Styling.IStyleProperty, fromChild?: boolean, activeStyle?: ReactUnity.Styling.NodeStyle): any;
       SetStyleValue(prop: ReactUnity.Styling.IStyleProperty, value: any): void;
@@ -4286,6 +4348,7 @@ export declare namespace ReactUnity {
       static FlexDirection: ReactUnity.Styling.LayoutProperty;
       static JustifyContent: ReactUnity.Styling.LayoutProperty;
       static Display: ReactUnity.Styling.LayoutProperty;
+      static BoxSizing: ReactUnity.Styling.LayoutProperty;
       static AlignItems: ReactUnity.Styling.LayoutProperty;
       static AlignSelf: ReactUnity.Styling.LayoutProperty;
       static AlignContent: ReactUnity.Styling.LayoutProperty;
@@ -4435,6 +4498,8 @@ export declare namespace ReactUnity {
       static maskSize: ReactUnity.Styling.ValueListStyleProperty;
       static maskRepeatX: ReactUnity.Styling.ValueListStyleProperty;
       static maskRepeatY: ReactUnity.Styling.ValueListStyleProperty;
+      static filter: ReactUnity.Styling.StyleProperty;
+      static backdropFilter: ReactUnity.Styling.StyleProperty;
       static transitionProperty: ReactUnity.Styling.ValueListStyleProperty;
       static transitionDuration: ReactUnity.Styling.ValueListStyleProperty;
       static transitionTimingFunction: ReactUnity.Styling.ValueListStyleProperty;
@@ -4454,6 +4519,8 @@ export declare namespace ReactUnity {
       static audioClip: ReactUnity.Styling.ValueListStyleProperty;
       static audioIterationCount: ReactUnity.Styling.ValueListStyleProperty;
       static audioDelay: ReactUnity.Styling.ValueListStyleProperty;
+      static audioVolume: ReactUnity.Styling.ValueListStyleProperty;
+      static audioPitch: ReactUnity.Styling.ValueListStyleProperty;
       static PropertyMap: System.Collections.Generic.Dictionary;
       Equals(obj: any): boolean;
       GetHashCode(): number;
@@ -5184,6 +5251,7 @@ export declare namespace ReactUnity {
         static BackgroundSizeConverter: ReactUnity.Styling.Converters.StyleConverterBase;
         static SortingLayerConverter: ReactUnity.Styling.Converters.StyleConverterBase;
         static BorderImageSliceConverter: ReactUnity.Styling.Converters.StyleConverterBase;
+        static FilterDefinitionConverter: ReactUnity.Styling.Converters.StyleConverterBase;
         static Get(type: System.Type): ReactUnity.Styling.Converters.StyleConverterBase;
         Equals(obj: any): boolean;
         GetHashCode(): number;
@@ -6037,6 +6105,26 @@ export declare namespace ReactUnity {
       GetType(): System.Type;
       ToString(): string;
     }
+    export class FilterDefinition {
+      constructor(blur?: number, brightness?: number, contrast?: number, grayscale?: number, hueRotate?: number, invert?: number, opacity?: number, saturate?: number, grain?: number, pixelate?: number, sepia?: number);
+      Blur: number;
+      Brightness: number;
+      Contrast: number;
+      Grayscale: number;
+      HueRotate: number;
+      Invert: number;
+      Opacity: number;
+      Saturate: number;
+      Grain: number;
+      Pixelate: number;
+      Sepia: number;
+      static Default: ReactUnity.Types.FilterDefinition;
+      Interpolate(to: any, t: number): any;
+      Equals(obj: any): boolean;
+      GetHashCode(): number;
+      GetType(): System.Type;
+      ToString(): string;
+    }
     export class FontSource {
       constructor();
       constructor(other: ReactUnity.Types.FontSource);
@@ -6426,6 +6514,17 @@ export declare namespace ReactUnity {
       CanHandleKeyword(keyword: ReactUnity.Styling.CssKeyword): boolean;
       Convert(value: any): ReactUnity.Styling.Computed.IComputedValue;
       Stringify(value: any): string;
+      Equals(obj: any): boolean;
+      GetHashCode(): number;
+      GetType(): System.Type;
+      ToString(): string;
+    }
+    export class FilterDefinition_Converter {
+      constructor();
+      CanHandleKeyword(keyword: ReactUnity.Styling.CssKeyword): boolean;
+      Convert(value: any): ReactUnity.Styling.Computed.IComputedValue;
+      Stringify(value: any): string;
+      StringifyInternal(value: any): string;
       Equals(obj: any): boolean;
       GetHashCode(): number;
       GetType(): System.Type;
@@ -9192,6 +9291,7 @@ export declare namespace ReactUnity {
       GetComponentsInParent(t: System.Type): UnityEngine.Component[];
       GetComponents(type: System.Type): UnityEngine.Component[];
       GetComponents(type: System.Type, results: UnityEngine.Component[]): void;
+      GetComponentIndex(): number;
       CompareTag(tag: string): boolean;
       CompareTag(tag: UnityEngine.TagHandle): boolean;
       SendMessageUpwards(methodName: string, value: any, options: UnityEngine.SendMessageOptions): void;
@@ -9257,7 +9357,7 @@ export declare namespace ReactUnity {
       Disposables: (() => void)[];
       static defaultCreator: ((arg1: string, arg2: string, arg3: ReactUnity.UGUI.UGUIContext) => ReactUnity.UGUI.UGUIComponent);
       static textCreator: ((arg1: string, arg2: string, arg3: ReactUnity.UGUI.UGUIContext) => ReactUnity.ITextComponent);
-      PlayAudio(clip: UnityEngine.AudioClip): void;
+      PlayAudio(clip: UnityEngine.AudioClip, volume: number, pitch: number): void;
       CreateNativeObject(name: string, ...components: System.Type[]): UnityEngine.GameObject;
       CalculateLayoutRecursively(): void;
       UpdateElementsRecursively(): void;
@@ -9388,6 +9488,7 @@ export declare namespace ReactUnity {
         GetComponentsInParent(t: System.Type): UnityEngine.Component[];
         GetComponents(type: System.Type): UnityEngine.Component[];
         GetComponents(type: System.Type, results: UnityEngine.Component[]): void;
+        GetComponentIndex(): number;
         CompareTag(tag: string): boolean;
         CompareTag(tag: UnityEngine.TagHandle): boolean;
         SendMessageUpwards(methodName: string, value: any, options: UnityEngine.SendMessageOptions): void;
@@ -9462,6 +9563,7 @@ export declare namespace ReactUnity {
         GetComponentsInParent(t: System.Type): UnityEngine.Component[];
         GetComponents(type: System.Type): UnityEngine.Component[];
         GetComponents(type: System.Type, results: UnityEngine.Component[]): void;
+        GetComponentIndex(): number;
         CompareTag(tag: string): boolean;
         CompareTag(tag: UnityEngine.TagHandle): boolean;
         SendMessageUpwards(methodName: string, value: any, options: UnityEngine.SendMessageOptions): void;
@@ -9544,6 +9646,7 @@ export declare namespace ReactUnity {
         GetComponentsInParent(t: System.Type): UnityEngine.Component[];
         GetComponents(type: System.Type): UnityEngine.Component[];
         GetComponents(type: System.Type, results: UnityEngine.Component[]): void;
+        GetComponentIndex(): number;
         CompareTag(tag: string): boolean;
         CompareTag(tag: UnityEngine.TagHandle): boolean;
         SendMessageUpwards(methodName: string, value: any, options: UnityEngine.SendMessageOptions): void;
@@ -9629,6 +9732,7 @@ export declare namespace ReactUnity {
         GetComponentsInParent(t: System.Type): UnityEngine.Component[];
         GetComponents(type: System.Type): UnityEngine.Component[];
         GetComponents(type: System.Type, results: UnityEngine.Component[]): void;
+        GetComponentIndex(): number;
         CompareTag(tag: string): boolean;
         CompareTag(tag: UnityEngine.TagHandle): boolean;
         SendMessageUpwards(methodName: string, value: any, options: UnityEngine.SendMessageOptions): void;
@@ -9705,6 +9809,7 @@ export declare namespace ReactUnity {
         GetComponentsInParent(t: System.Type): UnityEngine.Component[];
         GetComponents(type: System.Type): UnityEngine.Component[];
         GetComponents(type: System.Type, results: UnityEngine.Component[]): void;
+        GetComponentIndex(): number;
         CompareTag(tag: string): boolean;
         CompareTag(tag: UnityEngine.TagHandle): boolean;
         SendMessageUpwards(methodName: string, value: any, options: UnityEngine.SendMessageOptions): void;
@@ -9781,6 +9886,7 @@ export declare namespace ReactUnity {
         GetComponentsInParent(t: System.Type): UnityEngine.Component[];
         GetComponents(type: System.Type): UnityEngine.Component[];
         GetComponents(type: System.Type, results: UnityEngine.Component[]): void;
+        GetComponentIndex(): number;
         CompareTag(tag: string): boolean;
         CompareTag(tag: UnityEngine.TagHandle): boolean;
         SendMessageUpwards(methodName: string, value: any, options: UnityEngine.SendMessageOptions): void;
@@ -9857,6 +9963,7 @@ export declare namespace ReactUnity {
         GetComponentsInParent(t: System.Type): UnityEngine.Component[];
         GetComponents(type: System.Type): UnityEngine.Component[];
         GetComponents(type: System.Type, results: UnityEngine.Component[]): void;
+        GetComponentIndex(): number;
         CompareTag(tag: string): boolean;
         CompareTag(tag: UnityEngine.TagHandle): boolean;
         SendMessageUpwards(methodName: string, value: any, options: UnityEngine.SendMessageOptions): void;
@@ -9938,6 +10045,7 @@ export declare namespace ReactUnity {
         GetComponentsInParent(t: System.Type): UnityEngine.Component[];
         GetComponents(type: System.Type): UnityEngine.Component[];
         GetComponents(type: System.Type, results: UnityEngine.Component[]): void;
+        GetComponentIndex(): number;
         CompareTag(tag: string): boolean;
         CompareTag(tag: UnityEngine.TagHandle): boolean;
         SendMessageUpwards(methodName: string, value: any, options: UnityEngine.SendMessageOptions): void;
@@ -10063,6 +10171,7 @@ export declare namespace ReactUnity {
         GetComponentsInParent(t: System.Type): UnityEngine.Component[];
         GetComponents(type: System.Type): UnityEngine.Component[];
         GetComponents(type: System.Type, results: UnityEngine.Component[]): void;
+        GetComponentIndex(): number;
         CompareTag(tag: string): boolean;
         CompareTag(tag: UnityEngine.TagHandle): boolean;
         SendMessageUpwards(methodName: string, value: any, options: UnityEngine.SendMessageOptions): void;
@@ -10156,6 +10265,7 @@ export declare namespace ReactUnity {
         GetComponentsInParent(t: System.Type): UnityEngine.Component[];
         GetComponents(type: System.Type): UnityEngine.Component[];
         GetComponents(type: System.Type, results: UnityEngine.Component[]): void;
+        GetComponentIndex(): number;
         CompareTag(tag: string): boolean;
         CompareTag(tag: UnityEngine.TagHandle): boolean;
         SendMessageUpwards(methodName: string, value: any, options: UnityEngine.SendMessageOptions): void;
@@ -10231,6 +10341,7 @@ export declare namespace ReactUnity {
         GetComponentsInParent(t: System.Type): UnityEngine.Component[];
         GetComponents(type: System.Type): UnityEngine.Component[];
         GetComponents(type: System.Type, results: UnityEngine.Component[]): void;
+        GetComponentIndex(): number;
         CompareTag(tag: string): boolean;
         CompareTag(tag: UnityEngine.TagHandle): boolean;
         SendMessageUpwards(methodName: string, value: any, options: UnityEngine.SendMessageOptions): void;
@@ -10306,6 +10417,7 @@ export declare namespace ReactUnity {
         GetComponentsInParent(t: System.Type): UnityEngine.Component[];
         GetComponents(type: System.Type): UnityEngine.Component[];
         GetComponents(type: System.Type, results: UnityEngine.Component[]): void;
+        GetComponentIndex(): number;
         CompareTag(tag: string): boolean;
         CompareTag(tag: UnityEngine.TagHandle): boolean;
         SendMessageUpwards(methodName: string, value: any, options: UnityEngine.SendMessageOptions): void;
@@ -10381,6 +10493,7 @@ export declare namespace ReactUnity {
         GetComponentsInParent(t: System.Type): UnityEngine.Component[];
         GetComponents(type: System.Type): UnityEngine.Component[];
         GetComponents(type: System.Type, results: UnityEngine.Component[]): void;
+        GetComponentIndex(): number;
         CompareTag(tag: string): boolean;
         CompareTag(tag: UnityEngine.TagHandle): boolean;
         SendMessageUpwards(methodName: string, value: any, options: UnityEngine.SendMessageOptions): void;
@@ -10456,6 +10569,7 @@ export declare namespace ReactUnity {
         GetComponentsInParent(t: System.Type): UnityEngine.Component[];
         GetComponents(type: System.Type): UnityEngine.Component[];
         GetComponents(type: System.Type, results: UnityEngine.Component[]): void;
+        GetComponentIndex(): number;
         CompareTag(tag: string): boolean;
         CompareTag(tag: UnityEngine.TagHandle): boolean;
         SendMessageUpwards(methodName: string, value: any, options: UnityEngine.SendMessageOptions): void;
@@ -10531,6 +10645,7 @@ export declare namespace ReactUnity {
         GetComponentsInParent(t: System.Type): UnityEngine.Component[];
         GetComponents(type: System.Type): UnityEngine.Component[];
         GetComponents(type: System.Type, results: UnityEngine.Component[]): void;
+        GetComponentIndex(): number;
         CompareTag(tag: string): boolean;
         CompareTag(tag: UnityEngine.TagHandle): boolean;
         SendMessageUpwards(methodName: string, value: any, options: UnityEngine.SendMessageOptions): void;
@@ -10606,6 +10721,7 @@ export declare namespace ReactUnity {
         GetComponentsInParent(t: System.Type): UnityEngine.Component[];
         GetComponents(type: System.Type): UnityEngine.Component[];
         GetComponents(type: System.Type, results: UnityEngine.Component[]): void;
+        GetComponentIndex(): number;
         CompareTag(tag: string): boolean;
         CompareTag(tag: UnityEngine.TagHandle): boolean;
         SendMessageUpwards(methodName: string, value: any, options: UnityEngine.SendMessageOptions): void;
@@ -10682,6 +10798,7 @@ export declare namespace ReactUnity {
         GetComponentsInParent(t: System.Type): UnityEngine.Component[];
         GetComponents(type: System.Type): UnityEngine.Component[];
         GetComponents(type: System.Type, results: UnityEngine.Component[]): void;
+        GetComponentIndex(): number;
         CompareTag(tag: string): boolean;
         CompareTag(tag: UnityEngine.TagHandle): boolean;
         SendMessageUpwards(methodName: string, value: any, options: UnityEngine.SendMessageOptions): void;
@@ -10758,6 +10875,7 @@ export declare namespace ReactUnity {
         GetComponentsInParent(t: System.Type): UnityEngine.Component[];
         GetComponents(type: System.Type): UnityEngine.Component[];
         GetComponents(type: System.Type, results: UnityEngine.Component[]): void;
+        GetComponentIndex(): number;
         CompareTag(tag: string): boolean;
         CompareTag(tag: UnityEngine.TagHandle): boolean;
         SendMessageUpwards(methodName: string, value: any, options: UnityEngine.SendMessageOptions): void;
@@ -10850,6 +10968,7 @@ export declare namespace ReactUnity {
         GetComponentsInParent(t: System.Type): UnityEngine.Component[];
         GetComponents(type: System.Type): UnityEngine.Component[];
         GetComponents(type: System.Type, results: UnityEngine.Component[]): void;
+        GetComponentIndex(): number;
         CompareTag(tag: string): boolean;
         CompareTag(tag: UnityEngine.TagHandle): boolean;
         SendMessageUpwards(methodName: string, value: any, options: UnityEngine.SendMessageOptions): void;
@@ -10925,6 +11044,7 @@ export declare namespace ReactUnity {
         GetComponentsInParent(t: System.Type): UnityEngine.Component[];
         GetComponents(type: System.Type): UnityEngine.Component[];
         GetComponents(type: System.Type, results: UnityEngine.Component[]): void;
+        GetComponentIndex(): number;
         CompareTag(tag: string): boolean;
         CompareTag(tag: UnityEngine.TagHandle): boolean;
         SendMessageUpwards(methodName: string, value: any, options: UnityEngine.SendMessageOptions): void;
@@ -11000,6 +11120,7 @@ export declare namespace ReactUnity {
         GetComponentsInParent(t: System.Type): UnityEngine.Component[];
         GetComponents(type: System.Type): UnityEngine.Component[];
         GetComponents(type: System.Type, results: UnityEngine.Component[]): void;
+        GetComponentIndex(): number;
         CompareTag(tag: string): boolean;
         CompareTag(tag: UnityEngine.TagHandle): boolean;
         SendMessageUpwards(methodName: string, value: any, options: UnityEngine.SendMessageOptions): void;
@@ -11075,6 +11196,7 @@ export declare namespace ReactUnity {
         GetComponentsInParent(t: System.Type): UnityEngine.Component[];
         GetComponents(type: System.Type): UnityEngine.Component[];
         GetComponents(type: System.Type, results: UnityEngine.Component[]): void;
+        GetComponentIndex(): number;
         CompareTag(tag: string): boolean;
         CompareTag(tag: UnityEngine.TagHandle): boolean;
         SendMessageUpwards(methodName: string, value: any, options: UnityEngine.SendMessageOptions): void;
@@ -11150,6 +11272,7 @@ export declare namespace ReactUnity {
         GetComponentsInParent(t: System.Type): UnityEngine.Component[];
         GetComponents(type: System.Type): UnityEngine.Component[];
         GetComponents(type: System.Type, results: UnityEngine.Component[]): void;
+        GetComponentIndex(): number;
         CompareTag(tag: string): boolean;
         CompareTag(tag: UnityEngine.TagHandle): boolean;
         SendMessageUpwards(methodName: string, value: any, options: UnityEngine.SendMessageOptions): void;
@@ -11226,6 +11349,7 @@ export declare namespace ReactUnity {
         GetComponentsInParent(t: System.Type): UnityEngine.Component[];
         GetComponents(type: System.Type): UnityEngine.Component[];
         GetComponents(type: System.Type, results: UnityEngine.Component[]): void;
+        GetComponentIndex(): number;
         CompareTag(tag: string): boolean;
         CompareTag(tag: UnityEngine.TagHandle): boolean;
         SendMessageUpwards(methodName: string, value: any, options: UnityEngine.SendMessageOptions): void;
@@ -11301,6 +11425,7 @@ export declare namespace ReactUnity {
         GetComponentsInParent(t: System.Type): UnityEngine.Component[];
         GetComponents(type: System.Type): UnityEngine.Component[];
         GetComponents(type: System.Type, results: UnityEngine.Component[]): void;
+        GetComponentIndex(): number;
         CompareTag(tag: string): boolean;
         CompareTag(tag: UnityEngine.TagHandle): boolean;
         SendMessageUpwards(methodName: string, value: any, options: UnityEngine.SendMessageOptions): void;
@@ -11376,6 +11501,7 @@ export declare namespace ReactUnity {
         GetComponentsInParent(t: System.Type): UnityEngine.Component[];
         GetComponents(type: System.Type): UnityEngine.Component[];
         GetComponents(type: System.Type, results: UnityEngine.Component[]): void;
+        GetComponentIndex(): number;
         CompareTag(tag: string): boolean;
         CompareTag(tag: UnityEngine.TagHandle): boolean;
         SendMessageUpwards(methodName: string, value: any, options: UnityEngine.SendMessageOptions): void;
@@ -11452,6 +11578,7 @@ export declare namespace ReactUnity {
         GetComponentsInParent(t: System.Type): UnityEngine.Component[];
         GetComponents(type: System.Type): UnityEngine.Component[];
         GetComponents(type: System.Type, results: UnityEngine.Component[]): void;
+        GetComponentIndex(): number;
         CompareTag(tag: string): boolean;
         CompareTag(tag: UnityEngine.TagHandle): boolean;
         SendMessageUpwards(methodName: string, value: any, options: UnityEngine.SendMessageOptions): void;
@@ -11539,6 +11666,7 @@ export declare namespace ReactUnity {
         GetComponentsInParent(t: System.Type): UnityEngine.Component[];
         GetComponents(type: System.Type): UnityEngine.Component[];
         GetComponents(type: System.Type, results: UnityEngine.Component[]): void;
+        GetComponentIndex(): number;
         CompareTag(tag: string): boolean;
         CompareTag(tag: UnityEngine.TagHandle): boolean;
         SendMessageUpwards(methodName: string, value: any, options: UnityEngine.SendMessageOptions): void;
@@ -11614,6 +11742,7 @@ export declare namespace ReactUnity {
         GetComponentsInParent(t: System.Type): UnityEngine.Component[];
         GetComponents(type: System.Type): UnityEngine.Component[];
         GetComponents(type: System.Type, results: UnityEngine.Component[]): void;
+        GetComponentIndex(): number;
         CompareTag(tag: string): boolean;
         CompareTag(tag: UnityEngine.TagHandle): boolean;
         SendMessageUpwards(methodName: string, value: any, options: UnityEngine.SendMessageOptions): void;
@@ -11689,6 +11818,7 @@ export declare namespace ReactUnity {
         GetComponentsInParent(t: System.Type): UnityEngine.Component[];
         GetComponents(type: System.Type): UnityEngine.Component[];
         GetComponents(type: System.Type, results: UnityEngine.Component[]): void;
+        GetComponentIndex(): number;
         CompareTag(tag: string): boolean;
         CompareTag(tag: UnityEngine.TagHandle): boolean;
         SendMessageUpwards(methodName: string, value: any, options: UnityEngine.SendMessageOptions): void;
@@ -11764,6 +11894,7 @@ export declare namespace ReactUnity {
         GetComponentsInParent(t: System.Type): UnityEngine.Component[];
         GetComponents(type: System.Type): UnityEngine.Component[];
         GetComponents(type: System.Type, results: UnityEngine.Component[]): void;
+        GetComponentIndex(): number;
         CompareTag(tag: string): boolean;
         CompareTag(tag: UnityEngine.TagHandle): boolean;
         SendMessageUpwards(methodName: string, value: any, options: UnityEngine.SendMessageOptions): void;
@@ -11791,8 +11922,10 @@ export declare namespace ReactUnity {
         Root: UnityEngine.RectTransform;
         BorderRoot: UnityEngine.RectTransform;
         BackgroundRoot: UnityEngine.RectTransform;
+        Backdrop: UnityEngine.RectTransform;
         ShadowRoot: UnityEngine.RectTransform;
         BgImage: UnityEngine.UI.RawImage;
+        BackdropFilter: ReactUnity.UGUI.Shapes.WebFilter;
         BorderGraphic: ReactUnity.UGUI.Shapes.WebBorder;
         OutlineGraphic: ReactUnity.UGUI.Shapes.WebBorder;
         BorderImage: ReactUnity.UGUI.Shapes.WebBorderImage;
@@ -11860,6 +11993,7 @@ export declare namespace ReactUnity {
         GetComponentsInParent(t: System.Type): UnityEngine.Component[];
         GetComponents(type: System.Type): UnityEngine.Component[];
         GetComponents(type: System.Type, results: UnityEngine.Component[]): void;
+        GetComponentIndex(): number;
         CompareTag(tag: string): boolean;
         CompareTag(tag: UnityEngine.TagHandle): boolean;
         SendMessageUpwards(methodName: string, value: any, options: UnityEngine.SendMessageOptions): void;
@@ -11937,6 +12071,7 @@ export declare namespace ReactUnity {
         GetComponentsInParent(t: System.Type): UnityEngine.Component[];
         GetComponents(type: System.Type): UnityEngine.Component[];
         GetComponents(type: System.Type, results: UnityEngine.Component[]): void;
+        GetComponentIndex(): number;
         CompareTag(tag: string): boolean;
         CompareTag(tag: UnityEngine.TagHandle): boolean;
         SendMessageUpwards(methodName: string, value: any, options: UnityEngine.SendMessageOptions): void;
@@ -12027,6 +12162,7 @@ export declare namespace ReactUnity {
         GetComponentsInParent(t: System.Type): UnityEngine.Component[];
         GetComponents(type: System.Type): UnityEngine.Component[];
         GetComponents(type: System.Type, results: UnityEngine.Component[]): void;
+        GetComponentIndex(): number;
         CompareTag(tag: string): boolean;
         CompareTag(tag: UnityEngine.TagHandle): boolean;
         SendMessageUpwards(methodName: string, value: any, options: UnityEngine.SendMessageOptions): void;
@@ -12105,6 +12241,7 @@ export declare namespace ReactUnity {
         GetComponentsInParent(t: System.Type): UnityEngine.Component[];
         GetComponents(type: System.Type): UnityEngine.Component[];
         GetComponents(type: System.Type, results: UnityEngine.Component[]): void;
+        GetComponentIndex(): number;
         CompareTag(tag: string): boolean;
         CompareTag(tag: UnityEngine.TagHandle): boolean;
         SendMessageUpwards(methodName: string, value: any, options: UnityEngine.SendMessageOptions): void;
@@ -12181,6 +12318,7 @@ export declare namespace ReactUnity {
         GetComponentsInParent(t: System.Type): UnityEngine.Component[];
         GetComponents(type: System.Type): UnityEngine.Component[];
         GetComponents(type: System.Type, results: UnityEngine.Component[]): void;
+        GetComponentIndex(): number;
         CompareTag(tag: string): boolean;
         CompareTag(tag: UnityEngine.TagHandle): boolean;
         SendMessageUpwards(methodName: string, value: any, options: UnityEngine.SendMessageOptions): void;
@@ -12348,6 +12486,7 @@ export declare namespace ReactUnity {
         GetComponentsInParent(t: System.Type): UnityEngine.Component[];
         GetComponents(type: System.Type): UnityEngine.Component[];
         GetComponents(type: System.Type, results: UnityEngine.Component[]): void;
+        GetComponentIndex(): number;
         CompareTag(tag: string): boolean;
         CompareTag(tag: UnityEngine.TagHandle): boolean;
         SendMessageUpwards(methodName: string, value: any, options: UnityEngine.SendMessageOptions): void;
@@ -12472,6 +12611,7 @@ export declare namespace ReactUnity {
         GetComponentsInParent(t: System.Type): UnityEngine.Component[];
         GetComponents(type: System.Type): UnityEngine.Component[];
         GetComponents(type: System.Type, results: UnityEngine.Component[]): void;
+        GetComponentIndex(): number;
         CompareTag(tag: string): boolean;
         CompareTag(tag: UnityEngine.TagHandle): boolean;
         SendMessageUpwards(methodName: string, value: any, options: UnityEngine.SendMessageOptions): void;
@@ -12599,6 +12739,130 @@ export declare namespace ReactUnity {
         GetComponentsInParent(t: System.Type): UnityEngine.Component[];
         GetComponents(type: System.Type): UnityEngine.Component[];
         GetComponents(type: System.Type, results: UnityEngine.Component[]): void;
+        GetComponentIndex(): number;
+        CompareTag(tag: string): boolean;
+        CompareTag(tag: UnityEngine.TagHandle): boolean;
+        SendMessageUpwards(methodName: string, value: any, options: UnityEngine.SendMessageOptions): void;
+        SendMessageUpwards(methodName: string, value: any): void;
+        SendMessageUpwards(methodName: string): void;
+        SendMessageUpwards(methodName: string, options: UnityEngine.SendMessageOptions): void;
+        SendMessage(methodName: string, value: any): void;
+        SendMessage(methodName: string): void;
+        SendMessage(methodName: string, value: any, options: UnityEngine.SendMessageOptions): void;
+        SendMessage(methodName: string, options: UnityEngine.SendMessageOptions): void;
+        BroadcastMessage(methodName: string, parameter: any, options: UnityEngine.SendMessageOptions): void;
+        BroadcastMessage(methodName: string, parameter: any): void;
+        BroadcastMessage(methodName: string): void;
+        BroadcastMessage(methodName: string, options: UnityEngine.SendMessageOptions): void;
+        GetInstanceID(): number;
+        GetHashCode(): number;
+        Equals(other: any): boolean;
+        ToString(): string;
+        GetType(): System.Type;
+      }
+      export class WebFilter {
+        constructor();
+        materialForRendering: UnityEngine.Material;
+        IsBackdrop: boolean;
+        Definition: ReactUnity.Types.FilterDefinition;
+        onCullStateChanged: UnityEngine.UI.MaskableGraphic_CullStateChangedEvent;
+        maskable: boolean;
+        isMaskingGraphic: boolean;
+        color: UnityEngine.Color;
+        raycastTarget: boolean;
+        raycastPadding: UnityEngine.Vector4;
+        depth: number;
+        rectTransform: UnityEngine.RectTransform;
+        canvas: UnityEngine.Canvas;
+        canvasRenderer: UnityEngine.CanvasRenderer;
+        defaultMaterial: UnityEngine.Material;
+        material: UnityEngine.Material;
+        mainTexture: UnityEngine.Texture;
+        destroyCancellationToken: System.Threading.CancellationToken;
+        useGUILayout: boolean;
+        didStart: boolean;
+        didAwake: boolean;
+        runInEditMode: boolean;
+        enabled: boolean;
+        isActiveAndEnabled: boolean;
+        transform: UnityEngine.Transform;
+        gameObject: UnityEngine.GameObject;
+        tag: string;
+        rigidbody: UnityEngine.Component;
+        rigidbody2D: UnityEngine.Component;
+        camera: UnityEngine.Component;
+        light: UnityEngine.Component;
+        animation: UnityEngine.Component;
+        constantForce: UnityEngine.Component;
+        renderer: UnityEngine.Component;
+        audio: UnityEngine.Component;
+        networkView: UnityEngine.Component;
+        collider: UnityEngine.Component;
+        collider2D: UnityEngine.Component;
+        hingeJoint: UnityEngine.Component;
+        particleSystem: UnityEngine.Component;
+        name: string;
+        hideFlags: UnityEngine.HideFlags;
+        MaskRoot: UnityEngine.Transform;
+        GetModifiedMaterial(baseMaterial: UnityEngine.Material): UnityEngine.Material;
+        Cull(clipRect: UnityEngine.Rect, validRect: boolean): void;
+        SetClipRect(clipRect: UnityEngine.Rect, validRect: boolean): void;
+        SetClipSoftness(clipSoftness: UnityEngine.Vector2): void;
+        ParentMaskStateChanged(): void;
+        RecalculateClipping(): void;
+        RecalculateMasking(): void;
+        SetAllDirty(): void;
+        SetLayoutDirty(): void;
+        SetVerticesDirty(): void;
+        SetMaterialDirty(): void;
+        SetRaycastDirty(): void;
+        OnCullingChanged(): void;
+        Rebuild(update: UnityEngine.UI.CanvasUpdate): void;
+        LayoutComplete(): void;
+        GraphicUpdateComplete(): void;
+        OnRebuildRequested(): void;
+        SetNativeSize(): void;
+        Raycast(sp: UnityEngine.Vector2, eventCamera: UnityEngine.Camera): boolean;
+        PixelAdjustPoint(point: UnityEngine.Vector2): UnityEngine.Vector2;
+        GetPixelAdjustedRect(): UnityEngine.Rect;
+        CrossFadeColor(targetColor: UnityEngine.Color, duration: number, ignoreTimeScale: boolean, useAlpha: boolean): void;
+        CrossFadeColor(targetColor: UnityEngine.Color, duration: number, ignoreTimeScale: boolean, useAlpha: boolean, useRGB: boolean): void;
+        CrossFadeAlpha(alpha: number, duration: number, ignoreTimeScale: boolean): void;
+        RegisterDirtyLayoutCallback(action: (() => void)): void;
+        UnregisterDirtyLayoutCallback(action: (() => void)): void;
+        RegisterDirtyVerticesCallback(action: (() => void)): void;
+        UnregisterDirtyVerticesCallback(action: (() => void)): void;
+        RegisterDirtyMaterialCallback(action: (() => void)): void;
+        UnregisterDirtyMaterialCallback(action: (() => void)): void;
+        IsActive(): boolean;
+        IsDestroyed(): boolean;
+        IsInvoking(): boolean;
+        CancelInvoke(): void;
+        Invoke(methodName: string, time: number): void;
+        InvokeRepeating(methodName: string, time: number, repeatRate: number): void;
+        CancelInvoke(methodName: string): void;
+        IsInvoking(methodName: string): boolean;
+        StartCoroutine(methodName: string): UnityEngine.Coroutine;
+        StartCoroutine(methodName: string, value: any): UnityEngine.Coroutine;
+        StartCoroutine(routine: System.Collections.IEnumerator): UnityEngine.Coroutine;
+        StartCoroutine_Auto(routine: System.Collections.IEnumerator): UnityEngine.Coroutine;
+        StopCoroutine(routine: System.Collections.IEnumerator): void;
+        StopCoroutine(routine: UnityEngine.Coroutine): void;
+        StopCoroutine(methodName: string): void;
+        StopAllCoroutines(): void;
+        GetComponent(type: System.Type): UnityEngine.Component;
+        GetComponent(type: string): UnityEngine.Component;
+        GetComponentInChildren(t: System.Type, includeInactive: boolean): UnityEngine.Component;
+        GetComponentInChildren(t: System.Type): UnityEngine.Component;
+        GetComponentsInChildren(t: System.Type, includeInactive: boolean): UnityEngine.Component[];
+        GetComponentsInChildren(t: System.Type): UnityEngine.Component[];
+        GetComponentInParent(t: System.Type, includeInactive: boolean): UnityEngine.Component;
+        GetComponentInParent(t: System.Type): UnityEngine.Component;
+        GetComponentsInParent(t: System.Type, includeInactive: boolean): UnityEngine.Component[];
+        GetComponentsInParent(t: System.Type): UnityEngine.Component[];
+        GetComponents(type: System.Type): UnityEngine.Component[];
+        GetComponents(type: System.Type, results: UnityEngine.Component[]): void;
+        GetComponentIndex(): number;
         CompareTag(tag: string): boolean;
         CompareTag(tag: UnityEngine.TagHandle): boolean;
         SendMessageUpwards(methodName: string, value: any, options: UnityEngine.SendMessageOptions): void;
@@ -12762,6 +13026,7 @@ export declare namespace ReactUnity {
         GetComponentsInParent(t: System.Type): UnityEngine.Component[];
         GetComponents(type: System.Type): UnityEngine.Component[];
         GetComponents(type: System.Type, results: UnityEngine.Component[]): void;
+        GetComponentIndex(): number;
         CompareTag(tag: string): boolean;
         CompareTag(tag: UnityEngine.TagHandle): boolean;
         SendMessageUpwards(methodName: string, value: any, options: UnityEngine.SendMessageOptions): void;
@@ -12930,6 +13195,7 @@ export declare namespace ReactUnity {
         GetComponentsInParent(t: System.Type): UnityEngine.Component[];
         GetComponents(type: System.Type): UnityEngine.Component[];
         GetComponents(type: System.Type, results: UnityEngine.Component[]): void;
+        GetComponentIndex(): number;
         CompareTag(tag: string): boolean;
         CompareTag(tag: UnityEngine.TagHandle): boolean;
         SendMessageUpwards(methodName: string, value: any, options: UnityEngine.SendMessageOptions): void;
@@ -13032,6 +13298,7 @@ export declare namespace ReactUnity {
         GetComponentsInParent(t: System.Type): UnityEngine.Component[];
         GetComponents(type: System.Type): UnityEngine.Component[];
         GetComponents(type: System.Type, results: UnityEngine.Component[]): void;
+        GetComponentIndex(): number;
         CompareTag(tag: string): boolean;
         CompareTag(tag: UnityEngine.TagHandle): boolean;
         SendMessageUpwards(methodName: string, value: any, options: UnityEngine.SendMessageOptions): void;
@@ -13111,6 +13378,7 @@ export declare namespace ReactUnity {
         GetComponentsInParent(t: System.Type): UnityEngine.Component[];
         GetComponents(type: System.Type): UnityEngine.Component[];
         GetComponents(type: System.Type, results: UnityEngine.Component[]): void;
+        GetComponentIndex(): number;
         CompareTag(tag: string): boolean;
         CompareTag(tag: UnityEngine.TagHandle): boolean;
         SendMessageUpwards(methodName: string, value: any, options: UnityEngine.SendMessageOptions): void;
@@ -13187,6 +13455,7 @@ export declare namespace ReactUnity {
         GetComponentsInParent(t: System.Type): UnityEngine.Component[];
         GetComponents(type: System.Type): UnityEngine.Component[];
         GetComponents(type: System.Type, results: UnityEngine.Component[]): void;
+        GetComponentIndex(): number;
         CompareTag(tag: string): boolean;
         CompareTag(tag: UnityEngine.TagHandle): boolean;
         SendMessageUpwards(methodName: string, value: any, options: UnityEngine.SendMessageOptions): void;
@@ -13263,6 +13532,7 @@ export declare namespace ReactUnity {
         GetComponentsInParent(t: System.Type): UnityEngine.Component[];
         GetComponents(type: System.Type): UnityEngine.Component[];
         GetComponents(type: System.Type, results: UnityEngine.Component[]): void;
+        GetComponentIndex(): number;
         CompareTag(tag: string): boolean;
         CompareTag(tag: UnityEngine.TagHandle): boolean;
         SendMessageUpwards(methodName: string, value: any, options: UnityEngine.SendMessageOptions): void;
@@ -13337,6 +13607,7 @@ export declare namespace ReactUnity {
         GetComponentsInParent(t: System.Type): UnityEngine.Component[];
         GetComponents(type: System.Type): UnityEngine.Component[];
         GetComponents(type: System.Type, results: UnityEngine.Component[]): void;
+        GetComponentIndex(): number;
         CompareTag(tag: string): boolean;
         CompareTag(tag: UnityEngine.TagHandle): boolean;
         SendMessageUpwards(methodName: string, value: any, options: UnityEngine.SendMessageOptions): void;
@@ -13413,6 +13684,7 @@ export declare namespace ReactUnity {
         GetComponentsInParent(t: System.Type): UnityEngine.Component[];
         GetComponents(type: System.Type): UnityEngine.Component[];
         GetComponents(type: System.Type, results: UnityEngine.Component[]): void;
+        GetComponentIndex(): number;
         CompareTag(tag: string): boolean;
         CompareTag(tag: UnityEngine.TagHandle): boolean;
         SendMessageUpwards(methodName: string, value: any, options: UnityEngine.SendMessageOptions): void;
@@ -13489,6 +13761,7 @@ export declare namespace ReactUnity {
         GetComponentsInParent(t: System.Type): UnityEngine.Component[];
         GetComponents(type: System.Type): UnityEngine.Component[];
         GetComponents(type: System.Type, results: UnityEngine.Component[]): void;
+        GetComponentIndex(): number;
         CompareTag(tag: string): boolean;
         CompareTag(tag: UnityEngine.TagHandle): boolean;
         SendMessageUpwards(methodName: string, value: any, options: UnityEngine.SendMessageOptions): void;
@@ -14238,6 +14511,97 @@ export declare namespace ReactUnity {
       GetType(): System.Type;
       ToString(): string;
     }
+    export class IconComponent {
+      constructor(text: string, context: ReactUnity.UIToolkit.UIToolkitContext, tag: string);
+      Content: string;
+      Set: ReactUnity.Styling.IconSet;
+      Element: UnityEngine.UIElements.TextElement;
+      TargetElement: UnityEngine.UIElements.VisualElement;
+      ClientWidth: number;
+      ClientHeight: number;
+      Disabled: boolean;
+      Context: ReactUnity.UIToolkit.UIToolkitContext;
+      Parent: ReactUnity.IContainerComponent;
+      Data: ReactUnity.Reactive.ReactiveObjectRecord;
+      Layout: Yoga.YogaNode;
+      ComputedStyle: ReactUnity.Styling.NodeStyle;
+      StyleState: ReactUnity.Styling.StyleState;
+      StateStyles: ReactUnity.Styling.StateStyles;
+      Style: InlineStyleRemap;
+      InlineStylesheet: ReactUnity.Styling.StyleSheet;
+      CustomProperties: Record<string, any>;
+      RevertCalculator: ReactUnity.Styling.IRevertCalculator;
+      ParentIndex: number;
+      CurrentOrder: number;
+      Entering: boolean;
+      Leaving: boolean;
+      UpdatedThisFrame: boolean;
+      Destroyed: boolean;
+      Tag: string;
+      TextContent: string;
+      PoolStack: System.Collections.Generic.Stack<ReactUnity.IPoolableComponent>;
+      IsPseudoElement: boolean;
+      ResolvedName: string;
+      ClassName: string;
+      ClassList: ReactUnity.Helpers.ClassList;
+      Id: string;
+      Name: string;
+      RefId: number;
+      InstanceId: number;
+      IsContainer: boolean;
+      Children: ReactUnity.IReactComponent[];
+      BeforeRules: ReactUnity.Styling.Rules.RuleTreeNode<ReactUnity.Styling.Rules.StyleData>[];
+      AfterRules: ReactUnity.Styling.Rules.RuleTreeNode<ReactUnity.Styling.Rules.StyleData>[];
+      BeforePseudo: ReactUnity.IReactComponent;
+      AfterPseudo: ReactUnity.IReactComponent;
+      ScrollLeft: number;
+      ScrollTop: number;
+      ScrollWidth: number;
+      ScrollHeight: number;
+      SetText(text: string): void;
+      SetProperty(property: string, value: any): void;
+      ApplySet(value: any): void;
+      Pool(): boolean;
+      AddEventListener(eventName: string, fun: ReactUnity.Helpers.Callback): (() => void);
+      GetComponent(type: System.Type): any;
+      AddComponent(type: System.Type): any;
+      CaptureMouse(): void;
+      ReleaseMouse(): void;
+      HasMouseCapture(): boolean;
+      UpdateOrder(prev: number, current: number): boolean;
+      Activate(): void;
+      Update(): void;
+      MarkForStyleResolving(recursive: boolean): void;
+      Remove(): void;
+      Destroy(recursive?: boolean): void;
+      Revive(): boolean;
+      OnClassChange(): void;
+      SetParent(newParent: ReactUnity.IContainerComponent, relativeTo?: ReactUnity.IReactComponent, insertAfter?: boolean): void;
+      SetEventListener(eventName: string, fun: ReactUnity.Helpers.Callback): void;
+      FireEvent(eventName: string, arg: any): void;
+      SetData(propertyName: string, value: any): void;
+      SetCustomProperty(propertyName: string, value: any): void;
+      ResolveStyle(recursive?: boolean): void;
+      MarkForStyleResolvingWithSiblings(recursive: boolean): void;
+      ApplyStyles(): void;
+      ApplyLayoutStyles(): void;
+      Matches(query: string): boolean;
+      Closest(query: string): ReactUnity.IReactComponent;
+      QuerySelector(query: string): ReactUnity.IReactComponent;
+      QuerySelectorAll(query: string): ReactUnity.IReactComponent[];
+      Accept(visitor: ReactUnity.Helpers.Visitors.ReactComponentVisitor, skipSelf?: boolean): void;
+      AddBefore(): void;
+      RemoveBefore(): void;
+      AddAfter(): void;
+      RemoveAfter(): void;
+      RegisterChild(child: ReactUnity.IReactComponent, index?: number): void;
+      UnregisterChild(child: ReactUnity.IReactComponent): void;
+      Clear(): void;
+      Equals(obj: any): boolean;
+      GetHashCode(): number;
+      GetType(): System.Type;
+      ToString(): string;
+    }
     export class ImageComponent {
       constructor(context: ReactUnity.UIToolkit.UIToolkitContext, tag: string);
       Element: UnityEngine.UIElements.Image;
@@ -14389,6 +14753,96 @@ export declare namespace ReactUnity {
       Revive(): boolean;
       OnClassChange(): void;
       SetParent(newParent: ReactUnity.IContainerComponent, relativeTo?: ReactUnity.IReactComponent, insertAfter?: boolean): void;
+      SetEventListener(eventName: string, fun: ReactUnity.Helpers.Callback): void;
+      FireEvent(eventName: string, arg: any): void;
+      SetData(propertyName: string, value: any): void;
+      SetCustomProperty(propertyName: string, value: any): void;
+      ResolveStyle(recursive?: boolean): void;
+      MarkForStyleResolvingWithSiblings(recursive: boolean): void;
+      ApplyStyles(): void;
+      ApplyLayoutStyles(): void;
+      Matches(query: string): boolean;
+      Closest(query: string): ReactUnity.IReactComponent;
+      QuerySelector(query: string): ReactUnity.IReactComponent;
+      QuerySelectorAll(query: string): ReactUnity.IReactComponent[];
+      Accept(visitor: ReactUnity.Helpers.Visitors.ReactComponentVisitor, skipSelf?: boolean): void;
+      AddBefore(): void;
+      RemoveBefore(): void;
+      AddAfter(): void;
+      RemoveAfter(): void;
+      RegisterChild(child: ReactUnity.IReactComponent, index?: number): void;
+      UnregisterChild(child: ReactUnity.IReactComponent): void;
+      Clear(): void;
+      Equals(obj: any): boolean;
+      GetHashCode(): number;
+      GetType(): System.Type;
+      ToString(): string;
+    }
+    export class PortalComponent {
+      constructor(context: ReactUnity.UIToolkit.UIToolkitContext, tag?: string);
+      ShadowParent: ReactUnity.IReactComponent;
+      Detached: boolean;
+      ReplacedLayout: UnityEngine.UIElements.VisualElement;
+      Element: UnityEngine.UIElements.VisualElement;
+      TargetElement: UnityEngine.UIElements.VisualElement;
+      ClientWidth: number;
+      ClientHeight: number;
+      Disabled: boolean;
+      Context: ReactUnity.UIToolkit.UIToolkitContext;
+      Parent: ReactUnity.IContainerComponent;
+      Data: ReactUnity.Reactive.ReactiveObjectRecord;
+      Layout: Yoga.YogaNode;
+      ComputedStyle: ReactUnity.Styling.NodeStyle;
+      StyleState: ReactUnity.Styling.StyleState;
+      StateStyles: ReactUnity.Styling.StateStyles;
+      Style: InlineStyleRemap;
+      InlineStylesheet: ReactUnity.Styling.StyleSheet;
+      CustomProperties: Record<string, any>;
+      RevertCalculator: ReactUnity.Styling.IRevertCalculator;
+      ParentIndex: number;
+      CurrentOrder: number;
+      Entering: boolean;
+      Leaving: boolean;
+      UpdatedThisFrame: boolean;
+      Destroyed: boolean;
+      Tag: string;
+      TextContent: string;
+      PoolStack: System.Collections.Generic.Stack<ReactUnity.IPoolableComponent>;
+      IsPseudoElement: boolean;
+      ResolvedName: string;
+      ClassName: string;
+      ClassList: ReactUnity.Helpers.ClassList;
+      Id: string;
+      Name: string;
+      RefId: number;
+      InstanceId: number;
+      IsContainer: boolean;
+      Children: ReactUnity.IReactComponent[];
+      BeforeRules: ReactUnity.Styling.Rules.RuleTreeNode<ReactUnity.Styling.Rules.StyleData>[];
+      AfterRules: ReactUnity.Styling.Rules.RuleTreeNode<ReactUnity.Styling.Rules.StyleData>[];
+      BeforePseudo: ReactUnity.IReactComponent;
+      AfterPseudo: ReactUnity.IReactComponent;
+      ScrollLeft: number;
+      ScrollTop: number;
+      ScrollWidth: number;
+      ScrollHeight: number;
+      SetParent(newParent: ReactUnity.IContainerComponent, relativeTo?: ReactUnity.IReactComponent, insertAfter?: boolean): void;
+      SetProperty(propertyName: string, value: any): void;
+      Pool(): boolean;
+      Revive(): boolean;
+      AddEventListener(eventName: string, fun: ReactUnity.Helpers.Callback): (() => void);
+      GetComponent(type: System.Type): any;
+      AddComponent(type: System.Type): any;
+      CaptureMouse(): void;
+      ReleaseMouse(): void;
+      HasMouseCapture(): boolean;
+      UpdateOrder(prev: number, current: number): boolean;
+      Activate(): void;
+      Update(): void;
+      MarkForStyleResolving(recursive: boolean): void;
+      Remove(): void;
+      Destroy(recursive?: boolean): void;
+      OnClassChange(): void;
       SetEventListener(eventName: string, fun: ReactUnity.Helpers.Callback): void;
       FireEvent(eventName: string, arg: any): void;
       SetData(propertyName: string, value: any): void;
@@ -15182,10 +15636,12 @@ export declare namespace ReactUnity {
       particleSystem: UnityEngine.Component;
       name: string;
       hideFlags: UnityEngine.HideFlags;
+      DefaultIconSet: ReactUnity.Styling.IconSet;
+      IconSets: ReactUnity.Styling.IconSet[];
       Source: ReactUnity.ScriptSource;
       EngineType: ReactUnity.Scripting.JavascriptEngineType;
       AdvancedOptions: ReactUnity.ReactRendererBase_ReactAdvancedOptions;
-      PlayAudio(clip: UnityEngine.AudioClip): void;
+      PlayAudio(clip: UnityEngine.AudioClip, volume: number, pitch: number): void;
       Render(): ReactUnity.ReactRendererBase_WaitForRenderToComplete;
       IsInvoking(): boolean;
       CancelInvoke(): void;
@@ -15213,6 +15669,7 @@ export declare namespace ReactUnity {
       GetComponentsInParent(t: System.Type): UnityEngine.Component[];
       GetComponents(type: System.Type): UnityEngine.Component[];
       GetComponents(type: System.Type, results: UnityEngine.Component[]): void;
+      GetComponentIndex(): number;
       CompareTag(tag: string): boolean;
       CompareTag(tag: UnityEngine.TagHandle): boolean;
       SendMessageUpwards(methodName: string, value: any, options: UnityEngine.SendMessageOptions): void;
@@ -15247,8 +15704,10 @@ export declare namespace ReactUnity {
       userData: any; // System.Object
       canGrabFocus: boolean;
       focusController: UnityEngine.UIElements.FocusController;
+      disablePlayModeTint: boolean;
       usageHints: UnityEngine.UIElements.UsageHints;
       transform: UnityEngine.UIElements.ITransform;
+      scaledPixelsPerPoint: number;
       layout: UnityEngine.Rect;
       contentRect: UnityEngine.Rect;
       worldBound: UnityEngine.Rect;
@@ -15263,6 +15722,7 @@ export declare namespace ReactUnity {
       generateVisualContent: ((obj: UnityEngine.UIElements.MeshGenerationContext) => void);
       dataSource: any; // System.Object
       dataSourcePath: Unity.Properties.PropertyPath;
+      dataSourceType: System.Type;
       experimental: UnityEngine.UIElements.IExperimentalFeatures;
       hierarchy: UnityEngine.UIElements.VisualElement_Hierarchy;
       cacheAsBitmap: boolean;
@@ -15366,6 +15826,8 @@ export declare namespace ReactUnity {
     export class UIToolkitContext {
       constructor(options: ReactUnity.UIToolkit.UIToolkitContext_Options);
       StateHandlers: Record<string, System.Type>;
+      DefaultIconSet: ReactUnity.Styling.IconSet;
+      IconSets: Record<string, ReactUnity.Styling.IconSet>;
       HostElement: UnityEngine.UIElements.VisualElement;
       CalculatesLayout: boolean;
       Host: ReactUnity.IHostComponent;
@@ -15392,7 +15854,7 @@ export declare namespace ReactUnity {
       static textCreator: ((arg1: string, arg2: string, arg3: ReactUnity.UIToolkit.UIToolkitContext) => ReactUnity.ITextComponent);
       static ComponentCreators: System.Collections.Generic.Dictionary;
       Initialize(): void;
-      PlayAudio(clip: UnityEngine.AudioClip): void;
+      PlayAudio(clip: UnityEngine.AudioClip, volume: number, pitch: number): void;
       CalculateLayoutRecursively(): void;
       UpdateElementsRecursively(): void;
       LateUpdateElementsRecursively(): void;
@@ -15442,8 +15904,10 @@ export declare namespace ReactUnity {
       userData: any; // System.Object
       canGrabFocus: boolean;
       focusController: UnityEngine.UIElements.FocusController;
+      disablePlayModeTint: boolean;
       usageHints: UnityEngine.UIElements.UsageHints;
       transform: UnityEngine.UIElements.ITransform;
+      scaledPixelsPerPoint: number;
       layout: UnityEngine.Rect;
       contentRect: UnityEngine.Rect;
       worldBound: UnityEngine.Rect;
@@ -15458,6 +15922,7 @@ export declare namespace ReactUnity {
       generateVisualContent: ((obj: UnityEngine.UIElements.MeshGenerationContext) => void);
       dataSource: any; // System.Object
       dataSourcePath: Unity.Properties.PropertyPath;
+      dataSourceType: System.Type;
       experimental: UnityEngine.UIElements.IExperimentalFeatures;
       hierarchy: UnityEngine.UIElements.VisualElement_Hierarchy;
       cacheAsBitmap: boolean;
@@ -15574,7 +16039,9 @@ export declare namespace ReactUnity {
       constructor();
       CalculatesLayout: boolean;
       HostElement: UnityEngine.UIElements.VisualElement;
-      OnAudioPlayback: ((obj: UnityEngine.AudioClip) => void);
+      OnAudioPlayback: ((arg1: UnityEngine.AudioClip, arg2: number, arg3: number) => void);
+      IconSets: ReactUnity.Styling.IconSet[];
+      DefaultIconSet: ReactUnity.Styling.IconSet;
       Globals: ReactUnity.Helpers.GlobalRecord;
       Source: ReactUnity.ScriptSource;
       Timer: ReactUnity.Scheduling.ITimer;
