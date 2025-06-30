@@ -118,13 +118,16 @@ jobs:
           echo $(cat tests/Packages/manifest.json | jq '.dependencies["com.reactunity.clearscript"]="file:../../clearscript"') > tests/Packages/manifest.json
 
       - name: Run Unity Tests
-        uses: game-ci/unity-test-runner@v2
+        uses: game-ci/unity-test-runner@v4
         id: testRunner
         continue-on-error: true
         env:
           UNITY_LICENSE: ${{ secrets[matrix.unity.license || 'UNITY_LICENSE'] }}
+          UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
+          UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
         with:
           projectPath: tests
+          githubToken: ${{ secrets.GITHUB_TOKEN }}
           checkName: ${{ matrix.suite.name }} ${{ matrix.unity.version }}
           unityVersion: ${{ matrix.unity.version }}
           testMode: ${{ contains(matrix.suite.assemblies, 'Editor') && 'All' || 'PlayMode' }}
