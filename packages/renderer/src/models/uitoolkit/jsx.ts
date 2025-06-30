@@ -16,7 +16,7 @@ export interface UIToolkitElements extends BaseElements<BaseElement<any>> {
   a: Components.Anchor & rc.RefAttributes<Cmp.UIToolkitComponent> & Children;
   anchor: Components.Anchor & rc.RefAttributes<Cmp.UIToolkitComponent> & Children;
   text: Components.Text & rc.RefAttributes<Cmp.TextComponent> & Children<Textable | Textable[]>;
-  icon: Components.Icon & rc.RefAttributes<Cmp.TextComponent> & Children<Textable | Textable[]>;
+  icon: Components.Icon & rc.RefAttributes<Cmp.IconComponent> & Children<Textable | Textable[]>;
   richtext: Components.View & rc.RefAttributes<Cmp.TextComponent> & Children<Textable | Textable[]>;
   label: Components.View & rc.RefAttributes<Cmp.TextComponent> & Children<Textable | Textable[]>;
   button: Components.Button & rc.RefAttributes<Cmp.ButtonComponent> & Children;
@@ -38,6 +38,7 @@ export interface UIToolkitElements extends BaseElements<BaseElement<any>> {
   imgui: Components.IMGUI & rc.RefAttributes<Cmp.IMGUIComponent> & Children<never>;
   template: Components.Bindable;
   progress: Components.ValueComponent<number>;
+  portal: Components.Portal & rc.RefAttributes<Cmp.PortalComponent> & Children;
 }
 
 declare global {

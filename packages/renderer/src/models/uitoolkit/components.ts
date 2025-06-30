@@ -20,7 +20,7 @@ export interface Text<TSender = Cmp.TextComponent> extends View<TSender> {
   displayTooltipWhenElided?: boolean;
 }
 
-export interface Icon extends Text<Cmp.TextComponent> {
+export interface Icon extends Text<Cmp.IconComponent> {
   set?: ReactUnity.Styling.IconSet | string;
 }
 
@@ -32,6 +32,11 @@ export interface Scroll<TSender = Cmp.ScrollViewComponent> extends View<TSender>
   smoothness?: number;
 }
 
+export interface Portal<T = Cmp.PortalComponent> extends View<T> {
+  target?: UnityEngine.UIElements.VisualElement | Cmp.UIToolkitComponent;
+  onMount?: (camera: UnityEngine.Transform, sender: T) => void;
+  onUnmount?: (camera: UnityEngine.Transform, sender: T) => void;
+}
 export interface Bindable<TSender = BaseCmp> extends View<TSender> {
   bindingPath?: string;
   binding?: UnityEngine.UIElements.IBinding;
