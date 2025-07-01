@@ -33,6 +33,11 @@ namespace ReactUnity.Scripting
         public ReactUnityWebGLCompat WebGLCompat { get; } = new ReactUnityWebGLCompat();
         private Callback WebGLCompatDispatchEventCallback { get; set; }
 
+
+        private List<Action> beforeStartCallbacks = new List<Action>() { };
+        private List<Action<Exception>> afterStartCallbacks = new List<Action<Exception>>() { };
+
+
         public ScriptContext(ReactContext context, JavascriptEngineType engineType, bool debug = false, bool awaitDebugger = false)
         {
             Context = context;
@@ -48,23 +53,13 @@ namespace ReactUnity.Scripting
         {
             if (string.IsNullOrWhiteSpace(script)) return;
 
-            Initialize(() => {
-                var beforeStartCallbacks = new List<Action>() { beforeStart };
-                var afterStartCallbacks = new List<Action<Exception>>() { (success) => afterStart?.Invoke() };
+            beforeStartCallbacks.Add(beforeStart);
+            afterStartCallbacks.Add((success) => afterStart?.Invoke());
 
-                engine.SetGlobal("addEventListener", new EventTarget.addEventListener((e, h, o) => GlobalEventTarget.AddEventListener(e, h)));
-                engine.SetGlobal("removeEventListener", new EventTarget.removeEventListener((e, h, o) => GlobalEventTarget.RemoveEventListener(e, h)));
-                engine.SetGlobal("dispatchEvent", new EventTarget.dispatchEvent((e, a) => GlobalEventTarget.DispatchEvent(e, Context, EventPriority.Unknown, a)));
-
-                afterStartCallbacks.Add((success) => GlobalEventTarget.DispatchEvent("DOMContentLoaded", Context, EventPriority.Discrete, success, this));
-
-                beforeStartCallbacks.ForEach(x => x?.Invoke());
-                var error = engine.TryExecute(script, "ReactUnity/main");
-                afterStartCallbacks.ForEach(x => x?.Invoke(error));
-            });
+            Initialize(() => engine.TryExecute(script, "ReactUnity/main"));
         }
 
-        public void Initialize(Action callback)
+        public void Initialize(Func<Exception> callback)
         {
             if (Initialized)
             {
@@ -112,9 +107,18 @@ namespace ReactUnity.Scripting
                     var dispatchWebGLCompatCallback = engine.GetGlobal("dispatchWebGLCompatEvent");
                     WebGLCompatDispatchEventCallback = new Callback(dispatchWebGLCompatCallback, Context);
 
+
+                    engine.SetGlobal("addEventListener", new EventTarget.addEventListener((e, h, o) => GlobalEventTarget.AddEventListener(e, h)));
+                    engine.SetGlobal("removeEventListener", new EventTarget.removeEventListener((e, h, o) => GlobalEventTarget.RemoveEventListener(e, h)));
+                    engine.SetGlobal("dispatchEvent", new EventTarget.dispatchEvent((e, a) => GlobalEventTarget.DispatchEvent(e, Context, EventPriority.Unknown, a)));
+
+                    afterStartCallbacks.Add((success) => GlobalEventTarget.DispatchEvent("DOMContentLoaded", Context, EventPriority.Discrete, success, this));
+
                     EngineInitialized = true;
 
-                    callback?.Invoke();
+                    beforeStartCallbacks.ForEach(x => x?.Invoke());
+                    var error = callback?.Invoke();
+                    afterStartCallbacks.ForEach(x => x?.Invoke(error));
                 });
             }
             else callback?.Invoke();
