@@ -35,7 +35,7 @@ public class Player: MonoBehaviour {
 And then accessed in React via the hook:
 ```js
 // JS
-export default function ScoreTracker() {
+export function ScoreTracker() {
   const {Player} = useGlobals();
   // will trigger a re-render when Score changes
   const score = useReactiveValue(Player.Score);
@@ -106,5 +106,4 @@ export function DrawItems() {
   
   // return drawn items
 }
-
-
+```
