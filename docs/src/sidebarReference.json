@@ -18,6 +18,10 @@
             {
               "title": "useGlobals()",
               "path": "/reference/api/useglobals"
+            },
+            {
+              "title": "useReactiveValue()",
+              "path": "/reference/api/usereactivevalue"
             }
           ]
         },

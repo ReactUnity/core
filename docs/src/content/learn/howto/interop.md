@@ -14,9 +14,11 @@ There are several ways to achieve interop in ReactUnity.
 
 ### `Globals` object
 
-This method uses the `Globals` object to have two-way communication between React and C#. Also, `useGlobals` is a hook that is available in React side and it rerenders the component when `Globals` object changes.
+This method uses the `Globals` object to have two-way communication between React and C#. Also, `useGlobals` is a hook that is available in React side and it re-renders the component when `Globals` object changes.
 
 API reference for `useGlobals` can be found [here](/reference/api/useglobals).
+
+`useReactiveValue` is a further hook that can be used to re-render on individual property changes of a C# object, see [here](/reference/api/usereactivevalue).
 
 ### `Interop` namespace
 
