@@ -28,14 +28,6 @@ Shader "ReactUnity/BackdropFilter"
   }
 
 	Category {
-    Tags {
-      "Queue" = "Transparent"
-      "IgnoreProjector" = "True"
-      "RenderType" = "Transparent"
-      "PreviewType" = "Plane"
-      "CanUseSpriteAtlas" = "True"
-    }
-
     Stencil {
       Ref[_Stencil]
       Comp[_StencilComp]
@@ -51,8 +43,18 @@ Shader "ReactUnity/BackdropFilter"
     Blend SrcAlpha OneMinusSrcAlpha
     ZWrite Off
 
+    Tags {
+      "Queue" = "Transparent"
+      "IgnoreProjector" = "True"
+      "RenderType" = "Transparent"
+      "PreviewType" = "Plane"
+      "CanUseSpriteAtlas" = "True"
+    }
+
     SubShader {
-      GrabPass { }
+      Tags {
+        "RenderPipeline" = "UniversalPipeline"
+      }
 
       Pass {
         CGPROGRAM
@@ -67,15 +69,18 @@ Shader "ReactUnity/BackdropFilter"
         #include "ShaderSetup.cginc"
 
         float _Blur;
-        sampler2D _GrabTexture;
-        float4 _GrabTexture_TexelSize;
+
+        sampler2D _CameraOpaqueTexture;
+        float4 _CameraOpaqueTexture_TexelSize;
+        #define BACKDROP_TEX _CameraOpaqueTexture
+        #define BACKDROP_TEXELSIZE _CameraOpaqueTexture_TexelSize
 
         float4 frag( v2f i ) : COLOR {
           if(_Blur == 0) return float4(0,0,0,0);
 
           float3 sum = float3(0,0,0);
 
-          #define GRABPIXEL(weight,kernelx) tex2D( _GrabTexture, UNITY_PROJ_COORD(float2(i.uvgrab.x + _GrabTexture_TexelSize.x * kernelx*_Blur, i.uvgrab.y))) * weight
+          #define GRABPIXEL(weight,kernelx) tex2D( BACKDROP_TEX, UNITY_PROJ_COORD(float2(i.uvgrab.x + BACKDROP_TEXELSIZE.x * kernelx*_Blur, i.uvgrab.y))) * weight
 
           sum += GRABPIXEL(0.05, -4.0);
           sum += GRABPIXEL(0.09, -3.0);
@@ -92,8 +97,6 @@ Shader "ReactUnity/BackdropFilter"
         ENDCG
       }
 
-      GrabPass { }
-
       Pass {
         CGPROGRAM
         #pragma vertex vert
@@ -107,15 +110,18 @@ Shader "ReactUnity/BackdropFilter"
         #include "ShaderSetup.cginc"
 
         float _Blur;
-        sampler2D _GrabTexture;
-        float4 _GrabTexture_TexelSize;
+
+        sampler2D _CameraOpaqueTexture;
+        float4 _CameraOpaqueTexture_TexelSize;
+        #define BACKDROP_TEX _CameraOpaqueTexture
+        #define BACKDROP_TEXELSIZE _CameraOpaqueTexture_TexelSize
 
         float4 frag( v2f i ) : COLOR {
           if(_Blur == 0) return float4(0,0,0,0);
 
           float3 sum = float3(0,0,0);
 
-          #define GRABPIXEL(weight,kernely) tex2D( _GrabTexture, UNITY_PROJ_COORD(float2(i.uvgrab.x, i.uvgrab.y + _GrabTexture_TexelSize.y * kernely*_Blur))) * weight
+          #define GRABPIXEL(weight,kernely) tex2D( BACKDROP_TEX, UNITY_PROJ_COORD(float2(i.uvgrab.x, i.uvgrab.y + BACKDROP_TEXELSIZE.y * kernely*_Blur))) * weight
 
           sum += GRABPIXEL(0.05, -4.0);
           sum += GRABPIXEL(0.09, -3.0);
@@ -132,10 +138,7 @@ Shader "ReactUnity/BackdropFilter"
         ENDCG
       }
 
-      GrabPass { }
-
       Pass {
-
         CGPROGRAM
         #pragma vertex vert
         #pragma fragment frag
@@ -164,8 +167,11 @@ Shader "ReactUnity/BackdropFilter"
         float _Grain;
 
         float4 _ClipRect;
-        sampler2D _GrabTexture;
-        float4 _GrabTexture_TexelSize;
+
+        sampler2D _CameraOpaqueTexture;
+        float4 _CameraOpaqueTexture_TexelSize;
+        #define BACKDROP_TEX _CameraOpaqueTexture
+        #define BACKDROP_TEXELSIZE _CameraOpaqueTexture_TexelSize
 
         // Convert RGB to Grayscale
         float3 rgb2gray(float3 color)
@@ -205,12 +211,228 @@ Shader "ReactUnity/BackdropFilter"
           // Apply pixelate effect
           if (_Pixelate > 0)
           {
-            float4 ts = _GrabTexture_TexelSize * _Pixelate;
+            float4 ts = BACKDROP_TEXELSIZE * _Pixelate;
             uvgrab = round(i.uvgrab / ts.xy) * ts.xy;
           }
 
           // Grab the texture from behind the current object
-          float3 color = tex2D(_GrabTexture, uvgrab).rgb;
+          float3 color = tex2D(BACKDROP_TEX, uvgrab).rgb;
+
+          // Convert to grayscale if needed
+          if (_Grayscale > 0)
+          {
+            float gray = rgb2gray(color);
+            color = lerp(color, float3(gray, gray, gray), _Grayscale);
+          }
+
+          // Adjust brightness and contrast
+          color = color * _Brightness;
+          color = (color - 0.5) * _Contrast + 0.5;
+
+          // Adjust hue and saturation
+          float3 hsv = rgb2hsv(color);
+          hsv.x += _HueRotate / 360.0;
+          hsv.y *= _Saturate;
+          color = hsv2rgb(hsv);
+
+          // Apply sepia effect
+          if (_Sepia > 0)
+            color = lerp(color, float3(dot(color, float3(0.393, 0.769, 0.189)), dot(color, float3(0.349, 0.686, 0.168)), dot(color, float3(0.272, 0.534, 0.131))), _Sepia);
+
+          // Invert
+          if (_Invert > 0)
+            color = lerp(color, 1 - color, _Invert);
+
+          // Apply grain
+          if (_Grain > 0)
+            color += (0.5 - rand(i.uv)) * _Grain;
+
+          float4 res = float4(color, _Opacity);
+
+
+          #ifdef UNITY_UI_CLIP_RECT
+            res.a *= UnityGet2DClipping(i.worldPosition.xy, _ClipRect);
+          #endif
+
+          #ifdef UNITY_UI_ALPHACLIP
+            clip(res.a - 0.001);
+          #endif
+
+          return res;
+        }
+
+        ENDCG
+      }
+    }
+
+    SubShader {
+      GrabPass { }
+
+      Pass {
+        CGPROGRAM
+        #pragma vertex vert
+        #pragma fragment frag
+        #pragma target 2.0
+        #pragma shader_feature_local _SPECULARHIGHLIGHTS_OFF
+        #pragma shader_feature_local _GLOSSYREFLECTIONS_OFF
+        #pragma fragmentoption ARB_precision_hint_fastest
+        #define GRAB_POS
+        #include "UnityCG.cginc"
+        #include "ShaderSetup.cginc"
+
+        float _Blur;
+
+        sampler2D _GrabTexture;
+        float4 _GrabTexture_TexelSize;
+        #define BACKDROP_TEX _GrabTexture
+        #define BACKDROP_TEXELSIZE _GrabTexture_TexelSize
+
+        float4 frag( v2f i ) : COLOR {
+          if(_Blur == 0) return float4(0,0,0,0);
+
+          float3 sum = float3(0,0,0);
+
+          #define GRABPIXEL(weight,kernelx) tex2D( BACKDROP_TEX, UNITY_PROJ_COORD(float2(i.uvgrab.x + BACKDROP_TEXELSIZE.x * kernelx*_Blur, i.uvgrab.y))) * weight
+
+          sum += GRABPIXEL(0.05, -4.0);
+          sum += GRABPIXEL(0.09, -3.0);
+          sum += GRABPIXEL(0.12, -2.0);
+          sum += GRABPIXEL(0.15, -1.0);
+          sum += GRABPIXEL(0.18,  0.0);
+          sum += GRABPIXEL(0.15, +1.0);
+          sum += GRABPIXEL(0.12, +2.0);
+          sum += GRABPIXEL(0.09, +3.0);
+          sum += GRABPIXEL(0.05, +4.0);
+
+          return float4(sum, 1);
+        }
+        ENDCG
+      }
+
+      GrabPass { }
+
+      Pass {
+        CGPROGRAM
+        #pragma vertex vert
+        #pragma fragment frag
+        #pragma target 2.0
+        #pragma shader_feature_local _SPECULARHIGHLIGHTS_OFF
+        #pragma shader_feature_local _GLOSSYREFLECTIONS_OFF
+        #pragma fragmentoption ARB_precision_hint_fastest
+        #define GRAB_POS
+        #include "UnityCG.cginc"
+        #include "ShaderSetup.cginc"
+
+        float _Blur;
+
+        sampler2D _GrabTexture;
+        float4 _GrabTexture_TexelSize;
+        #define BACKDROP_TEX _GrabTexture
+        #define BACKDROP_TEXELSIZE _GrabTexture_TexelSize
+
+        float4 frag( v2f i ) : COLOR {
+          if(_Blur == 0) return float4(0,0,0,0);
+
+          float3 sum = float3(0,0,0);
+
+          #define GRABPIXEL(weight,kernely) tex2D( BACKDROP_TEX, UNITY_PROJ_COORD(float2(i.uvgrab.x, i.uvgrab.y + BACKDROP_TEXELSIZE.y * kernely*_Blur))) * weight
+
+          sum += GRABPIXEL(0.05, -4.0);
+          sum += GRABPIXEL(0.09, -3.0);
+          sum += GRABPIXEL(0.12, -2.0);
+          sum += GRABPIXEL(0.15, -1.0);
+          sum += GRABPIXEL(0.18,  0.0);
+          sum += GRABPIXEL(0.15, +1.0);
+          sum += GRABPIXEL(0.12, +2.0);
+          sum += GRABPIXEL(0.09, +3.0);
+          sum += GRABPIXEL(0.05, +4.0);
+
+          return float4(sum, 1);
+        }
+        ENDCG
+      }
+
+      GrabPass { }
+
+      Pass {
+        CGPROGRAM
+        #pragma vertex vert
+        #pragma fragment frag
+        #pragma target 2.0
+        #pragma shader_feature_local _SPECULARHIGHLIGHTS_OFF
+        #pragma shader_feature_local _GLOSSYREFLECTIONS_OFF
+        #pragma fragmentoption ARB_precision_hint_fastest
+        #define GRAB_POS
+        #include "UnityCG.cginc"
+        #include "UnityUI.cginc"
+        #include "ShaderSetup.cginc"
+
+        #pragma multi_compile_local _ UNITY_UI_CLIP_RECT
+        #pragma multi_compile_local _ UNITY_UI_ALPHACLIP
+
+        float _Blur;
+        float _Brightness;
+        float _Contrast;
+        float _Grayscale;
+        float _HueRotate;
+        float _Invert;
+        float _Opacity;
+        float _Saturate;
+        float _Sepia;
+        float _Pixelate;
+        float _Grain;
+
+        float4 _ClipRect;
+
+        sampler2D _GrabTexture;
+        float4 _GrabTexture_TexelSize;
+        #define BACKDROP_TEX _GrabTexture
+        #define BACKDROP_TEXELSIZE _GrabTexture_TexelSize
+
+        // Convert RGB to Grayscale
+        float3 rgb2gray(float3 color)
+        {
+          return dot(color, float3(0.299, 0.587, 0.114));
+        }
+
+        // Convert RGB to HSV for Hue and Saturation adjustments
+        float3 rgb2hsv(float3 c)
+        {
+          float4 K = float4(0.0, -1.0 / 3.0, 2.0 / 3.0, -1.0);
+          float4 p = lerp(float4(c.bg, K.wz), float4(c.gb, K.xy), step(c.b, c.g));
+          float4 q = lerp(float4(p.xyw, c.r), float4(c.r, p.yzx), step(p.x, c.r));
+
+          float d = q.x - min(q.w, q.y);
+          float e = 1.0e-10;
+          return float3(abs(q.z + (q.w - q.y) / (6.0 * d + e)), d / (q.x + e), q.x);
+        }
+
+        // Convert HSV to RGB
+        float3 hsv2rgb(float3 c)
+        {
+          float4 K = float4(1.0, 2.0 / 3.0, 1.0 / 3.0, 3.0);
+          float3 p = abs(frac(c.xxx + K.xyz) * 6.0 - K.www);
+          return c.z * lerp(K.xxx, saturate(p - K.xxx), c.y);
+        }
+
+        float rand(float2 co)
+        {
+          return frac(sin(dot(co.xy, float2(12.9898, 78.233))) * 43758.5453);
+        }
+
+        float4 frag(v2f i) : SV_Target
+        {
+          float2 uvgrab = i.uvgrab;
+
+          // Apply pixelate effect
+          if (_Pixelate > 0)
+          {
+            float4 ts = BACKDROP_TEXELSIZE * _Pixelate;
+            uvgrab = round(i.uvgrab / ts.xy) * ts.xy;
+          }
+
+          // Grab the texture from behind the current object
+          float3 color = tex2D(BACKDROP_TEX, uvgrab).rgb;
 
           // Convert to grayscale if needed
           if (_Grayscale > 0)
