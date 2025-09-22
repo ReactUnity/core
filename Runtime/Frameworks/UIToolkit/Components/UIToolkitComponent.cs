@@ -238,11 +238,20 @@ namespace ReactUnity.UIToolkit
 
             // Transforms
 
+#if UNITY_6000_2_OR_NEWER
+            if (computed.HasValue(StyleProperties.scale)) TargetElement.style.scale = computed.scale;
+            else TargetElement.style.scale = Vector3.one;
+
+            if (computed.HasValue(StyleProperties.rotate)) TargetElement.style.rotate = Quaternion.Euler(computed.rotate);
+            else TargetElement.style.rotate = Quaternion.identity;
+#else
             if (computed.HasValue(StyleProperties.scale)) TargetElement.transform.scale = computed.scale;
             else TargetElement.transform.scale = Vector3.one;
 
             if (computed.HasValue(StyleProperties.rotate)) TargetElement.transform.rotation = Quaternion.Euler(computed.rotate);
             else TargetElement.transform.rotation = Quaternion.identity;
+#endif
+
 
 
 
@@ -271,19 +280,41 @@ namespace ReactUnity.UIToolkit
                 var pivotY = origin.Y.Unit == YogaUnit.Percent ? (origin.Y.Value / 100) : origin.Y.Unit == YogaUnit.Point ? (origin.Y.Value / rect.y) : 0.5f;
                 var pivot = new Vector3(pivotX, pivotY, 0);
 
-                if (pivot == Vector3.zero) TargetElement.transform.position = translate;
+
+                if (pivot == Vector3.zero)
+                {
+#if UNITY_6000_2_OR_NEWER
+
+                    TargetElement.style.translate = translate;
+#else
+                    TargetElement.transform.position = translate;
+#endif
+                }
+
+
                 else
                 {
                     Vector3 deltaPosition = -pivot;    // get change in pivot
                     deltaPosition.Scale(rect);           // apply sizing
+
+#if UNITY_6000_2_OR_NEWER
+                    deltaPosition.Scale(TargetElement.resolvedStyle.scale.value);          // apply scaling
+                    deltaPosition = Quaternion.AngleAxis(TargetElement.resolvedStyle.rotate.angle.value, Vector3.forward) * deltaPosition; // apply rotation
+#else
                     deltaPosition.Scale(TargetElement.transform.scale);          // apply scaling
                     deltaPosition = TargetElement.transform.rotation * deltaPosition; // apply rotation
+#endif
 
                     var counter = new Vector3(pivot.x, pivot.y, 0);
                     counter.Scale(rect);
 
                     var pos = deltaPosition + translate + counter;
+
+#if UNITY_6000_2_OR_NEWER
+                    TargetElement.style.translate = new Vector3(pos.x, pos.y, 0);
+#else
                     TargetElement.transform.position = new Vector3(pos.x, pos.y, 0);
+#endif
                 }
 
 #if UNITY_2021_2_OR_NEWER
@@ -293,7 +324,14 @@ namespace ReactUnity.UIToolkit
                 TargetElement.style.transformOrigin = new TransformOrigin(0, 0, 0);
 #endif
             }
-            else TargetElement.transform.position = translate;
+            else
+            {
+#if UNITY_6000_2_OR_NEWER
+                TargetElement.style.translate = translate;
+#else
+                TargetElement.transform.position = translate;
+#endif
+            }
 
             TargetElement.pickingMode = computed.pointerEvents == PointerEvents.None ? PickingMode.Ignore : PickingMode.Position;
         }
