@@ -20,7 +20,7 @@ export default function App() {
 
 ### Properties
 
-- **source**: Source of the image. Can be a url, a resource path (e.g. 'res:/path/to/file'), the `Texture2D` object or the `Sprite` object.
+- **source**: Source of the image. Can be a url, a resource path (e.g. 'res:path/to/file'), the `Texture2D` object or the `Sprite` object.
 
 ### Notes
 
