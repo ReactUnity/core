@@ -183,7 +183,8 @@ namespace ReactUnity.Types
                 var t = i * resRp;
                 var rt = length * t + offset;
 
-                var px = GetColorForOffset(distance, rt);
+                // Convert to linear space as the texture is marked as linear
+                var px = GetColorForOffset(distance, rt).linear;
 
                 // This is done so that transparent pixels have same color channel as next pixel
                 // So that the bilinear interpolation shows a better texture
