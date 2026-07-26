@@ -91,8 +91,6 @@ export function render(element: React.ReactNode, options: RenderOptions = {}) {
         '',
         (error) => console.error(error),
         () => {},
-        // @ts-expect-error the types for `react-reconciler` are not up to date with the library.
-        // See https://github.com/facebook/react/blob/c0464aedb16b1c970d717651bba8d1c66c578729/packages/react-reconciler/src/ReactFiberReconciler.js#L236-L259
         () => {},
         () => {},
         null,
@@ -107,8 +105,6 @@ export function render(element: React.ReactNode, options: RenderOptions = {}) {
         '',
         (error) => console.error(error),
         () => {},
-        // @ts-expect-error the types for `react-reconciler` are not up to date with the library.
-        // See https://github.com/facebook/react/blob/c0464aedb16b1c970d717651bba8d1c66c578729/packages/react-reconciler/src/ReactFiberReconciler.js#L236-L259
         () => {},
         () => {},
         null,

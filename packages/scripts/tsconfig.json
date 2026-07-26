@@ -7,7 +7,7 @@
     "declaration": false,
     "module": "ESNext",
     "moduleResolution": "Bundler",
-    "preserveSymlinks": true,
+    "preserveSymlinks": false,
     "importHelpers": false,
     "strict": true,
     "strictNullChecks": false,

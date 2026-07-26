@@ -1,5 +1,3 @@
-
-
 const path = require('node:path');
 const fs = require('node:fs');
 const getPublicUrlOrPath = require('react-dev-utils/getPublicUrlOrPath');
@@ -38,6 +36,13 @@ const resolveModule = (resolveFn, filePath) => {
 };
 
 // config after eject: we're in ./config/
+// A CommonJS webpack config inside a "type": "module" package must be named
+// .cjs. Prefer that, falling back to .js so existing consumers keep working.
+const resolveWebpackSetup = (resolver, prefix = '') => {
+  const cjs = resolver(`${prefix}webpack.config.cjs`);
+  return fs.existsSync(cjs) ? cjs : resolver(`${prefix}webpack.config.js`);
+};
+
 module.exports = {
   dotenv: resolveApp('.env'),
   appPath: resolveApp('.'),
@@ -54,7 +59,7 @@ module.exports = {
   yarnLockFile: resolveApp('yarn.lock'),
   testsSetup: resolveModule(resolveApp, 'src/setupTests'),
   proxySetup: resolveApp('src/setupProxy.js'),
-  webpackSetup: resolveApp('webpack.config.js'),
+  webpackSetup: resolveWebpackSetup(resolveApp),
   appNodeModules: resolveApp('node_modules'),
   appWebpackCache: resolveApp('node_modules/.cache'),
   appTsBuildInfoFile: resolveApp('node_modules/.cache/tsconfig.tsbuildinfo'),
@@ -82,7 +87,7 @@ module.exports = {
   yarnLockFile: resolveApp('yarn.lock'),
   testsSetup: resolveModule(resolveApp, 'src/setupTests'),
   proxySetup: resolveApp('src/setupProxy.js'),
-  webpackSetup: resolveApp('webpack.config.js'),
+  webpackSetup: resolveWebpackSetup(resolveApp),
   appNodeModules: resolveApp('node_modules'),
   appWebpackCache: resolveApp('node_modules/.cache'),
   appTsBuildInfoFile: resolveApp('node_modules/.cache/tsconfig.tsbuildinfo'),
@@ -118,7 +123,7 @@ if (!reactScriptsLinked && __dirname.indexOf(path.join('packages', 'react-unity-
     yarnLockFile: resolveOwn(`${templatePath}/yarn.lock`),
     testsSetup: resolveModule(resolveOwn, `${templatePath}/src/setupTests`),
     proxySetup: resolveOwn(`${templatePath}/src/setupProxy.js`),
-    webpackSetup: resolveApp(`${templatePath}/webpack.config.js`),
+    webpackSetup: resolveWebpackSetup(resolveApp, `${templatePath}/`),
     appNodeModules: resolveOwn('node_modules'),
     appWebpackCache: resolveOwn('node_modules/.cache'),
     appTsBuildInfoFile: resolveOwn('node_modules/.cache/tsconfig.tsbuildinfo'),
