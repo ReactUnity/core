@@ -16,3 +16,5 @@ MonoBehaviour:
     Entries:
     - Key: myBorder
       Value: {fileID: 2800000, guid: fa26c01a6adcd5542ad81d4b1e1dd9d4, type: 3}
+    - Key: myCharacter
+      Value: {fileID: 2800000, guid: c4cce8aaca0d7904ea659e431b97b250, type: 3}

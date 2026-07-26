@@ -25,6 +25,7 @@ function App() {
         <button onClick={() => nav('query')}>Tanstack Query</button>
         <button onClick={() => nav('redux')}>Redux</button>
         <button onClick={() => nav('style-playground')}>Style Playground</button>
+        <button onClick={() => nav('game')}>Game UI</button>
       </scroll>
 
       <scroll className={styles.scroll}>
@@ -41,10 +42,6 @@ render(
     <MemoryRouter
       initialEntries={[`/${global.location.hash.replace(/^#/, '')}`]}
       initialIndex={0}
-      future={{
-        v7_relativeSplatPath: true,
-        v7_startTransition: true,
-      }}
     >
       <QueryClientProvider client={queryClient}>
         <App />

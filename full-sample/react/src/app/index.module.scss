@@ -3,7 +3,8 @@
   align-items: stretch;
   height: 100%;
   overflow: hidden;
-  background-color: #f0f0f0;
+  background-color: rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(4px);
   color: black;
 }
 
@@ -15,7 +16,7 @@
   align-items: stretch;
   background-color: #dedede;
 
-  >button {
+  > button {
     margin-bottom: 12px;
     background-color: white;
     color: black;
@@ -48,8 +49,8 @@ h1 {
   margin-bottom: 20px;
 }
 
-*+h1,
-*+* h1 {
+* + h1,
+* + * h1 {
   margin-top: 24px;
 }
 
@@ -60,8 +61,8 @@ h2 {
   margin-bottom: 20px;
 }
 
-*+h2,
-*+* h2 {
+* + h2,
+* + * h2 {
   margin-top: 16px;
 }
 

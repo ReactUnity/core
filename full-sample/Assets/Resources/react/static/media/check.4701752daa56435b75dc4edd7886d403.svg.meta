@@ -7,7 +7,7 @@ ScriptedImporter:
   userData: 
   assetBundleName: 
   assetBundleVariant: 
-  script: {fileID: 11500000, guid: a57477913897c46af95d590f580878bd, type: 3}
+  script: {fileID: 12408, guid: 0000000000000000e000000000000000, type: 0}
   svgType: 0
   texturedSpriteMeshType: 0
   svgPixelsPerUnit: 100
@@ -18,6 +18,7 @@ ScriptedImporter:
   viewportOptions: 0
   preserveViewport: 0
   advancedMode: 0
+  tessellationMode: 0
   predefinedResolutionIndex: 1
   targetResolution: 1080
   resolutionMultiplier: 1
@@ -38,18 +39,15 @@ ScriptedImporter:
   useSVGPixelsPerUnit: 0
   spriteData:
     TessellationDetail: 0
+    SpriteName: check.4701752daa56435b75dc4edd7886d403Sprite
+    SpritePivot: {x: 0.5, y: 0.5}
+    SpriteAlignment: 0
+    SpriteBorder: {x: 0, y: 0, z: 0, w: 0}
     SpriteRect:
-      name: 
-      originalName: 
-      pivot: {x: 0, y: 0}
-      alignment: 0
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      rect:
-        serializedVersion: 2
-        x: 0
-        y: 0
-        width: 0
-        height: 0
-      spriteID: 2ffe6885527582a4f83c08efe5258ffa
+      serializedVersion: 2
+      x: 0
+      y: 0
+      width: 17.59
+      height: 13.41
+    SpriteID: 745b9e59ba685354d8e3ba2fb64520cb
     PhysicsOutlines: []

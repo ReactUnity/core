@@ -2,9 +2,9 @@
 
 import { ReactUnity, icon, render } from '@reactunity/renderer';
 import { useState } from 'react';
-import base64Image from 'src/assets/base64Image.txt';
-import pngImage from 'src/assets/bg.png';
-import check, { ReactComponent as CheckSVG } from 'src/assets/check.svg';
+import base64Image from '#src/assets/base64Image.txt';
+import pngImage from '#src/assets/bg.png';
+import CheckSVG from '#src/assets/check.svg';
 import style from './index.module.scss';
 
 const webImage = 'https://www.google.com.tr/images/branding/googlelogo/1x/googlelogo_color_272x92dp.png';
@@ -18,7 +18,6 @@ export function App() {
         <h1>React Unity Showcase</h1>
 
         <CheckSVG />
-        <svg source={check} />
         <svg source={'https://dev.w3.org/SVG/tools/svgweb/samples/svg-files/betterplace.svg'} />
         <svg source={'https://dev.w3.org/SVG/tools/svgweb/samples/svg-files/compuserver_msn_Ford_Focus.svg'} />
 

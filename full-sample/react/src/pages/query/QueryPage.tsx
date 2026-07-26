@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 
 export function QueryPage() {
-  const { isPending, error, data, isFetching, refetch } = useQuery({
+  const { isPending, error, data, isFetching, refetch } = useQuery<any>({
     queryKey: ['repoData'],
     queryFn: async () => {
       const response = await fetch(

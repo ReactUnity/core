@@ -8918,7 +8918,7 @@ var flushSync = function flushSync() {
 const bg_namespaceObject = __webpack_require__.p + "static/media/bg.png.png";
 ;// ./src/assets/check.svg
 var _path;
-var _excluded = ["title", "titleId"];
+var _excluded = (/* unused pure expression or super */ null && (["title", "titleId"]));
 function _extends() { return _extends = Object.assign ? Object.assign.bind() : function (n) { for (var e = 1; e < arguments.length; e++) { var t = arguments[e]; for (var r in t) ({}).hasOwnProperty.call(t, r) && (n[r] = t[r]); } return n; }, _extends.apply(null, arguments); }
 function _objectWithoutProperties(e, t) { if (null == e) return {}; var o, r, i = _objectWithoutPropertiesLoose(e, t); if (Object.getOwnPropertySymbols) { var n = Object.getOwnPropertySymbols(e); for (r = 0; r < n.length; r++) o = n[r], -1 === t.indexOf(o) && {}.propertyIsEnumerable.call(e, o) && (i[o] = e[o]); } return i; }
 function _objectWithoutPropertiesLoose(r, e) { if (null == r) return {}; var t = {}; for (var n in r) if ({}.hasOwnProperty.call(r, n)) { if (-1 !== e.indexOf(n)) continue; t[n] = r[n]; } return t; }
@@ -8928,19 +8928,19 @@ var SvgCheck = function SvgCheck(_ref, ref) {
   var title = _ref.title,
     titleId = _ref.titleId,
     props = _objectWithoutProperties(_ref, _excluded);
-  return /*#__PURE__*/react.createElement("svg", _extends({
+  return /*#__PURE__*/React.createElement("svg", _extends({
     xmlns: "http://www.w3.org/2000/svg",
     viewBox: "0 0 32 32",
     fill: "black",
     ref: ref,
     "aria-labelledby": titleId
-  }, props), title ? /*#__PURE__*/react.createElement("title", {
+  }, props), title ? /*#__PURE__*/React.createElement("title", {
     id: titleId
-  }, title) : null, _path || (_path = /*#__PURE__*/react.createElement("path", {
+  }, title) : null, _path || (_path = /*#__PURE__*/React.createElement("path", {
     d: "M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"
   })));
 };
-var ForwardRef = /*#__PURE__*/(0,react.forwardRef)(SvgCheck);
+var ForwardRef = /*#__PURE__*/(/* unused pure expression or super */ null && (forwardRef(SvgCheck)));
 
 /* harmony default export */ const check = (__webpack_require__.p + "static/media/check.4701752daa56435b75dc4edd7886d403.svg");
 // EXTERNAL MODULE: ../../node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js
@@ -8991,7 +8991,7 @@ var update = injectStylesIntoStyleTag_default()(index_module/* default */.A, opt
        /* harmony default export */ const home_index_module = (index_module/* default */.A && index_module/* default */.A.locals ? index_module/* default */.A.locals : undefined);
 
 ;// ./src/uitoolkit/home/index.tsx
-/* @jsxImportSource @reactunity/renderer/uitoolkit */var webImage='https://www.google.com.tr/images/branding/googlelogo/1x/googlelogo_color_272x92dp.png';function App(){var _useState=(0,react.useState)(null),_useState2=_slicedToArray(_useState,2),testPortalTarget=_useState2[0],setTestPortalTarget=_useState2[1];return (0,jsx_runtime.jsx)("scroll",{children:(0,jsx_runtime.jsxs)("view",{className:home_index_module.app,children:[(0,jsx_runtime.jsx)("h1",{children:"React Unity Showcase"}),(0,jsx_runtime.jsx)(ForwardRef,{}),(0,jsx_runtime.jsx)("svg",{source:check}),(0,jsx_runtime.jsx)("svg",{source:'https://dev.w3.org/SVG/tools/svgweb/samples/svg-files/betterplace.svg'}),(0,jsx_runtime.jsx)("svg",{source:'https://dev.w3.org/SVG/tools/svgweb/samples/svg-files/compuserver_msn_Ford_Focus.svg'}),(0,jsx_runtime.jsxs)("section",{children:[(0,jsx_runtime.jsx)("h2",{children:"Button"}),(0,jsx_runtime.jsx)("button",{className:home_index_module.clickButton,children:"Click"})]}),(0,jsx_runtime.jsxs)("section",{children:[(0,jsx_runtime.jsx)("h2",{children:"Anchor"}),(0,jsx_runtime.jsx)("anchor",{url:"https://www.google.com",children:"Open Google"})]}),(0,jsx_runtime.jsxs)("section",{children:[(0,jsx_runtime.jsx)("h2",{children:"Input"}),(0,jsx_runtime.jsx)("input",{})]}),(0,jsx_runtime.jsxs)("section",{children:[(0,jsx_runtime.jsx)("h2",{children:"Toggle"}),(0,jsx_runtime.jsxs)("row",{children:[(0,jsx_runtime.jsx)("toggle",{}),"Toggle"]})]}),(0,jsx_runtime.jsxs)("section",{children:[(0,jsx_runtime.jsx)("h2",{children:"Image"}),(0,jsx_runtime.jsxs)("row",{children:[(0,jsx_runtime.jsx)("image",{source:bg_namespaceObject}),(0,jsx_runtime.jsx)("image",{source:base64Image}),(0,jsx_runtime.jsx)("image",{source:webImage})]})]}),(0,jsx_runtime.jsxs)("section",{children:[(0,jsx_runtime.jsx)("h2",{children:"Icons"}),(0,jsx_runtime.jsxs)("row",{children:[(0,jsx_runtime.jsx)(icon.image,{}),(0,jsx_runtime.jsx)(icon.person_add,{}),(0,jsx_runtime.jsx)(icon.hourglass_bottom,{}),(0,jsx_runtime.jsx)(icon._3d_rotation,{style:{fontSize:40}})]})]}),(0,jsx_runtime.jsxs)("section",{children:[(0,jsx_runtime.jsx)("h2",{children:"Portal"}),(0,jsx_runtime.jsx)("view",{style:{width:200,backgroundColor:'#f0f0f0',border:'1px solid #ccc'},children:(0,jsx_runtime.jsx)("view",{style:{border:'1px solid cornflowerblue',height:50},children:!!testPortalTarget&&(0,jsx_runtime.jsx)("portal",{target:testPortalTarget,children:"This should be rendered inside red borders"})})}),(0,jsx_runtime.jsx)("view",{style:{width:200,backgroundColor:'#f0f0f0',border:'1px solid #ccc'},children:(0,jsx_runtime.jsx)("view",{style:{border:'1px solid crimson',height:50},ref:setTestPortalTarget})})]})]})});}_render((0,jsx_runtime.jsx)(App,{}));
+/* @jsxImportSource @reactunity/renderer/uitoolkit */var webImage='https://www.google.com.tr/images/branding/googlelogo/1x/googlelogo_color_272x92dp.png';function App(){var _useState=(0,react.useState)(null),_useState2=_slicedToArray(_useState,2),testPortalTarget=_useState2[0],setTestPortalTarget=_useState2[1];return (0,jsx_runtime.jsx)("scroll",{children:(0,jsx_runtime.jsxs)("view",{className:home_index_module.app,children:[(0,jsx_runtime.jsx)("h1",{children:"React Unity Showcase"}),(0,jsx_runtime.jsx)(check,{}),(0,jsx_runtime.jsx)("svg",{source:'https://dev.w3.org/SVG/tools/svgweb/samples/svg-files/betterplace.svg'}),(0,jsx_runtime.jsx)("svg",{source:'https://dev.w3.org/SVG/tools/svgweb/samples/svg-files/compuserver_msn_Ford_Focus.svg'}),(0,jsx_runtime.jsxs)("section",{children:[(0,jsx_runtime.jsx)("h2",{children:"Button"}),(0,jsx_runtime.jsx)("button",{className:home_index_module.clickButton,children:"Click"})]}),(0,jsx_runtime.jsxs)("section",{children:[(0,jsx_runtime.jsx)("h2",{children:"Anchor"}),(0,jsx_runtime.jsx)("anchor",{url:"https://www.google.com",children:"Open Google"})]}),(0,jsx_runtime.jsxs)("section",{children:[(0,jsx_runtime.jsx)("h2",{children:"Input"}),(0,jsx_runtime.jsx)("input",{})]}),(0,jsx_runtime.jsxs)("section",{children:[(0,jsx_runtime.jsx)("h2",{children:"Toggle"}),(0,jsx_runtime.jsxs)("row",{children:[(0,jsx_runtime.jsx)("toggle",{}),"Toggle"]})]}),(0,jsx_runtime.jsxs)("section",{children:[(0,jsx_runtime.jsx)("h2",{children:"Image"}),(0,jsx_runtime.jsxs)("row",{children:[(0,jsx_runtime.jsx)("image",{source:bg_namespaceObject}),(0,jsx_runtime.jsx)("image",{source:base64Image}),(0,jsx_runtime.jsx)("image",{source:webImage})]})]}),(0,jsx_runtime.jsxs)("section",{children:[(0,jsx_runtime.jsx)("h2",{children:"Icons"}),(0,jsx_runtime.jsxs)("row",{children:[(0,jsx_runtime.jsx)(icon.image,{}),(0,jsx_runtime.jsx)(icon.person_add,{}),(0,jsx_runtime.jsx)(icon.hourglass_bottom,{}),(0,jsx_runtime.jsx)(icon._3d_rotation,{style:{fontSize:40}})]})]}),(0,jsx_runtime.jsxs)("section",{children:[(0,jsx_runtime.jsx)("h2",{children:"Portal"}),(0,jsx_runtime.jsx)("view",{style:{width:200,backgroundColor:'#f0f0f0',border:'1px solid #ccc'},children:(0,jsx_runtime.jsx)("view",{style:{border:'1px solid cornflowerblue',height:50},children:!!testPortalTarget&&(0,jsx_runtime.jsx)("portal",{target:testPortalTarget,children:"This should be rendered inside red borders"})})}),(0,jsx_runtime.jsx)("view",{style:{width:200,backgroundColor:'#f0f0f0',border:'1px solid #ccc'},children:(0,jsx_runtime.jsx)("view",{style:{border:'1px solid crimson',height:50},ref:setTestPortalTarget})})]})]})});}_render((0,jsx_runtime.jsx)(App,{}));
 ;// ./src/entry/uitoolkit.tsx
 
 /******/ })()

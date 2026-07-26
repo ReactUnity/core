@@ -1,11 +1,11 @@
 import { ReactUnity, UnityEngine, icon, useGlobals } from '@reactunity/renderer';
 import { useEffect, useState } from 'react';
-import base64Image from 'src/assets/base64Image.txt';
-import pngImage from 'src/assets/bg.png';
+import base64Image from '#src/assets/base64Image.txt';
+import pngImage from '#src/assets/bg.png';
 import styles from './index.module.scss';
 
 // @ts-expect-error
-import check from 'src/assets/check.svg?raw';
+import check from '#src/assets/check.svg?raw';
 
 const webImage = 'https://www.google.com.tr/images/branding/googlelogo/1x/googlelogo_color_272x92dp.png';
 const webVideo = 'https://media.w3.org/2010/05/sintel/trailer.mp4';
@@ -54,6 +54,7 @@ export function ImagesPage() {
           <image source={pngImage} />
           <image source={base64Image} />
           <image source={webImage} />
+          <image source="pool:images/myBorder" />
         </row>
       </section>
 

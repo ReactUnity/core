@@ -1,6 +1,6 @@
 import { Provider, useDispatch, useSelector } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
-import { decrement, increment, persistor, selectCount, store } from 'src/store';
+import { decrement, increment, persistor, selectCount, store } from '#src/store.ts';
 
 export function Redux() {
   return <Provider store={store}>
