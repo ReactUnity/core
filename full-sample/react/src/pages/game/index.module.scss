@@ -1,0 +1,278 @@
+.page {
+  font-size: 14px;
+  width: 100%;
+  height: 100vh;
+  position: relative;
+  background-color: rgba(0, 0, 0, 0.1);
+}
+
+/* Status Bars (Health/Mana) */
+.statusBars {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.healthContainer,
+.manaContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.barLabel {
+  font-size: 12px;
+  font-weight: bold;
+  color: black;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
+}
+
+.barBackground {
+  width: 200px;
+  height: 20px;
+  background-color: rgba(0, 0, 0, 0.6);
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-radius: 10px;
+  position: relative;
+  overflow: hidden;
+}
+
+.healthBar {
+  height: 100%;
+  background: linear-gradient(90deg, #ff4444, #ff6666);
+  border-radius: 8px;
+  transition: width 0.3s ease;
+}
+
+.manaBar {
+  height: 100%;
+  background: linear-gradient(90deg, #4444ff, #6666ff);
+  border-radius: 8px;
+  transition: width 0.3s ease;
+}
+
+.barText {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: white;
+  font-size: 11px;
+  font-weight: bold;
+  text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.8);
+}
+
+/* Minimap */
+.minimap {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  width: 150px;
+  height: 150px;
+  background-color: rgba(0, 0, 0, 0.8);
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-radius: 8px;
+  padding: 8px;
+}
+
+.minimapTitle {
+  color: white;
+  font-size: 12px;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 4px;
+}
+
+.minimapArea {
+  width: 100%;
+  height: 120px;
+  background-color: rgba(50, 100, 50, 0.3);
+  border-radius: 4px;
+  position: relative;
+  overflow: hidden;
+}
+
+.minimapGrid {
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+
+.mapMarker {
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+}
+
+.mapMarker.player {
+  background-color: #ffff00;
+  border: 1px solid #ffffff;
+  width: 6px;
+  height: 6px;
+  z-index: 10;
+}
+
+.mapMarker.forest {
+  background-color: #228b22;
+  width: 12px;
+  height: 12px;
+}
+
+.mapMarker.mountain {
+  background-color: #8b4513;
+  width: 10px;
+  height: 10px;
+}
+
+.mapMarker.village {
+  background-color: #ddd;
+  width: 8px;
+  height: 8px;
+}
+
+/* Skill Bar */
+.skillBar {
+  position: absolute;
+  bottom: 80px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: row;
+  gap: 8px;
+  background-color: rgba(0, 0, 0, 0.7);
+  padding: 12px;
+  border-radius: 8px;
+  border: 2px solid rgba(255, 255, 255, 0.2);
+}
+
+.skillSlot {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+
+.skillIcon {
+  width: 40px;
+  height: 40px;
+  background-color: rgba(50, 50, 50, 0.8);
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-radius: 6px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  cursor: pointer;
+}
+
+.skillIcon:hover {
+  border-color: rgba(255, 255, 255, 0.6);
+  background-color: rgba(70, 70, 70, 0.8);
+}
+
+.skillEmoji {
+  font-size: 20px;
+}
+
+.cooldownOverlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.7);
+  border-radius: 4px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+
+.cooldownText {
+  color: white;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.skillKey {
+  color: white;
+  font-size: 10px;
+  font-weight: bold;
+  background-color: rgba(0, 0, 0, 0.6);
+  padding: 2px 4px;
+  border-radius: 3px;
+}
+
+/* Quest Panel */
+.questPanel {
+  position: absolute;
+  top: 200px;
+  left: 20px;
+  width: 250px;
+  background-color: rgba(0, 0, 0, 0.8);
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-radius: 8px;
+  padding: 12px;
+}
+
+.questTitle {
+  color: white;
+  font-size: 14px;
+  font-weight: bold;
+  margin-bottom: 8px;
+  text-align: center;
+}
+
+.questList {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.questItem {
+  background-color: rgba(50, 50, 50, 0.6);
+  padding: 8px;
+  border-radius: 4px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.questText {
+  color: white;
+  font-size: 11px;
+  margin-bottom: 4px;
+  font-weight: bold;
+}
+
+.questProgress {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 8px;
+}
+
+.questProgressBackground {
+  flex: 1;
+  height: 8px;
+  background-color: rgba(0, 0, 0, 0.6);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.questProgressFill {
+  height: 100%;
+  background: linear-gradient(90deg, #00aa00, #44cc44);
+  border-radius: 4px;
+  transition: width 0.3s ease;
+}
+
+.questProgressText {
+  color: white;
+  font-size: 9px;
+  font-weight: bold;
+  white-space: nowrap;
+}
