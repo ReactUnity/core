@@ -1,0 +1,44 @@
+.label {
+  flex-direction: row;
+  align-items: center;
+
+  &:hover .toggle .ring {
+    scale: 1;
+  }
+}
+
+.toggle {
+  appearance: none;
+  overflow: visible;
+  border-radius: 4px;
+  transition: box-shadow 280ms cubic-bezier(0.4, 0, 0.2, 1);
+  color: black;
+  border: 2px black;
+  background-color: transparent;
+  box-shadow: none;
+  width: 20px;
+
+  .ring {
+    position: absolute;
+    border-radius: 50%;
+    inset: -70%;
+    background-color: rgba($color: black, $alpha: 0.08);
+    scale: 0;
+    transition: scale 0.16s;
+    overflow: hidden;
+  }
+}
+
+.selectAllToggle {
+  margin-bottom: 4px;
+}
+
+.label.radio {
+  .toggle {
+    border-radius: 50%;
+
+    &:checked:not(:indeterminate):after {
+      background-image: url(res:ReactUnity/sprites/radio);
+    }
+  }
+}

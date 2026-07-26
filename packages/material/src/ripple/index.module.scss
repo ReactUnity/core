@@ -1,0 +1,23 @@
+.rippleParent {
+  overflow: hidden;
+}
+
+.ripple {
+  pointer-events: none;
+  border-radius: 50%;
+  background-color: rgba(0, 0, 0, 0.1);
+  position: absolute;
+  transition: opacity 300ms ease-out, scale 450ms cubic-bezier(0, 0, 0.2, 1);
+  translate: -50% -50%;
+  scale: 1;
+
+  &:enter {
+    scale: 0;
+  }
+
+  &:leave {
+    opacity: 0;
+    transition: opacity 400ms ease-out, scale 450ms cubic-bezier(0, 0, 0.2, 1);
+    state-duration: 400ms;
+  }
+}

@@ -1,0 +1,71 @@
+{
+  "name": "@reactunity/material",
+  "version": "0.20.0",
+  "description": "Material Design components and utilities for React Unity",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "typings": "dist/index.d.ts",
+  "sideEffects": [
+    "./src/styles",
+    "./src/styles/**/*.*",
+    "./dist/src/styles",
+    "./dist/src/styles/**/*.*",
+    "**/*.css",
+    "**/*.scss"
+  ],
+  "author": "Gokhan Kurt <krtgkn@gmail.com>",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ReactUnity/material"
+  },
+  "keywords": [
+    "react",
+    "material",
+    "material-design",
+    "material-ui",
+    "unity",
+    "unity3d"
+  ],
+  "license": "MIT",
+  "files": [
+    "dist"
+  ],
+  "exports": {
+    ".": "./dist/index.js",
+    "./styles": {
+      "style": "./dist/src/styles/index.scss",
+      "default": "./dist/src/styles/index.js"
+    },
+    "./*": "./dist/src/*/index.js"
+  },
+  "scripts": {
+    "prebuild": "npm run clean",
+    "build": "tsc -d && npm run copy-files",
+    "copy-files": "copyfiles -u 1 \"src/**/*.scss\" dist/src",
+    "watch": "concurrently --kill-others \"npm run watch:tsc\" \"npm run watch:files\"",
+    "watch:tsc": "tsc -d --watch --sourceMap",
+    "watch:files": "onchange -i \"src/**/*.scss\" -- npm run copy-files",
+    "clean": "rimraf dist",
+    "lint": "react-unity-scripts lint",
+    "local": "yalc publish --push",
+    "pack": "npm run pack"
+  },
+  "dependencies": {
+    "clsx": "^2.1.1",
+    "memoize-one": "^6.0.0"
+  },
+  "devDependencies": {
+    "@reactunity/renderer": "^0.20.1",
+    "@reactunity/scripts": "^0.20.0",
+    "@types/react": "^19.1.8",
+    "concurrently": "^9.2.0",
+    "copyfiles": "^2.4.1",
+    "onchange": "^7.1.0",
+    "rimraf": "^6.0.1",
+    "typescript": "^5.8.3"
+  },
+  "peerDependencies": {
+    "@reactunity/renderer": "*",
+    "react": "^19.1.0"
+  }
+}

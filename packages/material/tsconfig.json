@@ -1,0 +1,14 @@
+{
+  "extends": "@reactunity/scripts",
+  "compilerOptions": {
+    "baseUrl": "./",
+    "outDir": "./dist",
+    "target": "ES5",
+    "sourceMap": true,
+    "noEmit": false,
+    "jsxImportSource": "@reactunity/renderer/ugui",
+    "types": ["@reactunity/scripts/main"]
+  },
+  "files": ["index.ts"],
+  "include": ["src"]
+}
