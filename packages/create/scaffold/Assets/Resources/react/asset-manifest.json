@@ -1,0 +1,8 @@
+{
+  "files": {
+    "index.js": "/index.js"
+  },
+  "entrypoints": [
+    "index.js"
+  ]
+}

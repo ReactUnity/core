@@ -1,0 +1,10 @@
+*
+!/src/**
+!/.vscode/**
+!/.editorconfig
+!/.gitignore
+!/package.json
+!/README.md
+!/tsconfig.json
+!/yarn.lock
+!/.env

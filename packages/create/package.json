@@ -1,0 +1,32 @@
+{
+  "name": "@reactunity/create",
+  "version": "0.18.0",
+  "description": "Scaffold a ReactUnity app using npm init",
+  "license": "MIT",
+  "main": "index.js",
+  "bin": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ReactUnity/create"
+  },
+  "author": {
+    "name": "Gokhan Kurt",
+    "email": "krtgkn@gmail.com"
+  },
+  "scripts": {
+    "start": "ts-node index.ts",
+    "build": "tsc",
+    "prepare": "tsc"
+  },
+  "dependencies": {
+    "chalk": "4.x",
+    "commander": "^11.0.0",
+    "fs-extra": "^11.2.0"
+  },
+  "devDependencies": {
+    "@types/fs-extra": "^11.0.4",
+    "@types/node": "^20.12.6",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.4.4"
+  }
+}
