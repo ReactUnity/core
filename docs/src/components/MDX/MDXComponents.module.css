@@ -1,0 +1,128 @@
+/*
+ * Copyright (c) Facebook, Inc. and its affiliates.
+ */
+
+/* Stop purging. */
+.markdown p {
+  @apply mb-4 leading-7 whitespace-pre-wrap text-gray-70;
+}
+
+.markdown ol {
+  @apply mb-4 ml-8 list-decimal;
+}
+
+.markdown ul {
+  @apply mb-4 ml-8 list-disc;
+}
+
+.markdown h1 {
+  @apply mb-6 text-4xl font-extrabold tracking-tight;
+}
+
+.markdown h2 {
+  @apply mt-12 mb-4 text-3xl font-extrabold tracking-tight;
+}
+.markdown h3 {
+  @apply mt-8 mb-3 text-2xl font-extrabold tracking-tight;
+}
+.markdown h4 {
+  @apply mt-8 mb-3 text-xl font-extrabold tracking-tight;
+}
+
+.markdown code {
+  @apply text-gray-70 bg-card dark:bg-card-dark   p-1 rounded-lg no-underline;
+  font-size: 90%;
+}
+
+.markdown li {
+  @apply mb-2;
+}
+
+.markdown a {
+  @apply inline text-link dark:text-link-dark break-normal border-b border-link border-opacity-0 hover:border-opacity-100 duration-100 ease-in transition leading-normal;
+}
+
+.embla {
+  position: relative;
+}
+.emblaViewport {
+  overflow: hidden;
+  aspect-ratio: 16 / 9;
+}
+.emblaContainer {
+  display: flex;
+  height: 100%;
+}
+.emblaSlide {
+  flex: 0 0 100%;
+  min-width: 0;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+.emblaPrev,
+.emblaNext {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 0;
+  color: transparent;
+}
+
+.emblaPrev:before,
+.emblaNext:before {
+  content: '';
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  border: 2px solid black;
+  border-radius: 3px;
+  rotate: 45deg;
+}
+
+.emblaPrev {
+  left: 10px;
+}
+.emblaPrev:before {
+  border-color: transparent transparent black black;
+}
+.emblaNext:before {
+  border-color: black black transparent transparent;
+}
+
+.emblaNext {
+  right: 10px;
+}
+
+.carousel {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.thumbnails {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+}
+
+.thumbnail {
+  width: 100px;
+  height: 60px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  cursor: pointer;
+  border-radius: 4px;
+  overflow: hidden;
+}

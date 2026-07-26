@@ -1,0 +1,69 @@
+{
+  "title": "Learn ReactUnity",
+  "heading": true,
+  "path": "/",
+  "routes": [
+    {
+      "heading": true,
+      "path": "",
+      "routes": [
+        {
+          "title": "Overview",
+          "path": "/"
+        },
+        {
+          "title": "Quick Start",
+          "path": "/learn"
+        },
+        {
+          "title": "Supported UI Backends",
+          "path": "/learn/ui-backends"
+        },
+        {
+          "hasSectionHeader": true,
+          "sectionHeader": "How to"
+        },
+        {
+          "title": "React - C# communication (Interop)",
+          "path": "/learn/howto/interop"
+        },
+        {
+          "title": "Extend ReactUnity",
+          "path": "/learn/howto/extending"
+        },
+        {
+          "title": "Debugging React code",
+          "path": "/learn/howto/debug"
+        },
+        {
+          "title": "Using custom fonts",
+          "path": "/learn/howto/fonts"
+        },
+        {
+          "title": "Troubleshooting",
+          "path": "/learn/howto/troubleshooting"
+        },
+        {
+          "hasSectionHeader": true,
+          "sectionHeader": "Misc"
+        },
+        {
+          "title": "Showcase",
+          "path": "/learn/misc/showcase"
+        },
+        {
+          "title": "Sponsors & Donations",
+          "path": "/learn/misc/sponsors"
+        },
+        {
+          "title": "About the documentation",
+          "path": "/learn/misc/about"
+        },
+        {
+          "title": "FAQ",
+          "path": "/learn/misc/faq"
+        }
+      ]
+    }
+  ]
+}

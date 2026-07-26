@@ -1,0 +1,17 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "type": "npm",
+      "script": "start"
+    },
+    {
+      "type": "npm",
+      "script": "build"
+    },
+    {
+      "type": "npm",
+      "script": "lint"
+    }
+  ]
+}
