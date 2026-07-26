@@ -1,0 +1,94 @@
+name: Docs
+
+# The docs site is served from GitHub Pages at https://reactunity.github.io/,
+# and that URL comes from the *repository name* -- only ReactUnity/<name>.github.io
+# can serve it. So the source lives here and the built output is pushed to the
+# gh-pages branch of ReactUnity/reactunity.github.io, which becomes a deploy target only.
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'docs/**'
+      - '.github/workflows/docs.yml'
+  workflow_dispatch:
+
+concurrency:
+  group: docs
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    # Hoisted to job level so the steps below can branch on whether the token
+    # exists. The `secrets` context is NOT available in a step-level `if`
+    # (allowed there: github, needs, strategy, matrix, job, runner, env, vars,
+    # steps, inputs) but `env` is, and `jobs.<id>.env` may read secrets. This is
+    # the documented way to make a step conditional on a secret being set.
+    env:
+      DOCS_DEPLOY_TOKEN: ${{ secrets.DOCS_DEPLOY_TOKEN }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v6
+      - uses: actions/setup-node@v6
+        with:
+          node-version-file: .node-version
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+
+      # Always built, even when the deploy is skipped -- that keeps this workflow
+      # useful as a check that the docs still compile.
+      - name: Build
+        working-directory: docs
+        env:
+          NEXT_PUBLIC_GA_TRACKING_ID: ${{ secrets.ANALYTICS_ID }}
+        run: pnpm build && pnpm export
+
+      # docs/src/components/unity/instance.tsx loads
+      # /Unity/<sample>/Build/WebInjectable.{wasm,data,framework.js,loader.js}.
+      # Those are hand-built Unity WebGL artifacts (103 MB for the .wasm alone)
+      # that nothing in this repo builds, so they were stripped from history.
+      #
+      # They now live permanently on the gh-pages branch of ReactUnity/reactunity.github.io,
+      # under /Unity/. clean-exclude keeps this deploy from wiping them, so the
+      # site serves them same-origin and the monorepo never carries the weight.
+      #
+      # ONE-TIME SETUP: commit the assets to that branch under Unity/. See
+      # tools/monorepo-migration/README.md. Until then the demos 404; nothing
+      # else breaks.
+      - name: Deploy to ReactUnity/reactunity.github.io@gh-pages
+        if: env.DOCS_DEPLOY_TOKEN != ''
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          folder: docs/out
+          branch: gh-pages
+          repository-name: ReactUnity/reactunity.github.io
+          token: ${{ secrets.DOCS_DEPLOY_TOKEN }}
+          clean: true
+          clean-exclude: |
+            Unity/**
+
+      # Never fail silently: without this the run is green and indistinguishable
+      # from a successful deploy.
+      - name: Deploy skipped
+        if: env.DOCS_DEPLOY_TOKEN == ''
+        run: |
+          echo "::warning title=Docs deploy skipped::DOCS_DEPLOY_TOKEN is not set, so the built site was not pushed to ReactUnity/reactunity.github.io. The docs build itself passed."
+          {
+            echo "### Docs deploy skipped"
+            echo
+            echo "The site built successfully but was **not deployed**: the"
+            echo "**DOCS_DEPLOY_TOKEN** secret is not set."
+            echo
+            echo "Add a token with write access to **ReactUnity/reactunity.github.io** to enable"
+            echo "deploys. Until then this workflow only checks that the docs compile,"
+            echo "and the built site is attached as the *docs-site* artifact."
+          } >> "$GITHUB_STEP_SUMMARY"
+
+      # The built site is kept as an artifact either way, so a skipped deploy can
+      # still be inspected (and uploaded by hand if needed).
+      - name: Upload built site
+        uses: actions/upload-artifact@v4
+        with:
+          name: docs-site
+          path: docs/out
+          retention-days: 7

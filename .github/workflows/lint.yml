@@ -1,0 +1,36 @@
+name: Lint
+
+on:
+  push:
+    branches: ['**']
+    paths:
+      - 'packages/**'
+      - 'docs/**'
+      - 'full-sample/react/**'
+      - 'unity/core/.react/**'
+      - '*.json'
+      - '*.jsonc'
+      - '*.yaml'
+      - '.github/workflows/lint.yml'
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+concurrency:
+  group: lint-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v6
+      - uses: actions/setup-node@v6
+        with:
+          node-version-file: .node-version
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm check
+      - name: Build the publishable packages
+        run: pnpm build

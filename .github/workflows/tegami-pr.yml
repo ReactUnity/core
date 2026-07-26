@@ -1,0 +1,34 @@
+name: Tegami PR
+
+# Builds the release-preview comment for a PR. Runs untrusted PR code, so it is
+# read-only; the companion tegami-pr-comment.yml posts the result.
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+concurrency:
+  group: tegami-pr-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  preview:
+    name: Release preview
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: pnpm/action-setup@v6
+      - uses: actions/setup-node@v6
+        with:
+          node-version-file: .node-version
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm tegami pr preview --artifact tegami-pr-preview.md
+      - uses: actions/upload-artifact@v4
+        with:
+          name: tegami-pr-preview
+          path: tegami-pr-preview.md

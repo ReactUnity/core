@@ -1,0 +1,103 @@
+name: Release UPM package
+
+# Publishes a Unity package to an orphan branch whose tree root IS the package,
+# so `git clone --depth 1 --branch <tag>` fetches only that tree. Measured on this
+# repo: 21 MB worktree / 7.8 MB .git against a ~1 GB monorepo.
+#
+# Deliberately NOT `git subtree split`: that walks every commit and took 3m10s
+# here. Building the commit straight from the tree is O(1) -- 0.198s -- and was
+# verified to produce a byte-identical tree.
+on:
+  workflow_dispatch:
+    inputs:
+      package:
+        description: Which Unity package to publish
+        type: choice
+        required: true
+        options: [core, jint, quickjs, clearscript]
+      move-latest:
+        description: 'Move the floating `latest` tag (core only)'
+        type: boolean
+        default: true
+
+concurrency:
+  group: release-upm-${{ github.event.inputs.package }}
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Resolve version
+        id: v
+        run: |
+          pkg='${{ github.event.inputs.package }}'
+          ver=$(node -p "require('./unity/$pkg/package.json').version")
+          echo "version=$ver" >> "$GITHUB_OUTPUT"
+          echo "Publishing unity/$pkg @ $ver"
+
+      # Tag naming:
+      #   core  -> v<version> plus the floating `latest`. Unprefixed on purpose:
+      #            core.git#latest and core.git#v0.21.2 are the documented install
+      #            URLs and must keep resolving. core's 143 historical tags are
+      #            already unprefixed and untouched on main.
+      #   others -> upm/<pkg>/v<version>. They cannot be unprefixed (they would
+      #            collide with core's), and they must differ from the <pkg>/v*
+      #            tags that the migration created, because those point into main
+      #            where the package sits at unity/<pkg>/ rather than at the root.
+      - name: Publish subtree to orphan branch
+        run: |
+          set -euo pipefail
+          pkg='${{ github.event.inputs.package }}'
+          ver='${{ steps.v.outputs.version }}'
+          branch="upm/$pkg"
+          if [ "$pkg" = core ]; then tag="v$ver"; else tag="upm/$pkg/v$ver"; fi
+
+          git config user.name  github-actions
+          git config user.email github-actions@github.com
+
+          if git rev-parse -q --verify "refs/tags/$tag" >/dev/null; then
+            echo "::error::tag $tag already exists - bump the version in unity/$pkg/package.json"
+            exit 1
+          fi
+
+          git fetch origin "+refs/heads/$branch:refs/heads/$branch" || true
+          prev=$(git rev-parse -q --verify "refs/heads/$branch" || true)
+
+          tree=$(git rev-parse "HEAD:unity/$pkg")
+          if [ -n "$prev" ]; then
+            commit=$(git commit-tree "$tree" -p "$prev" -m "$pkg v$ver")
+          else
+            commit=$(git commit-tree "$tree" -m "$pkg v$ver")
+          fi
+
+          git update-ref "refs/heads/$branch" "$commit"
+          git tag "$tag" "$commit"
+
+          refs="refs/heads/$branch refs/tags/$tag"
+          if [ "$pkg" = core ] && [ '${{ github.event.inputs.move-latest }}' = 'true' ]; then
+            git tag -f latest "$commit"
+            refs="$refs +refs/tags/latest"
+          fi
+
+          git push origin $refs
+          echo "Published $tag on $branch ($commit)"
+
+      - name: Verify the published tree
+        run: |
+          set -euo pipefail
+          pkg='${{ github.event.inputs.package }}'
+          ver='${{ steps.v.outputs.version }}'
+          if [ "$pkg" = core ]; then tag="v$ver"; else tag="upm/$pkg/v$ver"; fi
+          # A UPM git install resolves package.json at the tree root. If that is
+          # missing the tag is unusable, so fail loudly rather than ship it.
+          git cat-file -e "$tag:package.json"
+          name=$(git show "$tag:package.json" | node -e "let s='';process.stdin.on('data',d=>s+=d).on('end',()=>console.log(JSON.parse(s).name))")
+          echo "$tag has $name at its tree root"
+          test "$name" = "com.reactunity.$pkg"

@@ -1,9 +1,9 @@
 {
   "dependencies": {
-    "com.reactunity.clearscript": "file:../../clearscript",
-    "com.reactunity.core": "file:../../core",
-    "com.reactunity.jint": "file:../../jint",
-    "com.reactunity.quickjs": "file:../../quickjs",
+    "com.reactunity.clearscript": "file:../../unity/clearscript",
+    "com.reactunity.core": "file:../../unity/core",
+    "com.reactunity.jint": "file:../../unity/jint",
+    "com.reactunity.quickjs": "file:../../unity/quickjs",
     "com.unity.editorcoroutines": "1.0.0",
     "com.unity.ide.visualstudio": "2.0.16",
     "com.unity.ide.vscode": "1.2.5",

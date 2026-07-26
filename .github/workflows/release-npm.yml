@@ -1,0 +1,72 @@
+name: Release npm packages
+
+# `tegami ci` versions when pending .tegami/*.md changelogs exist (opening a
+# "Version Packages" PR via the github plugin), otherwise it publishes from the
+# committed .tegami/publish-lock.yaml.
+#
+# Replaces the hand-rolled `npm version --workspaces` script and the manual
+# release ordering the old README documented (scripts -> renderer -> material ->
+# injectable/devtools/quick-start -> core -> ...). Tegami derives that order from
+# the workspace graph.
+#
+# Only packages/* publish. unity/* are UPM packages -- see release-upm.yml. The
+# five private packages are excluded in scripts/tegami.mts.
+#
+# NOTE the filename: npm's trusted publishers point at `release-npm.yml`.
+# Renaming this file breaks publishing until they are all updated.
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+# No paths filter, deliberately. `tegami ci` is a safe no-op when there are no
+# pending changelogs and no publish lock, so running it on every push to main
+# costs one short job and cannot miss a release the way a filter can.
+concurrency: ${{ github.workflow }}-${{ github.ref }}
+
+permissions:
+  contents: write # commit version bumps, push the Version Packages branch
+  id-token: write # npm trusted publishing (OIDC) - no NPM_TOKEN needed
+  pull-requests: write # open the Version Packages PR
+
+jobs:
+  release:
+    name: Version & publish
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: pnpm/action-setup@v6
+      - uses: actions/setup-node@v6
+        with:
+          node-version-file: .node-version
+          cache: pnpm
+          registry-url: https://registry.npmjs.org
+
+      - run: pnpm install --frozen-lockfile
+
+      # Explicit build before publishing. `pnpm publish` does run each package's
+      # prepack/prepare, but material's build needs renderer's dist to exist
+      # first, and only `pnpm build` guarantees topological order.
+      - run: pnpm build
+
+      # Publishes via npm trusted publishing (OIDC) - no NPM_TOKEN anywhere.
+      #
+      # Note WHICH tool publishes: with npm.client 'pnpm', Tegami runs
+      # `pnpm publish --no-git-checks` (tegami 1.2.6, dist/npm-*.js:1180). So
+      # npm's documented ">= 11.5.1 for OIDC" is not the binding constraint --
+      # pnpm's own OIDC support is. Setting npm.client to 'npm' in
+      # scripts/tegami.mts switches to `npm publish` if that ever regresses.
+      #
+      # Requirements, each of which fails as a bare 404:
+      #   - pnpm past the 11.0.8 OIDC regression (pnpm/pnpm#11513, fixed by
+      #     #11526). packageManager pins 11.17.0, well past it.
+      #   - a Trusted Publisher on npmjs.com for EACH of the four packages,
+      #     naming this repo and the workflow filename `release-npm.yml`.
+      #   - each package's `repository` field pointing at this repo, or the
+      #     provenance attestation disagrees with the manifest.
+      - run: pnpm tegami ci
+        env:
+          GITHUB_TOKEN: ${{ github.token }}

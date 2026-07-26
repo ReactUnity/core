@@ -1,13 +1,13 @@
 {
   "dependencies": {
     "com.reactunity.clearscript": {
-      "version": "file:../../clearscript",
+      "version": "file:../../unity/clearscript",
       "depth": 0,
       "source": "local",
       "dependencies": {}
     },
     "com.reactunity.core": {
-      "version": "file:../../core",
+      "version": "file:../../unity/core",
       "depth": 0,
       "source": "local",
       "dependencies": {
@@ -16,13 +16,13 @@
       }
     },
     "com.reactunity.jint": {
-      "version": "file:../../jint",
+      "version": "file:../../unity/jint",
       "depth": 0,
       "source": "local",
       "dependencies": {}
     },
     "com.reactunity.quickjs": {
-      "version": "file:../../quickjs",
+      "version": "file:../../unity/quickjs",
       "depth": 0,
       "source": "local",
       "dependencies": {}
