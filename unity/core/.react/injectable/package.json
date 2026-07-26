@@ -6,18 +6,17 @@
   "private": true,
   "scripts": {
     "start": "react-unity-scripts start",
-    "build": "npm run build:self && npm run build:replace",
+    "build": "pnpm run build:self && pnpm run build:replace",
     "build:self": "react-unity-scripts build",
-    "build:replace": "node scripts/replace-injectable.mjs",
-    "postyalc": "yarn"
+    "build:replace": "node scripts/replace-injectable.mjs"
   },
   "dependencies": {
-    "@reactunity/material": "^0.20.0",
-    "@reactunity/renderer": "^0.20.1",
+    "@reactunity/material": "workspace:*",
+    "@reactunity/renderer": "workspace:*",
     "react": "^19.1.0"
   },
   "devDependencies": {
-    "@reactunity/scripts": "^0.20.0",
+    "@reactunity/scripts": "workspace:*",
     "typescript": "^5.8.3"
   }
 }

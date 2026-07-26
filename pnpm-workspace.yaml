@@ -1,0 +1,59 @@
+packages:
+  # npm packages. Safe as a glob: Unity packages live under unity/, never here.
+  - packages/*
+
+  # React apps bundled inside the core Unity package. The .react dot-prefix is
+  # what keeps Unity from importing them as assets.
+  - unity/core/.react/*
+
+  # React source of the full Unity sample project
+  - full-sample/react
+
+  - docs
+
+  # Never members:
+  #   packages/create/scaffold/** - a template for scaffolded projects. Its deps
+  #     are placeholders, and its name (my-react-unity-ui) collides with
+  #     samples/react/settings.
+  #   **/Library/**, **/PackageCache/** - Unity's package cache is full of
+  #     package.json files belonging to Unity's own packages.
+  #   samples/react/** - rotted, and never members of the old npm workspace
+  #     either. They declare react 19 alongside react-redux 8 / toolkit 1, which
+  #     cap out at React 18. Adopt them once those are modernised.
+  - '!samples/**'
+  - '!packages/create/scaffold/**'
+  - '!**/Library/**'
+  - '!**/PackageCache/**'
+  - '!**/node_modules/**'
+
+# pnpm 10+ blocks dependency build scripts unless named here. These four need to
+# run or their native/downloaded binaries never materialise:
+#   @biomejs/biome    - lint/format binary, used by every script in this repo
+#   esbuild           - binary, pulled in by vite/tailwind
+#   @parcel/watcher   - native watcher used by tailwind + webpack --watch
+#   unrs-resolver     - native resolver behind eslint-plugin-import
+# core-js, core-js-pure and es5-ext are deliberately NOT listed: their install
+# scripts only print funding banners.
+onlyBuiltDependencies:
+  - '@biomejs/biome'
+  - esbuild
+  - '@parcel/watcher'
+  - unrs-resolver
+
+# Force every request for a local package to resolve to the workspace copy.
+#
+# Without this, `pnpm install` reaches the registry for packages that exist right
+# here: @reactunity/previewer stays an external dependency, and it peer-depends on
+# @reactunity/scripts, so pnpm resolves that peer from npm at whatever version the
+# workspace reports. That silently downloaded a registry copy of @reactunity/scripts
+# while the local one sat next to it -- and it breaks outright the moment the local
+# version is one the registry has never seen, which is exactly what aligning
+# everything on an unreleased 0.22.0 does:
+#
+#   ERR_PNPM_NO_MATCHING_VERSION  No matching version found for
+#   @reactunity/scripts@0.22.0 ... The latest release is "0.21.0".
+overrides:
+  '@reactunity/renderer': workspace:*
+  '@reactunity/scripts': workspace:*
+  '@reactunity/material': workspace:*
+  '@reactunity/create': workspace:*

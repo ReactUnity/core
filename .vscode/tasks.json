@@ -1,0 +1,23 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Root",
+      "command": "${input:script}",
+      "type": "shell"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "script",
+      "description": "The script to run",
+      "type": "pickString",
+      "options": [
+        {
+          "label": "Pull All",
+          "value": "git submodule foreach git pull"
+        }
+      ]
+    }
+  ]
+}

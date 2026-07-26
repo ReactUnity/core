@@ -1,35 +1,20 @@
 {
   "name": "@reactunity/material",
-  "version": "0.20.0",
+  "version": "0.22.0",
   "description": "Material Design components and utilities for React Unity",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "typings": "dist/index.d.ts",
-  "sideEffects": [
-    "./src/styles",
-    "./src/styles/**/*.*",
-    "./dist/src/styles",
-    "./dist/src/styles/**/*.*",
-    "**/*.css",
-    "**/*.scss"
-  ],
+  "sideEffects": ["./src/styles", "./src/styles/**/*.*", "./dist/src/styles", "./dist/src/styles/**/*.*", "**/*.css", "**/*.scss"],
   "author": "Gokhan Kurt <krtgkn@gmail.com>",
   "repository": {
     "type": "git",
-    "url": "https://github.com/ReactUnity/material"
+    "url": "git+https://github.com/ReactUnity/core.git",
+    "directory": "packages/material"
   },
-  "keywords": [
-    "react",
-    "material",
-    "material-design",
-    "material-ui",
-    "unity",
-    "unity3d"
-  ],
+  "keywords": ["react", "material", "material-design", "material-ui", "unity", "unity3d"],
   "license": "MIT",
-  "files": [
-    "dist"
-  ],
+  "files": ["dist"],
   "exports": {
     ".": "./dist/index.js",
     "./styles": {
@@ -39,24 +24,25 @@
     "./*": "./dist/src/*/index.js"
   },
   "scripts": {
-    "prebuild": "npm run clean",
-    "build": "tsc -d && npm run copy-files",
+    "prebuild": "pnpm run clean",
+    "build": "tsc -d && pnpm run copy-files",
     "copy-files": "copyfiles -u 1 \"src/**/*.scss\" dist/src",
-    "watch": "concurrently --kill-others \"npm run watch:tsc\" \"npm run watch:files\"",
+    "watch": "concurrently --kill-others \"pnpm run watch:tsc\" \"pnpm run watch:files\"",
     "watch:tsc": "tsc -d --watch --sourceMap",
-    "watch:files": "onchange -i \"src/**/*.scss\" -- npm run copy-files",
+    "watch:files": "onchange -i \"src/**/*.scss\" -- pnpm run copy-files",
     "clean": "rimraf dist",
     "lint": "react-unity-scripts lint",
     "local": "yalc publish --push",
-    "pack": "npm run pack"
+    "pack": "npm run pack",
+    "prepack": "pnpm run build"
   },
   "dependencies": {
     "clsx": "^2.1.1",
     "memoize-one": "^6.0.0"
   },
   "devDependencies": {
-    "@reactunity/renderer": "^0.20.1",
-    "@reactunity/scripts": "^0.20.0",
+    "@reactunity/renderer": "workspace:^",
+    "@reactunity/scripts": "workspace:^",
     "@types/react": "^19.1.8",
     "concurrently": "^9.2.0",
     "copyfiles": "^2.4.1",
@@ -67,5 +53,12 @@
   "peerDependencies": {
     "@reactunity/renderer": "*",
     "react": "^19.1.0"
+  },
+  "bugs": {
+    "url": "https://github.com/ReactUnity/core/issues"
+  },
+  "homepage": "https://github.com/ReactUnity/core/tree/main/packages/material#readme",
+  "publishConfig": {
+    "access": "public"
   }
 }

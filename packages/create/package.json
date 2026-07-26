@@ -1,13 +1,14 @@
 {
   "name": "@reactunity/create",
-  "version": "0.18.0",
+  "version": "0.22.0",
   "description": "Scaffold a ReactUnity app using npm init",
   "license": "MIT",
   "main": "index.js",
   "bin": "index.js",
   "repository": {
     "type": "git",
-    "url": "https://github.com/ReactUnity/create"
+    "url": "git+https://github.com/ReactUnity/core.git",
+    "directory": "packages/create"
   },
   "author": {
     "name": "Gokhan Kurt",
@@ -28,5 +29,12 @@
     "@types/node": "^20.12.6",
     "ts-node": "^10.9.2",
     "typescript": "^5.4.4"
+  },
+  "bugs": {
+    "url": "https://github.com/ReactUnity/core/issues"
+  },
+  "homepage": "https://github.com/ReactUnity/core/tree/main/packages/create#readme",
+  "publishConfig": {
+    "access": "public"
   }
 }

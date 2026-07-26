@@ -6,15 +6,14 @@
   "private": true,
   "scripts": {
     "start": "react-unity-scripts start",
-    "build": "react-unity-scripts build",
-    "postyalc": "yarn"
+    "build": "react-unity-scripts build"
   },
   "dependencies": {
-    "@reactunity/renderer": "^0.20.1",
+    "@reactunity/renderer": "workspace:*",
     "react": "^19.1.0"
   },
   "devDependencies": {
-    "@reactunity/scripts": "^0.20.0",
+    "@reactunity/scripts": "workspace:*",
     "typescript": "^5.8.3"
   }
 }

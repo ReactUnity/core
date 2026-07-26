@@ -1,0 +1,39 @@
+{
+  "name": "@reactunity/monorepo",
+  "private": true,
+  "license": "MIT",
+  "author": {
+    "name": "Gokhan Kurt",
+    "email": "krtgkn@gmail.com",
+    "url": "https://github.com/KurtGokhan"
+  },
+  "packageManager": "pnpm@11.17.0",
+  "engines": {
+    "node": ">=26"
+  },
+  "scripts": {
+    "lint": "biome lint",
+    "format": "biome format",
+    "check": "biome check",
+    "build": "pnpm -r --filter './packages/*' build",
+    "prepare": "husky",
+    "tegami": "node scripts/tegami.mts"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "1.9.4",
+    "@types/node": "^22.13.8",
+    "@types/react": "^19.1.8",
+    "ajv": "^8.17.1",
+    "husky": "^9.1.7",
+    "lint-staged": "^15.5.0",
+    "react": "^19.1.0",
+    "rimraf": "^6.0.1",
+    "tsx": "^4.19.3",
+    "typescript": "^5.8.2",
+    "vite": "^8.1.5",
+    "tegami": "^1.2.6"
+  },
+  "lint-staged": {
+    "*": ["biome check --write --no-errors-on-unmatched --files-ignore-unknown=true"]
+  }
+}

@@ -6,16 +6,10 @@
     "url": "https://github.com/KurtGokhan"
   },
   "displayName": "React Unity",
-  "version": "0.21.2",
+  "version": "0.22.0",
   "unity": "2021.3",
   "description": "React renderer for Unity",
-  "keywords": [
-    "React",
-    "Framework",
-    "UI",
-    "UGUI",
-    "UIToolkit"
-  ],
+  "keywords": ["React", "Framework", "UI", "UGUI", "UIToolkit"],
   "category": "UI",
   "type": "library",
   "documentationUrl": "https://reactunity.github.io/",

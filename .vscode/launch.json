@@ -1,0 +1,23 @@
+{
+  // Use IntelliSense to learn about possible attributes.
+  // Hover to view descriptions of existing attributes.
+  // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Attach to V8 on port 9222 from ROOT",
+      "type": "pwa-node",
+      "port": 9222,
+      "request": "attach",
+      "sourceMaps": true,
+      "pauseForSourceMap": true,
+      "localRoot": "${workspaceFolder}",
+      "cwd": "${workspaceFolder}",
+      "showAsyncStacks": false,
+      "smartStep": false,
+      "resolveSourceMapLocations": [],
+      "outFiles": ["${workspaceFolder}/**/*.js", "!**/node_modules/**"],
+      "skipFiles": ["<node_internals>/**", "node_modules/**"]
+    }
+  ]
+}
