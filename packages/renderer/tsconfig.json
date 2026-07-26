@@ -1,0 +1,27 @@
+{
+  "extends": "@reactunity/scripts",
+  "compilerOptions": {
+    "outDir": "./dist",
+    "target": "ES5",
+    "esModuleInterop": false,
+    "noEmit": false,
+    "declaration": true,
+    "sourceMap": true,
+    "lib": ["ES2019"],
+    "types": []
+  },
+  "files": [
+    "index.ts",
+    "tests.ts",
+    "ugui/index.ts",
+    "ugui/jsx-dev-runtime.ts",
+    "ugui/jsx-runtime.ts",
+    "uitoolkit/index.ts",
+    "uitoolkit/jsx-dev-runtime.ts",
+    "uitoolkit/jsx-runtime.ts",
+    "editor/index.ts",
+    "editor/jsx-dev-runtime.ts",
+    "editor/jsx-runtime.ts",
+    "webgl-compat.ts"
+  ]
+}
