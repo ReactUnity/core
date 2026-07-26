@@ -1,0 +1,8 @@
+{
+  "name": "react",
+  "private": true,
+  "workspaces": [
+    "rpg",
+    "settings"
+  ]
+}

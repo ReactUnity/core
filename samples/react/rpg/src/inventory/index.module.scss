@@ -1,0 +1,56 @@
+.host {
+  position: absolute;
+  left: 10px;
+  top: 10px;
+  width: 380px;
+  height: 500px;
+  overflow: hidden;
+  border-radius: 10px;
+}
+
+.border {
+  border-width: 10px;
+  border-color: #adadad;
+  border-radius: 10px;
+  pointer-events: none;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+}
+
+.frame {
+  padding: 10px;
+  flex-grow: 1;
+  max-height: 100%;
+  flex-direction: column;
+  width: 390px;
+}
+
+.items {
+  flex-direction: row;
+  flex-wrap: wrap;
+  padding: 4px;
+  background-color: #adadad;
+}
+
+.itemSlot {
+  margin: 4px;
+  border-radius: 4px;
+  flex: 0;
+  width: 80px;
+  padding: 5px;
+  height: 80px;
+  background-color: #cacaca;
+
+  border-width: 2px;
+  border-color: #9c9c9c;
+  box-shadow: 1px 1px 5px 5px 5px black;
+
+  &:hover {
+    background-color: #dddddd;
+  }
+}
+
+.item image {
+  object-fit: fill;
+}
