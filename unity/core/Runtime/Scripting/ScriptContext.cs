@@ -223,6 +223,18 @@ namespace ReactUnity.Scripting
 
         static void CreatePolyfills(IJavaScriptEngine engine)
         {
+            // Missing language builtins come first: the shims below, and any bundle loaded after
+            // them, are allowed to use them.
+            //
+            // No EngineCapabilities flag guards this one, unlike everything else here. A flag
+            // describes the engine binding, but which ES2022 APIs exist is a property of the
+            // native library that binding happens to load -- the QuickJS binary shipped in
+            // com.reactunity.quickjs is Bellard's 2021-03-27 build and has none of them, while
+            // the same C# binding running under WebGL delegates to the browser and has them all.
+            // The polyfill feature-detects each API instead, so it costs one no-op pass where
+            // they already exist and needs no edit here when an engine gains them.
+            engine.Execute(ResourcesHelper.GetPolyfill("es2022"), "ReactUnity/polyfills/es2022");
+
             // Load essential polyfills
             if (!engine.Capabilities.HasFlag(EngineCapabilities.QueueMicrotask))
                 engine.Execute(ResourcesHelper.GetPolyfill("queue-microtask"), "ReactUnity/polyfills/queue-microtask");
