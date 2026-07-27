@@ -1,8 +1,9 @@
 // Original file: https://github.com/jeffreylanters/react-unity-webgl/blob/main/module/source/hooks/use-unity-context.ts
 
 import { useEffect, useRef } from 'react';
-import type { UnityConfig } from 'react-unity-webgl';
-import type { UnityInstance } from 'react-unity-webgl/declarations/unity-instance';
+import type { UnityConfig, UnityInstance } from 'react-unity-webgl';
+import type { UnityMessageParameter } from 'react-unity-webgl/distribution/types/unity-message-parameters';
+import type { UnityMetricsInfo } from 'react-unity-webgl/distribution/types/unity-metrics-info';
 import { UnityProvider } from 'react-unity-webgl/distribution/types/unity-provider';
 import { errorMessages } from './error-messages';
 import { EventCallback, ReactUnityEventParameter, UnityContextType } from './types';
@@ -21,16 +22,18 @@ const createUnityContext = (unityConfig: UnityConfig): UnityContextType => {
     if (loaded) setLoadingProgression(1);
   };
 
-  let initialisationError: Error | null = null;
-  const setInitialisationError = (error: Error | null) => (initialisationError = error);
+  let initialisationError: Error | undefined;
+  const setInitialisationError = (error?: Error) => (initialisationError = error);
 
   const eventSystem = createEventSystem();
+  // react-unity-webgl 10 flattened UnityProvider: it is the config's own fields plus the
+  // four setters, where 9 carried the config under a `unityConfig` key.
   const unityProvider = {
+    ...unityConfig,
     setLoadingProgression,
     setInitialisationError,
     setUnityInstance,
     setIsLoaded,
-    unityConfig,
   };
 
   const requestFullscreen = (enabled: boolean) => {
@@ -46,7 +49,9 @@ const createUnityContext = (unityConfig: UnityConfig): UnityContextType => {
       console.warn(errorMessages.requestPointerLockNoUnityInstanceOrCanvas);
       return;
     }
-    return unityInstance.Module.canvas.requestPointerLock();
+    // `lib` here is ES2022 with no DOM (this package runs on Unity's engines), so the
+    // canvas members react-unity-webgl types as HTMLCanvasElement are not in scope.
+    return (unityInstance.Module.canvas as unknown as { requestPointerLock(): void }).requestPointerLock();
   };
 
   const sendMessage = (gameObjectName: string, methodName: string, parameter?: ReactUnityEventParameter) => {
@@ -54,7 +59,7 @@ const createUnityContext = (unityConfig: UnityConfig): UnityContextType => {
       console.warn(errorMessages.sendMessageNoUnityInstance);
       return;
     }
-    unityInstance.SendMessage(gameObjectName, methodName, parameter);
+    unityInstance.SendMessage(gameObjectName, methodName, parameter as UnityMessageParameter);
   };
 
   const takeScreenshot = (dataType?: string, quality?: number): string | undefined => {
@@ -62,8 +67,12 @@ const createUnityContext = (unityConfig: UnityConfig): UnityContextType => {
       console.warn(errorMessages.screenshotNoUnityInstanceOrCanvas);
       return;
     }
-    return unityInstance.Module.canvas.toDataURL(dataType, quality);
+    return (unityInstance.Module.canvas as unknown as { toDataURL(type?: string, quality?: number): string }).toDataURL(dataType, quality);
   };
+
+  // Required by react-unity-webgl 10's UnityContext. It reports on a Unity WebGL player
+  // embedded in a web page; here the host *is* Unity, so there is nothing to measure.
+  const getMetricsInfo = (): UnityMetricsInfo | undefined => undefined;
 
   const unload = (): Promise<void> => {
     if (unityInstance === null) {
@@ -87,6 +96,7 @@ const createUnityContext = (unityConfig: UnityConfig): UnityContextType => {
     sendMessage,
     unload,
     takeScreenshot,
+    getMetricsInfo,
     quitUnityInstance: unload,
     UNSAFE__detachAndUnloadImmediate: unload,
     send: sendMessage,
@@ -125,6 +135,7 @@ export class UnityContext implements UnityContextType {
   sendMessage: (gameObjectName: string, methodName: string, parameter?: ReactUnityEventParameter) => void;
   takeScreenshot: (dataType?: string, quality?: number) => string;
   requestPointerLock: () => void;
+  getMetricsInfo: () => UnityMetricsInfo | undefined;
   unload: () => Promise<void>;
   UNSAFE__detachAndUnloadImmediate: () => Promise<void>;
   on: (eventName: string, callback: EventCallback) => void;

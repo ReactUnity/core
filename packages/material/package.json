@@ -40,7 +40,6 @@
     "clsx": "^2.1.1",
     "memoize-one": "^6.0.0"
   },
-  "//typescript": "On 7, for the same reason as packages/renderer: the blockers were emit options (`target=ES5`, and `baseUrl` which 7 removed as well), and tsdown owns emit now. tsconfig.json is `noEmit`, so `tsc` is only the type checker here.",
   "devDependencies": {
     "@reactunity/renderer": "workspace:^",
     "@reactunity/scripts": "workspace:^",

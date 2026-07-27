@@ -13789,18 +13789,17 @@ var createUnityContext = function createUnityContext(unityConfig) {
     isLoaded = loaded;
     if (loaded) setLoadingProgression(1);
   };
-  var initialisationError = null;
+  var initialisationError;
   var setInitialisationError = function setInitialisationError(error) {
     return initialisationError = error;
   };
   var eventSystem = createEventSystem();
-  var unityProvider = {
+  var unityProvider = objectSpread2_CDDvZyE7_objectSpread2(objectSpread2_CDDvZyE7_objectSpread2({}, unityConfig), {}, {
     setLoadingProgression: setLoadingProgression,
     setInitialisationError: setInitialisationError,
     setUnityInstance: setUnityInstance,
-    setIsLoaded: setIsLoaded,
-    unityConfig: unityConfig
-  };
+    setIsLoaded: setIsLoaded
+  });
   var requestFullscreen = function requestFullscreen(enabled) {
     if (unityInstance === null) {
       console.warn(errorMessages.requestFullscreenNoUnityInstance);
@@ -13829,6 +13828,9 @@ var createUnityContext = function createUnityContext(unityConfig) {
     }
     return unityInstance.Module.canvas.toDataURL(dataType, quality);
   };
+  var getMetricsInfo = function getMetricsInfo() {
+    return void 0;
+  };
   var unload = function unload() {
     if (unityInstance === null) {
       console.warn(errorMessages.quitNoUnityInstance);
@@ -13850,6 +13852,7 @@ var createUnityContext = function createUnityContext(unityConfig) {
     sendMessage: sendMessage,
     unload: unload,
     takeScreenshot: takeScreenshot,
+    getMetricsInfo: getMetricsInfo,
     quitUnityInstance: unload,
     UNSAFE__detachAndUnloadImmediate: unload,
     send: sendMessage,
@@ -13875,6 +13878,7 @@ var UnityContext = /*#__PURE__*/_createClass(function UnityContext(unityConfig) 
   objectSpread2_CDDvZyE7_defineProperty(this, "sendMessage", void 0);
   objectSpread2_CDDvZyE7_defineProperty(this, "takeScreenshot", void 0);
   objectSpread2_CDDvZyE7_defineProperty(this, "requestPointerLock", void 0);
+  objectSpread2_CDDvZyE7_defineProperty(this, "getMetricsInfo", void 0);
   objectSpread2_CDDvZyE7_defineProperty(this, "unload", void 0);
   objectSpread2_CDDvZyE7_defineProperty(this, "UNSAFE__detachAndUnloadImmediate", void 0);
   objectSpread2_CDDvZyE7_defineProperty(this, "on", void 0);

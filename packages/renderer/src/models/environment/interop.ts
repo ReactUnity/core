@@ -1,4 +1,4 @@
-import type { UnityInstance } from 'react-unity-webgl/declarations/unity-instance';
+import type { UnityInstance } from 'react-unity-webgl';
 import { ReactUnity, System, UnityEditor, UnityEngine, Yoga } from '../generated';
 
 export type NamespaceMap = {

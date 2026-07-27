@@ -13,7 +13,6 @@
     "@reactunity/renderer": "workspace:*",
     "react": "^19.2.8"
   },
-  "//typescript": "On 7. It was held at 6.x because react-unity-scripts ran fork-ts-checker against whatever `resolve.sync('typescript')` found from this directory, and 7 has no CJS entry to find. That plugin is gone, so type checking is this package's own `typecheck` script now -- webpack does not do it.",
   "devDependencies": {
     "@reactunity/scripts": "workspace:*",
     "typescript": "^7.0.2"

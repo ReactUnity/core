@@ -1,6 +1,6 @@
 // Original file: https://github.com/jeffreylanters/react-unity-webgl/blob/main/module/declarations/global.d.ts
 
-import type { UnityInstance } from 'react-unity-webgl/declarations/unity-instance';
+import type { UnityInstance } from 'react-unity-webgl';
 
 /**
  * Type declaration for global types.

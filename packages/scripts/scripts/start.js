@@ -103,7 +103,16 @@ checkBrowsers(paths.appPath, isInteractive)
     };
     const devServer = new WebpackDevServer(serverConfig, compiler);
     // Launch WebpackDevServer.
-    devServer.startCallback(() => {
+    devServer.startCallback((err) => {
+      // The callback used to take no arguments, which meant anything that went wrong while
+      // the server came up was dropped: the failure looked like "Starting the development
+      // server..." followed by silence, with nothing listening. Report it instead.
+      if (err) {
+        console.log(chalk.red('Failed to start the development server.\n'));
+        console.log(err.message || err);
+        process.exit(1);
+      }
+
       if (isInteractive) {
         clearConsole();
       }

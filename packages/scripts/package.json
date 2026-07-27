@@ -15,8 +15,7 @@
     "url": "https://github.com/ReactUnity/core/issues"
   },
   "files": ["bin", "config", "lib", "scripts", "tsconfig.json"],
-  "//webpack-dev-server": "Deliberately held at 5.x. Version 6 moves to Express 5, whose path-to-regexp rewrite rejects the route patterns the react-dev-utils middlewares this dev server is built on still use (evalSourceMapMiddleware, redirectServedPathMiddleware, noopServiceWorkerMiddleware -- see config/webpackDevServer.config.js). react-dev-utils is unmaintained (12.0.1, 2022), so moving to 6 means replacing those middlewares, not bumping a version. Symptom if you try it: `react-unity-scripts start` prints \"Starting the development server...\" and hangs with nothing listening.",
-  "//@babel/core": "Deliberately held at 7.x. babel-preset-react-app 10 -- the preset this whole pipeline compiles with -- peer-depends on @babel/core ^7, and Babel 8 requires every plugin and preset in the tree to be 8-compatible. Upgrading means replacing babel-preset-react-app first.",
+  "//@babel/core": "Held at 7.x. babel-preset-react-app refuses to load on 8: `Requires Babel \"^7.0.0-0\", but was loaded with \"8.0.1\"`. It is unmaintained, so moving to 8 means replacing the preset; config/babel-preset-extended.js is the seam it would go through.",
   "bin": {
     "react-unity-scripts": "./bin/react-unity-scripts.js"
   },
@@ -32,9 +31,9 @@
   },
   "tsconfig": "./tsconfig.json",
   "dependencies": {
-    "@babel/core": "^7.27.4",
+    "@babel/core": "^7.29.7",
     "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
-    "@babel/preset-react": "^7.27.1",
+    "@babel/preset-react": "^7.29.7",
     "@pmmmwh/react-refresh-webpack-plugin": "^0.6.0",
     "@svgr/webpack": "^8.1.0",
     "@types/react": "^19.2.17",
@@ -77,10 +76,9 @@
     "terser-webpack-plugin": "^5.3.14",
     "url-loader": "^4.1.1",
     "webpack": "^5.99.9",
-    "webpack-dev-server": "^5.2.6",
+    "webpack-dev-server": "^6.0.0",
     "webpack-manifest-plugin": "^6.0.1"
   },
-  "//typescript": "This package no longer loads TypeScript at all, which is why the peer range below accepts 7. It used to `resolve.sync('typescript')` at three points, and 7 publishes no CJS entry for `.` (its export map points at lib/version.cjs, and `resolve` reads `main`, not `exports`), so every one of them threw MODULE_NOT_FOUND. All three are gone: config/modules.js parses tsconfig.json with jsonc-parser, since all it ever wanted was `baseUrl`; fork-ts-checker-webpack-plugin was dropped from config/webpack.config.js, moving type checking to a `tsc --noEmit` command the app runs itself; and scripts/utils/verifyTypeScriptSetup.js was deleted as dead code (only `init` called it, and `init` is not a script bin/react-unity-scripts.js dispatches).",
   "devDependencies": {
     "typescript": "^7.0.2"
   },

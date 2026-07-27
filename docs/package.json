@@ -42,7 +42,6 @@
     "tailwindcss": "^4.3.3",
     "unist-util-visit": "^5.1.0"
   },
-  "//typescript": "Held at 6.x while the root and packages/create are on 7 -- see the note in the root package.json. Here specifically: `pnpm check` runs `astro check`, which drives TypeScript's programmatic API through Volar, and the native 7.0 compiler does not expose one. @astrojs/check states the limit itself: its peerDependencies are `typescript: \"^5.0.0 || ^6.0.0\"` (withastro/roadmap#1321).",
   "devDependencies": {
     "@astrojs/check": "^0.9.9",
     "@types/babel__standalone": "^7.1.9",

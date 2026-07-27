@@ -30,7 +30,6 @@
     "commander": "^15.0.0",
     "fs-extra": "^11.4.0"
   },
-  "//typescript": "On 7, unlike most of the workspace -- this is the one package whose `tsc` is only ever a compiler. It emits ES2023 for Node (see tsconfig.json), nothing here loads the TypeScript JS API that 7 dropped, and none of the options 7 removed are in use, so `tsc --noEmit -p .` is clean on both. The packages that cannot follow say why next to their own pins; the root package.json has the summary.",
   "devDependencies": {
     "@types/fs-extra": "^11.0.4",
     "@types/node": "^26.1.1",
