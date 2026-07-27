@@ -48,18 +48,23 @@ jobs:
           PUBLIC_GA_TRACKING_ID: ${{ secrets.ANALYTICS_ID }}
         run: pnpm build
 
-      # docs/src/components/unity/instance.tsx loads
-      # /Unity/<sample>/Build/WebInjectable.{wasm,data,framework.js,loader.js}.
-      # Those are hand-built Unity WebGL artifacts (103 MB for the .wasm alone)
-      # that nothing in this repo builds, so they were stripped from history.
+      # clean-exclude is load-bearing. Two sets of hand-built Unity WebGL artifacts
+      # live permanently on the target branch under Unity/, and nothing in this repo
+      # builds either of them:
       #
-      # They now live permanently on the gh-pages branch of ReactUnity/reactunity.github.io,
-      # under /Unity/. clean-exclude keeps this deploy from wiping them, so the
-      # site serves them same-origin and the monorepo never carries the weight.
+      #   Unity/injectable/Build/WebInjectable.*  (~145 MB) - the players embedded in
+      #     the docs examples. docs/src/components/unity/instance.tsx loads
+      #     /Unity/<sample>/Build/WebInjectable.{wasm,data,framework.js,loader.js},
+      #     and defaultUnityInstanceName makes <sample> `injectable`. Same-origin
+      #     with the site, so no CORS involved.
+      #   Unity/previewer/<version>/Build/Previewer.*  (~107 MB) - served to the
+      #     @reactunity/scripts dev server, which is cross-origin. That works because
+      #     GitHub Pages sends Access-Control-Allow-Origin: * and
+      #     Content-Type: application/wasm. See packages/scripts/config/public/index.html.
       #
-      # ONE-TIME SETUP: commit the assets to that branch under Unity/. See
-      # tools/monorepo-migration/README.md. Until then the demos 404; nothing
-      # else breaks.
+      # This deploy runs with clean: true, so anything outside Unity/** is replaced on
+      # every run. Dropping the exclude would delete ~250 MB that only exists there and
+      # would have to be rebuilt in Unity by hand.
       - name: Deploy to ReactUnity/reactunity.github.io@gh-pages
         if: env.DOCS_DEPLOY_TOKEN != ''
         uses: JamesIves/github-pages-deploy-action@v4
