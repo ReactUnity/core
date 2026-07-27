@@ -1,4 +1,17 @@
 # Editor configuration, see http://editorconfig.org
+#
+# This is the only .editorconfig that configures the repo, and adding another is almost
+# always a mistake. There used to be fourteen -- one per merged repo -- and because
+# EditorConfig stops climbing at `root = true`, which every one of them declared, each
+# subtree was governed by its own copy. Eleven were byte-for-byte identical to this file;
+# what the split actually achieved was disagreement about line endings (this file said
+# `crlf`, full-sample/ said `crlf`, the other twelve said `lf`), which is how the repo
+# ended up with 686 CRLF .cs files next to 1085 LF .meta files. Put repo-wide rules here.
+#
+# The one surviving nested copy, packages/create/scaffold/react/.editorconfig, is not
+# repo configuration at all: the scaffold directory is copied wholesale into every project
+# `create-react-unity` generates, and that .npmignore explicitly un-ignores it, so it is a
+# file we ship. It has no effect on this repo's own sources.
 root = true
 
 [*]
@@ -6,10 +19,17 @@ charset = utf-8
 indent_style = space
 indent_size = 2
 insert_final_newline = true
+# Visual Studio and Rider both honour this. .gitattributes normalises to LF on commit
+# regardless of what an editor writes, but an editor that is told the right thing never
+# creates the churn in the first place.
+end_of_line = lf
 trim_trailing_whitespace = true
-end_of_line = crlf
 
-[*.md]
+# Two trailing spaces are a hard line break in markdown, so trimming them silently
+# reflows prose. `mdx` is here because docs/src/content is .mdx since the Astro migration
+# -- and because docs/ used to have its own .editorconfig that left this rule out
+# entirely, its content was being trimmed until the configs were consolidated.
+[*.{md,mdx}]
 max_line_length = off
 trim_trailing_whitespace = false
 
@@ -50,6 +70,12 @@ dotnet_sort_system_directives_first = true
 #Formatting - spacing options
 
 #require space between a cast and the value
+# full-sample/.editorconfig said `false` here (and for csharp_preserve_single_line_blocks
+# below) before it was folded into this file. Both files were IntelliCode-inferred in 2021,
+# each from the code sitting next to it, so the disagreement is an artifact of sampling two
+# different codebases rather than a decision. This value wins: full-sample has 7 C# files
+# and none of them contains a cast, while unity/** -- 712 files, always governed by this
+# file -- writes `(int) x` 128 times against `(int)x` 81.
 csharp_space_after_cast = true
 #require a space before the colon for bases or interfaces in a type declaration
 csharp_space_after_colon_in_inheritance_clause = true

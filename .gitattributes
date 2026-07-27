@@ -1,0 +1,76 @@
+# Line endings.
+#
+# Before this file existed nothing normalised anything, so the ending a file got was
+# whatever the editor that last touched it happened to write, and `git ls-files --eol`
+# showed the result: 1921 LF against 1015 CRLF, with *every* extension split across both
+# (686 CRLF `.cs` vs 33 LF, 190 CRLF `.meta` vs 1085 LF, 62 CRLF `.mdx` vs 12 LF) and two
+# files -- artifacts/AvailableProfilerStats.txt, samples/.../rpg/index.js -- mixed inside
+# themselves. Ten merged repos and fourteen competing `.editorconfig` files will do that;
+# the configs have since been consolidated into the root one, which now says `lf`.
+#
+# `text=auto` is the load-bearing half, and it is the half that answers "but Visual Studio
+# writes CRLF": normalisation happens on *commit*, not on save. VS, Rider and Unity can
+# each write whatever their platform prefers into the working tree and the blob that gets
+# committed is still LF. No editor setting, no contributor's core.autocrlf, and no
+# generated-file pass can put a CRLF back into the repo while this line is here.
+#
+# `eol=lf` is the other half: checkouts are LF too, on Windows included. That matters
+# because plenty of tooling here reads bytes rather than lines -- Biome is configured
+# `lineEnding: "lf"` and Prettier defaults to it, so the repo's own formatters already
+# rewrite to LF and only ever agreed with the working tree by accident (all ten CRLF
+# .js/.ts files happen to sit in Biome's ignore list); docs/scripts/headingIDHelpers
+# splits content on '\n' and had to be taught to carry the stray '\r' back.
+#
+# Nothing needs CRLF in the working tree. Unity serialises its YAML with LF on every
+# platform, which is what the 1085-to-190 .meta split already reflects; MSBuild, the C#
+# compiler and PowerShell are all ending-agnostic; no .sln or .csproj is tracked (Unity
+# regenerates those, and .gitignore keeps them out).
+* text=auto eol=lf
+
+# Windows batch files are the one format that genuinely misreads LF -- cmd.exe can lose
+# its place scanning for a `goto` label. None are tracked today; the rule is here so the
+# first one added is right rather than subtly broken.
+*.bat text eol=crlf
+*.cmd text eol=crlf
+
+# Binaries. `text=auto` already detects these by content (a NUL byte in the first 8 KiB)
+# and the list below is belt-and-braces -- `binary` also switches off diffing, which is
+# what you want for 423 PNG snapshots and 37 DLLs.
+#
+# Deliberately absent: *.asset. Unity's text serialisation makes them YAML, but
+# full-sample/Assets/Scenes/Web/LightingData.asset is baked lighting data and is binary,
+# so a blanket rule for the extension would be wrong for one side or the other. Content
+# detection gets both right, which is the general argument for keeping this list to
+# formats that are *never* text.
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.webp binary
+*.ico binary
+*.psd binary
+*.pdf binary
+
+*.mp4 binary
+*.webm binary
+*.wav binary
+*.mp3 binary
+*.ogg binary
+
+*.ttf binary
+*.otf binary
+*.woff binary
+*.woff2 binary
+
+*.dll binary
+*.so binary
+*.dylib binary
+*.a binary
+*.exe binary
+*.pdb binary
+*.aar binary
+*.jar binary
+*.bundle binary
+
+*.unitypackage binary
+*.pfx binary
