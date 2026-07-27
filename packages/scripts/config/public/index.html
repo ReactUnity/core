@@ -6,74 +6,162 @@
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <title>ReactUnity</title>
+  <title>ReactUnity Previewer</title>
+  <link rel="icon" href="./favicon.ico">
 
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
-    integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+  <style>
+    html,
+    body {
+      font-size: 0;
+      margin: 0;
+      height: 100%;
+      overflow: hidden;
+    }
+
+    #unity-canvas {
+      height: 100%;
+      width: 100%;
+      background: #231F20;
+    }
+
+    .loader-center {
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 50%;
+      height: 0;
+      overflow: visible;
+      display: block;
+      pointer-events: none;
+      user-select: none;
+      -webkit-user-select: none;
+    }
+
+    .loader {
+      position: absolute;
+      height: 50px;
+      top: -25px;
+      left: 50px;
+      right: 50px;
+      background: #c5cae9;
+      border-radius: 10px;
+      overflow: hidden;
+    }
+
+    .loader-bar {
+      height: 100%;
+      background: #3f51b5;
+      width: 0;
+    }
+
+    #error {
+      display: none;
+      position: absolute;
+      inset: 0;
+      overflow: auto;
+      padding: 3rem 1.5rem;
+      background: #fff;
+      color: #231F20;
+      font: 16px/1.5 system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+    }
+
+    #error>div {
+      max-width: 40rem;
+      margin: 0 auto;
+    }
+
+    #error h1 {
+      font-size: 1.5rem;
+      margin: 0 0 1rem;
+    }
+
+    #error code {
+      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+      background: #f1f1f4;
+      padding: .1em .3em;
+      border-radius: 3px;
+    }
+  </style>
 </head>
 
 <body>
+  <canvas id="unity-canvas"></canvas>
 
-  <div class="col-lg-8 mx-auto p-3 py-md-5">
-    <header class="d-flex align-items-center pb-3 mb-5 border-bottom">
-      <a href="/" class="d-flex align-items-center text-dark text-decoration-none">
-        <img src="./favicon.ico" height="72" class="me-3" />
-        <span class="fs-1">ReactUnity Previewer</span>
-      </a>
-    </header>
-
-    <main>
-      <p class="fs-5 col-md-8">
-        Congratulations on starting your ReactUnity project. You can now test your app inside Unity by setting the
-        <code>DevServer</code> property of <code>ReactRendererUGUI</code> or <code>ReactRendererUIToolkit</code> components to
-        the address of this page.
-      </p>
-
-      <p class="fs-5 col-md-8">
-        If your UI is simple, you can also test your UI inside this page with a WebGL template. There are 2 ways you can
-        do that.
-      </p>
-
-      <div class="alert alert-warning d-flex align-items-center" role="alert">
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor"
-          class="bi bi-exclamation-triangle-fill flex-shrink-0 me-2" viewBox="0 0 16 16" role="img"
-          aria-label="Warning:">
-          <path
-            d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5zm.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2z" />
-        </svg>
-        <div class="fs-5">
-          Note that as ReactUnity is not optimized for WebGL, you will have a low performance by testing in WebGL.
-        </div>
-      </div>
-
-      <h4>1 - Install the default previewer</h4>
-
-      <p class="fs-5 col-md-8">
-        You can install the <code>@reactunity/previewer</code> package for this.
-      </p>
-
-      <pre>
-        yarn add --dev @reactunity/previewer
-        # OR
-        npm i --D @reactunity/previewer
-      </pre>
-
-      <h4>2 - Use a custom previewer</h4>
-
-      <p class="fs-5 col-md-8">
-        To do this, you need to build a scene in Unity with <code>ReactRendererUGUI</code> component added. The
-        <code>Type</code> property must be set to <code>Url</code> and <code>Source Path</code> property must be set to
-        <code>/index.js</code>.
-
-        After building, you must copy the built directory to <code>previewer</code> folder inside your React project, so
-        that there is a <code>previewer/index.html</code> file.
-      </p>
-    </main>
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"
-      integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF"
-      crossorigin="anonymous"></script>
+  <div class="loader-center" id="loader-root">
+    <div class="loader">
+      <div class="loader-bar" id="loader-bar"></div>
+    </div>
   </div>
+
+  <div id="error">
+    <div>
+      <h1>Couldn't load the previewer</h1>
+      <p>
+        The previewer's Unity WebGL build is hosted rather than bundled, so the first load needs
+        network access. It is cached by the browser afterwards.
+      </p>
+      <p>
+        To work offline, or to preview your own Unity scene instead, build a scene with a
+        <code>ReactRendererUGUI</code> component and copy the output into a <code>previewer</code>
+        folder in your React project, so that <code>previewer/index.html</code> exists. The dev
+        server prefers that over this page.
+      </p>
+      <p><a href="./info.html">More about the previewer and the dev server</a></p>
+    </div>
+  </div>
+
+  <script>
+    /*
+     * The Unity build lives on reactunity.github.io rather than in an npm package: it is
+     * ~107 MB, and shipping it as a dependency meant every install paid for it. GitHub
+     * Pages serves it with `Content-Type: application/wasm` and `Access-Control-Allow-Origin: *`,
+     * so streaming compilation works cross-origin from this dev server.
+     *
+     * The version is part of the path on purpose. Unity's loader, framework and wasm are
+     * built as a set and are not interchangeable, so each build gets its own directory and
+     * nothing is ever overwritten. Publishing a new previewer build means adding a directory
+     * on that branch and bumping the version here -- those two have to move together.
+     */
+    var PREVIEWER_VERSION = '0.20.0';
+    var PREVIEWER_BASE = 'https://reactunity.github.io/Unity/previewer/' + PREVIEWER_VERSION + '/Build/';
+
+    function fail() {
+      document.getElementById('loader-root').style.display = 'none';
+      document.getElementById('error').style.display = 'block';
+    }
+
+    function onProgress(progress) {
+      var bar = document.getElementById('loader-bar');
+      if (bar) bar.style.width = (progress * 100) + '%';
+
+      var loader = document.getElementById('loader-root');
+      if (loader) loader.style.display = progress < 1 ? 'block' : 'none';
+    }
+
+    /*
+     * Unity's loader is a plain script defining a global `createUnityInstance`, so it has to
+     * be appended rather than imported.
+     */
+    var loader = document.createElement('script');
+    loader.src = PREVIEWER_BASE + 'Previewer.loader.js';
+    loader.onerror = fail;
+    loader.onload = () => {
+      if (typeof createUnityInstance !== 'function') return fail();
+
+      createUnityInstance(document.getElementById('unity-canvas'), {
+        dataUrl: PREVIEWER_BASE + 'Previewer.data',
+        frameworkUrl: PREVIEWER_BASE + 'Previewer.framework.js',
+        codeUrl: PREVIEWER_BASE + 'Previewer.wasm',
+        // Absolute like the rest. Left relative it would resolve against this dev server,
+        // which has no StreamingAssets to serve.
+        streamingAssetsUrl: PREVIEWER_BASE + '../StreamingAssets',
+        companyName: 'reactunity',
+        productName: 'dev-sample',
+        productVersion: PREVIEWER_VERSION,
+      }, onProgress).catch(fail);
+    };
+    document.head.appendChild(loader);
+  </script>
 </body>
 
 </html>

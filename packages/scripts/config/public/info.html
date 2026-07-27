@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en-us">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>ReactUnity dev server</title>
+  <link rel="icon" href="./favicon.ico">
+
+  <style>
+    body {
+      max-width: 44rem;
+      margin: 0 auto;
+      padding: 3rem 1.5rem;
+      font: 16px/1.6 system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+      color: #231F20;
+    }
+
+    header {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      padding-bottom: 1.5rem;
+      margin-bottom: 2.5rem;
+      border-bottom: 1px solid #e3e3e8;
+    }
+
+    header img {
+      height: 64px;
+    }
+
+    header span {
+      font-size: 1.75rem;
+      font-weight: 600;
+    }
+
+    h2 {
+      font-size: 1.25rem;
+      margin: 2.5rem 0 .75rem;
+    }
+
+    code {
+      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+      background: #f1f1f4;
+      padding: .1em .3em;
+      border-radius: 3px;
+    }
+
+    pre {
+      background: #f1f1f4;
+      padding: .9rem 1rem;
+      border-radius: 6px;
+      overflow-x: auto;
+    }
+
+    pre code {
+      background: none;
+      padding: 0;
+    }
+
+    .note {
+      border-left: 3px solid #f0ad4e;
+      background: #fdf7ec;
+      padding: .9rem 1rem;
+      border-radius: 0 6px 6px 0;
+    }
+
+    a {
+      color: #3f51b5;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      body {
+        background: #1b1b1f;
+        color: #e8e8ea;
+      }
+
+      header {
+        border-bottom-color: #34343a;
+      }
+
+      code,
+      pre {
+        background: #2a2a30;
+      }
+
+      .note {
+        background: #2e2820;
+      }
+
+      a {
+        color: #9fa8da;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <img src="./favicon.ico" alt="">
+    <span>ReactUnity dev server</span>
+  </header>
+
+  <p>
+    This server is running. It serves the JavaScript and asset files your ReactUnity app is built
+    from, and reloads them as you edit.
+  </p>
+
+  <h2>Connecting Unity to it</h2>
+
+  <p>
+    Set the <code>DevServer</code> property of your <code>ReactRendererUGUI</code> or
+    <code>ReactRendererUIToolkit</code> component to the address of this page, then press play.
+  </p>
+
+  <h2>Previewing in the browser</h2>
+
+  <p>
+    <a href="./">The previewer</a> runs your UI in a Unity WebGL player right in the browser, with
+    no editor open. Useful when starting out or for quick iteration on simple UI.
+  </p>
+
+  <div class="note">
+    ReactUnity is not optimised for WebGL, so expect noticeably lower performance in the previewer
+    than in a real player. It also has limited capabilities and will not handle every case.
+  </div>
+
+  <p>
+    The Unity build behind it is hosted on <code>reactunity.github.io</code> rather than shipped as
+    a dependency, so nothing is downloaded at install time. The first load fetches it over the
+    network and the browser caches it afterwards.
+  </p>
+
+  <h2>Using your own previewer</h2>
+
+  <p>
+    You can replace the previewer with your own scene &mdash; which is also how you preview
+    offline. Build a scene in Unity with a <code>ReactRendererUGUI</code> component added, with its
+    <code>Type</code> set to <code>Url</code> and <code>Source Path</code> set to
+    <code>/index.js</code>. Then copy the build output into a <code>previewer</code> folder in your
+    React project, so that this file exists:
+  </p>
+
+  <pre><code>previewer/index.html</code></pre>
+
+  <p>
+    The dev server serves that in preference to the hosted previewer. Your project's own
+    <code>public</code> folder takes precedence over both.
+  </p>
+
+  <p>
+    See the <a href="https://github.com/ReactUnity/core/tree/main/packages/scripts">@reactunity/scripts
+    documentation</a> for the environment variables that control the build.
+  </p>
+</body>
+
+</html>

@@ -220,9 +220,6 @@ importers:
         specifier: ^4.4.0
         version: 4.4.0
     devDependencies:
-      '@reactunity/previewer':
-        specifier: ^0.20.0
-        version: 0.20.0(@reactunity/scripts@packages+scripts)
       '@reactunity/scripts':
         specifier: workspace:*
         version: link:../../packages/scripts
@@ -367,9 +364,6 @@ importers:
       '@pmmmwh/react-refresh-webpack-plugin':
         specifier: ^0.6.0
         version: 0.6.2(react-refresh@0.18.0)(type-fest@0.21.3)(webpack-dev-server@6.0.0(supports-color@10.2.2)(tslib@2.8.1)(webpack@5.109.0(csso@5.0.5)(esbuild@0.28.1)(lightningcss@1.33.0)(postcss@8.5.23)))(webpack@5.109.0(csso@5.0.5)(esbuild@0.28.1)(lightningcss@1.33.0)(postcss@8.5.23))
-      '@reactunity/previewer':
-        specifier: '*'
-        version: 0.20.0(@reactunity/scripts@packages+scripts)
       '@reactunity/renderer':
         specifier: workspace:*
         version: link:../renderer
@@ -3080,11 +3074,6 @@ packages:
     resolution: {integrity: sha512-DkP/H0C2YjjS7gZWKNqOmU8a16qHPjQNdzMwmTq9SzplM6Iw0kVMTZ0OIoe6FOgGqa+FwMsE2QbPjh/n3g/jXQ==}
     peerDependencies:
       react: ^16.8.0 || ^17.0.0-rc.1 || ^18.0.0 || ^19.0.0-rc.1
-
-  '@reactunity/previewer@0.20.0':
-    resolution: {integrity: sha512-v/uh9klTykWrrzL32rK+3q5u6Vog0h2wlxyNQLOmajc62xytsERqj1ZGNeaFUfwpgiqrjCDEmobUgTxY/GTNjA==}
-    peerDependencies:
-      '@reactunity/scripts': workspace:*
 
   '@reduxjs/toolkit@2.12.0':
     resolution: {integrity: sha512-KiT+RzZbp6mQET+Mg+h2c97+9j1sNflUxQkIHI7Yuzf6Peu+OYpmkn6nbHWmLLWj+1ZODUJFwGZ7gx3L9R9EOw==}
@@ -11569,10 +11558,6 @@ snapshots:
   '@react-types/shared@3.36.0(react@19.2.8)':
     dependencies:
       react: 19.2.8
-
-  '@reactunity/previewer@0.20.0(@reactunity/scripts@packages+scripts)':
-    dependencies:
-      '@reactunity/scripts': link:packages/scripts
 
   '@reduxjs/toolkit@2.12.0(react-redux@9.3.0(@types/react@19.2.17)(react@19.2.8)(redux@5.0.1))(react@19.2.8)':
     dependencies:

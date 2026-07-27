@@ -88,15 +88,11 @@
     "fsevents": "^2.3.3"
   },
   "peerDependencies": {
-    "@reactunity/previewer": "*",
     "@reactunity/renderer": ">=0.20.0",
     "react": "^19.0.0",
     "typescript": ">=5"
   },
   "peerDependenciesMeta": {
-    "@reactunity/previewer": {
-      "optional": true
-    },
     "typescript": {
       "optional": true
     }

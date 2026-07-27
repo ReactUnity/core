@@ -49,7 +49,11 @@ module.exports = {
   appBuild: resolveApp(buildPath),
   appManifest: resolveApp(manifestPath),
   appPublic: resolveApp('public'),
-  appPublicAlt: resolveApp('previewer'),
+  // Read as `paths.appPreviewer` by webpackDevServer.config.js. It was named appPublicAlt
+  // in both of these branches and appPreviewer only in the ejected branch below, so for
+  // every published install the lookup returned undefined and the documented `previewer`
+  // override silently did nothing.
+  appPreviewer: resolveApp('previewer'),
   appHtml: resolveApp('public/index.html'),
   appIndexJs: resolveModule(resolveApp, 'src/index'),
   appPackageJson: resolveApp('package.json'),
@@ -77,7 +81,11 @@ module.exports = {
   appBuild: resolveApp(buildPath),
   appManifest: resolveApp(manifestPath),
   appPublic: resolveApp('public'),
-  appPublicAlt: resolveApp('previewer'),
+  // Read as `paths.appPreviewer` by webpackDevServer.config.js. It was named appPublicAlt
+  // in both of these branches and appPreviewer only in the ejected branch below, so for
+  // every published install the lookup returned undefined and the documented `previewer`
+  // override silently did nothing.
+  appPreviewer: resolveApp('previewer'),
   appHtml: resolveApp('public/index.html'),
   appIndexJs: resolveModule(resolveApp, 'src/index'),
   appPackageJson: resolveApp('package.json'),

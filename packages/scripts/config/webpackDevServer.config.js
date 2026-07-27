@@ -13,15 +13,6 @@ const sockHost = process.env.WDS_SOCKET_HOST;
 const sockPath = process.env.WDS_SOCKET_PATH; // default: '/ws'
 const sockPort = process.env.WDS_SOCKET_PORT;
 
-function servePreviewerIfExists() {
-  try {
-    const previewerPath = path.dirname(require.resolve('@reactunity/previewer', { paths: [paths.appPath] }));
-    console.log('Using @reactunity/previewer');
-    return [{ directory: path.join(previewerPath, 'public') }];
-  } catch (err) {}
-  return [];
-}
-
 module.exports = (proxy, allowedHost) => {
   const disableFirewall = !proxy || process.env.DANGEROUSLY_DISABLE_HOST_CHECK === 'true';
   return {
@@ -79,17 +70,19 @@ module.exports = (proxy, allowedHost) => {
         },
       },
 
-      // Serve previewer from local previewer directory
+      // A previewer the user built themselves, in a `previewer` folder in their project.
+      // Takes precedence over the built-in one below, and is the way to preview a custom
+      // scene or to work offline.
       {
         directory: paths.appPreviewer,
         publicPath: [paths.publicUrlOrPath],
         watch: { ignored: ignoredFiles(paths.appSrc) },
       },
 
-      // If installed, serve the ReactUnity Web Previewer
-      ...servePreviewerIfExists(),
-
-      // Serve the fallback of web previewer as the index page
+      // The built-in previewer, last so anything above overrides it. Its Unity WebGL build
+      // is not here -- `public/index.html` loads it from reactunity.github.io. That used to
+      // be an optional `@reactunity/previewer` dependency serving its own `public` folder,
+      // which meant a ~107 MB install for a page most projects never opened.
       { directory: path.join(__dirname, 'public') },
     ],
     client: {
