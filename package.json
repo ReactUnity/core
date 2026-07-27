@@ -16,12 +16,12 @@
     "format": "biome format",
     "check": "biome check",
     "build": "pnpm -r --filter \"./packages/*\" run build",
-    "//typecheck": "Separate from `build` since tsdown took over emitting: rolldown transpiles per file and the dts step does not do full semantic analysis, so a build passing no longer means the types do. CI runs both.",
-    "typecheck": "pnpm -r --filter \"./packages/*\" run typecheck",
+    "//typecheck": "Separate from `build` because nothing in the build type checks any more: tsdown transpiles packages/* per file and its dts step does no semantic analysis, and dropping fork-ts-checker means webpack no longer checks the apps either. Unfiltered `-r` on purpose -- it reaches the four react-unity-scripts apps as well as packages/*, and skips members that declare no `typecheck` script. CI runs it beside the build.",
+    "typecheck": "pnpm -r run typecheck",
     "prepare": "husky",
     "tegami": "node scripts/tegami.mts"
   },
-  "//typescript": "On 7 here, but the workspace is deliberately split rather than uniform, so check the package you are editing. TypeScript 7 is the native compiler and it changes two things that matter: it ships no JS API (its export map points `.` at lib/version.cjs, so `require('typescript')` yields `{ version, versionMajorMinor }` and `resolve.sync('typescript')` fails with MODULE_NOT_FOUND), and it *removes* compiler options rather than deprecating them. Nothing at this root touches either -- the scripts here are Biome, husky and tsx, and tsx transpiles with esbuild -- so this copy and packages/create are on 7. Eight packages stay on 6.x and each says why next to its own pin: packages/renderer and packages/material (TS5108, `target=ES5` and `esModuleInterop=false` have both been removed), packages/scripts and the four apps that build through it (three `resolve.sync('typescript')` call sites), and docs (@astrojs/check peer-depends on `^5.0.0 || ^6.0.0`).",
+  "//typescript": "Everything is on 7 except docs. TypeScript 7 is the native compiler and it changes two things that mattered here: it ships no JS API (its export map points `.` at lib/version.cjs, so `require('typescript')` yields `{ version, versionMajorMinor }` and `resolve.sync('typescript')` fails with MODULE_NOT_FOUND), and it *removes* compiler options rather than deprecating them. Both were worked through rather than waited out -- tsdown took over emitting, so no tsconfig needs the removed options, and packages/scripts stopped loading the TypeScript module at all (fork-ts-checker dropped, tsconfig parsed with jsonc-parser, dead verifyTypeScriptSetup deleted), which freed the four apps that build through it. docs is the holdout and says so next to its own pin: @astrojs/check peer-depends on `^5.0.0 || ^6.0.0`, and `pnpm check` there runs `astro check`, which needs the API.",
   "devDependencies": {
     "@biomejs/biome": "2.5.5",
     "@types/node": "^26.1.1",

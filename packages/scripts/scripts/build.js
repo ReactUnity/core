@@ -82,15 +82,14 @@ checkBrowsers(paths.appPath, isInteractive)
       console.log(`The ${chalk.blue(buildFolder)} folder is ready to be used in ReactUnity.`);
     },
     (err) => {
-      const tscCompileOnError = process.env.TSC_COMPILE_ON_ERROR === 'true';
-      if (tscCompileOnError) {
-        console.log(chalk.yellow('Compiled with the following type errors (you may want to check these before deploying your app):\n'));
-        printBuildError(err);
-      } else {
-        console.log(chalk.red('Failed to compile.\n'));
-        printBuildError(err);
-        process.exit(1);
-      }
+      // TSC_COMPILE_ON_ERROR used to be honoured here: it downgraded the failure to a
+      // warning and let the build through, which made sense when the errors arriving on this
+      // path could be *type* errors from fork-ts-checker. That plugin is gone (see
+      // config/webpack.config.js), so anything reaching here is a real build failure and
+      // there is nothing left for the flag to usefully excuse.
+      console.log(chalk.red('Failed to compile.\n'));
+      printBuildError(err);
+      process.exit(1);
     },
   )
   .catch((err) => {

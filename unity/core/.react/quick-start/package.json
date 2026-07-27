@@ -6,15 +6,16 @@
   "private": true,
   "scripts": {
     "start": "react-unity-scripts start",
+    "typecheck": "tsc",
     "build": "react-unity-scripts build"
   },
   "dependencies": {
     "@reactunity/renderer": "workspace:*",
     "react": "^19.2.8"
   },
-  "//typescript": "Held at 6.x while the root and packages/create are on 7: this app builds with react-unity-scripts, which runs fork-ts-checker against whatever `resolve.sync('typescript')` finds from this directory, and 7 has no CJS entry to find. See packages/scripts.",
+  "//typescript": "On 7. It was held at 6.x because react-unity-scripts ran fork-ts-checker against whatever `resolve.sync('typescript')` found from this directory, and 7 has no CJS entry to find. That plugin is gone, so type checking is this package's own `typecheck` script now -- webpack does not do it.",
   "devDependencies": {
     "@reactunity/scripts": "workspace:*",
-    "typescript": "~6.0.3"
+    "typescript": "^7.0.2"
   }
 }

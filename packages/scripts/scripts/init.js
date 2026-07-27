@@ -12,7 +12,6 @@ const execSync = require('node:child_process').execSync;
 const spawn = require('react-dev-utils/crossSpawn');
 const { defaultBrowsers } = require('react-dev-utils/browsersHelper');
 const os = require('node:os');
-const verifyTypeScriptSetup = require('./utils/verifyTypeScriptSetup');
 
 function isInGitRepository() {
   try {
@@ -276,10 +275,15 @@ module.exports = (appPath, appName, verbose, originalDirectory, templateName) =>
     }
   }
 
-  if (args.find((arg) => arg.includes('typescript'))) {
-    console.log();
-    verifyTypeScriptSetup();
-  }
+  // CRA called verifyTypeScriptSetup() here, which rewrote the new project's tsconfig.json
+  // with the options it expected. It was deleted along with the rest of this package's
+  // dependence on the TypeScript JS API: it drove the compiler through
+  // ts.parseJsonConfigFileContent/ts.JsxEmit/ts.ScriptTarget, which TypeScript 7 does not
+  // expose, and what it wrote included `target: ES5` -- an option 7 removed. Nothing
+  // reaches this file in the first place: `init` is not one of the scripts bin/
+  // react-unity-scripts.js dispatches (build, eject, start, test, clean), and project
+  // creation goes through @reactunity/create, which copies packages/create/scaffold
+  // wholesale -- tsconfig.json included, already correct.
 
   // Remove template
   console.log(`Removing template package using ${command}...`);

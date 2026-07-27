@@ -1,7 +1,6 @@
 const fs = require('node:fs');
 const path = require('node:path');
 const webpack = require('webpack');
-const resolve = require('resolve');
 const CaseSensitivePathsPlugin = require('case-sensitive-paths-webpack-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
@@ -12,10 +11,6 @@ const paths = require('./paths');
 const modules = require('./modules');
 const getClientEnvironment = require('./env');
 const ModuleNotFoundPlugin = require('react-dev-utils/ModuleNotFoundPlugin');
-const ForkTsCheckerWebpackPlugin =
-  process.env.TSC_COMPILE_ON_ERROR === 'true'
-    ? require('react-dev-utils/ForkTsCheckerWarningWebpackPlugin')
-    : require('react-dev-utils/ForkTsCheckerWebpackPlugin');
 const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin');
 // @remove-on-eject-begin
 const getCacheIdentifier = require('react-dev-utils/getCacheIdentifier');
@@ -599,49 +594,20 @@ const baseConfigFactory = (webpackEnv) => {
         contextRegExp: /moment$/,
       }),
 
-      // TypeScript type checking
-      useTypeScript &&
-        new ForkTsCheckerWebpackPlugin({
-          async: isEnvDevelopment,
-          typescript: {
-            typescriptPath: resolve.sync('typescript', {
-              basedir: paths.appNodeModules,
-            }),
-            configOverwrite: {
-              compilerOptions: {
-                sourceMap: isEnvProduction ? shouldUseSourceMap : isEnvDevelopment,
-                skipLibCheck: true,
-                inlineSourceMap: false,
-                declarationMap: false,
-                noEmit: true,
-                incremental: true,
-                tsBuildInfoFile: paths.appTsBuildInfoFile,
-              },
-            },
-            context: paths.appPath,
-            diagnosticOptions: {
-              syntactic: true,
-            },
-            mode: 'write-references',
-            // profile: true,
-          },
-          issue: {
-            // This one is specifically to match during CI tests,
-            // as micromatch doesn't match
-            // '../cra-template-typescript/template/src/App.tsx'
-            // otherwise.
-            include: [{ file: '../**/src/**/*.{ts,tsx}' }, { file: '**/src/**/*.{ts,tsx}' }],
-            exclude: [
-              { file: '**/src/**/__tests__/**' },
-              { file: '**/src/**/?(*.){spec|test}.*' },
-              { file: '**/src/setupProxy.*' },
-              { file: '**/src/setupTests.*' },
-            ],
-          },
-          logger: {
-            infrastructure: 'silent',
-          },
-        }),
+      // There is no type checking here on purpose.
+      //
+      // CRA ran fork-ts-checker-webpack-plugin alongside webpack so that `start` reported
+      // type errors and `build` failed on them. Babel strips types without checking, so
+      // that plugin was the only thing doing the checking -- but it needs TypeScript's JS
+      // API, which version 7 does not ship (its export map points `.` at lib/version.cjs,
+      // and `resolve.sync('typescript')` throws MODULE_NOT_FOUND). Keeping it meant keeping
+      // this package and every app built with it on TypeScript 6 indefinitely.
+      //
+      // So type checking moved out of the bundler and into its own command, the same split
+      // packages/* made when tsdown took over emitting: each app runs `tsc --noEmit` as
+      // `pnpm typecheck`, and CI runs it beside the build. `react-unity-scripts build` no
+      // longer fails on type errors, which is worth knowing if you are relying on it --
+      // run the two together.
     ].filter(Boolean),
     // Turn off performance processing because we utilize
     // our own hints via the FileSizeReporter

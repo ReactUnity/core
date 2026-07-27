@@ -2,7 +2,57 @@ const fs = require('node:fs');
 const path = require('node:path');
 const paths = require('./paths');
 const chalk = require('react-dev-utils/chalk');
-const resolve = require('resolve');
+const { parse: parseJsoncText, printParseErrorCode } = require('jsonc-parser');
+
+/**
+ * Parse a tsconfig.json. It is JSONC -- comments and trailing commas are allowed and
+ * common -- so JSON.parse is not enough, which is why this used to go through
+ * TypeScript's `readConfigFile`.
+ *
+ * @param {string} text
+ * @param {string} filePath only used to point at the file when it does not parse
+ */
+function parseJsonc(text, filePath) {
+  const errors = [];
+  const value = parseJsoncText(text, errors, { allowTrailingComma: true });
+
+  if (errors.length > 0) {
+    const [{ error, offset }] = errors;
+    const line = text.slice(0, offset).split('\n').length;
+    throw new Error(`Failed to parse ${filePath} (line ${line}): ${printParseErrorCode(error)}.`);
+  }
+
+  return value;
+}
+
+/**
+ * The `baseUrl` a compilerOptions object asks for, including the spelling TypeScript 7
+ * requires.
+ *
+ * 7 removed `baseUrl` outright -- `tsc` fails with TS5102 -- and points you at
+ * `"paths": { "*": ["./*"] }` instead. The three functions below only ever read `baseUrl`,
+ * so a project that follows that advice silently loses its `src` alias and its absolute
+ * imports stop resolving in webpack. A single `*` mapping to one `<prefix>/*` target is
+ * exactly what `baseUrl: <prefix>` expressed, so translate it back rather than making every
+ * consumer choose between type checking and resolution.
+ *
+ * @param {Object} options
+ * @returns {string | undefined}
+ */
+function getBaseUrl(options = {}) {
+  if (options.baseUrl) {
+    return options.baseUrl;
+  }
+
+  const starTargets = options.paths?.['*'];
+  if (!Array.isArray(starTargets)) {
+    return undefined;
+  }
+
+  const target = starTargets.find((entry) => typeof entry === 'string' && entry.endsWith('/*'));
+  // './*' -> './' (the project root), './src/*' -> './src'
+  return target ? target.slice(0, -2) || './' : undefined;
+}
 
 /**
  * Get additional module paths based on the baseUrl of a compilerOptions object.
@@ -10,7 +60,7 @@ const resolve = require('resolve');
  * @param {Object} options
  */
 function getAdditionalModulePaths(options = {}) {
-  const baseUrl = options.baseUrl;
+  const baseUrl = getBaseUrl(options);
 
   if (!baseUrl) {
     return '';
@@ -53,7 +103,7 @@ function getAdditionalModulePaths(options = {}) {
  * @param {*} options
  */
 function getWebpackAliases(options = {}) {
-  const baseUrl = options.baseUrl;
+  const baseUrl = getBaseUrl(options);
 
   if (!baseUrl) {
     return {};
@@ -74,7 +124,7 @@ function getWebpackAliases(options = {}) {
  * @param {*} options
  */
 function getJestAliases(options = {}) {
-  const baseUrl = options.baseUrl;
+  const baseUrl = getBaseUrl(options);
 
   if (!baseUrl) {
     return {};
@@ -106,12 +156,12 @@ function getModules() {
   // TypeScript project and set up the config
   // based on tsconfig.json
   if (hasTsConfig) {
-    const ts = require(
-      resolve.sync('typescript', {
-        basedir: paths.appNodeModules,
-      }),
-    );
-    config = ts.readConfigFile(paths.appTsConfig, ts.sys.readFile).config;
+    // This used to load the app's TypeScript and call `ts.readConfigFile`, which is only a
+    // JSONC parse -- the result is read for `compilerOptions.baseUrl` a few lines down and
+    // nothing else. Doing it without the compiler is what lets an app run TypeScript 7,
+    // whose export map ships no `require`-able entry. `readConfigFile` does not follow
+    // `extends` either, so parsing the file directly sees exactly what it saw.
+    config = parseJsonc(fs.readFileSync(paths.appTsConfig, 'utf8'), paths.appTsConfig);
     // Otherwise we'll check if there is jsconfig.json
     // for non TS projects.
   } else if (hasJsConfig) {

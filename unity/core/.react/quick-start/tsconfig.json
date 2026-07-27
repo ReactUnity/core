@@ -1,7 +1,6 @@
 {
   "extends": "@reactunity/scripts",
   "compilerOptions": {
-    "baseUrl": "./",
     "jsxImportSource": "@reactunity/renderer/editor",
     "types": ["@reactunity/scripts/main"]
   },
