@@ -1,70 +1,80 @@
-# reactjs.org
+# ReactUnity documentation site
 
-This repo contains the source code and documentation powering [react.dev](https://react.dev/).
+The source of [reactunity.github.io](https://reactunity.github.io) — the ReactUnity
+documentation, guides and live samples.
 
+It is a fork of the [react.dev](https://github.com/reactjs/react.dev) site, so the
+authoring conventions, MDX component set and directory shape are React's. Prose lives in
+`src/content`.
 
-## Getting started
+## Running locally
 
-### Prerequisites
+From the repository root:
 
-1. Git
-1. Node and NPM
-1. A fork of the repo (for any contributions)
-1. A clone of the [reactjs.org repo](https://github.com/reactjs/reactjs.org) on your local machine
+```bash
+pnpm install
+```
 
-### Installation
+Then, from this directory:
 
-`npm i` to install the website's npm dependencies
+```bash
+pnpm start
+```
 
-### Running locally
+That serves the site at http://localhost:3000 with content hot-reloading.
 
-1. `npm run dev` to start the development server (powered by [Next.js](https://nextjs.org/))
-2. `open http://localhost:3000` to open the site in your favorite browser
+> **Node 22 is required here**, not the Node 26 the rest of the repository pins. This is
+> a Next 12.3 app, and Next 12 bundles a copy of `jsonwebtoken` that reaches for
+> `require('buffer').SlowBuffer` — removed in Node 24, so on newer versions the build
+> dies while collecting page data. `.github/workflows/docs.yml` installs on the pinned
+> version and downgrades to 22 just for the build. Upgrading Next is the real fix, but
+> it is a migration of its own: the app still uses `next export`, experimental config
+> that newer versions reject, and a `patch-package` patch pinned to
+> `next@12.3.2-canary.7`.
+
+## Checks
+
+```bash
+pnpm check-all
+```
+
+Runs Prettier, ESLint with `--fix`, and `tsc --noEmit`. `pnpm ci-check` is the
+non-mutating variant. This folder keeps its own Prettier and ESLint setup and is excluded
+from the repository's Biome config — don't reformat it with Biome.
+
+Heading anchors are linted separately, since links across the site depend on them:
+
+```bash
+pnpm lint-heading-ids
+```
+
+`pnpm fix-headings` rewrites them in place.
+
+## Deployment
+
+Pushes to `main` that touch `docs/**` build the site and push the output to the
+`gh-pages` branch of
+[ReactUnity/reactunity.github.io](https://github.com/ReactUnity/reactunity.github.io),
+which is a deploy target only — GitHub Pages derives the `reactunity.github.io` URL from
+that repository's name, so the built site has to live there while the source lives here.
+
+The deploy step is skipped when the `DOCS_DEPLOY_TOKEN` secret is not set; the build
+still runs, so the workflow stays useful as a compile check.
+
+The Unity WebGL demos load `/Unity/<sample>/Build/WebInjectable.*`. Those artifacts are
+hand-built, over 100 MB, and nothing in this repository produces them, so they are not
+tracked here — they live permanently under `Unity/` on the `gh-pages` branch, and the
+deploy is configured not to wipe them.
 
 ## Contributing
 
-### Guidelines
-
-The documentation is divided into several sections with a different tone and purpose. If you plan to write more than a few sentences, you might find it helpful to get familiar with the [contributing guidelines](https://github.com/reactjs/reactjs.org/blob/main/CONTRIBUTING.md#guidelines-for-text) for the appropriate sections.
-
-### Create a branch
-
-1. `git checkout main` from any folder in your local `reactjs.org` repository
-1. `git pull origin main` to ensure you have the latest main code
-1. `git checkout -b the-name-of-my-branch` (replacing `the-name-of-my-branch` with a suitable name) to create a branch
-
-### Make the change
-
-1. Follow the ["Running locally"](#running-locally) instructions
-1. Save the files and check in the browser
-  1. Changes to React components in `src` will hot-reload
-  1. Changes to markdown files in `content` will hot-reload
-  1. If working with plugins, you may need to remove the `.cache` directory and restart the server
-
-### Test the change
-
-1. If possible, test any visual changes in all latest versions of common browsers, on both desktop and mobile.
-2. Run `npm run check-all`. (This will run Prettier, ESLint and validate types.)
-
-### Push it
-
-1. `git add -A && git commit -m "My message"` (replacing `My message` with a commit message, such as `Fix header logo on Android`) to stage and commit your changes
-1. `git push my-fork-name the-name-of-my-branch`
-1. Go to the [reactjs.org repo](https://github.com/reactjs/reactjs.org) and you should see recently pushed branches.
-1. Follow GitHub's instructions.
-1. If possible, include screenshots of visual changes. A preview build is triggered after your changes are pushed to GitHub.
-
-## Translation
-
-If you are interested in translating `reactjs.org`, please see the current translation efforts at [translations.reactjs.org](https://translations.reactjs.org/).
-
-
-If your language does not have a translation and you would like to create one, please follow the instructions at [reactjs.org Translations](https://github.com/reactjs/reactjs.org-translation#translating-reactjsorg).
-
-## Acknowledgements
-
-This website was built by forking the source code of the React documentation website at [react.dev](https://react.dev) at the [source repository](https://github.com/reactjs/react.dev).
-We are thankful to all of the people who helped create React and the documentation website as mentioned in [the original website](https://react.dev/community/acknowledgements).
+[CONTRIBUTING.md](CONTRIBUTING.md) carries React's guidance on tone and structure per
+section, inherited from the upstream site and still worth reading before writing more
+than a few sentences. Documentation coverage is the weakest part of ReactUnity, so
+additions are especially welcome.
 
 ## License
-Contents in this repo is CC-BY-4.0 licensed, as found in the [LICENSE.md](https://github.com/ReactUnity/reactunity.github.io/blob/main/LICENSE.md) file.
+
+Content in this folder is [CC-BY-4.0](LICENSE.md). It builds on the React documentation
+site; see the [acknowledgements](https://react.dev/community/acknowledgements) for
+everyone who helped create the original.

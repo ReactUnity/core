@@ -140,6 +140,6 @@ an issue.
 
 ## License
 
-MIT — see [LICENSE](unity/core/LICENSE). The documentation under `docs/` is
-CC-BY-4.0. Thanks to everyone listed in
+MIT — see [LICENSE](LICENSE). The documentation under `docs/` is
+[CC-BY-4.0](docs/LICENSE.md). Thanks to everyone listed in
 [acknowledgements](.github/acknowledgements.md).

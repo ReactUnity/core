@@ -1,4 +1,0 @@
-[submodule "yoga"]
-	path = yoga
-	url = git@github.com:ReactUnity/yoga.git
-	branch = extended_main

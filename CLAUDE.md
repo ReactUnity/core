@@ -112,7 +112,7 @@ These are load-bearing and easy to undo (see commit `43e90688`):
 - Loaders in `packages/scripts/config/webpack.config.js` must be `require.resolve`'d, not bare strings — webpack resolves loader strings against the *consuming app's* directory, which only ever worked under npm's flat hoisting.
 - `full-sample/react` is `"type": "module"`, so its webpack config is `webpack.config.cjs`; `config/paths.js` prefers a `.cjs` sibling.
 - Root `.npmrc` sets `node-options="--import tsx"` (so `.mts` config is runnable) and `strict-peer-dependencies=false` (docs is on React 18, everything else React 19).
-- `pnpm-workspace.yaml`'s `onlyBuiltDependencies` list is minimal on purpose — four packages that genuinely need install scripts. Don't add packages whose scripts only print funding banners.
+- `pnpm-workspace.yaml`'s dependency-build allowlist is `allowBuilds`, not pnpm 10's `onlyBuiltDependencies`. pnpm 11 still *accepts* the old key — `pnpm config list` echoes it back — but no longer consults it, so every install script silently gets skipped. Combined with pnpm 11 defaulting `strictDepBuilds` to true, that turns a skipped build into `ERR_PNPM_IGNORED_BUILDS` and fails the install. Packages are listed explicitly as `true` or `false`; omitting one leaves it "undecided", which is what `strictDepBuilds` errors on. Only four are `true` — the ones whose native or downloaded binaries never materialise otherwise. Anything whose install script just prints a funding banner goes in as `false`.
 
 ## Conventions
 
