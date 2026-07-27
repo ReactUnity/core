@@ -24,7 +24,7 @@ subset of CSS on top of Yoga flexbox.
 
 | | |
 | --- | --- |
-| Unity | 2021.3 or newer. CI covers 2021.3, 2022.3, 2023.2, 6000.0 and 6000.1. |
+| Unity | 2021.3 or newer. CI covers 2023.2, 6000.0 and 6000.1. |
 | Node | 20 or newer. Used only while developing — it is not needed at runtime or in a built player. |
 | TextMeshPro | v3 |
 

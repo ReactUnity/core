@@ -41,11 +41,14 @@ jobs:
       fail-fast: false
       matrix:
         platform: [ubuntu-latest]
+        # 2021.3 and 2022.3 were dropped. 2021.3 had stopped contributing anything:
+        # its PlayMode run produced a 0-test result file, so the job only ever
+        # reported the EditMode suite. unity/core/package.json still declares
+        # `"unity": "2021.3"` -- dropping a job is not the same as dropping support,
+        # so lower that separately if that is the intent.
         unity:
           - { version: '6000.0.51f1' }
           - { version: '2023.2.20f1' }
-          - { version: '2022.3.62f1' }
-          - { version: '2021.3.45f1' }
         suite:
           - { name: 'Unit Tests', assemblies: 'ReactUnity.Tests;ReactUnity.Tests.Editor' }
         include:
@@ -70,6 +73,19 @@ jobs:
           path: tests/Library
           key: Library-${{ matrix.unity.version }}-${{ matrix.platform || 'ubuntu-latest' }}
 
+      # NOTE for tests/Packages/manifest.json, which is JSON and cannot hold this
+      # comment: `com.unity.test-framework.performance` was removed from `testables`.
+      # On Unity 6000.x, Unity upgrades that package 2.8.1-preview -> 3.1.0, and a
+      # package listed in `testables` makes Unity resolve its *related* test package
+      # too -- com.unity.test-framework.performance.tests@3.1.0, which does not exist.
+      # Resolution then failed for the whole project and the PlayMode run produced no
+      # results at all, so the 662-test UGUI suite silently did not run on 6000.0 or
+      # 6000.1 while the job still reported the 325 EditMode tests.
+      #
+      # The package stays a dependency (unity/core/Tests/Performance needs
+      # Unity.PerformanceTesting to compile) and this repo's own perf tests still run:
+      # they live in com.reactunity.core, which is still testable. Only Unity's own
+      # tests for that package are no longer requested.
       - name: Run Unity Tests
         uses: game-ci/unity-test-runner@v4
         id: testRunner

@@ -31,7 +31,6 @@
     "com.unity.modules.video": "1.0.0"
   },
   "testables": [
-    "com.unity.test-framework.performance",
     "com.reactunity.core",
     "com.unity.inputsystem"
   ],

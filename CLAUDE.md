@@ -66,7 +66,7 @@ pnpm --filter reactunity-sample start
 
 ### Unity C# tests
 
-There is no local CLI entry point — open `tests/` in Unity and use the Test Runner, or let `.github/workflows/unity-tests.yml` run the matrix (Unity 2021.3 → 6000.1). `tests/Packages/manifest.json` already points at `file:../../unity/*`, so the four Unity packages are wired up with no patching.
+There is no local CLI entry point — open `tests/` in Unity and use the Test Runner, or let `.github/workflows/unity-tests.yml` run the matrix (Unity 2023.2 → 6000.1). `tests/Packages/manifest.json` already points at `file:../../unity/*`, so the four Unity packages are wired up with no patching.
 
 Rendering tests compare against snapshots in `unity/core/Tests/.snapshots/{linux,windows}`. To regenerate: the `React > Tests > Overwrite Snapshots` editor menu toggle (needs the `REACT_UNITY_DEVELOPER` define), the `-reactOverwriteSnapshots` command-line arg, `[snapshots]` in a commit message, or the workflow's `overwrite-snapshots` dispatch input. CI commits regenerated snapshots from the one matrix job marked `main: true`.
 
