@@ -16,11 +16,7 @@ export function diffProperties(lastProps: Record<string, any>, nextProps: Record
   for (propKey in lastProps) {
     // This loop is for removing properties that existed in the previous properties, but not on current
 
-    if (
-      Object.prototype.hasOwnProperty.call(nextProps, propKey) ||
-      !Object.prototype.hasOwnProperty.call(lastProps, propKey) ||
-      lastProps[propKey] == null
-    ) {
+    if (Object.hasOwn(nextProps, propKey) || !Object.hasOwn(lastProps, propKey) || lastProps[propKey] == null) {
       continue;
     }
 
@@ -47,7 +43,7 @@ export function diffProperties(lastProps: Record<string, any>, nextProps: Record
 
     const nextProp = nextProps[propKey];
     const lastProp = lastProps != null ? lastProps[propKey] : undefined;
-    if (!Object.prototype.hasOwnProperty.call(nextProps, propKey) || nextProp === lastProp || (nextProp == null && lastProp == null)) {
+    if (!Object.hasOwn(nextProps, propKey) || nextProp === lastProp || (nextProp == null && lastProp == null)) {
       continue;
     }
 

@@ -1,0 +1,29 @@
+---
+/*
+ * Copyright (c) Facebook, Inc. and its affiliates.
+ */
+
+/*
+ * A terminal command beside the import it produces. The Next.js version split its
+ * children into "the <pre>" and "everything else" by inspecting React element types;
+ * here the two children just become the two cells of the grid, which is all that split
+ * was ever used for.
+ */
+---
+
+<section
+  class="package-import my-8 grid grid-cols-1 lg:grid-cols-2 gap-x-8 gap-y-4">
+  <slot />
+</section>
+
+<style is:global>
+  .package-import > * {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    /* The grid is the narrow column's full width; children must not add their own. */
+    max-width: none;
+    margin-top: 0;
+    margin-bottom: 0;
+  }
+</style>

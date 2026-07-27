@@ -2,6 +2,7 @@
  * Copyright (c) Facebook, Inc. and its affiliates.
  */
 
+import type { JSX } from 'react';
 import * as React from 'react';
 
 export const IconGotcha = React.memo<JSX.IntrinsicElements['svg']>(

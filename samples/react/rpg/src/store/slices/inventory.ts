@@ -1,12 +1,11 @@
-import { PayloadAction, createSlice } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { PersistConfig } from 'redux-persist';
 import persistReducer from 'redux-persist/es/persistReducer';
-import { unityStorage } from '../storage';
-
 import item3 from 'src/assets/icons/skoll/ak47.png';
 import item4 from 'src/assets/icons/skoll/bowie-knife.png';
 import item1 from 'src/assets/icons/skoll/glock.png';
 import item2 from 'src/assets/icons/skoll/stiletto.png';
+import { unityStorage } from '../storage';
 
 export interface ItemObject {
   image: string;

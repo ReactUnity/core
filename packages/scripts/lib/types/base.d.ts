@@ -1,5 +1,8 @@
 /// <reference no-default-lib="true"/>
-/// <reference lib="es2021" />
+// es2022, not es2021: ReactUnity's own code (the renderer's diffing, material's
+// virtual-scroll, the devtools app) calls Object.hasOwn, and every engine ReactUnity
+// ships with -- QuickJS, Jint 3, ClearScript -- implements it.
+/// <reference lib="es2022" />
 /// <reference types="react" />
 /// <reference types="webpack-env" />
 
@@ -53,6 +56,14 @@ declare module '*.svg' {
   const src: string;
   export default src;
 }
+
+// Plain stylesheets, imported for their side effects (`import './globals.scss'`). These
+// have no exports to describe, but they do have to be declared: TypeScript 6 reports a
+// side-effect import of an unresolvable module as an error (TS2882) where earlier versions
+// let it through.
+declare module '*.css';
+declare module '*.scss';
+declare module '*.sass';
 
 declare module '*.module.css' {
   const classes: { readonly [key: string]: string };

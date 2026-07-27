@@ -5,15 +5,17 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { SandpackStack, useSandpack } from '@codesandbox/sandpack-react';
 import cn from 'classnames';
-import { UnityCardridge, UnityCardridgeRef } from 'components/unity/cartridge';
+import {
+  UnityCardridge,
+  type UnityCardridgeRef,
+} from 'components/unity/cartridge';
 import { useDebounce } from 'hooks/use-debounce';
 import { useObservable, useSubject } from 'hooks/use-observable';
 import * as React from 'react';
 import { debounce, filter, map, of, timer } from 'rxjs';
 import { compile } from './compile';
-import type { LintDiagnostic } from './useSandpackLint';
 
-import { useEffect, useId, useMemo, useState } from 'react';
+import { useEffect, useId, useState } from 'react';
 import { SandpackConsole } from './Console';
 import { ErrorMessage } from './ErrorMessage';
 import { LoadingOverlay } from './LoadingOverlay';
@@ -21,7 +23,6 @@ import { LoadingOverlay } from './LoadingOverlay';
 type CustomPreviewProps = {
   className?: string;
   isExpanded: boolean;
-  lintErrors: LintDiagnostic;
 };
 
 const sandboxStyle = `
@@ -30,11 +31,7 @@ const sandboxStyle = `
 }
 `;
 
-export function UnityPreview({
-  isExpanded,
-  className,
-  lintErrors,
-}: CustomPreviewProps) {
+export function UnityPreview({ isExpanded, className }: CustomPreviewProps) {
   const { sandpack, listen } = useSandpack();
   const [bundlerIsReady, setBundlerIsReady] = useState(false);
   const [showLoading, setShowLoading] = useState(false);
@@ -42,13 +39,7 @@ export function UnityPreview({
     null
   );
 
-  let {
-    error: rawError,
-    errorScreenRegisteredRef,
-    openInCSBRegisteredRef,
-    loadingScreenRegisteredRef,
-    status,
-  } = sandpack;
+  let { error: rawError, status } = sandpack;
 
   if (
     rawError &&
@@ -58,36 +49,19 @@ export function UnityPreview({
     rawError = null;
   }
 
-  // Memoized because it's fed to debouncing.
-  const firstLintError = useMemo(() => {
-    if (lintErrors.length === 0) {
-      return null;
-    } else {
-      const { line, column, message } = lintErrors[0];
-      return {
-        title: 'Lint Error',
-        message: `${line}:${column} - ${message}`,
-      };
-    }
-  }, [lintErrors]);
-
-  if (rawError == null || rawError.title === 'Runtime Exception') {
-    if (firstLintError !== null) {
-      rawError = firstLintError;
-    }
-  }
-
   if (rawError != null && rawError.title === 'Runtime Exception') {
     rawError.title = 'Runtime Error';
   }
 
   const clientId = useId();
 
-  // SandpackPreview immediately registers the custom screens/components so the bundler does not render any of them
-  // TODO: why are we doing this during render?
-  openInCSBRegisteredRef.current = true;
-  errorScreenRegisteredRef.current = true;
-  loadingScreenRegisteredRef.current = true;
+  /*
+   * Sandpack v1 wanted three refs on its context flipped during render
+   * (openInCSBRegisteredRef, errorScreenRegisteredRef, loadingScreenRegisteredRef) to say
+   * "custom screens are in play, don't draw your own". v2 dropped them, and nothing here
+   * needs a replacement: those overlays belong to SandpackPreview, and this component
+   * renders a Unity player in its place. The error and loading overlays below are ours.
+   */
 
   const sandpackIdle = status === 'idle';
 
@@ -132,9 +106,18 @@ export function UnityPreview({
   const css = sandpack.files['/styles.css']?.code;
   const html = sandpack.files['/index.html']?.code;
 
-  const compiledCode = React.useMemo(() => compile(code || '', 'jsx') || '', [code]);
-  const compiledCss = React.useMemo(() => compile(css || '', 'css') || '', [css]);
-  const compiledHtml = React.useMemo(() => compile(html || '', 'html') || '', [html]);
+  const compiledCode = React.useMemo(
+    () => compile(code || '', 'jsx') || '',
+    [code]
+  );
+  const compiledCss = React.useMemo(
+    () => compile(css || '', 'css') || '',
+    [css]
+  );
+  const compiledHtml = React.useMemo(
+    () => compile(html || '', 'html') || '',
+    [html]
+  );
 
   const ccError: any = compiledCode.error || compiledCss.error || undefined;
 
@@ -143,11 +126,16 @@ export function UnityPreview({
 
   const codeSubj = useSubject(compiledCode);
 
-  const delayedCode = useObservable(() => codeSubj.pipe(
-    debounce(x => x.error ? of(0) : timer(300)),
-    filter(x => !x.error),
-    map(x => x.compiledCode!),
-  ), [], compiledCode.compiledCode || '');
+  const delayedCode = useObservable(
+    () =>
+      codeSubj.pipe(
+        debounce((x) => (x.error ? of(0) : timer(300))),
+        filter((x) => !x.error),
+        map((x) => x.compiledCode!)
+      ),
+    [],
+    compiledCode.compiledCode || ''
+  );
 
   const cartridgeRef = React.useRef<UnityCardridgeRef>(null);
 
@@ -216,7 +204,7 @@ export function UnityPreview({
           dependenciesLoading={!bundlerIsReady && iframeComputedHeight === null}
           forceLoading={showLoading}
         />
-      </div >
+      </div>
       <SandpackConsole visible={!error} />
     </SandpackStack>
   );

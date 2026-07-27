@@ -36,18 +36,19 @@
   },
   "keywords": ["react", "react-renderer", "unity", "unity3d"],
   "dependencies": {
-    "react-reconciler": "^0.32.0",
-    "use-sync-external-store": "^1.5.0"
+    "react-reconciler": "^0.33.0",
+    "use-sync-external-store": "^1.6.0"
   },
   "peerDependencies": {
     "react": "^19.0.0"
   },
+  "//react-unity-webgl": "Deliberately held at 9.x. This is a types-only dependency: src/webgl-compat reimplements react-unity-webgl's API so app code written against it runs inside a ReactUnity WebGL build, and it re-exports that package's types as part of its own public surface. Version 10 reshaped them -- dropped the deprecated aliases the shim provides (send, setFullscreen, quitUnityInstance), renamed UnityContextHook to UnityContext, added a required getMetricsInfo, removed the WebGLContextAttributes type, and changed UnityProvider to spread the config instead of carrying it. Following it is a compatibility decision for @reactunity/renderer/webgl-compat, and would break consumers still on 9 -- not a version bump. Left for a change that can be tested against a real WebGL build.",
   "devDependencies": {
     "@reactunity/scripts": "workspace:^",
-    "@types/react-reconciler": "^0.32.3",
+    "@types/react-reconciler": "^0.33.0",
     "react-unity-webgl": "^9.9.0",
-    "rimraf": "^6.0.1",
-    "typescript": "^5.8.3"
+    "rimraf": "^6.1.3",
+    "typescript": "~6.0.3"
   },
   "bugs": {
     "url": "https://github.com/ReactUnity/core/issues"

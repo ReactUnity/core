@@ -2,7 +2,6 @@
  * Copyright (c) Facebook, Inc. and its affiliates.
  */
 
-import * as React from 'react';
 import { IconRestart } from '../../Icon/IconRestart';
 export interface ResetButtonProps {
   onReset: () => void;

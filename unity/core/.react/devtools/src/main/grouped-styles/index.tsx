@@ -2,7 +2,7 @@ import { ReactUnity } from '@reactunity/renderer';
 import clsx from 'clsx';
 import * as React from 'react';
 import { useState } from 'react';
-import { CornerLabels, StyleProp, StylePropGroup, StylePropPart, allProps, styleProps } from '../../common/props';
+import { allProps, CornerLabels, StyleProp, StylePropGroup, StylePropPart, styleProps } from '../../common/props';
 import { useSelection } from '../../context/selection';
 import { useStyleContext } from '../../context/style';
 import style from './index.module.scss';

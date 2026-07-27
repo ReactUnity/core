@@ -2,21 +2,25 @@
  * Copyright (c) Facebook, Inc. and its affiliates.
  */
 
-const defaultTheme = require('tailwindcss/defaultTheme');
-const colors = require('./colors');
+/*
+ * Tailwind 4 reads its theme from CSS (`@theme`), but it still honours a v3-style
+ * JS config loaded with `@config` -- see src/styles/index.css. That is the path
+ * this site takes, because the theme below is not just a palette: `Sandpack/Themes.tsx`
+ * imports this file at runtime to hand Sandpack the same fonts and code size the
+ * rest of the page uses. A pure-CSS `@theme` cannot be imported from TypeScript,
+ * so porting it would mean duplicating those values in two places that must agree.
+ */
+import defaultTheme from 'tailwindcss/defaultTheme';
+import colors from './colors.js';
 
-module.exports = {
-  content: [
-    './src/components/**/*.{js,ts,jsx,tsx}',
-    './src/pages/**/*.{js,ts,jsx,tsx}',
-    './src/styles/**/*.{js,ts,jsx,tsx}',
-  ],
+export default {
+  content: ['./src/**/*.{js,ts,jsx,tsx,astro,mdx}'],
   darkMode: 'class',
   theme: {
-    // Override base screen sizes
     screens: {
       ...defaultTheme.screens,
-      betterhover: { raw: '(hover: hover)' },
+      // `betterhover` used to live here as a `raw` media query. It is a
+      // `@custom-variant` in src/styles/index.css now -- see the comment there.
     },
     boxShadow: {
       sm: '0 1px 2px 0 rgba(0, 0, 0, 0.05)',
@@ -37,7 +41,7 @@ module.exports = {
         xs: '21rem',
       },
       outline: {
-        blue: ['1px auto ' + colors.link, '3px'],
+        blue: [`1px auto ${colors.link}`, '3px'],
       },
       opacity: {
         8: '0.08',

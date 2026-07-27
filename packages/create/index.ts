@@ -2,9 +2,9 @@
 
 import * as cp from 'node:child_process';
 import * as path from 'node:path';
-import * as chalk from 'chalk';
+import chalk from 'chalk';
 import { Command, Option } from 'commander';
-import * as fse from 'fs-extra';
+import fse from 'fs-extra';
 
 const program = new Command();
 
@@ -36,8 +36,9 @@ const unityDir = createUnity ? path.resolve(cwd, unityFolderName) : cwd;
 const reactDir = path.resolve(unityDir, reactFolderName);
 const packageJsonPath = path.join(reactDir, 'package.json');
 
-const unityScaffold = path.join(__dirname, 'scaffold');
-const reactScaffold = path.join(__dirname, 'scaffold/react');
+// `import.meta.dirname` rather than `__dirname`: this package is ESM now.
+const unityScaffold = path.join(import.meta.dirname, 'scaffold');
+const reactScaffold = path.join(import.meta.dirname, 'scaffold/react');
 const reactScaffoldNodeModules = path.join(reactScaffold, 'node_modules');
 
 async function isDirEmpty(dirname) {

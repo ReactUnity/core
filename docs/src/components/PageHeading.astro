@@ -1,0 +1,47 @@
+---
+/*
+ * Copyright (c) Facebook, Inc. and its affiliates.
+ */
+
+import Breadcrumbs from 'components/Breadcrumbs.astro';
+import Tag from 'components/Tag.astro';
+import type { RouteItem, RouteTag } from 'components/Layout/getRouteMeta';
+import Heading from 'components/MDX/Heading.astro';
+
+interface Props {
+  title: string;
+  status?: string;
+  description?: string;
+  tags?: RouteTag[];
+  breadcrumbs?: RouteItem[];
+}
+
+const { title, status, description, tags = [], breadcrumbs } = Astro.props;
+---
+
+<div class="px-5 sm:px-12 pt-8 sm:pt-7 lg:pt-5">
+  <div class="max-w-4xl ml-0 2xl:mx-auto">
+    {breadcrumbs && <Breadcrumbs breadcrumbs={breadcrumbs} />}
+    <Heading
+      as="h1"
+      class="text-5xl font-bold leading-tight mt-0 text-primary dark:text-primary-dark -mx-.5 wrap-break-word">
+      {title}{status && <em>—{status}</em>}
+    </Heading>
+    {
+      description && (
+        <p class="mt-4 mb-6 text-primary dark:text-primary-dark text-xl text-gray-90 leading-large">
+          {description}
+        </p>
+      )
+    }
+    {
+      tags.length > 0 && (
+        <div class="mt-4">
+          {tags.map((tag) => (
+            <Tag variant={tag} />
+          ))}
+        </div>
+      )
+    }
+  </div>
+</div>

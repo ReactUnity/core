@@ -1,0 +1,67 @@
+---
+/*
+ * Copyright (c) Facebook, Inc. and its affiliates.
+ */
+
+import { IconNote } from 'components/Icon/IconNote';
+import { IconPitfall } from 'components/Icon/IconPitfall';
+import { IconWarning } from 'components/Icon/IconWarning';
+
+type CalloutVariants = 'deprecated' | 'pitfall' | 'note' | 'wip';
+
+interface Props {
+  type?: CalloutVariants;
+}
+
+const { type = 'note' } = Astro.props;
+
+/*
+ * The dark backgrounds carry their alpha in the colour (`dark:bg-red-60/20`) rather than
+ * in a separate `dark:bg-opacity-20`, which Tailwind 4 removed.
+ */
+const variantMap = {
+  deprecated: {
+    title: 'Deprecated',
+    Icon: IconWarning,
+    containerClasses: 'bg-red-5 dark:bg-red-60/20',
+    textColor: 'text-red-50 dark:text-red-40',
+  },
+  note: {
+    title: 'Note',
+    Icon: IconNote,
+    containerClasses:
+      'bg-green-5 dark:bg-green-60/20 text-primary dark:text-primary-dark text-lg',
+    textColor: 'text-green-60 dark:text-green-40',
+  },
+  pitfall: {
+    title: 'Pitfall',
+    Icon: IconPitfall,
+    containerClasses: 'bg-yellow-5 dark:bg-yellow-60/20',
+    textColor: 'text-yellow-50 dark:text-yellow-40',
+  },
+  wip: {
+    title: 'Under Construction',
+    Icon: IconNote,
+    containerClasses: 'bg-yellow-5 dark:bg-yellow-60/20',
+    textColor: 'text-yellow-50 dark:text-yellow-40',
+  },
+} as const;
+
+const variant = variantMap[type];
+const Icon = variant.Icon;
+---
+
+<div
+  class:list={[
+    'expandable-callout',
+    'pt-8 pb-4 px-5 sm:px-8 my-8 relative rounded-none shadow-inner -mx-5 sm:mx-auto sm:rounded-lg',
+    variant.containerClasses,
+  ]}>
+  <h3 class:list={['mb-2 text-2xl font-bold', variant.textColor]}>
+    <Icon className={`inline mr-3 mb-1 text-lg ${variant.textColor}`} />
+    {variant.title}
+  </h3>
+  <div class="relative">
+    <div class="py-2"><slot /></div>
+  </div>
+</div>

@@ -5,14 +5,14 @@
 import { useSandpack } from '@codesandbox/sandpack-react';
 import { useSyncExternalStore } from 'react';
 import { IconDownload } from '../../Icon/IconDownload';
-export interface DownloadButtonProps { }
+export interface DownloadButtonProps {}
 
 let supportsImportMap: boolean | void;
 
 function useSupportsImportMap() {
   function subscribe() {
     // It never updates.
-    return () => { };
+    return () => {};
   }
   function getCurrentValue() {
     if (supportsImportMap === undefined) {

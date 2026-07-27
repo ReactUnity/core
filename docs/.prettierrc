@@ -4,7 +4,14 @@
   "bracketSameLine": true,
   "trailingComma": "es5",
   "printWidth": 80,
+  "plugins": ["prettier-plugin-astro"],
   "overrides": [
+    {
+      "files": "*.astro",
+      "options": {
+        "parser": "astro"
+      }
+    },
     {
       "files": "*.css",
       "options": {
@@ -12,7 +19,7 @@
       }
     },
     {
-      "files": "*.md",
+      "files": "*.mdx",
       "options": {
         "parser": "mdx"
       }

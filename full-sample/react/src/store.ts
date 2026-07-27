@@ -1,5 +1,5 @@
-import { Action, ThunkAction, configureStore, createSlice } from '@reduxjs/toolkit';
-import { FLUSH, PAUSE, PERSIST, PURGE, PersistConfig, REGISTER, REHYDRATE, persistReducer, persistStore } from 'redux-persist';
+import { Action, configureStore, createSlice, ThunkAction } from '@reduxjs/toolkit';
+import { FLUSH, PAUSE, PERSIST, PersistConfig, PURGE, persistReducer, persistStore, REGISTER, REHYDRATE } from 'redux-persist';
 
 const persistConfig: PersistConfig<{ count: number }> = {
   key: 'counter',

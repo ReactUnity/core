@@ -1,5 +1,5 @@
 {
-  "$schema": "https://biomejs.dev/schemas/1.9.4/schema.json",
+  "$schema": "https://biomejs.dev/schemas/2.5.5/schema.json",
   "vcs": {
     "enabled": true,
     "clientKind": "git",
@@ -8,51 +8,50 @@
   },
   "files": {
     "ignoreUnknown": true,
-    "ignore": [
-      "docs",
-      "unity/*/Plugins",
-      ".node-version",
-      "node_modules",
-      "package-lock.json",
-      "dist",
-      "coverage",
-      "build",
-      "out",
-      ".docusaurus",
-      "*.gen.ts",
-      "mockServiceWorker.js",
-      "Library",
-      "Assets",
-      "manifest.json",
-      "packages-lock.json",
-      "models/generated",
+    "includes": [
+      "**",
+      "!**/docs",
+      "!**/unity/**/*/Plugins",
+      "!**/.node-version",
+      "!**/node_modules",
+      "!**/package-lock.json",
+      "!**/dist",
+      "!**/coverage",
+      "!**/build",
+      "!**/out",
+      "!**/.docusaurus",
+      "!**/*.gen.ts",
+      "!**/mockServiceWorker.js",
+      "!**/Library",
+      "!**/Assets",
+      "!**/manifest.json",
+      "!**/packages-lock.json",
+      "!**/models/generated",
 
       // tsc output of packages/create/index.ts, emitted next to the source by its
-      // `prepare` script and gitignored there. Biome 1.x only reads the root
-      // .gitignore, so nested ignores don't reach it.
-      "packages/create/index.js",
+      // `prepare` script and gitignored there. Biome only reads the root .gitignore,
+      // so nested ignores don't reach it.
+      "!**/packages/create/index.js",
 
       // Build output of the three React apps under unity/core/.react, committed
       // because the Unity package has to ship them. Each path is the BUILD_PATH
       // from the matching app's .env, so anything here is webpack's, not ours.
-      "unity/core/Editor/Resources/ReactUnity/editor/devtools",
-      "unity/core/Editor/Resources/ReactUnity/editor/quick-start",
-      "unity/core/Tests/Runtime/Resources/ReactUnity/tests/injectable",
+      "!**/unity/core/Editor/Resources/ReactUnity/editor/devtools",
+      "!**/unity/core/Editor/Resources/ReactUnity/editor/quick-start",
+      "!**/unity/core/Tests/Runtime/Resources/ReactUnity/tests/injectable",
 
       // Vendored third-party UMD bundles (whatwg-fetch, abortcontroller-polyfill,
       // base64.js, queue-microtask). Each keeps its source URL in a header comment
       // and is replaced wholesale on update, so reformatting it only adds diff noise.
-      "unity/core/Resources/ReactUnity/polyfills",
+      "!**/unity/core/Resources/ReactUnity/polyfills",
 
       // Vendored @babel/standalone, loaded by the editor test runner. At 3.7 MiB it is
       // over Biome's 1 MiB per-file ceiling, and being unable to read a file is an
       // error, not a skip -- leaving it in fails `pnpm check` outright.
-      "unity/core/Editor/Resources/ReactUnity/tests/scripts/babel-standalone.js"
+      "!**/unity/core/Editor/Resources/ReactUnity/tests/scripts/babel-standalone.js"
     ]
   },
-  "organizeImports": {
-    "enabled": true
-  },
+  "assist": { "actions": { "source": { "organizeImports": "on" } } },
   "css": {
     "formatter": {
       "enabled": true
@@ -67,7 +66,12 @@
   "json": {
     "formatter": {
       "enabled": true,
-      "lineWidth": 140
+      "lineWidth": 140,
+      // Biome 2 special-cases package.json and expands every array onto its own lines,
+      // regardless of width. "auto" is the general default -- collapse what fits in
+      // lineWidth -- and it is what the manifests in this repo are already written as,
+      // so stating it here keeps `keywords`, `files` and `sideEffects` on one line.
+      "expand": "auto"
     }
   },
   "formatter": {
@@ -80,7 +84,7 @@
   "linter": {
     "enabled": true,
     "rules": {
-      "recommended": true,
+      "preset": "recommended",
       "complexity": {
         "noForEach": "off"
       },
@@ -89,10 +93,23 @@
         // ReactUnity's CSS is a subset of CSS plus its own extensions, parsed by
         // unity/core/Runtime/Styling rather than a browser. Biome validates against
         // the web specs, so it rejects properties and media features that are valid
-        // here: `sorting-layer`, `state-duration`, `@media (skin: dark)`. Neither
-        // rule takes an allowlist, so both are off rather than suppressed per line.
+        // here: `sorting-layer`, `state-duration`, `@media (skin: dark)`. None of
+        // these rules take an allowlist, so they are off rather than suppressed per
+        // line. The last three joined the recommended set in Biome 2 and reject the
+        // rest of the dialect the same way: element selectors (`view`, `button`,
+        // `image` are Unity components, not HTML tags), `:hover`-style states Unity
+        // defines itself, and `@atlas`/`@font` style at-rules.
         "noUnknownProperty": "off",
         "noUnknownMediaFeatureName": "off",
+        "noUnknownTypeSelector": "off",
+        "noUnknownPseudoClass": "off",
+        "noUnknownPseudoElement": "off",
+        // New in Biome 2, and it cannot see the `_Name` convention this repo uses for
+        // the inner implementation of a component (packages/material/src/*/index.tsx
+        // exports a wrapped `Accordion` around `_Accordion`). A leading underscore is
+        // not the uppercase start the rule looks for, so every hook in those files
+        // reads as "called outside a component". React's own linter accepts them.
+        "useHookAtTopLevel": "off",
         "noUnusedImports": {
           "fix": "safe",
           "level": "warn"
@@ -113,16 +130,25 @@
         "noAssignInExpressions": "off",
         "noConfusingVoidType": "off",
         "noExplicitAny": "off",
-        "noArrayIndexKey": "off"
+        "noArrayIndexKey": "off",
+        // Same reason as the noUnknown* rules above: `@font`, `@atlas` and friends are
+        // ReactUnity at-rules, not CSS ones.
+        "noUnknownAtRules": "off"
       },
       "style": {
         "useImportType": "off",
         "noParameterAssign": "off",
         "noNonNullAssertion": "off"
       },
-      "a11y": {
-        "all": false
-      }
+      // `"off"` is Biome 2's spelling of the `{ "all": false }` this group carried
+      // before; `biome migrate` does not translate it, so the rules came back on and
+      // reported 68 errors. Why the group is off: every JSX file Biome sees here renders
+      // *Unity* elements, not DOM. `<button>` is a UGUI component with no `type`
+      // attribute, `<image>` takes no `alt`, and there is no accessibility tree behind a
+      // Unity canvas for a screen reader to read -- so the web a11y rules ask for props
+      // that do not exist. The one place in the repo that renders real DOM, the docs
+      // site, is excluded from Biome entirely (see `files.includes`).
+      "a11y": "off"
     }
   },
   "overrides": [
@@ -132,7 +158,7 @@
       // boxed objects rather than the numbers they compare against. Loose equality is
       // what makes them match, and `isNaN` has to keep coercing for the same reason;
       // the file already carries an `eslint-disable eqeqeq` block saying as much.
-      "include": ["unity/core/.react/devtools/src/common/helpers.ts"],
+      "includes": ["**/unity/core/.react/devtools/src/common/helpers.ts"],
       "linter": {
         "rules": {
           "suspicious": {

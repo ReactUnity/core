@@ -4,8 +4,8 @@ import './index.scss';
 
 export function BootstrapPage() {
   useEffect(() => {
-    // This causes too much performance issues, so load individual scss files
-    // @ts-ignore
+    // Loading the whole bootstrap stylesheet is too slow, so individual scss files are
+    // imported instead (see ./index.scss):
     // import('bootstrap/dist/css/bootstrap.min.css');
   }, []);
 

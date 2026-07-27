@@ -60,7 +60,6 @@ const hostConfig: Config = {
   createInstance(type, props, rootContainerInstance) {
     const aProps = getAllowedProps(props, type);
     const children = aProps.children || null;
-    // biome-ignore lint/performance/noDelete: Delete is required here
     delete aProps.children;
     return UnityBridge.createElement(props.tag || type, children, rootContainerInstance, aProps, stringizePoolKey(props.pool));
   },

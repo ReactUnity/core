@@ -1,6 +1,6 @@
 /* @jsxImportSource @reactunity/renderer/uitoolkit */
 
-import { ReactUnity, icon, render } from '@reactunity/renderer';
+import { icon, ReactUnity, render } from '@reactunity/renderer';
 import { useState } from 'react';
 import base64Image from '#src/assets/base64Image.txt';
 import pngImage from '#src/assets/bg.png';

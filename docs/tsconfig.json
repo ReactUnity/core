@@ -1,49 +1,20 @@
 {
+  "extends": "astro/tsconfigs/strict",
   "compilerOptions": {
-    "target": "es5",
-    "lib": [
-      "dom",
-      "dom.iterable",
-      "esnext"
-    ],
-    "allowJs": true,
-    "skipLibCheck": true,
-    "strict": true,
-    "noImplicitAny": true,
-    "noImplicitReturns": true,
-    "noImplicitThis": true,
-    "strictNullChecks": true,
-    "forceConsistentCasingInFileNames": true,
-    "noEmit": true,
-    "esModuleInterop": true,
-    "module": "esnext",
-    "moduleResolution": "node",
-    "resolveJsonModule": true,
-    "isolatedModules": true,
-    "jsx": "preserve",
-    "baseUrl": "src",
-    "incremental": true,
-    // Docs is the one workspace member still on React 18. Under pnpm's isolated layout,
-    // some of its dependencies (@codesandbox/sandpack-react, @code-hike/classer) resolve
-    // their own @types/react to 19, so tsc loaded 18 and 19 into the same program. Two
-    // copies of the global JSX namespace is a hard failure -- React 19 dropped string refs,
-    // so JSX.IntrinsicElements['a'] came from one copy carrying ref?: LegacyRef while <a>
-    // was checked against the other expecting ref?: Ref, and `next build` died on
-    // ButtonLink.tsx. npm's flat hoisting used to collapse them to one copy.
-    //
-    // Pinning the react types here is the narrow fix: a pnpm override would have to force
-    // one @types/react across the whole workspace, and everything outside docs is on 19.
+    "jsx": "react-jsx",
+    "jsxImportSource": "react",
+    "types": ["astro/client", "node"],
+    // The site was written against `baseUrl: "src"`, so a few hundred imports look like
+    // `components/Layout/Nav`. Astro turns tsconfig paths into Vite aliases, which keeps
+    // those working without rewriting every import to a relative path.
     "paths": {
-      "react": ["../node_modules/@types/react"],
-      "react-dom": ["../node_modules/@types/react-dom"]
+      "components/*": ["src/components/*"],
+      "hooks/*": ["src/hooks/*"],
+      "utils/*": ["src/utils/*"],
+      "styles/*": ["src/styles/*"],
+      "siteConfig": ["src/siteConfig.ts"]
     }
   },
-  "include": [
-    "next-env.d.ts",
-    "src/**/*.ts",
-    "src/**/*.tsx"
-  ],
-  "exclude": [
-    "node_modules"
-  ]
+  "include": [".astro/types.d.ts", "**/*"],
+  "exclude": ["dist", "node_modules"]
 }

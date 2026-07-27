@@ -1,5 +1,5 @@
 import { useCallback, useContext, useEffect, useState } from 'react';
-import { SetIsLoadingContext, Window, check, error, info, warn } from './common';
+import { check, error, info, SetIsLoadingContext, Window, warn } from './common';
 import styles from './styles.module.scss';
 
 interface PluginType {

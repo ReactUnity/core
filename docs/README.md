@@ -3,9 +3,11 @@
 The source of [reactunity.github.io](https://reactunity.github.io) — the ReactUnity
 documentation, guides and live samples.
 
-It is a fork of the [react.dev](https://github.com/reactjs/react.dev) site, so the
+It began as a fork of the [react.dev](https://github.com/reactjs/react.dev) site, so the
 authoring conventions, MDX component set and directory shape are React's. Prose lives in
-`src/content`.
+`src/content`. The site itself is [Astro](https://astro.build): pages are rendered to HTML
+at build time, and only the handful of components that need to run in the browser ship
+JavaScript.
 
 ## Running locally
 
@@ -21,26 +23,36 @@ Then, from this directory:
 pnpm start
 ```
 
-That serves the site at http://localhost:3000 with content hot-reloading.
+That serves the site at http://localhost:4321 with content hot-reloading.
 
-> **Node 22 is required here**, not the Node 26 the rest of the repository pins. This is
-> a Next 12.3 app, and Next 12 bundles a copy of `jsonwebtoken` that reaches for
-> `require('buffer').SlowBuffer` — removed in Node 24, so on newer versions the build
-> dies while collecting page data. `.github/workflows/docs.yml` installs on the pinned
-> version and downgrades to 22 just for the build. Upgrading Next is the real fix, but
-> it is a migration of its own: the app still uses `next export`, experimental config
-> that newer versions reject, and a `patch-package` patch pinned to
-> `next@12.3.2-canary.7`.
+## How a page is built
+
+- `src/content/**/*.mdx` — one file per page. `src/content.config.ts` declares the
+  collection; `src/pages/[...slug].astro` turns each entry into a route and supplies the
+  map from element names (`p`, `h2`, `Sandpack`, …) to components in
+  `src/components/MDX`.
+- The sidebar, breadcrumbs, page titles and previous/next links all come from
+  `src/sidebarLearn.json` and `src/sidebarReference.json`, not from frontmatter. A new
+  page has to be listed there to appear in navigation.
+- Headings carry explicit ids (`## Title {/*title*/}`) so that links survive edits to the
+  heading text. `plugins/remark-header-custom-ids.js` applies them.
+- `<Sandpack>` is the live editor. Its code fences are lifted into a serialized file map
+  at build time by `plugins/remark-sandpack-files.js`, and the editor hydrates when it
+  scrolls into view. Previews run inside a single shared Unity WebGL player
+  (`src/components/unity/global.tsx`) that moves between examples.
+- Plain code fences are highlighted by Shiki using the same palette as that editor —
+  see `plugins/shiki-theme.js`.
 
 ## Checks
 
 ```bash
-pnpm check-all
+pnpm check
 ```
 
-Runs Prettier, ESLint with `--fix`, and `tsc --noEmit`. `pnpm ci-check` is the
-non-mutating variant. This folder keeps its own Prettier and ESLint setup and is excluded
-from the repository's Biome config — don't reformat it with Biome.
+Runs `astro check` (types, including inside `.astro` files). `pnpm prettier` formats;
+`pnpm ci-check` is the non-mutating combination of both plus the heading linter. This
+folder keeps its own Prettier setup and is excluded from the repository's Biome config —
+don't reformat it with Biome.
 
 Heading anchors are linted separately, since links across the site depend on them:
 
@@ -65,6 +77,10 @@ The Unity WebGL demos load `/Unity/<sample>/Build/WebInjectable.*`. Those artifa
 hand-built, over 100 MB, and nothing in this repository produces them, so they are not
 tracked here — they live permanently under `Unity/` on the `gh-pages` branch, and the
 deploy is configured not to wipe them.
+
+The three Optimistic Display fonts are licensed to Meta rather than to this project, so
+they are not committed either; `scripts/downloadFonts.js` fetches them before the build
+and skips any that are already present.
 
 ## Contributing
 

@@ -1,0 +1,33 @@
+---
+/*
+ * Copyright (c) Facebook, Inc. and its affiliates.
+ */
+
+interface Props {
+  step: number;
+}
+
+const { step } = Astro.props;
+
+/*
+ * The tint and border alpha are baked into each colour rather than set once with
+ * `bg-opacity-10 dark:bg-opacity-20 border-opacity-60`: Tailwind 4 removed the
+ * *-opacity-* utilities in favour of the `colour/alpha` shorthand, which has to name the
+ * colour it modifies.
+ */
+const stepColors: Record<number, string> = {
+  1: 'bg-blue-40/10 dark:bg-blue-40/20 border-blue-40/60 text-blue-60 dark:text-blue-30',
+  2: 'bg-yellow-40/10 dark:bg-yellow-40/20 border-yellow-40/60 text-yellow-60 dark:text-yellow-30',
+  3: 'bg-purple-40/10 dark:bg-purple-40/20 border-purple-40/60 text-purple-60 dark:text-purple-30',
+  4: 'bg-green-40/10 dark:bg-green-40/20 border-green-40/60 text-green-60 dark:text-green-30',
+};
+---
+
+<span
+  data-step={step}
+  class:list={[
+    'code-step relative rounded px-[6px] py-[1.5px] border-b-2',
+    stepColors[step],
+  ]}>
+  <slot />
+</span>

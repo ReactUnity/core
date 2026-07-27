@@ -15,7 +15,7 @@ export function stringifyStyle(style: any): string {
   const acc: string[] = [];
 
   for (const key in style) {
-    if (Object.prototype.hasOwnProperty.call(style, key)) {
+    if (Object.hasOwn(style, key)) {
       const element = style[key];
 
       if (element != null) {
@@ -44,7 +44,7 @@ export function stringifySVG(node: RichTextNode): string {
     acc.push(tag);
 
     for (const key in node.attributes) {
-      if (Object.prototype.hasOwnProperty.call(node.attributes, key)) {
+      if (Object.hasOwn(node.attributes, key)) {
         let element = node.attributes[key];
 
         if (key === 'style') element = stringifyStyle(element);

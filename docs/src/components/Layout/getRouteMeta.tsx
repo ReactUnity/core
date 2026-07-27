@@ -10,11 +10,7 @@
  */
 
 export type RouteTag =
-  | 'foundation'
-  | 'intermediate'
-  | 'advanced'
-  | 'experimental'
-  | 'deprecated';
+  'foundation' | 'intermediate' | 'advanced' | 'experimental' | 'deprecated';
 
 export interface RouteItem {
   /** Page title (for the sidebar) */

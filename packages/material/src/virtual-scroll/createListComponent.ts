@@ -1,9 +1,9 @@
 import { ReactUnity, Style, UnityEngine } from '@reactunity/renderer';
 import { UGUIElements } from '@reactunity/renderer/ugui';
 import memoizeOne from 'memoize-one';
-import { PureComponent, ReactNode, createElement } from 'react';
+import { createElement, PureComponent, ReactNode } from 'react';
 import { getRTLOffsetType } from './domHelpers';
-import { TimeoutID, cancelTimeout, requestTimeout } from './timer';
+import { cancelTimeout, requestTimeout, TimeoutID } from './timer';
 
 export type ScrollToAlign = 'auto' | 'smart' | 'center' | 'start' | 'end';
 
@@ -34,11 +34,7 @@ type onItemsRenderedCallback = ({
   visibleStopIndex: number;
 }) => void;
 
-type onScrollCallback = (opts: {
-  scrollDirection: ScrollDirection;
-  scrollOffset: number;
-  scrollUpdateWasRequested: boolean;
-}) => void;
+type onScrollCallback = (opts: { scrollDirection: ScrollDirection; scrollOffset: number; scrollUpdateWasRequested: boolean }) => void;
 
 type ScrollEvent = UnityEngine.Vector2;
 type ScrollComponent = ReactUnity.UGUI.ScrollComponent;
@@ -158,7 +154,7 @@ export function createListComponent({
     // Always use explicit constructor for React components.
     // It produces less code after transpilation. (#26)
     // eslint-disable-next-line no-useless-constructor, @typescript-eslint/no-useless-constructor
-    // biome-ignore lint/complexity/noUselessConstructor: <explanation>
+    // biome-ignore lint/complexity/noUselessConstructor: kept deliberately, see above
     constructor(props: Props<T>) {
       super(props);
     }
@@ -385,7 +381,7 @@ export function createListComponent({
       let style: object;
       // Object.prototype.hasOwnProperty.call, not Object.hasOwn: this ships to Unity's
       // JS engines, and Jint has no ES2022 Object.hasOwn.
-      if (Object.prototype.hasOwnProperty.call(itemStyleCache, index)) {
+      if (Object.hasOwn(itemStyleCache, index)) {
         style = itemStyleCache[index];
       } else {
         const offset = getItemOffset(this.props, index, this._instanceProps);
@@ -508,7 +504,7 @@ export function createListComponent({
 
       if (typeof outerRef === 'function') {
         outerRef(ref);
-      } else if (outerRef != null && typeof outerRef === 'object' && Object.prototype.hasOwnProperty.call(outerRef, 'current')) {
+      } else if (outerRef != null && typeof outerRef === 'object' && Object.hasOwn(outerRef, 'current')) {
         outerRef.current = ref;
       }
     };

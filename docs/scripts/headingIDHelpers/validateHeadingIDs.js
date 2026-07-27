@@ -1,8 +1,8 @@
 /**
  * Copyright (c) Facebook, Inc. and its affiliates.
  */
-const fs = require('fs');
-const walk = require('./walk');
+import fs from 'node:fs';
+import walk from './walk.js';
 
 /**
  * Validate if there is a custom heading id and exit if there isn't a heading
@@ -15,9 +15,8 @@ function validateHeaderId(line) {
   }
 
   const match = /\{\/\*(.*?)\*\/}/.exec(line);
-  const id = match;
-  if (!id) {
-    console.error('Run npm run fix-headings to generate headings.');
+  if (!match) {
+    console.error('Run pnpm fix-headings to generate headings.');
     process.exit(1);
   }
 }
@@ -28,29 +27,26 @@ function validateHeaderId(line) {
  */
 function validateHeaderIds(lines) {
   let inCode = false;
-  const results = [];
   lines.forEach((line) => {
     // Ignore code blocks
     if (line.startsWith('```')) {
       inCode = !inCode;
-
-      results.push(line);
       return;
     }
     if (inCode) {
-      results.push(line);
       return;
     }
     validateHeaderId(line);
   });
 }
+
 /**
  * paths are basically array of path for which we have to validate heading IDs
  * @param {Array<string>} paths
  */
-async function main(paths) {
+export default async function main(paths) {
   paths = paths.length === 0 ? ['src/content'] : paths;
-  const files = paths.map((path) => [...walk(path)]).flat();
+  const files = paths.flatMap((path) => [...walk(path)]);
 
   files.forEach((file) => {
     if (!(file.endsWith('.md') || file.endsWith('.mdx'))) {
@@ -58,9 +54,6 @@ async function main(paths) {
     }
 
     const content = fs.readFileSync(file, 'utf8');
-    const lines = content.split('\n');
-    validateHeaderIds(lines);
+    validateHeaderIds(content.split('\n'));
   });
 }
-
-module.exports = main;

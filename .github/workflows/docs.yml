@@ -27,37 +27,26 @@ jobs:
     env:
       DOCS_DEPLOY_TOKEN: ${{ secrets.DOCS_DEPLOY_TOKEN }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - uses: pnpm/action-setup@v6
-      - uses: actions/setup-node@v6
+      - uses: actions/setup-node@v7
         with:
           node-version-file: .node-version
           cache: pnpm
       - run: pnpm install --frozen-lockfile
 
-      # Docs is a Next 12.3 app and cannot run on the Node that .node-version pins.
-      # Next 12 bundles jsonwebtoken, which reaches for `require('buffer').SlowBuffer`
-      # (DEP0030) -- removed in Node 24, so on Node 26 `next build` dies with
-      # "Cannot read properties of undefined (reading 'prototype')" while collecting
-      # page data. Restoring only SlowBuffer is enough to make the whole build pass,
-      # so Node 22 -- the last line that still has it -- is all this needs. 22 also
-      # clears pnpm 11's own floor of >=22.13.
-      #
-      # Install still runs on the pinned Node above; only the build steps downgrade.
-      # Upgrading Next is the real fix, but it is a migration of its own: the app is
-      # on `next export`, experimental config that newer versions reject, and a
-      # patch-package patch against next@12.3.2-canary.7.
-      - uses: actions/setup-node@v6
-        with:
-          node-version: 22
-
       # Always built, even when the deploy is skipped -- that keeps this workflow
       # useful as a check that the docs still compile.
+      #
+      # This used to run on a second, downgraded `setup-node@v6` pinned to Node 22: the
+      # site was a Next 12.3 app, and Next 12 bundles jsonwebtoken, which reaches for
+      # `require('buffer').SlowBuffer` -- removed in Node 24. It is an Astro site now and
+      # runs on the Node that .node-version pins, like everything else in the repo.
       - name: Build
         working-directory: docs
         env:
-          NEXT_PUBLIC_GA_TRACKING_ID: ${{ secrets.ANALYTICS_ID }}
-        run: pnpm build && pnpm export
+          PUBLIC_GA_TRACKING_ID: ${{ secrets.ANALYTICS_ID }}
+        run: pnpm build
 
       # docs/src/components/unity/instance.tsx loads
       # /Unity/<sample>/Build/WebInjectable.{wasm,data,framework.js,loader.js}.
@@ -75,7 +64,7 @@ jobs:
         if: env.DOCS_DEPLOY_TOKEN != ''
         uses: JamesIves/github-pages-deploy-action@v4
         with:
-          folder: docs/out
+          folder: docs/dist
           branch: gh-pages
           repository-name: ReactUnity/reactunity.github.io
           token: ${{ secrets.DOCS_DEPLOY_TOKEN }}
@@ -103,8 +92,8 @@ jobs:
       # The built site is kept as an artifact either way, so a skipped deploy can
       # still be inspected (and uploaded by hand if needed).
       - name: Upload built site
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: docs-site
-          path: docs/out
+          path: docs/dist
           retention-days: 7

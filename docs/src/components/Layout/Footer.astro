@@ -1,0 +1,69 @@
+---
+/*
+ * Copyright (c) Facebook, Inc. and its affiliates.
+ */
+
+import { siteConfig } from 'siteConfig';
+
+const columns = [
+  {
+    header: { href: '/', title: 'Community' },
+    links: [
+      { href: 'https://github.com/ReactUnity', title: 'GitHub' },
+      { href: 'https://discord.gg/UY2EFW5ZKG', title: 'Discord' },
+      { href: '/acknowledgements', title: 'Acknowledgements' },
+      { href: siteConfig.feedbackUrl, title: 'Leave Feedback' },
+    ],
+  },
+  {
+    header: { href: '/learn', title: 'Learn ReactUnity' },
+    links: [{ href: '/learn/', title: 'Quick Start' }],
+  },
+  {
+    header: { href: '/reference', title: 'API Reference' },
+    links: [
+      { href: '/reference', title: 'ReactUnity APIs' },
+      { href: '/reference/components', title: 'Components' },
+      { href: '/reference/css', title: 'CSS Reference' },
+      { href: '/reference/material', title: 'Material Design' },
+    ],
+  },
+];
+
+const headerClasses =
+  'border-b inline-block border-transparent text-md text-secondary dark:text-secondary-dark my-2 font-bold hover:border-gray-10';
+const linkClasses =
+  'border-b inline-block border-transparent text-sm text-primary dark:text-primary-dark hover:border-gray-10';
+const isExternal = (href: string) => href.startsWith('https://');
+---
+
+<div class="self-stretch w-full">
+  <footer
+    class="text-secondary dark:text-secondary-dark py-12 px-5 sm:px-12 md:px-12 sm:py-12 md:py-16 lg:py-14">
+    <div
+      class="grid grid-cols-2 sm:grid-cols-3 xl:grid-cols-3 gap-x-12 gap-y-8 max-w-7xl mx-auto">
+      {
+        columns.map((column) => (
+          <div class="flex flex-col">
+            <div>
+              <a href={column.header.href} class={headerClasses}>
+                {column.header.title}
+              </a>
+            </div>
+            {column.links.map((link) => (
+              <div>
+                <a
+                  href={link.href}
+                  class={linkClasses}
+                  target={isExternal(link.href) ? '_blank' : undefined}
+                  rel={isExternal(link.href) ? 'noopener' : undefined}>
+                  {link.title}
+                </a>
+              </div>
+            ))}
+          </div>
+        ))
+      }
+    </div>
+  </footer>
+</div>

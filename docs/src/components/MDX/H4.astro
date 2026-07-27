@@ -1,0 +1,8 @@
+---
+import Heading from './Heading.astro';
+const { id } = Astro.props;
+---
+
+<Heading as="h4" id={id} class="text-xl font-bold leading-9 my-4"
+  ><slot /></Heading
+>

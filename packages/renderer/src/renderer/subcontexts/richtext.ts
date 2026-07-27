@@ -29,7 +29,7 @@ export function stringifyRichText(node: RichTextNode): string {
 
     for (const key in node.attributes) {
       if (key === 'value') continue;
-      if (Object.prototype.hasOwnProperty.call(node.attributes, key)) {
+      if (Object.hasOwn(node.attributes, key)) {
         const value = node.attributes[key];
 
         if (value != null) {

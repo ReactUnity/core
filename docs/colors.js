@@ -2,7 +2,7 @@
  * Copyright (c) Facebook, Inc. and its affiliates.
  */
 
-module.exports = {
+export default {
   // Text colors
   primary: '#23272F', // gray-90
   'primary-dark': '#F6F7F9', // gray-5

@@ -35,7 +35,9 @@
 .todo-item {
   flex-direction: row;
   align-items: center;
-  transition: rotate var(--item-animation-duration), margin-bottom var(--item-animation-duration);
+  transition:
+    rotate var(--item-animation-duration),
+    margin-bottom var(--item-animation-duration);
   rotate: 0 0 0;
   width: 360px;
   padding: 4px 0 4px 8px;

@@ -2,12 +2,9 @@
  * Copyright (c) Facebook, Inc. and its affiliates.
  */
 
-import { disableBodyScroll, enableBodyScroll } from 'body-scroll-lock';
 import cn from 'classnames';
-import NextLink from 'next/link';
-import { useRouter } from 'next/router';
 import * as React from 'react';
-import { Suspense, useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 import { IconClose } from 'components/Icon/IconClose';
 import { IconHamburger } from 'components/Icon/IconHamburger';
@@ -94,16 +91,26 @@ export default function Nav({
   routeTree,
   breadcrumbs,
   section,
+  pathname,
 }: {
   routeTree: RouteItem;
   breadcrumbs: RouteItem[];
   section: 'learn' | 'reference';
+  /*
+   * Handed down from the layout rather than read from the router: this is an island, and
+   * the value has to be identical on the server and on the first client render or React
+   * throws the whole subtree away and re-renders it. There is no client-side routing to
+   * track either -- every link is a document navigation, so the path cannot change under
+   * a mounted Nav.
+   */
+  pathname: string;
 }) {
   const [isOpen, setIsOpen] = useState(false);
   const [showFeedback, setShowFeedback] = useState(false);
   const scrollParentRef = useRef<HTMLDivElement>(null);
-  const feedbackAutohideRef = useRef<any>(null);
-  const { asPath } = useRouter();
+  const feedbackAutohideRef = useRef<ReturnType<typeof setTimeout> | undefined>(
+    undefined
+  );
   const feedbackPopupRef = useRef<null | HTMLDivElement>(null);
 
   // In mobile mode, let the user switch tabs there and back without navigating.
@@ -130,23 +137,23 @@ export default function Nav({
     routeTree = (routeTree as any).routes[0];
   }
 
-  // While the overlay is open, disable body scroll.
+  // While the overlay is open, disable body scroll. body-scroll-lock used to do this;
+  // it is unmaintained, and the one thing this needs from it is the line below. What is
+  // lost is its iOS touch-event handling, which only mattered for scrollable content
+  // inside the locked element -- the overlay's own scroll container is not the body.
   useEffect(() => {
-    if (isOpen) {
-      const preferredScrollParent = scrollParentRef.current!;
-      disableBodyScroll(preferredScrollParent);
-      return () => enableBodyScroll(preferredScrollParent);
-    } else {
-      return undefined;
-    }
+    if (!isOpen) return;
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    return () => {
+      document.body.style.overflow = previousOverflow;
+    };
   }, [isOpen]);
 
-  // Close the overlay on any navigation.
-  useEffect(() => {
-    setIsOpen(false);
-  }, [asPath]);
+  // There is no "close the overlay on navigation" effect any more: every link is a full
+  // document load, so a navigation unmounts this component instead of updating it.
 
-  // Also close the overlay if the window gets resized past mobile layout.
+  // Close the overlay if the window gets resized past mobile layout.
   // (This is also important because we don't want to keep the body locked!)
   useEffect(() => {
     const media = window.matchMedia(`(max-width: 1023px)`);
@@ -210,12 +217,12 @@ export default function Nav({
             })}>
             {isOpen ? <IconClose /> : <IconHamburger />}
           </button>
-          <NextLink href="/">
-            <a className="inline-flex text-l font-normal items-center text-primary dark:text-primary-dark py-1 mr-0 sm:mr-3 whitespace-nowrap">
-              <Logo className="text-sm mr-2 w-8 h-8 text-link dark:text-link-dark" />
-              ReactUnity Docs
-            </a>
-          </NextLink>
+          <a
+            href="/"
+            className="inline-flex text-l font-normal items-center text-primary dark:text-primary-dark py-1 mr-0 sm:mr-3 whitespace-nowrap">
+            <Logo className="text-sm mr-2 w-8 h-8 text-link dark:text-link-dark" />
+            ReactUnity Docs
+          </a>
           <div className="block dark:hidden">
             <button
               type="button"
@@ -329,21 +336,23 @@ export default function Nav({
             `lg:grow lg:flex flex-col w-full pb-8 lg:pb-0 lg:max-w-xs z-10`,
             isOpen ? 'block z-40' : 'hidden lg:block'
           )}>
+          {/*
+            This used to set a `--bg-opacity` custom property. Nothing reads it: it was the
+            variable Tailwind 2 generated for `bg-opacity-*`, and neither v3's
+            `--tw-bg-opacity` nor v4's colour/alpha syntax looks at it.
+          */}
           <nav
             role="navigation"
-            style={{ '--bg-opacity': '.2' } as React.CSSProperties} // Need to cast here because CSS vars aren't considered valid in TS types (cuz they could be anything)
             className="w-full lg:h-auto grow pr-0 lg:pr-5 pt-6 lg:py-6 md:pt-4 lg:pt-4 scrolling-touch scrolling-gpu">
-            {/* No fallback UI so need to be careful not to suspend directly inside. */}
-            <Suspense fallback={null}>
-              <SidebarRouteTree
-                // Don't share state between the desktop and mobile versions.
-                // This avoids unnecessary animations and visual flicker.
-                key={isOpen ? 'mobile-overlay' : 'desktop-or-hidden'}
-                routeTree={routeTree}
-                breadcrumbs={breadcrumbs}
-                isForceExpanded={isOpen}
-              />
-            </Suspense>
+            <SidebarRouteTree
+              // Don't share state between the desktop and mobile versions.
+              // This avoids unnecessary animations and visual flicker.
+              key={isOpen ? 'mobile-overlay' : 'desktop-or-hidden'}
+              routeTree={routeTree}
+              breadcrumbs={breadcrumbs}
+              isForceExpanded={isOpen}
+              pathname={pathname}
+            />
             <div className="h-20" />
           </nav>
           <div className="fixed bottom-0 hidden lg:block">

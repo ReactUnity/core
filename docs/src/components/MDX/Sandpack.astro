@@ -1,0 +1,35 @@
+---
+/*
+ * Copyright (c) Facebook, Inc. and its affiliates.
+ */
+
+import SandpackRoot from 'components/MDX/Sandpack/SandpackRoot';
+
+interface Props {
+  /* JSON, produced by plugins/remark-sandpack-files.js. */
+  filesJson: string;
+  autorun?: boolean;
+  showDevTools?: boolean;
+}
+
+const { filesJson, autorun = true, showDevTools = false } = Astro.props;
+const files = JSON.parse(filesJson);
+---
+
+<div class="sandpack sandpack--playground my-8">
+  {
+    /*
+    client:visible, not client:only: Sandpack's editor renders a static <pre> when there
+    is no DOM, so the build emits readable, highlighted code and the island only takes
+    over -- turning it into a live editor wired to the Unity player -- once the example
+    scrolls into view. That is also what the old lazy() + SandpackGlimmer skeleton was
+    imitating, except the markup here is the real code instead of a placeholder.
+  */
+  }
+  <SandpackRoot
+    client:visible
+    files={files}
+    autorun={autorun}
+    showDevTools={showDevTools}
+  />
+</div>

@@ -1,9 +1,9 @@
 import { ReactUnity, Style, UnityEngine } from '@reactunity/renderer';
 import { UGUIElements } from '@reactunity/renderer/ugui';
 import memoizeOne from 'memoize-one';
-import { PureComponent, ReactNode, createElement } from 'react';
+import { createElement, PureComponent, ReactNode } from 'react';
 import { getRTLOffsetType, getScrollbarSize } from './domHelpers';
-import { TimeoutID, cancelTimeout, requestTimeout } from './timer';
+import { cancelTimeout, requestTimeout, TimeoutID } from './timer';
 
 type Direction = 'ltr' | 'rtl';
 export type ScrollToAlign = 'auto' | 'smart' | 'center' | 'start' | 'end';
@@ -67,11 +67,7 @@ export type Props<T> = {
   innerRef?: any;
   innerElementType?: string | React.Component<InnerProps, any>;
   itemData?: T;
-  itemKey?: (params: {
-    columnIndex: number;
-    data: T;
-    rowIndex: number;
-  }) => any;
+  itemKey?: (params: { columnIndex: number; data: T; rowIndex: number }) => any;
   onItemsRendered?: OnItemsRenderedCallback;
   onScroll?: OnScrollCallback;
   outerRef?: any;
@@ -172,7 +168,7 @@ export function createGridComponent({
     // Always use explicit constructor for React components.
     // It produces less code after transpilation. (#26)
     // eslint-disable-next-line no-useless-constructor, @typescript-eslint/no-useless-constructor
-    // biome-ignore lint/complexity/noUselessConstructor: <explanation>
+    // biome-ignore lint/complexity/noUselessConstructor: kept deliberately, see above
     constructor(props: Props<T>) {
       super(props);
     }
@@ -183,13 +179,7 @@ export function createGridComponent({
       return null;
     }
 
-    scrollTo({
-      scrollLeft,
-      scrollTop,
-    }: {
-      scrollLeft: number;
-      scrollTop: number;
-    }): void {
+    scrollTo({ scrollLeft, scrollTop }: { scrollLeft: number; scrollTop: number }): void {
       if (scrollLeft !== undefined) {
         scrollLeft = Math.max(0, scrollLeft);
       }
@@ -219,15 +209,7 @@ export function createGridComponent({
       }, this._resetIsScrollingDebounced);
     }
 
-    scrollToItem({
-      align = 'auto',
-      columnIndex,
-      rowIndex,
-    }: {
-      align: ScrollToAlign;
-      columnIndex?: number;
-      rowIndex?: number;
-    }): void {
+    scrollToItem({ align = 'auto', columnIndex, rowIndex }: { align: ScrollToAlign; columnIndex?: number; rowIndex?: number }): void {
       const { columnCount, height, rowCount, width } = this.props;
       const { scrollLeft, scrollTop } = this.state;
       const sizes = getScrollbarSize(this._outerRef);
@@ -500,7 +482,7 @@ export function createGridComponent({
       let style: object;
       // Object.prototype.hasOwnProperty.call, not Object.hasOwn: this ships to Unity's
       // JS engines, and Jint has no ES2022 Object.hasOwn.
-      if (Object.prototype.hasOwnProperty.call(itemStyleCache, key)) {
+      if (Object.hasOwn(itemStyleCache, key)) {
         style = itemStyleCache[key];
       } else {
         const offset = getColumnOffset(this.props, columnIndex, this._instanceProps);
@@ -628,7 +610,7 @@ export function createGridComponent({
 
       if (typeof outerRef === 'function') {
         outerRef(ref);
-      } else if (outerRef != null && typeof outerRef === 'object' && Object.prototype.hasOwnProperty.call(outerRef, 'current')) {
+      } else if (outerRef != null && typeof outerRef === 'object' && Object.hasOwn(outerRef, 'current')) {
         outerRef.current = ref;
       }
     };

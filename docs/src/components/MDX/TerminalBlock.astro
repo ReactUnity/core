@@ -1,0 +1,80 @@
+---
+/*
+ * Copyright (c) Facebook, Inc. and its affiliates.
+ */
+
+/*
+ * The Copy button used to be React state (`copied`, reset on a timer) around children
+ * the component read as a plain string. Both are unnecessary here: the text is whatever
+ * the slot rendered, so the button reads it back off the DOM, and the whole block ships
+ * as HTML plus the few lines of script below instead of a hydrated island.
+ */
+import { IconCopy } from 'components/Icon/IconCopy';
+import { IconTerminal } from 'components/Icon/IconTerminal';
+
+interface Props {
+  level?: 'info' | 'warning' | 'error';
+}
+
+const { level = 'info' } = Astro.props;
+---
+
+<div class="terminal-block rounded-lg bg-secondary dark:bg-gray-50 h-full">
+  <div class="bg-gray-90 dark:bg-gray-60 w-full rounded-t-lg">
+    <div
+      class="text-primary-dark dark:text-primary-dark flex text-sm px-4 py-0.5 relative justify-between">
+      <div>
+        <IconTerminal className="inline-flex mr-2 self-center" /> Terminal
+      </div>
+      <div>
+        <button
+          type="button"
+          data-terminal-copy
+          class="w-full text-left text-primary-dark dark:text-primary-dark">
+          <IconCopy className="inline-flex mr-2 self-center" />
+          <span data-terminal-copy-label>Copy</span>
+        </button>
+      </div>
+    </div>
+  </div>
+  <div
+    data-terminal-body
+    class="px-8 pt-4 pb-6 text-primary-dark dark:text-primary-dark font-mono text-code whitespace-pre">
+    {
+      level === 'warning' && (
+        <span class="text-yellow-50 bg-none mr-1">Warning: </span>
+      )
+    }
+    {level === 'error' && <span class="text-red-40 mr-1">Error: </span>}
+    <slot />
+  </div>
+</div>
+
+<script>
+  for (const button of document.querySelectorAll<HTMLButtonElement>(
+    '[data-terminal-copy]'
+  )) {
+    const block = button.closest('.terminal-block');
+    const label = button.querySelector('[data-terminal-copy-label]');
+    if (!block || !label) continue;
+
+    button.addEventListener('click', async () => {
+      const body = block.querySelector('[data-terminal-body]');
+      await navigator.clipboard.writeText(body?.textContent?.trim() ?? '');
+      label.textContent = 'Copied';
+      setTimeout(() => {
+        label.textContent = 'Copy';
+      }, 2000);
+    });
+  }
+</script>
+
+<style is:global>
+  /*
+   * Terminal contents come in as markdown, so a single line of text arrives wrapped in
+   * a <p> carrying the body-copy margins. Inside the terminal frame it is one line.
+   */
+  .terminal-block [data-terminal-body] p {
+    margin: 0;
+  }
+</style>

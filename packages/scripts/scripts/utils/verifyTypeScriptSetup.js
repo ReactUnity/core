@@ -75,8 +75,7 @@ function verifyTypeScriptSetup() {
       }),
     );
 
-    if (!globalThisWasDefined && !!global.globalThis) {
-      // biome-ignore lint/performance/noDelete: <explanation>
+    if (!globalThisWasDefined && global.globalThis) {
       delete global.globalThis;
     }
   } catch (_) {

@@ -100,7 +100,8 @@ html.dark .DocSearch-Footer {
   @apply text-sm;
   @apply leading-tight;
   @apply text-primary;
-  @apply appearance-none !important;
+  /* Tailwind 4 spells an important utility with a trailing `!`, not a CSS `!important`. */
+  @apply appearance-none!;
 }
 
 html.dark .DocSearch-Input {

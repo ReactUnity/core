@@ -1,0 +1,17 @@
+---
+/*
+ * Copyright (c) Facebook, Inc. and its affiliates.
+ */
+
+import SimpleCallout from './SimpleCallout.astro';
+
+interface Props {
+  isChapter?: boolean;
+}
+
+const { isChapter } = Astro.props;
+---
+
+<SimpleCallout title={isChapter ? 'In this chapter' : 'You will learn'}
+  ><slot /></SimpleCallout
+>

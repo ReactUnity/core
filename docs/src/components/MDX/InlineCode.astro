@@ -1,0 +1,20 @@
+---
+/*
+ * Copyright (c) Facebook, Inc. and its affiliates.
+ */
+
+/*
+ * Inline code only -- fenced blocks are highlighted by Shiki at build time and never
+ * reach this component.
+ *
+ * The react.dev original took an `isLink` prop and the surrounding <Link> cloned its
+ * children to set it, giving code inside a link a different background. Cloning children
+ * is not possible through an Astro slot, so that variant is a CSS rule on `a > code` in
+ * src/styles/index.css instead.
+ */
+---
+
+<code
+  class="inline text-code text-secondary dark:text-secondary-dark px-1 rounded-md no-underline bg-gray-30/10 py-px">
+  <slot />
+</code>

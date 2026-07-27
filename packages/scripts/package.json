@@ -15,6 +15,8 @@
     "url": "https://github.com/ReactUnity/core/issues"
   },
   "files": ["bin", "config", "lib", "scripts", "tsconfig.json"],
+  "//webpack-dev-server": "Deliberately held at 5.x. Version 6 moves to Express 5, whose path-to-regexp rewrite rejects the route patterns the react-dev-utils middlewares this dev server is built on still use (evalSourceMapMiddleware, redirectServedPathMiddleware, noopServiceWorkerMiddleware -- see config/webpackDevServer.config.js). react-dev-utils is unmaintained (12.0.1, 2022), so moving to 6 means replacing those middlewares, not bumping a version. Symptom if you try it: `react-unity-scripts start` prints \"Starting the development server...\" and hangs with nothing listening.",
+  "//@babel/core": "Deliberately held at 7.x. babel-preset-react-app 10 -- the preset this whole pipeline compiles with -- peer-depends on @babel/core ^7, and Babel 8 requires every plugin and preset in the tree to be 8-compatible. Upgrading means replacing babel-preset-react-app first.",
   "bin": {
     "react-unity-scripts": "./bin/react-unity-scripts.js"
   },
@@ -35,19 +37,19 @@
     "@babel/preset-react": "^7.27.1",
     "@pmmmwh/react-refresh-webpack-plugin": "^0.6.0",
     "@svgr/webpack": "^8.1.0",
-    "@types/react": "^19.1.8",
+    "@types/react": "^19.2.17",
     "@types/webpack-env": "^1.18.8",
     "babel-jest": "^30.0.2",
     "babel-loader": "^10.0.0",
     "babel-plugin-named-asset-import": "^0.3.8",
     "babel-preset-react-app": "^10.1.0",
     "bfj": "^9.1.2",
-    "camelcase": "^8.0.0",
+    "camelcase": "^9.0.0",
     "case-sensitive-paths-webpack-plugin": "^2.4.0",
     "confusing-browser-globals": "^1.0.11",
     "css-loader": "^7.1.2",
-    "dotenv": "^16.5.0",
-    "dotenv-expand": "^12.0.2",
+    "dotenv": "^17.4.2",
+    "dotenv-expand": "^13.0.0",
     "file-loader": "^6.2.0",
     "fork-ts-checker-webpack-plugin": "^9.1.0",
     "fs-extra": "^11.3.0",
@@ -63,11 +65,11 @@
     "raw-loader": "^4.0.2",
     "react-app-polyfill": "^3.0.0",
     "react-dev-utils": "^12.0.1",
-    "react-refresh": "^0.17.0",
+    "react-refresh": "^0.18.0",
     "resolve": "^1.22.10",
     "resolve-url-loader": "^5.0.0",
     "sass": "^1.89.2",
-    "sass-loader": "^16.0.5",
+    "sass-loader": "^17.0.0",
     "semver": "^7.7.2",
     "source-map-loader": "^5.0.0",
     "style-loader": "^4.0.0",
@@ -75,11 +77,11 @@
     "terser-webpack-plugin": "^5.3.14",
     "url-loader": "^4.1.1",
     "webpack": "^5.99.9",
-    "webpack-dev-server": "^5.2.2",
-    "webpack-manifest-plugin": "^5.0.1"
+    "webpack-dev-server": "^5.2.6",
+    "webpack-manifest-plugin": "^6.0.1"
   },
   "devDependencies": {
-    "typescript": "^5.8.3"
+    "typescript": "~6.0.3"
   },
   "optionalDependencies": {
     "fsevents": "^2.3.3"
@@ -88,7 +90,7 @@
     "@reactunity/previewer": "*",
     "@reactunity/renderer": ">=0.20.0",
     "react": "^19.0.0",
-    "typescript": ">=5"
+    "typescript": ">=5 <7"
   },
   "peerDependenciesMeta": {
     "@reactunity/previewer": {

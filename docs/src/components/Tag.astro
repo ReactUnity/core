@@ -1,0 +1,33 @@
+---
+/*
+ * Copyright (c) Facebook, Inc. and its affiliates.
+ */
+
+import type { RouteTag } from 'components/Layout/getRouteMeta';
+
+interface Props {
+  variant: RouteTag;
+  text?: string;
+  class?: string;
+}
+
+const variantMap = {
+  foundation: { name: 'Foundation', classes: 'bg-yellow-50 text-white' },
+  intermediate: { name: 'Intermediate', classes: 'bg-purple-40 text-white' },
+  advanced: { name: 'Advanced', classes: 'bg-green-40 text-white' },
+  experimental: { name: 'Experimental', classes: 'bg-ui-orange text-white' },
+  deprecated: { name: 'Deprecated', classes: 'bg-red-40 text-white' },
+} as const;
+
+const { text, variant, class: className } = Astro.props;
+const { name, classes } = variantMap[variant];
+---
+
+<span class:list={['mr-2', className]}>
+  <span
+    class:list={[
+      'inline font-bold text-sm uppercase py-1 px-2 rounded',
+      classes,
+    ]}>{text || name}</span
+  >
+</span>

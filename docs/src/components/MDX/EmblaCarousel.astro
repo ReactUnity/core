@@ -1,0 +1,195 @@
+---
+/*
+ * A slideshow of screenshots and clips, used by the showcase page.
+ *
+ * The React version built its slides by mapping over `children` and cloning any <video>
+ * to add `controls`/`autoPlay`. Children are opaque HTML through an Astro slot, so the
+ * script below does the equivalent to the rendered DOM: markdown wraps a run of images in
+ * a <p>, so it unwraps that, promotes each image or video to a slide, and mirrors the
+ * slides into the thumbnail strip. Embla's core package drives it -- no React needed,
+ * so the page ships the carousel and nothing else.
+ */
+---
+
+<div class="embla-carousel">
+  <div class="embla">
+    <div class="embla-viewport" data-embla-viewport>
+      <div class="embla-container" data-embla-container><slot /></div>
+    </div>
+
+    <button type="button" class="embla-prev" data-embla-prev>Prev</button>
+    <button type="button" class="embla-next" data-embla-next>Next</button>
+  </div>
+
+  <div class="embla-thumbnails" data-embla-thumbnails></div>
+</div>
+
+<script>
+  import EmblaCarousel from 'embla-carousel';
+  import Autoplay from 'embla-carousel-autoplay';
+
+  for (const carousel of document.querySelectorAll<HTMLElement>(
+    '.embla-carousel'
+  )) {
+    const viewport = carousel.querySelector<HTMLElement>(
+      '[data-embla-viewport]'
+    );
+    const container = carousel.querySelector<HTMLElement>(
+      '[data-embla-container]'
+    );
+    const thumbnails = carousel.querySelector<HTMLElement>(
+      '[data-embla-thumbnails]'
+    );
+    if (!viewport || !container || !thumbnails) continue;
+
+    // Markdown groups consecutive images into one paragraph; each media element has to
+    // be a direct child of the container for Embla to treat it as a slide.
+    for (const wrapper of [...container.children]) {
+      if (wrapper.tagName === 'P') wrapper.replaceWith(...wrapper.childNodes);
+    }
+
+    const media = [
+      ...container.querySelectorAll<HTMLElement>(
+        ':scope > img, :scope > video'
+      ),
+    ];
+    for (const element of media) {
+      if (element instanceof HTMLVideoElement) {
+        element.controls = true;
+        element.autoplay = true;
+        element.muted = true;
+      }
+
+      const slide = document.createElement('div');
+      slide.className = 'embla-slide';
+      element.replaceWith(slide);
+      slide.appendChild(element);
+
+      const thumbnail = document.createElement('div');
+      thumbnail.className = 'embla-thumbnail';
+      thumbnail.appendChild(element.cloneNode(false));
+      thumbnails.appendChild(thumbnail);
+    }
+
+    // Anything left over is stray whitespace between the media elements.
+    for (const node of [...container.childNodes]) {
+      if (node.nodeType === Node.TEXT_NODE) node.remove();
+    }
+
+    const embla = EmblaCarousel(viewport, {}, [
+      Autoplay({
+        // Clips need longer than stills.
+        delay: (_, api) =>
+          api
+            .slideNodes()
+            .map((slide) => (slide.querySelector('video') ? 10000 : 3000)),
+        stopOnInteraction: true,
+      }),
+    ]);
+
+    carousel
+      .querySelector('[data-embla-prev]')
+      ?.addEventListener('click', () => embla.scrollPrev());
+    carousel
+      .querySelector('[data-embla-next]')
+      ?.addEventListener('click', () => embla.scrollNext());
+    thumbnails
+      .querySelectorAll('.embla-thumbnail')
+      .forEach((thumbnail, index) => {
+        thumbnail.addEventListener('click', () => embla.scrollTo(index));
+      });
+  }
+</script>
+
+<style is:global>
+  .embla-carousel {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .embla-carousel .embla {
+    position: relative;
+  }
+
+  .embla-carousel .embla-viewport {
+    overflow: hidden;
+    aspect-ratio: 16 / 9;
+  }
+
+  .embla-carousel .embla-container {
+    display: flex;
+    height: 100%;
+  }
+
+  .embla-carousel .embla-slide {
+    flex: 0 0 100%;
+    min-width: 0;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .embla-carousel .embla-prev,
+  .embla-carousel .embla-next {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 0;
+    color: transparent;
+  }
+
+  .embla-carousel .embla-prev:before,
+  .embla-carousel .embla-next:before {
+    content: '';
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    border: 2px solid black;
+    border-radius: 3px;
+    rotate: 45deg;
+  }
+
+  .embla-carousel .embla-prev {
+    left: 10px;
+  }
+
+  .embla-carousel .embla-prev:before {
+    border-color: transparent transparent black black;
+  }
+
+  .embla-carousel .embla-next {
+    right: 10px;
+  }
+
+  .embla-carousel .embla-next:before {
+    border-color: black black transparent transparent;
+  }
+
+  .embla-carousel .embla-thumbnails {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .embla-carousel .embla-thumbnail {
+    width: 100px;
+    height: 60px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    cursor: pointer;
+    border-radius: 4px;
+    overflow: hidden;
+  }
+</style>

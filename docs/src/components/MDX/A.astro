@@ -1,0 +1,32 @@
+---
+/*
+ * Copyright (c) Facebook, Inc. and its affiliates.
+ */
+
+interface Props {
+  href?: string;
+  class?: string;
+}
+
+const { href, class: className, ...rest } = Astro.props;
+const classes =
+  'inline text-link dark:text-link-dark border-b border-link/0 hover:border-link/100 duration-100 ease-in transition leading-normal';
+const isExternal = href?.startsWith('http://') || href?.startsWith('https://');
+---
+
+{
+  href == null ? (
+    <a class={className} {...rest}>
+      <slot />
+    </a>
+  ) : (
+    <a
+      href={href}
+      class:list={[classes, className]}
+      target={isExternal ? '_blank' : undefined}
+      rel={isExternal ? 'noopener' : undefined}
+      {...rest}>
+      <slot />
+    </a>
+  )
+}

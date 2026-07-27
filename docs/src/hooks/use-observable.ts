@@ -1,5 +1,5 @@
-import { DependencyList, useEffect, useRef, useState } from 'react';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { type DependencyList, useEffect, useRef, useState } from 'react';
+import { BehaviorSubject, type Observable } from 'rxjs';
 
 /**
  * @param pr The promise to be watched
@@ -69,7 +69,8 @@ export function useObservable<ResType>(
  * @param value The value which is feeded to the returned {@link BehaviorSubject}
  */
 export function useSubject<ResType>(value: ResType) {
-  const res = useRef<BehaviorSubject<ResType>>();
+  // React 19's useRef requires an explicit initial value.
+  const res = useRef<BehaviorSubject<ResType> | undefined>(undefined);
   res.current = res.current || new BehaviorSubject<ResType>(value);
 
   useEffect(() => {

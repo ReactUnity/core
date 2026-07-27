@@ -1,19 +1,34 @@
 import cn from 'classnames';
-import Head from 'next/head';
-import { LegacyRef, useCallback, useEffect, useMemo, useState } from 'react';
+import { type Ref, useCallback, useEffect, useMemo, useState } from 'react';
 import { createPortal } from 'react-dom';
 import style from './index.module.scss';
 import {
   defaultUnityInstanceName,
   isLoaderScriptLoaded,
-  UnityAPI,
-  UnityInstance
+  type UnityAPI,
+  type UnityInstance,
 } from './types';
+
+const LOADER_SRC = '/Unity/injectable/Build/WebInjectable.loader.js';
+
+/*
+ * Unity's loader is a plain script that defines a global `createUnityInstance`, so it
+ * cannot be imported -- the Next.js version dropped a <script> into next/head. Appending
+ * it here keeps that lazy: the ~100 MB player is only fetched on pages where a code
+ * example actually mounts, not on every page in the site.
+ */
+function ensureLoaderScript() {
+  if (document.querySelector(`script[src="${LOADER_SRC}"]`)) return;
+  const script = document.createElement('script');
+  script.src = LOADER_SRC;
+  script.async = true;
+  document.head.appendChild(script);
+}
 
 interface Props {
   className?: string;
   sampleName?: string;
-  innerRef?: LegacyRef<HTMLDivElement>;
+  innerRef?: Ref<HTMLDivElement>;
   unityRef?: (unityInstance: UnityAPI | undefined) => void;
 }
 
@@ -89,6 +104,7 @@ export function Unity({
   useEffect(() => {
     if (scriptLoaded) return;
 
+    ensureLoaderScript();
     const interval = setInterval(() => {
       if (isLoaderScriptLoaded()) setScriptLoaded(true);
     }, 100);
@@ -107,15 +123,15 @@ export function Unity({
 
   return (
     <>
-      <Head>
-        <script src="/Unity/injectable/Build/WebInjectable.loader.js" async />
-      </Head>
-
       <div className={cn(className, style.host, 'unity')} ref={innerRef}>
         <canvas
           id={id}
           className={style.canvas}
-          ref={setCanvasRef}
+          // Wrapped rather than passed directly: booting Unity is async, and React 19
+          // reads a ref callback's return value as a cleanup function.
+          ref={(canvas) => {
+            void setCanvasRef(canvas);
+          }}
           tabIndex={-1}
         />
 

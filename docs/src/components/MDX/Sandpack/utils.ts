@@ -3,16 +3,10 @@
  */
 
 export type ViewportSizePreset =
-  | 'iPhone X'
-  | 'Pixel 2'
-  | 'iPad'
-  | 'Moto G4'
-  | 'Surface Duo';
+  'iPhone X' | 'Pixel 2' | 'iPad' | 'Moto G4' | 'Surface Duo';
 
 export type ViewportSize =
-  | ViewportSizePreset
-  | 'auto'
-  | { width: number; height: number };
+  ViewportSizePreset | 'auto' | { width: number; height: number };
 
 export type ViewportOrientation = 'portrait' | 'landscape';
 

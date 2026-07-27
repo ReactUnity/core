@@ -5,12 +5,24 @@
 import {
   FileTabs,
   useSandpack,
-  useSandpackNavigation
+  useSandpackNavigation,
 } from '@codesandbox/sandpack-react';
-import { Listbox } from '@headlessui/react';
+// Headless UI 2 deprecated the dot-notation subcomponents (Listbox.Button and friends) in
+// favour of these named exports.
+import {
+  Listbox,
+  ListboxButton,
+  ListboxOption,
+  ListboxOptions,
+} from '@headlessui/react';
 import cn from 'classnames';
 import {
-  Fragment, useCallback, useEffect, useInsertionEffect, useRef, useState
+  Fragment,
+  useCallback,
+  useEffect,
+  useInsertionEffect,
+  useRef,
+  useState,
 } from 'react';
 import { IconChevron } from '../../Icon/IconChevron';
 import { ResetButton } from './ResetButton';
@@ -32,10 +44,7 @@ const getFileName = (filePath: string): string => {
   return filePath.slice(lastIndexOfSlash + 1);
 };
 
-export function NavigationBar({
-}: {
-  providedFiles: Array<string>;
-}) {
+export function NavigationBar({}: { providedFiles: Array<string> }) {
   const { sandpack } = useSandpack();
   const containerRef = useRef<HTMLDivElement | null>(null);
   const tabsRef = useRef<HTMLDivElement | null>(null);
@@ -119,12 +128,12 @@ export function NavigationBar({
                   // not always visible. This lets us measure how much space
                   // the tabs would take if displayed. We use this to decide
                   // whether to keep showing the dropdown, or show all tabs.
-                  'w-[fit-content]',
+                  'w-fit',
                   showDropdown ? 'invisible' : ''
                 )}>
                 <FileTabs />
               </div>
-              <Listbox.Button as={Fragment}>
+              <ListboxButton as={Fragment}>
                 {({ open }) => (
                   // If tabs don't fit, display the dropdown instead.
                   // The dropdown is absolutely positioned inside the
@@ -150,25 +159,26 @@ export function NavigationBar({
                     </span>
                   </button>
                 )}
-              </Listbox.Button>
+              </ListboxButton>
             </div>
           </div>
           {isMultiFile && showDropdown && (
-            <Listbox.Options className="absolute mt-0.5 bg-card dark:bg-card-dark px-2 left-0 right-0 mx-0 rounded-b-lg border-1 border-border dark:border-border-dark rounded-sm shadow-md">
+            <ListboxOptions className="absolute mt-0.5 bg-card dark:bg-card-dark px-2 left-0 right-0 mx-0 rounded-b-lg border border-border dark:border-border-dark rounded-sm shadow-md">
               {visibleFiles.map((filePath: string) => (
-                <Listbox.Option key={filePath} value={filePath} as={Fragment}>
-                  {({ active }) => (
+                <ListboxOption key={filePath} value={filePath} as={Fragment}>
+                  {/* `active` became `focus` in Headless UI 2. */}
+                  {({ focus }) => (
                     <li
                       className={cn(
                         'text-md mx-2 my-4 cursor-pointer',
-                        active && 'text-link dark:text-link-dark'
+                        focus && 'text-link dark:text-link-dark'
                       )}>
                       {getFileName(filePath)}
                     </li>
                   )}
-                </Listbox.Option>
+                </ListboxOption>
               ))}
-            </Listbox.Options>
+            </ListboxOptions>
           )}
         </Listbox>
       </div>

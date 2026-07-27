@@ -3,55 +3,51 @@
  */
 
 import { SandpackLogLevel } from '@codesandbox/sandpack-client';
-import { SandpackProvider } from '@codesandbox/sandpack-react';
-import * as React from 'react';
-import { Children, useState } from 'react';
-import { createFileMap } from './createFileMap';
+import {
+  SandpackProvider,
+  type SandpackFile,
+} from '@codesandbox/sandpack-react';
+import { useState } from 'react';
 import { CustomPreset } from './CustomPreset';
 import { CustomTheme } from './Themes';
 
 type SandpackProps = {
-  children: React.ReactNode;
+  /*
+   * Built at compile time by plugins/remark-sandpack-files.js from the code fences
+   * nested inside <Sandpack>. It arrives as a prop rather than as children because
+   * this component is an island: children reach it as opaque HTML, and props have to
+   * survive JSON serialization.
+   */
+  files: Record<string, SandpackFile>;
   autorun?: boolean;
   showDevTools?: boolean;
 };
 
-function SandpackRoot(props: SandpackProps) {
-  let { children, autorun = true, showDevTools = false } = props;
+function SandpackRoot({
+  files,
+  autorun = true,
+  showDevTools = false,
+}: SandpackProps) {
   const [devToolsLoaded, setDevToolsLoaded] = useState(false);
-  const codeSnippets = Children.toArray(children) as React.ReactElement[];
-  const files = createFileMap(codeSnippets);
-
-  files['/styles.css'] = {
-    code: '',
-    ...files['/styles.css'],
-  };
-
-  if (!Object.values(files).some((x: any) => x.active)) {
-    if (files['/index.html']) files['/index.html'].active = true;
-    else if (files['/App.js']) files['/App.js'].active = true;
-  }
 
   return (
-    <div className="sandpack sandpack--playground my-8">
-      <SandpackProvider
-        template="react"
-        files={files}
-        theme={CustomTheme}
-        options={{
-          autorun,
-          initMode: 'user-visible',
-          initModeObserverOptions: { rootMargin: '1400px 0px' },
-          logLevel: SandpackLogLevel.None,
-        }}>
-        <CustomPreset
-          showDevTools={showDevTools}
-          onDevToolsLoad={() => setDevToolsLoaded(true)}
-          devToolsLoaded={devToolsLoaded}
-          providedFiles={Object.keys(files)}
-        />
-      </SandpackProvider>
-    </div>
+    <SandpackProvider
+      template="react"
+      files={files}
+      theme={CustomTheme}
+      options={{
+        autorun,
+        initMode: 'user-visible',
+        initModeObserverOptions: { rootMargin: '1400px 0px' },
+        logLevel: SandpackLogLevel.None,
+      }}>
+      <CustomPreset
+        showDevTools={showDevTools}
+        onDevToolsLoad={() => setDevToolsLoaded(true)}
+        devToolsLoaded={devToolsLoaded}
+        providedFiles={Object.keys(files)}
+      />
+    </SandpackProvider>
   );
 }
 

@@ -1,0 +1,25 @@
+---
+/*
+ * Copyright (c) Facebook, Inc. and its affiliates.
+ */
+
+import A from 'components/MDX/A.astro';
+import Intro from 'components/MDX/Intro.astro';
+import MaxWidth from 'components/MDX/MaxWidth.astro';
+import P from 'components/MDX/P.astro';
+import DocsLayout from '../layouts/DocsLayout.astro';
+---
+
+<DocsLayout title="Not Found">
+  <MaxWidth>
+    <Intro>
+      <P>This page doesn’t exist.</P>
+      <P>
+        Quite possibly, it hasn’t been written yet. This is a <A
+          href="/#how-much-content-is-ready">work in progress!</A
+        >
+      </P>
+      <P>Please check back later.</P>
+    </Intro>
+  </MaxWidth>
+</DocsLayout>

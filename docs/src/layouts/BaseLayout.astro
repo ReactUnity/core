@@ -1,0 +1,160 @@
+---
+/*
+ * Copyright (c) Facebook, Inc. and its affiliates.
+ */
+
+import { siteConfig } from 'siteConfig';
+// index.css pulls in the site's other stylesheets -- see the comment at the top of it.
+import '@docsearch/css';
+import 'styles/index.css';
+
+interface Props {
+  title?: string;
+  description?: string;
+  image?: string;
+  isHomePage?: boolean;
+}
+
+const {
+  title = 'ReactUnity',
+  description = 'A JavaScript library for building user interfaces in Unity',
+  image = '/images/logo.png',
+  isHomePage = false,
+} = Astro.props;
+
+const canonical = new URL(
+  Astro.url.pathname,
+  Astro.site ?? 'https://reactunity.github.io'
+);
+const imageUrl = new URL(image, Astro.site ?? 'https://reactunity.github.io');
+
+// Set in CI from the ANALYTICS_ID secret. Astro only exposes PUBLIC_-prefixed variables
+// to the browser, which is the same contract Next had with NEXT_PUBLIC_.
+const gaTrackingId = import.meta.env.PUBLIC_GA_TRACKING_ID ?? '';
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="icon" href="/favicon.ico" />
+    <title>{title}{isHomePage ? '' : ' • React'}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+
+    <meta property="fb:app_id" content="623268441017527" />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={imageUrl} />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:site" content="@reactjs" />
+    <meta name="twitter:creator" content="@reactjs" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={imageUrl} />
+
+    <link
+      rel="preconnect"
+      href={`https://${siteConfig.algolia.appId}-dsn.algolia.net`}
+    />
+    <link
+      rel="preload"
+      href="/fonts/Source-Code-Pro-Regular.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="preload"
+      href="/fonts/Optimistic_Display_W_Md.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="preload"
+      href="/fonts/Optimistic_Display_W_Bd.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin="anonymous"
+    />
+
+    {
+      gaTrackingId && (
+        <>
+          <script
+            is:inline
+            async
+            defer
+            src={`https://www.googletagmanager.com/gtag/js?id=${gaTrackingId}`}
+          />
+          <script
+            is:inline
+            define:vars={{ gaTrackingId }}
+            set:html={`
+              window.dataLayer = window.dataLayer || [];
+              function gtag(){window.dataLayer.push(arguments);}
+              gtag('js', new Date());
+              gtag('config', gaTrackingId);
+            `}
+          />
+        </>
+      )
+    }
+  </head>
+  <body
+    class="font-sans antialiased text-lg bg-wash dark:bg-wash-dark text-secondary dark:text-secondary-dark leading-base">
+    {
+      /*
+      Runs before anything paints, so a dark-mode reader never sees a white flash. It has
+      to be is:inline -- a bundled module script would be deferred, which is exactly the
+      flash this avoids. Nav's theme buttons call the __setPreferredTheme it defines.
+    */
+    }
+    <script is:inline>
+      (function () {
+        function setTheme(newTheme) {
+          window.__theme = newTheme;
+          if (newTheme === 'dark') {
+            document.documentElement.classList.add('dark');
+          } else if (newTheme === 'light') {
+            document.documentElement.classList.remove('dark');
+          }
+        }
+
+        var preferredTheme;
+        try {
+          preferredTheme = localStorage.getItem('theme');
+        } catch (err) {}
+
+        window.__setPreferredTheme = function (newTheme) {
+          preferredTheme = newTheme;
+          setTheme(newTheme);
+          try {
+            localStorage.setItem('theme', newTheme);
+          } catch (err) {}
+        };
+
+        var initialTheme = preferredTheme;
+        var darkQuery = window.matchMedia('(prefers-color-scheme: dark)');
+
+        if (!initialTheme) {
+          initialTheme = darkQuery.matches ? 'dark' : 'light';
+        }
+        setTheme(initialTheme);
+
+        darkQuery.addEventListener('change', function (e) {
+          if (!preferredTheme) {
+            setTheme(e.matches ? 'dark' : 'light');
+          }
+        });
+      })();
+    </script>
+
+    <slot />
+  </body>
+</html>

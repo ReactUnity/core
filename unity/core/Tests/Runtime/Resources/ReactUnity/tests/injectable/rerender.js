@@ -1,7 +1,7 @@
-(function (react, ReactUnity, Material, MaterialStyles, ReactUnityWebGLCompat) {
-  var __originalRender = ReactUnity.__originalRender || ReactUnity.render;
+((react, ReactUnity, Material, MaterialStyles, ReactUnityWebGLCompat) => {
+  const __originalRender = ReactUnity.__originalRender || ReactUnity.render;
 
-  var renderCalled = false;
+  let renderCalled = false;
   function render(element, options) {
     renderCalled = true;
     __originalRender.apply(null, [element, Object.assign({ mode: 'legacy' }, options || {})]);
@@ -12,12 +12,12 @@
     __originalRender: __originalRender,
   });
 
-  var React = react;
+  const React = react;
 
-  var exports = {};
-  var module = { exports: exports };
+  const exports = {};
+  const module = { exports: exports };
 
-  var require = function (module) {
+  const require = (module) => {
     if (module === 'react') return react;
     if (module === '@reactunity/renderer') return ReactUnity;
     if (module === 'react-unity-webgl') return ReactUnityWebGLCompat;
@@ -27,7 +27,6 @@
     if (module.startsWith('@reactunity/material/')) return Material;
   };
 
-
   globalThis.react = globalThis.React = react;
   globalThis.render = render;
   globalThis.ReactUnity = ReactUnity;
@@ -35,16 +34,14 @@
   globalThis.MaterialStyles = MaterialStyles;
   globalThis.useGlobals = ReactUnity.useGlobals;
 
-  var defaultComponent;
+  let defaultComponent;
 
-  let result = (function (module, exports, render, require) {
-
+  const result = ((module, exports, render, require) => {
     /*INJECT_CODE*/
 
     if (typeof App === 'function') defaultComponent = App;
     else if (typeof Example === 'function') defaultComponent = Example;
   })(module, exports, render, require);
-
 
   if (!renderCalled) {
     const renderElement = exports.default || result || exports.App || exports.Example || defaultComponent;

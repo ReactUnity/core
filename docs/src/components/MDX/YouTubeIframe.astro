@@ -1,0 +1,17 @@
+---
+/*
+ * Copyright (c) Facebook, Inc. and its affiliates.
+ */
+
+const { src, title = 'YouTube video player', ...rest } = Astro.props;
+---
+
+<div class="relative h-0 overflow-hidden pt-[56.25%]">
+  <iframe
+    class="absolute inset-0 w-full h-full"
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+    allowfullscreen
+    title={title}
+    src={src}
+    {...rest}></iframe>
+</div>

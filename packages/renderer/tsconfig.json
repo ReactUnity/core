@@ -2,12 +2,23 @@
   "extends": "@reactunity/scripts",
   "compilerOptions": {
     "outDir": "./dist",
+    // The published dist is ES5 so it runs on every engine ReactUnity supports, Jint
+    // included, without the consumer's bundler having to transpile node_modules.
+    // TypeScript 6 reports `target: ES5` and `esModuleInterop: false` as errors unless
+    // the deprecation is acknowledged, and 7 removes them outright -- so retargeting is
+    // a decision this package has to make before it can move to 7. Until then, this is
+    // that acknowledgement.
+    "ignoreDeprecations": "6.0",
     "target": "ES5",
     "esModuleInterop": false,
     "noEmit": false,
     "declaration": true,
     "sourceMap": true,
-    "lib": ["ES2019"],
+    // ES2022, not ES2019: the renderer calls Object.hasOwn (src/renderer/diffing.ts,
+    // async/serializer.ts, the subcontexts), which is an ES2022 API. `lib` says which
+    // APIs the host engine provides -- unrelated to `target`, which stays ES5 because
+    // that governs emitted *syntax*.
+    "lib": ["ES2022"],
     "types": []
   },
   "files": [

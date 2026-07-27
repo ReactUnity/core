@@ -6,17 +6,19 @@
     "allowJs": true,
     "pretty": true,
     "declaration": false,
-    "moduleResolution": "node",
     "preserveSymlinks": true,
     "importHelpers": false,
     "strict": true,
     "strictNullChecks": false,
     "noImplicitAny": false,
-    "jsx": "react",
     "skipLibCheck": true,
-    "lib": ["es2018"],
-    "module": "commonjs",
-    "target": "es2018"
+    // The package is ESM (see package.json) because chalk 6 and commander 15 are.
+    // nodenext is what teaches tsc that a bare `import 'fs-extra'` is a CommonJS
+    // dependency and has to come in through its default export.
+    "module": "nodenext",
+    "moduleResolution": "nodenext",
+    "lib": ["es2023"],
+    "target": "es2023"
   },
   "files": ["./index.ts"],
   "exclude": ["./dist/**/*.*", "./scaffold/**/*.*"]

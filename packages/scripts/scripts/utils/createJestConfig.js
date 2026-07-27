@@ -70,7 +70,7 @@ module.exports = (resolve, rootDir, isEjecting) => {
   ];
   if (overrides) {
     supportedKeys.forEach((key) => {
-      if (Object.prototype.hasOwnProperty.call(overrides, key)) {
+      if (Object.hasOwn(overrides, key)) {
         if (Array.isArray(config[key]) || typeof config[key] !== 'object') {
           // for arrays or primitive types, directly override the config key
           config[key] = overrides[key];

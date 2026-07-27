@@ -1,0 +1,24 @@
+---
+/*
+ * Copyright (c) Facebook, Inc. and its affiliates.
+ */
+
+interface Props {
+  title: string;
+  class?: string;
+}
+
+const { title, class: className } = Astro.props;
+---
+
+<div
+  class:list={[
+    'p-6 xl:p-8 pb-4 xl:pb-6 bg-card dark:bg-card-dark rounded-lg shadow-inner text-base text-secondary dark:text-secondary-dark my-8',
+    className,
+  ]}>
+  <h3
+    class="mdx-heading text-2xl leading-9 font-bold text-primary dark:text-primary-dark mt-0 mb-3 leading-tight">
+    {title}
+  </h3>
+  <slot />
+</div>

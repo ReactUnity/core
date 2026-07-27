@@ -1,0 +1,29 @@
+---
+/*
+ * Copyright (c) Facebook, Inc. and its affiliates.
+ */
+
+interface Props {
+  title: string;
+  image: string;
+  link: string;
+  class?: string;
+}
+
+const { title, image, link, class: className } = Astro.props;
+---
+
+<a
+  href={link}
+  rel="noopener noreferrer"
+  target="_blank"
+  class:list={[
+    className,
+    'text-base flex-row leading-tight font-bold border rounded-md m-3 py-5 px-5 inline-flex items-center my-1 min-w-[240px] hover:shadow-md',
+  ]}>
+  <img src={image} alt={title} class="w-16 h-16 mr-4" />
+  <div class="flex-col">
+    <div class="text-lg font-bold">{title}</div>
+    <div class="text-sm"><slot /></div>
+  </div>
+</a>

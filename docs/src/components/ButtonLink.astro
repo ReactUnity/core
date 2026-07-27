@@ -1,0 +1,41 @@
+---
+/*
+ * Copyright (c) Facebook, Inc. and its affiliates.
+ */
+
+interface Props {
+  href: string;
+  size?: 'md' | 'lg';
+  type?: 'primary' | 'secondary';
+  label?: string;
+  target?: '_self' | '_blank';
+  class?: string;
+}
+
+const {
+  href,
+  class: className,
+  type = 'primary',
+  size = 'md',
+  label,
+  target = '_self',
+} = Astro.props;
+---
+
+<a
+  href={href}
+  aria-label={label}
+  target={target}
+  class:list={[
+    className,
+    'inline-flex font-bold items-center border-2 border-transparent outline-none focus:ring-1 focus:ring-offset-2 focus:ring-link active:bg-link active:text-white active:ring-0 active:ring-offset-0 leading-normal',
+    {
+      'bg-link text-white hover:bg-link/80': type === 'primary',
+      'bg-secondary-button dark:bg-secondary-button-dark text-primary dark:text-primary-dark hover:text-link focus:bg-link focus:text-white focus:border-link focus:border-2':
+        type === 'secondary',
+      'text-lg rounded-lg p-4': size === 'lg',
+      'text-base rounded-lg px-4 py-1.5': size === 'md',
+    },
+  ]}>
+  <slot />
+</a>

@@ -2,19 +2,26 @@
  * Copyright (c) Facebook, Inc. and its affiliates.
  */
 
-import { useRef, useLayoutEffect, Fragment } from 'react';
-
 import cn from 'classnames';
-import { useRouter } from 'next/router';
-import { SidebarLink } from './SidebarLink';
-import useCollapse from 'react-collapsed';
-import usePendingRoute from 'hooks/usePendingRoute';
 import type { RouteItem } from 'components/Layout/getRouteMeta';
+import { Fragment, useEffect, useLayoutEffect, useRef } from 'react';
+import { useCollapse } from 'react-collapsed';
+import { SidebarLink } from './SidebarLink';
+
+/*
+ * The sidebar is rendered to HTML at build time, where useLayoutEffect does nothing and
+ * React says so on stderr. The Next.js version wrapped the call in `if (typeof window
+ * !== 'undefined')` -- a conditional hook, which only held together because that
+ * condition never changes within a process.
+ */
+const useIsomorphicLayoutEffect =
+  typeof document !== 'undefined' ? useLayoutEffect : useEffect;
 
 interface SidebarRouteTreeProps {
   isForceExpanded: boolean;
   breadcrumbs: RouteItem[];
   routeTree: RouteItem;
+  pathname: string;
   level?: number;
 }
 
@@ -36,26 +43,23 @@ function CollapseWrapper({
 
   // Disable pointer events while animating.
   const isExpandedRef = useRef(isExpanded);
-  if (typeof window !== 'undefined') {
-    // eslint-disable-next-line react-hooks/rules-of-hooks
-    useLayoutEffect(() => {
-      const wasExpanded = isExpandedRef.current;
-      if (wasExpanded === isExpanded) {
-        return;
+  useIsomorphicLayoutEffect(() => {
+    const wasExpanded = isExpandedRef.current;
+    if (wasExpanded === isExpanded) {
+      return;
+    }
+    isExpandedRef.current = isExpanded;
+    if (ref.current !== null) {
+      const node: HTMLDivElement = ref.current;
+      node.style.pointerEvents = 'none';
+      if (timeoutRef.current !== null) {
+        window.clearTimeout(timeoutRef.current);
       }
-      isExpandedRef.current = isExpanded;
-      if (ref.current !== null) {
-        const node: HTMLDivElement = ref.current;
-        node.style.pointerEvents = 'none';
-        if (timeoutRef.current !== null) {
-          window.clearTimeout(timeoutRef.current);
-        }
-        timeoutRef.current = window.setTimeout(() => {
-          node.style.pointerEvents = '';
-        }, duration + 100);
-      }
-    });
-  }
+      timeoutRef.current = window.setTimeout(() => {
+        node.style.pointerEvents = '';
+      }, duration + 100);
+    }
+  });
 
   return (
     <div
@@ -73,10 +77,10 @@ export function SidebarRouteTree({
   isForceExpanded,
   breadcrumbs,
   routeTree,
+  pathname,
   level = 0,
 }: SidebarRouteTreeProps) {
-  const slug = useRouter().asPath.split(/[\?\#]/)[0];
-  const pendingRoute = usePendingRoute();
+  const slug = pathname;
   const currentRoutes = routeTree.routes as RouteItem[];
   return (
     <ul>
@@ -95,7 +99,7 @@ export function SidebarRouteTree({
         ) => {
           const selected = slug === path;
           let listItem = null;
-          if (!path || !path || heading) {
+          if (!path || heading) {
             // if current route item has no path and children treat it as an API sidebar heading
             listItem = (
               <SidebarRouteTree
@@ -103,6 +107,7 @@ export function SidebarRouteTree({
                 isForceExpanded={isForceExpanded}
                 routeTree={{ title, routes }}
                 breadcrumbs={[]}
+                pathname={pathname}
               />
             );
           } else if (routes) {
@@ -116,7 +121,6 @@ export function SidebarRouteTree({
                 <SidebarLink
                   key={`${title}-${path}-${level}-link`}
                   href={path}
-                  isPending={pendingRoute === path}
                   selected={selected}
                   level={level}
                   title={title}
@@ -131,6 +135,7 @@ export function SidebarRouteTree({
                     routeTree={{ title, routes }}
                     breadcrumbs={breadcrumbs}
                     level={level + 1}
+                    pathname={pathname}
                   />
                 </CollapseWrapper>
               </li>
@@ -140,7 +145,6 @@ export function SidebarRouteTree({
             listItem = (
               <li key={`${title}-${path}-${level}-link`}>
                 <SidebarLink
-                  isPending={pendingRoute === path}
                   href={path}
                   selected={selected}
                   level={level}
@@ -168,9 +172,8 @@ export function SidebarRouteTree({
                 </h3>
               </Fragment>
             );
-          } else {
-            return listItem;
           }
+          return listItem;
         }
       )}
     </ul>

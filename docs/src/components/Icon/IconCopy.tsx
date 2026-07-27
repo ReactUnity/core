@@ -2,6 +2,7 @@
  * Copyright (c) Facebook, Inc. and its affiliates.
  */
 
+import type { JSX } from 'react';
 import { memo } from 'react';
 
 export const IconCopy = memo<JSX.IntrinsicElements['svg']>(function IconCopy({

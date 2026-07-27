@@ -2,14 +2,15 @@
  * Copyright (c) Facebook, Inc. and its affiliates.
  */
 
-import { useRouter } from 'next/router';
 import { useState } from 'react';
 
-export function Feedback({ onSubmit = () => { } }: { onSubmit?: () => void }) {
-  const { asPath } = useRouter();
-  const cleanedPath = asPath.split(/[\?\#]/)[0];
-  // Reset on route changes.
-  return <SendFeedback key={cleanedPath} onSubmit={onSubmit} />;
+/*
+ * The widget used to be keyed by the current path so that a client-side navigation reset
+ * it back to "Is this page useful?". Navigation reloads the document now, so mounting is
+ * the reset.
+ */
+export function Feedback({ onSubmit = () => {} }: { onSubmit?: () => void }) {
+  return <SendFeedback onSubmit={onSubmit} />;
 }
 
 const thumbsUpIcon = (

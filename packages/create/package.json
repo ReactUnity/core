@@ -3,6 +3,8 @@
   "version": "0.22.0",
   "description": "Scaffold a ReactUnity app using npm init",
   "license": "MIT",
+  "//type": "ESM, as of the chalk 6 / commander 15 upgrade: both dropped CommonJS. index.ts is emitted next to itself as ESM, so `bin` keeps pointing at index.js.",
+  "type": "module",
   "main": "index.js",
   "bin": "index.js",
   "repository": {
@@ -14,21 +16,24 @@
     "name": "Gokhan Kurt",
     "email": "krtgkn@gmail.com"
   },
+  "engines": {
+    "node": ">=20.11"
+  },
   "scripts": {
-    "start": "ts-node index.ts",
+    "start": "tsx index.ts",
     "build": "tsc",
     "prepare": "tsc"
   },
   "dependencies": {
-    "chalk": "4.x",
-    "commander": "^11.0.0",
-    "fs-extra": "^11.2.0"
+    "chalk": "^6.0.0",
+    "commander": "^15.0.0",
+    "fs-extra": "^11.4.0"
   },
   "devDependencies": {
     "@types/fs-extra": "^11.0.4",
-    "@types/node": "^20.12.6",
-    "ts-node": "^10.9.2",
-    "typescript": "^5.4.4"
+    "@types/node": "^26.1.1",
+    "tsx": "^4.23.1",
+    "typescript": "~6.0.3"
   },
   "bugs": {
     "url": "https://github.com/ReactUnity/core/issues"

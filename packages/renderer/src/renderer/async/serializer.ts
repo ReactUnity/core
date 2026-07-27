@@ -10,7 +10,7 @@ export function convertPropsToSerializable(props: any) {
   const res: SerializableUpdateProps = {};
 
   for (const key in props) {
-    if (Object.prototype.hasOwnProperty.call(props, key)) {
+    if (Object.hasOwn(props, key)) {
       const value = props[key];
 
       if (value == null) {

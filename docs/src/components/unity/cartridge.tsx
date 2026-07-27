@@ -2,7 +2,7 @@ import classNames from 'classnames';
 import { useEffectSkipFirst } from 'hooks/use-effect-skip-first';
 import { useLatest } from 'hooks/use-latest';
 import React, { forwardRef, useCallback, useEffect } from 'react';
-import { useGlobalUnity } from './context';
+import { getInsertedTo, useGlobalUnity } from './global';
 import styles from './index.module.scss';
 
 interface Props {
@@ -20,9 +20,22 @@ export interface UnityCardridgeRef {
   activate: (reset: boolean) => void;
 }
 
+/*
+ * A slot the shared Unity player can be plugged into. Only one cartridge holds the
+ * player at a time -- activating one moves the player's DOM node into it -- which is why
+ * every example on a page can offer a live preview without every example loading Unity.
+ */
 export const UnityCardridge = forwardRef<UnityCardridgeRef, Props>(
   function UnityCardridge(
-    { script, html, css, style, className, hideActivateButton, autoActivate = true },
+    {
+      script,
+      html,
+      css,
+      style,
+      className,
+      hideActivateButton,
+      autoActivate = true,
+    },
     ref
   ) {
     const latestScript = React.useRef(script);
@@ -30,20 +43,19 @@ export const UnityCardridge = forwardRef<UnityCardridgeRef, Props>(
     const latestStyle = React.useRef(css);
 
     const unityContainer = React.useRef<HTMLDivElement | null>(null);
-    const setRef = useCallback(
-      (el: HTMLDivElement | null) => {
-        if (el) unityContainer.current = el;
-      },
-      [unityContainer]
-    );
-    const { instance, insertTo, insertedToRef, setLoaded } = useGlobalUnity();
-    useEffect(() => setLoaded(true), [setLoaded]);
+    const setRef = useCallback((el: HTMLDivElement | null) => {
+      if (el) unityContainer.current = el;
+    }, []);
+    const { instance, insertTo } = useGlobalUnity();
 
     const instanceRef = useLatest(instance);
 
     const isActive = useCallback(() => {
-      return unityContainer.current === insertedToRef.current;
-    }, [insertedToRef, unityContainer]);
+      return (
+        unityContainer.current != null &&
+        unityContainer.current === getInsertedTo()
+      );
+    }, []);
 
     const activate = useCallback(
       (reset = false) => {
@@ -57,15 +69,7 @@ export const UnityCardridge = forwardRef<UnityCardridgeRef, Props>(
             latestStyle.current || ''
           );
       },
-      [
-        insertTo,
-        unityContainer,
-        isActive,
-        instanceRef,
-        latestStyle,
-        latestScript,
-        latestHtml,
-      ]
+      [insertTo, isActive, instanceRef]
     );
 
     React.useImperativeHandle(ref, () => ({ activate, isActive }), [
@@ -91,27 +95,28 @@ export const UnityCardridge = forwardRef<UnityCardridgeRef, Props>(
       () => {
         latestScript.current = script;
         if (autoActivate) {
-          instance?.SetReactScript(script || '', html || '', latestStyle.current || '');
+          instance?.SetReactScript(
+            script || '',
+            html || '',
+            latestStyle.current || ''
+          );
           activate();
         }
       },
-      [script, html, latestStyle, instance, autoActivate, activate],
+      [script, html, instance, autoActivate, activate],
       () => !instance
     );
 
     // Insert cartridge if none is installed yet
     useEffect(() => {
       const current = unityContainer.current;
-      const hasInsertedTo = insertedToRef.current;
       if (!current) return;
-      if (!hasInsertedTo) activate(true);
+      if (!getInsertedTo()) activate(true);
 
       return () => {
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-        if (insertedToRef.current === unityContainer.current)
-          insertTo(undefined);
+        if (getInsertedTo() === current) insertTo(undefined);
       };
-    }, [insertedToRef, insertTo, activate, unityContainer]);
+    }, [insertTo, activate]);
 
     // Set script after Unity instance is loaded
     useEffect(() => {
@@ -119,9 +124,14 @@ export const UnityCardridge = forwardRef<UnityCardridgeRef, Props>(
     }, [activate, instance, isActive]);
 
     return (
-      <div ref={setRef} style={style} className={classNames(className, styles.cartridge)}>
+      <div
+        ref={setRef}
+        style={style}
+        className={classNames(className, styles.cartridge)}>
         {!hideActivateButton && !isActive() && (
-          <button onClick={() => activate(true)}>Show Preview</button>
+          <button type="button" onClick={() => activate(true)}>
+            Show Preview
+          </button>
         )}
       </div>
     );

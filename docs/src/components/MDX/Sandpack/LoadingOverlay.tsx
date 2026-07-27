@@ -1,7 +1,10 @@
+import type { JSX } from 'react';
 import { useState } from 'react';
 
+// `LoadingOverlayState` is a type; it has to be imported as one or the bundler looks for
+// a runtime export that was never there.
 import {
-  LoadingOverlayState,
+  type LoadingOverlayState,
   OpenInCodeSandboxButton,
   useSandpack,
 } from '@codesandbox/sandpack-react';

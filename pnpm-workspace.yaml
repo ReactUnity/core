@@ -53,6 +53,16 @@ allowBuilds:
   core-js-pure: false
   es5-ext: false
 
+# pnpm 11 refuses to install releases younger than its minimum-release-age window as a
+# supply-chain measure, and writes an explicit exemption here when one is accepted
+# anyway -- which is what happened for these three during the Astro migration. The
+# entries are version-pinned, so they lapse on their own at the next bump; they exist so
+# that `--frozen-lockfile` installs in CI resolve exactly as local ones do.
+minimumReleaseAgeExclude:
+  - '@astrojs/mdx@7.0.4'
+  - astro@7.1.4
+  - tegami@1.2.7
+
 # Force every request for a local package to resolve to the workspace copy.
 #
 # Without this, `pnpm install` reaches the registry for packages that exist right

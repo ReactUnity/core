@@ -47,7 +47,7 @@ const buildSheet = (state: ElementProps) => {
   const valuesDic = (Globals.Window as any).CreateStyleDictionary();
 
   for (const prop in style) {
-    if (Object.prototype.hasOwnProperty.call(style, prop)) {
+    if (Object.hasOwn(style, prop)) {
       const val = style[prop];
       values.push(`${prop}: ${val};\n`);
       valuesDic.Add(prop, val);
@@ -90,7 +90,7 @@ export function StyleContext({ children }) {
       },
       hasProp: (el: Cmp, prop: string) => {
         const ind = findElementId(state.current, el);
-        return Object.prototype.hasOwnProperty.call(state.current[ind].styles, prop);
+        return Object.hasOwn(state.current[ind].styles, prop);
       },
       getProp: (el: Cmp, prop: string) => {
         const ind = findElementId(state.current, el);

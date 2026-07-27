@@ -1,7 +1,6 @@
 import { ReactUnity } from '@reactunity/renderer';
 import { PointerEventCallback } from '@reactunity/renderer/ugui';
-import { useRef } from 'react';
-import { useMemo } from 'react';
+import { useMemo, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { ItemObject, swapItems } from 'src/store/slices/inventory';
 import style from './index.module.scss';

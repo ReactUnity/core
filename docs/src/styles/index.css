@@ -2,9 +2,59 @@
  * Copyright (c) Facebook, Inc. and its affiliates.
  */
 
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import 'tailwindcss';
+
+/*
+ * These two used to be separate <link>s (imported one by one in _app.tsx). They are
+ * pulled in here instead because Tailwind 4 resolves `@apply` against the theme of the
+ * stylesheet being compiled: a standalone file has no theme, and both of them use
+ * `@apply` -- `@apply bg-red-400` in sandpack.css fails outright as "unknown utility
+ * class". Importing them makes the whole site one stylesheet with one theme.
+ */
+@import './sandpack.css';
+@import './algolia.css';
+
+@config '../../tailwind.config.js';
+
+/*
+ * `betterhover:` marks styles that should only apply on devices that actually hover, so
+ * tap targets on touchscreens do not get stuck in a hover state. It was a `screens` entry
+ * with a `raw` media query, which Tailwind 4 also feeds to the `container` utility --
+ * producing `@media (width >= (hover: hover))`. A custom variant is what v4 offers for
+ * a media query that is not a width.
+ */
+@custom-variant betterhover (@media (hover: hover));
+
+/*
+  These two are Tailwind's own scale names, redefined at sizes the theme does not
+  provide. In v3 they lived in a nested `@layer utilities` inside `@layer base`;
+  v4's `@utility` cannot be nested, so they sit at the top level now.
+*/
+@utility text-7xl {
+  font-size: 5rem;
+}
+
+@utility text-8xl {
+  font-size: 6rem;
+}
+
+/*
+  The default border color has changed to `currentcolor` in Tailwind CSS v4,
+  so we've added these compatibility styles to make sure everything still
+  looks the same as it did with Tailwind CSS v3.
+
+  If we ever want to remove these styles, we need to add an explicit border
+  color utility to any element that depends on these defaults.
+*/
+@layer base {
+  *,
+  ::after,
+  ::before,
+  ::backdrop,
+  ::file-selector-button {
+    border-color: var(--color-gray-200, currentcolor);
+  }
+}
 
 @layer base {
   @font-face {
@@ -85,23 +135,13 @@
     transform: translateZ(0);
   }
 
-  @layer utilities {
-    .text-7xl {
-      font-size: 5rem;
-    }
-
-    .text-8xl {
-      font-size: 6rem;
-    }
-  }
-
-  a>code {
+  a > code {
     color: #087ea4 !important;
     /* blue-50 */
     text-decoration: none !important;
   }
 
-  html.dark a>code {
+  html.dark a > code {
     color: #149eca !important;
     /* blue-40 */
   }
@@ -209,6 +249,90 @@
   }
 }
 
+/*
+ * Content width.
+ *
+ * Body copy runs in a narrow column while code examples span the full width. The Next.js
+ * build did this by rewriting the MDX tree (prepareMDX): it walked the page's children,
+ * wrapped each run of narrow blocks in a <MaxWidth>, and started a new wrapper after any
+ * full-width block. An Astro component cannot see its siblings, so the same result comes
+ * from the direct children of the content container instead -- which reads better anyway,
+ * since the rule is "everything is narrow except these".
+ */
+.mdx-content > * {
+  max-width: 56rem; /* max-w-4xl */
+  margin-left: 0;
+}
+
+.mdx-content > .sandpack,
+.mdx-content > .mdx-full-width,
+.mdx-content > .embla-carousel,
+.mdx-content > .expandable-callout {
+  max-width: none;
+}
+
+@media (min-width: 1536px) {
+  .mdx-content > * {
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+
+/*
+ * Inline code inside a link. The React components did this by having <Link> clone its
+ * children to pass `isLink` down to <InlineCode>; children are not reachable through an
+ * Astro slot, and a selector says it just as well.
+ */
+a > code {
+  @apply bg-highlight;
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+}
+
+html.dark a > code {
+  @apply bg-highlight-dark;
+}
+
+/*
+ * Fenced code blocks.
+ *
+ * Shiki highlights these at build time and emits <pre class="astro-code">. The frame and
+ * metrics below are the ones the old CodeMirror-based CodeBlock component produced, so
+ * a fence still matches the Sandpack editor it sits next to.
+ */
+.astro-code {
+  @apply rounded-lg w-full overflow-x-auto bg-wash dark:bg-gray-95 shadow-lg my-8;
+  font-family: var(--sp-font-mono, ui-monospace, monospace);
+  font-size: 13.6px;
+  line-height: 24px;
+  padding: 18px 20px;
+  -webkit-font-smoothing: auto;
+}
+
+/*
+ * Both themes are compiled in as CSS variables (astro.config.mjs sets defaultColor:
+ * false), so *neither* is applied until asked for -- including the light one. The dark
+ * palette is then selected the same way as everything else on the page: off `html.dark`,
+ * which the inline script in BaseLayout sets before first paint.
+ */
+.astro-code,
+.astro-code span {
+  color: var(--shiki-light);
+  background-color: var(--shiki-light-bg);
+  font-style: var(--shiki-light-font-style);
+  font-weight: var(--shiki-light-font-weight);
+  text-decoration: var(--shiki-light-text-decoration);
+}
+
+html.dark .astro-code,
+html.dark .astro-code span {
+  color: var(--shiki-dark) !important;
+  background-color: var(--shiki-dark-bg) !important;
+  font-style: var(--shiki-dark-font-style) !important;
+  font-weight: var(--shiki-dark-font-weight) !important;
+  text-decoration: var(--shiki-dark-text-decoration) !important;
+}
+
 .code-step * {
   color: inherit !important;
 }
@@ -264,11 +388,11 @@ html.dark .code-step * {
   visibility: visible;
 }
 
-.mdx-blockquote>span>p:first-of-type {
+.mdx-blockquote > span > p:first-of-type {
   margin-bottom: 0;
 }
 
-.mdx-blockquote>span>p:last-of-type {
+.mdx-blockquote > span > p:last-of-type {
   margin-bottom: 1rem;
 }
 

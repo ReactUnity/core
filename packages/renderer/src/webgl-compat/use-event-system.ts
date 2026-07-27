@@ -12,7 +12,7 @@ type EventListener = {
 const mountedEventDispatchers: ((eventName: string, ...parameters: ReactUnityEventParameter[]) => ReactUnityEventParameter)[] = [];
 
 const dispatchReactUnityEvent = (eventName: string, ...parameters: ReactUnityEventParameter[]): ReactUnityEventParameter => {
-  let returnValue: ReactUnityEventParameter = undefined;
+  let returnValue: ReactUnityEventParameter;
   mountedEventDispatchers.forEach((dispatchEvent) => {
     returnValue = dispatchEvent(eventName, ...parameters);
   });

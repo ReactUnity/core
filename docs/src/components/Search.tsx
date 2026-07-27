@@ -2,30 +2,24 @@
  * Copyright (c) Facebook, Inc. and its affiliates.
  */
 
-// @ts-ignore
 import { IconSearch } from 'components/Icon/IconSearch';
-import Head from 'next/head';
-import Link from 'next/link';
-import Router from 'next/router';
-import { useState, useCallback, useEffect } from 'react';
-import * as React from 'react';
+import type * as React from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { siteConfig } from 'siteConfig';
 
 export interface SearchProps {
-  appId?: string;
-  apiKey?: string;
-  indexName?: string;
-  searchParameters?: any;
-  renderModal?: boolean;
+  searchParameters?: Record<string, unknown>;
 }
 
-function Hit({ hit, children }: any) {
-  return (
-    <Link href={hit.url.replace()}>
-      <a>{children}</a>
-    </Link>
-  );
+function Hit({
+  hit,
+  children,
+}: {
+  hit: { url: string };
+  children: React.ReactNode;
+}) {
+  return <a href={hit.url}>{children}</a>;
 }
 
 function Kbd(props: { children?: React.ReactNode }) {
@@ -40,9 +34,9 @@ function Kbd(props: { children?: React.ReactNode }) {
 // Copy-pasted from @docsearch/react to avoid importing the whole bundle.
 // Slightly trimmed to features we use.
 // (c) Algolia, Inc.
-function isEditingContent(event: any) {
-  var element = event.target;
-  var tagName = element.tagName;
+function isEditingContent(event: KeyboardEvent) {
+  const element = event.target as HTMLElement;
+  const tagName = element.tagName;
   return (
     element.isContentEditable ||
     tagName === 'INPUT' ||
@@ -50,6 +44,7 @@ function isEditingContent(event: any) {
     tagName === 'TEXTAREA'
   );
 }
+
 function useDocSearchKeyboardEvents({
   isOpen,
   onOpen,
@@ -60,7 +55,7 @@ function useDocSearchKeyboardEvents({
   onClose: () => void;
 }) {
   useEffect(() => {
-    function onKeyDown(event: any) {
+    function onKeyDown(event: KeyboardEvent) {
       function open() {
         // We check that no other DocSearch modal is showing before opening
         // another one.
@@ -69,7 +64,7 @@ function useDocSearchKeyboardEvents({
         }
       }
       if (
-        (event.keyCode === 27 && isOpen) ||
+        (event.key === 'Escape' && isOpen) ||
         (event.key === 'k' && (event.metaKey || event.ctrlKey)) ||
         (!isEditingContent(event) && event.key === '/' && !isOpen)
       ) {
@@ -83,7 +78,7 @@ function useDocSearchKeyboardEvents({
     }
 
     window.addEventListener('keydown', onKeyDown);
-    return function () {
+    return () => {
       window.removeEventListener('keydown', onKeyDown);
     };
   }, [isOpen, onOpen, onClose]);
@@ -94,57 +89,35 @@ const options = {
   apiKey: siteConfig.algolia.apiKey,
   indexName: siteConfig.algolia.indexName,
 };
-let DocSearchModal: any = null;
-export function Search({
-  searchParameters = {
-    hitsPerPage: 5,
-  },
-}: SearchProps) {
+
+// The modal is the bulk of DocSearch, so it stays out of the initial bundle and is
+// fetched the first time someone opens search. `<link rel="preconnect">` for the Algolia
+// host lives in BaseLayout so the request is warm by then.
+let DocSearchModal: React.ComponentType<any> | null = null;
+
+export function Search({ searchParameters = { hitsPerPage: 5 } }: SearchProps) {
   const [isShowing, setIsShowing] = useState(false);
 
-  const importDocSearchModalIfNeeded = useCallback(
-    function importDocSearchModalIfNeeded() {
-      if (DocSearchModal) {
-        return Promise.resolve();
-      }
+  const importDocSearchModalIfNeeded = useCallback(async () => {
+    if (DocSearchModal) return;
+    const docsearch = await import('@docsearch/react');
+    DocSearchModal = docsearch.DocSearchModal;
+  }, []);
 
-      // @ts-ignore
-      return import('@docsearch/react/modal').then(
-        ({ DocSearchModal: Modal }) => {
-          DocSearchModal = Modal;
-        }
-      );
-    },
-    []
-  );
+  const onOpen = useCallback(() => {
+    importDocSearchModalIfNeeded().then(() => {
+      setIsShowing(true);
+    });
+  }, [importDocSearchModalIfNeeded]);
 
-  const onOpen = useCallback(
-    function onOpen() {
-      importDocSearchModalIfNeeded().then(() => {
-        setIsShowing(true);
-      });
-    },
-    [importDocSearchModalIfNeeded, setIsShowing]
-  );
-
-  const onClose = useCallback(
-    function onClose() {
-      setIsShowing(false);
-    },
-    [setIsShowing]
-  );
+  const onClose = useCallback(() => {
+    setIsShowing(false);
+  }, []);
 
   useDocSearchKeyboardEvents({ isOpen: isShowing, onOpen, onClose });
 
   return (
     <>
-      <Head>
-        <link
-          rel="preconnect"
-          href={`https://${options.appId}-dsn.algolia.net`}
-        />
-      </Head>
-
       <button
         aria-label="Search"
         type="button"
@@ -155,7 +128,7 @@ export function Search({
 
       <button
         type="button"
-        className="hidden md:flex relative pl-4 pr-1 py-1 h-10 bg-secondary-button dark:bg-gray-80 outline-none focus:ring focus:outline-none betterhover:hover:bg-opacity-80 pointer items-center shadow-inner text-left w-full text-gray-30 rounded-md align-middle text-sm"
+        className="hidden md:flex relative pl-4 pr-1 py-1 h-10 bg-secondary-button dark:bg-gray-80 outline-none focus:ring focus:outline-none betterhover:hover:bg-secondary-button/80 dark:betterhover:hover:bg-gray-80/80 pointer items-center shadow-inner text-left w-full text-gray-30 rounded-md align-middle text-sm"
         onClick={onOpen}>
         <IconSearch className="mr-3 align-middle text-gray-30 shrink-0 group-betterhover:hover:text-gray-70" />
         Search
@@ -166,6 +139,7 @@ export function Search({
       </button>
 
       {isShowing &&
+        DocSearchModal &&
         createPortal(
           <DocSearchModal
             {...options}
@@ -173,19 +147,20 @@ export function Search({
             searchParameters={searchParameters}
             onClose={onClose}
             navigator={{
-              navigate({ itemUrl }: any) {
-                Router.push(itemUrl);
+              navigate({ itemUrl }: { itemUrl: string }) {
+                window.location.assign(itemUrl);
               },
             }}
-            transformItems={(items: any[]) => {
-              return items.map((item) => {
+            transformItems={(items: { url: string }[]) =>
+              items.map((item) => {
                 const url = new URL(item.url);
                 return {
                   ...item,
-                  url: item.url.replace(url.origin, '').replace('#__next', ''),
+                  // The crawled URLs are absolute, and used to carry Next's #__next anchor.
+                  url: item.url.replace(url.origin, ''),
                 };
-              });
-            }}
+              })
+            }
             hitComponent={Hit}
           />,
           document.body

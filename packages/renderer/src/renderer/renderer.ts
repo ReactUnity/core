@@ -82,6 +82,7 @@ export function render(element: React.ReactNode, options: RenderOptions = {}) {
         hostContainerInstance.context.FlushCommands(serialized);
       };
 
+      // react-reconciler 0.33 dropped the trailing `transitionCallbacks` argument.
       hostRoot = asyncReconciler.createContainer(
         hostContainerInstance,
         mode,
@@ -93,7 +94,6 @@ export function render(element: React.ReactNode, options: RenderOptions = {}) {
         () => {},
         () => {},
         () => {},
-        null,
       );
     } else {
       hostRoot = getSyncReconciler().createContainer(
@@ -107,7 +107,6 @@ export function render(element: React.ReactNode, options: RenderOptions = {}) {
         () => {},
         () => {},
         () => {},
-        null,
       );
     }
     containerMap.set(cacheKey, { hostRoot, asyncJobCallback });

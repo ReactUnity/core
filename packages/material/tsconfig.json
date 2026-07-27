@@ -3,6 +3,9 @@
   "compilerOptions": {
     "baseUrl": "./",
     "outDir": "./dist",
+    // See packages/renderer/tsconfig.json: the ES5 emit is deliberate, and TypeScript 6
+    // wants that said out loud.
+    "ignoreDeprecations": "6.0",
     "target": "ES5",
     "sourceMap": true,
     "noEmit": false,

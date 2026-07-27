@@ -2,10 +2,8 @@
  * Copyright (c) Facebook, Inc. and its affiliates.
  */
 
-import * as React from 'react';
 import cn from 'classnames';
-import { ExternalLink } from 'components/ExternalLink';
-import NextLink from 'next/link';
+import type * as React from 'react';
 
 interface NavLinkProps {
   href: string;
@@ -23,17 +21,15 @@ export default function NavLink({ href, children, isActive }: NavLinkProps) {
     'inline-flex w-full items-center border-b-2 justify-center text-base leading-9 px-3 py-0.5 hover:text-link dark:hover:text-link-dark whitespace-nowrap'
   );
 
-  if (href.startsWith('https://')) {
-    return (
-      <ExternalLink href={href} className={classes}>
-        {children}
-      </ExternalLink>
-    );
-  }
+  const isExternal = href.startsWith('https://');
 
   return (
-    <NextLink href={href}>
-      <a className={classes}>{children}</a>
-    </NextLink>
+    <a
+      className={classes}
+      href={href}
+      target={isExternal ? '_blank' : undefined}
+      rel={isExternal ? 'noopener' : undefined}>
+      {children}
+    </a>
   );
 }

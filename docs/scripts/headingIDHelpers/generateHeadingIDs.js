@@ -2,22 +2,36 @@
  * Copyright (c) Facebook, Inc. and its affiliates.
  */
 
-// To do: Make this ESM.
 // To do: properly check heading numbers (headings with the same text get
 // numbered, this script doesn’t check that).
 
-const assert = require('assert');
-const fs = require('fs');
-const GithubSlugger = require('github-slugger');
-const walk = require('./walk');
+import assert from 'node:assert';
+import fs from 'node:fs';
+import { slug as toSlug } from 'github-slugger';
+import { toString } from 'mdast-util-to-string';
+import remarkParse from 'remark-parse';
+import { unified } from 'unified';
+import walk from './walk.js';
 
-let modules;
+/*
+ * The id a heading gets when it has none is the one GitHub would generate for the same
+ * text, so anchors keep working for anyone who linked to the rendered markdown. That used
+ * to come from remark-slug, which is deprecated and unmaintained; parsing the heading and
+ * slugging its text is what remark-slug did.
+ */
+const parser = unified().use(remarkParse);
 
-function stripLinks(line) {
-  return line.replace(/\[([^\]]+)\]\([^)]+\)/, (match, p1) => p1);
+function autoIdFor(headingLine) {
+  const tree = parser.parse(headingLine);
+  const head = tree.children[0];
+  assert(
+    head && head.type === 'heading',
+    `expected \`${headingLine}\` to be a heading, is it using a normal space after \`#\`?`
+  );
+  return toSlug(toString(head));
 }
 
-function addHeaderID(line, slugger) {
+function addHeaderID(line) {
   // check if we're a header at all
   if (!line.startsWith('#')) {
     return line;
@@ -26,19 +40,7 @@ function addHeaderID(line, slugger) {
   const match =
     /^(#+\s+)(.+?)(\s*\{(?:\/\*|#)([^\}\*\/]+)(?:\*\/)?\}\s*)?$/.exec(line);
   const before = match[1] + match[2];
-  const proc = modules
-    .unified()
-    .use(modules.remarkParse)
-    .use(modules.remarkSlug);
-  const tree = proc.runSync(proc.parse(before));
-  const head = tree.children[0];
-  assert(
-    head && head.type === 'heading',
-    'expected `' +
-      before +
-      '` to be a heading, is it using a normal space after `#`?'
-  );
-  const autoId = head.data.id;
+  const autoId = autoIdFor(before);
   const existingId = match[4];
   const id = existingId || autoId;
   // Ignore numbers:
@@ -56,12 +58,10 @@ function addHeaderID(line, slugger) {
     );
   }
 
-  return match[1] + match[2] + ' {/*' + id + '*/}';
+  return `${match[1] + match[2]} {/*${id}*/}`;
 }
 
 function addHeaderIDs(lines) {
-  // Sluggers should be per file
-  const slugger = new GithubSlugger();
   let inCode = false;
   const results = [];
   lines.forEach((line) => {
@@ -76,24 +76,24 @@ function addHeaderIDs(lines) {
       return;
     }
 
-    results.push(addHeaderID(line, slugger));
+    /*
+     * Most content files here are committed with CRLF endings -- there is no
+     * .gitattributes and core.autocrlf is off, so the bytes in the repo are the bytes on
+     * disk. Splitting the file on '\n' leaves a '\r' at the end of every line, and the
+     * heading pattern in addHeaderID ends in `\s*$`, which would swallow it and write the
+     * line back as LF: every heading would show up in the diff as a line-ending change on
+     * top of the id it gained. Carry the '\r' around the rewrite instead. (react.dev,
+     * where this script comes from, is LF-only and never had to.)
+     */
+    const eol = line.endsWith('\r') ? '\r' : '';
+    results.push(addHeaderID(eol ? line.slice(0, -1) : line) + eol);
   });
   return results;
 }
 
-async function main(paths) {
+export default async function main(paths) {
   paths = paths.length === 0 ? ['src/content'] : paths;
-
-  const [unifiedMod, remarkParseMod, remarkSlugMod] = await Promise.all([
-    import('unified'),
-    import('remark-parse'),
-    import('remark-slug'),
-  ]);
-  const unified = unifiedMod.unified;
-  const remarkParse = remarkParseMod.default;
-  const remarkSlug = remarkSlugMod.default;
-  modules = {unified, remarkParse, remarkSlug};
-  const files = paths.map((path) => [...walk(path)]).flat();
+  const files = paths.flatMap((path) => [...walk(path)]);
 
   files.forEach((file) => {
     if (!(file.endsWith('.md') || file.endsWith('.mdx'))) {
@@ -101,10 +101,7 @@ async function main(paths) {
     }
 
     const content = fs.readFileSync(file, 'utf8');
-    const lines = content.split('\n');
-    const updatedLines = addHeaderIDs(lines);
+    const updatedLines = addHeaderIDs(content.split('\n'));
     fs.writeFileSync(file, updatedLines.join('\n'));
   });
 }
-
-module.exports = main;

@@ -1,0 +1,96 @@
+---
+/*
+ * Copyright (c) Facebook, Inc. and its affiliates.
+ */
+
+import DocsFooter from 'components/DocsFooter.astro';
+import { getRouteMeta, type RouteItem } from 'components/Layout/getRouteMeta';
+import Footer from 'components/Layout/Footer.astro';
+import Nav from 'components/Layout/Nav/Nav';
+import { Toc, type TocItem } from 'components/Layout/Toc';
+import PageHeading from 'components/PageHeading.astro';
+import BaseLayout from './BaseLayout.astro';
+import sidebarLearn from '../sidebarLearn.json';
+import sidebarReference from '../sidebarReference.json';
+
+interface Props {
+  title?: string;
+  description?: string;
+  headings?: TocItem[];
+}
+
+const {
+  title: frontmatterTitle,
+  description: frontmatterDescription,
+  headings = [],
+} = Astro.props;
+
+const pathname = Astro.url.pathname.replace(/(.)\/$/, '$1');
+const section = pathname.startsWith('/reference') ? 'reference' : 'learn';
+const routeTree = (
+  section === 'reference' ? sidebarReference : sidebarLearn
+) as RouteItem;
+
+const { route, nextRoute, prevRoute, breadcrumbs } = getRouteMeta(
+  pathname,
+  routeTree
+);
+const title = frontmatterTitle || route?.title || '';
+const description = frontmatterDescription || route?.description || '';
+const isHomePage = pathname === '/';
+---
+
+<BaseLayout title={title} description={description} isHomePage={isHomePage}>
+  <div
+    class="grid grid-cols-only-content lg:grid-cols-sidebar-content 2xl:grid-cols-sidebar-content-toc">
+    <div
+      class="fixed lg:sticky top-0 left-0 right-0 py-0 shadow lg:shadow-none z-50">
+      {
+        /*
+        The nav is the one part of the shell that has to run in the browser: the mobile
+        menu, the theme toggle, search and the collapsing sidebar sections are all state.
+        client:load rather than client:idle because the sidebar is on screen immediately
+        on desktop, so its expand/collapse should work as soon as the page does.
+      */
+      }
+      <Nav
+        client:load
+        routeTree={routeTree}
+        breadcrumbs={breadcrumbs ?? []}
+        section={section}
+        pathname={pathname}
+      />
+    </div>
+    <main class="min-w-0">
+      <div class="lg:hidden h-16 mb-2"></div>
+      <article class="wrap-break-word">
+        <div class="pl-0">
+          {
+            !isHomePage && (
+              <PageHeading
+                title={title}
+                description={description}
+                tags={route?.tags}
+                breadcrumbs={breadcrumbs}
+              />
+            )
+          }
+          <div class="px-5 sm:px-12">
+            <div class="max-w-7xl mx-auto mdx-content">
+              <slot />
+            </div>
+            <DocsFooter
+              route={route}
+              nextRoute={nextRoute}
+              prevRoute={prevRoute}
+            />
+          </div>
+        </div>
+      </article>
+      <Footer />
+    </main>
+    <div class="hidden lg:max-w-xs 2xl:block">
+      {headings.length > 0 && <Toc client:load headings={headings} />}
+    </div>
+  </div>
+</BaseLayout>

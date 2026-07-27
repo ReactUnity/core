@@ -9,68 +9,60 @@
  * Copyright (c) 2015 Gatsbyjs
  */
 
-const toString = require('mdast-util-to-string');
-const visit = require('unist-util-visit');
-const toSlug = require('github-slugger').slug;
+/*
+ * Every heading in src/content carries an explicit id, written as `## Title {/*title*\/}`
+ * and kept honest by `pnpm fix-headings`. They exist so translations and refactors can
+ * change heading text without breaking inbound anchors, so they have to win over the
+ * slug Astro would otherwise derive from the text.
+ *
+ * Astro's own rehypeHeadingIds runs after this and leaves a heading alone once it has an
+ * id, which is why this sets `hProperties.id`: the id ends up in the HTML *and* in the
+ * `headings` array a page renders its table of contents from.
+ */
+import { toString } from 'mdast-util-to-string';
+import { slug as toSlug } from 'github-slugger';
+import { visit } from 'unist-util-visit';
 
-function patch(context, key, value) {
-  if (!context[key]) {
-    context[key] = value;
-  }
-  return context[key];
-}
-
-const svgIcon = `<svg aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg>`;
-
-module.exports = ({ icon = svgIcon, className = `anchor` } = {}) => {
-  return function transformer(tree) {
+export function remarkHeaderCustomIds() {
+  return (tree, file) => {
     const ids = new Set();
     visit(tree, 'heading', (node) => {
-      let children = [...node.children];
+      const children = [...node.children];
       let id;
-      if (children[children.length - 1].type === 'mdxTextExpression') {
+      const last = children[children.length - 1];
+      if (last && last.type === 'mdxTextExpression') {
         // # My header {/*my-header*/}
         id = children.pop().value;
         const isValidCustomId = id.startsWith('/*') && id.endsWith('*/');
         if (!isValidCustomId) {
-          throw Error(
-            'Expected header ID to be like: {/*some-header*/}. ' +
-              'Instead, received: ' +
-              id
+          throw new Error(
+            `${file.path}: expected header ID to be like: {/*some-header*/}. Instead, received: ${id}`
           );
         }
         id = id.slice(2, id.length - 2);
         if (id !== toSlug(id)) {
-          throw Error(
-            'Expected header ID to be a valid slug. You specified: {/*' +
-              id +
-              '*/}. Replace it with: {/*' +
-              toSlug(id) +
-              '*/}'
+          throw new Error(
+            `${file.path}: expected header ID to be a valid slug. You specified: {/*${id}*/}. Replace it with: {/*${toSlug(id)}*/}`
           );
         }
+        // The expression node is dropped so `{/*my-header*/}` never reaches the page.
+        node.children = children;
       } else {
         // # My header
         id = toSlug(toString(node));
       }
 
       if (ids.has(id)) {
-        throw Error(
-          'Cannot have a duplicate header with id "' +
-            id +
-            '" on the page. ' +
-            'Rename the section or give it an explicit unique ID. ' +
-            'For example: #### Arguments {/*setstate-arguments*/}'
+        throw new Error(
+          `${file.path}: cannot have a duplicate header with id "${id}" on the page. ` +
+            'Rename the section or give it an explicit unique ID. For example: #### Arguments {/*setstate-arguments*/}'
         );
       }
       ids.add(id);
 
-      const data = patch(node, 'data', {});
-      patch(data, 'id', id);
-      patch(data, 'htmlAttributes', {});
-      patch(data, 'hProperties', {});
-      patch(data.htmlAttributes, 'id', id);
-      patch(data.hProperties, 'id', id);
+      node.data ??= {};
+      node.data.id = id;
+      node.data.hProperties = { ...node.data.hProperties, id };
     });
   };
-};
+}

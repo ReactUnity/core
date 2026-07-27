@@ -1,0 +1,15 @@
+---
+/*
+ * Copyright (c) Facebook, Inc. and its affiliates.
+ */
+
+/*
+ * Kept for content that wants to opt into the narrow column explicitly. The automatic
+ * wrapping the Next.js build did in prepareMDX -- grouping every run of narrow blocks
+ * into one <MaxWidth> and letting Sandpack interrupt it -- is a CSS rule on
+ * `.mdx-content > *` in src/styles/index.css now, because the equivalent tree surgery
+ * is not available to an Astro component: it never sees its siblings.
+ */
+---
+
+<div class="max-w-4xl ml-0 2xl:mx-auto"><slot /></div>

@@ -1,0 +1,123 @@
+---
+/*
+ * Every page of the site: one route per file in src/content.
+ *
+ * The Next.js version compiled each MDX file, evaluated it at build time, serialized the
+ * resulting React tree to JSON and revived it in the browser -- all so a static page
+ * could use components. Astro renders MDX directly, so what is left here is the mapping
+ * from element names to components.
+ */
+import { getCollection, render } from 'astro:content';
+import type { TocItem } from 'components/Layout/Toc';
+import DocsLayout from '../layouts/DocsLayout.astro';
+
+import A from 'components/MDX/A.astro';
+import Blockquote from 'components/MDX/Blockquote.astro';
+import CodeStep from 'components/MDX/CodeStep.astro';
+import Deprecated from 'components/MDX/Deprecated.astro';
+import Divider from 'components/MDX/Divider.astro';
+import EmblaCarousel from 'components/MDX/EmblaCarousel.astro';
+import FullWidth from 'components/MDX/FullWidth.astro';
+import H1 from 'components/MDX/H1.astro';
+import H2 from 'components/MDX/H2.astro';
+import H3 from 'components/MDX/H3.astro';
+import H4 from 'components/MDX/H4.astro';
+import HomepageHero from 'components/MDX/HomepageHero.astro';
+import InlineCode from 'components/MDX/InlineCode.astro';
+import Intro from 'components/MDX/Intro.astro';
+import LI from 'components/MDX/LI.astro';
+import MaxWidth from 'components/MDX/MaxWidth.astro';
+import Note from 'components/MDX/Note.astro';
+import OL from 'components/MDX/OL.astro';
+import P from 'components/MDX/P.astro';
+import PackageImport from 'components/MDX/PackageImport.astro';
+import Pitfall from 'components/MDX/Pitfall.astro';
+import Recap from 'components/MDX/Recap.astro';
+import Sandpack from 'components/MDX/Sandpack.astro';
+import Sponsor from 'components/MDX/Sponsor.astro';
+import Strong from 'components/MDX/Strong.astro';
+import TerminalBlock from 'components/MDX/TerminalBlock.astro';
+import UL from 'components/MDX/UL.astro';
+import Wip from 'components/MDX/Wip.astro';
+import YouTubeIframe from 'components/MDX/YouTubeIframe.astro';
+import YouWillLearn from 'components/MDX/YouWillLearn.astro';
+import YouWillLearnCard from 'components/MDX/YouWillLearnCard.astro';
+
+export async function getStaticPaths() {
+  const entries = await getCollection('docs');
+  return entries.map((entry) => ({
+    // Ids are file paths without the extension, so 'learn/index' has to collapse to
+    // '/learn' and the root 'index' to '/'. Astro reads an undefined rest param as the
+    // site root.
+    params: { slug: entry.id.replace(/(^|\/)index$/, '') || undefined },
+    props: { entry },
+  }));
+}
+
+const { entry } = Astro.props;
+const { Content, headings } = await render(entry);
+
+/*
+ * `Overview` is prepended so the first row of the table of contents points at the top of
+ * the page -- and so its indexes line up with the heading anchors useTocHighlight walks,
+ * which start with the (hidden) one on the page title.
+ */
+const toc: TocItem[] = headings.length
+  ? [
+      { url: '#', text: 'Overview', depth: 2 },
+      ...headings.map((h) => ({
+        url: `#${h.slug}`,
+        text: h.text,
+        depth: h.depth,
+      })),
+    ]
+  : [];
+
+/*
+ * Astro components, not React ones: an Astro component splices slot children straight
+ * into the output, while a React component in this map would receive them as an opaque
+ * pre-rendered blob inside an <astro-slot> wrapper -- visible to selectors, and useless
+ * to anything that wants to read its children. <Sandpack> is the case that cares most:
+ * its code fences are lifted into a prop by plugins/remark-sandpack-files.js.
+ */
+const components = {
+  p: P,
+  strong: Strong,
+  blockquote: Blockquote,
+  ol: OL,
+  ul: UL,
+  li: LI,
+  h1: H1,
+  h2: H2,
+  h3: H3,
+  h4: H4,
+  hr: Divider,
+  a: A,
+  code: InlineCode,
+  CodeStep,
+  Deprecated,
+  EmblaCarousel,
+  FullWidth,
+  HomepageHero,
+  Intro,
+  MaxWidth,
+  Note,
+  PackageImport,
+  Pitfall,
+  Recap,
+  Sandpack,
+  Sponsor,
+  TerminalBlock,
+  Wip,
+  YouTubeIframe,
+  YouWillLearn,
+  YouWillLearnCard,
+};
+---
+
+<DocsLayout
+  title={entry.data.title}
+  description={entry.data.description}
+  headings={toc}>
+  <Content components={components} />
+</DocsLayout>
