@@ -19,20 +19,21 @@ const pluginTypes: Array<PluginType> = [
     packageName: 'com.unity.editorcoroutines',
     name: 'Unity Editor Coroutines',
     required: true,
-    tooltip: `Required for running editor windows with ReactUnity (like this window). It is installed by default and highly recommended to keep it installed.`,
+    tooltip:
+      'Required for running editor windows with ReactUnity (like this window). It is installed by default and highly recommended to keep it installed.',
   },
   {
     packageName: 'com.unity.vectorgraphics',
     name: 'Unity Vector Graphics',
     required: false,
-    tooltip: `Required for SVG rendering.`,
+    tooltip: 'Required for SVG rendering.',
   },
   {
     packageName: 'com.nosuchstudio.rtltmpro',
     name: 'RTLTMPro',
     required: false,
     scoped: true,
-    tooltip: `Right-To-Left Text Mesh Pro for Unity. This plugin adds support for Persian and Arabic languages to TextMeshPro.`,
+    tooltip: 'Right-To-Left Text Mesh Pro for Unity. This plugin adds support for Persian and Arabic languages to TextMeshPro.',
   },
 ];
 
@@ -65,18 +66,22 @@ export function AdditionalPlugins() {
   const [updatePlugins, setUpdatePlugins] = useState(0);
   const setIsLoading = useContext(SetIsLoadingContext);
 
-  const installPlugin = useCallback((x: PluginType) => {
-    const update = () => {
-      setIsLoading(false);
-      setUpdatePlugins((x) => x + 1);
-    };
-    if (x.scoped) Window.InstallScopedPlugin(x.packageName, update);
-    else Window.InstallUnityPlugin(x.packageName, update);
+  const installPlugin = useCallback(
+    (x: PluginType) => {
+      const update = () => {
+        setIsLoading(false);
+        setUpdatePlugins((x) => x + 1);
+      };
+      if (x.scoped) Window.InstallScopedPlugin(x.packageName, update);
+      else Window.InstallUnityPlugin(x.packageName, update);
 
-    setLoadingPlugin(x.packageName);
-    setIsLoading(true);
-  }, []);
+      setLoadingPlugin(x.packageName);
+      setIsLoading(true);
+    },
+    [setIsLoading],
+  );
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: updatePlugins is a counter that exists only to re-trigger this effect after an install finishes; the body never reads it.
   useEffect(() => {
     setPlugins(null);
     initPlugins().then(() => setPlugins(pluginTypes));
@@ -106,25 +111,22 @@ export function AdditionalPlugins() {
 
             {!x.installed ? (x.required ? error : warn) : x.hasUpdate ? warn : check}
 
-            {!x.installed && <>Not installed</>}
+            {!x.installed && 'Not installed'}
 
-            {!!x.installed ? (
+            {x.installed ? (
               <>
-                {'Installed Version ' + x.version}
+                {`Installed Version ${x.version}`}
 
                 {!x.required && <button onClick={() => Window.UninstallUnityPlugin(x.packageName)}>Uninstall</button>}
 
-                {x.hasUpdate && (
-                  <>
-                    {x.required ? (
-                      <>Update to get the latest version</>
-                    ) : (
-                      <button onClick={() => installPlugin(x)}>
-                        {(loadingPlugin === x.packageName ? 'Updating to ' : 'Update to ') + x.latestVersion}
-                      </button>
-                    )}
-                  </>
-                )}
+                {x.hasUpdate &&
+                  (x.required ? (
+                    <>Update to get the latest version</>
+                  ) : (
+                    <button onClick={() => installPlugin(x)}>
+                      {(loadingPlugin === x.packageName ? 'Updating to ' : 'Update to ') + x.latestVersion}
+                    </button>
+                  ))}
               </>
             ) : (
               <>

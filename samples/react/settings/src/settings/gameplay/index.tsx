@@ -1,5 +1,3 @@
 export function GameplaySettings() {
-  return <view>
-    Gameplay settings
-  </view>;
+  return <view>Gameplay settings</view>;
 }

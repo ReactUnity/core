@@ -78,12 +78,15 @@ export function EnginePlugins() {
   const [loadingPlugin, setLoadingPlugin] = useState('');
   const setIsLoading = useContext(SetIsLoadingContext);
 
-  const installPlugin = useCallback((x: PluginType) => {
-    Window.InstallScopedPlugin(x.packageName);
+  const installPlugin = useCallback(
+    (x: PluginType) => {
+      Window.InstallScopedPlugin(x.packageName);
 
-    setLoadingPlugin(x.packageName);
-    setIsLoading(true);
-  }, []);
+      setLoadingPlugin(x.packageName);
+      setIsLoading(true);
+    },
+    [setIsLoading],
+  );
 
   return (
     <section style={{ flexDirection: 'column', alignItems: 'stretch' }}>
@@ -111,25 +114,22 @@ export function EnginePlugins() {
 
             {!x.installed ? (x.recommended ? error : warn) : x.hasUpdate ? warn : check}
 
-            {!x.installed && <>Not installed</>}
+            {!x.installed && 'Not installed'}
 
-            {!!x.installed ? (
+            {x.installed ? (
               <>
-                {'Installed Version ' + x.version}
+                {`Installed Version ${x.version}`}
 
                 {!x.implicit && !x.recommended && <button onClick={() => Window.UninstallUnityPlugin(x.packageName)}>Uninstall</button>}
 
-                {x.hasUpdate && (
-                  <>
-                    {x.implicit ? (
-                      <>Update ReactUnity to get the latest version</>
-                    ) : (
-                      <button onClick={() => installPlugin(x)}>
-                        {(loadingPlugin === x.packageName ? 'Updating to ' : 'Update to ') + x.latestVersion}
-                      </button>
-                    )}
-                  </>
-                )}
+                {x.hasUpdate &&
+                  (x.implicit ? (
+                    <>Update ReactUnity to get the latest version</>
+                  ) : (
+                    <button onClick={() => installPlugin(x)}>
+                      {(loadingPlugin === x.packageName ? 'Updating to ' : 'Update to ') + x.latestVersion}
+                    </button>
+                  ))}
               </>
             ) : (
               <>

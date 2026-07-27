@@ -1,5 +1,3 @@
-
-
 const path = require('node:path');
 const camelcase = require('camelcase');
 

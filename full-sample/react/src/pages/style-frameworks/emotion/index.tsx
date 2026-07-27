@@ -18,9 +18,10 @@ const color = 'white';
 export function EmotionPage() {
   // const [toggled, setToggled] = useState(false);
 
-  return <>
-    <div
-      className={css`
+  return (
+    <>
+      <div
+        className={css`
       padding: 32px;
       background-color: hotpink;
       font-size: 24px;
@@ -29,12 +30,13 @@ export function EmotionPage() {
         color: ${color};
       }
     `}
-    >
-      Hover to change color.
-    </div>
+      >
+        Hover to change color.
+      </div>
 
-    <Button>Emotion button</Button>
-  </>;
+      <Button>Emotion button</Button>
+    </>
+  );
 }
 
 export default EmotionPage;

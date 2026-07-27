@@ -12,21 +12,26 @@ const Button = styled.button<{ $toggled?: boolean }>`
   color: black;
   border: 2px solid black;
 
-  ${props => props.$toggled && css`
+  ${(props) =>
+    props.$toggled &&
+    css`
     background: white;
     color: black;
   `}
 `;
 
-
 export function StyledComponentsPage() {
   const [toggled, setToggled] = useState(false);
 
-  return <>
-    <div>
-      <Button $toggled={toggled} onClick={() => setToggled(x => !x)}>Styled Button</Button>
-    </div>
-  </>;
+  return (
+    <>
+      <div>
+        <Button $toggled={toggled} onClick={() => setToggled((x) => !x)}>
+          Styled Button
+        </Button>
+      </div>
+    </>
+  );
 }
 
 export default StyledComponentsPage;

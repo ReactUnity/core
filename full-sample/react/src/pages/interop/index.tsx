@@ -1,4 +1,3 @@
-
 import { useGlobals, useReactiveValue } from '@reactunity/renderer';
 import { useEffect, useState } from 'react';
 import { useUnityContext } from 'react-unity-webgl';
@@ -10,8 +9,7 @@ export const InteropPage = () => {
 
   const { addEventListener, removeEventListener } = useUnityContext({} as any);
 
-
-  const { InteropTest }= useGlobals();
+  const { InteropTest } = useGlobals();
   const deltaTime = useReactiveValue(InteropTest.DeltaTime);
 
   useEffect(() => {
@@ -28,7 +26,7 @@ export const InteropPage = () => {
 
   useEffect(() => {
     const fn = (key) => {
-      console.log('Pressed key is: ' + key);
+      console.log(`Pressed key is: ${key}`);
     };
 
     addEventListener('OnKeyPress', fn);
@@ -36,17 +34,17 @@ export const InteropPage = () => {
     return () => removeEventListener('OnKeyPress', fn);
   }, [addEventListener, removeEventListener]);
 
-  return <view className={styles.host}>
-    <button onClick={() => setShouldListen(x => !x)}>
-      {shouldListen ? 'Remove Listener' : 'Add Listener'}
-    </button>
-
-    {!!pressedKey && <view>
-      <text>Pressed key is: {pressedKey}</text>
-    </view>}
-
-    Delta Time: {deltaTime}
-  </view>;
+  return (
+    <view className={styles.host}>
+      <button onClick={() => setShouldListen((x) => !x)}>{shouldListen ? 'Remove Listener' : 'Add Listener'}</button>
+      {!!pressedKey && (
+        <view>
+          <text>Pressed key is: {pressedKey}</text>
+        </view>
+      )}
+      Delta Time: {deltaTime}
+    </view>
+  );
 };
 
 export default InteropPage;

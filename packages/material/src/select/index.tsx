@@ -80,7 +80,7 @@ function _Select<T = any>({
   const onChangeRef = useAutoRef(onChange);
   const shouldKeepOpenRef = useAutoRef(shouldKeepOpen);
 
-  const state = useMemo(() => new SelectionState<T, SelectSelectionElement>(!!multiple, init.current), [multiple, init]);
+  const state = useMemo(() => new SelectionState<T, SelectSelectionElement>(!!multiple, init.current), [multiple]);
   const [selectedElements, setSelectedElements] = useState(state.getSelectedElements());
 
   useLayoutEffect(() => {
@@ -103,12 +103,14 @@ function _Select<T = any>({
       const sel = st.getSelectedElements();
       setSelectedElements(sel);
     };
-  }, []);
+    // The refs and setters are stable; state is not -- a new SelectionState (multiple changed)
+    // needs its handlers attached, or selection changes stop propagating.
+  }, [state]);
 
   const [opened, setOpened] = useState(false);
 
-  const toggle = useCallback(() => setOpened((st) => !st), [setOpened]);
-  const close = useCallback(() => setOpened(false), [setOpened]);
+  const toggle = useCallback(() => setOpened((st) => !st), []);
+  const close = useCallback(() => setOpened(false), []);
 
   if (typeof separator === 'undefined' && !chips) {
     separator = <text className={style.defaultSeparator}>,</text>;
@@ -211,7 +213,7 @@ function _Option({ className, children, value, triggerTemplate, showToggle = 'au
         return getTemplateRef.current();
       },
     }),
-    [value, setSelected, selectedRef],
+    [value],
   );
 
   useLayoutEffect(() => {
@@ -227,7 +229,7 @@ function _Option({ className, children, value, triggerTemplate, showToggle = 'au
       const cb = onChangeRef.current[index];
       cb();
     }
-  }, [setSelected]);
+  }, []);
 
   return (
     <Button

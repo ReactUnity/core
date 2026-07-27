@@ -24,7 +24,7 @@ export function Classes() {
 
   const toggled: EditorElements['toggle']['onChange'] = useCallback(
     (ev, sender) => {
-      selection.ClassList.Toggle(sender.Data['id'], sender.Value);
+      selection.ClassList.Toggle(sender.Data.id, sender.Value);
       setRender((x) => x + 1);
     },
     [selection],

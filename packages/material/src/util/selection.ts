@@ -49,34 +49,34 @@ export class SelectionState<T = any, ElementType extends SelectionElement = Sele
       this.any = any;
       return;
     }
-      this.all = false;
-      let firstChecked = sender;
+    this.all = false;
+    let firstChecked = sender;
 
-      if (!firstChecked) {
-        for (let index = 0; index < this.elements.length; index++) {
-          const element = this.elements[index];
-          if (element.el.selected) {
-            firstChecked = element.el;
-            break;
-          }
-        }
-      }
-
-      if (!firstChecked) {
-        this.value = undefined;
-        this.any = false;
-        return;
-      }
-
-      if (!firstChecked.selected) firstChecked.selected = true;
-
+    if (!firstChecked) {
       for (let index = 0; index < this.elements.length; index++) {
         const element = this.elements[index];
-        if (element.el !== firstChecked) element.el.selected = false;
+        if (element.el.selected) {
+          firstChecked = element.el;
+          break;
+        }
       }
+    }
 
-      this.value = firstChecked.value;
-      this.any = true;
+    if (!firstChecked) {
+      this.value = undefined;
+      this.any = false;
+      return;
+    }
+
+    if (!firstChecked.selected) firstChecked.selected = true;
+
+    for (let index = 0; index < this.elements.length; index++) {
+      const element = this.elements[index];
+      if (element.el !== firstChecked) element.el.selected = false;
+    }
+
+    this.value = firstChecked.value;
+    this.any = true;
   }
 
   triggerChange() {

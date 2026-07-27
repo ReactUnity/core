@@ -6,19 +6,21 @@ import { Inventory } from './inventory';
 import { persistor, store } from './store';
 
 function Root() {
-  return <view>
-    <Inventory />
-  </view>;
+  return (
+    <view>
+      <Inventory />
+    </view>
+  );
 }
 
-
 function Main() {
-  return <PersistGate persistor={persistor}>
-
-    <Provider store={store}>
-      <Root />
-    </Provider>
-  </PersistGate>;
+  return (
+    <PersistGate persistor={persistor}>
+      <Provider store={store}>
+        <Root />
+      </Provider>
+    </PersistGate>
+  );
 }
 
 render(<Main />);

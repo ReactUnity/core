@@ -7,7 +7,6 @@ declare global {
   }
 }
 
-
 declare global {
   interface ReactUnityCustomElements {
     // Add your custom native elements here

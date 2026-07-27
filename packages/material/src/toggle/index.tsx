@@ -61,7 +61,7 @@ const _Toggle = React.forwardRef<ToggleEl, Props>(function _Toggle(
       if (typeof ref === 'function') ref(val);
       else if (ref) ref.current = val;
     },
-    [ctx, ref],
+    [ref],
   );
 
   useLayoutEffect(() => {
@@ -111,7 +111,7 @@ const _ToggleGroup = React.forwardRef<SelectionState, ToggleGroupProps>(function
   const selectAllRef = useRef<ToggleEl>(undefined);
   const onChangeRef = useAutoRef(onChange);
 
-  const state = useMemo(() => new SelectionState(multiple, init.current), [multiple, init]);
+  const state = useMemo(() => new SelectionState(multiple, init.current), [multiple]);
 
   useLayoutEffect(() => {
     state.onChange = (val, all, any) => {
@@ -127,7 +127,9 @@ const _ToggleGroup = React.forwardRef<SelectionState, ToggleGroupProps>(function
       selectAllRef.current.Indeterminate = !!state.any && !state.all;
       selectAllRef.current.Checked = !!state.all;
     }
-  }, [onChangeRef]);
+    // state, not onChangeRef: the ref is stable, while a new SelectionState (multiple changed)
+    // needs its onChange wired up and the select-all box re-synced.
+  }, [state]);
 
   const selectAllCallback: UGUIElements['toggle']['onChange'] = useCallback(
     (checked, sender) => {

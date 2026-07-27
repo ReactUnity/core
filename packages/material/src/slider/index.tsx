@@ -105,7 +105,7 @@ const _Slider = forwardRef<SliderRef, SliderProps>(function _Slider(
 
   useLayoutEffect(() => {
     if (isControlled) setValWithStep(value, true, true);
-  }, [value, isControlled]);
+  }, [value, isControlled, setValWithStep]);
 
   const dragCallback: PointerEventCallback = useCallback(
     (ev) => {
@@ -129,7 +129,7 @@ const _Slider = forwardRef<SliderRef, SliderProps>(function _Slider(
 
       setValWithStep(val);
     },
-    [innerValue, setValWithStep, mode, coordProp, crossCoordProp, sizeProp, isReverse, range, min],
+    [setValWithStep, mode, coordProp, crossCoordProp, sizeProp, isReverse, range, min],
   );
 
   const moveCallback: AxisEventCallback = useCallback(
@@ -164,7 +164,7 @@ const _Slider = forwardRef<SliderRef, SliderProps>(function _Slider(
         return elementRef.current;
       },
     }),
-    [elementRef, curValue, setValWithStep],
+    [setValWithStep],
   );
 
   return (

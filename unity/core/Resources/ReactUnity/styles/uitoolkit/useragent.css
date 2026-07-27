@@ -29,6 +29,6 @@ br {
   visibility: hidden;
 }
 
-br+br {
+br + br {
   height: auto;
 }

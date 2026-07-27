@@ -15,7 +15,7 @@ type RenderComponentProps<T> = {
   data: T;
   index: number;
   isScrolling?: boolean;
-  style: Object;
+  style: object;
 };
 
 type RenderComponent<T> = React.ComponentType<Partial<RenderComponentProps<T>>>;
@@ -42,7 +42,7 @@ type onScrollCallback = (opts: {
 
 type ScrollEvent = UnityEngine.Vector2;
 type ScrollComponent = ReactUnity.UGUI.ScrollComponent;
-type ItemStyleCache = { [index: number]: Object };
+type ItemStyleCache = { [index: number]: object };
 
 type OuterProps = {
   children: React.ReactNode;
@@ -373,7 +373,7 @@ export function createListComponent({
     // So that pure component sCU will prevent re-renders.
     // We maintain this cache, and pass a style prop rather than index,
     // So that List can clear cached styles and force item re-render if necessary.
-    _getItemStyle: (index: number) => Object = (index: number): Object => {
+    _getItemStyle: (index: number) => object = (index: number): object => {
       const { direction, itemSize, layout } = this.props;
 
       const itemStyleCache = this._getItemStyleCache(
@@ -382,8 +382,10 @@ export function createListComponent({
         shouldResetStyleCacheOnItemSizeChange && direction,
       );
 
-      let style;
-      if (itemStyleCache.hasOwnProperty(index)) {
+      let style: object;
+      // Object.prototype.hasOwnProperty.call, not Object.hasOwn: this ships to Unity's
+      // JS engines, and Jint has no ES2022 Object.hasOwn.
+      if (Object.prototype.hasOwnProperty.call(itemStyleCache, index)) {
         style = itemStyleCache[index];
       } else {
         const offset = getItemOffset(this.props, index, this._instanceProps);
@@ -506,7 +508,7 @@ export function createListComponent({
 
       if (typeof outerRef === 'function') {
         outerRef(ref);
-      } else if (outerRef != null && typeof outerRef === 'object' && outerRef.hasOwnProperty('current')) {
+      } else if (outerRef != null && typeof outerRef === 'object' && Object.prototype.hasOwnProperty.call(outerRef, 'current')) {
         outerRef.current = ref;
       }
     };

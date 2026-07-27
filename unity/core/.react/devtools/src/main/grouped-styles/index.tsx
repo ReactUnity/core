@@ -69,7 +69,7 @@ function StylePropRow({ prop, className, optional }: { prop: StyleProp; classNam
 
   const changeStyle = (name: string, value: { newValue: any }) => {
     if (prop.setter) {
-      var res = prop.setter(value.newValue, element);
+      const res = prop.setter(value.newValue, element);
       if (res !== undefined) ctx.setProp(cmp, name, res);
     } else ctx.setProp(cmp, name, value.newValue);
     changed(500);
@@ -169,7 +169,7 @@ function StylePropRectPart({ prop, part }: { prop: StyleProp; part: StylePropPar
     <>
       <StylePropRow
         prop={partProp}
-        className={clsx(style.rectPart, style['part-' + part], 'react-unity__field__inline', isCorner && style.corner)}
+        className={clsx(style.rectPart, style[`part-${part}`], 'react-unity__field__inline', isCorner && style.corner)}
       />
     </>
   );

@@ -69,9 +69,9 @@ const getEstimatedTotalWidth = (
 };
 
 const getItemMetadata = (itemType: ItemType, props: Props<any>, index: number, instanceProps: InstanceProps): ItemMetadata => {
-  let itemMetadataMap;
-  let itemSize;
-  let lastMeasuredIndex;
+  let itemMetadataMap: ItemMetadataMap;
+  let itemSize: itemSizeGetter;
+  let lastMeasuredIndex: number;
   if (itemType === 'column') {
     itemMetadataMap = instanceProps.columnMetadataMap;
     itemSize = props.columnWidth as itemSizeGetter;
@@ -111,8 +111,8 @@ const getItemMetadata = (itemType: ItemType, props: Props<any>, index: number, i
 };
 
 const findNearestItem = (itemType: ItemType, props: Props<any>, instanceProps: InstanceProps, offset: number) => {
-  let itemMetadataMap;
-  let lastMeasuredIndex;
+  let itemMetadataMap: ItemMetadataMap;
+  let lastMeasuredIndex: number;
   if (itemType === 'column') {
     itemMetadataMap = instanceProps.columnMetadataMap;
     lastMeasuredIndex = instanceProps.lastMeasuredColumnIndex;
@@ -127,10 +127,10 @@ const findNearestItem = (itemType: ItemType, props: Props<any>, instanceProps: I
     // If we've already measured items within this range just use a binary search as it's faster.
     return findNearestItemBinarySearch(itemType, props, instanceProps, lastMeasuredIndex, 0, offset);
   }
-    // If we haven't yet measured this high, fallback to an exponential search with an inner binary search.
-    // The exponential search avoids pre-computing sizes for the full set of items as a binary search would.
-    // The overall complexity for this approach is O(log n).
-    return findNearestItemExponentialSearch(itemType, props, instanceProps, Math.max(0, lastMeasuredIndex), offset);
+  // If we haven't yet measured this high, fallback to an exponential search with an inner binary search.
+  // The exponential search avoids pre-computing sizes for the full set of items as a binary search would.
+  // The overall complexity for this approach is O(log n).
+  return findNearestItemExponentialSearch(itemType, props, instanceProps, Math.max(0, lastMeasuredIndex), offset);
 };
 
 const findNearestItemBinarySearch = (
@@ -147,7 +147,8 @@ const findNearestItemBinarySearch = (
 
     if (currentOffset === offset) {
       return middle;
-    }if (currentOffset < offset) {
+    }
+    if (currentOffset < offset) {
       low = middle + 1;
     } else if (currentOffset > offset) {
       high = middle - 1;
@@ -157,7 +158,7 @@ const findNearestItemBinarySearch = (
   if (low > 0) {
     return low - 1;
   }
-    return 0;
+  return 0;
 };
 
 const findNearestItemExponentialSearch = (
@@ -216,14 +217,16 @@ const getOffsetForIndexAndAlignment = (
     default:
       if (scrollOffset >= minOffset && scrollOffset <= maxOffset) {
         return scrollOffset;
-      }if (minOffset > maxOffset) {
+      }
+      if (minOffset > maxOffset) {
         // Because we only take into account the scrollbar size when calculating minOffset
         // this value can be larger than maxOffset when at the end of the list
         return minOffset;
-      }if (scrollOffset < minOffset) {
+      }
+      if (scrollOffset < minOffset) {
         return minOffset;
       }
-        return maxOffset;
+      return maxOffset;
   }
 };
 
@@ -357,7 +360,8 @@ export const VariableSizeGrid = createGridComponent({
         throw Error(
           `An invalid "columnWidth" prop has been specified. Value should be a function. "${columnWidth === null ? 'null' : typeof columnWidth}" was specified.`,
         );
-      }if (typeof rowHeight !== 'function') {
+      }
+      if (typeof rowHeight !== 'function') {
         throw Error(
           `An invalid "rowHeight" prop has been specified. Value should be a function. "${rowHeight === null ? 'null' : typeof rowHeight}" was specified.`,
         );

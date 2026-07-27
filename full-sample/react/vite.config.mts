@@ -9,8 +9,8 @@ export default defineConfig({
     port: 3100,
     strictPort: true,
     hmr: {
-      overlay: false
-    }
+      overlay: false,
+    },
   },
   devtools: false,
   plugins: [react()],

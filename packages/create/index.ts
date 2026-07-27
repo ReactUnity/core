@@ -1,10 +1,10 @@
 #!/usr/bin/env node
 
+import * as cp from 'node:child_process';
+import * as path from 'node:path';
 import * as chalk from 'chalk';
-import * as cp from 'child_process';
 import { Command, Option } from 'commander';
 import * as fse from 'fs-extra';
-import * as path from 'path';
 
 const program = new Command();
 
@@ -21,13 +21,13 @@ const options: {
 const chalkPath = chalk.blue.underline;
 const chalkCmd = chalk.yellow;
 const chalkSuccess = chalk.green;
-const chalkError = chalk.red
+const chalkError = chalk.red;
 
 const cwd = process.cwd();
 const install = options.install === 'false' ? false : options.install === true ? 'yarn' : options.install;
 const createUnity = options.unity;
 
-let targetDir = program.args[0] || 'react';
+const targetDir = program.args[0] || 'react';
 
 const unityFolderName = 'react-unity-project';
 const reactFolderName = targetDir;
@@ -55,13 +55,13 @@ async function copyScaffold(scaffoldDir: string, targetDir: string) {
   }
 
   // Copy project template
-  await fse.copy(scaffoldDir, targetDir, { filter: src => !src.includes(reactScaffoldNodeModules) });
+  await fse.copy(scaffoldDir, targetDir, { filter: (src) => !src.includes(reactScaffoldNodeModules) });
 
   await fixGitignore(targetDir);
 }
 
 async function runOpenUPM() {
-  const cmd = 'npx' + (process.platform === 'win32' ? '.cmd' : '');
+  const cmd = `npx${process.platform === 'win32' ? '.cmd' : ''}`;
   return await run_script(cmd, ['-y', 'openupm-cli', 'add', 'com.reactunity.core', 'com.reactunity.quickjs'], { cwd: unityDir });
 }
 
@@ -70,7 +70,7 @@ async function runOpenUPM() {
 async function fixGitignore(targetDir: string) {
   const npmIgnorePath = path.join(targetDir, '.npmignore');
   const gitIgnorePath = path.join(targetDir, '.gitignore');
-  if (await fse.exists(npmIgnorePath) && !(await fse.exists(gitIgnorePath))) {
+  if ((await fse.exists(npmIgnorePath)) && !(await fse.exists(gitIgnorePath))) {
     await fse.move(npmIgnorePath, gitIgnorePath);
   }
 }
@@ -96,19 +96,18 @@ async function create() {
   console.log(`Copying files ${chalkSuccess('completed')}`);
   console.log();
 
-
   const updateFailCallback = () => {
     console.error(`Updating node modules ${chalkError('failed')}.`);
-    console.log(`You can update them manually:`);
+    console.log('You can update them manually:');
     console.log(`- Go to project folder at ${chalkPath(reactDir)}`);
     console.log(`- Run ${chalkCmd('npx npm-check-updates -u')}`);
     console.log();
   };
 
   try {
-    console.log(chalk.underline(`Starting package updates`));
+    console.log(chalk.underline('Starting package updates'));
     console.log();
-    const npx = 'npx' + (process.platform === 'win32' ? '.cmd' : '');
+    const npx = `npx${process.platform === 'win32' ? '.cmd' : ''}`;
     const npxCode = await run_script(npx, ['-y', 'npm-check-updates', '-u', '--packageFile', packageJsonPath], { cwd: reactDir });
     if (npxCode !== 0) updateFailCallback();
   } catch (err) {
@@ -116,11 +115,10 @@ async function create() {
     updateFailCallback();
   }
 
-
   if (install) {
     const installFailCallback = () => {
       console.error(`Installing node modules ${chalkError('failed')}.`);
-      console.log(`You can install them manually:`);
+      console.log('You can install them manually:');
       console.log(`- Go to project folder at ${chalkPath(reactDir)}`);
       console.log(`- Run ${chalkCmd('npm install')} or ${chalkCmd('yarn')}`);
       console.log();
@@ -141,14 +139,14 @@ async function create() {
     }
   }
 
-  console.log(`Successfully created the project. Next steps you should do manually:`);
+  console.log('Successfully created the project. Next steps you should do manually:');
   console.log(`- Go to project folder at ${chalkPath(reactDir)}`);
   console.log(`- Update packages to their latest versions in ${chalkPath(packageJsonPath)}`);
   if (!install) console.log(`- Run ${chalkCmd('yarn')} to install packages`);
   console.log(`- Try running ${chalkCmd('yarn start')} to start the project and test it inside Unity`);
 }
 
-create().catch(err => {
+create().catch((err) => {
   console.error(err);
 });
 
@@ -158,20 +156,20 @@ function run_script(command: string, args: string[], options: cp.SpawnOptionsWit
       const child = cp.spawn(command, args, options);
 
       child.stdout.setEncoding('utf8');
-      child.stdout.on('data', function (data) {
+      child.stdout.on('data', (data) => {
         console.log(data);
       });
 
       child.stderr.setEncoding('utf8');
-      child.stderr.on('data', function (data) {
+      child.stderr.on('data', (data) => {
         console.error(data);
       });
 
-      child.on('error', function (err) {
+      child.on('error', (err) => {
         reject(err);
       });
 
-      child.on('close', function (code) {
+      child.on('close', (code) => {
         resolve(code);
       });
     } catch (err) {

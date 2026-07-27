@@ -3,8 +3,6 @@
   "compilerOptions": {
     "allowImportingTsExtensions": true,
     "jsxImportSource": "@reactunity/renderer/ugui",
-    "types": [
-      "@reactunity/scripts/main"
-    ]
+    "types": ["@reactunity/scripts/main"]
   }
 }

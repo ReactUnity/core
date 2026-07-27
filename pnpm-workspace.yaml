@@ -26,19 +26,32 @@ packages:
   - '!**/PackageCache/**'
   - '!**/node_modules/**'
 
-# pnpm 10+ blocks dependency build scripts unless named here. These four need to
-# run or their native/downloaded binaries never materialise:
-#   @biomejs/biome    - lint/format binary, used by every script in this repo
-#   esbuild           - binary, pulled in by vite/tailwind
-#   @parcel/watcher   - native watcher used by tailwind + webpack --watch
-#   unrs-resolver     - native resolver behind eslint-plugin-import
-# core-js, core-js-pure and es5-ext are deliberately NOT listed: their install
-# scripts only print funding banners.
-onlyBuiltDependencies:
-  - '@biomejs/biome'
-  - esbuild
-  - '@parcel/watcher'
-  - unrs-resolver
+# pnpm blocks dependency build scripts unless they are named here, one entry per
+# package, `true` to run its scripts and `false` to skip them.
+#
+# This is `allowBuilds`, which supersedes pnpm 10's `onlyBuiltDependencies` list.
+# pnpm 11 still accepts that key -- `pnpm config list` even echoes it back -- but no
+# longer consults it, so every build script is skipped no matter what it names. pnpm 11
+# also defaults `strictDepBuilds` to true, which turns a skipped build from a warning
+# into ERR_PNPM_IGNORED_BUILDS and fails the install outright. Together those two
+# changes broke every CI job at `pnpm install --frozen-lockfile` while local installs
+# kept working off an already-built node_modules. (Verified on pnpm 11.17.0: with only
+# `onlyBuiltDependencies: [esbuild]`, esbuild's postinstall does not run.)
+#
+# Hence: the packages that must build are `true`, and the ones deliberately not
+# built are `false` rather than omitted -- omitting them leaves them "undecided",
+# which is what strictDepBuilds errors on.
+allowBuilds:
+  # Must build, or their native/downloaded binaries never materialise:
+  '@biomejs/biome': true # lint/format binary, used by every script in this repo
+  esbuild: true # binary, pulled in by vite/tailwind
+  '@parcel/watcher': true # native watcher used by tailwind + webpack --watch
+  unrs-resolver: true # native resolver behind eslint-plugin-import
+
+  # Install scripts only print funding banners:
+  core-js: false
+  core-js-pure: false
+  es5-ext: false
 
 # Force every request for a local package to resolve to the workspace copy.
 #

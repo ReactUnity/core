@@ -31,6 +31,8 @@ export const HomePage = () => {
           </color>
         </size>
         Check out the new{' '}
+        {/* biome-ignore lint/correctness/noVoidElementsWithChildren: inside <richtext> this is TextMeshPro's
+            <link> tag, which wraps the text it makes clickable. Nothing here is an HTML void element. */}
         <link value={'svgs'}>
           <size value={24}>
             <color value="blue">SVG</color>

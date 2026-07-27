@@ -204,9 +204,10 @@ export function useTooltip(props: TooltipProps | TooltipPropsCallback, trigger: 
         show(sender, calculatedProps, withBackdrop);
       }
     },
-    [show, trigger, propsRef],
+    [show, trigger],
   );
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: trigger is not read in the body, it is here on purpose -- switching trigger mode has to run clearAll and drop the listeners registered under the old mode.
   useLayoutEffect(() => {
     return clearAll;
   }, [trigger, clearAll]);

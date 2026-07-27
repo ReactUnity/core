@@ -24,7 +24,7 @@ function App() {
     if (nodeVersion < 0) {
       Window.GetNodeVersion((ver) => setNodeVersion(ver));
     }
-  }, [nodeVersion, setNodeVersion]);
+  }, [nodeVersion]);
 
   useEffect(() => {
     if (!packageVersion) {
@@ -38,11 +38,11 @@ function App() {
 
   useEffect(() => {
     setProjectPath(Window.GetProjectPath());
-  }, [setProjectPath]);
+  }, []);
 
   useEffect(() => {
     setCanvasExists(Window.CanvasExistsInScene());
-  }, [setCanvasExists]);
+  }, []);
 
   const nodeOk = nodeVersion > Window.RequiredNodeVersion;
   const projectOk = !!projectPath;
@@ -62,7 +62,7 @@ function App() {
     <SetIsLoadingContext.Provider value={setIsLoading}>
       <scroll className={styles.host}>
         <head>
-          <image source="url(resource:ReactUnity/editor/logo)" className={styles.logo}></image>
+          <image source="url(resource:ReactUnity/editor/logo)" className={styles.logo} />
 
           <h1>React Unity</h1>
           <h2>Quick Start</h2>

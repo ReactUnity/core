@@ -2,7 +2,7 @@ import { ReactUnity } from '@reactunity/renderer';
 import { PointerEventCallback } from '@reactunity/renderer/ugui';
 import { useRef } from 'react';
 import { useMemo } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { ItemObject, swapItems } from 'src/store/slices/inventory';
 import style from './index.module.scss';
 
@@ -39,35 +39,46 @@ export function Item({ item }: { item: ItemObject }) {
     inline.translate = null;
   };
 
-  return <view className={style.item} onBeginDrag={beginDrag} onDrag={onDrag} onEndDrag={endDrag} ref={ref}>
-    <image source={item.image} />
-  </view>;
+  return (
+    <view className={style.item} onBeginDrag={beginDrag} onDrag={onDrag} onEndDrag={endDrag} ref={ref}>
+      <image source={item.image} />
+    </view>
+  );
 }
 
 export function Inventory() {
-  const slotCount = useSelector(x => x.inventory.size);
-  const items = useSelector(x => x.inventory.items);
+  const slotCount = useSelector((x) => x.inventory.size);
+  const items = useSelector((x) => x.inventory.items);
   const slots = useMemo(() => new Array(slotCount).fill(null), [slotCount]);
   const dispatch = useDispatch();
 
-  return <view className={style.host}>
-    <scroll className={style.frame}>
-      <view className={style.items}>
-        {slots.map((x, i) => {
-          const itemInSlot = items.find(x => x.slot === i);
+  return (
+    <view className={style.host}>
+      <scroll className={style.frame}>
+        <view className={style.items}>
+          {slots.map((x, i) => {
+            const itemInSlot = items.find((x) => x.slot === i);
 
-          return <view key={i} className={style.itemSlot} data-index={i} onDrop={(ev) => {
-            if (draggingItem) {
-              dispatch(swapItems({ slot1: draggingItem.slot, slot2: i }));
-              draggingItem = null;
-            }
-          }}>
-            <Item item={itemInSlot} key={itemInSlot?.image ?? i} />
-          </view>;
-        })}
-      </view>
-    </scroll>
+            return (
+              <view
+                key={i}
+                className={style.itemSlot}
+                data-index={i}
+                onDrop={(ev) => {
+                  if (draggingItem) {
+                    dispatch(swapItems({ slot1: draggingItem.slot, slot2: i }));
+                    draggingItem = null;
+                  }
+                }}
+              >
+                <Item item={itemInSlot} key={itemInSlot?.image ?? i} />
+              </view>
+            );
+          })}
+        </view>
+      </scroll>
 
-    <view className={style.border} />
-  </view>;
+      <view className={style.border} />
+    </view>
+  );
 }

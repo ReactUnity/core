@@ -2,19 +2,20 @@ import { useState } from 'react';
 import { createUseStyles } from 'react-jss';
 
 export function JSSPage() {
-  return <>
-    <div>
-      <Button>JSS Button</Button>
-    </div>
-  </>;
+  return (
+    <>
+      <div>
+        <Button>JSS Button</Button>
+      </div>
+    </>
+  );
 }
 
 export default JSSPage;
 
-
 // Create your Styles. Remember, since React-JSS uses the default preset,
 // most plugins are available without further configuration needed.
-const useStyles = createUseStyles(({
+const useStyles = createUseStyles({
   '@keyframes rotate': {
     from: {
       transform: 'scale(1)',
@@ -23,8 +24,8 @@ const useStyles = createUseStyles(({
       transform: 'scale(1.5)',
     },
   },
-  myButton: ({
-    color: (prop: any) => prop.enabled ? 'green' : 'red',
+  myButton: {
+    color: (prop: any) => (prop.enabled ? 'green' : 'red'),
     // color: 'green',
     margin: {
       // jss-plugin-expand gives more readable syntax
@@ -38,7 +39,7 @@ const useStyles = createUseStyles(({
       // jss-plugin-nested applies this to a child span
       fontWeight: 'bold', // jss-plugin-camel-case turns this into 'font-weight'
     },
-  }),
+  },
   myLabel: {
     fontStyle: 'italic',
   },
@@ -47,7 +48,7 @@ const useStyles = createUseStyles(({
       backgroundColor: 'yellow',
     },
   },
-}));
+});
 
 // Define the component using these styles and pass it the 'classes' prop.
 // Use this to assign scoped class names.
@@ -55,7 +56,7 @@ const Button = ({ children }) => {
   const [enabled, setEnabled] = useState(true);
   const classes = useStyles({ enabled } as any);
   return (
-    <button className={classes.myButton} onClick={() => setEnabled(x => !x)}>
+    <button className={classes.myButton} onClick={() => setEnabled((x) => !x)}>
       <span className={classes.myLabel}>{children}</span>
     </button>
   );

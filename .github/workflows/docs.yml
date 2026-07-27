@@ -35,6 +35,22 @@ jobs:
           cache: pnpm
       - run: pnpm install --frozen-lockfile
 
+      # Docs is a Next 12.3 app and cannot run on the Node that .node-version pins.
+      # Next 12 bundles jsonwebtoken, which reaches for `require('buffer').SlowBuffer`
+      # (DEP0030) -- removed in Node 24, so on Node 26 `next build` dies with
+      # "Cannot read properties of undefined (reading 'prototype')" while collecting
+      # page data. Restoring only SlowBuffer is enough to make the whole build pass,
+      # so Node 22 -- the last line that still has it -- is all this needs. 22 also
+      # clears pnpm 11's own floor of >=22.13.
+      #
+      # Install still runs on the pinned Node above; only the build steps downgrade.
+      # Upgrading Next is the real fix, but it is a migration of its own: the app is
+      # on `next export`, experimental config that newer versions reject, and a
+      # patch-package patch against next@12.3.2-canary.7.
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 22
+
       # Always built, even when the deploy is skipped -- that keeps this workflow
       # useful as a check that the docs still compile.
       - name: Build

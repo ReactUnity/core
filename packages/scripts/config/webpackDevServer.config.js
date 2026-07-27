@@ -1,5 +1,3 @@
-
-
 const fs = require('node:fs');
 const path = require('node:path');
 const evalSourceMapMiddleware = require('react-dev-utils/evalSourceMapMiddleware');

@@ -39,18 +39,20 @@ export const FixedSizeList = createListComponent({
         const middleOffset = Math.round(minOffset + (maxOffset - minOffset) / 2);
         if (middleOffset < Math.ceil(size / 2)) {
           return 0; // near the beginning
-        }if (middleOffset > lastItemOffset + Math.floor(size / 2)) {
+        }
+        if (middleOffset > lastItemOffset + Math.floor(size / 2)) {
           return lastItemOffset; // near the end
         }
-          return middleOffset;
+        return middleOffset;
       }
       default:
         if (scrollOffset >= minOffset && scrollOffset <= maxOffset) {
           return scrollOffset;
-        }if (scrollOffset < minOffset) {
+        }
+        if (scrollOffset < minOffset) {
           return minOffset;
         }
-          return maxOffset;
+        return maxOffset;
     }
   },
 

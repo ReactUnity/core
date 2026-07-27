@@ -59,7 +59,7 @@ export const TextField = forwardRef<ReactUnity.UGUI.InputComponent, TextFieldPro
       fieldRef.current?.setEmpty(!val);
       onValue?.(val);
     },
-    [fieldRef, onChange, onValue],
+    [onChange, onValue],
   );
 
   return (

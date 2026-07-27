@@ -3,14 +3,8 @@
   "compilerOptions": {
     "baseUrl": "./",
     "jsxImportSource": "@reactunity/renderer/ugui",
-    "types": [
-      "@reactunity/scripts/main"
-    ]
+    "types": ["@reactunity/scripts/main"]
   },
-  "files": [
-    "./src/index.tsx"
-  ],
-  "include": [
-    "./src"
-  ]
+  "files": ["./src/index.tsx"],
+  "include": ["./src"]
 }

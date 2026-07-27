@@ -1,10 +1,10 @@
-import fs from 'fs';
-import path from 'path';
+import fs from 'node:fs';
+import path from 'node:path';
 
 const folder = '../../Tests/Runtime/Resources/ReactUnity/tests/injectable';
 
-const replaceStart = `/*INJECTABLE_START*/`;
-const replaceEnd = `/*INJECTABLE_END*/`;
+const replaceStart = '/*INJECTABLE_START*/';
+const replaceEnd = '/*INJECTABLE_END*/';
 
 const replacePath = path.resolve(process.cwd(), 'scripts', 'injected-code.js');
 const replaceWith = fs.readFileSync(replacePath, { encoding: 'utf8' });

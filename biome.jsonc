@@ -25,7 +25,29 @@
       "Assets",
       "manifest.json",
       "packages-lock.json",
-      "models/generated"
+      "models/generated",
+
+      // tsc output of packages/create/index.ts, emitted next to the source by its
+      // `prepare` script and gitignored there. Biome 1.x only reads the root
+      // .gitignore, so nested ignores don't reach it.
+      "packages/create/index.js",
+
+      // Build output of the three React apps under unity/core/.react, committed
+      // because the Unity package has to ship them. Each path is the BUILD_PATH
+      // from the matching app's .env, so anything here is webpack's, not ours.
+      "unity/core/Editor/Resources/ReactUnity/editor/devtools",
+      "unity/core/Editor/Resources/ReactUnity/editor/quick-start",
+      "unity/core/Tests/Runtime/Resources/ReactUnity/tests/injectable",
+
+      // Vendored third-party UMD bundles (whatwg-fetch, abortcontroller-polyfill,
+      // base64.js, queue-microtask). Each keeps its source URL in a header comment
+      // and is replaced wholesale on update, so reformatting it only adds diff noise.
+      "unity/core/Resources/ReactUnity/polyfills",
+
+      // Vendored @babel/standalone, loaded by the editor test runner. At 3.7 MiB it is
+      // over Biome's 1 MiB per-file ceiling, and being unable to read a file is an
+      // error, not a skip -- leaving it in fails `pnpm check` outright.
+      "unity/core/Editor/Resources/ReactUnity/tests/scripts/babel-standalone.js"
     ]
   },
   "organizeImports": {
@@ -64,13 +86,27 @@
       },
       "correctness": {
         "noChildrenProp": "off",
+        // ReactUnity's CSS is a subset of CSS plus its own extensions, parsed by
+        // unity/core/Runtime/Styling rather than a browser. Biome validates against
+        // the web specs, so it rejects properties and media features that are valid
+        // here: `sorting-layer`, `state-duration`, `@media (skin: dark)`. Neither
+        // rule takes an allowlist, so both are off rather than suppressed per line.
+        "noUnknownProperty": "off",
+        "noUnknownMediaFeatureName": "off",
         "noUnusedImports": {
           "fix": "safe",
           "level": "warn"
         },
         "useExhaustiveDependencies": {
           "level": "error",
-          "options": {}
+          // useAutoRef is a useRef wrapper (packages/material/src/util/hooks/use-auto-ref.ts):
+          // it returns a ref whose .current tracks the latest value, precisely so effects can
+          // read a fresh value without listing it as a dependency. Biome can't see through the
+          // wrapper, so without this it demands `xRef.current` in the dependency arrays --
+          // which would defeat the pattern the hook exists to provide.
+          "options": {
+            "hooks": [{ "name": "useAutoRef", "stableResult": true }]
+          }
         }
       },
       "suspicious": {
@@ -88,5 +124,23 @@
         "all": false
       }
     }
-  }
+  },
+  "overrides": [
+    {
+      // These helpers compare values that arrive over the C# interop boundary --
+      // UIElements StyleKeyword/LengthUnit and Yoga YogaUnit enums, which reach JS as
+      // boxed objects rather than the numbers they compare against. Loose equality is
+      // what makes them match, and `isNaN` has to keep coercing for the same reason;
+      // the file already carries an `eslint-disable eqeqeq` block saying as much.
+      "include": ["unity/core/.react/devtools/src/common/helpers.ts"],
+      "linter": {
+        "rules": {
+          "suspicious": {
+            "noDoubleEquals": "off",
+            "noGlobalIsNan": "off"
+          }
+        }
+      }
+    }
+  ]
 }

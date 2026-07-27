@@ -4,16 +4,14 @@ export function QueryPage() {
   const { isPending, error, data, isFetching, refetch } = useQuery<any>({
     queryKey: ['repoData'],
     queryFn: async () => {
-      const response = await fetch(
-        'https://api.github.com/repos/TanStack/query'
-      );
+      const response = await fetch('https://api.github.com/repos/TanStack/query');
       return await response.json();
     },
   });
 
   if (isPending) return 'Loading...';
 
-  if (error) return 'An error has occurred: ' + error.message;
+  if (error) return `An error has occurred: ${error.message}`;
 
   return (
     <div>

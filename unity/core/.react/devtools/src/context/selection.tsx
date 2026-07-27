@@ -1,6 +1,6 @@
 import { ReactUnity } from '@reactunity/renderer';
 import * as React from 'react';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 
 type RC = ReactUnity.UGUI.Behaviours.ReactElement;
 
@@ -26,7 +26,7 @@ const ctx = React.createContext<RC>(undefined);
 export function SelectionProvider({ children }: { children?: React.ReactNode }) {
   const [selection, setSelection] = useState<RC>(getSelection());
 
-  const updateSelection = () => setSelection(getSelection());
+  const updateSelection = useCallback(() => setSelection(getSelection()), []);
 
   useEffect(() => {
     if (Window) {
@@ -39,7 +39,7 @@ export function SelectionProvider({ children }: { children?: React.ReactNode }) 
         removeVisibilityChange();
       };
     }
-  }, []);
+  }, [updateSelection]);
 
   return React.createElement(ctx.Provider, { value: selection }, children);
 }

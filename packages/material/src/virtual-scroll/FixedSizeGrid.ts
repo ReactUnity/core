@@ -45,22 +45,25 @@ export const FixedSizeGrid = createGridComponent({
         const middleOffset = Math.round(minOffset + (maxOffset - minOffset) / 2);
         if (middleOffset < Math.ceil(width / 2)) {
           return 0; // near the beginning
-        }if (middleOffset > lastColumnOffset + Math.floor(width / 2)) {
+        }
+        if (middleOffset > lastColumnOffset + Math.floor(width / 2)) {
           return lastColumnOffset; // near the end
         }
-          return middleOffset;
+        return middleOffset;
       }
       default:
         if (scrollLeft >= minOffset && scrollLeft <= maxOffset) {
           return scrollLeft;
-        }if (minOffset > maxOffset) {
+        }
+        if (minOffset > maxOffset) {
           // Because we only take into account the scrollbar size when calculating minOffset
           // this value can be larger than maxOffset when at the end of the list
           return minOffset;
-        }if (scrollLeft < minOffset) {
+        }
+        if (scrollLeft < minOffset) {
           return minOffset;
         }
-          return maxOffset;
+        return maxOffset;
     }
   },
 
@@ -95,22 +98,25 @@ export const FixedSizeGrid = createGridComponent({
         const middleOffset = Math.round(minOffset + (maxOffset - minOffset) / 2);
         if (middleOffset < Math.ceil(height / 2)) {
           return 0; // near the beginning
-        }if (middleOffset > lastRowOffset + Math.floor(height / 2)) {
+        }
+        if (middleOffset > lastRowOffset + Math.floor(height / 2)) {
           return lastRowOffset; // near the end
         }
-          return middleOffset;
+        return middleOffset;
       }
       default:
         if (scrollTop >= minOffset && scrollTop <= maxOffset) {
           return scrollTop;
-        }if (minOffset > maxOffset) {
+        }
+        if (minOffset > maxOffset) {
           // Because we only take into account the scrollbar size when calculating minOffset
           // this value can be larger than maxOffset when at the end of the list
           return minOffset;
-        }if (scrollTop < minOffset) {
+        }
+        if (scrollTop < minOffset) {
           return minOffset;
         }
-          return maxOffset;
+        return maxOffset;
     }
   },
 

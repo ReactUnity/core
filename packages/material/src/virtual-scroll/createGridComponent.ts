@@ -15,7 +15,7 @@ type RenderComponentProps<T> = {
   data: T;
   isScrolling?: boolean;
   rowIndex: number;
-  style: Object;
+  style: object;
 };
 export type RenderComponent<T> = React.ComponentType<Partial<RenderComponentProps<T>>>;
 
@@ -41,7 +41,7 @@ type OnScrollCallback = (val: {
 
 type ScrollEvent = UnityEngine.Vector2;
 type ScrollComponent = ReactUnity.UGUI.ScrollComponent;
-type ItemStyleCache = { [key: string]: Object };
+type ItemStyleCache = { [key: string]: object };
 
 type OuterProps = {
   children: React.ReactNode;
@@ -486,7 +486,7 @@ export function createGridComponent({
     // So that pure component sCU will prevent re-renders.
     // We maintain this cache, and pass a style prop rather than index,
     // So that List can clear cached styles and force item re-render if necessary.
-    _getItemStyle: (rowIndex: number, columnIndex: number) => Object = (rowIndex: number, columnIndex: number): Object => {
+    _getItemStyle: (rowIndex: number, columnIndex: number) => object = (rowIndex: number, columnIndex: number): object => {
       const { columnWidth, direction, rowHeight } = this.props;
 
       const itemStyleCache = this._getItemStyleCache(
@@ -497,8 +497,10 @@ export function createGridComponent({
 
       const key = `${rowIndex}:${columnIndex}`;
 
-      let style;
-      if (itemStyleCache.hasOwnProperty(key)) {
+      let style: object;
+      // Object.prototype.hasOwnProperty.call, not Object.hasOwn: this ships to Unity's
+      // JS engines, and Jint has no ES2022 Object.hasOwn.
+      if (Object.prototype.hasOwnProperty.call(itemStyleCache, key)) {
         style = itemStyleCache[key];
       } else {
         const offset = getColumnOffset(this.props, columnIndex, this._instanceProps);
@@ -626,7 +628,7 @@ export function createGridComponent({
 
       if (typeof outerRef === 'function') {
         outerRef(ref);
-      } else if (outerRef != null && typeof outerRef === 'object' && outerRef.hasOwnProperty('current')) {
+      } else if (outerRef != null && typeof outerRef === 'object' && Object.prototype.hasOwnProperty.call(outerRef, 'current')) {
         outerRef.current = ref;
       }
     };
@@ -665,9 +667,7 @@ const validateSharedProps = ({ children, direction, height, width }: Props<any>,
         // Valid values
         break;
       default:
-        throw Error(
-          `An invalid "direction" prop has been specified. Value should be either "ltr" or "rtl". "${direction}" was specified.`,
-        );
+        throw Error(`An invalid "direction" prop has been specified. Value should be either "ltr" or "rtl". "${direction}" was specified.`);
     }
 
     if (typeof width !== 'number') {

@@ -11,10 +11,7 @@
       "request": "attach",
       "pauseForSourceMap": true,
       "resolveSourceMapLocations": null,
-      "skipFiles": [
-        "<node_internals>/**",
-        "node_modules/**"
-      ]
+      "skipFiles": ["<node_internals>/**", "node_modules/**"]
     }
   ]
 }
