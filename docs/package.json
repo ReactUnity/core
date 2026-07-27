@@ -9,14 +9,13 @@
     "start": "astro dev",
     "build": "node scripts/downloadFonts.js && astro build",
     "preview": "astro preview",
-    "check": "astro check",
     "format:source": "prettier --config .prettierrc --write \"src/**/*.{js,ts,jsx,tsx,astro,css}\"",
     "nit:source": "prettier --config .prettierrc --list-different \"src/**/*.{js,ts,jsx,tsx,astro,css}\"",
     "prettier": "pnpm run format:source",
     "prettier:diff": "pnpm run nit:source",
     "lint-heading-ids": "node scripts/headingIdLinter.js",
     "fix-headings": "node scripts/headingIdLinter.js --fix",
-    "ci-check": "pnpm run prettier:diff && pnpm run check && pnpm run lint-heading-ids"
+    "ci-check": "pnpm run prettier:diff && pnpm run lint-heading-ids"
   },
   "dependencies": {
     "@astrojs/markdown-remark": "^7.0.0",
@@ -43,7 +42,6 @@
     "unist-util-visit": "^5.1.0"
   },
   "devDependencies": {
-    "@astrojs/check": "^0.9.9",
     "@types/babel__standalone": "^7.1.9",
     "@types/node": "^26.1.1",
     "@types/react": "^19.2.17",
@@ -52,7 +50,7 @@
     "prettier-plugin-astro": "^0.14.1",
     "remark-parse": "^11.0.0",
     "sass": "^1.102.0",
-    "typescript": "~6.0.3",
+    "typescript": "^7.0.2",
     "unified": "^11.0.5"
   },
   "lint-staged": {

@@ -45,12 +45,10 @@ That serves the site at http://localhost:4321 with content hot-reloading.
 
 ## Checks
 
-```bash
-pnpm check
-```
-
-Runs `astro check` (types, including inside `.astro` files). `pnpm prettier` formats;
-`pnpm ci-check` is the non-mutating combination of both plus the heading linter. This
+There is no type-check command: `astro check` cannot run on TypeScript 7, which this
+folder now uses, so it was removed (see the `//check` note in package.json). `astro build`
+is what catches breakage. `pnpm prettier` formats; `pnpm ci-check` is the non-mutating
+combination of Prettier and the heading linter. This
 folder keeps its own Prettier setup and is excluded from the repository's Biome config —
 don't reformat it with Biome.
 

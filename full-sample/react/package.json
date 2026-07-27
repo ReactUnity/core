@@ -11,6 +11,7 @@
     "#*": "./*"
   },
   "scripts": {
+    "dev": "react-unity-scripts start",
     "start": "react-unity-scripts start",
     "typecheck": "tsc",
     "build": "react-unity-scripts build",
