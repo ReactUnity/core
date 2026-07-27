@@ -1,0 +1,15 @@
+# Commits that touched a lot of files without changing any code, so that `git blame`
+# skips straight past them to the commit that actually wrote the line.
+#
+# GitHub reads this file automatically. Locally it has to be pointed at once per clone:
+#
+#   git config blame.ignoreRevsFile .git-blame-ignore-revs
+#
+# Only mechanical, verifiable-by-machine changes belong here. Each entry should say what
+# it was and how to re-check that it changed nothing else.
+
+# chore: renormalise line endings to LF
+# 1016 files re-staged with `git add --renormalize` after .gitattributes started
+# normalising to LF. Nothing but removed carriage returns, which
+# `git diff --ignore-cr-at-eol 97c944ff~1 97c944ff` confirms by printing nothing.
+97c944ff790caf6d6d94cec9f7f331211283128f
