@@ -28,12 +28,17 @@
     "lint-staged": "^15.5.0",
     "react": "^19.1.0",
     "rimraf": "^6.0.1",
+    "tegami": "^1.2.6",
     "tsx": "^4.19.3",
     "typescript": "^5.8.2",
-    "vite": "^8.1.5",
-    "tegami": "^1.2.6"
+    "vite": "^8.1.5"
   },
   "lint-staged": {
-    "*": ["biome check --write --no-errors-on-unmatched --files-ignore-unknown=true"]
+    "*": [
+      "biome check --write --no-errors-on-unmatched --files-ignore-unknown=true"
+    ]
+  },
+  "dependencies": {
+    "next": "12.3.5"
   }
 }
