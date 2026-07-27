@@ -32,5 +32,10 @@ jobs:
           cache: pnpm
       - run: pnpm install --frozen-lockfile
       - run: pnpm check
+      # These two used to be one step. `pnpm build` ran tsc, so a green build was also a
+      # green type check; now it runs tsdown, which transpiles per file and never does
+      # whole-program analysis, so type errors have to be asked for separately.
+      - name: Type-check the publishable packages
+        run: pnpm typecheck
       - name: Build the publishable packages
         run: pnpm build

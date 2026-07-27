@@ -24,11 +24,11 @@
     "./*": "./dist/src/*/index.js"
   },
   "scripts": {
-    "prebuild": "pnpm run clean",
-    "build": "tsc -d && pnpm run copy-files",
+    "build": "tsdown && pnpm run copy-files",
+    "typecheck": "tsc",
     "copy-files": "copyfiles -u 1 \"src/**/*.scss\" dist/src",
-    "watch": "concurrently --kill-others \"pnpm run watch:tsc\" \"pnpm run watch:files\"",
-    "watch:tsc": "tsc -d --watch --sourceMap",
+    "watch": "concurrently --kill-others \"pnpm run watch:build\" \"pnpm run watch:files\"",
+    "watch:build": "tsdown --watch",
     "watch:files": "onchange -i \"src/**/*.scss\" -- pnpm run copy-files",
     "clean": "rimraf dist",
     "lint": "react-unity-scripts lint",
@@ -40,6 +40,7 @@
     "clsx": "^2.1.1",
     "memoize-one": "^6.0.0"
   },
+  "//typescript": "On 7, for the same reason as packages/renderer: the blockers were emit options (`target=ES5`, and `baseUrl` which 7 removed as well), and tsdown owns emit now. tsconfig.json is `noEmit`, so `tsc` is only the type checker here.",
   "devDependencies": {
     "@reactunity/renderer": "workspace:^",
     "@reactunity/scripts": "workspace:^",
@@ -48,7 +49,8 @@
     "copyfiles": "^2.4.1",
     "onchange": "^7.1.0",
     "rimraf": "^6.1.3",
-    "typescript": "~6.0.3"
+    "tsdown": "^0.22.14",
+    "typescript": "^7.0.2"
   },
   "peerDependencies": {
     "@reactunity/renderer": "*",

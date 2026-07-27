@@ -15,6 +15,7 @@
     "@reactunity/renderer": "workspace:*",
     "react": "^19.2.8"
   },
+  "//typescript": "Held at 6.x while the root and packages/create are on 7: this app builds with react-unity-scripts, which runs fork-ts-checker against whatever `resolve.sync('typescript')` finds from this directory, and 7 has no CJS entry to find. See packages/scripts.",
   "devDependencies": {
     "@reactunity/scripts": "workspace:*",
     "typescript": "~6.0.3"

@@ -80,6 +80,7 @@
     "webpack-dev-server": "^5.2.6",
     "webpack-manifest-plugin": "^6.0.1"
   },
+  "//typescript": "Held at 6.x while the root and packages/create are on 7, and the peer range below caps consumers at <7 for the same reason: this package resolves the TypeScript *module* at three points -- config/modules.js, config/webpack.config.js (as fork-ts-checker's `typescriptPath`) and scripts/utils/verifyTypeScriptSetup.js -- all via `resolve.sync('typescript')`. TypeScript 7 publishes no CJS entry for `.` (its export map points at lib/version.cjs), and `resolve` reads `main`, not `exports`, so that call throws MODULE_NOT_FOUND and `react-unity-scripts` cannot start at all. Unblocking this means teaching fork-ts-checker about the native compiler, not bumping a range.",
   "devDependencies": {
     "typescript": "~6.0.3"
   },

@@ -7816,7 +7816,7 @@ var update = injectStylesIntoStyleTag_default()(globals/* default */.A, options)
 
 ;// ../../../../packages/material/dist/src/styles/index.js
 
-//# sourceMappingURL=index.js.map
+
 
 /***/ },
 
@@ -8641,6 +8641,25 @@ module.exports = styleTagTransform;
 /************************************************************************/
 let __webpack_exports__ = {};
 
+// NAMESPACE OBJECT (decoupled): ../../../../packages/renderer/dist/index.js
+var dist_namespaceObject = {};
+__webpack_require__.r(dist_namespaceObject);
+__webpack_require__.d(dist_namespaceObject, {
+  GlobalsProvider: () => (GlobalsProvider),
+  Renderer: () => (Renderer),
+  batchedUpdates: () => (batchedUpdates),
+  createDictionaryWatcher: () => (createDictionaryWatcher),
+  "default": () => (ReactUnityRenderer),
+  flushSync: () => (flushSync),
+  icon: () => (icon),
+  render: () => (_render),
+  unstable_batchedUpdates: () => (batchedUpdates),
+  useGlobals: () => (useGlobals),
+  useGlobalsContext: () => (useGlobalsContext),
+  useGlobalsSelector: () => (useGlobalsSelector),
+  useReactiveValue: () => (useReactiveValue)
+});
+
 // NAMESPACE OBJECT (decoupled): ../../../../packages/material/dist/index.js
 var material_dist_namespaceObject = {};
 __webpack_require__.r(material_dist_namespaceObject);
@@ -8669,25 +8688,6 @@ __webpack_require__.d(material_dist_namespaceObject, {
   useTooltip: () => (useTooltip)
 });
 
-// NAMESPACE OBJECT (decoupled): ../../../../packages/renderer/dist/index.js
-var dist_namespaceObject = {};
-__webpack_require__.r(dist_namespaceObject);
-__webpack_require__.d(dist_namespaceObject, {
-  GlobalsProvider: () => (GlobalsProvider),
-  Renderer: () => (Renderer),
-  batchedUpdates: () => (batchedUpdates),
-  createDictionaryWatcher: () => (createDictionaryWatcher),
-  "default": () => (dist),
-  flushSync: () => (flushSync),
-  icon: () => (icon),
-  render: () => (_render),
-  unstable_batchedUpdates: () => (batchedUpdates),
-  useGlobals: () => (useGlobals),
-  useGlobalsContext: () => (useGlobalsContext),
-  useGlobalsSelector: () => (useGlobalsSelector),
-  useReactiveValue: () => (useReactiveValue)
-});
-
 // NAMESPACE OBJECT (decoupled): ../../../../packages/renderer/dist/webgl-compat.js
 var webgl_compat_namespaceObject = {};
 __webpack_require__.r(webgl_compat_namespaceObject);
@@ -8697,8 +8697,180 @@ __webpack_require__.d(webgl_compat_namespaceObject, {
   useUnityContext: () => (useUnityContext)
 });
 
-// EXTERNAL MODULE: ../../../../node_modules/.pnpm/react@19.2.8/node_modules/react/jsx-runtime.js
-var jsx_runtime = __webpack_require__("../../../../node_modules/.pnpm/react@19.2.8/node_modules/react/jsx-runtime.js");
+;// ../../../../node_modules/.pnpm/@babel+runtime@7.29.7/node_modules/@babel/runtime/helpers/esm/arrayWithHoles.js
+function _arrayWithHoles(r) {
+  if (Array.isArray(r)) return r;
+}
+
+;// ../../../../node_modules/.pnpm/@babel+runtime@7.29.7/node_modules/@babel/runtime/helpers/esm/iterableToArrayLimit.js
+function _iterableToArrayLimit(r, l) {
+  var t = null == r ? null : "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"];
+  if (null != t) {
+    var e,
+      n,
+      i,
+      u,
+      a = [],
+      f = !0,
+      o = !1;
+    try {
+      if (i = (t = t.call(r)).next, 0 === l) {
+        if (Object(t) !== t) return;
+        f = !1;
+      } else for (; !(f = (e = i.call(t)).done) && (a.push(e.value), a.length !== l); f = !0);
+    } catch (r) {
+      o = !0, n = r;
+    } finally {
+      try {
+        if (!f && null != t["return"] && (u = t["return"](), Object(u) !== u)) return;
+      } finally {
+        if (o) throw n;
+      }
+    }
+    return a;
+  }
+}
+
+;// ../../../../node_modules/.pnpm/@babel+runtime@7.29.7/node_modules/@babel/runtime/helpers/esm/arrayLikeToArray.js
+function _arrayLikeToArray(r, a) {
+  (null == a || a > r.length) && (a = r.length);
+  for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e];
+  return n;
+}
+
+;// ../../../../node_modules/.pnpm/@babel+runtime@7.29.7/node_modules/@babel/runtime/helpers/esm/unsupportedIterableToArray.js
+
+function _unsupportedIterableToArray(r, a) {
+  if (r) {
+    if ("string" == typeof r) return _arrayLikeToArray(r, a);
+    var t = {}.toString.call(r).slice(8, -1);
+    return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray(r, a) : void 0;
+  }
+}
+
+;// ../../../../node_modules/.pnpm/@babel+runtime@7.29.7/node_modules/@babel/runtime/helpers/esm/nonIterableRest.js
+function _nonIterableRest() {
+  throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
+}
+
+;// ../../../../node_modules/.pnpm/@babel+runtime@7.29.7/node_modules/@babel/runtime/helpers/esm/slicedToArray.js
+
+
+
+
+function _slicedToArray(r, e) {
+  return _arrayWithHoles(r) || _iterableToArrayLimit(r, e) || _unsupportedIterableToArray(r, e) || _nonIterableRest();
+}
+
+// EXTERNAL MODULE: ../../../../node_modules/.pnpm/react@19.2.8/node_modules/react/index.js
+var react = __webpack_require__("../../../../node_modules/.pnpm/react@19.2.8/node_modules/react/index.js");
+;// ../../../../packages/material/dist/helpers-D3F2qDT1.js
+
+//#region src/util/helpers.ts
+function getChildrenOfType(children, type) {
+  return react.Children.toArray(children).filter(function (x) {
+    return x && typeof x === "object" && "type" in x && x.type === type;
+  });
+}
+function getOnlyChildOfType(children, type) {
+  return getChildrenOfType(children, type);
+}
+function getElevationClass(elevation) {
+  if (elevation > 0) return "mat-elevation-".concat(elevation);
+  return "mat-elevation-0";
+}
+//#endregion
+
+
+//# sourceMappingURL=helpers-D3F2qDT1.js.map
+;// ../../../../packages/material/dist/objectSpread2-BTgUBSvM.js
+//#region \0@oxc-project+runtime@0.140.0/helpers/esm/objectWithoutPropertiesLoose.js
+function _objectWithoutPropertiesLoose(r, e) {
+  if (null == r) return {};
+  var t = {};
+  for (var n in r) if ({}.hasOwnProperty.call(r, n)) {
+    if (e.includes(n)) continue;
+    t[n] = r[n];
+  }
+  return t;
+}
+//#endregion
+//#region \0@oxc-project+runtime@0.140.0/helpers/esm/objectWithoutProperties.js
+function _objectWithoutProperties(e, t) {
+  if (null == e) return {};
+  var o,
+    r,
+    i = _objectWithoutPropertiesLoose(e, t);
+  if (Object.getOwnPropertySymbols) {
+    var s = Object.getOwnPropertySymbols(e);
+    for (r = 0; r < s.length; r++) o = s[r], t.includes(o) || {}.propertyIsEnumerable.call(e, o) && (i[o] = e[o]);
+  }
+  return i;
+}
+//#endregion
+//#region \0@oxc-project+runtime@0.140.0/helpers/esm/typeof.js
+function _typeof(o) {
+  "@babel/helpers - typeof";
+
+  return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) {
+    return typeof o;
+  } : function (o) {
+    return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o;
+  }, _typeof(o);
+}
+//#endregion
+//#region \0@oxc-project+runtime@0.140.0/helpers/esm/toPrimitive.js
+function toPrimitive(t, r) {
+  if ("object" != _typeof(t) || !t) return t;
+  var e = t[Symbol.toPrimitive];
+  if (void 0 !== e) {
+    var i = e.call(t, r || "default");
+    if ("object" != _typeof(i)) return i;
+    throw new TypeError("@@toPrimitive must return a primitive value.");
+  }
+  return ("string" === r ? String : Number)(t);
+}
+//#endregion
+//#region \0@oxc-project+runtime@0.140.0/helpers/esm/toPropertyKey.js
+function toPropertyKey(t) {
+  var i = toPrimitive(t, "string");
+  return "symbol" == _typeof(i) ? i : i + "";
+}
+//#endregion
+//#region \0@oxc-project+runtime@0.140.0/helpers/esm/defineProperty.js
+function _defineProperty(e, r, t) {
+  return (r = toPropertyKey(r)) in e ? Object.defineProperty(e, r, {
+    value: t,
+    enumerable: !0,
+    configurable: !0,
+    writable: !0
+  }) : e[r] = t, e;
+}
+//#endregion
+//#region \0@oxc-project+runtime@0.140.0/helpers/esm/objectSpread2.js
+function ownKeys(e, r) {
+  var t = Object.keys(e);
+  if (Object.getOwnPropertySymbols) {
+    var o = Object.getOwnPropertySymbols(e);
+    r && (o = o.filter(function (r) {
+      return Object.getOwnPropertyDescriptor(e, r).enumerable;
+    })), t.push.apply(t, o);
+  }
+  return t;
+}
+function _objectSpread2(e) {
+  for (var r = 1; r < arguments.length; r++) {
+    var t = null != arguments[r] ? arguments[r] : {};
+    r % 2 ? ownKeys(Object(t), !0).forEach(function (r) {
+      _defineProperty(e, r, t[r]);
+    }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) {
+      Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r));
+    });
+  }
+  return e;
+}
+//#endregion
+
 ;// ../../../../node_modules/.pnpm/clsx@2.1.1/node_modules/clsx/dist/clsx.mjs
 function r(e) {
   var t,
@@ -8715,23 +8887,6 @@ function clsx() {
   return n;
 }
 /* harmony default export */ const dist_clsx = (clsx);
-// EXTERNAL MODULE: ../../../../node_modules/.pnpm/react@19.2.8/node_modules/react/index.js
-var react = __webpack_require__("../../../../node_modules/.pnpm/react@19.2.8/node_modules/react/index.js");
-;// ../../../../packages/material/dist/src/util/helpers.js
-
-function getChildrenOfType(children, type) {
-  return react.Children.toArray(children).filter(function (x) {
-    return x && typeof x === 'object' && 'type' in x && x.type === type;
-  });
-}
-function getOnlyChildOfType(children, type) {
-  return getChildrenOfType(children, type);
-}
-function getElevationClass(elevation) {
-  if (elevation > 0) return "mat-elevation-".concat(elevation);
-  return 'mat-elevation-0';
-}
-//# sourceMappingURL=helpers.js.map
 // EXTERNAL MODULE: ../../../../node_modules/.pnpm/style-loader@4.0.0_webpack@_340d4ccd197601d182a5a6feacda02d4/node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js
 var injectStylesIntoStyleTag = __webpack_require__("../../../../node_modules/.pnpm/style-loader@4.0.0_webpack@_340d4ccd197601d182a5a6feacda02d4/node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js");
 var injectStylesIntoStyleTag_default = /*#__PURE__*/__webpack_require__.n(injectStylesIntoStyleTag);
@@ -8779,77 +8934,66 @@ var update = injectStylesIntoStyleTag_default()(index_module/* default */.A, opt
 
        /* harmony default export */ const accordion_index_module = (index_module/* default */.A && index_module/* default */.A.locals ? index_module/* default */.A.locals : undefined);
 
+// EXTERNAL MODULE: ../../../../node_modules/.pnpm/react@19.2.8/node_modules/react/jsx-runtime.js
+var jsx_runtime = __webpack_require__("../../../../node_modules/.pnpm/react@19.2.8/node_modules/react/jsx-runtime.js");
 ;// ../../../../packages/material/dist/src/accordion/index.js
-var __assign = undefined && undefined.__assign || function () {
-  __assign = Object.assign || function (t) {
-    for (var s, i = 1, n = arguments.length; i < n; i++) {
-      s = arguments[i];
-      for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p)) t[p] = s[p];
-    }
-    return t;
-  };
-  return __assign.apply(this, arguments);
-};
-var __rest = undefined && undefined.__rest || function (s, e) {
-  var t = {};
-  for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p) && e.indexOf(p) < 0) t[p] = s[p];
-  if (s != null && typeof Object.getOwnPropertySymbols === "function") for (var i = 0, p = Object.getOwnPropertySymbols(s); i < p.length; i++) {
-    if (e.indexOf(p[i]) < 0 && Object.prototype.propertyIsEnumerable.call(s, p[i])) t[p[i]] = s[p[i]];
-  }
-  return t;
-};
 
 
 
 
 
+
+
+//#region src/accordion/index.tsx
+var _excluded = ["children", "className", "elevation"];
+var _excluded2 = ["className"];
+var _excluded3 = ["className"];
 var expanderBaseStyle = {
   height: 0
 };
-function _Accordion(_a) {
-  var children = _a.children,
-    className = _a.className,
-    _b = _a.elevation,
-    elevation = _b === void 0 ? 1 : _b,
-    props = __rest(_a, ["children", "className", "elevation"]);
+function _Accordion(_ref) {
+  var children = _ref.children,
+    className = _ref.className,
+    _ref$elevation = _ref.elevation,
+    elevation = _ref$elevation === void 0 ? 1 : _ref$elevation,
+    props = _objectWithoutProperties(_ref, _excluded);
   var summary = getOnlyChildOfType(children, _Summary);
   var content = getOnlyChildOfType(children, _Content);
-  var _c = (0,react.useState)(false),
-    opened = _c[0],
-    setOpened = _c[1];
-  var expanderRef = (0,react.useRef)(undefined);
-  var wrapperRef = (0,react.useRef)(undefined);
+  var _useState = (0,react.useState)(false),
+    _useState2 = _slicedToArray(_useState, 2),
+    opened = _useState2[0],
+    setOpened = _useState2[1];
+  var expanderRef = (0,react.useRef)(void 0);
+  var wrapperRef = (0,react.useRef)(void 0);
   var onResize = function onResize(ev, sender) {
     if (!expanderRef.current) return;
-    if (opened) {
-      expanderRef.current.Style.Set('height', sender.RectTransform.rect.height);
-    }
+    if (opened) expanderRef.current.Style.Set("height", sender.RectTransform.rect.height);
   };
   (0,react.useEffect)(function () {
     if (!expanderRef.current || !wrapperRef.current) return;
-    expanderRef.current.Style.Set('height', opened ? wrapperRef.current.RectTransform.rect.height : 0);
-    expanderRef.current.Style.Set('opacity', opened ? 1 : 0);
+    expanderRef.current.Style.Set("height", opened ? wrapperRef.current.RectTransform.rect.height : 0);
+    expanderRef.current.Style.Set("opacity", opened ? 1 : 0);
   }, [opened]);
-  return (0,jsx_runtime.jsxs)("view", __assign({
+  return /* @__PURE__ */(0,jsx_runtime.jsxs)("view", _objectSpread2(_objectSpread2({
     name: "<Accordion>",
-    className: dist_clsx(className, accordion_index_module.host, opened && [accordion_index_module.expanded, 'mat-expanded'], getElevationClass(elevation), 'mat-accordion')
-  }, props, {
-    children: [(0,jsx_runtime.jsxs)("view", {
+    className: dist_clsx(className, accordion_index_module.host, opened && [accordion_index_module.expanded, "mat-expanded"], getElevationClass(elevation), "mat-accordion")
+  }, props), {}, {
+    children: [/* @__PURE__ */(0,jsx_runtime.jsxs)("view", {
       name: "<AccordionHeader>",
-      className: dist_clsx(accordion_index_module.header, 'mat-accordion-header'),
+      className: dist_clsx(accordion_index_module.header, "mat-accordion-header"),
       onPointerClick: function onPointerClick() {
         return setOpened(function (x) {
           return !x;
         });
       },
-      children: [summary, (0,jsx_runtime.jsx)("icon", {
+      children: [summary, /* @__PURE__ */(0,jsx_runtime.jsx)("icon", {
         children: "expand_more"
       })]
-    }), (0,jsx_runtime.jsx)("view", {
-      className: dist_clsx(accordion_index_module.expander, 'mat-accordion-expander'),
+    }), /* @__PURE__ */(0,jsx_runtime.jsx)("view", {
+      className: dist_clsx(accordion_index_module.expander, "mat-accordion-expander"),
       ref: expanderRef,
       style: expanderBaseStyle,
-      children: (0,jsx_runtime.jsx)("view", {
+      children: /* @__PURE__ */(0,jsx_runtime.jsx)("view", {
         onResize: onResize,
         ref: wrapperRef,
         className: accordion_index_module.contentWrapper,
@@ -8858,25 +9002,28 @@ function _Accordion(_a) {
     })]
   }));
 }
-function _Summary(_a) {
-  var className = _a.className,
-    props = __rest(_a, ["className"]);
-  return (0,jsx_runtime.jsx)("view", __assign({
+function _Summary(_ref2) {
+  var className = _ref2.className,
+    props = _objectWithoutProperties(_ref2, _excluded2);
+  return /* @__PURE__ */(0,jsx_runtime.jsx)("view", _objectSpread2({
     name: "<Accordion.Summary>",
-    className: dist_clsx(className, accordion_index_module.summary, 'mat-accordion-summary')
+    className: dist_clsx(className, accordion_index_module.summary, "mat-accordion-summary")
   }, props));
 }
-function _Content(_a) {
-  var className = _a.className,
-    props = __rest(_a, ["className"]);
-  return (0,jsx_runtime.jsx)("view", __assign({
+function _Content(_ref3) {
+  var className = _ref3.className,
+    props = _objectWithoutProperties(_ref3, _excluded3);
+  return /* @__PURE__ */(0,jsx_runtime.jsx)("view", _objectSpread2({
     name: "<Accordion.Content>",
-    className: dist_clsx(className, accordion_index_module.content, 'mat-accordion-content')
+    className: dist_clsx(className, accordion_index_module.content, "mat-accordion-content")
   }, props));
 }
 var Accordion = react.memo(_Accordion);
 Accordion.Summary = _Summary;
 Accordion.Content = _Content;
+//#endregion
+
+
 //# sourceMappingURL=index.js.map
 // EXTERNAL MODULE: ../../../../node_modules/.pnpm/css-loader@7.1.4_webpack@5._62043f6a253f8c7f1ce10b9e4bcb0b7c/node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[0].oneOf[7].use[1]!../../../../node_modules/.pnpm/resolve-url-loader@5.0.0/node_modules/resolve-url-loader/index.js??ruleSet[1].rules[0].oneOf[7].use[2]!../../../../node_modules/.pnpm/sass-loader@17.0.0_sass@1.1_20e65d72e5f2ff16ba56ab3dd615796f/node_modules/sass-loader/dist/cjs/index.js??ruleSet[1].rules[0].oneOf[7].use[3]!../../../../packages/material/dist/src/ripple/index.module.scss
 var ripple_index_module = __webpack_require__("../../../../node_modules/.pnpm/css-loader@7.1.4_webpack@5._62043f6a253f8c7f1ce10b9e4bcb0b7c/node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[0].oneOf[7].use[1]!../../../../node_modules/.pnpm/resolve-url-loader@5.0.0/node_modules/resolve-url-loader/index.js??ruleSet[1].rules[0].oneOf[7].use[2]!../../../../node_modules/.pnpm/sass-loader@17.0.0_sass@1.1_20e65d72e5f2ff16ba56ab3dd615796f/node_modules/sass-loader/dist/cjs/index.js??ruleSet[1].rules[0].oneOf[7].use[3]!../../../../packages/material/dist/src/ripple/index.module.scss");
@@ -8910,18 +9057,19 @@ var index_module_update = injectStylesIntoStyleTag_default()(ripple_index_module
 ;// ../../../../packages/material/dist/src/ripple/index.js
 
 
+//#region src/ripple/index.ts
 function addRipple(containerElement, pressPosition) {
   if (!containerElement) return null;
-  var ripple = UnityBridge.createElement('view', '', HostContainer);
+  var ripple = UnityBridge.createElement("view", "", HostContainer);
   ripple.ClassName = "".concat(src_ripple_index_module.ripple, " mat-ripple");
-  ripple.Name = '<Ripple>';
+  ripple.Name = "<Ripple>";
   var w = containerElement.RectTransform.rect.width;
   var h = containerElement.RectTransform.rect.height;
   var maxDimension = Math.max(w, h);
   if (pressPosition) {
     var pos = containerElement.GetRelativePosition(pressPosition.x, pressPosition.y);
-    ripple.Style.Set('left', pos.x);
-    ripple.Style.Set('top', pos.y);
+    ripple.Style.Set("left", pos.x);
+    ripple.Style.Set("top", pos.y);
     var hw = w / 2;
     var hh = h / 2;
     var rx = pos.x > hw ? 0 : w;
@@ -8929,49 +9077,49 @@ function addRipple(containerElement, pressPosition) {
     var dx = rx - pos.x;
     var dy = ry - pos.y;
     var mag = Math.sqrt(dx * dx + dy * dy) * 2.1;
-    ripple.Style.Set('width', mag);
-    ripple.Style.Set('height', mag);
+    ripple.Style.Set("width", mag);
+    ripple.Style.Set("height", mag);
   } else {
-    ripple.Style.Set('position', 'inset');
-    ripple.Style.Set('left', '50%');
-    ripple.Style.Set('top', '50%');
-    ripple.Style.Set('width', maxDimension);
-    ripple.Style.Set('height', maxDimension);
+    ripple.Style.Set("position", "inset");
+    ripple.Style.Set("left", "50%");
+    ripple.Style.Set("top", "50%");
+    ripple.Style.Set("width", maxDimension);
+    ripple.Style.Set("height", maxDimension);
   }
   containerElement.ClassList.Add(src_ripple_index_module.rippleParent);
   UnityBridge.appendChild(containerElement, ripple);
   return ripple;
 }
-function useRipple(_a) {
-  var onPointerDown = _a.onPointerDown,
-    onPointerUp = _a.onPointerUp,
-    noRipple = _a.noRipple,
-    centered = _a.centered,
-    target = _a.target;
-  var rippleRef = (0,react.useRef)(undefined);
-  var pointerDown = (0,react.useCallback)(function (ev, sender) {
-    var _a;
-    onPointerDown === null || onPointerDown === void 0 ? void 0 : onPointerDown.call(null, ev, sender);
-    if (!noRipple) {
-      (_a = rippleRef.current) === null || _a === void 0 ? void 0 : _a.Remove();
-      rippleRef.current = addRipple(target ? target.current : sender, centered ? null : ev.pressPosition);
-    }
-  }, [noRipple, onPointerDown, centered, target]);
-  var pointerUp = (0,react.useCallback)(function () {
-    var _a;
-    var args = [];
-    for (var _i = 0; _i < arguments.length; _i++) {
-      args[_i] = arguments[_i];
-    }
-    onPointerUp === null || onPointerUp === void 0 ? void 0 : onPointerUp.apply(null, args);
-    (_a = rippleRef.current) === null || _a === void 0 ? void 0 : _a.Remove();
-    rippleRef.current = null;
-  }, [onPointerUp]);
+function useRipple(_ref) {
+  var onPointerDown = _ref.onPointerDown,
+    onPointerUp = _ref.onPointerUp,
+    noRipple = _ref.noRipple,
+    centered = _ref.centered,
+    target = _ref.target;
+  var rippleRef = (0,react.useRef)(void 0);
   return {
-    onPointerDown: pointerDown,
-    onPointerUp: pointerUp
+    onPointerDown: (0,react.useCallback)(function (ev, sender) {
+      onPointerDown === null || onPointerDown === void 0 || onPointerDown.call(null, ev, sender);
+      if (!noRipple) {
+        var _rippleRef$current;
+        (_rippleRef$current = rippleRef.current) === null || _rippleRef$current === void 0 || _rippleRef$current.Remove();
+        rippleRef.current = addRipple(target ? target.current : sender, centered ? null : ev.pressPosition);
+      }
+    }, [noRipple, onPointerDown, centered, target]),
+    onPointerUp: (0,react.useCallback)(function () {
+      var _rippleRef$current2;
+      for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
+        args[_key] = arguments[_key];
+      }
+      onPointerUp === null || onPointerUp === void 0 || onPointerUp.apply(null, args);
+      (_rippleRef$current2 = rippleRef.current) === null || _rippleRef$current2 === void 0 || _rippleRef$current2.Remove();
+      rippleRef.current = null;
+    }, [onPointerUp])
   };
 }
+//#endregion
+
+
 //# sourceMappingURL=index.js.map
 // EXTERNAL MODULE: ../../../../node_modules/.pnpm/css-loader@7.1.4_webpack@5._62043f6a253f8c7f1ce10b9e4bcb0b7c/node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[0].oneOf[7].use[1]!../../../../node_modules/.pnpm/resolve-url-loader@5.0.0/node_modules/resolve-url-loader/index.js??ruleSet[1].rules[0].oneOf[7].use[2]!../../../../node_modules/.pnpm/sass-loader@17.0.0_sass@1.1_20e65d72e5f2ff16ba56ab3dd615796f/node_modules/sass-loader/dist/cjs/index.js??ruleSet[1].rules[0].oneOf[7].use[3]!../../../../packages/material/dist/src/button/index.module.scss
 var button_index_module = __webpack_require__("../../../../node_modules/.pnpm/css-loader@7.1.4_webpack@5._62043f6a253f8c7f1ce10b9e4bcb0b7c/node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[0].oneOf[7].use[1]!../../../../node_modules/.pnpm/resolve-url-loader@5.0.0/node_modules/resolve-url-loader/index.js??ruleSet[1].rules[0].oneOf[7].use[2]!../../../../node_modules/.pnpm/sass-loader@17.0.0_sass@1.1_20e65d72e5f2ff16ba56ab3dd615796f/node_modules/sass-loader/dist/cjs/index.js??ruleSet[1].rules[0].oneOf[7].use[3]!../../../../packages/material/dist/src/button/index.module.scss");
@@ -9003,80 +9151,95 @@ var button_index_module_update = injectStylesIntoStyleTag_default()(button_index
        /* harmony default export */ const src_button_index_module = (button_index_module/* default */.A && button_index_module/* default */.A.locals ? button_index_module/* default */.A.locals : undefined);
 
 ;// ../../../../packages/material/dist/src/button/index.js
-var button_assign = undefined && undefined.__assign || function () {
-  button_assign = Object.assign || function (t) {
-    for (var s, i = 1, n = arguments.length; i < n; i++) {
-      s = arguments[i];
-      for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p)) t[p] = s[p];
-    }
-    return t;
-  };
-  return button_assign.apply(this, arguments);
-};
-var button_rest = undefined && undefined.__rest || function (s, e) {
-  var t = {};
-  for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p) && e.indexOf(p) < 0) t[p] = s[p];
-  if (s != null && typeof Object.getOwnPropertySymbols === "function") for (var i = 0, p = Object.getOwnPropertySymbols(s); i < p.length; i++) {
-    if (e.indexOf(p[i]) < 0 && Object.prototype.propertyIsEnumerable.call(s, p[i])) t[p[i]] = s[p[i]];
-  }
-  return t;
-};
 
 
 
 
 
 
-var _Button = (0,react.forwardRef)(function _Button(_a, ref) {
-  var children = _a.children,
-    className = _a.className,
-    elevation = _a.elevation,
-    noRipple = _a.noRipple,
-    onPointerDown = _a.onPointerDown,
-    onPointerUp = _a.onPointerUp,
-    variant = _a.variant,
-    props = button_rest(_a, ["children", "className", "elevation", "noRipple", "onPointerDown", "onPointerUp", "variant"]);
-  variant = variant || 'text';
+
+//#region src/button/index.tsx
+var button_excluded = ["children", "className", "elevation", "noRipple", "onPointerDown", "onPointerUp", "variant"];
+var _Button = (0,react.forwardRef)(function _Button(_ref, ref) {
+  var children = _ref.children,
+    className = _ref.className,
+    elevation = _ref.elevation,
+    noRipple = _ref.noRipple,
+    onPointerDown = _ref.onPointerDown,
+    onPointerUp = _ref.onPointerUp,
+    variant = _ref.variant,
+    props = _objectWithoutProperties(_ref, button_excluded);
+  variant = variant || "text";
   var ripple = useRipple({
     onPointerDown: onPointerDown,
     onPointerUp: onPointerUp,
     noRipple: noRipple,
-    centered: variant === 'icon'
+    centered: variant === "icon"
   });
-  return (0,jsx_runtime.jsx)("button", button_assign({
+  return /* @__PURE__ */(0,jsx_runtime.jsx)("button", _objectSpread2(_objectSpread2(_objectSpread2({
     name: "<Button>"
-  }, props, ripple, {
+  }, props), ripple), {}, {
     ref: ref,
-    className: dist_clsx(className, src_button_index_module.host, getElevationClass(elevation), 'mat-button', src_button_index_module[variant], "mat-variant-".concat(variant)),
+    className: dist_clsx(className, src_button_index_module.host, getElevationClass(elevation), "mat-button", src_button_index_module[variant], "mat-variant-".concat(variant)),
     children: children
   }));
 });
 var Button = react.memo(_Button);
+//#endregion
+
+
 //# sourceMappingURL=index.js.map
-;// ../../../../packages/material/dist/src/util/hooks/use-root-class.js
+;// ../../../../node_modules/.pnpm/@babel+runtime@7.29.7/node_modules/@babel/runtime/helpers/esm/createForOfIteratorHelper.js
 
-
-function useRootClass(className) {
-  var classes = dist_clsx(className);
-  (0,react.useEffect)(function () {
-    var classArray = classes.split(' ').filter(function (x) {
-      return x;
-    });
-    if (classArray.length) {
-      for (var _i = 0, classArray_1 = classArray; _i < classArray_1.length; _i++) {
-        var cls = classArray_1[_i];
-        HostContainer.ClassList.Add(cls);
-      }
-      return function () {
-        for (var _i = 0, classArray_2 = classArray; _i < classArray_2.length; _i++) {
-          var cls = classArray_2[_i];
-          HostContainer.ClassList.Remove(cls);
-        }
+function _createForOfIteratorHelper(r, e) {
+  var t = "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"];
+  if (!t) {
+    if (Array.isArray(r) || (t = _unsupportedIterableToArray(r)) || e && r && "number" == typeof r.length) {
+      t && (r = t);
+      var _n = 0,
+        F = function F() {};
+      return {
+        s: F,
+        n: function n() {
+          return _n >= r.length ? {
+            done: !0
+          } : {
+            done: !1,
+            value: r[_n++]
+          };
+        },
+        e: function e(r) {
+          throw r;
+        },
+        f: F
       };
     }
-  }, [classes]);
+    throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
+  }
+  var o,
+    a = !0,
+    u = !1;
+  return {
+    s: function s() {
+      t = t.call(r);
+    },
+    n: function n() {
+      var r = t.next();
+      return a = r.done, r;
+    },
+    e: function e(r) {
+      u = !0, o = r;
+    },
+    f: function f() {
+      try {
+        a || null == t["return"] || t["return"]();
+      } finally {
+        if (u) throw o;
+      }
+    }
+  };
 }
-//# sourceMappingURL=use-root-class.js.map
+
 // EXTERNAL MODULE: ../../../../node_modules/.pnpm/css-loader@7.1.4_webpack@5._62043f6a253f8c7f1ce10b9e4bcb0b7c/node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[0].oneOf[7].use[1]!../../../../node_modules/.pnpm/resolve-url-loader@5.0.0/node_modules/resolve-url-loader/index.js??ruleSet[1].rules[0].oneOf[7].use[2]!../../../../node_modules/.pnpm/sass-loader@17.0.0_sass@1.1_20e65d72e5f2ff16ba56ab3dd615796f/node_modules/sass-loader/dist/cjs/index.js??ruleSet[1].rules[0].oneOf[7].use[3]!../../../../packages/material/dist/src/modal/index.module.scss
 var modal_index_module = __webpack_require__("../../../../node_modules/.pnpm/css-loader@7.1.4_webpack@5._62043f6a253f8c7f1ce10b9e4bcb0b7c/node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[0].oneOf[7].use[1]!../../../../node_modules/.pnpm/resolve-url-loader@5.0.0/node_modules/resolve-url-loader/index.js??ruleSet[1].rules[0].oneOf[7].use[2]!../../../../node_modules/.pnpm/sass-loader@17.0.0_sass@1.1_20e65d72e5f2ff16ba56ab3dd615796f/node_modules/sass-loader/dist/cjs/index.js??ruleSet[1].rules[0].oneOf[7].use[3]!../../../../packages/material/dist/src/modal/index.module.scss");
 ;// ../../../../packages/material/dist/src/modal/index.module.scss
@@ -9106,62 +9269,102 @@ var modal_index_module_update = injectStylesIntoStyleTag_default()(modal_index_m
 
        /* harmony default export */ const src_modal_index_module = (modal_index_module/* default */.A && modal_index_module/* default */.A.locals ? modal_index_module/* default */.A.locals : undefined);
 
-;// ../../../../packages/material/dist/src/modal/index.js
+;// ../../../../packages/material/dist/modal-BlnMbeTW.js
 
 
 
 
 
-function Modal(_a) {
-  var open = _a.open,
-    children = _a.children,
-    className = _a.className,
-    onClickBackdrop = _a.onClickBackdrop,
-    onEscape = _a.onEscape,
-    onCloseButton = _a.onCloseButton;
-  useRootClass(open && [src_modal_index_module.body, 'mat-modal-open']);
-  var portalRef = (0,react.useRef)(undefined);
+//#region src/util/hooks/use-root-class.ts
+function useRootClass(className) {
+  var classes = dist_clsx(className);
+  (0,react.useEffect)(function () {
+    var classArray = classes.split(" ").filter(function (x) {
+      return x;
+    });
+    if (classArray.length) {
+      var _iterator = _createForOfIteratorHelper(classArray),
+        _step;
+      try {
+        for (_iterator.s(); !(_step = _iterator.n()).done;) {
+          var cls = _step.value;
+          HostContainer.ClassList.Add(cls);
+        }
+      } catch (err) {
+        _iterator.e(err);
+      } finally {
+        _iterator.f();
+      }
+      return function () {
+        var _iterator2 = _createForOfIteratorHelper(classArray),
+          _step2;
+        try {
+          for (_iterator2.s(); !(_step2 = _iterator2.n()).done;) {
+            var cls = _step2.value;
+            HostContainer.ClassList.Remove(cls);
+          }
+        } catch (err) {
+          _iterator2.e(err);
+        } finally {
+          _iterator2.f();
+        }
+      };
+    }
+  }, [classes]);
+}
+//#endregion
+//#region src/modal/index.tsx
+function Modal(_ref) {
+  var open = _ref.open,
+    children = _ref.children,
+    className = _ref.className,
+    onClickBackdrop = _ref.onClickBackdrop,
+    onEscape = _ref.onEscape,
+    onCloseButton = _ref.onCloseButton;
+  useRootClass(open && [src_modal_index_module.body, "mat-modal-open"]);
+  var portalRef = (0,react.useRef)(void 0);
   var initialOpen = (0,react.useRef)(open);
   var openedOnce = (0,react.useRef)(open);
   var click = function click(ev, sender) {
-    if (!ev.used) onClickBackdrop === null || onClickBackdrop === void 0 ? void 0 : onClickBackdrop();
+    if (!ev.used) onClickBackdrop === null || onClickBackdrop === void 0 || onClickBackdrop();
   };
   var clickContent = function clickContent(ev, sender) {
     ev.Use();
   };
   var keyup = function keyup(ev) {
-    if (ev.key === 'Escape') onEscape === null || onEscape === void 0 ? void 0 : onEscape();
+    if (ev.key === "Escape") onEscape === null || onEscape === void 0 || onEscape();
   };
   var onAnimationEnd = function onAnimationEnd(ev) {
-    if (ev.AnimationName === src_modal_index_module.closeAnim && portalRef.current) {
-      portalRef.current.SetProperty('active', false);
-    }
+    if (ev.AnimationName === src_modal_index_module.closeAnim && portalRef.current) portalRef.current.SetProperty("active", false);
   };
   (0,react.useEffect)(function () {
     openedOnce.current = openedOnce.current || open;
-    if (open && portalRef.current) portalRef.current.SetProperty('active', !!open);
+    if (open && portalRef.current) portalRef.current.SetProperty("active", !!open);
   }, [open]);
-  return (0,jsx_runtime.jsx)("portal", {
-    className: dist_clsx(src_modal_index_module.host, 'mat-modal', className, open && src_modal_index_module.opened, !open && openedOnce.current && src_modal_index_module.closed),
+  return /* @__PURE__ */(0,jsx_runtime.jsx)("portal", {
+    className: dist_clsx(src_modal_index_module.host, "mat-modal", className, open && src_modal_index_module.opened, !open && openedOnce.current && src_modal_index_module.closed),
     onPointerClick: onClickBackdrop ? click : null,
     onKeyDown: onEscape ? keyup : null,
     active: initialOpen.current,
     onAnimationEnd: onAnimationEnd,
     ref: portalRef,
-    children: (0,jsx_runtime.jsxs)("view", {
-      className: dist_clsx(src_modal_index_module.content, 'mat-modal-content'),
+    children: /* @__PURE__ */(0,jsx_runtime.jsxs)("view", {
+      className: dist_clsx(src_modal_index_module.content, "mat-modal-content"),
       onPointerClick: clickContent,
-      children: [children, onCloseButton && (0,jsx_runtime.jsx)("button", {
+      children: [children, onCloseButton && /* @__PURE__ */(0,jsx_runtime.jsx)("button", {
         className: src_modal_index_module.close,
         onClick: onCloseButton,
-        children: (0,jsx_runtime.jsx)("icon", {
+        children: /* @__PURE__ */(0,jsx_runtime.jsx)("icon", {
           children: "close"
         })
       })]
     })
   });
 }
-//# sourceMappingURL=index.js.map
+//#endregion
+
+
+//# sourceMappingURL=modal-BlnMbeTW.js.map
 // EXTERNAL MODULE: ../../../../node_modules/.pnpm/css-loader@7.1.4_webpack@5._62043f6a253f8c7f1ce10b9e4bcb0b7c/node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[0].oneOf[7].use[1]!../../../../node_modules/.pnpm/resolve-url-loader@5.0.0/node_modules/resolve-url-loader/index.js??ruleSet[1].rules[0].oneOf[7].use[2]!../../../../node_modules/.pnpm/sass-loader@17.0.0_sass@1.1_20e65d72e5f2ff16ba56ab3dd615796f/node_modules/sass-loader/dist/cjs/index.js??ruleSet[1].rules[0].oneOf[7].use[3]!../../../../packages/material/dist/src/alert/index.module.scss
 var alert_index_module = __webpack_require__("../../../../node_modules/.pnpm/css-loader@7.1.4_webpack@5._62043f6a253f8c7f1ce10b9e4bcb0b7c/node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[0].oneOf[7].use[1]!../../../../node_modules/.pnpm/resolve-url-loader@5.0.0/node_modules/resolve-url-loader/index.js??ruleSet[1].rules[0].oneOf[7].use[2]!../../../../node_modules/.pnpm/sass-loader@17.0.0_sass@1.1_20e65d72e5f2ff16ba56ab3dd615796f/node_modules/sass-loader/dist/cjs/index.js??ruleSet[1].rules[0].oneOf[7].use[3]!../../../../packages/material/dist/src/alert/index.module.scss");
 ;// ../../../../packages/material/dist/src/alert/index.module.scss
@@ -9192,54 +9395,40 @@ var alert_index_module_update = injectStylesIntoStyleTag_default()(alert_index_m
        /* harmony default export */ const src_alert_index_module = (alert_index_module/* default */.A && alert_index_module/* default */.A.locals ? alert_index_module/* default */.A.locals : undefined);
 
 ;// ../../../../packages/material/dist/src/alert/index.js
-var alert_assign = undefined && undefined.__assign || function () {
-  alert_assign = Object.assign || function (t) {
-    for (var s, i = 1, n = arguments.length; i < n; i++) {
-      s = arguments[i];
-      for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p)) t[p] = s[p];
-    }
-    return t;
-  };
-  return alert_assign.apply(this, arguments);
-};
-var alert_rest = undefined && undefined.__rest || function (s, e) {
-  var t = {};
-  for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p) && e.indexOf(p) < 0) t[p] = s[p];
-  if (s != null && typeof Object.getOwnPropertySymbols === "function") for (var i = 0, p = Object.getOwnPropertySymbols(s); i < p.length; i++) {
-    if (e.indexOf(p[i]) < 0 && Object.prototype.propertyIsEnumerable.call(s, p[i])) t[p[i]] = s[p[i]];
-  }
-  return t;
-};
 
 
 
 
 
-function AlertDialog(_a) {
-  var title = _a.title,
-    text = _a.text,
-    _b = _a.button,
-    button = _b === void 0 ? 'Ok' : _b,
-    onClose = _a.onClose,
-    onClickBackdrop = _a.onClickBackdrop,
-    backdropClose = _a.backdropClose,
-    props = alert_rest(_a, ["title", "text", "button", "onClose", "onClickBackdrop", "backdropClose"]);
+
+
+//#region src/alert/index.tsx
+var alert_excluded = ["title", "text", "button", "onClose", "onClickBackdrop", "backdropClose"];
+function AlertDialog(_ref) {
+  var title = _ref.title,
+    text = _ref.text,
+    _ref$button = _ref.button,
+    button = _ref$button === void 0 ? "Ok" : _ref$button,
+    onClose = _ref.onClose,
+    onClickBackdrop = _ref.onClickBackdrop,
+    backdropClose = _ref.backdropClose,
+    props = _objectWithoutProperties(_ref, alert_excluded);
   var clickBackdrop = function clickBackdrop() {
     if (backdropClose) onClose();
     if (onClickBackdrop) onClickBackdrop();
   };
-  return (0,jsx_runtime.jsxs)(Modal, alert_assign({}, props, {
-    className: dist_clsx('mat-alert-dialog', src_alert_index_module.host, props.className),
+  return /* @__PURE__ */(0,jsx_runtime.jsxs)(Modal, _objectSpread2(_objectSpread2({}, props), {}, {
+    className: dist_clsx("mat-alert-dialog", src_alert_index_module.host, props.className),
     onClickBackdrop: clickBackdrop,
-    children: [title && (0,jsx_runtime.jsx)("div", {
-      className: dist_clsx('mat-alert-dialog-title', src_alert_index_module.title),
+    children: [title && /* @__PURE__ */(0,jsx_runtime.jsx)("div", {
+      className: dist_clsx("mat-alert-dialog-title", src_alert_index_module.title),
       children: title
-    }), text && (0,jsx_runtime.jsx)("div", {
-      className: dist_clsx('mat-alert-dialog-text', src_alert_index_module.text),
+    }), text && /* @__PURE__ */(0,jsx_runtime.jsx)("div", {
+      className: dist_clsx("mat-alert-dialog-text", src_alert_index_module.text),
       children: text
-    }), button && (0,jsx_runtime.jsx)("div", {
-      className: dist_clsx('mat-alert-dialog-buttons', src_alert_index_module.buttons),
-      children: (0,jsx_runtime.jsx)(Button, {
+    }), button && /* @__PURE__ */(0,jsx_runtime.jsx)("div", {
+      className: dist_clsx("mat-alert-dialog-buttons", src_alert_index_module.buttons),
+      children: /* @__PURE__ */(0,jsx_runtime.jsx)(Button, {
         className: dist_clsx(src_alert_index_module.button),
         onClick: function onClick() {
           return onClose();
@@ -9249,6 +9438,9 @@ function AlertDialog(_a) {
     })]
   }));
 }
+//#endregion
+
+
 //# sourceMappingURL=index.js.map
 // EXTERNAL MODULE: ../../../../node_modules/.pnpm/css-loader@7.1.4_webpack@5._62043f6a253f8c7f1ce10b9e4bcb0b7c/node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[0].oneOf[7].use[1]!../../../../node_modules/.pnpm/resolve-url-loader@5.0.0/node_modules/resolve-url-loader/index.js??ruleSet[1].rules[0].oneOf[7].use[2]!../../../../node_modules/.pnpm/sass-loader@17.0.0_sass@1.1_20e65d72e5f2ff16ba56ab3dd615796f/node_modules/sass-loader/dist/cjs/index.js??ruleSet[1].rules[0].oneOf[7].use[3]!../../../../packages/material/dist/src/card/index.module.scss
 var card_index_module = __webpack_require__("../../../../node_modules/.pnpm/css-loader@7.1.4_webpack@5._62043f6a253f8c7f1ce10b9e4bcb0b7c/node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[0].oneOf[7].use[1]!../../../../node_modules/.pnpm/resolve-url-loader@5.0.0/node_modules/resolve-url-loader/index.js??ruleSet[1].rules[0].oneOf[7].use[2]!../../../../node_modules/.pnpm/sass-loader@17.0.0_sass@1.1_20e65d72e5f2ff16ba56ab3dd615796f/node_modules/sass-loader/dist/cjs/index.js??ruleSet[1].rules[0].oneOf[7].use[3]!../../../../packages/material/dist/src/card/index.module.scss");
@@ -9280,52 +9472,41 @@ var card_index_module_update = injectStylesIntoStyleTag_default()(card_index_mod
        /* harmony default export */ const src_card_index_module = (card_index_module/* default */.A && card_index_module/* default */.A.locals ? card_index_module/* default */.A.locals : undefined);
 
 ;// ../../../../packages/material/dist/src/card/index.js
-var card_assign = undefined && undefined.__assign || function () {
-  card_assign = Object.assign || function (t) {
-    for (var s, i = 1, n = arguments.length; i < n; i++) {
-      s = arguments[i];
-      for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p)) t[p] = s[p];
-    }
-    return t;
-  };
-  return card_assign.apply(this, arguments);
-};
-var card_rest = undefined && undefined.__rest || function (s, e) {
-  var t = {};
-  for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p) && e.indexOf(p) < 0) t[p] = s[p];
-  if (s != null && typeof Object.getOwnPropertySymbols === "function") for (var i = 0, p = Object.getOwnPropertySymbols(s); i < p.length; i++) {
-    if (e.indexOf(p[i]) < 0 && Object.prototype.propertyIsEnumerable.call(s, p[i])) t[p[i]] = s[p[i]];
-  }
-  return t;
-};
 
 
 
 
 
-function _Card(_a) {
-  var children = _a.children,
-    className = _a.className,
-    _b = _a.elevation,
-    elevation = _b === void 0 ? 1 : _b,
-    props = card_rest(_a, ["children", "className", "elevation"]);
-  return (0,jsx_runtime.jsx)("view", card_assign({
+
+//#region src/card/index.tsx
+var card_excluded = ["children", "className", "elevation"];
+var card_excluded2 = ["className"];
+function _Card(_ref) {
+  var children = _ref.children,
+    className = _ref.className,
+    _ref$elevation = _ref.elevation,
+    elevation = _ref$elevation === void 0 ? 1 : _ref$elevation,
+    props = _objectWithoutProperties(_ref, card_excluded);
+  return /* @__PURE__ */(0,jsx_runtime.jsx)("view", _objectSpread2(_objectSpread2({
     name: "<Card>",
-    className: dist_clsx(className, src_card_index_module.host, getElevationClass(elevation), 'mat-card')
-  }, props, {
+    className: dist_clsx(className, src_card_index_module.host, getElevationClass(elevation), "mat-card")
+  }, props), {}, {
     children: children
   }));
 }
-function card_Content(_a) {
-  var className = _a.className,
-    props = card_rest(_a, ["className"]);
-  return (0,jsx_runtime.jsx)("view", card_assign({
+function card_Content(_ref2) {
+  var className = _ref2.className,
+    props = _objectWithoutProperties(_ref2, card_excluded2);
+  return /* @__PURE__ */(0,jsx_runtime.jsx)("view", _objectSpread2({
     name: "<Card.Content>",
-    className: dist_clsx(className, src_card_index_module.content, 'mat-card-content')
+    className: dist_clsx(className, src_card_index_module.content, "mat-card-content")
   }, props));
 }
 var Card = react.memo(_Card);
 Card.Content = card_Content;
+//#endregion
+
+
 //# sourceMappingURL=index.js.map
 // EXTERNAL MODULE: ../../../../node_modules/.pnpm/css-loader@7.1.4_webpack@5._62043f6a253f8c7f1ce10b9e4bcb0b7c/node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[0].oneOf[7].use[1]!../../../../node_modules/.pnpm/resolve-url-loader@5.0.0/node_modules/resolve-url-loader/index.js??ruleSet[1].rules[0].oneOf[7].use[2]!../../../../node_modules/.pnpm/sass-loader@17.0.0_sass@1.1_20e65d72e5f2ff16ba56ab3dd615796f/node_modules/sass-loader/dist/cjs/index.js??ruleSet[1].rules[0].oneOf[7].use[3]!../../../../packages/material/dist/src/confirm/index.module.scss
 var confirm_index_module = __webpack_require__("../../../../node_modules/.pnpm/css-loader@7.1.4_webpack@5._62043f6a253f8c7f1ce10b9e4bcb0b7c/node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[0].oneOf[7].use[1]!../../../../node_modules/.pnpm/resolve-url-loader@5.0.0/node_modules/resolve-url-loader/index.js??ruleSet[1].rules[0].oneOf[7].use[2]!../../../../node_modules/.pnpm/sass-loader@17.0.0_sass@1.1_20e65d72e5f2ff16ba56ab3dd615796f/node_modules/sass-loader/dist/cjs/index.js??ruleSet[1].rules[0].oneOf[7].use[3]!../../../../packages/material/dist/src/confirm/index.module.scss");
@@ -9357,49 +9538,35 @@ var confirm_index_module_update = injectStylesIntoStyleTag_default()(confirm_ind
        /* harmony default export */ const src_confirm_index_module = (confirm_index_module/* default */.A && confirm_index_module/* default */.A.locals ? confirm_index_module/* default */.A.locals : undefined);
 
 ;// ../../../../packages/material/dist/src/confirm/index.js
-var confirm_assign = undefined && undefined.__assign || function () {
-  confirm_assign = Object.assign || function (t) {
-    for (var s, i = 1, n = arguments.length; i < n; i++) {
-      s = arguments[i];
-      for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p)) t[p] = s[p];
-    }
-    return t;
-  };
-  return confirm_assign.apply(this, arguments);
-};
-var confirm_rest = undefined && undefined.__rest || function (s, e) {
-  var t = {};
-  for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p) && e.indexOf(p) < 0) t[p] = s[p];
-  if (s != null && typeof Object.getOwnPropertySymbols === "function") for (var i = 0, p = Object.getOwnPropertySymbols(s); i < p.length; i++) {
-    if (e.indexOf(p[i]) < 0 && Object.prototype.propertyIsEnumerable.call(s, p[i])) t[p[i]] = s[p[i]];
-  }
-  return t;
-};
 
 
 
 
 
 
-function ConfirmDialog(_a) {
-  var title = _a.title,
-    text = _a.text,
-    buttons = _a.buttons,
-    error = _a.error,
-    submitting = _a.submitting,
-    yes = _a.yes,
-    no = _a.no,
-    onClose = _a.onClose,
-    backdropClose = _a.backdropClose,
-    onClickBackdrop = _a.onClickBackdrop,
-    props = confirm_rest(_a, ["title", "text", "buttons", "error", "submitting", "yes", "no", "onClose", "backdropClose", "onClickBackdrop"]);
+
+//#region src/confirm/index.tsx
+var confirm_excluded = ["title", "text", "buttons", "error", "submitting", "yes", "no", "onClose", "backdropClose", "onClickBackdrop"];
+function ConfirmDialog(_ref) {
+  var title = _ref.title,
+    text = _ref.text,
+    buttons = _ref.buttons,
+    error = _ref.error,
+    submitting = _ref.submitting,
+    yes = _ref.yes,
+    no = _ref.no,
+    onClose = _ref.onClose,
+    backdropClose = _ref.backdropClose,
+    onClickBackdrop = _ref.onClickBackdrop,
+    props = _objectWithoutProperties(_ref, confirm_excluded);
   buttons = (0,react.useMemo)(function () {
-    return buttons !== null && buttons !== void 0 ? buttons : [no == null && {
+    var _buttons;
+    return (_buttons = buttons) !== null && _buttons !== void 0 ? _buttons : [no == null && {
       value: false,
-      text: no || 'No'
+      text: no || "No"
     }, yes == null && {
       value: true,
-      text: yes || 'Yes'
+      text: yes || "Yes"
     }].filter(function (x) {
       return x;
     });
@@ -9408,22 +9575,22 @@ function ConfirmDialog(_a) {
     if (backdropClose) onClose(null);
     if (onClickBackdrop) onClickBackdrop();
   };
-  return (0,jsx_runtime.jsxs)(Modal, confirm_assign({}, props, {
-    className: dist_clsx('mat-confirm-dialog', src_confirm_index_module.host, props.className),
+  return /* @__PURE__ */(0,jsx_runtime.jsxs)(Modal, _objectSpread2(_objectSpread2({}, props), {}, {
+    className: dist_clsx("mat-confirm-dialog", src_confirm_index_module.host, props.className),
     onClickBackdrop: clickBackdrop,
-    children: [title && (0,jsx_runtime.jsx)("div", {
-      className: dist_clsx('mat-confirm-dialog-title', src_confirm_index_module.title),
+    children: [title && /* @__PURE__ */(0,jsx_runtime.jsx)("div", {
+      className: dist_clsx("mat-confirm-dialog-title", src_confirm_index_module.title),
       children: title
-    }), text && (0,jsx_runtime.jsx)("div", {
-      className: dist_clsx('mat-confirm-dialog-text', src_confirm_index_module.text),
+    }), text && /* @__PURE__ */(0,jsx_runtime.jsx)("div", {
+      className: dist_clsx("mat-confirm-dialog-text", src_confirm_index_module.text),
       children: text
-    }), error && (0,jsx_runtime.jsx)("div", {
-      className: dist_clsx('mat-modal-dialog-error', src_confirm_index_module.error),
+    }), error && /* @__PURE__ */(0,jsx_runtime.jsx)("div", {
+      className: dist_clsx("mat-modal-dialog-error", src_confirm_index_module.error),
       children: error
-    }), (buttons === null || buttons === void 0 ? void 0 : buttons.length) > 0 && (0,jsx_runtime.jsx)("div", {
-      className: dist_clsx('mat-confirm-dialog-buttons', src_confirm_index_module.buttons),
+    }), (buttons === null || buttons === void 0 ? void 0 : buttons.length) > 0 && /* @__PURE__ */(0,jsx_runtime.jsx)("div", {
+      className: dist_clsx("mat-confirm-dialog-buttons", src_confirm_index_module.buttons),
       children: buttons.map(function (btn, ind) {
-        return (0,jsx_runtime.jsx)(Button, {
+        return /* @__PURE__ */(0,jsx_runtime.jsx)(Button, {
           className: dist_clsx(src_confirm_index_module.button),
           onClick: function onClick() {
             return onClose(btn.value);
@@ -9435,6 +9602,9 @@ function ConfirmDialog(_a) {
     })]
   }));
 }
+//#endregion
+
+
 //# sourceMappingURL=index.js.map
 // EXTERNAL MODULE: ../../../../node_modules/.pnpm/css-loader@7.1.4_webpack@5._62043f6a253f8c7f1ce10b9e4bcb0b7c/node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[0].oneOf[7].use[1]!../../../../node_modules/.pnpm/resolve-url-loader@5.0.0/node_modules/resolve-url-loader/index.js??ruleSet[1].rules[0].oneOf[7].use[2]!../../../../node_modules/.pnpm/sass-loader@17.0.0_sass@1.1_20e65d72e5f2ff16ba56ab3dd615796f/node_modules/sass-loader/dist/cjs/index.js??ruleSet[1].rules[0].oneOf[7].use[3]!../../../../packages/material/dist/src/input/index.module.scss
 var input_index_module = __webpack_require__("../../../../node_modules/.pnpm/css-loader@7.1.4_webpack@5._62043f6a253f8c7f1ce10b9e4bcb0b7c/node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[0].oneOf[7].use[1]!../../../../node_modules/.pnpm/resolve-url-loader@5.0.0/node_modules/resolve-url-loader/index.js??ruleSet[1].rules[0].oneOf[7].use[2]!../../../../node_modules/.pnpm/sass-loader@17.0.0_sass@1.1_20e65d72e5f2ff16ba56ab3dd615796f/node_modules/sass-loader/dist/cjs/index.js??ruleSet[1].rules[0].oneOf[7].use[3]!../../../../packages/material/dist/src/input/index.module.scss");
@@ -9466,75 +9636,63 @@ var input_index_module_update = injectStylesIntoStyleTag_default()(input_index_m
        /* harmony default export */ const src_input_index_module = (input_index_module/* default */.A && input_index_module/* default */.A.locals ? input_index_module/* default */.A.locals : undefined);
 
 ;// ../../../../packages/material/dist/src/input/index.js
-var input_assign = undefined && undefined.__assign || function () {
-  input_assign = Object.assign || function (t) {
-    for (var s, i = 1, n = arguments.length; i < n; i++) {
-      s = arguments[i];
-      for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p)) t[p] = s[p];
-    }
-    return t;
-  };
-  return input_assign.apply(this, arguments);
-};
-var input_rest = undefined && undefined.__rest || function (s, e) {
-  var t = {};
-  for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p) && e.indexOf(p) < 0) t[p] = s[p];
-  if (s != null && typeof Object.getOwnPropertySymbols === "function") for (var i = 0, p = Object.getOwnPropertySymbols(s); i < p.length; i++) {
-    if (e.indexOf(p[i]) < 0 && Object.prototype.propertyIsEnumerable.call(s, p[i])) t[p[i]] = s[p[i]];
-  }
-  return t;
-};
 
 
 
 
-var InputField = (0,react.forwardRef)(function InputField(_a, ref) {
-  var children = _a.children,
-    _b = _a["float"],
-    _float = _b === void 0 ? 'auto' : _b,
-    placeholder = _a.placeholder,
-    className = _a.className,
-    _c = _a.variant,
-    variant = _c === void 0 ? 'filled' : _c,
-    other = input_rest(_a, ["children", "float", "placeholder", "className", "variant"]);
-  var hostRef = (0,react.useRef)(undefined);
-  variant = variant || 'filled';
+
+//#region src/input/index.tsx
+var input_excluded = ["children", "float", "placeholder", "className", "variant"];
+var InputField = (0,react.forwardRef)(function InputField(_ref, ref) {
+  var children = _ref.children,
+    _ref$float = _ref["float"],
+    _float = _ref$float === void 0 ? "auto" : _ref$float,
+    placeholder = _ref.placeholder,
+    className = _ref.className,
+    _ref$variant = _ref.variant,
+    variant = _ref$variant === void 0 ? "filled" : _ref$variant,
+    other = _objectWithoutProperties(_ref, input_excluded);
+  var hostRef = (0,react.useRef)(void 0);
+  variant = variant || "filled";
   var emptyRef = (0,react.useRef)(true);
   (0,react.useImperativeHandle)(ref, function () {
     return {
       setEmpty: function setEmpty(empty) {
-        var _a, _b;
-        (_a = hostRef.current) === null || _a === void 0 ? void 0 : _a.ClassList.Toggle(src_input_index_module["float"], !empty);
-        (_b = hostRef.current) === null || _b === void 0 ? void 0 : _b.ClassList.Toggle('float', !empty);
+        var _hostRef$current, _hostRef$current2;
+        (_hostRef$current = hostRef.current) === null || _hostRef$current === void 0 || _hostRef$current.ClassList.Toggle(src_input_index_module["float"], !empty);
+        (_hostRef$current2 = hostRef.current) === null || _hostRef$current2 === void 0 || _hostRef$current2.ClassList.Toggle("float", !empty);
         emptyRef.current = empty;
       }
     };
   }, []);
-  return (0,jsx_runtime.jsxs)("view", input_assign({
+  return /* @__PURE__ */(0,jsx_runtime.jsxs)("view", _objectSpread2(_objectSpread2({
     name: "<InputField>"
-  }, other, {
+  }, other), {}, {
     ref: hostRef,
-    className: dist_clsx(src_input_index_module.host, 'mat-input-field', className, src_input_index_module[variant], "mat-text-field-".concat(variant), !!placeholder && src_input_index_module.hasPlaceholder, src_input_index_module["float-".concat(_float || 'auto')], "float-".concat(_float || 'auto'), !emptyRef.current && [src_input_index_module["float"], 'float']),
-    children: [(0,jsx_runtime.jsx)("view", {
-      className: dist_clsx(src_input_index_module.content, 'mat-input-content'),
+    className: dist_clsx(src_input_index_module.host, "mat-input-field", className, src_input_index_module[variant], "mat-text-field-".concat(variant), !!placeholder && src_input_index_module.hasPlaceholder, src_input_index_module["float-".concat(_float || "auto")], "float-".concat(_float || "auto"), !emptyRef.current && [src_input_index_module["float"], "float"]),
+    children: [/* @__PURE__ */(0,jsx_runtime.jsx)("view", {
+      className: dist_clsx(src_input_index_module.content, "mat-input-content"),
       children: children
-    }), variant === 'outlined' && (0,jsx_runtime.jsx)("view", {
-      className: dist_clsx(src_input_index_module.inputFrame, 'mat-input-frame')
-    }), !!placeholder && (0,jsx_runtime.jsxs)("view", {
-      className: dist_clsx(src_input_index_module.placeholder, 'mat-input-placeholder'),
-      children: [(0,jsx_runtime.jsx)("view", {
-        className: dist_clsx(src_input_index_module.placeholderGhost, 'mat-input-placeholder-ghost'),
+    }), variant === "outlined" && /* @__PURE__ */(0,jsx_runtime.jsx)("view", {
+      className: dist_clsx(src_input_index_module.inputFrame, "mat-input-frame")
+    }), !!placeholder && /* @__PURE__ */(0,jsx_runtime.jsxs)("view", {
+      className: dist_clsx(src_input_index_module.placeholder, "mat-input-placeholder"),
+      children: [/* @__PURE__ */(0,jsx_runtime.jsx)("view", {
+        className: dist_clsx(src_input_index_module.placeholderGhost, "mat-input-placeholder-ghost"),
         children: placeholder
-      }), (0,jsx_runtime.jsx)("view", {
-        className: dist_clsx(src_input_index_module.placeholderContent, 'mat-input-placeholder-content'),
-        children: (0,jsx_runtime.jsx)("view", {
-          className: dist_clsx(src_input_index_module.placeholderText, 'mat-input-placeholder-text'),
+      }), /* @__PURE__ */(0,jsx_runtime.jsx)("view", {
+        className: dist_clsx(src_input_index_module.placeholderContent, "mat-input-placeholder-content"),
+        children: /* @__PURE__ */(0,jsx_runtime.jsx)("view", {
+          className: dist_clsx(src_input_index_module.placeholderText, "mat-input-placeholder-text"),
           children: placeholder
         })
       })]
     })]
   }));
 });
+//#endregion
+
+
 //# sourceMappingURL=index.js.map
 // EXTERNAL MODULE: ../../../../node_modules/.pnpm/css-loader@7.1.4_webpack@5._62043f6a253f8c7f1ce10b9e4bcb0b7c/node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[0].oneOf[7].use[1]!../../../../node_modules/.pnpm/resolve-url-loader@5.0.0/node_modules/resolve-url-loader/index.js??ruleSet[1].rules[0].oneOf[7].use[2]!../../../../node_modules/.pnpm/sass-loader@17.0.0_sass@1.1_20e65d72e5f2ff16ba56ab3dd615796f/node_modules/sass-loader/dist/cjs/index.js??ruleSet[1].rules[0].oneOf[7].use[3]!../../../../packages/material/dist/src/paper/index.module.scss
 var paper_index_module = __webpack_require__("../../../../node_modules/.pnpm/css-loader@7.1.4_webpack@5._62043f6a253f8c7f1ce10b9e4bcb0b7c/node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[0].oneOf[7].use[1]!../../../../node_modules/.pnpm/resolve-url-loader@5.0.0/node_modules/resolve-url-loader/index.js??ruleSet[1].rules[0].oneOf[7].use[2]!../../../../node_modules/.pnpm/sass-loader@17.0.0_sass@1.1_20e65d72e5f2ff16ba56ab3dd615796f/node_modules/sass-loader/dist/cjs/index.js??ruleSet[1].rules[0].oneOf[7].use[3]!../../../../packages/material/dist/src/paper/index.module.scss");
@@ -9566,42 +9724,30 @@ var paper_index_module_update = injectStylesIntoStyleTag_default()(paper_index_m
        /* harmony default export */ const src_paper_index_module = (paper_index_module/* default */.A && paper_index_module/* default */.A.locals ? paper_index_module/* default */.A.locals : undefined);
 
 ;// ../../../../packages/material/dist/src/paper/index.js
-var paper_assign = undefined && undefined.__assign || function () {
-  paper_assign = Object.assign || function (t) {
-    for (var s, i = 1, n = arguments.length; i < n; i++) {
-      s = arguments[i];
-      for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p)) t[p] = s[p];
-    }
-    return t;
-  };
-  return paper_assign.apply(this, arguments);
-};
-var paper_rest = undefined && undefined.__rest || function (s, e) {
-  var t = {};
-  for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p) && e.indexOf(p) < 0) t[p] = s[p];
-  if (s != null && typeof Object.getOwnPropertySymbols === "function") for (var i = 0, p = Object.getOwnPropertySymbols(s); i < p.length; i++) {
-    if (e.indexOf(p[i]) < 0 && Object.prototype.propertyIsEnumerable.call(s, p[i])) t[p[i]] = s[p[i]];
-  }
-  return t;
-};
 
 
 
 
 
-function _Paper(_a) {
-  var children = _a.children,
-    className = _a.className,
-    elevation = _a.elevation,
-    props = paper_rest(_a, ["children", "className", "elevation"]);
-  return (0,jsx_runtime.jsx)("view", paper_assign({
+
+//#region src/paper/index.tsx
+var paper_excluded = ["children", "className", "elevation"];
+function _Paper(_ref) {
+  var children = _ref.children,
+    className = _ref.className,
+    elevation = _ref.elevation,
+    props = _objectWithoutProperties(_ref, paper_excluded);
+  return /* @__PURE__ */(0,jsx_runtime.jsx)("view", _objectSpread2(_objectSpread2({
     name: "<Paper>",
-    className: dist_clsx(className, src_paper_index_module.host, getElevationClass(elevation), 'mat-paper')
-  }, props, {
+    className: dist_clsx(className, src_paper_index_module.host, getElevationClass(elevation), "mat-paper")
+  }, props), {}, {
     children: children
   }));
 }
 var Paper = react.memo(_Paper);
+//#endregion
+
+
 //# sourceMappingURL=index.js.map
 // EXTERNAL MODULE: ../../../../node_modules/.pnpm/css-loader@7.1.4_webpack@5._62043f6a253f8c7f1ce10b9e4bcb0b7c/node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[0].oneOf[7].use[1]!../../../../node_modules/.pnpm/resolve-url-loader@5.0.0/node_modules/resolve-url-loader/index.js??ruleSet[1].rules[0].oneOf[7].use[2]!../../../../node_modules/.pnpm/sass-loader@17.0.0_sass@1.1_20e65d72e5f2ff16ba56ab3dd615796f/node_modules/sass-loader/dist/cjs/index.js??ruleSet[1].rules[0].oneOf[7].use[3]!../../../../packages/material/dist/src/text/index.module.scss
 var text_index_module = __webpack_require__("../../../../node_modules/.pnpm/css-loader@7.1.4_webpack@5._62043f6a253f8c7f1ce10b9e4bcb0b7c/node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[0].oneOf[7].use[1]!../../../../node_modules/.pnpm/resolve-url-loader@5.0.0/node_modules/resolve-url-loader/index.js??ruleSet[1].rules[0].oneOf[7].use[2]!../../../../node_modules/.pnpm/sass-loader@17.0.0_sass@1.1_20e65d72e5f2ff16ba56ab3dd615796f/node_modules/sass-loader/dist/cjs/index.js??ruleSet[1].rules[0].oneOf[7].use[3]!../../../../packages/material/dist/src/text/index.module.scss");
@@ -9633,92 +9779,82 @@ var text_index_module_update = injectStylesIntoStyleTag_default()(text_index_mod
        /* harmony default export */ const src_text_index_module = (text_index_module/* default */.A && text_index_module/* default */.A.locals ? text_index_module/* default */.A.locals : undefined);
 
 ;// ../../../../packages/material/dist/src/text/index.js
-var text_assign = undefined && undefined.__assign || function () {
-  text_assign = Object.assign || function (t) {
-    for (var s, i = 1, n = arguments.length; i < n; i++) {
-      s = arguments[i];
-      for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p)) t[p] = s[p];
-    }
-    return t;
-  };
-  return text_assign.apply(this, arguments);
-};
-var text_rest = undefined && undefined.__rest || function (s, e) {
-  var t = {};
-  for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p) && e.indexOf(p) < 0) t[p] = s[p];
-  if (s != null && typeof Object.getOwnPropertySymbols === "function") for (var i = 0, p = Object.getOwnPropertySymbols(s); i < p.length; i++) {
-    if (e.indexOf(p[i]) < 0 && Object.prototype.propertyIsEnumerable.call(s, p[i])) t[p[i]] = s[p[i]];
-  }
-  return t;
-};
 
 
 
 
 
 
-var TextField = (0,react.forwardRef)(function TextField(_a, ref) {
-  var _b = _a.placeholder,
-    placeholder = _b === void 0 ? '' : _b,
-    onSelect = _a.onSelect,
-    onChange = _a.onChange,
-    onValue = _a.onValue,
-    _float = _a["float"],
-    selectAllOnFocus = _a.selectAllOnFocus,
-    className = _a.className,
-    defaultValue = _a.defaultValue,
-    contentType = _a.contentType,
-    _c = _a.variant,
-    variant = _c === void 0 ? 'filled' : _c,
-    inputProps = text_rest(_a, ["placeholder", "onSelect", "onChange", "onValue", "float", "selectAllOnFocus", "className", "defaultValue", "contentType", "variant"]);
-  var _d = (0,react.useState)(false),
-    passwordShown = _d[0],
-    setPasswordShown = _d[1];
-  variant = variant || 'filled';
-  var isPassword = contentType === 'password' || contentType === 'pin';
+
+
+//#region src/text/index.tsx
+var text_excluded = ["placeholder", "onSelect", "onChange", "onValue", "float", "selectAllOnFocus", "className", "defaultValue", "contentType", "variant"];
+var TextField = (0,react.forwardRef)(function TextField(_ref, ref) {
+  var _ref$placeholder = _ref.placeholder,
+    placeholder = _ref$placeholder === void 0 ? "" : _ref$placeholder,
+    onSelect = _ref.onSelect,
+    onChange = _ref.onChange,
+    onValue = _ref.onValue,
+    _float = _ref["float"],
+    selectAllOnFocus = _ref.selectAllOnFocus,
+    className = _ref.className,
+    defaultValue = _ref.defaultValue,
+    contentType = _ref.contentType,
+    _ref$variant = _ref.variant,
+    variant = _ref$variant === void 0 ? "filled" : _ref$variant,
+    inputProps = _objectWithoutProperties(_ref, text_excluded);
+  var _useState = (0,react.useState)(false),
+    _useState2 = _slicedToArray(_useState, 2),
+    passwordShown = _useState2[0],
+    setPasswordShown = _useState2[1];
+  variant = variant || "filled";
+  var isPassword = contentType === "password" || contentType === "pin";
   var focusHandler = !selectAllOnFocus ? onSelect : function (ev, sender) {
     setTimeout(function () {
       sender.Focus();
     }, 100);
-    onSelect === null || onSelect === void 0 ? void 0 : onSelect(ev, sender);
+    onSelect === null || onSelect === void 0 || onSelect(ev, sender);
   };
-  var realType = isPassword && passwordShown ? 'standard' : contentType;
-  var fieldRef = (0,react.useRef)(undefined);
+  var realType = isPassword && passwordShown ? "standard" : contentType;
+  var fieldRef = (0,react.useRef)(void 0);
   var change = (0,react.useCallback)(function (ev, sender) {
-    var _a;
+    var _fieldRef$current;
     var val = sender.Value;
     if (onChange && ev) onChange(ev, sender);
-    (_a = fieldRef.current) === null || _a === void 0 ? void 0 : _a.setEmpty(!val);
-    onValue === null || onValue === void 0 ? void 0 : onValue(val);
+    (_fieldRef$current = fieldRef.current) === null || _fieldRef$current === void 0 || _fieldRef$current.setEmpty(!val);
+    onValue === null || onValue === void 0 || onValue(val);
   }, [onChange, onValue]);
-  return (0,jsx_runtime.jsxs)(InputField, {
-    className: dist_clsx(className, src_text_index_module.host, 'mat-text-field', src_text_index_module[variant]),
+  return /* @__PURE__ */(0,jsx_runtime.jsxs)(InputField, {
+    className: dist_clsx(className, src_text_index_module.host, "mat-text-field", src_text_index_module[variant]),
     variant: variant,
     placeholder: placeholder,
     "float": _float,
     ref: fieldRef,
     name: "<TextField>",
-    children: [(0,jsx_runtime.jsx)("input", text_assign({
-      className: dist_clsx(src_text_index_module.input, 'mat-text-input', 'mat-input-field-target'),
+    children: [/* @__PURE__ */(0,jsx_runtime.jsx)("input", _objectSpread2({
+      className: dist_clsx(src_text_index_module.input, "mat-text-input", "mat-input-field-target"),
       contentType: realType,
       ref: ref,
-      placeholder: ' ',
+      placeholder: " ",
       onSelect: focusHandler,
       onChange: change
-    }, inputProps)), isPassword && (0,jsx_runtime.jsx)(Button, {
+    }, inputProps)), isPassword && /* @__PURE__ */(0,jsx_runtime.jsx)(Button, {
       variant: "icon",
       onClick: function onClick() {
         return setPasswordShown(function (st) {
           return !st;
         });
       },
-      className: dist_clsx(src_text_index_module.passwordToggle, 'mat-text-password-toggle'),
-      children: (0,jsx_runtime.jsx)("icon", {
-        children: passwordShown ? 'visibility' : 'visibility_off'
+      className: dist_clsx(src_text_index_module.passwordToggle, "mat-text-password-toggle"),
+      children: /* @__PURE__ */(0,jsx_runtime.jsx)("icon", {
+        children: passwordShown ? "visibility" : "visibility_off"
       })
     })]
   });
 });
+//#endregion
+
+
 //# sourceMappingURL=index.js.map
 // EXTERNAL MODULE: ../../../../node_modules/.pnpm/css-loader@7.1.4_webpack@5._62043f6a253f8c7f1ce10b9e4bcb0b7c/node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[0].oneOf[7].use[1]!../../../../node_modules/.pnpm/resolve-url-loader@5.0.0/node_modules/resolve-url-loader/index.js??ruleSet[1].rules[0].oneOf[7].use[2]!../../../../node_modules/.pnpm/sass-loader@17.0.0_sass@1.1_20e65d72e5f2ff16ba56ab3dd615796f/node_modules/sass-loader/dist/cjs/index.js??ruleSet[1].rules[0].oneOf[7].use[3]!../../../../packages/material/dist/src/prompt/index.module.scss
 var prompt_index_module = __webpack_require__("../../../../node_modules/.pnpm/css-loader@7.1.4_webpack@5._62043f6a253f8c7f1ce10b9e4bcb0b7c/node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[0].oneOf[7].use[1]!../../../../node_modules/.pnpm/resolve-url-loader@5.0.0/node_modules/resolve-url-loader/index.js??ruleSet[1].rules[0].oneOf[7].use[2]!../../../../node_modules/.pnpm/sass-loader@17.0.0_sass@1.1_20e65d72e5f2ff16ba56ab3dd615796f/node_modules/sass-loader/dist/cjs/index.js??ruleSet[1].rules[0].oneOf[7].use[3]!../../../../packages/material/dist/src/prompt/index.module.scss");
@@ -9750,24 +9886,6 @@ var prompt_index_module_update = injectStylesIntoStyleTag_default()(prompt_index
        /* harmony default export */ const src_prompt_index_module = (prompt_index_module/* default */.A && prompt_index_module/* default */.A.locals ? prompt_index_module/* default */.A.locals : undefined);
 
 ;// ../../../../packages/material/dist/src/prompt/index.js
-var prompt_assign = undefined && undefined.__assign || function () {
-  prompt_assign = Object.assign || function (t) {
-    for (var s, i = 1, n = arguments.length; i < n; i++) {
-      s = arguments[i];
-      for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p)) t[p] = s[p];
-    }
-    return t;
-  };
-  return prompt_assign.apply(this, arguments);
-};
-var prompt_rest = undefined && undefined.__rest || function (s, e) {
-  var t = {};
-  for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p) && e.indexOf(p) < 0) t[p] = s[p];
-  if (s != null && typeof Object.getOwnPropertySymbols === "function") for (var i = 0, p = Object.getOwnPropertySymbols(s); i < p.length; i++) {
-    if (e.indexOf(p[i]) < 0 && Object.prototype.propertyIsEnumerable.call(s, p[i])) t[p[i]] = s[p[i]];
-  }
-  return t;
-};
 
 
 
@@ -9775,62 +9893,120 @@ var prompt_rest = undefined && undefined.__rest || function (s, e) {
 
 
 
-function PromptDialog(_a) {
-  var title = _a.title,
-    text = _a.text,
-    error = _a.error,
-    placeholder = _a.placeholder,
-    submit = _a.submit,
-    submitting = _a.submitting,
-    cancel = _a.cancel,
-    onClose = _a.onClose,
-    open = _a.open,
-    className = _a.className,
-    backdropClose = _a.backdropClose,
-    onClickBackdrop = _a.onClickBackdrop,
-    inputProps = prompt_rest(_a, ["title", "text", "error", "placeholder", "submit", "submitting", "cancel", "onClose", "open", "className", "backdropClose", "onClickBackdrop"]);
-  var inputRef = (0,react.useRef)(undefined);
+
+//#region src/prompt/index.tsx
+var prompt_excluded = ["title", "text", "error", "placeholder", "submit", "submitting", "cancel", "onClose", "open", "className", "backdropClose", "onClickBackdrop"];
+function PromptDialog(_ref) {
+  var title = _ref.title,
+    text = _ref.text,
+    error = _ref.error,
+    placeholder = _ref.placeholder,
+    submit = _ref.submit,
+    submitting = _ref.submitting,
+    cancel = _ref.cancel,
+    onClose = _ref.onClose,
+    open = _ref.open,
+    className = _ref.className,
+    backdropClose = _ref.backdropClose,
+    onClickBackdrop = _ref.onClickBackdrop,
+    inputProps = _objectWithoutProperties(_ref, prompt_excluded);
+  var inputRef = (0,react.useRef)(void 0);
   var clickBackdrop = function clickBackdrop() {
     if (backdropClose) onClose(null, false);
     if (onClickBackdrop) onClickBackdrop();
   };
-  return (0,jsx_runtime.jsxs)(Modal, {
+  return /* @__PURE__ */(0,jsx_runtime.jsxs)(Modal, {
     open: open,
-    className: dist_clsx('mat-prompt-dialog', src_prompt_index_module.host, className),
+    className: dist_clsx("mat-prompt-dialog", src_prompt_index_module.host, className),
     onClickBackdrop: clickBackdrop,
-    children: [title && (0,jsx_runtime.jsx)("div", {
-      className: dist_clsx('mat-prompt-dialog-title', src_prompt_index_module.title),
+    children: [title && /* @__PURE__ */(0,jsx_runtime.jsx)("div", {
+      className: dist_clsx("mat-prompt-dialog-title", src_prompt_index_module.title),
       children: title
-    }), text && (0,jsx_runtime.jsx)("div", {
-      className: dist_clsx('mat-prompt-dialog-text', src_prompt_index_module.text),
+    }), text && /* @__PURE__ */(0,jsx_runtime.jsx)("div", {
+      className: dist_clsx("mat-prompt-dialog-text", src_prompt_index_module.text),
       children: text
-    }), (0,jsx_runtime.jsx)(TextField, prompt_assign({
-      className: dist_clsx('mat-prompt-dialog-input', src_prompt_index_module.input),
+    }), /* @__PURE__ */(0,jsx_runtime.jsx)(TextField, _objectSpread2({
+      className: dist_clsx("mat-prompt-dialog-input", src_prompt_index_module.input),
       placeholder: placeholder,
       ref: inputRef
-    }, inputProps)), error && (0,jsx_runtime.jsx)("div", {
-      className: dist_clsx('mat-prompt-dialog-error', src_prompt_index_module.error),
+    }, inputProps)), error && /* @__PURE__ */(0,jsx_runtime.jsx)("div", {
+      className: dist_clsx("mat-prompt-dialog-error", src_prompt_index_module.error),
       children: error
-    }), (0,jsx_runtime.jsxs)("div", {
-      className: dist_clsx('mat-prompt-dialog-buttons', src_prompt_index_module.buttons),
-      children: [(0,jsx_runtime.jsx)(Button, {
+    }), /* @__PURE__ */(0,jsx_runtime.jsxs)("div", {
+      className: dist_clsx("mat-prompt-dialog-buttons", src_prompt_index_module.buttons),
+      children: [/* @__PURE__ */(0,jsx_runtime.jsx)(Button, {
         onClick: function onClick() {
           return onClose(inputRef.current.Value, false);
         },
-        children: cancel || 'Cancel'
-      }), (0,jsx_runtime.jsx)(Button, {
+        children: cancel || "Cancel"
+      }), /* @__PURE__ */(0,jsx_runtime.jsx)(Button, {
         onClick: function onClick() {
           return onClose(inputRef.current.Value, true);
         },
         "data-temp-disabled": submitting,
-        children: submit || 'Submit'
+        children: submit || "Submit"
       })]
     })]
   });
 }
-//# sourceMappingURL=index.js.map
-;// ../../../../packages/material/dist/src/util/hooks/use-auto-ref.js
+//#endregion
 
+
+//# sourceMappingURL=index.js.map
+;// ../../../../node_modules/.pnpm/@babel+runtime@7.29.7/node_modules/@babel/runtime/helpers/esm/classCallCheck.js
+function _classCallCheck(a, n) {
+  if (!(a instanceof n)) throw new TypeError("Cannot call a class as a function");
+}
+
+;// ../../../../node_modules/.pnpm/@babel+runtime@7.29.7/node_modules/@babel/runtime/helpers/esm/typeof.js
+function typeof_typeof(o) {
+  "@babel/helpers - typeof";
+
+  return typeof_typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) {
+    return typeof o;
+  } : function (o) {
+    return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o;
+  }, typeof_typeof(o);
+}
+
+;// ../../../../node_modules/.pnpm/@babel+runtime@7.29.7/node_modules/@babel/runtime/helpers/esm/toPrimitive.js
+
+function toPrimitive_toPrimitive(t, r) {
+  if ("object" != typeof_typeof(t) || !t) return t;
+  var e = t[Symbol.toPrimitive];
+  if (void 0 !== e) {
+    var i = e.call(t, r || "default");
+    if ("object" != typeof_typeof(i)) return i;
+    throw new TypeError("@@toPrimitive must return a primitive value.");
+  }
+  return ("string" === r ? String : Number)(t);
+}
+
+;// ../../../../node_modules/.pnpm/@babel+runtime@7.29.7/node_modules/@babel/runtime/helpers/esm/toPropertyKey.js
+
+
+function toPropertyKey_toPropertyKey(t) {
+  var i = toPrimitive_toPrimitive(t, "string");
+  return "symbol" == typeof_typeof(i) ? i : i + "";
+}
+
+;// ../../../../node_modules/.pnpm/@babel+runtime@7.29.7/node_modules/@babel/runtime/helpers/esm/createClass.js
+
+function _defineProperties(e, r) {
+  for (var t = 0; t < r.length; t++) {
+    var o = r[t];
+    o.enumerable = o.enumerable || !1, o.configurable = !0, "value" in o && (o.writable = !0), Object.defineProperty(e, toPropertyKey_toPropertyKey(o.key), o);
+  }
+}
+function _createClass(e, r, t) {
+  return r && _defineProperties(e.prototype, r), t && _defineProperties(e, t), Object.defineProperty(e, "prototype", {
+    writable: !1
+  }), e;
+}
+
+;// ../../../../packages/material/dist/use-auto-ref-DA1SDgWf.js
+
+//#region src/util/hooks/use-auto-ref.ts
 function useAutoRef(value) {
   var ref = (0,react.useRef)(value);
   (0,react.useLayoutEffect)(function () {
@@ -9838,139 +10014,10 @@ function useAutoRef(value) {
   });
   return ref;
 }
-//# sourceMappingURL=use-auto-ref.js.map
-;// ../../../../packages/material/dist/src/util/selection.js
-var SelectionState = /** @class */function () {
-  function SelectionState(allowMultiple, initialValue) {
-    this.allowMultiple = allowMultiple;
-    this.initialValue = initialValue;
-    this.elements = [];
-    this.value = initialValue || (allowMultiple ? [] : undefined);
-    if (this.allowMultiple) {
-      if (!Array.isArray(this.value)) this.value = [this.value];
-      this.any = this.all = this.value.length > 0;
-    } else {
-      this.any = this.all = !!this.value;
-    }
-  }
-  SelectionState.prototype.changed = function (sender) {
-    if (this.allowMultiple) {
-      var all = true;
-      var any = false;
-      var res = [];
-      for (var index = 0; index < this.elements.length; index++) {
-        var element = this.elements[index];
-        if (element.el.selected) {
-          res.push(element.el.value);
-          any = true;
-        } else all = false;
-      }
-      this.value = res;
-      this.all = all;
-      this.any = any;
-      return;
-    }
-    this.all = false;
-    var firstChecked = sender;
-    if (!firstChecked) {
-      for (var index = 0; index < this.elements.length; index++) {
-        var element = this.elements[index];
-        if (element.el.selected) {
-          firstChecked = element.el;
-          break;
-        }
-      }
-    }
-    if (!firstChecked) {
-      this.value = undefined;
-      this.any = false;
-      return;
-    }
-    if (!firstChecked.selected) firstChecked.selected = true;
-    for (var index = 0; index < this.elements.length; index++) {
-      var element = this.elements[index];
-      if (element.el !== firstChecked) element.el.selected = false;
-    }
-    this.value = firstChecked.value;
-    this.any = true;
-  };
-  SelectionState.prototype.triggerChange = function () {
-    var _a;
-    (_a = this.onChange) === null || _a === void 0 ? void 0 : _a.call(this, this.value, this.all, this.any);
-  };
-  SelectionState.prototype.triggerUpdate = function () {
-    var _a;
-    (_a = this.onUpdate) === null || _a === void 0 ? void 0 : _a.call(this, this);
-  };
-  SelectionState.prototype.register = function (el) {
-    var _this = this;
-    var listener = el.addOnChange(function () {
-      _this.changed(el);
-      _this.triggerChange();
-      _this.triggerUpdate();
-    });
-    this.elements.push({
-      el: el,
-      listener: listener
-    });
-    if (typeof el.value !== 'undefined') {
-      if (this.allowMultiple && Array.isArray(this.value)) el.selected = this.value.includes(el.value);else el.selected = this.value === el.value;
-    }
-    if (this.allowMultiple) {
-      if (this.all && !el.selected) {
-        this.all = false;
-        this.triggerChange();
-      }
-      if (!this.any && el.selected) {
-        this.any = true;
-        this.triggerChange();
-      }
-    }
-    this.triggerUpdate();
-    return function () {
-      _this.unregister(el);
-    };
-  };
-  SelectionState.prototype.unregister = function (el) {
-    var ind = this.elements.findIndex(function (x) {
-      return x.el === el;
-    });
-    if (ind >= 0) {
-      var item = this.elements[ind];
-      this.elements.splice(ind, 1);
-      if (item.listener) item.listener();
-    }
-    this.triggerUpdate();
-  };
-  SelectionState.prototype.setAll = function (checked) {
-    if (!this.allowMultiple && checked) throw new Error('Multiple values cannot be selected for this selection state');
-    checked = !!checked;
-    this.all = checked;
-    this.any = checked;
-    var values = [];
-    for (var index = 0; index < this.elements.length; index++) {
-      var element = this.elements[index];
-      element.el.selected = checked;
-    }
-    this.value = this.allowMultiple ? values : undefined;
-    this.all = checked;
-    this.any = checked;
-    this.triggerChange();
-    this.triggerUpdate();
-  };
-  SelectionState.prototype.getSelectedElements = function () {
-    var res = [];
-    for (var index = 0; index < this.elements.length; index++) {
-      var el = this.elements[index].el;
-      var isSelected = typeof el.value !== 'undefined' && (this.allowMultiple && Array.isArray(this.value) ? this.value.includes(el.value) : this.value === el.value);
-      if (isSelected) res.push(el);
-    }
-    return res;
-  };
-  return SelectionState;
-}();
+//#endregion
 
-//# sourceMappingURL=selection.js.map
+
+//# sourceMappingURL=use-auto-ref-DA1SDgWf.js.map
 // EXTERNAL MODULE: ../../../../node_modules/.pnpm/css-loader@7.1.4_webpack@5._62043f6a253f8c7f1ce10b9e4bcb0b7c/node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[0].oneOf[7].use[1]!../../../../node_modules/.pnpm/resolve-url-loader@5.0.0/node_modules/resolve-url-loader/index.js??ruleSet[1].rules[0].oneOf[7].use[2]!../../../../node_modules/.pnpm/sass-loader@17.0.0_sass@1.1_20e65d72e5f2ff16ba56ab3dd615796f/node_modules/sass-loader/dist/cjs/index.js??ruleSet[1].rules[0].oneOf[7].use[3]!../../../../packages/material/dist/src/toggle/index.module.scss
 var toggle_index_module = __webpack_require__("../../../../node_modules/.pnpm/css-loader@7.1.4_webpack@5._62043f6a253f8c7f1ce10b9e4bcb0b7c/node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[0].oneOf[7].use[1]!../../../../node_modules/.pnpm/resolve-url-loader@5.0.0/node_modules/resolve-url-loader/index.js??ruleSet[1].rules[0].oneOf[7].use[2]!../../../../node_modules/.pnpm/sass-loader@17.0.0_sass@1.1_20e65d72e5f2ff16ba56ab3dd615796f/node_modules/sass-loader/dist/cjs/index.js??ruleSet[1].rules[0].oneOf[7].use[3]!../../../../packages/material/dist/src/toggle/index.module.scss");
 ;// ../../../../packages/material/dist/src/toggle/index.module.scss
@@ -10000,45 +10047,175 @@ var toggle_index_module_update = injectStylesIntoStyleTag_default()(toggle_index
 
        /* harmony default export */ const src_toggle_index_module = (toggle_index_module/* default */.A && toggle_index_module/* default */.A.locals ? toggle_index_module/* default */.A.locals : undefined);
 
-;// ../../../../packages/material/dist/src/toggle/index.js
-var toggle_assign = undefined && undefined.__assign || function () {
-  toggle_assign = Object.assign || function (t) {
-    for (var s, i = 1, n = arguments.length; i < n; i++) {
-      s = arguments[i];
-      for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p)) t[p] = s[p];
-    }
-    return t;
-  };
-  return toggle_assign.apply(this, arguments);
-};
-var toggle_rest = undefined && undefined.__rest || function (s, e) {
-  var t = {};
-  for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p) && e.indexOf(p) < 0) t[p] = s[p];
-  if (s != null && typeof Object.getOwnPropertySymbols === "function") for (var i = 0, p = Object.getOwnPropertySymbols(s); i < p.length; i++) {
-    if (e.indexOf(p[i]) < 0 && Object.prototype.propertyIsEnumerable.call(s, p[i])) t[p[i]] = s[p[i]];
+;// ../../../../packages/material/dist/toggle-DvSooyoZ.js
+
+
+
+
+
+
+
+
+
+//#region src/util/selection.ts
+var SelectionState = /*#__PURE__*/function () {
+  function SelectionState(allowMultiple, initialValue) {
+    _classCallCheck(this, SelectionState);
+    this.allowMultiple = allowMultiple;
+    this.initialValue = initialValue;
+    _defineProperty(this, "elements", []);
+    _defineProperty(this, "value", void 0);
+    _defineProperty(this, "any", void 0);
+    _defineProperty(this, "all", void 0);
+    _defineProperty(this, "onChange", void 0);
+    _defineProperty(this, "onUpdate", void 0);
+    this.value = initialValue || (allowMultiple ? [] : void 0);
+    if (this.allowMultiple) {
+      if (!Array.isArray(this.value)) this.value = [this.value];
+      this.any = this.all = this.value.length > 0;
+    } else this.any = this.all = !!this.value;
   }
-  return t;
-};
-
-
-
-
-
-
-
+  return _createClass(SelectionState, [{
+    key: "changed",
+    value: function changed(sender) {
+      if (this.allowMultiple) {
+        var all = true;
+        var any = false;
+        var res = [];
+        for (var index = 0; index < this.elements.length; index++) {
+          var element = this.elements[index];
+          if (element.el.selected) {
+            res.push(element.el.value);
+            any = true;
+          } else all = false;
+        }
+        this.value = res;
+        this.all = all;
+        this.any = any;
+        return;
+      }
+      this.all = false;
+      var firstChecked = sender;
+      if (!firstChecked) for (var _index = 0; _index < this.elements.length; _index++) {
+        var _element = this.elements[_index];
+        if (_element.el.selected) {
+          firstChecked = _element.el;
+          break;
+        }
+      }
+      if (!firstChecked) {
+        this.value = void 0;
+        this.any = false;
+        return;
+      }
+      if (!firstChecked.selected) firstChecked.selected = true;
+      for (var _index2 = 0; _index2 < this.elements.length; _index2++) {
+        var _element2 = this.elements[_index2];
+        if (_element2.el !== firstChecked) _element2.el.selected = false;
+      }
+      this.value = firstChecked.value;
+      this.any = true;
+    }
+  }, {
+    key: "triggerChange",
+    value: function triggerChange() {
+      var _this$onChange;
+      (_this$onChange = this.onChange) === null || _this$onChange === void 0 || _this$onChange.call(this, this.value, this.all, this.any);
+    }
+  }, {
+    key: "triggerUpdate",
+    value: function triggerUpdate() {
+      var _this$onUpdate;
+      (_this$onUpdate = this.onUpdate) === null || _this$onUpdate === void 0 || _this$onUpdate.call(this, this);
+    }
+  }, {
+    key: "register",
+    value: function register(el) {
+      var _this = this;
+      var listener = el.addOnChange(function () {
+        _this.changed(el);
+        _this.triggerChange();
+        _this.triggerUpdate();
+      });
+      this.elements.push({
+        el: el,
+        listener: listener
+      });
+      if (typeof el.value !== "undefined") if (this.allowMultiple && Array.isArray(this.value)) el.selected = this.value.includes(el.value);else el.selected = this.value === el.value;
+      if (this.allowMultiple) {
+        if (this.all && !el.selected) {
+          this.all = false;
+          this.triggerChange();
+        }
+        if (!this.any && el.selected) {
+          this.any = true;
+          this.triggerChange();
+        }
+      }
+      this.triggerUpdate();
+      return function () {
+        _this.unregister(el);
+      };
+    }
+  }, {
+    key: "unregister",
+    value: function unregister(el) {
+      var ind = this.elements.findIndex(function (x) {
+        return x.el === el;
+      });
+      if (ind >= 0) {
+        var item = this.elements[ind];
+        this.elements.splice(ind, 1);
+        if (item.listener) item.listener();
+      }
+      this.triggerUpdate();
+    }
+  }, {
+    key: "setAll",
+    value: function setAll(checked) {
+      if (!this.allowMultiple && checked) throw new Error("Multiple values cannot be selected for this selection state");
+      checked = !!checked;
+      this.all = checked;
+      this.any = checked;
+      var values = [];
+      for (var index = 0; index < this.elements.length; index++) {
+        var element = this.elements[index];
+        element.el.selected = checked;
+      }
+      this.value = this.allowMultiple ? values : void 0;
+      this.all = checked;
+      this.any = checked;
+      this.triggerChange();
+      this.triggerUpdate();
+    }
+  }, {
+    key: "getSelectedElements",
+    value: function getSelectedElements() {
+      var res = [];
+      for (var index = 0; index < this.elements.length; index++) {
+        var el = this.elements[index].el;
+        if (typeof el.value !== "undefined" && (this.allowMultiple && Array.isArray(this.value) ? this.value.includes(el.value) : this.value === el.value)) res.push(el);
+      }
+      return res;
+    }
+  }]);
+}();
+//#endregion
+//#region src/toggle/index.tsx
+var toggle_DvSooyoZ_excluded = ["children", "className", "noRipple", "onPointerDown", "onPointerUp", "type", "variant", "independent"];
 var ToggleGroupContext = react.createContext(null);
-var _Toggle = react.forwardRef(function _Toggle(_a, ref) {
-  var children = _a.children,
-    className = _a.className,
-    noRipple = _a.noRipple,
-    onPointerDown = _a.onPointerDown,
-    onPointerUp = _a.onPointerUp,
-    type = _a.type,
-    variant = _a.variant,
-    independent = _a.independent,
-    props = toggle_rest(_a, ["children", "className", "noRipple", "onPointerDown", "onPointerUp", "type", "variant", "independent"]);
-  var toggleRef = (0,react.useRef)(undefined);
-  var ringRef = (0,react.useRef)(undefined);
+var _Toggle = react.forwardRef(function _Toggle(_ref, ref) {
+  var children = _ref.children,
+    className = _ref.className,
+    noRipple = _ref.noRipple,
+    onPointerDown = _ref.onPointerDown,
+    onPointerUp = _ref.onPointerUp,
+    type = _ref.type,
+    variant = _ref.variant,
+    independent = _ref.independent,
+    props = _objectWithoutProperties(_ref, toggle_DvSooyoZ_excluded);
+  var toggleRef = (0,react.useRef)(void 0);
+  var ringRef = (0,react.useRef)(void 0);
   var ripple = useRipple({
     onPointerDown: onPointerDown,
     onPointerUp: onPointerUp,
@@ -10048,72 +10225,71 @@ var _Toggle = react.forwardRef(function _Toggle(_a, ref) {
   });
   var ctx = (0,react.useContext)(ToggleGroupContext);
   if (independent) ctx = null;
-  type = type || (ctx && !ctx.allowMultiple ? 'radio' : 'checkbox');
+  type = type || (ctx && !ctx.allowMultiple ? "radio" : "checkbox");
   var selectionRef = (0,react.useMemo)(function () {
     return {
       get selected() {
-        var _a;
-        return (_a = toggleRef.current) === null || _a === void 0 ? void 0 : _a.Checked;
+        var _toggleRef$current;
+        return (_toggleRef$current = toggleRef.current) === null || _toggleRef$current === void 0 ? void 0 : _toggleRef$current.Checked;
       },
       set selected(val) {
         if (toggleRef.current) toggleRef.current.Checked = val;
       },
       get value() {
-        var _a;
-        return (_a = toggleRef.current) === null || _a === void 0 ? void 0 : _a.Value;
+        var _toggleRef$current2;
+        return (_toggleRef$current2 = toggleRef.current) === null || _toggleRef$current2 === void 0 ? void 0 : _toggleRef$current2.Value;
       },
       addOnChange: function addOnChange(callback) {
-        return UnityBridge.addEventListener(toggleRef.current, 'onChange', function () {
-          callback === null || callback === void 0 ? void 0 : callback();
+        return UnityBridge.addEventListener(toggleRef.current, "onChange", function () {
+          callback === null || callback === void 0 || callback();
         });
       }
     };
   }, []);
   var innerRef = (0,react.useCallback)(function (val) {
     toggleRef.current = val;
-    if (typeof ref === 'function') ref(val);else if (ref) ref.current = val;
+    if (typeof ref === "function") ref(val);else if (ref) ref.current = val;
   }, [ref]);
   (0,react.useLayoutEffect)(function () {
     return ctx === null || ctx === void 0 ? void 0 : ctx.register(selectionRef);
   }, [ctx, selectionRef]);
-  var NativeToggle = 'toggle';
-  return (0,jsx_runtime.jsxs)("label", toggle_assign({
-    className: dist_clsx(className, src_toggle_index_module.label, 'mat-toggle-label', src_toggle_index_module[type], "mat-toggle-".concat(type), "mat-variant-".concat(variant))
-  }, ripple, {
-    children: [(0,jsx_runtime.jsx)(NativeToggle, toggle_assign({
+  return /* @__PURE__ */(0,jsx_runtime.jsxs)("label", _objectSpread2(_objectSpread2({
+    className: dist_clsx(className, src_toggle_index_module.label, "mat-toggle-label", src_toggle_index_module[type], "mat-toggle-".concat(type), "mat-variant-".concat(variant))
+  }, ripple), {}, {
+    children: [/* @__PURE__ */(0,jsx_runtime.jsx)("toggle", _objectSpread2(_objectSpread2(_objectSpread2({
       name: "<Toggle>",
       ref: innerRef
-    }, ripple, {
-      className: dist_clsx(src_toggle_index_module.toggle, 'mat-toggle')
-    }, props, {
-      children: (0,jsx_runtime.jsx)("view", {
-        className: dist_clsx(src_toggle_index_module.ring, 'mat-toggle-ring'),
+    }, ripple), {}, {
+      className: dist_clsx(src_toggle_index_module.toggle, "mat-toggle")
+    }, props), {}, {
+      children: /* @__PURE__ */(0,jsx_runtime.jsx)("view", {
+        className: dist_clsx(src_toggle_index_module.ring, "mat-toggle-ring"),
         ref: ringRef
       })
-    })), !!children && (0,jsx_runtime.jsx)("view", {
-      className: dist_clsx(src_toggle_index_module.labelContent, 'mat-toggle-label-content'),
+    })), !!children && /* @__PURE__ */(0,jsx_runtime.jsx)("view", {
+      className: dist_clsx(src_toggle_index_module.labelContent, "mat-toggle-label-content"),
       children: children
     })]
   }));
 });
 var Toggle = react.memo(_Toggle);
-var _ToggleGroup = react.forwardRef(function _ToggleGroupOrig(_a, ref) {
-  var children = _a.children,
-    multiple = _a.multiple,
-    showSelectAll = _a.showSelectAll,
-    selectAllLabel = _a.selectAllLabel,
-    onChange = _a.onChange,
-    initialValue = _a.initialValue;
+var _ToggleGroup = react.forwardRef(function _ToggleGroupOrig(_ref2, ref) {
+  var children = _ref2.children,
+    multiple = _ref2.multiple,
+    showSelectAll = _ref2.showSelectAll,
+    selectAllLabel = _ref2.selectAllLabel,
+    onChange = _ref2.onChange,
+    initialValue = _ref2.initialValue;
   var init = (0,react.useRef)(initialValue);
-  var selectAllRef = (0,react.useRef)(undefined);
+  var selectAllRef = (0,react.useRef)(void 0);
   var onChangeRef = useAutoRef(onChange);
   var state = (0,react.useMemo)(function () {
     return new SelectionState(multiple, init.current);
   }, [multiple]);
   (0,react.useLayoutEffect)(function () {
     state.onChange = function (val, all, any) {
-      var _a;
-      (_a = onChangeRef.current) === null || _a === void 0 ? void 0 : _a.call(onChangeRef, val, all, any);
+      var _onChangeRef$current;
+      (_onChangeRef$current = onChangeRef.current) === null || _onChangeRef$current === void 0 || _onChangeRef$current.call(onChangeRef, val, all, any);
       if (selectAllRef.current) {
         selectAllRef.current.Indeterminate = !!any && !all;
         selectAllRef.current.Checked = !!all;
@@ -10123,8 +10299,6 @@ var _ToggleGroup = react.forwardRef(function _ToggleGroupOrig(_a, ref) {
       selectAllRef.current.Indeterminate = !!state.any && !state.all;
       selectAllRef.current.Checked = !!state.all;
     }
-    // state, not onChangeRef: the ref is stable, while a new SelectionState (multiple changed)
-    // needs its onChange wired up and the select-all box re-synced.
   }, [state]);
   var selectAllCallback = (0,react.useCallback)(function (checked, sender) {
     state.setAll(checked);
@@ -10132,23 +10306,26 @@ var _ToggleGroup = react.forwardRef(function _ToggleGroupOrig(_a, ref) {
   (0,react.useImperativeHandle)(ref, function () {
     return state;
   }, [state]);
-  return (0,jsx_runtime.jsx)(ToggleGroupContext.Provider, {
+  return /* @__PURE__ */(0,jsx_runtime.jsx)(ToggleGroupContext.Provider, {
     value: state,
-    children: (0,jsx_runtime.jsxs)("view", {
+    children: /* @__PURE__ */(0,jsx_runtime.jsxs)("view", {
       name: "<ToggleGroup>",
-      className: dist_clsx('mat-toggle-group'),
-      children: [!!(multiple && showSelectAll) && (0,jsx_runtime.jsx)(Toggle, {
+      className: dist_clsx("mat-toggle-group"),
+      children: [!!(multiple && showSelectAll) && /* @__PURE__ */(0,jsx_runtime.jsx)(Toggle, {
         ref: selectAllRef,
         independent: true,
         onChange: selectAllCallback,
-        className: dist_clsx('mat-toggle-select-all', src_toggle_index_module.selectAllToggle),
-        children: selectAllLabel || 'Select All'
+        className: dist_clsx("mat-toggle-select-all", src_toggle_index_module.selectAllToggle),
+        children: selectAllLabel || "Select All"
       }), children]
     })
   });
 });
 var ToggleGroup = react.memo(_ToggleGroup);
-//# sourceMappingURL=index.js.map
+//#endregion
+
+
+//# sourceMappingURL=toggle-DvSooyoZ.js.map
 // EXTERNAL MODULE: ../../../../node_modules/.pnpm/css-loader@7.1.4_webpack@5._62043f6a253f8c7f1ce10b9e4bcb0b7c/node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[0].oneOf[7].use[1]!../../../../node_modules/.pnpm/resolve-url-loader@5.0.0/node_modules/resolve-url-loader/index.js??ruleSet[1].rules[0].oneOf[7].use[2]!../../../../node_modules/.pnpm/sass-loader@17.0.0_sass@1.1_20e65d72e5f2ff16ba56ab3dd615796f/node_modules/sass-loader/dist/cjs/index.js??ruleSet[1].rules[0].oneOf[7].use[3]!../../../../packages/material/dist/src/select/index.module.scss
 var select_index_module = __webpack_require__("../../../../node_modules/.pnpm/css-loader@7.1.4_webpack@5._62043f6a253f8c7f1ce10b9e4bcb0b7c/node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[0].oneOf[7].use[1]!../../../../node_modules/.pnpm/resolve-url-loader@5.0.0/node_modules/resolve-url-loader/index.js??ruleSet[1].rules[0].oneOf[7].use[2]!../../../../node_modules/.pnpm/sass-loader@17.0.0_sass@1.1_20e65d72e5f2ff16ba56ab3dd615796f/node_modules/sass-loader/dist/cjs/index.js??ruleSet[1].rules[0].oneOf[7].use[3]!../../../../packages/material/dist/src/select/index.module.scss");
 ;// ../../../../packages/material/dist/src/select/index.module.scss
@@ -10179,24 +10356,6 @@ var select_index_module_update = injectStylesIntoStyleTag_default()(select_index
        /* harmony default export */ const src_select_index_module = (select_index_module/* default */.A && select_index_module/* default */.A.locals ? select_index_module/* default */.A.locals : undefined);
 
 ;// ../../../../packages/material/dist/src/select/index.js
-var select_assign = undefined && undefined.__assign || function () {
-  select_assign = Object.assign || function (t) {
-    for (var s, i = 1, n = arguments.length; i < n; i++) {
-      s = arguments[i];
-      for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p)) t[p] = s[p];
-    }
-    return t;
-  };
-  return select_assign.apply(this, arguments);
-};
-var select_rest = undefined && undefined.__rest || function (s, e) {
-  var t = {};
-  for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p) && e.indexOf(p) < 0) t[p] = s[p];
-  if (s != null && typeof Object.getOwnPropertySymbols === "function") for (var i = 0, p = Object.getOwnPropertySymbols(s); i < p.length; i++) {
-    if (e.indexOf(p[i]) < 0 && Object.prototype.propertyIsEnumerable.call(s, p[i])) t[p[i]] = s[p[i]];
-  }
-  return t;
-};
 
 
 
@@ -10207,58 +10366,59 @@ var select_rest = undefined && undefined.__rest || function (s, e) {
 
 
 
+
+//#region src/select/index.tsx
+var select_excluded = ["keepOpen", "onChange", "name", "children", "initialValue", "multiple", "separator", "chips", "variant", "placeholder", "float", "className", "hideCaret"];
 var SelectContext = (0,react.createContext)(null);
-function _Select(_a) {
-  var _b = _a.keepOpen,
-    keepOpen = _b === void 0 ? 'auto' : _b,
-    onChange = _a.onChange,
-    name = _a.name,
-    children = _a.children,
-    initialValue = _a.initialValue,
-    multiple = _a.multiple,
-    separator = _a.separator,
-    chips = _a.chips,
-    variant = _a.variant,
-    placeholder = _a.placeholder,
-    _float = _a["float"],
-    className = _a.className,
-    hideCaret = _a.hideCaret,
-    otherProps = select_rest(_a, ["keepOpen", "onChange", "name", "children", "initialValue", "multiple", "separator", "chips", "variant", "placeholder", "float", "className", "hideCaret"]);
+function _Select(_ref) {
+  var _ref$keepOpen = _ref.keepOpen,
+    keepOpen = _ref$keepOpen === void 0 ? "auto" : _ref$keepOpen,
+    onChange = _ref.onChange,
+    name = _ref.name,
+    children = _ref.children,
+    initialValue = _ref.initialValue,
+    multiple = _ref.multiple,
+    separator = _ref.separator,
+    chips = _ref.chips,
+    variant = _ref.variant,
+    placeholder = _ref.placeholder,
+    _float = _ref["float"],
+    className = _ref.className,
+    hideCaret = _ref.hideCaret,
+    otherProps = _objectWithoutProperties(_ref, select_excluded);
   var init = (0,react.useRef)(initialValue);
-  var selectAllRef = (0,react.useRef)(undefined);
-  var fieldRef = (0,react.useRef)(undefined);
-  var shouldKeepOpen = keepOpen === 'auto' ? multiple : !!keepOpen;
+  var selectAllRef = (0,react.useRef)(void 0);
+  var fieldRef = (0,react.useRef)(void 0);
+  var shouldKeepOpen = keepOpen === "auto" ? multiple : !!keepOpen;
   var onChangeRef = useAutoRef(onChange);
   var shouldKeepOpenRef = useAutoRef(shouldKeepOpen);
   var state = (0,react.useMemo)(function () {
     return new SelectionState(!!multiple, init.current);
   }, [multiple]);
-  var _c = (0,react.useState)(state.getSelectedElements()),
-    selectedElements = _c[0],
-    setSelectedElements = _c[1];
+  var _useState = (0,react.useState)(state.getSelectedElements()),
+    _useState2 = _slicedToArray(_useState, 2),
+    selectedElements = _useState2[0],
+    setSelectedElements = _useState2[1];
   (0,react.useLayoutEffect)(function () {
     state.onChange = function (val, all, any) {
-      var _a, _b;
-      (_a = onChangeRef.current) === null || _a === void 0 ? void 0 : _a.call(onChangeRef, val, all, any);
+      var _onChangeRef$current, _fieldRef$current;
+      (_onChangeRef$current = onChangeRef.current) === null || _onChangeRef$current === void 0 || _onChangeRef$current.call(onChangeRef, val, all, any);
       if (selectAllRef.current) {
         selectAllRef.current.Indeterminate = !!any && !all;
         selectAllRef.current.Checked = !!all;
       }
-      if (!shouldKeepOpenRef.current) {
-        setOpened(false);
-      }
-      (_b = fieldRef.current) === null || _b === void 0 ? void 0 : _b.setEmpty(!any);
+      if (!shouldKeepOpenRef.current) setOpened(false);
+      (_fieldRef$current = fieldRef.current) === null || _fieldRef$current === void 0 || _fieldRef$current.setEmpty(!any);
     };
     state.onUpdate = function (st) {
       var sel = st.getSelectedElements();
       setSelectedElements(sel);
     };
-    // The refs and setters are stable; state is not -- a new SelectionState (multiple changed)
-    // needs its handlers attached, or selection changes stop propagating.
   }, [state]);
-  var _d = (0,react.useState)(false),
-    opened = _d[0],
-    setOpened = _d[1];
+  var _useState3 = (0,react.useState)(false),
+    _useState4 = _slicedToArray(_useState3, 2),
+    opened = _useState4[0],
+    setOpened = _useState4[1];
   var toggle = (0,react.useCallback)(function () {
     return setOpened(function (st) {
       return !st;
@@ -10267,84 +10427,83 @@ function _Select(_a) {
   var close = (0,react.useCallback)(function () {
     return setOpened(false);
   }, []);
-  if (typeof separator === 'undefined' && !chips) {
-    separator = (0,jsx_runtime.jsx)("text", {
-      className: src_select_index_module.defaultSeparator,
-      children: ","
-    });
-  }
+  if (typeof separator === "undefined" && !chips) separator = /* @__PURE__ */(0,jsx_runtime.jsx)("text", {
+    className: src_select_index_module.defaultSeparator,
+    children: ","
+  });
   var setFieldRef = (0,react.useCallback)(function (val) {
-    var _a, _b;
+    var _fieldRef$current2, _init$current;
     fieldRef.current = val;
-    (_a = fieldRef.current) === null || _a === void 0 ? void 0 : _a.setEmpty(multiple ? ((_b = init.current) === null || _b === void 0 ? void 0 : _b.length) === 0 : typeof init.current === 'undefined');
+    (_fieldRef$current2 = fieldRef.current) === null || _fieldRef$current2 === void 0 || _fieldRef$current2.setEmpty(multiple ? ((_init$current = init.current) === null || _init$current === void 0 ? void 0 : _init$current.length) === 0 : typeof init.current === "undefined");
   }, [multiple]);
-  return (0,jsx_runtime.jsxs)(InputField, {
-    className: dist_clsx(className, src_select_index_module.host, 'mat-select-field', src_select_index_module[variant], chips && src_select_index_module.chips, opened && [src_select_index_module.opened, 'mat-select-opened']),
+  return /* @__PURE__ */(0,jsx_runtime.jsxs)(InputField, {
+    className: dist_clsx(className, src_select_index_module.host, "mat-select-field", src_select_index_module[variant], chips && src_select_index_module.chips, opened && [src_select_index_module.opened, "mat-select-opened"]),
     variant: variant,
     placeholder: placeholder,
     "float": _float,
-    name: name || '<SelectField>',
+    name: name || "<SelectField>",
     ref: setFieldRef,
-    children: [(0,jsx_runtime.jsxs)("button", select_assign({
+    children: [/* @__PURE__ */(0,jsx_runtime.jsxs)("button", _objectSpread2(_objectSpread2({
       name: "<Select>",
       onClick: toggle,
-      className: dist_clsx(src_select_index_module.trigger, 'mat-input-field-target')
-    }, otherProps, {
-      children: [(0,jsx_runtime.jsx)("view", {
+      className: dist_clsx(src_select_index_module.trigger, "mat-input-field-target")
+    }, otherProps), {}, {
+      children: [/* @__PURE__ */(0,jsx_runtime.jsx)("view", {
         className: src_select_index_module.triggerContent,
         children: selectedElements.map(function (x, i) {
-          return (0,jsx_runtime.jsxs)(react.Fragment, {
-            children: [i > 0 && separator, (0,jsx_runtime.jsx)("view", {
+          return /* @__PURE__ */(0,jsx_runtime.jsxs)(react.Fragment, {
+            children: [i > 0 && separator, /* @__PURE__ */(0,jsx_runtime.jsx)("view", {
               className: src_select_index_module.triggerPart,
               children: x.getTemplate()
             })]
           }, i);
         })
-      }), (0,jsx_runtime.jsxs)("view", {
+      }), /* @__PURE__ */(0,jsx_runtime.jsxs)("view", {
         className: dist_clsx(src_select_index_module.menuRoot, opened && src_select_index_module.opened),
-        children: [(0,jsx_runtime.jsx)("button", {
+        children: [/* @__PURE__ */(0,jsx_runtime.jsx)("button", {
           name: "<SelectBackdrop>",
           onClick: close,
           className: dist_clsx(src_select_index_module.backdrop)
-        }), (0,jsx_runtime.jsx)(SelectContext.Provider, {
+        }), /* @__PURE__ */(0,jsx_runtime.jsx)(SelectContext.Provider, {
           value: state,
-          children: (0,jsx_runtime.jsx)("scroll", {
+          children: /* @__PURE__ */(0,jsx_runtime.jsx)("scroll", {
             name: "<SelectMenu>",
             className: dist_clsx(src_select_index_module.menu, getElevationClass(4)),
             children: children
           })
         })]
       })]
-    })), !hideCaret && (0,jsx_runtime.jsx)("icon", {
-      className: dist_clsx(src_select_index_module.caret, 'mat-select-caret'),
-      children: 'keyboard_arrow_down'
+    })), !hideCaret && /* @__PURE__ */(0,jsx_runtime.jsx)("icon", {
+      className: dist_clsx(src_select_index_module.caret, "mat-select-caret"),
+      children: "keyboard_arrow_down"
     })]
   });
 }
-function _Option(_a) {
-  var className = _a.className,
-    children = _a.children,
-    value = _a.value,
-    triggerTemplate = _a.triggerTemplate,
-    _b = _a.showToggle,
-    showToggle = _b === void 0 ? 'auto' : _b;
+function _Option(_ref3) {
+  var className = _ref3.className,
+    children = _ref3.children,
+    value = _ref3.value,
+    triggerTemplate = _ref3.triggerTemplate,
+    _ref3$showToggle = _ref3.showToggle,
+    showToggle = _ref3$showToggle === void 0 ? "auto" : _ref3$showToggle;
   var ctx = (0,react.useContext)(SelectContext);
-  var _c = (0,react.useState)(false),
-    selected = _c[0],
-    setSelected = _c[1];
+  var _useState5 = (0,react.useState)(false),
+    _useState6 = _slicedToArray(_useState5, 2),
+    selected = _useState6[0],
+    setSelected = _useState6[1];
   var selectedRef = useAutoRef(selected);
   var onChangeRef = (0,react.useRef)([]);
   var childRef = useAutoRef(children);
   var getTemplateRef = (0,react.useRef)(function () {
-    var _a;
-    return (_a = triggerTemplate !== null && triggerTemplate !== void 0 ? triggerTemplate : childRef.current) !== null && _a !== void 0 ? _a : children;
+    var _ref2;
+    return (_ref2 = triggerTemplate !== null && triggerTemplate !== void 0 ? triggerTemplate : childRef.current) !== null && _ref2 !== void 0 ? _ref2 : children;
   });
-  var shouldShowToggle = showToggle === 'auto' ? !!(ctx === null || ctx === void 0 ? void 0 : ctx.allowMultiple) : !!showToggle;
+  var shouldShowToggle = showToggle === "auto" ? !!(ctx === null || ctx === void 0 ? void 0 : ctx.allowMultiple) : !!showToggle;
   (0,react.useEffect)(function () {
     getTemplateRef.current = function () {
       return triggerTemplate !== null && triggerTemplate !== void 0 ? triggerTemplate : childRef.current;
     };
-    ctx === null || ctx === void 0 ? void 0 : ctx.triggerUpdate();
+    ctx === null || ctx === void 0 || ctx.triggerUpdate();
   }, [triggerTemplate, ctx]);
   var selectionRef = (0,react.useMemo)(function () {
     return {
@@ -10372,22 +10531,21 @@ function _Option(_a) {
   (0,react.useLayoutEffect)(function () {
     return ctx === null || ctx === void 0 ? void 0 : ctx.register(selectionRef);
   }, [ctx, selectionRef]);
-  var onClick = (0,react.useCallback)(function () {
-    var newValue = !selectedRef.current;
-    selectedRef.current = newValue;
-    setSelected(newValue);
-    for (var index = 0; index < onChangeRef.current.length; index++) {
-      var cb = onChangeRef.current[index];
-      cb();
-    }
-  }, []);
-  return (0,jsx_runtime.jsxs)(Button, {
-    onClick: onClick,
+  return /* @__PURE__ */(0,jsx_runtime.jsxs)(Button, {
+    onClick: (0,react.useCallback)(function () {
+      var newValue = !selectedRef.current;
+      selectedRef.current = newValue;
+      setSelected(newValue);
+      for (var index = 0; index < onChangeRef.current.length; index++) {
+        var cb = onChangeRef.current[index];
+        cb();
+      }
+    }, []),
     variant: "text",
-    className: dist_clsx(src_select_index_module.option, 'mat-select-option', selected && ['mat-select-option-selected', src_select_index_module.selected], className),
-    children: [shouldShowToggle && (0,jsx_runtime.jsx)(Toggle, {
-      className: dist_clsx(src_select_index_module.toggle, 'mat-select-option-toggle'),
-      type: ctx.allowMultiple ? 'checkbox' : 'radio',
+    className: dist_clsx(src_select_index_module.option, "mat-select-option", selected && ["mat-select-option-selected", src_select_index_module.selected], className),
+    children: [shouldShowToggle && /* @__PURE__ */(0,jsx_runtime.jsx)(Toggle, {
+      className: dist_clsx(src_select_index_module.toggle, "mat-select-option-toggle"),
+      type: ctx.allowMultiple ? "checkbox" : "radio",
       checked: selected,
       independent: true
     }), children]
@@ -10395,44 +10553,21 @@ function _Option(_a) {
 }
 var Select = (0,react.memo)(_Select);
 Select.Option = _Option;
-//# sourceMappingURL=index.js.map
-;// ../../../../packages/material/dist/src/util/hooks/use-control-check.js
+//#endregion
 
-var error1 = 'A component is changing an uncontrolled input to be controlled. This is likely caused by the value changing from undefined to a defined value, which should not happen. Decide between using a controlled or uncontrolled input element for the lifetime of the component. More info: https://reactjs.org/link/controlled-components';
-var error2 = 'You provided a `value` prop to a form field without an `onChange` handler. This will render a read-only field. If the field should be mutable use `defaultValue`. Otherwise, set either `onChange` or `readOnly`.';
-var error3 = 'App contains an input element with both value and defaultValue props. Input elements must be either controlled or uncontrolled (specify either the value prop, or the defaultValue prop, but not both). Decide between using a controlled or uncontrolled input element and remove one of these props. More info: https://reactjs.org/link/controlled-components';
-var error4 = 'A component is changing a controlled input to be uncontrolled. This is likely caused by the value changing from a defined to undefined, which should not happen. Decide between using a controlled or uncontrolled input element for the lifetime of the component. More info: https://reactjs.org/link/controlled-components';
-function useControlCheck(_a) {
-  var value = _a.value,
-    defaultValue = _a.defaultValue,
-    onChange = _a.onChange,
-    readOnly = _a.readOnly;
-  var valueInit = (0,react.useRef)(value);
-  var warned = (0,react.useRef)(0);
-  (0,react.useEffect)(function () {
-    if (typeof value !== 'undefined') {
-      if ((warned.current & 1) === 0 && typeof valueInit.current === 'undefined') {
-        warned.current |= 1;
-        console.error(error1);
-      }
-      if ((warned.current & 2) === 0 && typeof onChange === 'undefined' && typeof readOnly === 'undefined') {
-        warned.current |= 2;
-        console.warn(error2);
-      }
-      if ((warned.current & 4) === 0 && typeof defaultValue !== 'undefined') {
-        warned.current |= 4;
-        console.error(error3);
-      }
-    } else {
-      if ((warned.current & 8) === 0 && typeof valueInit.current !== 'undefined') {
-        warned.current |= 8;
-        console.error(error4);
-      }
-    }
-  }, [value, defaultValue, onChange, readOnly]);
-  return typeof valueInit.current !== 'undefined';
+
+//# sourceMappingURL=index.js.map
+;// ../../../../node_modules/.pnpm/@babel+runtime@7.29.7/node_modules/@babel/runtime/helpers/esm/defineProperty.js
+
+function defineProperty_defineProperty(e, r, t) {
+  return (r = toPropertyKey_toPropertyKey(r)) in e ? Object.defineProperty(e, r, {
+    value: t,
+    enumerable: !0,
+    configurable: !0,
+    writable: !0
+  }) : e[r] = t, e;
 }
-//# sourceMappingURL=use-control-check.js.map
+
 // EXTERNAL MODULE: ../../../../node_modules/.pnpm/css-loader@7.1.4_webpack@5._62043f6a253f8c7f1ce10b9e4bcb0b7c/node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[0].oneOf[7].use[1]!../../../../node_modules/.pnpm/resolve-url-loader@5.0.0/node_modules/resolve-url-loader/index.js??ruleSet[1].rules[0].oneOf[7].use[2]!../../../../node_modules/.pnpm/sass-loader@17.0.0_sass@1.1_20e65d72e5f2ff16ba56ab3dd615796f/node_modules/sass-loader/dist/cjs/index.js??ruleSet[1].rules[0].oneOf[7].use[3]!../../../../packages/material/dist/src/slider/index.module.scss
 var slider_index_module = __webpack_require__("../../../../node_modules/.pnpm/css-loader@7.1.4_webpack@5._62043f6a253f8c7f1ce10b9e4bcb0b7c/node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[0].oneOf[7].use[1]!../../../../node_modules/.pnpm/resolve-url-loader@5.0.0/node_modules/resolve-url-loader/index.js??ruleSet[1].rules[0].oneOf[7].use[2]!../../../../node_modules/.pnpm/sass-loader@17.0.0_sass@1.1_20e65d72e5f2ff16ba56ab3dd615796f/node_modules/sass-loader/dist/cjs/index.js??ruleSet[1].rules[0].oneOf[7].use[3]!../../../../packages/material/dist/src/slider/index.module.scss");
 ;// ../../../../packages/material/dist/src/slider/index.module.scss
@@ -10462,109 +10597,130 @@ var slider_index_module_update = injectStylesIntoStyleTag_default()(slider_index
 
        /* harmony default export */ const src_slider_index_module = (slider_index_module/* default */.A && slider_index_module/* default */.A.locals ? slider_index_module/* default */.A.locals : undefined);
 
-;// ../../../../packages/material/dist/src/slider/index.js
-var slider_assign = undefined && undefined.__assign || function () {
-  slider_assign = Object.assign || function (t) {
-    for (var s, i = 1, n = arguments.length; i < n; i++) {
-      s = arguments[i];
-      for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p)) t[p] = s[p];
+;// ../../../../packages/material/dist/slider-GNnZnlgJ.js
+
+
+
+
+
+
+
+
+//#region src/util/hooks/use-control-check.ts
+var error1 = "A component is changing an uncontrolled input to be controlled. This is likely caused by the value changing from undefined to a defined value, which should not happen. Decide between using a controlled or uncontrolled input element for the lifetime of the component. More info: https://reactjs.org/link/controlled-components";
+var error2 = "You provided a `value` prop to a form field without an `onChange` handler. This will render a read-only field. If the field should be mutable use `defaultValue`. Otherwise, set either `onChange` or `readOnly`.";
+var error3 = "App contains an input element with both value and defaultValue props. Input elements must be either controlled or uncontrolled (specify either the value prop, or the defaultValue prop, but not both). Decide between using a controlled or uncontrolled input element and remove one of these props. More info: https://reactjs.org/link/controlled-components";
+var error4 = "A component is changing a controlled input to be uncontrolled. This is likely caused by the value changing from a defined to undefined, which should not happen. Decide between using a controlled or uncontrolled input element for the lifetime of the component. More info: https://reactjs.org/link/controlled-components";
+function useControlCheck(_ref3) {
+  var value = _ref3.value,
+    defaultValue = _ref3.defaultValue,
+    onChange = _ref3.onChange,
+    readOnly = _ref3.readOnly;
+  var valueInit = (0,react.useRef)(value);
+  var warned = (0,react.useRef)(0);
+  (0,react.useEffect)(function () {
+    if (typeof value !== "undefined") {
+      if ((warned.current & 1) === 0 && typeof valueInit.current === "undefined") {
+        warned.current |= 1;
+        console.error(error1);
+      }
+      if ((warned.current & 2) === 0 && typeof onChange === "undefined" && typeof readOnly === "undefined") {
+        warned.current |= 2;
+        console.warn(error2);
+      }
+      if ((warned.current & 4) === 0 && typeof defaultValue !== "undefined") {
+        warned.current |= 4;
+        console.error(error3);
+      }
+    } else if ((warned.current & 8) === 0 && typeof valueInit.current !== "undefined") {
+      warned.current |= 8;
+      console.error(error4);
     }
-    return t;
-  };
-  return slider_assign.apply(this, arguments);
-};
-var slider_rest = undefined && undefined.__rest || function (s, e) {
-  var t = {};
-  for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p) && e.indexOf(p) < 0) t[p] = s[p];
-  if (s != null && typeof Object.getOwnPropertySymbols === "function") for (var i = 0, p = Object.getOwnPropertySymbols(s); i < p.length; i++) {
-    if (e.indexOf(p[i]) < 0 && Object.prototype.propertyIsEnumerable.call(s, p[i])) t[p[i]] = s[p[i]];
-  }
-  return t;
-};
-
-
-
-
-
-
-var SliderChild = (0,react.forwardRef)(function _SliderChild(_a, ref) {
-  var callback = _a.callback,
-    defaultValue = _a.defaultValue;
-  var _b = (0,react.useState)(defaultValue),
-    st = _b[0],
-    setSt = _b[1];
+  }, [value, defaultValue, onChange, readOnly]);
+  return typeof valueInit.current !== "undefined";
+}
+//#endregion
+//#region src/slider/index.tsx
+var slider_GNnZnlgJ_excluded = ["onChange", "onScroll", "name", "children", "defaultValue", "value", "direction", "mode", "valuePosition", "min", "max", "step", "keyStep", "allowScroll", "scrollMultiplier", "readOnly"];
+var SliderChild = (0,react.forwardRef)(function _SliderChild(_ref4, ref) {
+  var callback = _ref4.callback,
+    defaultValue = _ref4.defaultValue;
+  var _useState = (0,react.useState)(defaultValue),
+    _useState2 = _slicedToArray(_useState, 2),
+    st = _useState2[0],
+    setSt = _useState2[1];
   (0,react.useImperativeHandle)(ref, function () {
     return setSt;
   });
-  return (0,jsx_runtime.jsx)(jsx_runtime.Fragment, {
+  return /* @__PURE__ */(0,jsx_runtime.jsx)(jsx_runtime.Fragment, {
     children: callback(st)
   });
 });
-var _Slider = (0,react.forwardRef)(function _Slider(_a, ref) {
-  var _b;
-  var _c;
-  var onChange = _a.onChange,
-    onScroll = _a.onScroll,
-    name = _a.name,
-    children = _a.children,
-    defaultValue = _a.defaultValue,
-    value = _a.value,
-    _d = _a.direction,
-    direction = _d === void 0 ? 'horizontal' : _d,
-    _e = _a.mode,
-    mode = _e === void 0 ? 'normal' : _e,
-    _f = _a.valuePosition,
-    valuePosition = _f === void 0 ? 'auto' : _f,
-    _g = _a.min,
-    min = _g === void 0 ? 0 : _g,
-    _h = _a.max,
-    max = _h === void 0 ? 1 : _h,
-    _j = _a.step,
-    step = _j === void 0 ? 0 : _j,
-    _k = _a.keyStep,
-    keyStep = _k === void 0 ? null : _k,
-    _l = _a.allowScroll,
-    allowScroll = _l === void 0 ? false : _l,
-    _m = _a.scrollMultiplier,
-    scrollMultiplier = _m === void 0 ? 1 / 6 : _m,
-    readOnly = _a.readOnly,
-    otherProps = slider_rest(_a, ["onChange", "onScroll", "name", "children", "defaultValue", "value", "direction", "mode", "valuePosition", "min", "max", "step", "keyStep", "allowScroll", "scrollMultiplier", "readOnly"]);
+var _Slider = (0,react.forwardRef)(function _Slider(_ref, ref) {
+  var _ref2;
+  var onChange = _ref.onChange,
+    onScroll = _ref.onScroll,
+    name = _ref.name,
+    children = _ref.children,
+    defaultValue = _ref.defaultValue,
+    value = _ref.value,
+    _ref$direction = _ref.direction,
+    direction = _ref$direction === void 0 ? "horizontal" : _ref$direction,
+    _ref$mode = _ref.mode,
+    mode = _ref$mode === void 0 ? "normal" : _ref$mode,
+    _ref$valuePosition = _ref.valuePosition,
+    valuePosition = _ref$valuePosition === void 0 ? "auto" : _ref$valuePosition,
+    _ref$min = _ref.min,
+    min = _ref$min === void 0 ? 0 : _ref$min,
+    _ref$max = _ref.max,
+    max = _ref$max === void 0 ? 1 : _ref$max,
+    _ref$step = _ref.step,
+    step = _ref$step === void 0 ? 0 : _ref$step,
+    _ref$keyStep = _ref.keyStep,
+    keyStep = _ref$keyStep === void 0 ? null : _ref$keyStep,
+    _ref$allowScroll = _ref.allowScroll,
+    allowScroll = _ref$allowScroll === void 0 ? false : _ref$allowScroll,
+    _ref$scrollMultiplier = _ref.scrollMultiplier,
+    scrollMultiplier = _ref$scrollMultiplier === void 0 ? 1 / 6 : _ref$scrollMultiplier,
+    readOnly = _ref.readOnly,
+    otherProps = _objectWithoutProperties(_ref, slider_GNnZnlgJ_excluded);
   var isControlled = useControlCheck({
     value: value,
     defaultValue: defaultValue,
     onChange: onChange,
     readOnly: readOnly
   });
-  var init = (_c = defaultValue !== null && defaultValue !== void 0 ? defaultValue : value) !== null && _c !== void 0 ? _c : min;
+  var init = (_ref2 = defaultValue !== null && defaultValue !== void 0 ? defaultValue : value) !== null && _ref2 !== void 0 ? _ref2 : min;
   var curValue = (0,react.useRef)(init);
   var innerValue = (0,react.useRef)(init);
   var onChangeRef = useAutoRef(onChange);
-  var orientation = direction === 'vertical' || direction === 'vertical-reverse' ? 'vertical' : 'horizontal';
-  var isReverse = direction === 'vertical-reverse' || direction === 'horizontal-reverse';
-  var sizeProp = orientation === 'horizontal' ? 'width' : 'height';
-  var coordProp = orientation === 'horizontal' ? 'x' : 'y';
-  var crossCoordProp = orientation === 'horizontal' ? 'y' : 'x';
+  var orientation = direction === "vertical" || direction === "vertical-reverse" ? "vertical" : "horizontal";
+  var isReverse = direction === "vertical-reverse" || direction === "horizontal-reverse";
+  var sizeProp = orientation === "horizontal" ? "width" : "height";
+  var coordProp = orientation === "horizontal" ? "x" : "y";
+  var crossCoordProp = orientation === "horizontal" ? "y" : "x";
   var range = max - min;
-  var elementRef = (0,react.useRef)(undefined);
-  var fillRef = (0,react.useRef)(undefined);
-  var childRef = (0,react.useRef)(undefined);
+  var elementRef = (0,react.useRef)(void 0);
+  var fillRef = (0,react.useRef)(void 0);
+  var childRef = (0,react.useRef)(void 0);
   var moveStep = keyStep || step || range / 10;
   var setValWithStep = (0,react.useCallback)(function (val, skipNotify, skipControl) {
-    var _a, _b;
+    var _onChangeRef$current;
     var clampedVal = Math.max(min, Math.min(max, val));
     var steppedVal = step > 0 ? Math.round(clampedVal / step) * step : clampedVal;
     var oldValue = curValue.current;
     if (!isControlled && !readOnly || skipControl) {
+      var _childRef$current;
       innerValue.current = clampedVal;
       curValue.current = steppedVal;
       if (fillRef.current) {
         var ratio = (curValue.current - min) / range;
-        fillRef.current.Style.Set(sizeProp === 'width' ? 'height' : 'width', null);
+        fillRef.current.Style.Set(sizeProp === "width" ? "height" : "width", null);
         fillRef.current.Style.Set(sizeProp, "".concat(ratio * 100, "%"));
       }
-      (_a = childRef.current) === null || _a === void 0 ? void 0 : _a.call(childRef, steppedVal);
+      (_childRef$current = childRef.current) === null || _childRef$current === void 0 || _childRef$current.call(childRef, steppedVal);
     }
-    if (!skipNotify && !readOnly && oldValue !== steppedVal) (_b = onChangeRef.current) === null || _b === void 0 ? void 0 : _b.call(onChangeRef, steppedVal);
+    if (!skipNotify && !readOnly && oldValue !== steppedVal) (_onChangeRef$current = onChangeRef.current) === null || _onChangeRef$current === void 0 || _onChangeRef$current.call(onChangeRef, steppedVal);
   }, [min, max, step, sizeProp, range, isControlled, readOnly]);
   (0,react.useLayoutEffect)(function () {
     if (isControlled) setValWithStep(value, true, true);
@@ -10572,16 +10728,15 @@ var _Slider = (0,react.forwardRef)(function _Slider(_a, ref) {
   var dragCallback = (0,react.useCallback)(function (ev) {
     var mul = isReverse ? -1 : 1;
     var val = innerValue.current;
-    if (mode === 'diff' || mode === 'falloff') {
+    if (mode === "diff" || mode === "falloff") {
       var diff = ev.delta[coordProp] / 200 * range;
-      if (mode === 'falloff') {
+      if (mode === "falloff") {
         var yDiff = Math.max(Math.abs(ev.pressPosition[crossCoordProp] - ev.position[crossCoordProp]) / 100, 1);
         val += mul * diff / (yDiff * yDiff);
       } else val += mul * diff;
     } else {
-      var relPos = elementRef.current.GetRelativePosition(ev.position.x, ev.position.y);
-      var relRatio = relPos[coordProp] / elementRef.current.RectTransform.rect[sizeProp];
-      if (coordProp === 'x' && isReverse || coordProp === 'y' && !isReverse) relRatio = 1 - relRatio;
+      var relRatio = elementRef.current.GetRelativePosition(ev.position.x, ev.position.y)[coordProp] / elementRef.current.RectTransform.rect[sizeProp];
+      if (coordProp === "x" && isReverse || coordProp === "y" && !isReverse) relRatio = 1 - relRatio;
       val = relRatio * range + min;
     }
     setValWithStep(val);
@@ -10593,12 +10748,11 @@ var _Slider = (0,react.forwardRef)(function _Slider(_a, ref) {
   }, [coordProp, moveStep, isReverse, setValWithStep]);
   var scrollCallback = (0,react.useCallback)(function (ev, sender) {
     if (allowScroll) {
-      var delta = Math.abs(ev.scrollDelta.y) > Math.abs(ev.scrollDelta.x) ? ev.scrollDelta.y : ev.scrollDelta.x;
-      var diff = delta * moveStep * scrollMultiplier;
+      var diff = (Math.abs(ev.scrollDelta.y) > Math.abs(ev.scrollDelta.x) ? ev.scrollDelta.y : ev.scrollDelta.x) * moveStep * scrollMultiplier;
       if (isReverse) diff = -diff;
       setValWithStep(curValue.current + diff);
     }
-    onScroll === null || onScroll === void 0 ? void 0 : onScroll(ev, sender);
+    onScroll === null || onScroll === void 0 || onScroll(ev, sender);
   }, [moveStep, isReverse, setValWithStep, onScroll, allowScroll, scrollMultiplier]);
   (0,react.useImperativeHandle)(ref, function () {
     return {
@@ -10611,38 +10765,38 @@ var _Slider = (0,react.forwardRef)(function _Slider(_a, ref) {
       }
     };
   }, [setValWithStep]);
-  return (0,jsx_runtime.jsx)("view", slider_assign({
-    name: name || '<Slider>'
-  }, otherProps, {
+  return /* @__PURE__ */(0,jsx_runtime.jsx)("view", _objectSpread2(_objectSpread2({
+    name: name || "<Slider>"
+  }, otherProps), {}, {
     ref: elementRef,
     "data-direction": direction,
     "data-orientation": orientation,
-    "data-readonly": readOnly ? true : undefined,
+    "data-readonly": readOnly ? true : void 0,
     "data-cursor": valuePosition,
     onDrag: dragCallback,
     onPointerClick: dragCallback,
     onPotentialDrag: dragCallback,
     onMove: moveCallback,
     onScroll: scrollCallback,
-    className: dist_clsx(src_slider_index_module.host, otherProps.className, 'mat-slider'),
-    children: (0,jsx_runtime.jsx)("view", {
+    className: dist_clsx(src_slider_index_module.host, otherProps.className, "mat-slider"),
+    children: /* @__PURE__ */(0,jsx_runtime.jsx)("view", {
       name: "<Slider-Track>",
-      className: dist_clsx(src_slider_index_module.track, 'mat-slider-track'),
-      children: (0,jsx_runtime.jsx)("view", {
+      className: dist_clsx(src_slider_index_module.track, "mat-slider-track"),
+      children: /* @__PURE__ */(0,jsx_runtime.jsx)("view", {
         name: "<Slider-Fill>",
-        className: dist_clsx(src_slider_index_module.fill, 'mat-slider-fill'),
+        className: dist_clsx(src_slider_index_module.fill, "mat-slider-fill"),
         ref: fillRef,
-        style: (_b = {}, _b[sizeProp] = "".concat(100 * (curValue.current - min) / range, "%"), _b),
-        children: (0,jsx_runtime.jsx)("view", {
+        style: defineProperty_defineProperty({}, sizeProp, "".concat(100 * (curValue.current - min) / range, "%")),
+        children: /* @__PURE__ */(0,jsx_runtime.jsx)("view", {
           name: "<Slider-Thumb-Container>",
-          className: dist_clsx(src_slider_index_module.thumbContainer, 'mat-slider-thumb-container'),
-          children: (0,jsx_runtime.jsx)("view", {
+          className: dist_clsx(src_slider_index_module.thumbContainer, "mat-slider-thumb-container"),
+          children: /* @__PURE__ */(0,jsx_runtime.jsx)("view", {
             name: "<Slider-Thumb>",
-            className: dist_clsx(src_slider_index_module.thumb, 'mat-slider-thumb'),
-            children: (0,jsx_runtime.jsx)("view", {
+            className: dist_clsx(src_slider_index_module.thumb, "mat-slider-thumb"),
+            children: /* @__PURE__ */(0,jsx_runtime.jsx)("view", {
               name: "<Slider-Value>",
-              className: dist_clsx(src_slider_index_module.value, 'mat-slider-value'),
-              children: typeof children === 'function' ? (0,jsx_runtime.jsx)(SliderChild, {
+              className: dist_clsx(src_slider_index_module.value, "mat-slider-value"),
+              children: typeof children === "function" ? /* @__PURE__ */(0,jsx_runtime.jsx)(SliderChild, {
                 defaultValue: curValue.current,
                 callback: children,
                 ref: childRef
@@ -10655,224 +10809,487 @@ var _Slider = (0,react.forwardRef)(function _Slider(_a, ref) {
   }));
 });
 var Slider = react.memo(_Slider);
-//# sourceMappingURL=index.js.map
+//#endregion
+
+
+//# sourceMappingURL=slider-GNnZnlgJ.js.map
+;// ../../../../node_modules/.pnpm/@babel+runtime@7.29.7/node_modules/@babel/runtime/helpers/esm/getPrototypeOf.js
+function _getPrototypeOf(t) {
+  return _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf.bind() : function (t) {
+    return t.__proto__ || Object.getPrototypeOf(t);
+  }, _getPrototypeOf(t);
+}
+
+;// ../../../../node_modules/.pnpm/@babel+runtime@7.29.7/node_modules/@babel/runtime/helpers/esm/isNativeReflectConstruct.js
+function _isNativeReflectConstruct() {
+  try {
+    var t = !Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {}));
+  } catch (t) {}
+  return (_isNativeReflectConstruct = function _isNativeReflectConstruct() {
+    return !!t;
+  })();
+}
+
+;// ../../../../node_modules/.pnpm/@babel+runtime@7.29.7/node_modules/@babel/runtime/helpers/esm/assertThisInitialized.js
+function _assertThisInitialized(e) {
+  if (void 0 === e) throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
+  return e;
+}
+
+;// ../../../../node_modules/.pnpm/@babel+runtime@7.29.7/node_modules/@babel/runtime/helpers/esm/possibleConstructorReturn.js
+
+
+function _possibleConstructorReturn(t, e) {
+  if (e && ("object" == typeof_typeof(e) || "function" == typeof e)) return e;
+  if (void 0 !== e) throw new TypeError("Derived constructors may only return object or undefined");
+  return _assertThisInitialized(t);
+}
+
+;// ../../../../node_modules/.pnpm/@babel+runtime@7.29.7/node_modules/@babel/runtime/helpers/esm/callSuper.js
+
+
+
+function _callSuper(t, o, e) {
+  return o = _getPrototypeOf(o), _possibleConstructorReturn(t, _isNativeReflectConstruct() ? Reflect.construct(o, e || [], _getPrototypeOf(t).constructor) : o.apply(t, e));
+}
+
+;// ../../../../node_modules/.pnpm/@babel+runtime@7.29.7/node_modules/@babel/runtime/helpers/esm/setPrototypeOf.js
+function _setPrototypeOf(t, e) {
+  return _setPrototypeOf = Object.setPrototypeOf ? Object.setPrototypeOf.bind() : function (t, e) {
+    return t.__proto__ = e, t;
+  }, _setPrototypeOf(t, e);
+}
+
+;// ../../../../node_modules/.pnpm/@babel+runtime@7.29.7/node_modules/@babel/runtime/helpers/esm/inherits.js
+
+function _inherits(t, e) {
+  if ("function" != typeof e && null !== e) throw new TypeError("Super expression must either be null or a function");
+  t.prototype = Object.create(e && e.prototype, {
+    constructor: {
+      value: t,
+      writable: !0,
+      configurable: !0
+    }
+  }), Object.defineProperty(t, "prototype", {
+    writable: !1
+  }), e && _setPrototypeOf(t, e);
+}
+
+;// ../../../../packages/renderer/dist/objectSpread2-CDDvZyE7.js
+//#region \0@oxc-project+runtime@0.140.0/helpers/esm/typeof.js
+function objectSpread2_CDDvZyE7_typeof(o) {
+  "@babel/helpers - typeof";
+
+  return objectSpread2_CDDvZyE7_typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) {
+    return typeof o;
+  } : function (o) {
+    return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o;
+  }, objectSpread2_CDDvZyE7_typeof(o);
+}
+//#endregion
+//#region \0@oxc-project+runtime@0.140.0/helpers/esm/toPrimitive.js
+function objectSpread2_CDDvZyE7_toPrimitive(t, r) {
+  if ("object" != objectSpread2_CDDvZyE7_typeof(t) || !t) return t;
+  var e = t[Symbol.toPrimitive];
+  if (void 0 !== e) {
+    var i = e.call(t, r || "default");
+    if ("object" != objectSpread2_CDDvZyE7_typeof(i)) return i;
+    throw new TypeError("@@toPrimitive must return a primitive value.");
+  }
+  return ("string" === r ? String : Number)(t);
+}
+//#endregion
+//#region \0@oxc-project+runtime@0.140.0/helpers/esm/toPropertyKey.js
+function objectSpread2_CDDvZyE7_toPropertyKey(t) {
+  var i = objectSpread2_CDDvZyE7_toPrimitive(t, "string");
+  return "symbol" == objectSpread2_CDDvZyE7_typeof(i) ? i : i + "";
+}
+//#endregion
+//#region \0@oxc-project+runtime@0.140.0/helpers/esm/defineProperty.js
+function objectSpread2_CDDvZyE7_defineProperty(e, r, t) {
+  return (r = objectSpread2_CDDvZyE7_toPropertyKey(r)) in e ? Object.defineProperty(e, r, {
+    value: t,
+    enumerable: !0,
+    configurable: !0,
+    writable: !0
+  }) : e[r] = t, e;
+}
+//#endregion
+//#region \0@oxc-project+runtime@0.140.0/helpers/esm/objectSpread2.js
+function objectSpread2_CDDvZyE7_ownKeys(e, r) {
+  var t = Object.keys(e);
+  if (Object.getOwnPropertySymbols) {
+    var o = Object.getOwnPropertySymbols(e);
+    r && (o = o.filter(function (r) {
+      return Object.getOwnPropertyDescriptor(e, r).enumerable;
+    })), t.push.apply(t, o);
+  }
+  return t;
+}
+function objectSpread2_CDDvZyE7_objectSpread2(e) {
+  for (var r = 1; r < arguments.length; r++) {
+    var t = null != arguments[r] ? arguments[r] : {};
+    r % 2 ? objectSpread2_CDDvZyE7_ownKeys(Object(t), !0).forEach(function (r) {
+      objectSpread2_CDDvZyE7_defineProperty(e, r, t[r]);
+    }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : objectSpread2_CDDvZyE7_ownKeys(Object(t)).forEach(function (r) {
+      Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r));
+    });
+  }
+  return e;
+}
+//#endregion
+
+// EXTERNAL MODULE: ../../../../node_modules/.pnpm/use-sync-external-store@1.6.0_react@19.2.8/node_modules/use-sync-external-store/shim/index.js
+var shim = __webpack_require__("../../../../node_modules/.pnpm/use-sync-external-store@1.6.0_react@19.2.8/node_modules/use-sync-external-store/shim/index.js");
+// EXTERNAL MODULE: ../../../../node_modules/.pnpm/use-sync-external-store@1.6.0_react@19.2.8/node_modules/use-sync-external-store/with-selector.js
+var with_selector = __webpack_require__("../../../../node_modules/.pnpm/use-sync-external-store@1.6.0_react@19.2.8/node_modules/use-sync-external-store/with-selector.js");
 // EXTERNAL MODULE: ../../../../node_modules/.pnpm/react-reconciler@0.33.0_react@19.2.8/node_modules/react-reconciler/constants.js
 var constants = __webpack_require__("../../../../node_modules/.pnpm/react-reconciler@0.33.0_react@19.2.8/node_modules/react-reconciler/constants.js");
-;// ../../../../packages/renderer/dist/src/version.js
-var version = '0.21.0';
-//# sourceMappingURL=version.js.map
-;// ../../../../packages/renderer/dist/src/views/error-boundary.js
-var __extends = undefined && undefined.__extends || function () {
-  var _extendStatics = function extendStatics(d, b) {
-    _extendStatics = Object.setPrototypeOf || {
-      __proto__: []
-    } instanceof Array && function (d, b) {
-      d.__proto__ = b;
-    } || function (d, b) {
-      for (var p in b) if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p];
+// EXTERNAL MODULE: ../../../../node_modules/.pnpm/react-reconciler@0.33.0_react@19.2.8/node_modules/react-reconciler/index.js
+var react_reconciler = __webpack_require__("../../../../node_modules/.pnpm/react-reconciler@0.33.0_react@19.2.8/node_modules/react-reconciler/index.js");
+var react_reconciler_default = /*#__PURE__*/__webpack_require__.n(react_reconciler);
+;// ../../../../packages/renderer/dist/index.js
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//#region src/helpers/dictionary-watcher.ts
+/**
+* Creates a context that updates its value when the values in the dictionary change
+* @param dictionary The dictionary to be watched. Must implement the EventDictionary type in the C#
+* @param displayName A displayName to identify this context easier in case of problems
+*/
+function createDictionaryWatcher(dictionary, displayName) {
+  var ctx = (0,react.createContext)(void 0);
+  if (displayName) ctx.displayName = displayName;
+  var createSubscriber = function createSubscriber(fields, isEqual) {
+    var snapshot = objectSpread2_CDDvZyE7_objectSpread2({}, dictionary);
+    return {
+      subscribe: function subscribe(onStoreChange) {
+        snapshot = objectSpread2_CDDvZyE7_objectSpread2({}, dictionary);
+        var remove = dictionary === null || dictionary === void 0 ? void 0 : dictionary.AddListener(function () {
+          var prev = snapshot;
+          snapshot = objectSpread2_CDDvZyE7_objectSpread2({}, dictionary);
+          if (!fields) onStoreChange();else {
+            var it = fields.values();
+            for (var field = it.next().value; field; field = it.next().value) if (isEqual ? !isEqual(prev[field], snapshot[field]) : prev[field] !== snapshot[field]) {
+              onStoreChange();
+              break;
+            }
+          }
+        });
+        if (!remove) if (displayName) console.warn("".concat(displayName, " dictionary does not provide a change listener"));else console.warn("The dictionary does not provide a change listener");
+        return function () {
+          return remove === null || remove === void 0 ? void 0 : remove();
+        };
+      },
+      getSnapshot: function getSnapshot() {
+        return snapshot;
+      }
     };
-    return _extendStatics(d, b);
   };
-  return function (d, b) {
-    if (typeof b !== "function" && b !== null) throw new TypeError("Class extends value " + String(b) + " is not a constructor or null");
-    _extendStatics(d, b);
-    function __() {
-      this.constructor = d;
+  var defaultSubscriber = createSubscriber();
+  var Provider = function GlobalsProvider(_ref) {
+    var children = _ref.children;
+    var value = (0,shim.useSyncExternalStore)(defaultSubscriber.subscribe, defaultSubscriber.getSnapshot, defaultSubscriber.getSnapshot);
+    return (0,react.createElement)(ctx.Provider, {
+      value: value
+    }, children);
+  };
+  function useDictionaryContext() {
+    var context = (0,react.useContext)(ctx);
+    if (context === void 0) {
+      if (displayName) throw new Error("".concat(displayName, ".useContext must be used within a ").concat(displayName, ".Provider"));
+      throw new Error("useContext must be used within a provider");
     }
-    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    return context;
+  }
+  function useValue() {
+    var subscribeToAllFields = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : false;
+    var fieldEqual = arguments.length > 1 ? arguments[1] : undefined;
+    var fields = (0,react.useMemo)(function () {
+      return /* @__PURE__ */new Set();
+    }, []);
+    var fieldsRef = (0,react.useRef)(fields);
+    var _useState = (0,react.useState)(false),
+      _useState2 = _slicedToArray(_useState, 2),
+      allFieldsSubscribed = _useState2[0],
+      setAllFieldsSubscribed = _useState2[1];
+    subscribeToAllFields || (subscribeToAllFields = allFieldsSubscribed);
+    var subscriber = (0,react.useMemo)(function () {
+      return subscribeToAllFields ? defaultSubscriber : createSubscriber(fieldsRef.current, fieldEqual);
+    }, [subscribeToAllFields, fieldEqual]);
+    var value = (0,shim.useSyncExternalStore)(subscriber.subscribe, subscriber.getSnapshot, subscriber.getSnapshot);
+    return new Proxy(value, {
+      get: function get(target, p, receiver) {
+        fields.add(p);
+        return value[p];
+      },
+      ownKeys: function ownKeys(target) {
+        if (!allFieldsSubscribed) setAllFieldsSubscribed(true);
+        return Reflect.ownKeys(target);
+      },
+      getOwnPropertyDescriptor: function getOwnPropertyDescriptor(target, p) {
+        fields.add(p);
+        return objectSpread2_CDDvZyE7_objectSpread2(objectSpread2_CDDvZyE7_objectSpread2({}, Reflect.getOwnPropertyDescriptor(target, p)), {}, {
+          value: value[p]
+        });
+      }
+    });
+  }
+  function useSelector(selector, isEqual) {
+    return (0,with_selector.useSyncExternalStoreWithSelector)(defaultSubscriber.subscribe, defaultSubscriber.getSnapshot, defaultSubscriber.getSnapshot, selector, isEqual);
+  }
+  return {
+    context: ctx,
+    Provider: Provider,
+    useValue: useValue,
+    useContext: useDictionaryContext,
+    useSelector: useSelector
   };
-}();
-
-
-var ErrorBoundary = /** @class */function (_super) {
-  __extends(ErrorBoundary, _super);
+}
+//#endregion
+//#region src/helpers/hooks/use-globals.ts
+var globalsWatcher = createDictionaryWatcher(Globals, "globalsContext");
+var useGlobals = globalsWatcher.useValue;
+var useGlobalsContext = globalsWatcher.useContext;
+var useGlobalsSelector = globalsWatcher.useSelector;
+var GlobalsProvider = globalsWatcher.Provider;
+//#endregion
+//#region src/helpers/hooks/use-reactive-value.ts
+function createSubscriber(obj, isEqual) {
+  var isReactive = obj && typeof obj === "object" && "Value" in obj;
+  var snapshot = isReactive ? obj.Value : void 0;
+  return {
+    subscribe: function subscribe(onStoreChange) {
+      snapshot = isReactive ? obj.Value : void 0;
+      var remove = isReactive && typeof obj.AddListener === "function" && (obj === null || obj === void 0 ? void 0 : obj.AddListener(function () {
+        var prev = snapshot;
+        snapshot = isReactive ? obj.Value : void 0;
+        if (typeof isEqual !== "function" || !isEqual(prev, snapshot)) onStoreChange();
+      }));
+      if (isReactive && typeof remove !== "function") console.warn("The reactive value does not provide a change listener");
+      return function () {
+        return remove === null || remove === void 0 ? void 0 : remove();
+      };
+    },
+    getSnapshot: function getSnapshot() {
+      return snapshot;
+    }
+  };
+}
+function useReactiveValue(obj, isEqual) {
+  var sb = (0,react.useMemo)(function () {
+    return createSubscriber(obj, isEqual);
+  }, [obj, isEqual]);
+  return (0,shim.useSyncExternalStore)(sb.subscribe, sb.getSnapshot, sb.getSnapshot);
+}
+//#endregion
+//#region src/helpers/icons.ts
+var componentCache = {};
+var icon = new Proxy({}, {
+  get: function get(target, key) {
+    if (typeof key === "symbol") return target[key];
+    var icon = key.replace(/^_/, "");
+    var cmp = componentCache[icon];
+    if (cmp) return cmp;
+    cmp = function NamedIcon(props, ref) {
+      return react.createElement("icon", objectSpread2_CDDvZyE7_objectSpread2(objectSpread2_CDDvZyE7_objectSpread2({
+        name: "<icon ".concat(icon, ">")
+      }, props), {}, {
+        ref: ref
+      }), icon);
+    };
+    cmp = react.forwardRef(cmp);
+    componentCache[icon] = cmp;
+    return cmp;
+  }
+});
+//#endregion
+//#region src/version.ts
+var version = "0.21.0";
+//#endregion
+//#region src/views/error-boundary.tsx
+var ErrorBoundary = /*#__PURE__*/function (_React$Component) {
   function ErrorBoundary(props) {
-    var _this = _super.call(this, props) || this;
+    var _this;
+    _classCallCheck(this, ErrorBoundary);
+    _this = _callSuper(this, ErrorBoundary, [props]);
     _this.state = {
       hasError: false,
       error: null
     };
     return _this;
   }
-  ErrorBoundary.getDerivedStateFromError = function (error) {
-    // Update state so the next render will show the fallback UI.
-    return {
-      hasError: true,
-      error: error
-    };
-  };
-  ErrorBoundary.prototype.componentDidCatch = function (error, errorInfo) {
-    // You can also log the error to an error reporting service
-    // logErrorToMyService(error, errorInfo);
-  };
-  ErrorBoundary.prototype.render = function () {
-    var _a, _b;
-    if (this.state.hasError) {
-      return (0,jsx_runtime.jsxs)("view", {
-        id: "__react-unity-error-boundary",
-        style: {
-          color: 'crimson',
-          padding: 20,
-          fontSize: 16
-        },
-        children: [(0,jsx_runtime.jsx)("view", {
+  _inherits(ErrorBoundary, _React$Component);
+  return _createClass(ErrorBoundary, [{
+    key: "componentDidCatch",
+    value: function componentDidCatch(error, errorInfo) {}
+  }, {
+    key: "render",
+    value: function render() {
+      if (this.state.hasError) {
+        var _this$state$error, _this$state$error2;
+        return /* @__PURE__ */(0,jsx_runtime.jsxs)("view", {
+          id: "__react-unity-error-boundary",
           style: {
-            marginBottom: '12px'
+            color: "crimson",
+            padding: 20,
+            fontSize: 16
           },
-          children: ((_a = this.state.error) === null || _a === void 0 ? void 0 : _a.message) || ''
-        }), (0,jsx_runtime.jsx)("view", {
-          children: ((_b = this.state.error) === null || _b === void 0 ? void 0 : _b.stack) || ''
-        })]
-      });
+          children: [/* @__PURE__ */(0,jsx_runtime.jsx)("view", {
+            style: {
+              marginBottom: "12px"
+            },
+            children: ((_this$state$error = this.state.error) === null || _this$state$error === void 0 ? void 0 : _this$state$error.message) || ""
+          }), /* @__PURE__ */(0,jsx_runtime.jsx)("view", {
+            children: ((_this$state$error2 = this.state.error) === null || _this$state$error2 === void 0 ? void 0 : _this$state$error2.stack) || ""
+          })]
+        });
+      }
+      return this.props.children;
     }
-    return this.props.children;
-  };
-  return ErrorBoundary;
+  }], [{
+    key: "getDerivedStateFromError",
+    value: function getDerivedStateFromError(error) {
+      return {
+        hasError: true,
+        error: error
+      };
+    }
+  }]);
 }(react.Component);
-
-//# sourceMappingURL=error-boundary.js.map
-;// ../../../../packages/renderer/dist/src/views/default-view.js
-
-
-function DefaultView(_a) {
-  var children = _a.children,
-    withHelpers = _a.withHelpers,
-    renderCount = _a.renderCount;
-  return (0,jsx_runtime.jsx)(jsx_runtime.Fragment, {
-    children: !withHelpers ? children : (0,jsx_runtime.jsx)(ErrorBoundary, {
+//#endregion
+//#region src/views/default-view.tsx
+function DefaultView(_ref2) {
+  var children = _ref2.children,
+    withHelpers = _ref2.withHelpers,
+    renderCount = _ref2.renderCount;
+  return /* @__PURE__ */(0,jsx_runtime.jsx)(jsx_runtime.Fragment, {
+    children: !withHelpers ? children : /* @__PURE__ */(0,jsx_runtime.jsx)(ErrorBoundary, {
       children: children
     }, renderCount)
   });
 }
-//# sourceMappingURL=default-view.js.map
-;// ../../../../packages/renderer/dist/src/renderer/async/objects.js
-var ObjectsRepo = /** @class */function () {
-  function ObjectsRepo() {
-    var _this = this;
-    this.indices = [{}];
-    this.objects = new WeakMap();
-    this.setObject = function (index, item) {
-      var it = _this.indices[index];
-      if (!it) {
-        it = _this.indices[index] = {};
-      }
-      _this.objects.set(it, item);
-    };
-    this.addObject = function (item) {
-      if (!item) return -1;
-      var it = {};
-      var ind = _this.indices.length;
-      _this.indices.push(it);
-      _this.objects.set(it, item);
-      return ind;
-    };
-    this.getObject = function (index) {
-      if (index < 0) return undefined;
-      var it = _this.indices[index];
-      return _this.objects.get(it);
-    };
-  }
-  return ObjectsRepo;
-}();
-
-//# sourceMappingURL=objects.js.map
-// EXTERNAL MODULE: ../../../../node_modules/.pnpm/react-reconciler@0.33.0_react@19.2.8/node_modules/react-reconciler/index.js
-var react_reconciler = __webpack_require__("../../../../node_modules/.pnpm/react-reconciler@0.33.0_react@19.2.8/node_modules/react-reconciler/index.js");
-var react_reconciler_default = /*#__PURE__*/__webpack_require__.n(react_reconciler);
-;// ../../../../packages/renderer/dist/src/renderer/diffing.js
-var styleStringSymbol = '__style_as_string__';
+//#endregion
+//#region src/renderer/async/objects.ts
+var ObjectsRepo = /*#__PURE__*/_createClass(function ObjectsRepo() {
+  var _this2 = this;
+  _classCallCheck(this, ObjectsRepo);
+  objectSpread2_CDDvZyE7_defineProperty(this, "indices", [{}]);
+  objectSpread2_CDDvZyE7_defineProperty(this, "objects", /* @__PURE__ */new WeakMap());
+  objectSpread2_CDDvZyE7_defineProperty(this, "setObject", function (index, item) {
+    var it = _this2.indices[index];
+    if (!it) it = _this2.indices[index] = {};
+    _this2.objects.set(it, item);
+  });
+  objectSpread2_CDDvZyE7_defineProperty(this, "addObject", function (item) {
+    if (!item) return -1;
+    var it = {};
+    var ind = _this2.indices.length;
+    _this2.indices.push(it);
+    _this2.objects.set(it, item);
+    return ind;
+  });
+  objectSpread2_CDDvZyE7_defineProperty(this, "getObject", function (index) {
+    if (index < 0) return void 0;
+    var it = _this2.indices[index];
+    return _this2.objects.get(it);
+  });
+});
+//#endregion
+//#region src/renderer/diffing.ts
+var styleStringSymbol = "__style_as_string__";
 var propDepths = {
   style: 1,
   data: 1,
   custom: 1
 };
-function diffProperties(lastProps, nextProps, deepDiffing) {
-  if (deepDiffing === void 0) {
-    deepDiffing = 0;
-  }
+function diffProperties(lastProps, nextProps) {
+  var deepDiffing = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 0;
   if (lastProps === nextProps) return null;
   var updatePayload = null;
   var propKey;
   for (propKey in lastProps) {
-    // This loop is for removing properties that existed in the previous properties, but not on current
-    if (Object.hasOwn(nextProps, propKey) || !Object.hasOwn(lastProps, propKey) || lastProps[propKey] == null) {
-      continue;
-    }
+    if (Object.hasOwn(nextProps, propKey) || !Object.hasOwn(lastProps, propKey) || lastProps[propKey] == null) continue;
     var prop = null;
-    // If style existed in the previous properties as string, set it to null
-    if (propKey === 'style' && typeof lastProps.style === 'string') {
-      (updatePayload = updatePayload || {})[styleStringSymbol] = null;
-    } else {
+    if (propKey === "style" && typeof lastProps.style === "string") (updatePayload = updatePayload || {})[styleStringSymbol] = null;else {
       var depth = deepDiffing > 0 ? deepDiffing : propDepths[propKey] || 0;
       if (depth > 0) {
         prop = diffProperties(lastProps[propKey], {}, depth - 1);
         if (!prop) continue;
       }
-      // For all other deleted properties we add it to the queue. We use
-      // the whitelist in the commit phase instead.
       (updatePayload = updatePayload || {})[propKey] = prop;
     }
   }
   for (propKey in nextProps) {
-    // This loop is for finding difference between current properties and previous properties
     var nextProp = nextProps[propKey];
-    var lastProp = lastProps != null ? lastProps[propKey] : undefined;
-    if (!Object.hasOwn(nextProps, propKey) || nextProp === lastProp || nextProp == null && lastProp == null) {
-      continue;
-    }
-    var prop = nextProp;
-    if (propKey === 'style') {
-      var prevWasString = typeof lastProp === 'string';
-      var curIsString = typeof prop === 'string';
+    var lastProp = lastProps != null ? lastProps[propKey] : void 0;
+    if (!Object.hasOwn(nextProps, propKey) || nextProp === lastProp || nextProp == null && lastProp == null) continue;
+    var _prop = nextProp;
+    if (propKey === "style") {
+      var prevWasString = typeof lastProp === "string";
+      var curIsString = typeof _prop === "string";
       if (prevWasString !== curIsString) {
-        (updatePayload = updatePayload || {})[styleStringSymbol] = typeof prop === 'string' ? prop : null;
+        (updatePayload = updatePayload || {})[styleStringSymbol] = typeof _prop === "string" ? _prop : null;
         if (curIsString) {
-          // Current style is string while previous is object, so revert all changes from the previous one
-          prop = diffProperties(lastProp, {}, 0);
-          if (!prop) continue;
+          _prop = diffProperties(lastProp, {}, 0);
+          if (!_prop) continue;
         }
       } else {
-        // Both styles are string, style does not need changing
         if (curIsString) continue;
-        // Both styles are object, take the difference
-        prop = diffProperties(lastProp, nextProp, 0);
-        if (!prop) continue;
+        _prop = diffProperties(lastProp, nextProp, 0);
+        if (!_prop) continue;
       }
     } else {
-      var depth = deepDiffing > 0 ? deepDiffing : propDepths[propKey] || 0;
-      if (depth > 0) {
-        prop = diffProperties(lastProp, nextProp, depth - 1);
-        if (!prop) continue;
+      var _depth = deepDiffing > 0 ? deepDiffing : propDepths[propKey] || 0;
+      if (_depth > 0) {
+        _prop = diffProperties(lastProp, nextProp, _depth - 1);
+        if (!_prop) continue;
       }
     }
-    (updatePayload = updatePayload || {})[propKey] = prop;
+    (updatePayload = updatePayload || {})[propKey] = _prop;
   }
   return updatePayload;
 }
-//# sourceMappingURL=diffing.js.map
-;// ../../../../packages/renderer/dist/src/renderer/constants.js
-var constants_assign = undefined && undefined.__assign || function () {
-  constants_assign = Object.assign || function (t) {
-    for (var s, i = 1, n = arguments.length; i < n; i++) {
-      s = arguments[i];
-      for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p)) t[p] = s[p];
-    }
-    return t;
-  };
-  return constants_assign.apply(this, arguments);
-};
-var constants_rest = undefined && undefined.__rest || function (s, e) {
+//#endregion
+//#region \0@oxc-project+runtime@0.140.0/helpers/esm/objectWithoutPropertiesLoose.js
+function dist_objectWithoutPropertiesLoose(r, e) {
+  if (null == r) return {};
   var t = {};
-  for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p) && e.indexOf(p) < 0) t[p] = s[p];
-  if (s != null && typeof Object.getOwnPropertySymbols === "function") for (var i = 0, p = Object.getOwnPropertySymbols(s); i < p.length; i++) {
-    if (e.indexOf(p[i]) < 0 && Object.prototype.propertyIsEnumerable.call(s, p[i])) t[p[i]] = s[p[i]];
+  for (var n in r) if ({}.hasOwnProperty.call(r, n)) {
+    if (e.includes(n)) continue;
+    t[n] = r[n];
   }
   return t;
-};
-
-
-
-var hideClass = 'react-unity__renderer__hidden';
+}
+//#endregion
+//#region \0@oxc-project+runtime@0.140.0/helpers/esm/objectWithoutProperties.js
+function dist_objectWithoutProperties(e, t) {
+  if (null == e) return {};
+  var o,
+    r,
+    i = dist_objectWithoutPropertiesLoose(e, t);
+  if (Object.getOwnPropertySymbols) {
+    var s = Object.getOwnPropertySymbols(e);
+    for (r = 0; r < s.length; r++) o = s[r], t.includes(o) || {}.propertyIsEnumerable.call(e, o) && (i[o] = e[o]);
+  }
+  return i;
+}
+//#endregion
+//#region src/renderer/constants.ts
+var dist_excluded = ["children", "tag", "pool", "ref"];
+var hideClass = "react-unity__renderer__hidden";
 var eventPriorities = {
   discrete: constants.DiscreteEventPriority,
   continuous: constants.ContinuousEventPriority,
@@ -10887,16 +11304,16 @@ var textTypes = {
 };
 function stringizePoolKey(key) {
   switch (typeof key) {
-    case 'string':
+    case "string":
       return key;
-    case 'boolean':
-      return key ? 'default' : '';
-    case 'number':
+    case "boolean":
+      return key ? "default" : "";
+    case "number":
       return key.toString();
-    case 'undefined':
+    case "undefined":
       return null;
     default:
-      return '';
+      return "";
   }
 }
 function getAllowedProps(props, type) {
@@ -10904,25 +11321,19 @@ function getAllowedProps(props, type) {
     tag = props.tag,
     pool = props.pool,
     ref = props.ref,
-    rest = constants_rest(props, ["children", "tag", "pool", "ref"]);
-  if (textTypes[type] && 'children' in props) {
-    rest.children = !children || typeof children === 'boolean' ? null : Array.isArray(children) ? children.join('') : String(children);
-  }
-  if (typeof props.style === 'string') rest[styleStringSymbol] = props.style;
+    rest = dist_objectWithoutProperties(props, dist_excluded);
+  if (textTypes[type] && "children" in props) rest.children = !children || typeof children === "boolean" ? null : Array.isArray(children) ? children.join("") : String(children);
+  if (typeof props.style === "string") rest[styleStringSymbol] = props.style;
   return rest;
 }
 var HostTransitionContext = (0,react.createContext)(null);
-var NoEventPriority = 0;
-var currentUpdatePriority = NoEventPriority;
-var commonReconciler = constants_assign({
-  // -------------------
-  //     Scheduling
-  // -------------------
+var currentUpdatePriority = 0;
+var commonReconciler = objectSpread2_CDDvZyE7_objectSpread2({
   noTimeout: -1,
   scheduleTimeout: function scheduleTimeout(callback, delay) {
     return setTimeout(callback, delay);
   },
-  scheduleMicrotask: typeof queueMicrotask === 'function' ? queueMicrotask : function (callback) {
+  scheduleMicrotask: typeof queueMicrotask === "function" ? queueMicrotask : function (callback) {
     return Promise.resolve(null).then(callback)["catch"](function (error) {
       return setTimeout(function () {
         throw error;
@@ -10936,12 +11347,11 @@ var commonReconciler = constants_assign({
   afterActiveInstanceBlur: function afterActiveInstanceBlur() {},
   prepareScopeUpdate: function prepareScopeUpdate() {},
   getInstanceFromScope: function getInstanceFromScope() {
-    return undefined;
+    return void 0;
   },
   getInstanceFromNode: function getInstanceFromNode() {
-    return undefined;
+    return void 0;
   },
-  // React 19
   setCurrentUpdatePriority: function setCurrentUpdatePriority(newPriority) {
     return currentUpdatePriority = newPriority;
   },
@@ -10977,9 +11387,9 @@ var commonReconciler = constants_assign({
   NotPendingTransition: null,
   HostTransitionContext: HostTransitionContext
 }, {
-  now: typeof performance !== 'undefined' && typeof performance.now === 'function' ? function () {
+  now: typeof performance !== "undefined" && typeof performance.now === "function" ? function () {
     return performance.now();
-  } : typeof Date !== 'undefined' && typeof Date.now === 'function' ? function () {
+  } : typeof Date !== "undefined" && typeof Date.now === "function" ? function () {
     return Date.now();
   } : function () {
     return 0;
@@ -10988,228 +11398,192 @@ var commonReconciler = constants_assign({
     return UnityBridge.CurrentEventPriority || eventPriorities["default"];
   }
 });
-var isDevelopment = "production" === 'development';
-//# sourceMappingURL=constants.js.map
-;// ../../../../packages/renderer/dist/src/renderer/subcontexts/richtext.js
+var isDevelopment = "production" === "development";
+//#endregion
+//#region src/renderer/subcontexts/richtext.ts
 function parametrizeValue(value) {
-  if (typeof value === 'number') return String(value);
+  if (typeof value === "number") return String(value);
   value = String(value);
-  if (value.includes(' ') || value.includes('-')) return "\"".concat(value, "\"");
+  if (value.includes(" ") || value.includes("-")) return "\"".concat(value, "\"");
   return value;
 }
 function stringifyRichText(node) {
-  var _a, _b, _c;
-  if (node.hidden) return '';
-  if ('text' in node) return node.text;
+  var _node$children;
+  if (node.hidden) return "";
+  if ("text" in node) return node.text;
   var acc = [];
   var tag = node.tag;
   if (tag) {
-    acc.push('<');
+    var _node$attributes;
+    acc.push("<");
     acc.push(tag);
-    if (((_a = node.attributes) === null || _a === void 0 ? void 0 : _a.value) != null) {
-      var value = (_b = node.attributes) === null || _b === void 0 ? void 0 : _b.value;
-      acc.push('=');
+    if (((_node$attributes = node.attributes) === null || _node$attributes === void 0 ? void 0 : _node$attributes.value) != null) {
+      var _node$attributes2;
+      var value = (_node$attributes2 = node.attributes) === null || _node$attributes2 === void 0 ? void 0 : _node$attributes2.value;
+      acc.push("=");
       acc.push(parametrizeValue(value));
     }
     for (var key in node.attributes) {
-      if (key === 'value') continue;
+      if (key === "value") continue;
       if (Object.hasOwn(node.attributes, key)) {
-        var value = node.attributes[key];
-        if (value != null) {
-          acc.push(' ');
+        var _value = node.attributes[key];
+        if (_value != null) {
+          acc.push(" ");
           acc.push(key);
-          acc.push('=');
-          acc.push(parametrizeValue(value));
+          acc.push("=");
+          acc.push(parametrizeValue(_value));
         }
       }
     }
-    acc.push('>');
+    acc.push(">");
   }
-  if (((_c = node.children) === null || _c === void 0 ? void 0 : _c.length) > 0) {
-    for (var _i = 0, _d = node.children; _i < _d.length; _i++) {
-      var child = _d[_i];
-      acc.push(stringifyRichText(child));
+  if (((_node$children = node.children) === null || _node$children === void 0 ? void 0 : _node$children.length) > 0) {
+    var _iterator = _createForOfIteratorHelper(node.children),
+      _step;
+    try {
+      for (_iterator.s(); !(_step = _iterator.n()).done;) {
+        var child = _step.value;
+        acc.push(stringifyRichText(child));
+      }
+    } catch (err) {
+      _iterator.e(err);
+    } finally {
+      _iterator.f();
     }
     if (tag) {
-      acc.push('</');
+      acc.push("</");
       acc.push(tag);
-      acc.push('>');
+      acc.push(">");
     }
   }
-  return acc.join('');
+  return acc.join("");
 }
-//# sourceMappingURL=richtext.js.map
-;// ../../../../packages/renderer/dist/src/renderer/subcontexts/svg.js
+//#endregion
+//#region src/renderer/subcontexts/svg.ts
 function kebabize(str) {
-  return str.split('').map(function (letter, idx) {
-    return letter.toUpperCase() === letter ? "".concat(idx !== 0 ? '-' : '').concat(letter.toLowerCase()) : letter;
-  }).join('');
+  return str.split("").map(function (letter, idx) {
+    return letter.toUpperCase() === letter ? "".concat(idx !== 0 ? "-" : "").concat(letter.toLowerCase()) : letter;
+  }).join("");
 }
 function stringifyStyle(style) {
-  if (typeof style === 'string') return style;
+  if (typeof style === "string") return style;
   var acc = [];
-  for (var key in style) {
-    if (Object.hasOwn(style, key)) {
-      var element = style[key];
-      if (element != null) {
-        acc.push(kebabize(key));
-        acc.push(':');
-        acc.push(element);
-        acc.push(';');
-      }
+  for (var key in style) if (Object.hasOwn(style, key)) {
+    var element = style[key];
+    if (element != null) {
+      acc.push(kebabize(key));
+      acc.push(":");
+      acc.push(element);
+      acc.push(";");
     }
   }
-  return acc.join('');
+  return acc.join("");
 }
 function stringifySVG(node) {
-  var _a;
-  if (node.hidden) return '';
-  if ('text' in node) return node.text;
+  var _node$children;
+  if (node.hidden) return "";
+  if ("text" in node) return node.text;
   var acc = [];
   var tag = node.tag;
   if (tag) {
-    acc.push('<');
+    acc.push("<");
     acc.push(tag);
-    for (var key in node.attributes) {
-      if (Object.hasOwn(node.attributes, key)) {
-        var element = node.attributes[key];
-        if (key === 'style') element = stringifyStyle(element);
-        if (element != null) {
-          acc.push(' ');
-          acc.push(kebabize(key));
-          acc.push('="');
-          acc.push(element);
-          acc.push('"');
-        }
+    for (var key in node.attributes) if (Object.hasOwn(node.attributes, key)) {
+      var element = node.attributes[key];
+      if (key === "style") element = stringifyStyle(element);
+      if (element != null) {
+        acc.push(" ");
+        acc.push(kebabize(key));
+        acc.push("=\"");
+        acc.push(element);
+        acc.push("\"");
       }
     }
   }
-  if (((_a = node.children) === null || _a === void 0 ? void 0 : _a.length) > 0) {
-    if (tag) acc.push('>');
-    for (var _i = 0, _b = node.children; _i < _b.length; _i++) {
-      var child = _b[_i];
-      acc.push(stringifySVG(child));
+  if (((_node$children = node.children) === null || _node$children === void 0 ? void 0 : _node$children.length) > 0) {
+    if (tag) acc.push(">");
+    var _iterator2 = _createForOfIteratorHelper(node.children),
+      _step2;
+    try {
+      for (_iterator2.s(); !(_step2 = _iterator2.n()).done;) {
+        var child = _step2.value;
+        acc.push(stringifySVG(child));
+      }
+    } catch (err) {
+      _iterator2.e(err);
+    } finally {
+      _iterator2.f();
     }
     if (tag) {
-      acc.push('</');
+      acc.push("</");
       acc.push(tag);
-      acc.push('>');
+      acc.push(">");
     }
-  } else {
-    if (tag) acc.push(' />');
-  }
-  return acc.join('');
+  } else if (tag) acc.push(" />");
+  return acc.join("");
 }
-//# sourceMappingURL=svg.js.map
-;// ../../../../packages/renderer/dist/src/renderer/subcontexts/index.js
-
-
+//#endregion
+//#region src/renderer/subcontexts/index.ts
 var subContextRenderers = {
   richtext: stringifyRichText,
   svg: stringifySVG
 };
-//# sourceMappingURL=index.js.map
-;// ../../../../packages/renderer/dist/src/renderer/async/callbacks.js
-var callbacks_extends = undefined && undefined.__extends || function () {
-  var _extendStatics = function extendStatics(d, b) {
-    _extendStatics = Object.setPrototypeOf || {
-      __proto__: []
-    } instanceof Array && function (d, b) {
-      d.__proto__ = b;
-    } || function (d, b) {
-      for (var p in b) if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p];
-    };
-    return _extendStatics(d, b);
-  };
-  return function (d, b) {
-    if (typeof b !== "function" && b !== null) throw new TypeError("Class extends value " + String(b) + " is not a constructor or null");
-    _extendStatics(d, b);
-    function __() {
-      this.constructor = d;
-    }
-    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-  };
-}();
-
-var CallbacksRepo = /** @class */function (_super) {
-  callbacks_extends(CallbacksRepo, _super);
+//#endregion
+//#region src/renderer/async/callbacks.ts
+var CallbacksRepo = /*#__PURE__*/function (_ObjectsRepo) {
   function CallbacksRepo() {
-    var _this = _super !== null && _super.apply(this, arguments) || this;
-    _this.call = function (ind, args) {
-      var cb = _this.getObject(ind);
+    var _this3;
+    _classCallCheck(this, CallbacksRepo);
+    for (var _len = arguments.length, _args = new Array(_len), _key = 0; _key < _len; _key++) {
+      _args[_key] = arguments[_key];
+    }
+    _this3 = _callSuper(this, CallbacksRepo, [].concat(_args));
+    objectSpread2_CDDvZyE7_defineProperty(_this3, "call", function (ind, args) {
+      var cb = _this3.getObject(ind);
       var argsAsList = args;
       var argsAsArray = args;
-      if (typeof argsAsArray.Length === 'number') {
-        // C# Array
+      if (typeof argsAsArray.Length === "number") {
         args = [];
         var length = argsAsArray.Length;
         for (var index = 0; index < length; index++) args.push(argsAsArray.GetValue(index));
-      } else if (typeof argsAsList.Count === 'number') {
-        // C# List
+      } else if (typeof argsAsList.Count === "number") {
         args = [];
-        var length = argsAsList.Count;
-        for (var index = 0; index < length; index++) args.push(argsAsList[index]);
-      } else if (typeof argsAsList.Count === 'function') {
-        // C# IList
+        var _length = argsAsList.Count;
+        for (var _index = 0; _index < _length; _index++) args.push(argsAsList[_index]);
+      } else if (typeof argsAsList.Count === "function") {
         args = [];
-        var length = argsAsList.Count();
-        for (var index = 0; index < length; index++) args.push(argsAsArray.GetValue(index));
+        var _length2 = argsAsList.Count();
+        for (var _index2 = 0; _index2 < _length2; _index2++) args.push(argsAsArray.GetValue(_index2));
       }
       return cb.apply(null, args);
-    };
-    return _this;
+    });
+    return _this3;
   }
-  return CallbacksRepo;
+  _inherits(CallbacksRepo, _ObjectsRepo);
+  return _createClass(CallbacksRepo);
 }(ObjectsRepo);
-
-//# sourceMappingURL=callbacks.js.map
-;// ../../../../packages/renderer/dist/src/renderer/async/serializer.js
-
-
+//#endregion
+//#region src/renderer/async/serializer.ts
 var callbacksRepo = new CallbacksRepo();
 var objectsRepo = new ObjectsRepo();
-// Separates properties in 3 categories: regular props, callbacks and non-serializable objects
 function convertPropsToSerializable(props) {
   var res = {};
-  for (var key in props) {
-    if (Object.hasOwn(props, key)) {
-      var value = props[key];
-      if (value == null) {
-        (res.p || (res.p = {}))[key] = null;
-      } else if (key === 'style') {
-        (res.p || (res.p = {}))[key] = convertPropsToSerializable(value);
-      } else if (key[0] === 'o' && key[1] === 'n' && typeof value === 'function') {
-        var ind = callbacksRepo.addObject(value);
-        (res.e || (res.e = {}))[key] = ind;
-      } else if (typeof value === 'object' || typeof value === 'function') {
-        var ind = objectsRepo.addObject(value);
-        (res.o || (res.o = {}))[key] = ind;
-      } else {
-        (res.p || (res.p = {}))[key] = value;
-      }
-    }
+  for (var key in props) if (Object.hasOwn(props, key)) {
+    var value = props[key];
+    if (value == null) (res.p || (res.p = {}))[key] = null;else if (key === "style") (res.p || (res.p = {}))[key] = convertPropsToSerializable(value);else if (key[0] === "o" && key[1] === "n" && typeof value === "function") {
+      var ind = callbacksRepo.addObject(value);
+      (res.e || (res.e = {}))[key] = ind;
+    } else if (typeof value === "object" || typeof value === "function") {
+      var _ind = objectsRepo.addObject(value);
+      (res.o || (res.o = {}))[key] = _ind;
+    } else (res.p || (res.p = {}))[key] = value;
   }
   return res;
 }
-//# sourceMappingURL=serializer.js.map
-;// ../../../../packages/renderer/dist/src/renderer/async/reconciler.js
-var reconciler_assign = undefined && undefined.__assign || function () {
-  reconciler_assign = Object.assign || function (t) {
-    for (var s, i = 1, n = arguments.length; i < n; i++) {
-      s = arguments[i];
-      for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p)) t[p] = s[p];
-    }
-    return t;
-  };
-  return reconciler_assign.apply(this, arguments);
-};
-
-
-
-
-
+//#endregion
+//#region src/renderer/async/reconciler.ts
 var refId = 0;
-var ctxMap = new Map();
+var ctxMap = /* @__PURE__ */new Map();
 var updateSubContext = function updateSubContext(instance) {
   var rend = subContextRenderers[instance.type];
   var root = instance === null || instance === void 0 ? void 0 : instance.root;
@@ -11220,17 +11594,11 @@ var updateSubContext = function updateSubContext(instance) {
   }
   if (!root) return;
   var content = rend(root.subContext.node);
-  if (instance.type === 'richtext') {
-    // instance.hostContext.commands.push(['x', { r: root.refId, c: content }]);
-    instance.hostContext.commands.push([6, root.refId, content]);
-  } else if (instance.type === 'svg') {
-    // instance.hostContext.commands.push(['u', { r: root.refId, t: 'svg', ...convertPropsToSerializable({ innerContent: content }) }]);
-    instance.hostContext.commands.push([5, root.refId, 'svg', convertPropsToSerializable({
-      innerContent: content
-    })]);
-  }
+  if (instance.type === "richtext") instance.hostContext.commands.push([6, root.refId, content]);else if (instance.type === "svg") instance.hostContext.commands.push([5, root.refId, "svg", convertPropsToSerializable({
+    innerContent: content
+  })]);
 };
-var hostConfig = reconciler_assign(reconciler_assign(reconciler_assign({}, commonReconciler), {
+var hostConfig$1 = objectSpread2_CDDvZyE7_objectSpread2(objectSpread2_CDDvZyE7_objectSpread2({}, commonReconciler), {}, {
   getRootHostContext: function getRootHostContext(rootContainer) {
     var context = rootContainer.context;
     if (rootContainer.refId < 0) {
@@ -11260,21 +11628,21 @@ var hostConfig = reconciler_assign(reconciler_assign(reconciler_assign({}, commo
       context: context,
       commands: commands,
       refId: rootContainer.refId,
-      type: 'native'
+      type: "native"
     };
     ctxMap.set(context, ctx);
     return ctx;
   },
   getChildHostContext: function getChildHostContext(parentCtx, type) {
-    if (type === 'richtext' && parentCtx.type === 'native') return {
-      type: 'richtext',
+    if (type === "richtext" && parentCtx.type === "native") return {
+      type: "richtext",
       hostContext: parentCtx,
       node: null,
       parent: null,
       root: null
     };
-    if (type === 'svg' && parentCtx.type === 'native') return {
-      type: 'svg',
+    if (type === "svg" && parentCtx.type === "native") return {
+      type: "svg",
       hostContext: parentCtx,
       node: null,
       parent: null,
@@ -11283,7 +11651,7 @@ var hostConfig = reconciler_assign(reconciler_assign(reconciler_assign({}, commo
     return parentCtx;
   },
   getPublicInstance: function getPublicInstance(instance) {
-    if (instance.type === 'native') return instance.context.GetRef(instance.refId, instance.commands.length > 0);
+    if (instance.type === "native") return instance.context.GetRef(instance.refId, instance.commands.length > 0);
     return null;
   },
   supportsMutation: true,
@@ -11301,78 +11669,65 @@ var hostConfig = reconciler_assign(reconciler_assign(reconciler_assign({}, commo
   },
   createInstance: function createInstance(type, props, rootContainer, ctx, internalHandle) {
     var aProps = getAllowedProps(props, type);
-    if (ctx.type === 'native') {
+    if (ctx.type === "native") {
       refId++;
-      // ctx.commands.push(['c', { t: type, r: refId, k: stringizePoolKey(props.pool), ...convertPropsToSerializable(aProps) }]);
       ctx.commands.push([0, refId, type, convertPropsToSerializable(aProps), stringizePoolKey(props.pool)]);
       if (rootContainer.fiberCache) rootContainer.fiberCache.setObject(refId, internalHandle);
-      var res = reconciler_assign(reconciler_assign({}, ctx), {
+      var res = objectSpread2_CDDvZyE7_objectSpread2(objectSpread2_CDDvZyE7_objectSpread2({}, ctx), {}, {
         refId: refId
       });
-      if (type === 'richtext') {
-        res.subContext = {
-          type: 'richtext',
-          node: {
-            tag: '',
-            children: [],
-            attributes: aProps
-          },
-          root: res,
-          hostContext: res,
-          parent: null
-        };
-      }
-      if (type === 'svg') {
-        res.subContext = {
-          type: 'svg',
-          node: {
-            tag: '',
-            children: [],
-            attributes: aProps
-          },
-          root: res,
-          hostContext: res,
-          parent: null
-        };
-      }
-      return res;
-    }
-    if (ctx.type === 'richtext' || ctx.type === 'svg') {
-      return reconciler_assign(reconciler_assign({}, ctx), {
+      if (type === "richtext") res.subContext = {
+        type: "richtext",
         node: {
-          tag: type,
+          tag: "",
           children: [],
           attributes: aProps
-        }
-      });
+        },
+        root: res,
+        hostContext: res,
+        parent: null
+      };
+      if (type === "svg") res.subContext = {
+        type: "svg",
+        node: {
+          tag: "",
+          children: [],
+          attributes: aProps
+        },
+        root: res,
+        hostContext: res,
+        parent: null
+      };
+      return res;
     }
+    if (ctx.type === "richtext" || ctx.type === "svg") return objectSpread2_CDDvZyE7_objectSpread2(objectSpread2_CDDvZyE7_objectSpread2({}, ctx), {}, {
+      node: {
+        tag: type,
+        children: [],
+        attributes: aProps
+      }
+    });
   },
   createTextInstance: function createTextInstance(text, rootContainer, ctx, internalHandle) {
-    if (ctx.type === 'native') {
+    if (ctx.type === "native") {
       refId++;
-      // ctx.commands.push(['t', { r: refId, c: text }]);
       ctx.commands.push([1, refId, text]);
       if (rootContainer.fiberCache) rootContainer.fiberCache.setObject(refId, internalHandle);
-      return reconciler_assign(reconciler_assign({}, ctx), {
+      return objectSpread2_CDDvZyE7_objectSpread2(objectSpread2_CDDvZyE7_objectSpread2({}, ctx), {}, {
         refId: refId
       });
     }
-    if (ctx.type === 'richtext' || ctx.type === 'svg') {
-      return reconciler_assign(reconciler_assign({}, ctx), {
-        node: {
-          text: text
-        }
-      });
-    }
+    if (ctx.type === "richtext" || ctx.type === "svg") return objectSpread2_CDDvZyE7_objectSpread2(objectSpread2_CDDvZyE7_objectSpread2({}, ctx), {}, {
+      node: {
+        text: text
+      }
+    });
   },
   appendInitialChild: function appendInitialChild(parent, child) {
     if (!child) return;
-    if (parent.type === 'native' && parent.subContext) parent = parent.subContext;
-    if (parent.type === 'native' && child.type === 'native') {
-      // parent.commands.push(['a', { p: parent.refId, c: child.refId }]);
-      parent.commands.push([2, parent.refId, child.refId]);
-    } else if (parent.type === 'richtext' && child.type === 'richtext' || parent.type === 'svg' && child.type === 'svg') {
-      if ('children' in parent.node) parent.node.children.push(child.node);
+    if (parent.type === "native" && parent.subContext) parent = parent.subContext;
+    if (parent.type === "native" && child.type === "native") parent.commands.push([2, parent.refId, child.refId]);else if (parent.type === "richtext" && child.type === "richtext" || parent.type === "svg" && child.type === "svg") {
+      if ("children" in parent.node) parent.node.children.push(child.node);
       child.root = parent.root;
       child.parent = parent;
       updateSubContext(child);
@@ -11385,64 +11740,45 @@ var hostConfig = reconciler_assign(reconciler_assign(reconciler_assign({}, commo
   shouldSetTextContent: function shouldSetTextContent(type) {
     return textTypes[type];
   },
-  // -------------------
-  //     Mutation
-  // -------------------
   commitUpdate: function commitUpdate(instance, type, prevProps, nextProps) {
     var updatePayload = null;
-    if (typeof prevProps === 'string') {
-      // React 18 compatibility
+    if (typeof prevProps === "string") {
       updatePayload = type;
       type = prevProps;
     } else {
-      // React 19+
       updatePayload = diffProperties(prevProps, nextProps);
       if (!updatePayload) return;
     }
     var props = getAllowedProps(updatePayload, type);
-    if (instance.type === 'native') {
-      // instance.commands.push(['u', { r: instance.refId, t: type, ...convertPropsToSerializable(props) }]);
-      instance.commands.push([5, instance.refId, type, convertPropsToSerializable(props)]);
-    } else if (instance.type === 'richtext' || instance.type === 'svg') {
-      if ('attributes' in instance.node) instance.node.attributes = reconciler_assign(reconciler_assign({}, instance.node.attributes), props);
+    if (instance.type === "native") instance.commands.push([5, instance.refId, type, convertPropsToSerializable(props)]);else if (instance.type === "richtext" || instance.type === "svg") {
+      if ("attributes" in instance.node) instance.node.attributes = objectSpread2_CDDvZyE7_objectSpread2(objectSpread2_CDDvZyE7_objectSpread2({}, instance.node.attributes), props);
       updateSubContext(instance);
     }
   },
   commitTextUpdate: function commitTextUpdate(instance, oldText, newText) {
-    if (instance.type === 'native') {
-      // instance.commands.push(['x', { r: instance.refId, c: newText }]);
-      instance.commands.push([6, instance.refId, newText]);
-    } else if (instance.type === 'richtext' || instance.type === 'svg') {
+    if (instance.type === "native") instance.commands.push([6, instance.refId, newText]);else if (instance.type === "richtext" || instance.type === "svg") {
       instance.node.text = newText;
       updateSubContext(instance);
     }
   },
   appendChild: function appendChild(parent, child) {
     if (!child) return;
-    if (parent.type === 'native' && parent.subContext) parent = parent.subContext;
-    if (parent.type === 'native' && child.type === 'native') {
-      // child.commands.push(['a', { p: parent.refId, c: child.refId }]);
-      child.commands.push([2, parent.refId, child.refId]);
-    } else if (parent.type === 'richtext' && child.type === 'richtext' || parent.type === 'svg' && child.type === 'svg') {
-      if ('children' in parent.node) parent.node.children.push(child.node);
+    if (parent.type === "native" && parent.subContext) parent = parent.subContext;
+    if (parent.type === "native" && child.type === "native") child.commands.push([2, parent.refId, child.refId]);else if (parent.type === "richtext" && child.type === "richtext" || parent.type === "svg" && child.type === "svg") {
+      if ("children" in parent.node) parent.node.children.push(child.node);
       child.root = parent.root;
       child.parent = parent;
       updateSubContext(child);
     }
   },
   appendChildToContainer: function appendChildToContainer(parent, child) {
-    if (child.type === 'native')
-      // child.commands.push(['a', { p: parent.refId, c: child.refId }]);
-      child.commands.push([2, parent.refId, child.refId]);
+    if (child.type === "native") child.commands.push([2, parent.refId, child.refId]);
   },
   insertBefore: function insertBefore(parent, child, beforeChild) {
     if (!child) return;
-    if (parent.type === 'native' && parent.subContext) parent = parent.subContext;
-    if (parent.type === 'native' && child.type === 'native' && beforeChild.type === 'native') {
-      // child.commands.push(['i', { p: parent.refId, c: child.refId, i: beforeChild.refId }]);
-      child.commands.push([4, parent.refId, child.refId, beforeChild.refId]);
-    } else if (parent.type === 'richtext' && child.type === 'richtext' && beforeChild.type === 'richtext' || parent.type === 'svg' && child.type === 'svg' && beforeChild.type === 'svg') {
-      if ('children' in parent.node) {
+    if (parent.type === "native" && parent.subContext) parent = parent.subContext;
+    if (parent.type === "native" && child.type === "native" && beforeChild.type === "native") child.commands.push([4, parent.refId, child.refId, beforeChild.refId]);else if (parent.type === "richtext" && child.type === "richtext" && beforeChild.type === "richtext" || parent.type === "svg" && child.type === "svg" && beforeChild.type === "svg") {
+      if ("children" in parent.node) {
         var index = parent.node.children.indexOf(beforeChild.node);
         if (index >= 0) parent.node.children.splice(index, 0, child.node);else parent.node.children.push(child.node);
       }
@@ -11452,18 +11788,13 @@ var hostConfig = reconciler_assign(reconciler_assign(reconciler_assign({}, commo
     }
   },
   insertInContainerBefore: function insertInContainerBefore(parent, child, beforeChild) {
-    if (child.type === 'native' && beforeChild.type === 'native')
-      // child.commands.push(['i', { p: parent.refId, c: child.refId, i: beforeChild.refId }]);
-      child.commands.push([4, parent.refId, child.refId, beforeChild.refId]);
+    if (child.type === "native" && beforeChild.type === "native") child.commands.push([4, parent.refId, child.refId, beforeChild.refId]);
   },
   removeChild: function removeChild(parent, child) {
     if (!child) return;
-    if (parent.type === 'native' && parent.subContext) parent = parent.subContext;
-    if (parent.type === 'native' && child.type === 'native') {
-      // child.commands.push(['r', { p: parent.refId, c: child.refId }]);
-      child.commands.push([3, parent.refId, child.refId]);
-    } else if (parent.type === 'richtext' && child.type === 'richtext' || parent.type === 'svg' && child.type === 'svg') {
-      if ('children' in parent.node) {
+    if (parent.type === "native" && parent.subContext) parent = parent.subContext;
+    if (parent.type === "native" && child.type === "native") child.commands.push([3, parent.refId, child.refId]);else if (parent.type === "richtext" && child.type === "richtext" || parent.type === "svg" && child.type === "svg") {
+      if ("children" in parent.node) {
         var index = parent.node.children.indexOf(child.node);
         if (index >= 0) parent.node.children.splice(index, 1);
       }
@@ -11471,51 +11802,36 @@ var hostConfig = reconciler_assign(reconciler_assign(reconciler_assign({}, commo
     }
   },
   removeChildFromContainer: function removeChildFromContainer(parent, child) {
-    if (child.type === 'native')
-      // child.commands.push(['r', { p: parent.refId, c: child.refId }]);
-      child.commands.push([3, parent.refId, child.refId]);
+    if (child.type === "native") child.commands.push([3, parent.refId, child.refId]);
   },
   resetTextContent: function resetTextContent() {},
   preparePortalMount: function preparePortalMount() {},
   detachDeletedInstance: function detachDeletedInstance() {},
-  // Required for Suspense
   hideInstance: function hideInstance(instance) {
-    if (instance.type === 'native') {
-      // instance.commands.push(['h', { r: instance.refId, h: true }]);
-      instance.commands.push([7, instance.refId, true]);
-    } else if (instance.type === 'richtext' || instance.type === 'svg') {
+    if (instance.type === "native") instance.commands.push([7, instance.refId, true]);else if (instance.type === "richtext" || instance.type === "svg") {
       instance.node.hidden = true;
       updateSubContext(instance);
     }
   },
   hideTextInstance: function hideTextInstance(instance) {
-    if (instance.type === 'native') {
-      // instance.commands.push(['h', { r: instance.refId, h: true }]);
-      instance.commands.push([7, instance.refId, true]);
-    } else if (instance.type === 'richtext' || instance.type === 'svg') {
+    if (instance.type === "native") instance.commands.push([7, instance.refId, true]);else if (instance.type === "richtext" || instance.type === "svg") {
       instance.node.hidden = true;
       updateSubContext(instance);
     }
   },
   unhideInstance: function unhideInstance(instance) {
-    if (instance.type === 'native') {
-      // instance.commands.push(['h', { r: instance.refId, h: false }]);
-      instance.commands.push([7, instance.refId, false]);
-    } else if (instance.type === 'richtext' || instance.type === 'svg') {
+    if (instance.type === "native") instance.commands.push([7, instance.refId, false]);else if (instance.type === "richtext" || instance.type === "svg") {
       instance.node.hidden = false;
       updateSubContext(instance);
     }
   },
   unhideTextInstance: function unhideTextInstance(instance) {
-    if (instance.type === 'native') {
-      // instance.commands.push(['h', { r: instance.refId, h: false }]);
-      instance.commands.push([7, instance.refId, false]);
-    } else if (instance.type === 'richtext' || instance.type === 'svg') {
+    if (instance.type === "native") instance.commands.push([7, instance.refId, false]);else if (instance.type === "richtext" || instance.type === "svg") {
       instance.node.hidden = false;
       updateSubContext(instance);
     }
   }
-}), {
+}, {
   supportsTestSelectors: false,
   shouldDeprioritizeSubtree: function shouldDeprioritizeSubtree() {
     return false;
@@ -11526,26 +11842,14 @@ var hostConfig = reconciler_assign(reconciler_assign(reconciler_assign({}, commo
 });
 var asyncReconciler = null;
 var getAsyncReconciler = function getAsyncReconciler() {
-  return asyncReconciler !== null && asyncReconciler !== void 0 ? asyncReconciler : asyncReconciler = react_reconciler_default()(hostConfig);
+  var _asyncReconciler;
+  return (_asyncReconciler = asyncReconciler) !== null && _asyncReconciler !== void 0 ? _asyncReconciler : asyncReconciler = react_reconciler_default()(hostConfig$1);
 };
-//# sourceMappingURL=reconciler.js.map
-;// ../../../../packages/renderer/dist/src/renderer/sync/reconciler.js
-var sync_reconciler_assign = undefined && undefined.__assign || function () {
-  sync_reconciler_assign = Object.assign || function (t) {
-    for (var s, i = 1, n = arguments.length; i < n; i++) {
-      s = arguments[i];
-      for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p)) t[p] = s[p];
-    }
-    return t;
-  };
-  return sync_reconciler_assign.apply(this, arguments);
-};
-
-
-
+//#endregion
+//#region src/renderer/sync/reconciler.ts
 var hostContext = {};
 var childContext = {};
-var reconciler_hostConfig = sync_reconciler_assign(sync_reconciler_assign(sync_reconciler_assign({}, commonReconciler), {
+var hostConfig = objectSpread2_CDDvZyE7_objectSpread2(objectSpread2_CDDvZyE7_objectSpread2({}, commonReconciler), {}, {
   getRootHostContext: function getRootHostContext() {
     return hostContext;
   },
@@ -11587,17 +11891,12 @@ var reconciler_hostConfig = sync_reconciler_assign(sync_reconciler_assign(sync_r
   shouldSetTextContent: function shouldSetTextContent(type) {
     return textTypes[type];
   },
-  // -------------------
-  //     Mutation
-  // -------------------
   commitUpdate: function commitUpdate(instance, type, prevProps, nextProps) {
     var updatePayload = null;
-    if (typeof prevProps === 'string') {
-      // React 18 compatibility
+    if (typeof prevProps === "string") {
       updatePayload = type;
       type = prevProps;
     } else {
-      // React 19+
       updatePayload = diffProperties(prevProps, nextProps);
       if (!updatePayload) return;
     }
@@ -11627,7 +11926,6 @@ var reconciler_hostConfig = sync_reconciler_assign(sync_reconciler_assign(sync_r
   resetTextContent: function resetTextContent() {},
   preparePortalMount: function preparePortalMount() {},
   detachDeletedInstance: function detachDeletedInstance() {},
-  // Required for Suspense
   hideInstance: function hideInstance(instance) {
     instance.ClassList.Add(hideClass);
   },
@@ -11640,7 +11938,7 @@ var reconciler_hostConfig = sync_reconciler_assign(sync_reconciler_assign(sync_r
   unhideTextInstance: function unhideTextInstance(instance) {
     instance.ClassList.Remove(hideClass);
   }
-}), {
+}, {
   supportsTestSelectors: false,
   shouldDeprioritizeSubtree: function shouldDeprioritizeSubtree() {
     return false;
@@ -11651,107 +11949,86 @@ var reconciler_hostConfig = sync_reconciler_assign(sync_reconciler_assign(sync_r
 });
 var syncReconciler = null;
 var getSyncReconciler = function getSyncReconciler() {
-  return syncReconciler !== null && syncReconciler !== void 0 ? syncReconciler : syncReconciler = react_reconciler_default()(reconciler_hostConfig);
+  var _syncReconciler;
+  return (_syncReconciler = syncReconciler) !== null && _syncReconciler !== void 0 ? _syncReconciler : syncReconciler = react_reconciler_default()(hostConfig);
 };
-//# sourceMappingURL=reconciler.js.map
-;// ../../../../packages/renderer/dist/src/renderer/renderer.js
-
-
-
-
-
-
-
-
-var containerMap = new Map();
+//#endregion
+//#region src/renderer/renderer.ts
+var containerMap = /* @__PURE__ */new Map();
 var renderCount = 0;
-function _render(element, options) {
-  if (options === void 0) {
-    options = {};
-  }
+function _render(element) {
+  var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
   renderCount++;
   var hostContainer = (options === null || options === void 0 ? void 0 : options.hostContainer) || HostContainer;
   var cacheKey = hostContainer.InstanceId >= 0 ? hostContainer.InstanceId : hostContainer;
   var isAsync = !(options === null || options === void 0 ? void 0 : options.disableBatchRendering);
-  var _a = containerMap.get(cacheKey) || {},
-    hostRoot = _a.hostRoot,
-    asyncJobCallback = _a.asyncJobCallback;
+  var _ref3 = containerMap.get(cacheKey) || {},
+    hostRoot = _ref3.hostRoot,
+    asyncJobCallback = _ref3.asyncJobCallback;
   var findFiberByHostInstance = function findFiberByHostInstance() {
     return null;
   };
   if (!hostRoot) {
-    var mode = (options === null || options === void 0 ? void 0 : options.mode) === 'legacy' ? constants.LegacyRoot : constants.ConcurrentRoot;
+    var mode = (options === null || options === void 0 ? void 0 : options.mode) === "legacy" ? constants.LegacyRoot : constants.ConcurrentRoot;
     if (isAsync) {
-      var asyncReconciler = getAsyncReconciler();
-      var fiberCache_1 = isDevelopment ? new ObjectsRepo() : null;
-      if (isDevelopment) {
-        findFiberByHostInstance = function findFiberByHostInstance(instance) {
-          return !instance ? null : fiberCache_1.getObject(instance.refId);
-        };
-      }
-      var scheduled_1 = false;
-      var commands_1 = [];
-      commands_1.push = function () {
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-          args[_i] = arguments[_i];
-        }
-        if (!scheduled_1) {
-          scheduled_1 = true;
+      var _asyncReconciler2 = getAsyncReconciler();
+      var fiberCache = isDevelopment ? new ObjectsRepo() : null;
+      if (isDevelopment) findFiberByHostInstance = function findFiberByHostInstance(instance) {
+        return !instance ? null : fiberCache.getObject(instance.refId);
+      };
+      var scheduled = false;
+      var commands = [];
+      commands.push = function () {
+        if (!scheduled) {
+          scheduled = true;
           Promise.resolve().then(function () {
             asyncJobCallback();
-            scheduled_1 = false;
+            scheduled = false;
           });
         }
-        return Array.prototype.push.apply(commands_1, args);
+        for (var _len2 = arguments.length, args = new Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
+          args[_key2] = arguments[_key2];
+        }
+        return Array.prototype.push.apply(commands, args);
       };
-      var hostContainerInstance_1 = {
-        type: 'native',
-        commands: commands_1,
+      var hostContainerInstance = {
+        type: "native",
+        commands: commands,
         component: hostContainer,
         context: hostContainer.Context,
         refId: hostContainer.RefId,
-        fiberCache: fiberCache_1
+        fiberCache: fiberCache
       };
       asyncJobCallback = function asyncJobCallback() {
-        if (!commands_1.length) return;
-        var serialized = JSON.stringify(commands_1);
-        commands_1.length = 0;
-        hostContainerInstance_1.context.FlushCommands(serialized);
+        if (!commands.length) return;
+        var serialized = JSON.stringify(commands);
+        commands.length = 0;
+        hostContainerInstance.context.FlushCommands(serialized);
       };
-      // react-reconciler 0.33 dropped the trailing `transitionCallbacks` argument.
-      hostRoot = asyncReconciler.createContainer(hostContainerInstance_1, mode, null, false, undefined, '', function (error) {
+      hostRoot = _asyncReconciler2.createContainer(hostContainerInstance, mode, null, false, void 0, "", function (error) {
         return console.error(error);
       }, function () {}, function () {}, function () {});
-    } else {
-      hostRoot = getSyncReconciler().createContainer(hostContainer, mode, null, false, undefined, '', function (error) {
-        return console.error(error);
-      }, function () {}, function () {}, function () {});
-    }
+    } else hostRoot = getSyncReconciler().createContainer(hostContainer, mode, null, false, void 0, "", function (error) {
+      return console.error(error);
+    }, function () {}, function () {}, function () {});
     containerMap.set(cacheKey, {
       hostRoot: hostRoot,
       asyncJobCallback: asyncJobCallback
     });
   }
-  var shouldWrapWithHelpers = !(options === null || options === void 0 ? void 0 : options.disableHelpers);
-  if (shouldWrapWithHelpers) {
-    var viewWrapperProps = {
-      withHelpers: !(options === null || options === void 0 ? void 0 : options.disableHelpers),
-      renderCount: renderCount
-    };
-    element = (0,react.createElement)(DefaultView, viewWrapperProps, element);
-  }
+  if (!(options === null || options === void 0 ? void 0 : options.disableHelpers)) element = (0,react.createElement)(DefaultView, {
+    withHelpers: !(options === null || options === void 0 ? void 0 : options.disableHelpers),
+    renderCount: renderCount
+  }, element);
   var rc = isAsync ? getAsyncReconciler() : getSyncReconciler();
-  if ('updateContainerSync' in rc && typeof rc.updateContainerSync === 'function' && 'flushSyncWork' in rc && typeof rc.flushSyncWork === 'function') {
+  if ("updateContainerSync" in rc && typeof rc.updateContainerSync === "function" && "flushSyncWork" in rc && typeof rc.flushSyncWork === "function") {
     rc.updateContainerSync(element, hostRoot, null, function () {});
     rc.flushSyncWork();
-  } else {
-    rc.updateContainer(element, hostRoot, null, function () {});
-  }
+  } else rc.updateContainer(element, hostRoot, null, function () {});
   rc.injectIntoDevTools({
     bundleType: isDevelopment ? 1 : 0,
     version: version,
-    rendererPackageName: '@reactunity/renderer',
+    rendererPackageName: "@reactunity/renderer",
     rendererConfig: {
       isAsync: isAsync
     },
@@ -11760,34 +12037,34 @@ function _render(element, options) {
   return rc;
 }
 /**
- * @deprecated Instead, import `render` directly from `@reactunity/renderer`
- */
-
+* @deprecated Instead, import `render` directly from `@reactunity/renderer`
+*/
 var Renderer = {
-  render: function render(element, options) {
-    if (options === void 0) {
-      options = {};
-    }
+  render: function render(element) {
+    var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
     return _render(element, options);
   }
 };
 var batchedUpdates = function batchedUpdates() {
-  var _a;
-  var args = [];
-  for (var _i = 0; _i < arguments.length; _i++) {
-    args[_i] = arguments[_i];
-  }
-  return (_a = getAsyncReconciler()).batchedUpdates.apply(_a, args);
+  var _getAsyncReconciler;
+  return (_getAsyncReconciler = getAsyncReconciler()).batchedUpdates.apply(_getAsyncReconciler, arguments);
 };
 var flushSync = function flushSync() {
-  var _a;
-  var args = [];
-  for (var _i = 0; _i < arguments.length; _i++) {
-    args[_i] = arguments[_i];
-  }
-  return (_a = getAsyncReconciler()).flushSync.apply(_a, args);
+  var _getAsyncReconciler2;
+  return (_getAsyncReconciler2 = getAsyncReconciler()).flushSync.apply(_getAsyncReconciler2, arguments);
 };
-//# sourceMappingURL=renderer.js.map
+//#endregion
+//#region index.ts
+var ReactUnityRenderer = {
+  batchedUpdates: batchedUpdates,
+  flushSync: flushSync,
+  render: _render,
+  unstable_batchedUpdates: batchedUpdates
+};
+//#endregion
+
+
+//# sourceMappingURL=index.js.map
 // EXTERNAL MODULE: ../../../../node_modules/.pnpm/css-loader@7.1.4_webpack@5._62043f6a253f8c7f1ce10b9e4bcb0b7c/node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[0].oneOf[7].use[1]!../../../../node_modules/.pnpm/resolve-url-loader@5.0.0/node_modules/resolve-url-loader/index.js??ruleSet[1].rules[0].oneOf[7].use[2]!../../../../node_modules/.pnpm/sass-loader@17.0.0_sass@1.1_20e65d72e5f2ff16ba56ab3dd615796f/node_modules/sass-loader/dist/cjs/index.js??ruleSet[1].rules[0].oneOf[7].use[3]!../../../../packages/material/dist/src/tooltip/index.module.scss
 var tooltip_index_module = __webpack_require__("../../../../node_modules/.pnpm/css-loader@7.1.4_webpack@5._62043f6a253f8c7f1ce10b9e4bcb0b7c/node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[0].oneOf[7].use[1]!../../../../node_modules/.pnpm/resolve-url-loader@5.0.0/node_modules/resolve-url-loader/index.js??ruleSet[1].rules[0].oneOf[7].use[2]!../../../../node_modules/.pnpm/sass-loader@17.0.0_sass@1.1_20e65d72e5f2ff16ba56ab3dd615796f/node_modules/sass-loader/dist/cjs/index.js??ruleSet[1].rules[0].oneOf[7].use[3]!../../../../packages/material/dist/src/tooltip/index.module.scss");
 ;// ../../../../packages/material/dist/src/tooltip/index.module.scss
@@ -11823,115 +12100,102 @@ var tooltip_index_module_update = injectStylesIntoStyleTag_default()(tooltip_ind
 
 
 
+
+//#region src/tooltip/index.ts
 var positions = {
   left: {
-    anchor: 'left',
-    pivot: 'right'
+    anchor: "left",
+    pivot: "right"
   },
   right: {
-    anchor: 'right',
-    pivot: 'left'
+    anchor: "right",
+    pivot: "left"
   },
   top: {
-    anchor: 'top',
-    pivot: 'bottom'
+    anchor: "top",
+    pivot: "bottom"
   },
   bottom: {
-    anchor: 'bottom',
-    pivot: 'top'
+    anchor: "bottom",
+    pivot: "top"
   },
   center: {
-    anchor: 'center',
-    pivot: 'center'
+    anchor: "center",
+    pivot: "center"
   }
 };
 function parseFromPositioningLiteral(str) {
   var x;
   var y;
-  var values = str.split(' ');
+  var values = str.split(" ");
   if (values.length > 2) return;
   var hasDouble = values.length === 2;
-  if (values.includes('top')) {
-    x = 0.5;
+  if (values.includes("top")) {
+    x = .5;
     y = 0;
-    if (hasDouble) {
-      if (values.includes('left')) x = 0;else if (values.includes('right')) x = 1;else if (values.includes('center')) x = 0.5;else return;
-    }
-  } else if (values.includes('bottom')) {
-    x = 0.5;
+    if (hasDouble) if (values.includes("left")) x = 0;else if (values.includes("right")) x = 1;else if (values.includes("center")) x = .5;else return;
+  } else if (values.includes("bottom")) {
+    x = .5;
     y = 1;
-    if (hasDouble) {
-      if (values.includes('left')) x = 0;else if (values.includes('right')) x = 1;else if (values.includes('center')) x = 0.5;else return;
-    }
-  } else if (values.includes('left')) {
-    if (hasDouble && !values.includes('center')) return;
+    if (hasDouble) if (values.includes("left")) x = 0;else if (values.includes("right")) x = 1;else if (values.includes("center")) x = .5;else return;
+  } else if (values.includes("left")) {
+    if (hasDouble && !values.includes("center")) return;
     x = 0;
-    y = 0.5;
-  } else if (values.includes('right')) {
-    if (hasDouble && !values.includes('center')) return;
+    y = .5;
+  } else if (values.includes("right")) {
+    if (hasDouble && !values.includes("center")) return;
     x = 1;
-    y = 0.5;
-  } else if (values.includes('center')) {
+    y = .5;
+  } else if (values.includes("center")) {
     if (hasDouble && values[0] !== values[1]) return;
-    x = 0.5;
-    y = 0.5;
-  } else {
-    return;
-  }
+    x = .5;
+    y = .5;
+  } else return;
   return ["".concat(x * 100, "%"), "".concat(y * 100, "%")];
 }
 function convert2DValue(val) {
   if (!val) return;
-  if (typeof val === 'string') {
+  if (typeof val === "string") {
     val = val.trim();
     if (!val) return;
     var sp = parseFromPositioningLiteral(val);
     if (sp) return sp;
-    var values = val.split(' ');
-    if (values.length === 2) {
-      return values;
-    }
+    var values = val.split(" ");
+    if (values.length === 2) return values;
     return;
   }
   if (Array.isArray(val)) {
     if (!val.length) return;
     var v0 = val[0];
     var v1 = val[1];
-    var v0f = typeof v0 === 'number' ? "".concat(v0, "px") : v0;
-    var v1f = typeof v1 === 'number' ? "".concat(v1, "px") : v1;
-    return [v0f, v1f];
+    return [typeof v0 === "number" ? "".concat(v0, "px") : v0, typeof v1 === "number" ? "".concat(v1, "px") : v1];
   }
-  return;
 }
-function convertToTransform(val, negate) {
-  if (negate === void 0) {
-    negate = false;
-  }
+function convertToTransform(val) {
+  var negate = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
   var converted = convert2DValue(val);
-  if (!converted) return '';
-  var cx = negate ? converted[0].startsWith('-') ? converted[0].substring(1) : "-".concat(converted[0]) : converted[0];
-  var cy = negate ? converted[1].startsWith('-') ? converted[1].substring(1) : "-".concat(converted[1]) : converted[1];
-  return "".concat(cx, " ").concat(cy);
+  if (!converted) return "";
+  return "".concat(negate ? converted[0].startsWith("-") ? converted[0].substring(1) : "-".concat(converted[0]) : converted[0], " ").concat(negate ? converted[1].startsWith("-") ? converted[1].substring(1) : "-".concat(converted[1]) : converted[1]);
 }
 function addTooltip(target, props, withBackdrop, hide) {
   target = props.target ? props.target.current : target;
   if (!target) return null;
-  var anchor = UnityBridge.createElement('view', '', HostContainer);
-  anchor.ClassName = dist_clsx(src_tooltip_index_module.anchor, 'mat-tooltip-anchor', props.interactive && src_tooltip_index_module.interactive);
-  anchor.Name = '<TooltipAnchor>';
-  var tooltip = UnityBridge.createElement('view', '', HostContainer);
-  tooltip.ClassName = dist_clsx(src_tooltip_index_module.tooltip, 'mat-tooltip', props.className);
-  tooltip.Name = '<Tooltip>';
+  var anchor = UnityBridge.createElement("view", "", HostContainer);
+  anchor.ClassName = dist_clsx(src_tooltip_index_module.anchor, "mat-tooltip-anchor", props.interactive && src_tooltip_index_module.interactive);
+  anchor.Name = "<TooltipAnchor>";
+  var tooltip = UnityBridge.createElement("view", "", HostContainer);
+  tooltip.ClassName = dist_clsx(src_tooltip_index_module.tooltip, "mat-tooltip", props.className);
+  tooltip.Name = "<Tooltip>";
   var pos = positions[props.position];
-  anchor.Style.Set('translate', props.anchor || (pos === null || pos === void 0 ? void 0 : pos.anchor) || 'bottom');
-  anchor.Style.Set('inset', -(props.offset || 5));
-  var pivotOriginal = props.pivot || (pos === null || pos === void 0 ? void 0 : pos.pivot) || 'top';
-  tooltip.Style.Set('translate', convertToTransform(pivotOriginal, true));
+  anchor.Style.Set("translate", props.anchor || (pos === null || pos === void 0 ? void 0 : pos.anchor) || "bottom");
+  anchor.Style.Set("inset", -(props.offset || 5));
+  var pivotOriginal = props.pivot || (pos === null || pos === void 0 ? void 0 : pos.pivot) || "top";
+  tooltip.Style.Set("translate", convertToTransform(pivotOriginal, true));
   if (withBackdrop) {
-    var backdrop = UnityBridge.createElement('portal', '', HostContainer);
-    backdrop.ClassName = dist_clsx(src_tooltip_index_module.backdrop, 'mat-tooltip-backdrop');
-    backdrop.Name = '<TooltipBackdrop>';
-    UnityBridge.addEventListener(backdrop, 'onPointerClick', hide);
+    var backdrop = UnityBridge.createElement("portal", "", HostContainer);
+    backdrop.ClassName = dist_clsx(src_tooltip_index_module.backdrop, "mat-tooltip-backdrop");
+    backdrop.Name = "<TooltipBackdrop>";
+    UnityBridge.addEventListener(backdrop, "onPointerClick", hide);
     UnityBridge.appendChild(anchor, backdrop);
   }
   UnityBridge.appendChild(anchor, tooltip);
@@ -11942,91 +12206,82 @@ function addTooltip(target, props, withBackdrop, hide) {
   UnityBridge.appendChild(target, anchor);
   return anchor;
 }
-function useTooltip(props, trigger) {
-  if (trigger === void 0) {
-    trigger = 'auto';
-  }
-  var tooltipRef = (0,react.useRef)(undefined);
-  var timeoutRef = (0,react.useRef)(undefined);
+function useTooltip(props) {
+  var trigger = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : "auto";
+  var tooltipRef = (0,react.useRef)(void 0);
+  var timeoutRef = (0,react.useRef)(void 0);
   var callbacksRef = (0,react.useRef)([]);
   var elementsRef = (0,react.useRef)([]);
   var propsRef = useAutoRef(props);
   var clearAll = (0,react.useCallback)(function () {
     var callbacks = callbacksRef.current;
-    for (var _i = 0, callbacks_1 = callbacks; _i < callbacks_1.length; _i++) {
-      var cb = callbacks_1[_i];
-      cb === null || cb === void 0 ? void 0 : cb();
+    var _iterator = _createForOfIteratorHelper(callbacks),
+      _step;
+    try {
+      for (_iterator.s(); !(_step = _iterator.n()).done;) {
+        var cb = _step.value;
+        cb === null || cb === void 0 || cb();
+      }
+    } catch (err) {
+      _iterator.e(err);
+    } finally {
+      _iterator.f();
     }
     callbacks.length = 0;
   }, []);
   var hide = (0,react.useCallback)(function () {
-    var _a;
+    var _tooltipRef$current;
     if (timeoutRef.current >= 0) {
       clearTimeout(timeoutRef.current);
       timeoutRef.current = null;
     }
-    (_a = tooltipRef.current) === null || _a === void 0 ? void 0 : _a.Remove();
+    (_tooltipRef$current = tooltipRef.current) === null || _tooltipRef$current === void 0 || _tooltipRef$current.Remove();
     tooltipRef.current = null;
   }, []);
-  var show = (0,react.useCallback)(function (target, properties, withBackdrop) {
-    if (withBackdrop === void 0) {
-      withBackdrop = false;
-    }
+  var show = (0,react.useCallback)(function (target, properties) {
+    var withBackdrop = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
     hide();
     return tooltipRef.current = addTooltip(target, properties, withBackdrop, hide);
   }, [hide]);
   var showWithCurrent = (0,react.useCallback)(function (ev, sender) {
-    var calculatedProps = typeof propsRef.current === 'function' ? propsRef.current(sender) : propsRef.current;
-    var withBackdrop = trigger === 'click';
+    var calculatedProps = typeof propsRef.current === "function" ? propsRef.current(sender) : propsRef.current;
+    var withBackdrop = trigger === "click";
     var delay = calculatedProps.delay;
-    if (delay > 0) {
-      timeoutRef.current = setTimeout(function () {
-        setImmediate(function () {
-          show(sender, calculatedProps, withBackdrop);
-        });
-      }, delay);
-    } else {
-      show(sender, calculatedProps, withBackdrop);
-    }
+    if (delay > 0) timeoutRef.current = setTimeout(function () {
+      setImmediate(function () {
+        show(sender, calculatedProps, withBackdrop);
+      });
+    }, delay);else show(sender, calculatedProps, withBackdrop);
   }, [show, trigger]);
-  // biome-ignore lint/correctness/useExhaustiveDependencies: trigger is not read in the body, it is here on purpose -- switching trigger mode has to run clearAll and drop the listeners registered under the old mode.
   (0,react.useLayoutEffect)(function () {
     return clearAll;
   }, [trigger, clearAll]);
-  var register = (0,react.useCallback)(function (el) {
-    if (!el) return;
-    elementsRef.current.push(el);
-    var callbacks = callbacksRef.current;
-    if (trigger === 'click') {
-      callbacks.push(UnityBridge.addEventListener(el, 'onPointerClick', showWithCurrent));
-    } else if (trigger === 'press' || trigger === 'active') {
-      // TODO: improve active to handle key presses
-      callbacks.push(UnityBridge.addEventListener(el, 'onPointerDown', showWithCurrent));
-      callbacks.push(UnityBridge.addEventListener(el, 'onPointerUp', hide));
-    } else if (trigger === 'focus') {
-      callbacks.push(UnityBridge.addEventListener(el, 'onSelect', showWithCurrent));
-      callbacks.push(UnityBridge.addEventListener(el, 'onDeselect', hide));
-    } else if (trigger === 'hover') {
-      callbacks.push(UnityBridge.addEventListener(el, 'onPointerEnter', showWithCurrent));
-      callbacks.push(UnityBridge.addEventListener(el, 'onPointerExit', hide));
-    } else {
-      // auto
-      // TODO: improve auto to handle mobile/gamepad differently (active and focus)
-      callbacks.push(UnityBridge.addEventListener(el, 'onPointerEnter', showWithCurrent));
-      callbacks.push(UnityBridge.addEventListener(el, 'onPointerExit', hide));
-    }
-  }, [trigger, showWithCurrent, hide]);
   return {
-    register: register,
+    register: (0,react.useCallback)(function (el) {
+      if (!el) return;
+      elementsRef.current.push(el);
+      var callbacks = callbacksRef.current;
+      if (trigger === "click") callbacks.push(UnityBridge.addEventListener(el, "onPointerClick", showWithCurrent));else if (trigger === "press" || trigger === "active") {
+        callbacks.push(UnityBridge.addEventListener(el, "onPointerDown", showWithCurrent));
+        callbacks.push(UnityBridge.addEventListener(el, "onPointerUp", hide));
+      } else if (trigger === "focus") {
+        callbacks.push(UnityBridge.addEventListener(el, "onSelect", showWithCurrent));
+        callbacks.push(UnityBridge.addEventListener(el, "onDeselect", hide));
+      } else if (trigger === "hover") {
+        callbacks.push(UnityBridge.addEventListener(el, "onPointerEnter", showWithCurrent));
+        callbacks.push(UnityBridge.addEventListener(el, "onPointerExit", hide));
+      } else {
+        callbacks.push(UnityBridge.addEventListener(el, "onPointerEnter", showWithCurrent));
+        callbacks.push(UnityBridge.addEventListener(el, "onPointerExit", hide));
+      }
+    }, [trigger, showWithCurrent, hide]),
     show: show,
     hide: hide,
     clearAll: clearAll
   };
 }
-function useDataTooltip(trigger) {
-  if (trigger === void 0) {
-    trigger = 'hover';
-  }
+function useDataTooltip() {
+  var trigger = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : "hover";
   var props = function props(el) {
     return propsProxy(el.Data);
   };
@@ -12035,11 +12290,14 @@ function useDataTooltip(trigger) {
 function propsProxy(data) {
   return new Proxy(data, {
     get: function get(tg, prop) {
-      if (typeof prop === 'symbol') return data[prop];
+      if (typeof prop === "symbol") return data[prop];
       return data.GetValueOrDefault("tooltip-".concat(prop));
     }
   });
 }
+//#endregion
+
+
 //# sourceMappingURL=index.js.map
 ;// ../../../../node_modules/.pnpm/memoize-one@6.0.0/node_modules/memoize-one/dist/memoize-one.esm.js
 var safeIsNaN = Number.isNaN || function ponyfill(value) {
@@ -12092,7 +12350,16 @@ function memoizeOne(resultFn, isEqual) {
   return memoized;
 }
 
-;// ../../../../packages/material/dist/src/virtual-scroll/domHelpers.js
+;// ../../../../packages/material/dist/VariableSizeList-DEYjHugc.js
+
+
+
+
+
+
+
+
+//#region src/virtual-scroll/domHelpers.ts
 function getScrollbarSize(el) {
   return {
     verticalWidth: el.VerticalScrollbar.Thumb.ClientWidth,
@@ -12100,10 +12367,10 @@ function getScrollbarSize(el) {
   };
 }
 function getRTLOffsetType() {
-  return 'positive-ascending';
+  return "positive-ascending";
 }
-//# sourceMappingURL=domHelpers.js.map
-;// ../../../../packages/material/dist/src/virtual-scroll/timer.js
+//#endregion
+//#region src/virtual-scroll/timer.ts
 function cancelTimeout(timeoutID) {
   clearTimeout(timeoutID.id);
 }
@@ -12112,94 +12379,51 @@ function requestTimeout(callback, delay) {
     id: setTimeout(callback, delay)
   };
 }
-//# sourceMappingURL=timer.js.map
-;// ../../../../packages/material/dist/src/virtual-scroll/createGridComponent.js
-var createGridComponent_extends = undefined && undefined.__extends || function () {
-  var _extendStatics = function extendStatics(d, b) {
-    _extendStatics = Object.setPrototypeOf || {
-      __proto__: []
-    } instanceof Array && function (d, b) {
-      d.__proto__ = b;
-    } || function (d, b) {
-      for (var p in b) if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p];
-    };
-    return _extendStatics(d, b);
-  };
-  return function (d, b) {
-    if (typeof b !== "function" && b !== null) throw new TypeError("Class extends value " + String(b) + " is not a constructor or null");
-    _extendStatics(d, b);
-    function __() {
-      this.constructor = d;
-    }
-    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-  };
-}();
-var createGridComponent_assign = undefined && undefined.__assign || function () {
-  createGridComponent_assign = Object.assign || function (t) {
-    for (var s, i = 1, n = arguments.length; i < n; i++) {
-      s = arguments[i];
-      for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p)) t[p] = s[p];
-    }
-    return t;
-  };
-  return createGridComponent_assign.apply(this, arguments);
-};
-var createGridComponent_rest = undefined && undefined.__rest || function (s, e) {
-  var t = {};
-  for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p) && e.indexOf(p) < 0) t[p] = s[p];
-  if (s != null && typeof Object.getOwnPropertySymbols === "function") for (var i = 0, p = Object.getOwnPropertySymbols(s); i < p.length; i++) {
-    if (e.indexOf(p[i]) < 0 && Object.prototype.propertyIsEnumerable.call(s, p[i])) t[p[i]] = s[p[i]];
-  }
-  return t;
-};
-
-
-
-
-var IS_SCROLLING_DEBOUNCE_INTERVAL = 150;
-var defaultItemKey = function defaultItemKey(_a) {
-  var columnIndex = _a.columnIndex,
-    data = _a.data,
-    rowIndex = _a.rowIndex;
+//#endregion
+//#region src/virtual-scroll/createGridComponent.ts
+var _excluded$1 = ["children", "className", "columnCount", "direction", "height", "innerRef", "innerElementType", "itemData", "itemKey", "outerElementType", "rowCount", "style", "useIsScrolling", "width", "columnWidth", "initialScrollLeft", "initialScrollTop", "onItemsRendered", "onScroll", "outerRef", "overscanColumnCount", "overscanRowCount", "rowHeight"];
+var IS_SCROLLING_DEBOUNCE_INTERVAL$1 = 150;
+var defaultItemKey$1 = function defaultItemKey$1(_ref) {
+  var columnIndex = _ref.columnIndex,
+    data = _ref.data,
+    rowIndex = _ref.rowIndex;
   return "".concat(rowIndex, ":").concat(columnIndex);
 };
-function createGridComponent(_a) {
-  var _b;
-  var getColumnOffset = _a.getColumnOffset,
-    getColumnStartIndexForOffset = _a.getColumnStartIndexForOffset,
-    getColumnStopIndexForStartIndex = _a.getColumnStopIndexForStartIndex,
-    getColumnWidth = _a.getColumnWidth,
-    getEstimatedTotalHeight = _a.getEstimatedTotalHeight,
-    getEstimatedTotalWidth = _a.getEstimatedTotalWidth,
-    getOffsetForColumnAndAlignment = _a.getOffsetForColumnAndAlignment,
-    getOffsetForRowAndAlignment = _a.getOffsetForRowAndAlignment,
-    getRowHeight = _a.getRowHeight,
-    getRowOffset = _a.getRowOffset,
-    getRowStartIndexForOffset = _a.getRowStartIndexForOffset,
-    getRowStopIndexForStartIndex = _a.getRowStopIndexForStartIndex,
-    initInstanceProps = _a.initInstanceProps,
-    shouldResetStyleCacheOnItemSizeChange = _a.shouldResetStyleCacheOnItemSizeChange,
-    validateProps = _a.validateProps;
-  return _b = /** @class */function (_super) {
-    createGridComponent_extends(Grid, _super);
-    // Always use explicit constructor for React components.
-    // It produces less code after transpilation. (#26)
-    // eslint-disable-next-line no-useless-constructor, @typescript-eslint/no-useless-constructor
-    // biome-ignore lint/complexity/noUselessConstructor: kept deliberately, see above
+function createGridComponent(_ref2) {
+  var getColumnOffset = _ref2.getColumnOffset,
+    getColumnStartIndexForOffset = _ref2.getColumnStartIndexForOffset,
+    getColumnStopIndexForStartIndex = _ref2.getColumnStopIndexForStartIndex,
+    getColumnWidth = _ref2.getColumnWidth,
+    getEstimatedTotalHeight = _ref2.getEstimatedTotalHeight,
+    getEstimatedTotalWidth = _ref2.getEstimatedTotalWidth,
+    getOffsetForColumnAndAlignment = _ref2.getOffsetForColumnAndAlignment,
+    getOffsetForRowAndAlignment = _ref2.getOffsetForRowAndAlignment,
+    getRowHeight = _ref2.getRowHeight,
+    getRowOffset = _ref2.getRowOffset,
+    getRowStartIndexForOffset = _ref2.getRowStartIndexForOffset,
+    getRowStopIndexForStartIndex = _ref2.getRowStopIndexForStartIndex,
+    initInstanceProps = _ref2.initInstanceProps,
+    shouldResetStyleCacheOnItemSizeChange = _ref2.shouldResetStyleCacheOnItemSizeChange,
+    validateProps = _ref2.validateProps;
+  var _Grid;
+  return _Grid = /*#__PURE__*/function (_PureComponent) {
     function Grid(props) {
-      var _this = _super.call(this, props) || this;
-      _this._instanceProps = initInstanceProps(_this.props, _this);
-      _this._resetIsScrollingTimeoutId = null;
-      _this.state = {
+      var _this;
+      _classCallCheck(this, Grid);
+      _this = _callSuper(this, Grid, [props]);
+      _defineProperty(_this, "_instanceProps", initInstanceProps(_this.props, _this));
+      _defineProperty(_this, "_resetIsScrollingTimeoutId", null);
+      _defineProperty(_this, "_outerRef", void 0);
+      _defineProperty(_this, "state", {
         instance: _this,
         isScrolling: false,
-        horizontalScrollDirection: 'forward',
-        scrollLeft: typeof _this.props.initialScrollLeft === 'number' ? _this.props.initialScrollLeft : 0,
-        scrollTop: typeof _this.props.initialScrollTop === 'number' ? _this.props.initialScrollTop : 0,
+        horizontalScrollDirection: "forward",
+        scrollLeft: typeof _this.props.initialScrollLeft === "number" ? _this.props.initialScrollLeft : 0,
+        scrollTop: typeof _this.props.initialScrollTop === "number" ? _this.props.initialScrollTop : 0,
         scrollUpdateWasRequested: false,
-        verticalScrollDirection: 'forward'
-      };
-      _this._callOnItemsRendered = memoizeOne(function (overscanColumnStartIndex, overscanColumnStopIndex, overscanRowStartIndex, overscanRowStopIndex, visibleColumnStartIndex, visibleColumnStopIndex, visibleRowStartIndex, visibleRowStopIndex) {
+        verticalScrollDirection: "forward"
+      });
+      _defineProperty(_this, "_callOnItemsRendered", memoizeOne(function (overscanColumnStartIndex, overscanColumnStopIndex, overscanRowStartIndex, overscanRowStopIndex, visibleColumnStartIndex, visibleColumnStopIndex, visibleRowStartIndex, visibleRowStopIndex) {
         return _this.props.onItemsRendered({
           overscanColumnStartIndex: overscanColumnStartIndex,
           overscanColumnStopIndex: overscanColumnStopIndex,
@@ -12210,8 +12434,8 @@ function createGridComponent(_a) {
           visibleRowStartIndex: visibleRowStartIndex,
           visibleRowStopIndex: visibleRowStopIndex
         });
-      });
-      _this._callOnScroll = memoizeOne(function (scrollLeft, scrollTop, horizontalScrollDirection, verticalScrollDirection, scrollUpdateWasRequested) {
+      }));
+      _defineProperty(_this, "_callOnScroll", memoizeOne(function (scrollLeft, scrollTop, horizontalScrollDirection, verticalScrollDirection, scrollUpdateWasRequested) {
         return _this.props.onScroll({
           horizontalScrollDirection: horizontalScrollDirection,
           scrollLeft: scrollLeft,
@@ -12219,41 +12443,33 @@ function createGridComponent(_a) {
           verticalScrollDirection: verticalScrollDirection,
           scrollUpdateWasRequested: scrollUpdateWasRequested
         });
-      });
-      // Lazily create and cache item styles while scrolling,
-      // So that pure component sCU will prevent re-renders.
-      // We maintain this cache, and pass a style prop rather than index,
-      // So that List can clear cached styles and force item re-render if necessary.
-      _this._getItemStyle = function (rowIndex, columnIndex) {
-        var _a = _this.props,
-          columnWidth = _a.columnWidth,
-          direction = _a.direction,
-          rowHeight = _a.rowHeight;
+      }));
+      _defineProperty(_this, "_getItemStyle", function (rowIndex, columnIndex) {
+        var _this$props2 = _this.props,
+          columnWidth = _this$props2.columnWidth,
+          direction = _this$props2.direction,
+          rowHeight = _this$props2.rowHeight;
         var itemStyleCache = _this._getItemStyleCache(shouldResetStyleCacheOnItemSizeChange && columnWidth, shouldResetStyleCacheOnItemSizeChange && direction, shouldResetStyleCacheOnItemSizeChange && rowHeight);
         var key = "".concat(rowIndex, ":").concat(columnIndex);
         var style;
-        // Object.prototype.hasOwnProperty.call, not Object.hasOwn: this ships to Unity's
-        // JS engines, and Jint has no ES2022 Object.hasOwn.
-        if (Object.hasOwn(itemStyleCache, key)) {
-          style = itemStyleCache[key];
-        } else {
+        if (Object.hasOwn(itemStyleCache, key)) style = itemStyleCache[key];else {
           var offset = getColumnOffset(_this.props, columnIndex, _this._instanceProps);
-          var isRtl = direction === 'rtl';
+          var isRtl = direction === "rtl";
           itemStyleCache[key] = style = {
-            position: 'absolute',
-            left: isRtl ? undefined : offset,
-            right: isRtl ? offset : undefined,
+            position: "absolute",
+            left: isRtl ? void 0 : offset,
+            right: isRtl ? offset : void 0,
             top: getRowOffset(_this.props, rowIndex, _this._instanceProps),
             height: getRowHeight(_this.props, rowIndex, _this._instanceProps),
             width: getColumnWidth(_this.props, columnIndex, _this._instanceProps)
           };
         }
         return style;
-      };
-      _this._getItemStyleCache = memoizeOne(function (_, __, ___) {
-        return {};
       });
-      _this._onScroll = function (event, sender) {
+      _defineProperty(_this, "_getItemStyleCache", memoizeOne(function (_, __, ___) {
+        return {};
+      }));
+      _defineProperty(_this, "_onScroll", function (event, sender) {
         var clientHeight = sender.ClientHeight;
         var clientWidth = sender.ClientWidth;
         var scrollLeft = sender.ScrollLeft;
@@ -12261,1078 +12477,864 @@ function createGridComponent(_a) {
         var scrollHeight = sender.ScrollHeight;
         var scrollWidth = sender.ScrollWidth;
         _this.setState(function (prevState) {
-          if (prevState.scrollLeft === scrollLeft && prevState.scrollTop === scrollTop) {
-            // Scroll position may have been updated by cDM/cDU,
-            // In which case we don't need to trigger another render,
-            // And we don't want to update state.isScrolling.
-            return null;
-          }
+          if (prevState.scrollLeft === scrollLeft && prevState.scrollTop === scrollTop) return null;
           var direction = _this.props.direction;
-          // TRICKY According to the spec, scrollLeft should be negative for RTL aligned elements.
-          // This is not the case for all browsers though (e.g. Chrome reports values as positive, measured relative to the left).
-          // It's also easier for this component if we convert offsets to the same format as they would be in for ltr.
-          // So the simplest solution is to determine which browser behavior we're dealing with, and convert based on it.
           var calculatedScrollLeft = scrollLeft;
-          if (direction === 'rtl') {
-            switch (getRTLOffsetType()) {
-              case 'negative':
-                calculatedScrollLeft = -scrollLeft;
-                break;
-              case 'positive-descending':
-                calculatedScrollLeft = scrollWidth - clientWidth - scrollLeft;
-                break;
-            }
+          if (direction === "rtl") switch (getRTLOffsetType()) {
+            case "negative":
+              calculatedScrollLeft = -scrollLeft;
+              break;
+            case "positive-descending":
+              calculatedScrollLeft = scrollWidth - clientWidth - scrollLeft;
+              break;
           }
-          // Prevent Safari's elastic scrolling from causing visual shaking when scrolling past bounds.
           calculatedScrollLeft = Math.max(0, Math.min(calculatedScrollLeft, scrollWidth - clientWidth));
           var calculatedScrollTop = Math.max(0, Math.min(scrollTop, scrollHeight - clientHeight));
           return {
             isScrolling: true,
-            horizontalScrollDirection: prevState.scrollLeft < scrollLeft ? 'forward' : 'backward',
+            horizontalScrollDirection: prevState.scrollLeft < scrollLeft ? "forward" : "backward",
             scrollLeft: calculatedScrollLeft,
             scrollTop: calculatedScrollTop,
-            verticalScrollDirection: prevState.scrollTop < scrollTop ? 'forward' : 'backward',
+            verticalScrollDirection: prevState.scrollTop < scrollTop ? "forward" : "backward",
             scrollUpdateWasRequested: false
           };
         }, _this._resetIsScrollingDebounced);
-      };
-      _this._outerRefSetter = function (ref) {
+      });
+      _defineProperty(_this, "_outerRefSetter", function (ref) {
         var outerRef = _this.props.outerRef;
         _this._outerRef = ref;
-        if (typeof outerRef === 'function') {
-          outerRef(ref);
-        } else if (outerRef != null && typeof outerRef === 'object' && Object.hasOwn(outerRef, 'current')) {
-          outerRef.current = ref;
-        }
-      };
-      _this._resetIsScrollingDebounced = function () {
-        if (_this._resetIsScrollingTimeoutId !== null) {
-          cancelTimeout(_this._resetIsScrollingTimeoutId);
-        }
-        _this._resetIsScrollingTimeoutId = requestTimeout(_this._resetIsScrolling, IS_SCROLLING_DEBOUNCE_INTERVAL);
-      };
-      _this._resetIsScrolling = function () {
+        if (typeof outerRef === "function") outerRef(ref);else if (outerRef != null && typeof outerRef === "object" && Object.hasOwn(outerRef, "current")) outerRef.current = ref;
+      });
+      _defineProperty(_this, "_resetIsScrollingDebounced", function () {
+        if (_this._resetIsScrollingTimeoutId !== null) cancelTimeout(_this._resetIsScrollingTimeoutId);
+        _this._resetIsScrollingTimeoutId = requestTimeout(_this._resetIsScrolling, IS_SCROLLING_DEBOUNCE_INTERVAL$1);
+      });
+      _defineProperty(_this, "_resetIsScrolling", function () {
         _this._resetIsScrollingTimeoutId = null;
         _this.setState({
           isScrolling: false
         }, function () {
-          // Clear style cache after state update has been committed.
-          // This way we don't break pure sCU for items that don't use isScrolling param.
           _this._getItemStyleCache(-1);
         });
-      };
+      });
       return _this;
     }
-    Grid.getDerivedStateFromProps = function (nextProps, prevState) {
-      validateSharedProps(nextProps, prevState);
-      validateProps(nextProps);
-      return null;
-    };
-    Grid.prototype.scrollTo = function (_a) {
-      var scrollLeft = _a.scrollLeft,
-        scrollTop = _a.scrollTop;
-      if (scrollLeft !== undefined) {
-        scrollLeft = Math.max(0, scrollLeft);
+    _inherits(Grid, _PureComponent);
+    return _createClass(Grid, [{
+      key: "scrollTo",
+      value: function scrollTo(_ref3) {
+        var scrollLeft = _ref3.scrollLeft,
+          scrollTop = _ref3.scrollTop;
+        if (scrollLeft !== void 0) scrollLeft = Math.max(0, scrollLeft);
+        if (scrollTop !== void 0) scrollTop = Math.max(0, scrollTop);
+        this.setState(function (prevState) {
+          if (scrollLeft === void 0) scrollLeft = prevState.scrollLeft;
+          if (scrollTop === void 0) scrollTop = prevState.scrollTop;
+          if (prevState.scrollLeft === scrollLeft && prevState.scrollTop === scrollTop) return null;
+          return {
+            horizontalScrollDirection: prevState.scrollLeft < scrollLeft ? "forward" : "backward",
+            scrollLeft: scrollLeft,
+            scrollTop: scrollTop,
+            scrollUpdateWasRequested: true,
+            verticalScrollDirection: prevState.scrollTop < scrollTop ? "forward" : "backward"
+          };
+        }, this._resetIsScrollingDebounced);
       }
-      if (scrollTop !== undefined) {
-        scrollTop = Math.max(0, scrollTop);
+    }, {
+      key: "scrollToItem",
+      value: function scrollToItem(_ref4) {
+        var _ref4$align = _ref4.align,
+          align = _ref4$align === void 0 ? "auto" : _ref4$align,
+          columnIndex = _ref4.columnIndex,
+          rowIndex = _ref4.rowIndex;
+        var _this$props3 = this.props,
+          columnCount = _this$props3.columnCount,
+          height = _this$props3.height,
+          rowCount = _this$props3.rowCount,
+          width = _this$props3.width;
+        var _this$state = this.state,
+          scrollLeft = _this$state.scrollLeft,
+          scrollTop = _this$state.scrollTop;
+        var sizes = getScrollbarSize(this._outerRef);
+        if (columnIndex !== void 0) columnIndex = Math.max(0, Math.min(columnIndex, columnCount - 1));
+        if (rowIndex !== void 0) rowIndex = Math.max(0, Math.min(rowIndex, rowCount - 1));
+        var estimatedTotalHeight = getEstimatedTotalHeight(this.props, this._instanceProps);
+        var horizontalScrollbarSize = getEstimatedTotalWidth(this.props, this._instanceProps) > width ? sizes.horizontalHeight : 0;
+        var verticalScrollbarSize = estimatedTotalHeight > height ? sizes.verticalWidth : 0;
+        this.scrollTo({
+          scrollLeft: columnIndex !== void 0 ? getOffsetForColumnAndAlignment(this.props, columnIndex, align, scrollLeft, this._instanceProps, verticalScrollbarSize) : scrollLeft,
+          scrollTop: rowIndex !== void 0 ? getOffsetForRowAndAlignment(this.props, rowIndex, align, scrollTop, this._instanceProps, horizontalScrollbarSize) : scrollTop
+        });
       }
-      this.setState(function (prevState) {
-        if (scrollLeft === undefined) {
-          scrollLeft = prevState.scrollLeft;
+    }, {
+      key: "componentDidMount",
+      value: function componentDidMount() {
+        var _this$props4 = this.props,
+          initialScrollLeft = _this$props4.initialScrollLeft,
+          initialScrollTop = _this$props4.initialScrollTop;
+        if (this._outerRef != null) {
+          var outerRef = this._outerRef;
+          if (typeof initialScrollLeft === "number") outerRef.ScrollLeft = initialScrollLeft;
+          if (typeof initialScrollTop === "number") outerRef.ScrollTop = initialScrollTop;
         }
-        if (scrollTop === undefined) {
-          scrollTop = prevState.scrollTop;
-        }
-        if (prevState.scrollLeft === scrollLeft && prevState.scrollTop === scrollTop) {
-          return null;
-        }
-        return {
-          horizontalScrollDirection: prevState.scrollLeft < scrollLeft ? 'forward' : 'backward',
-          scrollLeft: scrollLeft,
-          scrollTop: scrollTop,
-          scrollUpdateWasRequested: true,
-          verticalScrollDirection: prevState.scrollTop < scrollTop ? 'forward' : 'backward'
-        };
-      }, this._resetIsScrollingDebounced);
-    };
-    Grid.prototype.scrollToItem = function (_a) {
-      var _c = _a.align,
-        align = _c === void 0 ? 'auto' : _c,
-        columnIndex = _a.columnIndex,
-        rowIndex = _a.rowIndex;
-      var _d = this.props,
-        columnCount = _d.columnCount,
-        height = _d.height,
-        rowCount = _d.rowCount,
-        width = _d.width;
-      var _e = this.state,
-        scrollLeft = _e.scrollLeft,
-        scrollTop = _e.scrollTop;
-      var sizes = getScrollbarSize(this._outerRef);
-      if (columnIndex !== undefined) {
-        columnIndex = Math.max(0, Math.min(columnIndex, columnCount - 1));
+        this._callPropsCallbacks();
       }
-      if (rowIndex !== undefined) {
-        rowIndex = Math.max(0, Math.min(rowIndex, rowCount - 1));
-      }
-      var estimatedTotalHeight = getEstimatedTotalHeight(this.props, this._instanceProps);
-      var estimatedTotalWidth = getEstimatedTotalWidth(this.props, this._instanceProps);
-      // The scrollbar size should be considered when scrolling an item into view,
-      // to ensure it's fully visible.
-      // But we only need to account for its size when it's actually visible.
-      var horizontalScrollbarSize = estimatedTotalWidth > width ? sizes.horizontalHeight : 0;
-      var verticalScrollbarSize = estimatedTotalHeight > height ? sizes.verticalWidth : 0;
-      this.scrollTo({
-        scrollLeft: columnIndex !== undefined ? getOffsetForColumnAndAlignment(this.props, columnIndex, align, scrollLeft, this._instanceProps, verticalScrollbarSize) : scrollLeft,
-        scrollTop: rowIndex !== undefined ? getOffsetForRowAndAlignment(this.props, rowIndex, align, scrollTop, this._instanceProps, horizontalScrollbarSize) : scrollTop
-      });
-    };
-    Grid.prototype.componentDidMount = function () {
-      var _a = this.props,
-        initialScrollLeft = _a.initialScrollLeft,
-        initialScrollTop = _a.initialScrollTop;
-      if (this._outerRef != null) {
-        var outerRef = this._outerRef;
-        if (typeof initialScrollLeft === 'number') {
-          outerRef.ScrollLeft = initialScrollLeft;
-        }
-        if (typeof initialScrollTop === 'number') {
-          outerRef.ScrollTop = initialScrollTop;
-        }
-      }
-      this._callPropsCallbacks();
-    };
-    Grid.prototype.componentDidUpdate = function () {
-      var direction = this.props.direction;
-      var _a = this.state,
-        scrollLeft = _a.scrollLeft,
-        scrollTop = _a.scrollTop,
-        scrollUpdateWasRequested = _a.scrollUpdateWasRequested;
-      if (scrollUpdateWasRequested && this._outerRef != null) {
-        // TRICKY According to the spec, scrollLeft should be negative for RTL aligned elements.
-        // This is not the case for all browsers though (e.g. Chrome reports values as positive, measured relative to the left).
-        // So we need to determine which browser behavior we're dealing with, and mimic it.
-        var outerRef = this._outerRef;
-        if (direction === 'rtl') {
-          switch (getRTLOffsetType()) {
-            case 'negative':
+    }, {
+      key: "componentDidUpdate",
+      value: function componentDidUpdate() {
+        var direction = this.props.direction;
+        var _this$state2 = this.state,
+          scrollLeft = _this$state2.scrollLeft,
+          scrollTop = _this$state2.scrollTop,
+          scrollUpdateWasRequested = _this$state2.scrollUpdateWasRequested;
+        if (scrollUpdateWasRequested && this._outerRef != null) {
+          var outerRef = this._outerRef;
+          if (direction === "rtl") switch (getRTLOffsetType()) {
+            case "negative":
               outerRef.ScrollLeft = -scrollLeft;
               break;
-            case 'positive-ascending':
+            case "positive-ascending":
               outerRef.ScrollLeft = scrollLeft;
               break;
             default:
               {
                 var clientWidth = outerRef.ClientWidth;
-                var scrollWidth = outerRef.ScrollWidth;
-                outerRef.ScrollLeft = scrollWidth - clientWidth - scrollLeft;
+                outerRef.ScrollLeft = outerRef.ScrollWidth - clientWidth - scrollLeft;
                 break;
               }
+          } else outerRef.ScrollLeft = Math.max(0, scrollLeft);
+          outerRef.ScrollTop = Math.max(0, scrollTop);
+        }
+        this._callPropsCallbacks();
+      }
+    }, {
+      key: "componentWillUnmount",
+      value: function componentWillUnmount() {
+        if (this._resetIsScrollingTimeoutId !== null) cancelTimeout(this._resetIsScrollingTimeoutId);
+      }
+    }, {
+      key: "render",
+      value: function render() {
+        var _this$props = this.props,
+          children = _this$props.children,
+          className = _this$props.className,
+          columnCount = _this$props.columnCount,
+          direction = _this$props.direction,
+          height = _this$props.height,
+          innerRef = _this$props.innerRef,
+          innerElementType = _this$props.innerElementType,
+          itemData = _this$props.itemData,
+          _this$props$itemKey = _this$props.itemKey,
+          itemKey = _this$props$itemKey === void 0 ? defaultItemKey$1 : _this$props$itemKey,
+          outerElementType = _this$props.outerElementType,
+          rowCount = _this$props.rowCount,
+          style = _this$props.style,
+          useIsScrolling = _this$props.useIsScrolling,
+          width = _this$props.width,
+          columnWidth = _this$props.columnWidth,
+          initialScrollLeft = _this$props.initialScrollLeft,
+          initialScrollTop = _this$props.initialScrollTop,
+          onItemsRendered = _this$props.onItemsRendered,
+          onScroll = _this$props.onScroll,
+          outerRef = _this$props.outerRef,
+          overscanColumnCount = _this$props.overscanColumnCount,
+          overscanRowCount = _this$props.overscanRowCount,
+          rowHeight = _this$props.rowHeight,
+          rest = _objectWithoutProperties(_this$props, _excluded$1);
+        var isScrolling = this.state.isScrolling;
+        var _this$_getHorizontalR = this._getHorizontalRangeToRender(),
+          _this$_getHorizontalR2 = _slicedToArray(_this$_getHorizontalR, 2),
+          columnStartIndex = _this$_getHorizontalR2[0],
+          columnStopIndex = _this$_getHorizontalR2[1];
+        var _this$_getVerticalRan = this._getVerticalRangeToRender(),
+          _this$_getVerticalRan2 = _slicedToArray(_this$_getVerticalRan, 2),
+          rowStartIndex = _this$_getVerticalRan2[0],
+          rowStopIndex = _this$_getVerticalRan2[1];
+        var items = [];
+        if (columnCount > 0 && rowCount) for (var rowIndex = rowStartIndex; rowIndex <= rowStopIndex; rowIndex++) for (var columnIndex = columnStartIndex; columnIndex <= columnStopIndex; columnIndex++) items.push((0,react.createElement)(children, {
+          columnIndex: columnIndex,
+          data: itemData,
+          isScrolling: useIsScrolling ? isScrolling : void 0,
+          key: itemKey({
+            columnIndex: columnIndex,
+            data: itemData,
+            rowIndex: rowIndex
+          }),
+          rowIndex: rowIndex,
+          style: this._getItemStyle(rowIndex, columnIndex)
+        }));
+        var estimatedTotalHeight = getEstimatedTotalHeight(this.props, this._instanceProps);
+        var estimatedTotalWidth = getEstimatedTotalWidth(this.props, this._instanceProps);
+        return (0,react.createElement)(outerElementType || "scroll", _objectSpread2(_objectSpread2({}, rest), {}, {
+          className: className,
+          onValueChanged: this._onScroll,
+          ref: this._outerRefSetter,
+          style: _objectSpread2({
+            position: "relative",
+            height: height,
+            width: width,
+            direction: direction
+          }, style)
+        }), (0,react.createElement)(innerElementType || "view", {
+          children: items,
+          ref: innerRef,
+          style: {
+            height: estimatedTotalHeight,
+            pointerEvents: isScrolling ? "none" : void 0,
+            width: estimatedTotalWidth
           }
-        } else {
-          outerRef.ScrollLeft = Math.max(0, scrollLeft);
-        }
-        outerRef.ScrollTop = Math.max(0, scrollTop);
+        }));
       }
-      this._callPropsCallbacks();
-    };
-    Grid.prototype.componentWillUnmount = function () {
-      if (this._resetIsScrollingTimeoutId !== null) {
-        cancelTimeout(this._resetIsScrollingTimeoutId);
-      }
-    };
-    Grid.prototype.render = function () {
-      var _a = this.props,
-        children = _a.children,
-        className = _a.className,
-        columnCount = _a.columnCount,
-        direction = _a.direction,
-        height = _a.height,
-        innerRef = _a.innerRef,
-        innerElementType = _a.innerElementType,
-        itemData = _a.itemData,
-        _c = _a.itemKey,
-        itemKey = _c === void 0 ? defaultItemKey : _c,
-        outerElementType = _a.outerElementType,
-        rowCount = _a.rowCount,
-        style = _a.style,
-        useIsScrolling = _a.useIsScrolling,
-        width = _a.width,
-        // Unused
-        columnWidth = _a.columnWidth,
-        initialScrollLeft = _a.initialScrollLeft,
-        initialScrollTop = _a.initialScrollTop,
-        onItemsRendered = _a.onItemsRendered,
-        onScroll = _a.onScroll,
-        outerRef = _a.outerRef,
-        overscanColumnCount = _a.overscanColumnCount,
-        overscanRowCount = _a.overscanRowCount,
-        rowHeight = _a.rowHeight,
-        rest = createGridComponent_rest(_a, ["children", "className", "columnCount", "direction", "height", "innerRef", "innerElementType", "itemData", "itemKey", "outerElementType", "rowCount", "style", "useIsScrolling", "width", "columnWidth", "initialScrollLeft", "initialScrollTop", "onItemsRendered", "onScroll", "outerRef", "overscanColumnCount", "overscanRowCount", "rowHeight"]);
-      var isScrolling = this.state.isScrolling;
-      var _d = this._getHorizontalRangeToRender(),
-        columnStartIndex = _d[0],
-        columnStopIndex = _d[1];
-      var _e = this._getVerticalRangeToRender(),
-        rowStartIndex = _e[0],
-        rowStopIndex = _e[1];
-      var items = [];
-      if (columnCount > 0 && rowCount) {
-        for (var rowIndex = rowStartIndex; rowIndex <= rowStopIndex; rowIndex++) {
-          for (var columnIndex = columnStartIndex; columnIndex <= columnStopIndex; columnIndex++) {
-            items.push((0,react.createElement)(children, {
-              columnIndex: columnIndex,
-              data: itemData,
-              isScrolling: useIsScrolling ? isScrolling : undefined,
-              key: itemKey({
-                columnIndex: columnIndex,
-                data: itemData,
-                rowIndex: rowIndex
-              }),
-              rowIndex: rowIndex,
-              style: this._getItemStyle(rowIndex, columnIndex)
-            }));
+    }, {
+      key: "_callPropsCallbacks",
+      value: function _callPropsCallbacks() {
+        var _this$props5 = this.props,
+          columnCount = _this$props5.columnCount,
+          onItemsRendered = _this$props5.onItemsRendered,
+          onScroll = _this$props5.onScroll,
+          rowCount = _this$props5.rowCount;
+        if (typeof onItemsRendered === "function") {
+          if (columnCount > 0 && rowCount > 0) {
+            var _this$_getHorizontalR3 = this._getHorizontalRangeToRender(),
+              _this$_getHorizontalR4 = _slicedToArray(_this$_getHorizontalR3, 4),
+              overscanColumnStartIndex = _this$_getHorizontalR4[0],
+              overscanColumnStopIndex = _this$_getHorizontalR4[1],
+              visibleColumnStartIndex = _this$_getHorizontalR4[2],
+              visibleColumnStopIndex = _this$_getHorizontalR4[3];
+            var _this$_getVerticalRan3 = this._getVerticalRangeToRender(),
+              _this$_getVerticalRan4 = _slicedToArray(_this$_getVerticalRan3, 4),
+              overscanRowStartIndex = _this$_getVerticalRan4[0],
+              overscanRowStopIndex = _this$_getVerticalRan4[1],
+              visibleRowStartIndex = _this$_getVerticalRan4[2],
+              visibleRowStopIndex = _this$_getVerticalRan4[3];
+            this._callOnItemsRendered(overscanColumnStartIndex, overscanColumnStopIndex, overscanRowStartIndex, overscanRowStopIndex, visibleColumnStartIndex, visibleColumnStopIndex, visibleRowStartIndex, visibleRowStopIndex);
           }
         }
-      }
-      // Read this value AFTER items have been created,
-      // So their actual sizes (if variable) are taken into consideration.
-      var estimatedTotalHeight = getEstimatedTotalHeight(this.props, this._instanceProps);
-      var estimatedTotalWidth = getEstimatedTotalWidth(this.props, this._instanceProps);
-      return (0,react.createElement)(outerElementType || 'scroll', createGridComponent_assign(createGridComponent_assign({}, rest), {
-        className: className,
-        onValueChanged: this._onScroll,
-        ref: this._outerRefSetter,
-        style: createGridComponent_assign({
-          position: 'relative',
-          height: height,
-          width: width,
-          direction: direction
-        }, style)
-      }), (0,react.createElement)(innerElementType || 'view', {
-        children: items,
-        ref: innerRef,
-        style: {
-          height: estimatedTotalHeight,
-          pointerEvents: isScrolling ? 'none' : undefined,
-          width: estimatedTotalWidth
-        }
-      }));
-    };
-    Grid.prototype._callPropsCallbacks = function () {
-      var _a = this.props,
-        columnCount = _a.columnCount,
-        onItemsRendered = _a.onItemsRendered,
-        onScroll = _a.onScroll,
-        rowCount = _a.rowCount;
-      if (typeof onItemsRendered === 'function') {
-        if (columnCount > 0 && rowCount > 0) {
-          var _c = this._getHorizontalRangeToRender(),
-            overscanColumnStartIndex = _c[0],
-            overscanColumnStopIndex = _c[1],
-            visibleColumnStartIndex = _c[2],
-            visibleColumnStopIndex = _c[3];
-          var _d = this._getVerticalRangeToRender(),
-            overscanRowStartIndex = _d[0],
-            overscanRowStopIndex = _d[1],
-            visibleRowStartIndex = _d[2],
-            visibleRowStopIndex = _d[3];
-          this._callOnItemsRendered(overscanColumnStartIndex, overscanColumnStopIndex, overscanRowStartIndex, overscanRowStopIndex, visibleColumnStartIndex, visibleColumnStopIndex, visibleRowStartIndex, visibleRowStopIndex);
+        if (typeof onScroll === "function") {
+          var _this$state3 = this.state,
+            horizontalScrollDirection = _this$state3.horizontalScrollDirection,
+            scrollLeft = _this$state3.scrollLeft,
+            scrollTop = _this$state3.scrollTop,
+            scrollUpdateWasRequested = _this$state3.scrollUpdateWasRequested,
+            verticalScrollDirection = _this$state3.verticalScrollDirection;
+          this._callOnScroll(scrollLeft, scrollTop, horizontalScrollDirection, verticalScrollDirection, scrollUpdateWasRequested);
         }
       }
-      if (typeof onScroll === 'function') {
-        var _e = this.state,
-          horizontalScrollDirection = _e.horizontalScrollDirection,
-          scrollLeft = _e.scrollLeft,
-          scrollTop = _e.scrollTop,
-          scrollUpdateWasRequested = _e.scrollUpdateWasRequested,
-          verticalScrollDirection = _e.verticalScrollDirection;
-        this._callOnScroll(scrollLeft, scrollTop, horizontalScrollDirection, verticalScrollDirection, scrollUpdateWasRequested);
+    }, {
+      key: "_getHorizontalRangeToRender",
+      value: function _getHorizontalRangeToRender() {
+        var _this$props6 = this.props,
+          columnCount = _this$props6.columnCount,
+          overscanColumnCount = _this$props6.overscanColumnCount,
+          rowCount = _this$props6.rowCount;
+        var _this$state4 = this.state,
+          horizontalScrollDirection = _this$state4.horizontalScrollDirection,
+          isScrolling = _this$state4.isScrolling,
+          scrollLeft = _this$state4.scrollLeft;
+        var overscanCountResolved = overscanColumnCount || 1;
+        if (columnCount === 0 || rowCount === 0) return [0, 0, 0, 0];
+        var startIndex = getColumnStartIndexForOffset(this.props, scrollLeft, this._instanceProps);
+        var stopIndex = getColumnStopIndexForStartIndex(this.props, startIndex, scrollLeft, this._instanceProps);
+        var overscanBackward = !isScrolling || horizontalScrollDirection === "backward" ? Math.max(1, overscanCountResolved) : 1;
+        var overscanForward = !isScrolling || horizontalScrollDirection === "forward" ? Math.max(1, overscanCountResolved) : 1;
+        return [Math.max(0, startIndex - overscanBackward), Math.max(0, Math.min(columnCount - 1, stopIndex + overscanForward)), startIndex, stopIndex];
       }
-    };
-    Grid.prototype._getHorizontalRangeToRender = function () {
-      var _a = this.props,
-        columnCount = _a.columnCount,
-        overscanColumnCount = _a.overscanColumnCount,
-        rowCount = _a.rowCount;
-      var _c = this.state,
-        horizontalScrollDirection = _c.horizontalScrollDirection,
-        isScrolling = _c.isScrolling,
-        scrollLeft = _c.scrollLeft;
-      var overscanCountResolved = overscanColumnCount || 1;
-      if (columnCount === 0 || rowCount === 0) {
-        return [0, 0, 0, 0];
+    }, {
+      key: "_getVerticalRangeToRender",
+      value: function _getVerticalRangeToRender() {
+        var _this$props7 = this.props,
+          columnCount = _this$props7.columnCount,
+          overscanRowCount = _this$props7.overscanRowCount,
+          rowCount = _this$props7.rowCount;
+        var _this$state5 = this.state,
+          isScrolling = _this$state5.isScrolling,
+          verticalScrollDirection = _this$state5.verticalScrollDirection,
+          scrollTop = _this$state5.scrollTop;
+        var overscanCountResolved = overscanRowCount || 1;
+        if (columnCount === 0 || rowCount === 0) return [0, 0, 0, 0];
+        var startIndex = getRowStartIndexForOffset(this.props, scrollTop, this._instanceProps);
+        var stopIndex = getRowStopIndexForStartIndex(this.props, startIndex, scrollTop, this._instanceProps);
+        var overscanBackward = !isScrolling || verticalScrollDirection === "backward" ? Math.max(1, overscanCountResolved) : 1;
+        var overscanForward = !isScrolling || verticalScrollDirection === "forward" ? Math.max(1, overscanCountResolved) : 1;
+        return [Math.max(0, startIndex - overscanBackward), Math.max(0, Math.min(rowCount - 1, stopIndex + overscanForward)), startIndex, stopIndex];
       }
-      var startIndex = getColumnStartIndexForOffset(this.props, scrollLeft, this._instanceProps);
-      var stopIndex = getColumnStopIndexForStartIndex(this.props, startIndex, scrollLeft, this._instanceProps);
-      // Overscan by one item in each direction so that tab/focus works.
-      // If there isn't at least one extra item, tab loops back around.
-      var overscanBackward = !isScrolling || horizontalScrollDirection === 'backward' ? Math.max(1, overscanCountResolved) : 1;
-      var overscanForward = !isScrolling || horizontalScrollDirection === 'forward' ? Math.max(1, overscanCountResolved) : 1;
-      return [Math.max(0, startIndex - overscanBackward), Math.max(0, Math.min(columnCount - 1, stopIndex + overscanForward)), startIndex, stopIndex];
-    };
-    Grid.prototype._getVerticalRangeToRender = function () {
-      var _a = this.props,
-        columnCount = _a.columnCount,
-        overscanRowCount = _a.overscanRowCount,
-        rowCount = _a.rowCount;
-      var _c = this.state,
-        isScrolling = _c.isScrolling,
-        verticalScrollDirection = _c.verticalScrollDirection,
-        scrollTop = _c.scrollTop;
-      var overscanCountResolved = overscanRowCount || 1;
-      if (columnCount === 0 || rowCount === 0) {
-        return [0, 0, 0, 0];
+    }], [{
+      key: "getDerivedStateFromProps",
+      value: function getDerivedStateFromProps(nextProps, prevState) {
+        validateSharedProps$1(nextProps, prevState);
+        validateProps(nextProps);
+        return null;
       }
-      var startIndex = getRowStartIndexForOffset(this.props, scrollTop, this._instanceProps);
-      var stopIndex = getRowStopIndexForStartIndex(this.props, startIndex, scrollTop, this._instanceProps);
-      // Overscan by one item in each direction so that tab/focus works.
-      // If there isn't at least one extra item, tab loops back around.
-      var overscanBackward = !isScrolling || verticalScrollDirection === 'backward' ? Math.max(1, overscanCountResolved) : 1;
-      var overscanForward = !isScrolling || verticalScrollDirection === 'forward' ? Math.max(1, overscanCountResolved) : 1;
-      return [Math.max(0, startIndex - overscanBackward), Math.max(0, Math.min(rowCount - 1, stopIndex + overscanForward)), startIndex, stopIndex];
-    };
-    return Grid;
-  }(react.PureComponent), _b.defaultProps = {
-    direction: 'ltr',
-    itemData: undefined,
+    }]);
+  }(react.PureComponent), _defineProperty(_Grid, "defaultProps", {
+    direction: "ltr",
+    itemData: void 0,
     useIsScrolling: false
-  }, _b;
+  }), _Grid;
 }
-var validateSharedProps = function validateSharedProps(_a, _b) {
-  var children = _a.children,
-    direction = _a.direction,
-    height = _a.height,
-    width = _a.width;
-  var instance = _b.instance;
+var validateSharedProps$1 = function validateSharedProps$1(_ref5, _ref6) {
+  var children = _ref5.children,
+    direction = _ref5.direction,
+    height = _ref5.height,
+    width = _ref5.width;
+  var instance = _ref6.instance;
   if (false) // removed by dead control flow
 {}
 };
-//# sourceMappingURL=createGridComponent.js.map
-;// ../../../../packages/material/dist/src/virtual-scroll/FixedSizeGrid.js
-
+//#endregion
+//#region src/virtual-scroll/FixedSizeGrid.ts
 var FixedSizeGrid = createGridComponent({
-  getColumnOffset: function getColumnOffset(_a, index) {
-    var columnWidth = _a.columnWidth;
+  getColumnOffset: function getColumnOffset(_ref7, index) {
+    var columnWidth = _ref7.columnWidth;
     return index * columnWidth;
   },
-  getColumnWidth: function getColumnWidth(_a, index) {
-    var columnWidth = _a.columnWidth;
+  getColumnWidth: function getColumnWidth(_ref8, index) {
+    var columnWidth = _ref8.columnWidth;
     return columnWidth;
   },
-  getRowOffset: function getRowOffset(_a, index) {
-    var rowHeight = _a.rowHeight;
+  getRowOffset: function getRowOffset(_ref9, index) {
+    var rowHeight = _ref9.rowHeight;
     return index * rowHeight;
   },
-  getRowHeight: function getRowHeight(_a, index) {
-    var rowHeight = _a.rowHeight;
+  getRowHeight: function getRowHeight(_ref0, index) {
+    var rowHeight = _ref0.rowHeight;
     return rowHeight;
   },
-  getEstimatedTotalHeight: function getEstimatedTotalHeight(_a) {
-    var rowCount = _a.rowCount,
-      rowHeight = _a.rowHeight;
+  getEstimatedTotalHeight: function getEstimatedTotalHeight(_ref1) {
+    var rowCount = _ref1.rowCount,
+      rowHeight = _ref1.rowHeight;
     return rowHeight * rowCount;
   },
-  getEstimatedTotalWidth: function getEstimatedTotalWidth(_a) {
-    var columnCount = _a.columnCount,
-      columnWidth = _a.columnWidth;
+  getEstimatedTotalWidth: function getEstimatedTotalWidth(_ref10) {
+    var columnCount = _ref10.columnCount,
+      columnWidth = _ref10.columnWidth;
     return columnWidth * columnCount;
   },
-  getOffsetForColumnAndAlignment: function getOffsetForColumnAndAlignment(_a, columnIndex, align, scrollLeft, instanceProps, scrollbarSize) {
-    var columnCount = _a.columnCount,
-      columnWidth = _a.columnWidth,
-      width = _a.width;
+  getOffsetForColumnAndAlignment: function getOffsetForColumnAndAlignment(_ref11, columnIndex, align, scrollLeft, instanceProps, scrollbarSize) {
+    var columnCount = _ref11.columnCount,
+      columnWidth = _ref11.columnWidth,
+      width = _ref11.width;
     var lastColumnOffset = Math.max(0, columnCount * columnWidth - width);
     var maxOffset = Math.min(lastColumnOffset, columnIndex * columnWidth);
     var minOffset = Math.max(0, columnIndex * columnWidth - width + scrollbarSize + columnWidth);
-    if (align === 'smart') {
-      if (scrollLeft >= minOffset - width && scrollLeft <= maxOffset + width) {
-        align = 'auto';
-      } else {
-        align = 'center';
-      }
-    }
+    if (align === "smart") if (scrollLeft >= minOffset - width && scrollLeft <= maxOffset + width) align = "auto";else align = "center";
     switch (align) {
-      case 'start':
+      case "start":
         return maxOffset;
-      case 'end':
+      case "end":
         return minOffset;
-      case 'center':
+      case "center":
         {
-          // "Centered" offset is usually the average of the min and max.
-          // But near the edges of the list, this doesn't hold true.
           var middleOffset = Math.round(minOffset + (maxOffset - minOffset) / 2);
-          if (middleOffset < Math.ceil(width / 2)) {
-            return 0; // near the beginning
-          }
-          if (middleOffset > lastColumnOffset + Math.floor(width / 2)) {
-            return lastColumnOffset; // near the end
-          }
+          if (middleOffset < Math.ceil(width / 2)) return 0;
+          if (middleOffset > lastColumnOffset + Math.floor(width / 2)) return lastColumnOffset;
           return middleOffset;
         }
       default:
-        if (scrollLeft >= minOffset && scrollLeft <= maxOffset) {
-          return scrollLeft;
-        }
-        if (minOffset > maxOffset) {
-          // Because we only take into account the scrollbar size when calculating minOffset
-          // this value can be larger than maxOffset when at the end of the list
-          return minOffset;
-        }
-        if (scrollLeft < minOffset) {
-          return minOffset;
-        }
+        if (scrollLeft >= minOffset && scrollLeft <= maxOffset) return scrollLeft;
+        if (minOffset > maxOffset) return minOffset;
+        if (scrollLeft < minOffset) return minOffset;
         return maxOffset;
     }
   },
-  getOffsetForRowAndAlignment: function getOffsetForRowAndAlignment(_a, rowIndex, align, scrollTop, instanceProps, scrollbarSize) {
-    var rowHeight = _a.rowHeight,
-      height = _a.height,
-      rowCount = _a.rowCount;
+  getOffsetForRowAndAlignment: function getOffsetForRowAndAlignment(_ref12, rowIndex, align, scrollTop, instanceProps, scrollbarSize) {
+    var rowHeight = _ref12.rowHeight,
+      height = _ref12.height,
+      rowCount = _ref12.rowCount;
     var lastRowOffset = Math.max(0, rowCount * rowHeight - height);
     var maxOffset = Math.min(lastRowOffset, rowIndex * rowHeight);
     var minOffset = Math.max(0, rowIndex * rowHeight - height + scrollbarSize + rowHeight);
-    if (align === 'smart') {
-      if (scrollTop >= minOffset - height && scrollTop <= maxOffset + height) {
-        align = 'auto';
-      } else {
-        align = 'center';
-      }
-    }
+    if (align === "smart") if (scrollTop >= minOffset - height && scrollTop <= maxOffset + height) align = "auto";else align = "center";
     switch (align) {
-      case 'start':
+      case "start":
         return maxOffset;
-      case 'end':
+      case "end":
         return minOffset;
-      case 'center':
+      case "center":
         {
-          // "Centered" offset is usually the average of the min and max.
-          // But near the edges of the list, this doesn't hold true.
           var middleOffset = Math.round(minOffset + (maxOffset - minOffset) / 2);
-          if (middleOffset < Math.ceil(height / 2)) {
-            return 0; // near the beginning
-          }
-          if (middleOffset > lastRowOffset + Math.floor(height / 2)) {
-            return lastRowOffset; // near the end
-          }
+          if (middleOffset < Math.ceil(height / 2)) return 0;
+          if (middleOffset > lastRowOffset + Math.floor(height / 2)) return lastRowOffset;
           return middleOffset;
         }
       default:
-        if (scrollTop >= minOffset && scrollTop <= maxOffset) {
-          return scrollTop;
-        }
-        if (minOffset > maxOffset) {
-          // Because we only take into account the scrollbar size when calculating minOffset
-          // this value can be larger than maxOffset when at the end of the list
-          return minOffset;
-        }
-        if (scrollTop < minOffset) {
-          return minOffset;
-        }
+        if (scrollTop >= minOffset && scrollTop <= maxOffset) return scrollTop;
+        if (minOffset > maxOffset) return minOffset;
+        if (scrollTop < minOffset) return minOffset;
         return maxOffset;
     }
   },
-  getColumnStartIndexForOffset: function getColumnStartIndexForOffset(_a, scrollLeft) {
-    var columnWidth = _a.columnWidth,
-      columnCount = _a.columnCount;
+  getColumnStartIndexForOffset: function getColumnStartIndexForOffset(_ref13, scrollLeft) {
+    var columnWidth = _ref13.columnWidth,
+      columnCount = _ref13.columnCount;
     return Math.max(0, Math.min(columnCount - 1, Math.floor(scrollLeft / columnWidth)));
   },
-  getColumnStopIndexForStartIndex: function getColumnStopIndexForStartIndex(_a, startIndex, scrollLeft) {
-    var columnWidth = _a.columnWidth,
-      columnCount = _a.columnCount,
-      width = _a.width;
+  getColumnStopIndexForStartIndex: function getColumnStopIndexForStartIndex(_ref14, startIndex, scrollLeft) {
+    var columnWidth = _ref14.columnWidth,
+      columnCount = _ref14.columnCount,
+      width = _ref14.width;
     var left = startIndex * columnWidth;
     var numVisibleColumns = Math.ceil((width + scrollLeft - left) / columnWidth);
     return Math.max(0, Math.min(columnCount - 1, startIndex + numVisibleColumns - 1));
   },
-  getRowStartIndexForOffset: function getRowStartIndexForOffset(_a, scrollTop) {
-    var rowHeight = _a.rowHeight,
-      rowCount = _a.rowCount;
+  getRowStartIndexForOffset: function getRowStartIndexForOffset(_ref15, scrollTop) {
+    var rowHeight = _ref15.rowHeight,
+      rowCount = _ref15.rowCount;
     return Math.max(0, Math.min(rowCount - 1, Math.floor(scrollTop / rowHeight)));
   },
-  getRowStopIndexForStartIndex: function getRowStopIndexForStartIndex(_a, startIndex, scrollTop) {
-    var rowHeight = _a.rowHeight,
-      rowCount = _a.rowCount,
-      height = _a.height;
+  getRowStopIndexForStartIndex: function getRowStopIndexForStartIndex(_ref16, startIndex, scrollTop) {
+    var rowHeight = _ref16.rowHeight,
+      rowCount = _ref16.rowCount,
+      height = _ref16.height;
     var top = startIndex * rowHeight;
     var numVisibleRows = Math.ceil((height + scrollTop - top) / rowHeight);
     return Math.max(0, Math.min(rowCount - 1, startIndex + numVisibleRows - 1));
   },
-  initInstanceProps: function initInstanceProps(props) {
-    // Noop
-  },
+  initInstanceProps: function initInstanceProps(props) {},
   shouldResetStyleCacheOnItemSizeChange: true,
-  validateProps: function validateProps(_a) {
-    var columnWidth = _a.columnWidth,
-      rowHeight = _a.rowHeight;
+  validateProps: function validateProps(_ref17) {
+    var columnWidth = _ref17.columnWidth,
+      rowHeight = _ref17.rowHeight;
     if (false) // removed by dead control flow
 {}
   }
 });
-//# sourceMappingURL=FixedSizeGrid.js.map
-;// ../../../../packages/material/dist/src/virtual-scroll/createListComponent.js
-var createListComponent_extends = undefined && undefined.__extends || function () {
-  var _extendStatics = function extendStatics(d, b) {
-    _extendStatics = Object.setPrototypeOf || {
-      __proto__: []
-    } instanceof Array && function (d, b) {
-      d.__proto__ = b;
-    } || function (d, b) {
-      for (var p in b) if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p];
-    };
-    return _extendStatics(d, b);
-  };
-  return function (d, b) {
-    if (typeof b !== "function" && b !== null) throw new TypeError("Class extends value " + String(b) + " is not a constructor or null");
-    _extendStatics(d, b);
-    function __() {
-      this.constructor = d;
-    }
-    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-  };
-}();
-var createListComponent_assign = undefined && undefined.__assign || function () {
-  createListComponent_assign = Object.assign || function (t) {
-    for (var s, i = 1, n = arguments.length; i < n; i++) {
-      s = arguments[i];
-      for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p)) t[p] = s[p];
-    }
-    return t;
-  };
-  return createListComponent_assign.apply(this, arguments);
-};
-var createListComponent_rest = undefined && undefined.__rest || function (s, e) {
-  var t = {};
-  for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p) && e.indexOf(p) < 0) t[p] = s[p];
-  if (s != null && typeof Object.getOwnPropertySymbols === "function") for (var i = 0, p = Object.getOwnPropertySymbols(s); i < p.length; i++) {
-    if (e.indexOf(p[i]) < 0 && Object.prototype.propertyIsEnumerable.call(s, p[i])) t[p[i]] = s[p[i]];
-  }
-  return t;
-};
-
-
-
-
-var createListComponent_IS_SCROLLING_DEBOUNCE_INTERVAL = 150;
-var createListComponent_defaultItemKey = function defaultItemKey(index, data) {
+//#endregion
+//#region src/virtual-scroll/createListComponent.ts
+var VariableSizeList_DEYjHugc_excluded = ["children", "className", "direction", "height", "innerRef", "innerElementType", "itemCount", "itemData", "itemKey", "layout", "outerElementType", "style", "useIsScrolling", "width", "initialScrollOffset", "itemSize", "onItemsRendered", "onScroll", "outerRef", "overscanCount"];
+var IS_SCROLLING_DEBOUNCE_INTERVAL = 150;
+var defaultItemKey = function defaultItemKey(index, data) {
   return index;
 };
-function createListComponent(_a) {
-  var _b;
-  var getItemOffset = _a.getItemOffset,
-    getEstimatedTotalSize = _a.getEstimatedTotalSize,
-    getItemSize = _a.getItemSize,
-    getOffsetForIndexAndAlignment = _a.getOffsetForIndexAndAlignment,
-    getStartIndexForOffset = _a.getStartIndexForOffset,
-    getStopIndexForStartIndex = _a.getStopIndexForStartIndex,
-    initInstanceProps = _a.initInstanceProps,
-    shouldResetStyleCacheOnItemSizeChange = _a.shouldResetStyleCacheOnItemSizeChange,
-    validateProps = _a.validateProps;
-  return _b = /** @class */function (_super) {
-    createListComponent_extends(List, _super);
-    // Always use explicit constructor for React components.
-    // It produces less code after transpilation. (#26)
-    // eslint-disable-next-line no-useless-constructor, @typescript-eslint/no-useless-constructor
-    // biome-ignore lint/complexity/noUselessConstructor: kept deliberately, see above
+function createListComponent(_ref18) {
+  var getItemOffset = _ref18.getItemOffset,
+    getEstimatedTotalSize = _ref18.getEstimatedTotalSize,
+    getItemSize = _ref18.getItemSize,
+    getOffsetForIndexAndAlignment = _ref18.getOffsetForIndexAndAlignment,
+    getStartIndexForOffset = _ref18.getStartIndexForOffset,
+    getStopIndexForStartIndex = _ref18.getStopIndexForStartIndex,
+    initInstanceProps = _ref18.initInstanceProps,
+    shouldResetStyleCacheOnItemSizeChange = _ref18.shouldResetStyleCacheOnItemSizeChange,
+    validateProps = _ref18.validateProps;
+  var _List;
+  return _List = /*#__PURE__*/function (_PureComponent2) {
     function List(props) {
-      var _this = _super.call(this, props) || this;
-      _this._instanceProps = initInstanceProps(_this.props, _this);
-      _this._resetIsScrollingTimeoutId = null;
-      _this.state = {
-        instance: _this,
+      var _this2;
+      _classCallCheck(this, List);
+      _this2 = _callSuper(this, List, [props]);
+      _defineProperty(_this2, "_instanceProps", initInstanceProps(_this2.props, _this2));
+      _defineProperty(_this2, "_outerRef", void 0);
+      _defineProperty(_this2, "_resetIsScrollingTimeoutId", null);
+      _defineProperty(_this2, "state", {
+        instance: _this2,
         isScrolling: false,
-        scrollDirection: 'forward',
-        scrollOffset: typeof _this.props.initialScrollOffset === 'number' ? _this.props.initialScrollOffset : 0,
+        scrollDirection: "forward",
+        scrollOffset: typeof _this2.props.initialScrollOffset === "number" ? _this2.props.initialScrollOffset : 0,
         scrollUpdateWasRequested: false
-      };
-      _this._callOnItemsRendered = memoizeOne(function (overscanStartIndex, overscanStopIndex, visibleStartIndex, visibleStopIndex) {
-        return _this.props.onItemsRendered({
+      });
+      _defineProperty(_this2, "_callOnItemsRendered", memoizeOne(function (overscanStartIndex, overscanStopIndex, visibleStartIndex, visibleStopIndex) {
+        return _this2.props.onItemsRendered({
           overscanStartIndex: overscanStartIndex,
           overscanStopIndex: overscanStopIndex,
           visibleStartIndex: visibleStartIndex,
           visibleStopIndex: visibleStopIndex
         });
-      });
-      _this._callOnScroll = memoizeOne(function (scrollDirection, scrollOffset, scrollUpdateWasRequested) {
-        return _this.props.onScroll({
+      }));
+      _defineProperty(_this2, "_callOnScroll", memoizeOne(function (scrollDirection, scrollOffset, scrollUpdateWasRequested) {
+        return _this2.props.onScroll({
           scrollDirection: scrollDirection,
           scrollOffset: scrollOffset,
           scrollUpdateWasRequested: scrollUpdateWasRequested
         });
-      });
-      // Lazily create and cache item styles while scrolling,
-      // So that pure component sCU will prevent re-renders.
-      // We maintain this cache, and pass a style prop rather than index,
-      // So that List can clear cached styles and force item re-render if necessary.
-      _this._getItemStyle = function (index) {
-        var _a = _this.props,
-          direction = _a.direction,
-          itemSize = _a.itemSize,
-          layout = _a.layout;
-        var itemStyleCache = _this._getItemStyleCache(shouldResetStyleCacheOnItemSizeChange && itemSize, shouldResetStyleCacheOnItemSizeChange && layout, shouldResetStyleCacheOnItemSizeChange && direction);
+      }));
+      _defineProperty(_this2, "_getItemStyle", function (index) {
+        var _this2$props = _this2.props,
+          direction = _this2$props.direction,
+          itemSize = _this2$props.itemSize,
+          layout = _this2$props.layout;
+        var itemStyleCache = _this2._getItemStyleCache(shouldResetStyleCacheOnItemSizeChange && itemSize, shouldResetStyleCacheOnItemSizeChange && layout, shouldResetStyleCacheOnItemSizeChange && direction);
         var style;
-        // Object.prototype.hasOwnProperty.call, not Object.hasOwn: this ships to Unity's
-        // JS engines, and Jint has no ES2022 Object.hasOwn.
-        if (Object.hasOwn(itemStyleCache, index)) {
-          style = itemStyleCache[index];
-        } else {
-          var offset = getItemOffset(_this.props, index, _this._instanceProps);
-          var size = getItemSize(_this.props, index, _this._instanceProps);
-          var isHorizontal = layout === 'horizontal';
-          var isRtl = direction === 'rtl';
+        if (Object.hasOwn(itemStyleCache, index)) style = itemStyleCache[index];else {
+          var offset = getItemOffset(_this2.props, index, _this2._instanceProps);
+          var size = getItemSize(_this2.props, index, _this2._instanceProps);
+          var isHorizontal = layout === "horizontal";
+          var isRtl = direction === "rtl";
           var offsetHorizontal = isHorizontal ? offset : 0;
           itemStyleCache[index] = style = {
-            position: 'absolute',
-            left: isRtl ? undefined : offsetHorizontal,
-            right: isRtl ? offsetHorizontal : undefined,
+            position: "absolute",
+            left: isRtl ? void 0 : offsetHorizontal,
+            right: isRtl ? offsetHorizontal : void 0,
             top: !isHorizontal ? offset : 0,
-            height: !isHorizontal ? size : '100%',
-            width: isHorizontal ? size : '100%'
+            height: !isHorizontal ? size : "100%",
+            width: isHorizontal ? size : "100%"
           };
         }
         return style;
-      };
-      _this._getItemStyleCache = memoizeOne(function (_, __, ___) {
-        return {};
       });
-      _this._onScrollHorizontal = function (event, sender) {
+      _defineProperty(_this2, "_getItemStyleCache", memoizeOne(function (_, __, ___) {
+        return {};
+      }));
+      _defineProperty(_this2, "_onScrollHorizontal", function (event, sender) {
         var clientWidth = sender.ClientWidth;
         var scrollWidth = sender.ScrollWidth;
         var scrollLeft = sender.ScrollLeft;
-        _this.setState(function (prevState) {
-          if (prevState.scrollOffset === scrollLeft) {
-            // Scroll position may have been updated by cDM/cDU,
-            // In which case we don't need to trigger another render,
-            // And we don't want to update state.isScrolling.
-            return null;
-          }
-          var direction = _this.props.direction;
+        _this2.setState(function (prevState) {
+          if (prevState.scrollOffset === scrollLeft) return null;
+          var direction = _this2.props.direction;
           var scrollOffset = scrollLeft;
-          if (direction === 'rtl') {
-            // TRICKY According to the spec, scrollLeft should be negative for RTL aligned elements.
-            // This is not the case for all browsers though (e.g. Chrome reports values as positive, measured relative to the left).
-            // It's also easier for this component if we convert offsets to the same format as they would be in for ltr.
-            // So the simplest solution is to determine which browser behavior we're dealing with, and convert based on it.
-            switch (getRTLOffsetType()) {
-              case 'negative':
-                scrollOffset = -scrollLeft;
-                break;
-              case 'positive-descending':
-                scrollOffset = scrollWidth - clientWidth - scrollLeft;
-                break;
-            }
+          if (direction === "rtl") switch (getRTLOffsetType()) {
+            case "negative":
+              scrollOffset = -scrollLeft;
+              break;
+            case "positive-descending":
+              scrollOffset = scrollWidth - clientWidth - scrollLeft;
+              break;
           }
-          // Prevent Safari's elastic scrolling from causing visual shaking when scrolling past bounds.
           scrollOffset = Math.max(0, Math.min(scrollOffset, scrollWidth - clientWidth));
           return {
             isScrolling: true,
-            scrollDirection: prevState.scrollOffset < scrollLeft ? 'forward' : 'backward',
+            scrollDirection: prevState.scrollOffset < scrollLeft ? "forward" : "backward",
             scrollOffset: scrollOffset,
             scrollUpdateWasRequested: false
           };
-        }, _this._resetIsScrollingDebounced);
-      };
-      _this._onScrollVertical = function (event, sender) {
+        }, _this2._resetIsScrollingDebounced);
+      });
+      _defineProperty(_this2, "_onScrollVertical", function (event, sender) {
         var clientHeight = sender.ClientHeight;
         var scrollHeight = sender.ScrollHeight;
         var scrollTop = sender.ScrollTop;
-        _this.setState(function (prevState) {
-          if (prevState.scrollOffset === scrollTop) {
-            // Scroll position may have been updated by cDM/cDU,
-            // In which case we don't need to trigger another render,
-            // And we don't want to update state.isScrolling.
-            return null;
-          }
-          // Prevent Safari's elastic scrolling from causing visual shaking when scrolling past bounds.
+        _this2.setState(function (prevState) {
+          if (prevState.scrollOffset === scrollTop) return null;
           var scrollOffset = Math.max(0, Math.min(scrollTop, scrollHeight - clientHeight));
           return {
             isScrolling: true,
-            scrollDirection: prevState.scrollOffset < scrollOffset ? 'forward' : 'backward',
+            scrollDirection: prevState.scrollOffset < scrollOffset ? "forward" : "backward",
             scrollOffset: scrollOffset,
             scrollUpdateWasRequested: false
           };
-        }, _this._resetIsScrollingDebounced);
-      };
-      _this._outerRefSetter = function (ref) {
-        var outerRef = _this.props.outerRef;
-        _this._outerRef = ref;
-        if (typeof outerRef === 'function') {
-          outerRef(ref);
-        } else if (outerRef != null && typeof outerRef === 'object' && Object.hasOwn(outerRef, 'current')) {
-          outerRef.current = ref;
-        }
-      };
-      _this._resetIsScrollingDebounced = function () {
-        if (_this._resetIsScrollingTimeoutId !== null) {
-          cancelTimeout(_this._resetIsScrollingTimeoutId);
-        }
-        _this._resetIsScrollingTimeoutId = requestTimeout(_this._resetIsScrolling, createListComponent_IS_SCROLLING_DEBOUNCE_INTERVAL);
-      };
-      _this._resetIsScrolling = function () {
-        _this._resetIsScrollingTimeoutId = null;
-        _this.setState({
+        }, _this2._resetIsScrollingDebounced);
+      });
+      _defineProperty(_this2, "_outerRefSetter", function (ref) {
+        var outerRef = _this2.props.outerRef;
+        _this2._outerRef = ref;
+        if (typeof outerRef === "function") outerRef(ref);else if (outerRef != null && typeof outerRef === "object" && Object.hasOwn(outerRef, "current")) outerRef.current = ref;
+      });
+      _defineProperty(_this2, "_resetIsScrollingDebounced", function () {
+        if (_this2._resetIsScrollingTimeoutId !== null) cancelTimeout(_this2._resetIsScrollingTimeoutId);
+        _this2._resetIsScrollingTimeoutId = requestTimeout(_this2._resetIsScrolling, IS_SCROLLING_DEBOUNCE_INTERVAL);
+      });
+      _defineProperty(_this2, "_resetIsScrolling", function () {
+        _this2._resetIsScrollingTimeoutId = null;
+        _this2.setState({
           isScrolling: false
         }, function () {
-          // Clear style cache after state update has been committed.
-          // This way we don't break pure sCU for items that don't use isScrolling param.
-          _this._getItemStyleCache(-1, null);
+          _this2._getItemStyleCache(-1, null);
         });
-      };
-      return _this;
+      });
+      return _this2;
     }
-    List.getDerivedStateFromProps = function (nextProps, prevState) {
-      createListComponent_validateSharedProps(nextProps, prevState);
-      validateProps(nextProps);
-      return null;
-    };
-    List.prototype.scrollTo = function (scrollOffset) {
-      scrollOffset = Math.max(0, scrollOffset);
-      this.setState(function (prevState) {
-        if (prevState.scrollOffset === scrollOffset) {
-          return null;
-        }
-        return {
-          scrollDirection: prevState.scrollOffset < scrollOffset ? 'forward' : 'backward',
-          scrollOffset: scrollOffset,
-          scrollUpdateWasRequested: true
-        };
-      }, this._resetIsScrollingDebounced);
-    };
-    List.prototype.scrollToItem = function (index, align) {
-      if (align === void 0) {
-        align = 'auto';
+    _inherits(List, _PureComponent2);
+    return _createClass(List, [{
+      key: "scrollTo",
+      value: function scrollTo(scrollOffset) {
+        scrollOffset = Math.max(0, scrollOffset);
+        this.setState(function (prevState) {
+          if (prevState.scrollOffset === scrollOffset) return null;
+          return {
+            scrollDirection: prevState.scrollOffset < scrollOffset ? "forward" : "backward",
+            scrollOffset: scrollOffset,
+            scrollUpdateWasRequested: true
+          };
+        }, this._resetIsScrollingDebounced);
       }
-      var itemCount = this.props.itemCount;
-      var scrollOffset = this.state.scrollOffset;
-      index = Math.max(0, Math.min(index, itemCount - 1));
-      this.scrollTo(getOffsetForIndexAndAlignment(this.props, index, align, scrollOffset, this._instanceProps));
-    };
-    List.prototype.componentDidMount = function () {
-      var _a = this.props,
-        initialScrollOffset = _a.initialScrollOffset,
-        layout = _a.layout;
-      if (typeof initialScrollOffset === 'number' && this._outerRef != null) {
-        var outerRef = this._outerRef;
-        if (layout === 'horizontal') {
-          outerRef.ScrollLeft = initialScrollOffset;
-        } else {
-          outerRef.ScrollTop = initialScrollOffset;
-        }
+    }, {
+      key: "scrollToItem",
+      value: function scrollToItem(index) {
+        var align = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : "auto";
+        var itemCount = this.props.itemCount;
+        var scrollOffset = this.state.scrollOffset;
+        index = Math.max(0, Math.min(index, itemCount - 1));
+        this.scrollTo(getOffsetForIndexAndAlignment(this.props, index, align, scrollOffset, this._instanceProps));
       }
-      this._callPropsCallbacks();
-    };
-    List.prototype.componentDidUpdate = function () {
-      var _a = this.props,
-        direction = _a.direction,
-        layout = _a.layout;
-      var _c = this.state,
-        scrollOffset = _c.scrollOffset,
-        scrollUpdateWasRequested = _c.scrollUpdateWasRequested;
-      if (scrollUpdateWasRequested && this._outerRef != null) {
-        var outerRef = this._outerRef;
-        if (layout === 'horizontal') {
-          if (direction === 'rtl') {
-            // TRICKY According to the spec, ScrollLeft should be negative for RTL aligned elements.
-            // This is not the case for all browsers though (e.g. Chrome reports values as positive, measured relative to the left).
-            // So we need to determine which browser behavior we're dealing with, and mimic it.
-            switch (getRTLOffsetType()) {
-              case 'negative':
+    }, {
+      key: "componentDidMount",
+      value: function componentDidMount() {
+        var _this$props8 = this.props,
+          initialScrollOffset = _this$props8.initialScrollOffset,
+          layout = _this$props8.layout;
+        if (typeof initialScrollOffset === "number" && this._outerRef != null) {
+          var outerRef = this._outerRef;
+          if (layout === "horizontal") outerRef.ScrollLeft = initialScrollOffset;else outerRef.ScrollTop = initialScrollOffset;
+        }
+        this._callPropsCallbacks();
+      }
+    }, {
+      key: "componentDidUpdate",
+      value: function componentDidUpdate() {
+        var _this$props9 = this.props,
+          direction = _this$props9.direction,
+          layout = _this$props9.layout;
+        var _this$state6 = this.state,
+          scrollOffset = _this$state6.scrollOffset,
+          scrollUpdateWasRequested = _this$state6.scrollUpdateWasRequested;
+        if (scrollUpdateWasRequested && this._outerRef != null) {
+          var outerRef = this._outerRef;
+          if (layout === "horizontal") {
+            if (direction === "rtl") switch (getRTLOffsetType()) {
+              case "negative":
                 outerRef.ScrollLeft = -scrollOffset;
                 break;
-              case 'positive-ascending':
+              case "positive-ascending":
                 outerRef.ScrollLeft = scrollOffset;
                 break;
               default:
-                {
-                  var scrollWidth = outerRef.ScrollWidth;
-                  var clientWidth = outerRef.ClientWidth;
-                  outerRef.ScrollLeft = scrollWidth - clientWidth - scrollOffset;
-                  break;
-                }
-            }
-          } else {
-            outerRef.ScrollLeft = scrollOffset;
+                outerRef.ScrollLeft = outerRef.ScrollWidth - outerRef.ClientWidth - scrollOffset;
+                break;
+            } else outerRef.ScrollLeft = scrollOffset;
+          } else outerRef.ScrollTop = scrollOffset;
+        }
+        this._callPropsCallbacks();
+      }
+    }, {
+      key: "componentWillUnmount",
+      value: function componentWillUnmount() {
+        if (this._resetIsScrollingTimeoutId !== null) cancelTimeout(this._resetIsScrollingTimeoutId);
+      }
+    }, {
+      key: "render",
+      value: function render() {
+        var _this$props = this.props,
+          children = _this$props.children,
+          className = _this$props.className,
+          direction = _this$props.direction,
+          height = _this$props.height,
+          innerRef = _this$props.innerRef,
+          innerElementType = _this$props.innerElementType,
+          itemCount = _this$props.itemCount,
+          itemData = _this$props.itemData,
+          _this$props$itemKey2 = _this$props.itemKey,
+          itemKey = _this$props$itemKey2 === void 0 ? defaultItemKey : _this$props$itemKey2,
+          layout = _this$props.layout,
+          outerElementType = _this$props.outerElementType,
+          style = _this$props.style,
+          useIsScrolling = _this$props.useIsScrolling,
+          width = _this$props.width,
+          initialScrollOffset = _this$props.initialScrollOffset,
+          itemSize = _this$props.itemSize,
+          onItemsRendered = _this$props.onItemsRendered,
+          _ = _this$props.onScroll,
+          outerRef = _this$props.outerRef,
+          overscanCount = _this$props.overscanCount,
+          rest = _objectWithoutProperties(_this$props, VariableSizeList_DEYjHugc_excluded);
+        var isScrolling = this.state.isScrolling;
+        var isHorizontal = layout === "horizontal";
+        var onScroll = isHorizontal ? this._onScrollHorizontal : this._onScrollVertical;
+        var _this$_getRangeToRend = this._getRangeToRender(),
+          _this$_getRangeToRend2 = _slicedToArray(_this$_getRangeToRend, 2),
+          startIndex = _this$_getRangeToRend2[0],
+          stopIndex = _this$_getRangeToRend2[1];
+        var items = [];
+        if (itemCount > 0) for (var index = startIndex; index <= stopIndex; index++) items.push((0,react.createElement)(children, {
+          data: itemData,
+          key: itemKey(index, itemData),
+          index: index,
+          isScrolling: useIsScrolling ? isScrolling : void 0,
+          style: this._getItemStyle(index)
+        }));
+        var estimatedTotalSize = getEstimatedTotalSize(this.props, this._instanceProps);
+        return (0,react.createElement)(outerElementType || "scroll", _objectSpread2(_objectSpread2({}, rest), {}, {
+          className: className,
+          onValueChanged: onScroll,
+          ref: this._outerRefSetter,
+          style: _objectSpread2({
+            position: "relative",
+            height: height,
+            width: width,
+            direction: direction
+          }, style)
+        }), (0,react.createElement)(innerElementType || "view", {
+          children: items,
+          ref: innerRef,
+          style: {
+            height: isHorizontal ? "100%" : estimatedTotalSize,
+            pointerEvents: isScrolling ? "none" : void 0,
+            width: isHorizontal ? estimatedTotalSize : "100%"
           }
-        } else {
-          outerRef.ScrollTop = scrollOffset;
+        }));
+      }
+    }, {
+      key: "_callPropsCallbacks",
+      value: function _callPropsCallbacks() {
+        if (typeof this.props.onItemsRendered === "function") {
+          var itemCount = this.props.itemCount;
+          if (itemCount > 0) {
+            var _this$_getRangeToRend3 = this._getRangeToRender(),
+              _this$_getRangeToRend4 = _slicedToArray(_this$_getRangeToRend3, 4),
+              overscanStartIndex = _this$_getRangeToRend4[0],
+              overscanStopIndex = _this$_getRangeToRend4[1],
+              visibleStartIndex = _this$_getRangeToRend4[2],
+              visibleStopIndex = _this$_getRangeToRend4[3];
+            this._callOnItemsRendered(overscanStartIndex, overscanStopIndex, visibleStartIndex, visibleStopIndex);
+          }
+        }
+        if (typeof this.props.onScroll === "function") {
+          var _this$state7 = this.state,
+            scrollDirection = _this$state7.scrollDirection,
+            scrollOffset = _this$state7.scrollOffset,
+            scrollUpdateWasRequested = _this$state7.scrollUpdateWasRequested;
+          this._callOnScroll(scrollDirection, scrollOffset, scrollUpdateWasRequested);
         }
       }
-      this._callPropsCallbacks();
-    };
-    List.prototype.componentWillUnmount = function () {
-      if (this._resetIsScrollingTimeoutId !== null) {
-        cancelTimeout(this._resetIsScrollingTimeoutId);
+    }, {
+      key: "_getRangeToRender",
+      value: function _getRangeToRender() {
+        var _this$props0 = this.props,
+          itemCount = _this$props0.itemCount,
+          overscanCount = _this$props0.overscanCount;
+        var _this$state8 = this.state,
+          isScrolling = _this$state8.isScrolling,
+          scrollDirection = _this$state8.scrollDirection,
+          scrollOffset = _this$state8.scrollOffset;
+        if (itemCount === 0) return [0, 0, 0, 0];
+        var startIndex = getStartIndexForOffset(this.props, scrollOffset, this._instanceProps);
+        var stopIndex = getStopIndexForStartIndex(this.props, startIndex, scrollOffset, this._instanceProps);
+        var overscanBackward = !isScrolling || scrollDirection === "backward" ? Math.max(1, overscanCount) : 1;
+        var overscanForward = !isScrolling || scrollDirection === "forward" ? Math.max(1, overscanCount) : 1;
+        return [Math.max(0, startIndex - overscanBackward), Math.max(0, Math.min(itemCount - 1, stopIndex + overscanForward)), startIndex, stopIndex];
       }
-    };
-    List.prototype.render = function () {
-      var _a = this.props,
-        children = _a.children,
-        className = _a.className,
-        direction = _a.direction,
-        height = _a.height,
-        innerRef = _a.innerRef,
-        innerElementType = _a.innerElementType,
-        itemCount = _a.itemCount,
-        itemData = _a.itemData,
-        _c = _a.itemKey,
-        itemKey = _c === void 0 ? createListComponent_defaultItemKey : _c,
-        layout = _a.layout,
-        outerElementType = _a.outerElementType,
-        style = _a.style,
-        useIsScrolling = _a.useIsScrolling,
-        width = _a.width,
-        // Unused
-        initialScrollOffset = _a.initialScrollOffset,
-        itemSize = _a.itemSize,
-        onItemsRendered = _a.onItemsRendered,
-        _ = _a.onScroll,
-        outerRef = _a.outerRef,
-        overscanCount = _a.overscanCount,
-        rest = createListComponent_rest(_a, ["children", "className", "direction", "height", "innerRef", "innerElementType", "itemCount", "itemData", "itemKey", "layout", "outerElementType", "style", "useIsScrolling", "width", "initialScrollOffset", "itemSize", "onItemsRendered", "onScroll", "outerRef", "overscanCount"]);
-      var isScrolling = this.state.isScrolling;
-      var isHorizontal = layout === 'horizontal';
-      var onScroll = isHorizontal ? this._onScrollHorizontal : this._onScrollVertical;
-      var _d = this._getRangeToRender(),
-        startIndex = _d[0],
-        stopIndex = _d[1];
-      var items = [];
-      if (itemCount > 0) {
-        for (var index = startIndex; index <= stopIndex; index++) {
-          items.push((0,react.createElement)(children, {
-            data: itemData,
-            key: itemKey(index, itemData),
-            index: index,
-            isScrolling: useIsScrolling ? isScrolling : undefined,
-            style: this._getItemStyle(index)
-          }));
-        }
+    }], [{
+      key: "getDerivedStateFromProps",
+      value: function getDerivedStateFromProps(nextProps, prevState) {
+        validateSharedProps(nextProps, prevState);
+        validateProps(nextProps);
+        return null;
       }
-      // Read this value AFTER items have been created,
-      // So their actual sizes (if variable) are taken into consideration.
-      var estimatedTotalSize = getEstimatedTotalSize(this.props, this._instanceProps);
-      return (0,react.createElement)(outerElementType || 'scroll', createListComponent_assign(createListComponent_assign({}, rest), {
-        className: className,
-        onValueChanged: onScroll,
-        ref: this._outerRefSetter,
-        style: createListComponent_assign({
-          position: 'relative',
-          height: height,
-          width: width,
-          direction: direction
-        }, style)
-      }), (0,react.createElement)(innerElementType || 'view', {
-        children: items,
-        ref: innerRef,
-        style: {
-          height: isHorizontal ? '100%' : estimatedTotalSize,
-          pointerEvents: isScrolling ? 'none' : undefined,
-          width: isHorizontal ? estimatedTotalSize : '100%'
-        }
-      }));
-    };
-    List.prototype._callPropsCallbacks = function () {
-      if (typeof this.props.onItemsRendered === 'function') {
-        var itemCount = this.props.itemCount;
-        if (itemCount > 0) {
-          var _a = this._getRangeToRender(),
-            overscanStartIndex = _a[0],
-            overscanStopIndex = _a[1],
-            visibleStartIndex = _a[2],
-            visibleStopIndex = _a[3];
-          this._callOnItemsRendered(overscanStartIndex, overscanStopIndex, visibleStartIndex, visibleStopIndex);
-        }
-      }
-      if (typeof this.props.onScroll === 'function') {
-        var _c = this.state,
-          scrollDirection = _c.scrollDirection,
-          scrollOffset = _c.scrollOffset,
-          scrollUpdateWasRequested = _c.scrollUpdateWasRequested;
-        this._callOnScroll(scrollDirection, scrollOffset, scrollUpdateWasRequested);
-      }
-    };
-    List.prototype._getRangeToRender = function () {
-      var _a = this.props,
-        itemCount = _a.itemCount,
-        overscanCount = _a.overscanCount;
-      var _c = this.state,
-        isScrolling = _c.isScrolling,
-        scrollDirection = _c.scrollDirection,
-        scrollOffset = _c.scrollOffset;
-      if (itemCount === 0) {
-        return [0, 0, 0, 0];
-      }
-      var startIndex = getStartIndexForOffset(this.props, scrollOffset, this._instanceProps);
-      var stopIndex = getStopIndexForStartIndex(this.props, startIndex, scrollOffset, this._instanceProps);
-      // Overscan by one item in each direction so that tab/focus works.
-      // If there isn't at least one extra item, tab loops back around.
-      var overscanBackward = !isScrolling || scrollDirection === 'backward' ? Math.max(1, overscanCount) : 1;
-      var overscanForward = !isScrolling || scrollDirection === 'forward' ? Math.max(1, overscanCount) : 1;
-      return [Math.max(0, startIndex - overscanBackward), Math.max(0, Math.min(itemCount - 1, stopIndex + overscanForward)), startIndex, stopIndex];
-    };
-    return List;
-  }(react.PureComponent), _b.defaultProps = {
-    direction: 'ltr',
-    itemData: undefined,
-    layout: 'vertical',
+    }]);
+  }(react.PureComponent), _defineProperty(_List, "defaultProps", {
+    direction: "ltr",
+    itemData: void 0,
+    layout: "vertical",
     overscanCount: 2,
     useIsScrolling: false
-  }, _b;
+  }), _List;
 }
-// NOTE: I considered further wrapping individual items with a pure ListItem component.
-// This would avoid ever calling the render function for the same index more than once,
-// But it would also add the overhead of a lot of components/fibers.
-// I assume people already do this (render function returning a class component),
-// So my doing it would just unnecessarily double the wrappers.
-var createListComponent_validateSharedProps = function validateSharedProps(_a, _b) {
-  var children = _a.children,
-    direction = _a.direction,
-    height = _a.height,
-    layout = _a.layout,
-    width = _a.width;
-  var instance = _b.instance;
+var validateSharedProps = function validateSharedProps(_ref19, _ref20) {
+  var children = _ref19.children,
+    direction = _ref19.direction,
+    height = _ref19.height,
+    layout = _ref19.layout,
+    width = _ref19.width;
+  var instance = _ref20.instance;
   if (false) // removed by dead control flow
 { var isHorizontal; }
 };
-//# sourceMappingURL=createListComponent.js.map
-;// ../../../../packages/material/dist/src/virtual-scroll/FixedSizeList.js
-
+//#endregion
+//#region src/virtual-scroll/FixedSizeList.ts
 var FixedSizeList = createListComponent({
-  getItemOffset: function getItemOffset(_a, index) {
-    var itemSize = _a.itemSize;
+  getItemOffset: function getItemOffset(_ref21, index) {
+    var itemSize = _ref21.itemSize;
     return index * itemSize;
   },
-  getItemSize: function getItemSize(_a, index) {
-    var itemSize = _a.itemSize;
+  getItemSize: function getItemSize(_ref22, index) {
+    var itemSize = _ref22.itemSize;
     return itemSize;
   },
-  getEstimatedTotalSize: function getEstimatedTotalSize(_a) {
-    var itemCount = _a.itemCount,
-      itemSize = _a.itemSize;
+  getEstimatedTotalSize: function getEstimatedTotalSize(_ref23) {
+    var itemCount = _ref23.itemCount,
+      itemSize = _ref23.itemSize;
     return itemSize * itemCount;
   },
-  getOffsetForIndexAndAlignment: function getOffsetForIndexAndAlignment(_a, index, align, scrollOffset) {
-    var direction = _a.direction,
-      height = _a.height,
-      itemCount = _a.itemCount,
-      itemSize = _a.itemSize,
-      layout = _a.layout,
-      width = _a.width;
-    var isHorizontal = layout === 'horizontal';
-    var size = isHorizontal ? width : height;
+  getOffsetForIndexAndAlignment: function getOffsetForIndexAndAlignment(_ref24, index, align, scrollOffset) {
+    var direction = _ref24.direction,
+      height = _ref24.height,
+      itemCount = _ref24.itemCount,
+      itemSize = _ref24.itemSize,
+      layout = _ref24.layout,
+      width = _ref24.width;
+    var size = layout === "horizontal" ? width : height;
     var lastItemOffset = Math.max(0, itemCount * itemSize - size);
     var maxOffset = Math.min(lastItemOffset, index * itemSize);
     var minOffset = Math.max(0, index * itemSize - size + itemSize);
-    if (align === 'smart') {
-      if (scrollOffset >= minOffset - size && scrollOffset <= maxOffset + size) {
-        align = 'auto';
-      } else {
-        align = 'center';
-      }
-    }
+    if (align === "smart") if (scrollOffset >= minOffset - size && scrollOffset <= maxOffset + size) align = "auto";else align = "center";
     switch (align) {
-      case 'start':
+      case "start":
         return maxOffset;
-      case 'end':
+      case "end":
         return minOffset;
-      case 'center':
+      case "center":
         {
-          // "Centered" offset is usually the average of the min and max.
-          // But near the edges of the list, this doesn't hold true.
           var middleOffset = Math.round(minOffset + (maxOffset - minOffset) / 2);
-          if (middleOffset < Math.ceil(size / 2)) {
-            return 0; // near the beginning
-          }
-          if (middleOffset > lastItemOffset + Math.floor(size / 2)) {
-            return lastItemOffset; // near the end
-          }
+          if (middleOffset < Math.ceil(size / 2)) return 0;
+          if (middleOffset > lastItemOffset + Math.floor(size / 2)) return lastItemOffset;
           return middleOffset;
         }
       default:
-        if (scrollOffset >= minOffset && scrollOffset <= maxOffset) {
-          return scrollOffset;
-        }
-        if (scrollOffset < minOffset) {
-          return minOffset;
-        }
+        if (scrollOffset >= minOffset && scrollOffset <= maxOffset) return scrollOffset;
+        if (scrollOffset < minOffset) return minOffset;
         return maxOffset;
     }
   },
-  getStartIndexForOffset: function getStartIndexForOffset(_a, offset) {
-    var itemCount = _a.itemCount,
-      itemSize = _a.itemSize;
+  getStartIndexForOffset: function getStartIndexForOffset(_ref25, offset) {
+    var itemCount = _ref25.itemCount,
+      itemSize = _ref25.itemSize;
     return Math.max(0, Math.min(itemCount - 1, Math.floor(offset / itemSize)));
   },
-  getStopIndexForStartIndex: function getStopIndexForStartIndex(_a, startIndex, scrollOffset) {
-    var direction = _a.direction,
-      height = _a.height,
-      itemCount = _a.itemCount,
-      itemSize = _a.itemSize,
-      layout = _a.layout,
-      width = _a.width;
-    var isHorizontal = layout === 'horizontal';
+  getStopIndexForStartIndex: function getStopIndexForStartIndex(_ref26, startIndex, scrollOffset) {
+    var direction = _ref26.direction,
+      height = _ref26.height,
+      itemCount = _ref26.itemCount,
+      itemSize = _ref26.itemSize,
+      layout = _ref26.layout,
+      width = _ref26.width;
+    var isHorizontal = layout === "horizontal";
     var offset = startIndex * itemSize;
-    var size = isHorizontal ? width : height;
-    var numVisibleItems = Math.ceil((size + scrollOffset - offset) / itemSize);
+    var numVisibleItems = Math.ceil(((isHorizontal ? width : height) + scrollOffset - offset) / itemSize);
     return Math.max(0, Math.min(itemCount - 1, startIndex + numVisibleItems - 1));
   },
-  initInstanceProps: function initInstanceProps(props) {
-    // Noop
-  },
+  initInstanceProps: function initInstanceProps(props) {},
   shouldResetStyleCacheOnItemSizeChange: true,
-  validateProps: function validateProps(_a) {
-    var itemSize = _a.itemSize;
+  validateProps: function validateProps(_ref27) {
+    var itemSize = _ref27.itemSize;
     if (false) // removed by dead control flow
 {}
   }
 });
-//# sourceMappingURL=FixedSizeList.js.map
-;// ../../../../packages/material/dist/src/virtual-scroll/VariableSizeGrid.js
-
-var DEFAULT_ESTIMATED_ITEM_SIZE = 50;
-var getEstimatedTotalHeight = function getEstimatedTotalHeight(_a, _b) {
-  var rowCount = _a.rowCount;
-  var rowMetadataMap = _b.rowMetadataMap,
-    estimatedRowHeight = _b.estimatedRowHeight,
-    lastMeasuredRowIndex = _b.lastMeasuredRowIndex;
+//#endregion
+//#region src/virtual-scroll/VariableSizeGrid.ts
+var DEFAULT_ESTIMATED_ITEM_SIZE$1 = 50;
+var getEstimatedTotalHeight = function getEstimatedTotalHeight(_ref28, _ref29) {
+  var rowCount = _ref28.rowCount;
+  var rowMetadataMap = _ref29.rowMetadataMap,
+    estimatedRowHeight = _ref29.estimatedRowHeight,
+    lastMeasuredRowIndex = _ref29.lastMeasuredRowIndex;
   var totalSizeOfMeasuredRows = 0;
-  // Edge case check for when the number of items decreases while a scroll is in progress.
-  // https://github.com/bvaughn/react-window/pull/138
-  if (lastMeasuredRowIndex >= rowCount) {
-    lastMeasuredRowIndex = rowCount - 1;
-  }
+  if (lastMeasuredRowIndex >= rowCount) lastMeasuredRowIndex = rowCount - 1;
   if (lastMeasuredRowIndex >= 0) {
     var itemMetadata = rowMetadataMap[lastMeasuredRowIndex];
     totalSizeOfMeasuredRows = itemMetadata.offset + itemMetadata.size;
   }
-  var numUnmeasuredItems = rowCount - lastMeasuredRowIndex - 1;
-  var totalSizeOfUnmeasuredItems = numUnmeasuredItems * estimatedRowHeight;
+  var totalSizeOfUnmeasuredItems = (rowCount - lastMeasuredRowIndex - 1) * estimatedRowHeight;
   return totalSizeOfMeasuredRows + totalSizeOfUnmeasuredItems;
 };
-var getEstimatedTotalWidth = function getEstimatedTotalWidth(_a, _b) {
-  var columnCount = _a.columnCount;
-  var columnMetadataMap = _b.columnMetadataMap,
-    estimatedColumnWidth = _b.estimatedColumnWidth,
-    lastMeasuredColumnIndex = _b.lastMeasuredColumnIndex;
+var getEstimatedTotalWidth = function getEstimatedTotalWidth(_ref30, _ref31) {
+  var columnCount = _ref30.columnCount;
+  var columnMetadataMap = _ref31.columnMetadataMap,
+    estimatedColumnWidth = _ref31.estimatedColumnWidth,
+    lastMeasuredColumnIndex = _ref31.lastMeasuredColumnIndex;
   var totalSizeOfMeasuredRows = 0;
-  // Edge case check for when the number of items decreases while a scroll is in progress.
-  // https://github.com/bvaughn/react-window/pull/138
-  if (lastMeasuredColumnIndex >= columnCount) {
-    lastMeasuredColumnIndex = columnCount - 1;
-  }
+  if (lastMeasuredColumnIndex >= columnCount) lastMeasuredColumnIndex = columnCount - 1;
   if (lastMeasuredColumnIndex >= 0) {
     var itemMetadata = columnMetadataMap[lastMeasuredColumnIndex];
     totalSizeOfMeasuredRows = itemMetadata.offset + itemMetadata.size;
   }
-  var numUnmeasuredItems = columnCount - lastMeasuredColumnIndex - 1;
-  var totalSizeOfUnmeasuredItems = numUnmeasuredItems * estimatedColumnWidth;
+  var totalSizeOfUnmeasuredItems = (columnCount - lastMeasuredColumnIndex - 1) * estimatedColumnWidth;
   return totalSizeOfMeasuredRows + totalSizeOfUnmeasuredItems;
 };
-var getItemMetadata = function getItemMetadata(itemType, props, index, instanceProps) {
+var getItemMetadata$1 = function getItemMetadata$1(itemType, props, index, instanceProps) {
   var itemMetadataMap;
   var itemSize;
   var lastMeasuredIndex;
-  if (itemType === 'column') {
+  if (itemType === "column") {
     itemMetadataMap = instanceProps.columnMetadataMap;
     itemSize = props.columnWidth;
     lastMeasuredIndex = instanceProps.lastMeasuredColumnIndex;
@@ -13355,115 +13357,80 @@ var getItemMetadata = function getItemMetadata(itemType, props, index, instanceP
       };
       offset += size;
     }
-    if (itemType === 'column') {
-      instanceProps.lastMeasuredColumnIndex = index;
-    } else {
-      instanceProps.lastMeasuredRowIndex = index;
-    }
+    if (itemType === "column") instanceProps.lastMeasuredColumnIndex = index;else instanceProps.lastMeasuredRowIndex = index;
   }
   return itemMetadataMap[index];
 };
-var findNearestItem = function findNearestItem(itemType, props, instanceProps, offset) {
+var findNearestItem$1 = function findNearestItem$1(itemType, props, instanceProps, offset) {
   var itemMetadataMap;
   var lastMeasuredIndex;
-  if (itemType === 'column') {
+  if (itemType === "column") {
     itemMetadataMap = instanceProps.columnMetadataMap;
     lastMeasuredIndex = instanceProps.lastMeasuredColumnIndex;
   } else {
     itemMetadataMap = instanceProps.rowMetadataMap;
     lastMeasuredIndex = instanceProps.lastMeasuredRowIndex;
   }
-  var lastMeasuredItemOffset = lastMeasuredIndex > 0 ? itemMetadataMap[lastMeasuredIndex].offset : 0;
-  if (lastMeasuredItemOffset >= offset) {
-    // If we've already measured items within this range just use a binary search as it's faster.
-    return findNearestItemBinarySearch(itemType, props, instanceProps, lastMeasuredIndex, 0, offset);
-  }
-  // If we haven't yet measured this high, fallback to an exponential search with an inner binary search.
-  // The exponential search avoids pre-computing sizes for the full set of items as a binary search would.
-  // The overall complexity for this approach is O(log n).
-  return findNearestItemExponentialSearch(itemType, props, instanceProps, Math.max(0, lastMeasuredIndex), offset);
+  if ((lastMeasuredIndex > 0 ? itemMetadataMap[lastMeasuredIndex].offset : 0) >= offset) return findNearestItemBinarySearch$1(itemType, props, instanceProps, lastMeasuredIndex, 0, offset);
+  return findNearestItemExponentialSearch$1(itemType, props, instanceProps, Math.max(0, lastMeasuredIndex), offset);
 };
-var findNearestItemBinarySearch = function findNearestItemBinarySearch(itemType, props, instanceProps, high, low, offset) {
+var findNearestItemBinarySearch$1 = function findNearestItemBinarySearch$1(itemType, props, instanceProps, high, low, offset) {
   while (low <= high) {
     var middle = low + Math.floor((high - low) / 2);
-    var currentOffset = getItemMetadata(itemType, props, middle, instanceProps).offset;
-    if (currentOffset === offset) {
-      return middle;
-    }
-    if (currentOffset < offset) {
-      low = middle + 1;
-    } else if (currentOffset > offset) {
-      high = middle - 1;
-    }
+    var currentOffset = getItemMetadata$1(itemType, props, middle, instanceProps).offset;
+    if (currentOffset === offset) return middle;
+    if (currentOffset < offset) low = middle + 1;else if (currentOffset > offset) high = middle - 1;
   }
-  if (low > 0) {
-    return low - 1;
-  }
+  if (low > 0) return low - 1;
   return 0;
 };
-var findNearestItemExponentialSearch = function findNearestItemExponentialSearch(itemType, props, instanceProps, index, offset) {
-  var itemCount = itemType === 'column' ? props.columnCount : props.rowCount;
+var findNearestItemExponentialSearch$1 = function findNearestItemExponentialSearch$1(itemType, props, instanceProps, index, offset) {
+  var itemCount = itemType === "column" ? props.columnCount : props.rowCount;
   var interval = 1;
-  while (index < itemCount && getItemMetadata(itemType, props, index, instanceProps).offset < offset) {
+  while (index < itemCount && getItemMetadata$1(itemType, props, index, instanceProps).offset < offset) {
     index += interval;
     interval *= 2;
   }
-  return findNearestItemBinarySearch(itemType, props, instanceProps, Math.min(index, itemCount - 1), Math.floor(index / 2), offset);
+  return findNearestItemBinarySearch$1(itemType, props, instanceProps, Math.min(index, itemCount - 1), Math.floor(index / 2), offset);
 };
 var getOffsetForIndexAndAlignment = function getOffsetForIndexAndAlignment(itemType, props, index, align, scrollOffset, instanceProps, scrollbarSize) {
-  var size = itemType === 'column' ? props.width : props.height;
-  var itemMetadata = getItemMetadata(itemType, props, index, instanceProps);
-  // Get estimated total size after ItemMetadata is computed,
-  // To ensure it reflects actual measurements instead of just estimates.
-  var estimatedTotalSize = itemType === 'column' ? getEstimatedTotalWidth(props, instanceProps) : getEstimatedTotalHeight(props, instanceProps);
+  var size = itemType === "column" ? props.width : props.height;
+  var itemMetadata = getItemMetadata$1(itemType, props, index, instanceProps);
+  var estimatedTotalSize = itemType === "column" ? getEstimatedTotalWidth(props, instanceProps) : getEstimatedTotalHeight(props, instanceProps);
   var maxOffset = Math.max(0, Math.min(estimatedTotalSize - size, itemMetadata.offset));
   var minOffset = Math.max(0, itemMetadata.offset - size + scrollbarSize + itemMetadata.size);
-  if (align === 'smart') {
-    if (scrollOffset >= minOffset - size && scrollOffset <= maxOffset + size) {
-      align = 'auto';
-    } else {
-      align = 'center';
-    }
-  }
+  if (align === "smart") if (scrollOffset >= minOffset - size && scrollOffset <= maxOffset + size) align = "auto";else align = "center";
   switch (align) {
-    case 'start':
+    case "start":
       return maxOffset;
-    case 'end':
+    case "end":
       return minOffset;
-    case 'center':
+    case "center":
       return Math.round(minOffset + (maxOffset - minOffset) / 2);
     default:
-      if (scrollOffset >= minOffset && scrollOffset <= maxOffset) {
-        return scrollOffset;
-      }
-      if (minOffset > maxOffset) {
-        // Because we only take into account the scrollbar size when calculating minOffset
-        // this value can be larger than maxOffset when at the end of the list
-        return minOffset;
-      }
-      if (scrollOffset < minOffset) {
-        return minOffset;
-      }
+      if (scrollOffset >= minOffset && scrollOffset <= maxOffset) return scrollOffset;
+      if (minOffset > maxOffset) return minOffset;
+      if (scrollOffset < minOffset) return minOffset;
       return maxOffset;
   }
 };
 var VariableSizeGrid = createGridComponent({
   getColumnOffset: function getColumnOffset(props, index, instanceProps) {
-    return getItemMetadata('column', props, index, instanceProps).offset;
+    return getItemMetadata$1("column", props, index, instanceProps).offset;
   },
   getColumnStartIndexForOffset: function getColumnStartIndexForOffset(props, scrollLeft, instanceProps) {
-    return findNearestItem('column', props, instanceProps, scrollLeft);
+    return findNearestItem$1("column", props, instanceProps, scrollLeft);
   },
   getColumnStopIndexForStartIndex: function getColumnStopIndexForStartIndex(props, startIndex, scrollLeft, instanceProps) {
     var columnCount = props.columnCount,
       width = props.width;
-    var itemMetadata = getItemMetadata('column', props, startIndex, instanceProps);
+    var itemMetadata = getItemMetadata$1("column", props, startIndex, instanceProps);
     var maxOffset = scrollLeft + width;
     var offset = itemMetadata.offset + itemMetadata.size;
     var stopIndex = startIndex;
     while (stopIndex < columnCount - 1 && offset < maxOffset) {
       stopIndex++;
-      offset += getItemMetadata('column', props, stopIndex, instanceProps).size;
+      offset += getItemMetadata$1("column", props, stopIndex, instanceProps).size;
     }
     return stopIndex;
   },
@@ -13473,98 +13440,82 @@ var VariableSizeGrid = createGridComponent({
   getEstimatedTotalHeight: getEstimatedTotalHeight,
   getEstimatedTotalWidth: getEstimatedTotalWidth,
   getOffsetForColumnAndAlignment: function getOffsetForColumnAndAlignment(props, index, align, scrollOffset, instanceProps, scrollbarSize) {
-    return getOffsetForIndexAndAlignment('column', props, index, align, scrollOffset, instanceProps, scrollbarSize);
+    return getOffsetForIndexAndAlignment("column", props, index, align, scrollOffset, instanceProps, scrollbarSize);
   },
   getOffsetForRowAndAlignment: function getOffsetForRowAndAlignment(props, index, align, scrollOffset, instanceProps, scrollbarSize) {
-    return getOffsetForIndexAndAlignment('row', props, index, align, scrollOffset, instanceProps, scrollbarSize);
+    return getOffsetForIndexAndAlignment("row", props, index, align, scrollOffset, instanceProps, scrollbarSize);
   },
   getRowOffset: function getRowOffset(props, index, instanceProps) {
-    return getItemMetadata('row', props, index, instanceProps).offset;
+    return getItemMetadata$1("row", props, index, instanceProps).offset;
   },
   getRowHeight: function getRowHeight(props, index, instanceProps) {
     return instanceProps.rowMetadataMap[index].size;
   },
   getRowStartIndexForOffset: function getRowStartIndexForOffset(props, scrollTop, instanceProps) {
-    return findNearestItem('row', props, instanceProps, scrollTop);
+    return findNearestItem$1("row", props, instanceProps, scrollTop);
   },
   getRowStopIndexForStartIndex: function getRowStopIndexForStartIndex(props, startIndex, scrollTop, instanceProps) {
     var rowCount = props.rowCount,
       height = props.height;
-    var itemMetadata = getItemMetadata('row', props, startIndex, instanceProps);
+    var itemMetadata = getItemMetadata$1("row", props, startIndex, instanceProps);
     var maxOffset = scrollTop + height;
     var offset = itemMetadata.offset + itemMetadata.size;
     var stopIndex = startIndex;
     while (stopIndex < rowCount - 1 && offset < maxOffset) {
       stopIndex++;
-      offset += getItemMetadata('row', props, stopIndex, instanceProps).size;
+      offset += getItemMetadata$1("row", props, stopIndex, instanceProps).size;
     }
     return stopIndex;
   },
   initInstanceProps: function initInstanceProps(props, instance) {
-    var _a = props,
-      estimatedColumnWidth = _a.estimatedColumnWidth,
-      estimatedRowHeight = _a.estimatedRowHeight;
+    var estimatedColumnWidth = props.estimatedColumnWidth,
+      estimatedRowHeight = props.estimatedRowHeight;
     var instanceProps = {
       columnMetadataMap: {},
-      estimatedColumnWidth: estimatedColumnWidth || DEFAULT_ESTIMATED_ITEM_SIZE,
-      estimatedRowHeight: estimatedRowHeight || DEFAULT_ESTIMATED_ITEM_SIZE,
+      estimatedColumnWidth: estimatedColumnWidth || DEFAULT_ESTIMATED_ITEM_SIZE$1,
+      estimatedRowHeight: estimatedRowHeight || DEFAULT_ESTIMATED_ITEM_SIZE$1,
       lastMeasuredColumnIndex: -1,
       lastMeasuredRowIndex: -1,
       rowMetadataMap: {}
     };
-    instance.resetAfterColumnIndex = function (columnIndex, shouldForceUpdate) {
-      if (shouldForceUpdate === void 0) {
-        shouldForceUpdate = true;
-      }
+    instance.resetAfterColumnIndex = function (columnIndex) {
+      var shouldForceUpdate = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : true;
       instance.resetAfterIndices({
         columnIndex: columnIndex,
         shouldForceUpdate: shouldForceUpdate
       });
     };
-    instance.resetAfterRowIndex = function (rowIndex, shouldForceUpdate) {
-      if (shouldForceUpdate === void 0) {
-        shouldForceUpdate = true;
-      }
+    instance.resetAfterRowIndex = function (rowIndex) {
+      var shouldForceUpdate = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : true;
       instance.resetAfterIndices({
         rowIndex: rowIndex,
         shouldForceUpdate: shouldForceUpdate
       });
     };
-    instance.resetAfterIndices = function (_a) {
-      var columnIndex = _a.columnIndex,
-        rowIndex = _a.rowIndex,
-        _b = _a.shouldForceUpdate,
-        shouldForceUpdate = _b === void 0 ? true : _b;
-      if (typeof columnIndex === 'number') {
-        instanceProps.lastMeasuredColumnIndex = Math.min(instanceProps.lastMeasuredColumnIndex, columnIndex - 1);
-      }
-      if (typeof rowIndex === 'number') {
-        instanceProps.lastMeasuredRowIndex = Math.min(instanceProps.lastMeasuredRowIndex, rowIndex - 1);
-      }
-      // We could potentially optimize further by only evicting styles after this index,
-      // But since styles are only cached while scrolling is in progress-
-      // It seems an unnecessary optimization.
-      // It's unlikely that resetAfterIndex() will be called while a user is scrolling.
+    instance.resetAfterIndices = function (_ref32) {
+      var columnIndex = _ref32.columnIndex,
+        rowIndex = _ref32.rowIndex,
+        _ref32$shouldForceUpd = _ref32.shouldForceUpdate,
+        shouldForceUpdate = _ref32$shouldForceUpd === void 0 ? true : _ref32$shouldForceUpd;
+      if (typeof columnIndex === "number") instanceProps.lastMeasuredColumnIndex = Math.min(instanceProps.lastMeasuredColumnIndex, columnIndex - 1);
+      if (typeof rowIndex === "number") instanceProps.lastMeasuredRowIndex = Math.min(instanceProps.lastMeasuredRowIndex, rowIndex - 1);
       instance._getItemStyleCache(-1);
-      if (shouldForceUpdate) {
-        instance.forceUpdate();
-      }
+      if (shouldForceUpdate) instance.forceUpdate();
     };
     return instanceProps;
   },
   shouldResetStyleCacheOnItemSizeChange: false,
-  validateProps: function validateProps(_a) {
-    var columnWidth = _a.columnWidth,
-      rowHeight = _a.rowHeight;
+  validateProps: function validateProps(_ref33) {
+    var columnWidth = _ref33.columnWidth,
+      rowHeight = _ref33.rowHeight;
     if (false) // removed by dead control flow
 {}
   }
 });
-//# sourceMappingURL=VariableSizeGrid.js.map
-;// ../../../../packages/material/dist/src/virtual-scroll/VariableSizeList.js
-
-var VariableSizeList_DEFAULT_ESTIMATED_ITEM_SIZE = 50;
-var VariableSizeList_getItemMetadata = function getItemMetadata(props, index, instanceProps) {
+//#endregion
+//#region src/virtual-scroll/VariableSizeList.ts
+var DEFAULT_ESTIMATED_ITEM_SIZE = 50;
+var getItemMetadata = function getItemMetadata(props, index, instanceProps) {
   var itemSize = props.itemSize;
   var itemMetadataMap = instanceProps.itemMetadataMap,
     lastMeasuredIndex = instanceProps.lastMeasuredIndex;
@@ -13586,68 +13537,48 @@ var VariableSizeList_getItemMetadata = function getItemMetadata(props, index, in
   }
   return itemMetadataMap[index];
 };
-var VariableSizeList_findNearestItem = function findNearestItem(props, instanceProps, offset) {
+var findNearestItem = function findNearestItem(props, instanceProps, offset) {
   var itemMetadataMap = instanceProps.itemMetadataMap,
     lastMeasuredIndex = instanceProps.lastMeasuredIndex;
-  var lastMeasuredItemOffset = lastMeasuredIndex > 0 ? itemMetadataMap[lastMeasuredIndex].offset : 0;
-  if (lastMeasuredItemOffset >= offset) {
-    // If we've already measured items within this range just use a binary search as it's faster.
-    return VariableSizeList_findNearestItemBinarySearch(props, instanceProps, lastMeasuredIndex, 0, offset);
-  }
-  // If we haven't yet measured this high, fallback to an exponential search with an inner binary search.
-  // The exponential search avoids pre-computing sizes for the full set of items as a binary search would.
-  // The overall complexity for this approach is O(log n).
-  return VariableSizeList_findNearestItemExponentialSearch(props, instanceProps, Math.max(0, lastMeasuredIndex), offset);
+  if ((lastMeasuredIndex > 0 ? itemMetadataMap[lastMeasuredIndex].offset : 0) >= offset) return findNearestItemBinarySearch(props, instanceProps, lastMeasuredIndex, 0, offset);
+  return findNearestItemExponentialSearch(props, instanceProps, Math.max(0, lastMeasuredIndex), offset);
 };
-var VariableSizeList_findNearestItemBinarySearch = function findNearestItemBinarySearch(props, instanceProps, high, low, offset) {
+var findNearestItemBinarySearch = function findNearestItemBinarySearch(props, instanceProps, high, low, offset) {
   while (low <= high) {
     var middle = low + Math.floor((high - low) / 2);
-    var currentOffset = VariableSizeList_getItemMetadata(props, middle, instanceProps).offset;
-    if (currentOffset === offset) {
-      return middle;
-    }
-    if (currentOffset < offset) {
-      low = middle + 1;
-    } else if (currentOffset > offset) {
-      high = middle - 1;
-    }
+    var currentOffset = getItemMetadata(props, middle, instanceProps).offset;
+    if (currentOffset === offset) return middle;
+    if (currentOffset < offset) low = middle + 1;else if (currentOffset > offset) high = middle - 1;
   }
-  if (low > 0) {
-    return low - 1;
-  }
+  if (low > 0) return low - 1;
   return 0;
 };
-var VariableSizeList_findNearestItemExponentialSearch = function findNearestItemExponentialSearch(props, instanceProps, index, offset) {
+var findNearestItemExponentialSearch = function findNearestItemExponentialSearch(props, instanceProps, index, offset) {
   var itemCount = props.itemCount;
   var interval = 1;
-  while (index < itemCount && VariableSizeList_getItemMetadata(props, index, instanceProps).offset < offset) {
+  while (index < itemCount && getItemMetadata(props, index, instanceProps).offset < offset) {
     index += interval;
     interval *= 2;
   }
-  return VariableSizeList_findNearestItemBinarySearch(props, instanceProps, Math.min(index, itemCount - 1), Math.floor(index / 2), offset);
+  return findNearestItemBinarySearch(props, instanceProps, Math.min(index, itemCount - 1), Math.floor(index / 2), offset);
 };
-var getEstimatedTotalSize = function getEstimatedTotalSize(_a, _b) {
-  var itemCount = _a.itemCount;
-  var itemMetadataMap = _b.itemMetadataMap,
-    estimatedItemSize = _b.estimatedItemSize,
-    lastMeasuredIndex = _b.lastMeasuredIndex;
+var getEstimatedTotalSize = function getEstimatedTotalSize(_ref34, _ref35) {
+  var itemCount = _ref34.itemCount;
+  var itemMetadataMap = _ref35.itemMetadataMap,
+    estimatedItemSize = _ref35.estimatedItemSize,
+    lastMeasuredIndex = _ref35.lastMeasuredIndex;
   var totalSizeOfMeasuredItems = 0;
-  // Edge case check for when the number of items decreases while a scroll is in progress.
-  // https://github.com/bvaughn/react-window/pull/138
-  if (lastMeasuredIndex >= itemCount) {
-    lastMeasuredIndex = itemCount - 1;
-  }
+  if (lastMeasuredIndex >= itemCount) lastMeasuredIndex = itemCount - 1;
   if (lastMeasuredIndex >= 0) {
     var itemMetadata = itemMetadataMap[lastMeasuredIndex];
     totalSizeOfMeasuredItems = itemMetadata.offset + itemMetadata.size;
   }
-  var numUnmeasuredItems = itemCount - lastMeasuredIndex - 1;
-  var totalSizeOfUnmeasuredItems = numUnmeasuredItems * estimatedItemSize;
+  var totalSizeOfUnmeasuredItems = (itemCount - lastMeasuredIndex - 1) * estimatedItemSize;
   return totalSizeOfMeasuredItems + totalSizeOfUnmeasuredItems;
 };
 var VariableSizeList = createListComponent({
   getItemOffset: function getItemOffset(props, index, instanceProps) {
-    return VariableSizeList_getItemMetadata(props, index, instanceProps).offset;
+    return getItemMetadata(props, index, instanceProps).offset;
   },
   getItemSize: function getItemSize(props, index, instanceProps) {
     return instanceProps.itemMetadataMap[index].size;
@@ -13657,55 +13588,41 @@ var VariableSizeList = createListComponent({
     var height = props.height,
       layout = props.layout,
       width = props.width;
-    var isHorizontal = layout === 'horizontal';
-    var size = isHorizontal ? width : height;
-    var itemMetadata = VariableSizeList_getItemMetadata(props, index, instanceProps);
-    // Get estimated total size after ItemMetadata is computed,
-    // To ensure it reflects actual measurements instead of just estimates.
+    var size = layout === "horizontal" ? width : height;
+    var itemMetadata = getItemMetadata(props, index, instanceProps);
     var estimatedTotalSize = getEstimatedTotalSize(props, instanceProps);
     var maxOffset = Math.max(0, Math.min(estimatedTotalSize - size, itemMetadata.offset));
     var minOffset = Math.max(0, itemMetadata.offset - size + itemMetadata.size);
-    if (align === 'smart') {
-      if (scrollOffset >= minOffset - size && scrollOffset <= maxOffset + size) {
-        align = 'auto';
-      } else {
-        align = 'center';
-      }
-    }
+    if (align === "smart") if (scrollOffset >= minOffset - size && scrollOffset <= maxOffset + size) align = "auto";else align = "center";
     switch (align) {
-      case 'start':
+      case "start":
         return maxOffset;
-      case 'end':
+      case "end":
         return minOffset;
-      case 'center':
+      case "center":
         return Math.round(minOffset + (maxOffset - minOffset) / 2);
       default:
-        if (scrollOffset >= minOffset && scrollOffset <= maxOffset) {
-          return scrollOffset;
-        }
-        if (scrollOffset < minOffset) {
-          return minOffset;
-        }
+        if (scrollOffset >= minOffset && scrollOffset <= maxOffset) return scrollOffset;
+        if (scrollOffset < minOffset) return minOffset;
         return maxOffset;
     }
   },
   getStartIndexForOffset: function getStartIndexForOffset(props, offset, instanceProps) {
-    return VariableSizeList_findNearestItem(props, instanceProps, offset);
+    return findNearestItem(props, instanceProps, offset);
   },
   getStopIndexForStartIndex: function getStopIndexForStartIndex(props, startIndex, scrollOffset, instanceProps) {
     var height = props.height,
       itemCount = props.itemCount,
       layout = props.layout,
       width = props.width;
-    var isHorizontal = layout === 'horizontal';
-    var size = isHorizontal ? width : height;
-    var itemMetadata = VariableSizeList_getItemMetadata(props, startIndex, instanceProps);
+    var size = layout === "horizontal" ? width : height;
+    var itemMetadata = getItemMetadata(props, startIndex, instanceProps);
     var maxOffset = scrollOffset + size;
     var offset = itemMetadata.offset + itemMetadata.size;
     var stopIndex = startIndex;
     while (stopIndex < itemCount - 1 && offset < maxOffset) {
       stopIndex++;
-      offset += VariableSizeList_getItemMetadata(props, stopIndex, instanceProps).size;
+      offset += getItemMetadata(props, stopIndex, instanceProps).size;
     }
     return stopIndex;
   },
@@ -13713,319 +13630,109 @@ var VariableSizeList = createListComponent({
     var estimatedItemSize = props.estimatedItemSize;
     var instanceProps = {
       itemMetadataMap: {},
-      estimatedItemSize: estimatedItemSize || VariableSizeList_DEFAULT_ESTIMATED_ITEM_SIZE,
+      estimatedItemSize: estimatedItemSize || DEFAULT_ESTIMATED_ITEM_SIZE,
       lastMeasuredIndex: -1
     };
-    instance.resetAfterIndex = function (index, shouldForceUpdate) {
-      if (shouldForceUpdate === void 0) {
-        shouldForceUpdate = true;
-      }
+    instance.resetAfterIndex = function (index) {
+      var shouldForceUpdate = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : true;
       instanceProps.lastMeasuredIndex = Math.min(instanceProps.lastMeasuredIndex, index - 1);
-      // We could potentially optimize further by only evicting styles after this index,
-      // But since styles are only cached while scrolling is in progress-
-      // It seems an unnecessary optimization.
-      // It's unlikely that resetAfterIndex() will be called while a user is scrolling.
       instance._getItemStyleCache(-1);
-      if (shouldForceUpdate) {
-        instance.forceUpdate();
-      }
+      if (shouldForceUpdate) instance.forceUpdate();
     };
     return instanceProps;
   },
   shouldResetStyleCacheOnItemSizeChange: false,
-  validateProps: function validateProps(_a) {
-    var itemSize = _a.itemSize;
+  validateProps: function validateProps(_ref36) {
+    var itemSize = _ref36.itemSize;
     if (false) // removed by dead control flow
 {}
   }
 });
-//# sourceMappingURL=VariableSizeList.js.map
-;// ../../../../packages/material/dist/src/virtual-scroll/index.js
+//#endregion
 
 
-
-
-//# sourceMappingURL=index.js.map
-;// ../../../../packages/material/dist/src/index.js
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-//# sourceMappingURL=index.js.map
+//# sourceMappingURL=VariableSizeList-DEYjHugc.js.map
 ;// ../../../../packages/material/dist/index.js
 
-//# sourceMappingURL=index.js.map
-// EXTERNAL MODULE: ../../../../node_modules/.pnpm/use-sync-external-store@1.6.0_react@19.2.8/node_modules/use-sync-external-store/shim/index.js
-var shim = __webpack_require__("../../../../node_modules/.pnpm/use-sync-external-store@1.6.0_react@19.2.8/node_modules/use-sync-external-store/shim/index.js");
-// EXTERNAL MODULE: ../../../../node_modules/.pnpm/use-sync-external-store@1.6.0_react@19.2.8/node_modules/use-sync-external-store/with-selector.js
-var with_selector = __webpack_require__("../../../../node_modules/.pnpm/use-sync-external-store@1.6.0_react@19.2.8/node_modules/use-sync-external-store/with-selector.js");
-;// ../../../../packages/renderer/dist/src/helpers/dictionary-watcher.js
-var dictionary_watcher_assign = undefined && undefined.__assign || function () {
-  dictionary_watcher_assign = Object.assign || function (t) {
-    for (var s, i = 1, n = arguments.length; i < n; i++) {
-      s = arguments[i];
-      for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p)) t[p] = s[p];
-    }
-    return t;
-  };
-  return dictionary_watcher_assign.apply(this, arguments);
-};
 
 
 
-/**
- * Creates a context that updates its value when the values in the dictionary change
- * @param dictionary The dictionary to be watched. Must implement the EventDictionary type in the C#
- * @param displayName A displayName to identify this context easier in case of problems
- */
-function createDictionaryWatcher(dictionary, displayName) {
-  var ctx = (0,react.createContext)(undefined);
-  if (displayName) ctx.displayName = displayName;
-  var createSubscriber = function createSubscriber(fields, isEqual) {
-    var snapshot = dictionary_watcher_assign({}, dictionary);
-    return {
-      subscribe: function subscribe(onStoreChange) {
-        snapshot = dictionary_watcher_assign({}, dictionary);
-        var remove = dictionary === null || dictionary === void 0 ? void 0 : dictionary.AddListener(function () {
-          var prev = snapshot;
-          snapshot = dictionary_watcher_assign({}, dictionary);
-          if (!fields) onStoreChange();else {
-            var it = fields.values();
-            for (var field = it.next().value; field; field = it.next().value) {
-              if (isEqual ? !isEqual(prev[field], snapshot[field]) : prev[field] !== snapshot[field]) {
-                onStoreChange();
-                break;
-              }
-            }
-          }
-        });
-        if (!remove) {
-          if (displayName) console.warn("".concat(displayName, " dictionary does not provide a change listener"));else console.warn('The dictionary does not provide a change listener');
-        }
-        return function () {
-          return remove === null || remove === void 0 ? void 0 : remove();
-        };
-      },
-      getSnapshot: function getSnapshot() {
-        return snapshot;
-      }
-    };
-  };
-  var defaultSubscriber = createSubscriber();
-  var Provider = function GlobalsProvider(_a) {
-    var children = _a.children;
-    var value = (0,shim.useSyncExternalStore)(defaultSubscriber.subscribe, defaultSubscriber.getSnapshot, defaultSubscriber.getSnapshot);
-    return (0,react.createElement)(ctx.Provider, {
-      value: value
-    }, children);
-  };
-  function useDictionaryContext() {
-    var context = (0,react.useContext)(ctx);
-    if (context === undefined) {
-      if (displayName) throw new Error("".concat(displayName, ".useContext must be used within a ").concat(displayName, ".Provider"));
-      throw new Error('useContext must be used within a provider');
-    }
-    return context;
-  }
-  function useValue(subscribeToAllFields, fieldEqual) {
-    if (subscribeToAllFields === void 0) {
-      subscribeToAllFields = false;
-    }
-    var fields = (0,react.useMemo)(function () {
-      return new Set();
-    }, []);
-    var fieldsRef = (0,react.useRef)(fields);
-    var _a = (0,react.useState)(false),
-      allFieldsSubscribed = _a[0],
-      setAllFieldsSubscribed = _a[1];
-    subscribeToAllFields || (subscribeToAllFields = allFieldsSubscribed);
-    var subscriber = (0,react.useMemo)(function () {
-      return subscribeToAllFields ? defaultSubscriber : createSubscriber(fieldsRef.current, fieldEqual);
-    }, [subscribeToAllFields, fieldEqual]);
-    var value = (0,shim.useSyncExternalStore)(subscriber.subscribe, subscriber.getSnapshot, subscriber.getSnapshot);
-    var proxy = new Proxy(value, {
-      get: function get(target, p, receiver) {
-        fields.add(p);
-        return value[p];
-      },
-      ownKeys: function ownKeys(target) {
-        if (!allFieldsSubscribed) setAllFieldsSubscribed(true);
-        return Reflect.ownKeys(target);
-      },
-      getOwnPropertyDescriptor: function getOwnPropertyDescriptor(target, p) {
-        fields.add(p);
-        return dictionary_watcher_assign(dictionary_watcher_assign({}, Reflect.getOwnPropertyDescriptor(target, p)), {
-          value: value[p]
-        });
-      }
-    });
-    return proxy;
-  }
-  function useSelector(selector, isEqual) {
-    return (0,with_selector.useSyncExternalStoreWithSelector)(defaultSubscriber.subscribe, defaultSubscriber.getSnapshot, defaultSubscriber.getSnapshot, selector, isEqual);
-  }
-  return {
-    context: ctx,
-    Provider: Provider,
-    useValue: useValue,
-    useContext: useDictionaryContext,
-    useSelector: useSelector
-  };
+
+
+
+
+
+
+
+
+
+
+
+
+
+;// ../../../../node_modules/.pnpm/@babel+runtime@7.29.7/node_modules/@babel/runtime/helpers/esm/arrayWithoutHoles.js
+
+function _arrayWithoutHoles(r) {
+  if (Array.isArray(r)) return _arrayLikeToArray(r);
 }
-//# sourceMappingURL=dictionary-watcher.js.map
-;// ../../../../packages/renderer/dist/src/helpers/hooks/use-globals.js
 
-var globalsWatcher = createDictionaryWatcher(Globals, 'globalsContext');
-var useGlobals = globalsWatcher.useValue;
-var useGlobalsContext = globalsWatcher.useContext;
-var useGlobalsSelector = globalsWatcher.useSelector;
-var GlobalsProvider = globalsWatcher.Provider;
-//# sourceMappingURL=use-globals.js.map
-;// ../../../../packages/renderer/dist/src/helpers/hooks/use-reactive-value.js
-
-
-function createSubscriber(obj, isEqual) {
-  var isReactive = obj && typeof obj === 'object' && 'Value' in obj;
-  var snapshot = isReactive ? obj.Value : undefined;
-  return {
-    subscribe: function subscribe(onStoreChange) {
-      snapshot = isReactive ? obj.Value : undefined;
-      var remove = isReactive && typeof obj.AddListener === 'function' && (obj === null || obj === void 0 ? void 0 : obj.AddListener(function () {
-        var prev = snapshot;
-        snapshot = isReactive ? obj.Value : undefined;
-        if (typeof isEqual !== 'function' || !isEqual(prev, snapshot)) {
-          onStoreChange();
-        }
-      }));
-      if (isReactive && typeof remove !== 'function') console.warn('The reactive value does not provide a change listener');
-      return function () {
-        return remove === null || remove === void 0 ? void 0 : remove();
-      };
-    },
-    getSnapshot: function getSnapshot() {
-      return snapshot;
-    }
-  };
+;// ../../../../node_modules/.pnpm/@babel+runtime@7.29.7/node_modules/@babel/runtime/helpers/esm/iterableToArray.js
+function _iterableToArray(r) {
+  if ("undefined" != typeof Symbol && null != r[Symbol.iterator] || null != r["@@iterator"]) return Array.from(r);
 }
-function useReactiveValue(obj, isEqual) {
-  var sb = (0,react.useMemo)(function () {
-    return createSubscriber(obj, isEqual);
-  }, [obj, isEqual]);
-  return (0,shim.useSyncExternalStore)(sb.subscribe, sb.getSnapshot, sb.getSnapshot);
+
+;// ../../../../node_modules/.pnpm/@babel+runtime@7.29.7/node_modules/@babel/runtime/helpers/esm/nonIterableSpread.js
+function _nonIterableSpread() {
+  throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
 }
-//# sourceMappingURL=use-reactive-value.js.map
-;// ../../../../packages/renderer/dist/src/helpers/icons.js
-var icons_assign = undefined && undefined.__assign || function () {
-  icons_assign = Object.assign || function (t) {
-    for (var s, i = 1, n = arguments.length; i < n; i++) {
-      s = arguments[i];
-      for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p)) t[p] = s[p];
-    }
-    return t;
-  };
-  return icons_assign.apply(this, arguments);
-};
 
-var componentCache = {};
-var icon = new Proxy({}, {
-  get: function get(target, key) {
-    if (typeof key === 'symbol') return target[key];
-    var icon = key.replace(/^_/, '');
-    var cmp = componentCache[icon];
-    if (cmp) return cmp;
-    cmp = function NamedIcon(props, ref) {
-      return react.createElement('icon', icons_assign(icons_assign({
-        name: "<icon ".concat(icon, ">")
-      }, props), {
-        ref: ref
-      }), icon);
-    };
-    cmp = react.forwardRef(cmp);
-    componentCache[icon] = cmp;
-    return cmp;
-  }
-});
-//# sourceMappingURL=icons.js.map
-;// ../../../../packages/renderer/dist/index.js
+;// ../../../../node_modules/.pnpm/@babel+runtime@7.29.7/node_modules/@babel/runtime/helpers/esm/toConsumableArray.js
+
+
+
+
+function _toConsumableArray(r) {
+  return _arrayWithoutHoles(r) || _iterableToArray(r) || _unsupportedIterableToArray(r) || _nonIterableSpread();
+}
+
+;// ../../../../packages/renderer/dist/webgl-compat.js
 
 
 
 
 
 
-
-
-
-
-var ReactUnityRenderer = {
-  batchedUpdates: batchedUpdates,
-  flushSync: flushSync,
-  render: _render,
-  unstable_batchedUpdates: batchedUpdates
-};
-/* harmony default export */ const dist = (ReactUnityRenderer);
-//# sourceMappingURL=index.js.map
-;// ../../../../packages/renderer/dist/src/webgl-compat/error-messages.js
-// Original file: https://github.com/jeffreylanters/react-unity-webgl/blob/main/module/source/constants/error-messages.ts
+//#region src/webgl-compat/error-messages.ts
 var errorMessages = {
-  genericNoUnityInstance: 'No Unity Instance found.',
-  requestFullscreenNoUnityInstance: 'Unable to Set Fullscreen while Unity is not Instantiated.',
-  requestPointerLockNoUnityInstanceOrCanvas: 'Unable to Request Pointer Lock while Unity is not Instantiated or the Canvas is not found.',
-  sendMessageNoUnityInstance: 'Unable to Send Message while Unity is not Instantiated.',
-  quitNoUnityInstance: 'Unable to Quit Unity while Unity is not Instantiated.',
-  screenshotNoUnityInstanceOrCanvas: 'Unable to Take Screenshot while Unity is not Instantiated or Canvas is not available.',
-  noEventListener: 'Unable to find Event Listener in Event System for Event'
+  genericNoUnityInstance: "No Unity Instance found.",
+  requestFullscreenNoUnityInstance: "Unable to Set Fullscreen while Unity is not Instantiated.",
+  requestPointerLockNoUnityInstanceOrCanvas: "Unable to Request Pointer Lock while Unity is not Instantiated or the Canvas is not found.",
+  sendMessageNoUnityInstance: "Unable to Send Message while Unity is not Instantiated.",
+  quitNoUnityInstance: "Unable to Quit Unity while Unity is not Instantiated.",
+  screenshotNoUnityInstanceOrCanvas: "Unable to Take Screenshot while Unity is not Instantiated or Canvas is not available.",
+  noEventListener: "Unable to find Event Listener in Event System for Event"
 };
-//# sourceMappingURL=error-messages.js.map
-;// ../../../../packages/renderer/dist/src/webgl-compat/use-event-system.js
-/* unused harmony import specifier */ var useRef;
-/* unused harmony import specifier */ var useEffect;
-// Original file: https://github.com/jeffreylanters/react-unity-webgl/blob/main/module/source/hooks/use-event-system.ts
-var __spreadArray = undefined && undefined.__spreadArray || function (to, from, pack) {
-  if (pack || arguments.length === 2) for (var i = 0, l = from.length, ar; i < l; i++) {
-    if (ar || !(i in from)) {
-      if (!ar) ar = Array.prototype.slice.call(from, 0, i);
-      ar[i] = from[i];
-    }
-  }
-  return to.concat(ar || Array.prototype.slice.call(from));
-};
-
-
+//#endregion
+//#region src/webgl-compat/use-event-system.ts
 var mountedEventDispatchers = [];
 var dispatchReactUnityEvent = function dispatchReactUnityEvent(eventName) {
-  var parameters = [];
-  for (var _i = 1; _i < arguments.length; _i++) {
-    parameters[_i - 1] = arguments[_i];
+  for (var _len = arguments.length, parameters = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
+    parameters[_key - 1] = arguments[_key];
   }
   var returnValue;
   mountedEventDispatchers.forEach(function (dispatchEvent) {
-    returnValue = dispatchEvent.apply(void 0, __spreadArray([eventName], parameters, false));
+    returnValue = dispatchEvent.apply(void 0, [eventName].concat(parameters));
   });
   return returnValue;
 };
-if (typeof globalThis !== 'undefined' || typeof window !== 'undefined') {
-  (globalThis || window).dispatchReactUnityEvent = dispatchReactUnityEvent;
-}
+if (typeof globalThis !== "undefined" || typeof window !== "undefined") (globalThis || window).dispatchReactUnityEvent = dispatchReactUnityEvent;
 var createEventSystem = function createEventSystem() {
   var eventListeners = [];
   var addEventListener = function addEventListener(eventName, callback) {
-    eventListeners = __spreadArray(__spreadArray([], eventListeners, true), [{
+    eventListeners = [].concat(_toConsumableArray(eventListeners), [{
       eventName: eventName,
       callback: callback
-    }], false);
+    }]);
   };
   var removeEventListener = function removeEventListener(eventName, callback) {
     eventListeners = eventListeners.filter(function (eventListener) {
@@ -14036,18 +13743,17 @@ var createEventSystem = function createEventSystem() {
     eventListeners = [];
   };
   var dispatchEvent = function dispatchEvent(eventName) {
-    var parameters = [];
-    for (var _i = 1; _i < arguments.length; _i++) {
-      parameters[_i - 1] = arguments[_i];
-    }
     var eventListener = eventListeners.find(function (eventListener) {
       return eventListener.eventName === eventName;
     });
-    if (typeof eventListener === 'undefined') {
+    if (typeof eventListener === "undefined") {
       console.warn(errorMessages.noEventListener, {
         eventName: eventName
       });
       return;
+    }
+    for (var _len2 = arguments.length, parameters = new Array(_len2 > 1 ? _len2 - 1 : 0), _key2 = 1; _key2 < _len2; _key2++) {
+      parameters[_key2 - 1] = arguments[_key2];
     }
     return eventListener.callback.apply(eventListener, parameters);
   };
@@ -14066,34 +13772,11 @@ var createEventSystem = function createEventSystem() {
     onMount: onMount
   };
 };
-var useEventSystem = function useEventSystem() {
-  var ref = useRef(undefined);
-  if (!ref.current) {
-    ref.current = createEventSystem();
-  }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  useEffect(ref.current.onMount, []);
-  return ref.current;
-};
-//# sourceMappingURL=use-event-system.js.map
-;// ../../../../packages/renderer/dist/src/webgl-compat/use-unity-context.js
-// Original file: https://github.com/jeffreylanters/react-unity-webgl/blob/main/module/source/hooks/use-unity-context.ts
-var use_unity_context_assign = undefined && undefined.__assign || function () {
-  use_unity_context_assign = Object.assign || function (t) {
-    for (var s, i = 1, n = arguments.length; i < n; i++) {
-      s = arguments[i];
-      for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p)) t[p] = s[p];
-    }
-    return t;
-  };
-  return use_unity_context_assign.apply(this, arguments);
-};
-
-
-
+//#endregion
+//#region src/webgl-compat/use-unity-context.ts
 var createUnityContext = function createUnityContext(unityConfig) {
-  var _a;
-  var unityInstance = typeof ReactUnityWebGLCompat !== 'undefined' ? ReactUnityWebGLCompat : null;
+  var _unityInstance$Module;
+  var unityInstance = typeof ReactUnityWebGLCompat !== "undefined" ? ReactUnityWebGLCompat : null;
   var setUnityInstance = function setUnityInstance(instance) {
     return unityInstance = instance;
   };
@@ -14126,7 +13809,7 @@ var createUnityContext = function createUnityContext(unityConfig) {
     unityInstance.SetFullscreen(enabled === true ? 1 : 0);
   };
   var requestPointerLock = function requestPointerLock() {
-    if (unityInstance === null || typeof unityInstance.Module.canvas === 'undefined') {
+    if (unityInstance === null || typeof unityInstance.Module.canvas === "undefined") {
       console.warn(errorMessages.requestPointerLockNoUnityInstanceOrCanvas);
       return;
     }
@@ -14140,7 +13823,7 @@ var createUnityContext = function createUnityContext(unityConfig) {
     unityInstance.SendMessage(gameObjectName, methodName, parameter);
   };
   var takeScreenshot = function takeScreenshot(dataType, quality) {
-    if (unityInstance === null || typeof unityInstance.Module.canvas === 'undefined') {
+    if (unityInstance === null || typeof unityInstance.Module.canvas === "undefined") {
       console.warn(errorMessages.screenshotNoUnityInstanceOrCanvas);
       return;
     }
@@ -14153,9 +13836,9 @@ var createUnityContext = function createUnityContext(unityConfig) {
     }
     return unityInstance.Quit();
   };
-  return use_unity_context_assign({
+  return objectSpread2_CDDvZyE7_objectSpread2({
     unityProvider: unityProvider,
-    htmlCanvasElement: (_a = unityInstance === null || unityInstance === void 0 ? void 0 : unityInstance.Module) === null || _a === void 0 ? void 0 : _a.canvas,
+    htmlCanvasElement: unityInstance === null || unityInstance === void 0 || (_unityInstance$Module = unityInstance.Module) === null || _unityInstance$Module === void 0 ? void 0 : _unityInstance$Module.canvas,
     loadingProgression: loadingProgression,
     initialisationError: initialisationError,
     isLoaded: isLoaded,
@@ -14174,35 +13857,48 @@ var createUnityContext = function createUnityContext(unityConfig) {
   }, eventSystem);
 };
 var useUnityContext = function useUnityContext(unityConfig) {
-  var ref = (0,react.useRef)(undefined);
-  if (!ref.current) {
-    ref.current = createUnityContext(unityConfig);
-  }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  ;(0,react.useEffect)(ref.current.onMount, []);
+  var ref = (0,react.useRef)(void 0);
+  if (!ref.current) ref.current = createUnityContext(unityConfig);
+  (0,react.useEffect)(ref.current.onMount, []);
   return ref.current;
 };
-var UnityContext = /** @class */function () {
-  function UnityContext(unityConfig) {
-    Object.assign(this, createUnityContext(unityConfig));
-  }
-  return UnityContext;
-}();
-
-//# sourceMappingURL=use-unity-context.js.map
-;// ../../../../packages/renderer/dist/src/webgl-compat/index.js
-
-// <reference types="react-unity-webgl" />
-
-
+var UnityContext = /*#__PURE__*/_createClass(function UnityContext(unityConfig) {
+  _classCallCheck(this, UnityContext);
+  objectSpread2_CDDvZyE7_defineProperty(this, "addEventListener", void 0);
+  objectSpread2_CDDvZyE7_defineProperty(this, "removeEventListener", void 0);
+  objectSpread2_CDDvZyE7_defineProperty(this, "unityProvider", void 0);
+  objectSpread2_CDDvZyE7_defineProperty(this, "loadingProgression", void 0);
+  objectSpread2_CDDvZyE7_defineProperty(this, "isLoaded", void 0);
+  objectSpread2_CDDvZyE7_defineProperty(this, "initialisationError", void 0);
+  objectSpread2_CDDvZyE7_defineProperty(this, "UNSAFE__unityInstance", void 0);
+  objectSpread2_CDDvZyE7_defineProperty(this, "requestFullscreen", void 0);
+  objectSpread2_CDDvZyE7_defineProperty(this, "sendMessage", void 0);
+  objectSpread2_CDDvZyE7_defineProperty(this, "takeScreenshot", void 0);
+  objectSpread2_CDDvZyE7_defineProperty(this, "requestPointerLock", void 0);
+  objectSpread2_CDDvZyE7_defineProperty(this, "unload", void 0);
+  objectSpread2_CDDvZyE7_defineProperty(this, "UNSAFE__detachAndUnloadImmediate", void 0);
+  objectSpread2_CDDvZyE7_defineProperty(this, "on", void 0);
+  objectSpread2_CDDvZyE7_defineProperty(this, "removeAllEventListeners", void 0);
+  objectSpread2_CDDvZyE7_defineProperty(this, "dispatchEvent", void 0);
+  objectSpread2_CDDvZyE7_defineProperty(this, "onMount", void 0);
+  objectSpread2_CDDvZyE7_defineProperty(this, "unityConfig", void 0);
+  objectSpread2_CDDvZyE7_defineProperty(this, "unityInstance", void 0);
+  objectSpread2_CDDvZyE7_defineProperty(this, "htmlCanvasElement", void 0);
+  objectSpread2_CDDvZyE7_defineProperty(this, "send", void 0);
+  objectSpread2_CDDvZyE7_defineProperty(this, "setFullscreen", void 0);
+  objectSpread2_CDDvZyE7_defineProperty(this, "quitUnityInstance", void 0);
+  Object.assign(this, createUnityContext(unityConfig));
+});
+//#endregion
+//#region src/webgl-compat/index.tsx
 var Unity = (0,react.forwardRef)(function Unity(props, ref) {
   (0,react.useImperativeHandle)(ref, function () {
     return {};
   });
-  return (0,jsx_runtime.jsx)(jsx_runtime.Fragment, {});
+  return /* @__PURE__ */(0,jsx_runtime.jsx)(jsx_runtime.Fragment, {});
 });
-//# sourceMappingURL=index.js.map
-;// ../../../../packages/renderer/dist/webgl-compat.js
+//#endregion
+
 
 //# sourceMappingURL=webgl-compat.js.map
 ;// ./src/app.tsx

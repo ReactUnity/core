@@ -1,8 +1,9 @@
 {
   "compileOnSave": false,
   "compilerOptions": {
-    "outDir": "./",
-    "sourceMap": false,
+    // Type checking only -- tsdown.config.ts owns the build, so there is no outDir and
+    // nothing here describes output.
+    "noEmit": true,
     "allowJs": true,
     "pretty": true,
     "declaration": false,

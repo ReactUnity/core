@@ -28,11 +28,6 @@
       "!**/packages-lock.json",
       "!**/models/generated",
 
-      // tsc output of packages/create/index.ts, emitted next to the source by its
-      // `prepare` script and gitignored there. Biome only reads the root .gitignore,
-      // so nested ignores don't reach it.
-      "!**/packages/create/index.js",
-
       // Build output of the three React apps under unity/core/.react, committed
       // because the Unity package has to ship them. Each path is the BUILD_PATH
       // from the matching app's .env, so anything here is webpack's, not ours.

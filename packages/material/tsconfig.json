@@ -1,14 +1,11 @@
 {
   "extends": "@reactunity/scripts",
   "compilerOptions": {
-    "baseUrl": "./",
-    "outDir": "./dist",
-    // See packages/renderer/tsconfig.json: the ES5 emit is deliberate, and TypeScript 6
-    // wants that said out loud.
-    "ignoreDeprecations": "6.0",
-    "target": "ES5",
-    "sourceMap": true,
-    "noEmit": false,
+    // Type checking only -- tsdown.config.ts owns the build. `baseUrl` went with it: it
+    // was never doing any work (every import under src/ is relative), and TypeScript 7
+    // removed the option anyway.
+    "noEmit": true,
+    "target": "ES2022",
     "jsxImportSource": "@reactunity/renderer/ugui",
     "types": ["@reactunity/scripts/main"]
   },

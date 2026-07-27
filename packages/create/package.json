@@ -5,8 +5,8 @@
   "license": "MIT",
   "//type": "ESM, as of the chalk 6 / commander 15 upgrade: both dropped CommonJS. index.ts is emitted next to itself as ESM, so `bin` keeps pointing at index.js.",
   "type": "module",
-  "main": "index.js",
-  "bin": "index.js",
+  "main": "dist/index.js",
+  "bin": "dist/index.js",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/ReactUnity/core.git",
@@ -21,19 +21,22 @@
   },
   "scripts": {
     "start": "tsx index.ts",
-    "build": "tsc",
-    "prepare": "tsc"
+    "build": "tsdown",
+    "typecheck": "tsc",
+    "prepare": "pnpm run build"
   },
   "dependencies": {
     "chalk": "^6.0.0",
     "commander": "^15.0.0",
     "fs-extra": "^11.4.0"
   },
+  "//typescript": "On 7, unlike most of the workspace -- this is the one package whose `tsc` is only ever a compiler. It emits ES2023 for Node (see tsconfig.json), nothing here loads the TypeScript JS API that 7 dropped, and none of the options 7 removed are in use, so `tsc --noEmit -p .` is clean on both. The packages that cannot follow say why next to their own pins; the root package.json has the summary.",
   "devDependencies": {
     "@types/fs-extra": "^11.0.4",
     "@types/node": "^26.1.1",
+    "tsdown": "^0.22.14",
     "tsx": "^4.23.1",
-    "typescript": "~6.0.3"
+    "typescript": "^7.0.2"
   },
   "bugs": {
     "url": "https://github.com/ReactUnity/core/issues"

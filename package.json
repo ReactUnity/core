@@ -16,10 +16,12 @@
     "format": "biome format",
     "check": "biome check",
     "build": "pnpm -r --filter \"./packages/*\" run build",
+    "//typecheck": "Separate from `build` since tsdown took over emitting: rolldown transpiles per file and the dts step does not do full semantic analysis, so a build passing no longer means the types do. CI runs both.",
+    "typecheck": "pnpm -r --filter \"./packages/*\" run typecheck",
     "prepare": "husky",
     "tegami": "node scripts/tegami.mts"
   },
-  "//typescript": "Held at 6.x, not the 7.0 release, and the whole workspace is pinned to the same range on purpose. TypeScript 7 is the native compiler: it ships no JS API, so `resolve.sync('typescript')` fails outright -- which breaks react-unity-scripts (packages/scripts/config/modules.js) and fork-ts-checker-webpack-plugin behind it, and stops `astro check` in docs. It also removed `target: ES5`, which packages/renderer and packages/material emit for Unity's embedded JS engines. Raise this once those three can run on 7.",
+  "//typescript": "On 7 here, but the workspace is deliberately split rather than uniform, so check the package you are editing. TypeScript 7 is the native compiler and it changes two things that matter: it ships no JS API (its export map points `.` at lib/version.cjs, so `require('typescript')` yields `{ version, versionMajorMinor }` and `resolve.sync('typescript')` fails with MODULE_NOT_FOUND), and it *removes* compiler options rather than deprecating them. Nothing at this root touches either -- the scripts here are Biome, husky and tsx, and tsx transpiles with esbuild -- so this copy and packages/create are on 7. Eight packages stay on 6.x and each says why next to its own pin: packages/renderer and packages/material (TS5108, `target=ES5` and `esModuleInterop=false` have both been removed), packages/scripts and the four apps that build through it (three `resolve.sync('typescript')` call sites), and docs (@astrojs/check peer-depends on `^5.0.0 || ^6.0.0`).",
   "devDependencies": {
     "@biomejs/biome": "2.5.5",
     "@types/node": "^26.1.1",
@@ -30,7 +32,7 @@
     "react": "^19.2.8",
     "rimraf": "^6.1.3",
     "tsx": "^4.23.1",
-    "typescript": "~6.0.3",
+    "typescript": "^7.0.2",
     "vite": "^8.1.5",
     "tegami": "^1.2.7"
   },
