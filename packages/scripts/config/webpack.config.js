@@ -25,11 +25,12 @@ const sourceMapType = sourceMapVar !== 'false' && sourceMapVar !== 'true' && sou
 
 const reactRefreshRuntimeEntry = require.resolve('react-refresh/runtime');
 const reactRefreshWebpackPluginRuntimeEntry = require.resolve('@pmmmwh/react-refresh-webpack-plugin');
-const babelRuntimeEntry = require.resolve('babel-preset-react-app');
-const babelRuntimeEntryHelpers = require.resolve('@babel/runtime/helpers/esm/assertThisInitialized', { paths: [babelRuntimeEntry] });
-const babelRuntimeRegenerator = require.resolve('@babel/runtime/regenerator', {
-  paths: [babelRuntimeEntry],
-});
+const babelRuntimeEntry = require.resolve('@babel/runtime/package.json');
+// @babel/runtime 8 reshaped its export map: the helpers are no longer split into
+// helpers/esm/*, and `regenerator` is gone entirely (Babel 8 dropped regenerator, and
+// transform-runtime lost the option that injected it). These paths only exist to widen
+// ModuleScopePlugin, so there is nothing to replace the regenerator entry with.
+const babelRuntimeEntryHelpers = require.resolve('@babel/runtime/helpers/assertThisInitialized', { paths: [babelRuntimeEntry] });
 
 const extractCss = process.env.EXTRACT_CSS === 'true';
 const generateManifest = process.env.GENERATE_MANIFEST !== 'false';
@@ -301,7 +302,6 @@ const baseConfigFactory = (webpackEnv) => {
             reactRefreshWebpackPluginRuntimeEntry,
             babelRuntimeEntry,
             babelRuntimeEntryHelpers,
-            babelRuntimeRegenerator,
           ]),
       ].filter(Boolean),
     },
@@ -366,7 +366,7 @@ const baseConfigFactory = (webpackEnv) => {
               include: paths.appPath,
               loader: require.resolve('babel-loader'),
               options: {
-                customize: require.resolve('babel-preset-react-app/webpack-overrides'),
+                customize: require.resolve('./babel-webpack-overrides'),
                 presets: [
                   [
                     require.resolve('./babel-preset-extended'),
@@ -384,10 +384,10 @@ const baseConfigFactory = (webpackEnv) => {
                 // side of caution.
                 // We remove this when the user ejects because the default
                 // is sane and uses Babel options. Instead of options, we use
-                // the react-unity-scripts and babel-preset-react-app versions.
+                // the react-unity-scripts and @babel/core versions.
                 cacheIdentifier: getCacheIdentifier(isEnvProduction ? 'production' : isEnvDevelopment && 'development', [
                   'babel-plugin-named-asset-import',
-                  'babel-preset-react-app',
+                  '@babel/core',
                   'react-dev-utils',
                   'react-unity-scripts',
                 ]),
@@ -412,14 +412,14 @@ const baseConfigFactory = (webpackEnv) => {
                 babelrc: true,
                 configFile: true,
                 compact: false,
-                presets: [[require.resolve('babel-preset-react-app/dependencies'), { helpers: true }]],
+                presets: [[require.resolve('./babel-preset-dependencies'), { helpers: true }]],
                 cacheDirectory: true,
                 // See #6846 for context on why cacheCompression is disabled
                 cacheCompression: false,
                 // @remove-on-eject-begin
                 cacheIdentifier: getCacheIdentifier(isEnvProduction ? 'production' : isEnvDevelopment && 'development', [
                   'babel-plugin-named-asset-import',
-                  'babel-preset-react-app',
+                  '@babel/core',
                   'react-dev-utils',
                   'react-unity-scripts',
                 ]),

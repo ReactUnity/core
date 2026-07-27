@@ -161,9 +161,9 @@ module.exports = function ($$$config) {
   function getNearestMountedFiber(fiber) {
     var node = fiber,
       nearestMounted = fiber;
-    if (fiber.alternate) for (; node["return"];) node = node["return"];else {
+    if (fiber.alternate) for (; node.return;) node = node.return;else {
       fiber = node;
-      do node = fiber, 0 !== (node.flags & 4098) && (nearestMounted = node["return"]), fiber = node["return"]; while (fiber);
+      do node = fiber, 0 !== (node.flags & 4098) && (nearestMounted = node.return), fiber = node.return; while (fiber);
     }
     return 3 === node.tag ? nearestMounted : null;
   }
@@ -178,11 +178,11 @@ module.exports = function ($$$config) {
       return alternate !== fiber ? null : fiber;
     }
     for (var a = fiber, b = alternate;;) {
-      var parentA = a["return"];
+      var parentA = a.return;
       if (null === parentA) break;
       var parentB = parentA.alternate;
       if (null === parentB) {
-        b = parentA["return"];
+        b = parentA.return;
         if (null !== b) {
           a = b;
           continue;
@@ -197,7 +197,7 @@ module.exports = function ($$$config) {
         }
         throw Error(formatProdErrorMessage(188));
       }
-      if (a["return"] !== b["return"]) a = parentA, b = parentB;else {
+      if (a.return !== b.return) a = parentA, b = parentB;else {
         for (var didFindChild = !1, child$0 = parentA.child; child$0;) {
           if (child$0 === a) {
             didFindChild = !0;
@@ -561,14 +561,14 @@ module.exports = function ($$$config) {
     Error.prepareStackTrace = void 0;
     try {
       var RunInRootFrame = {
-        DetermineComponentFrameRoot: function DetermineComponentFrameRoot() {
+        DetermineComponentFrameRoot: function () {
           try {
             if (construct) {
-              var Fake = function Fake() {
+              var Fake = function () {
                 throw Error();
               };
               Object.defineProperty(Fake.prototype, "props", {
-                set: function set() {
+                set: function () {
                   throw Error();
                 }
               });
@@ -593,7 +593,7 @@ module.exports = function ($$$config) {
               } catch (x$9) {
                 control = x$9;
               }
-              (Fake = fn()) && "function" === typeof Fake["catch"] && Fake["catch"](function () {});
+              (Fake = fn()) && "function" === typeof Fake.catch && Fake.catch(function () {});
             }
           } catch (sample) {
             if (sample && control && "string" === typeof sample.stack) return [sample.stack, control.stack];
@@ -660,7 +660,7 @@ module.exports = function ($$$config) {
     try {
       var info = "",
         previous = null;
-      do info += describeFiber(workInProgress, previous), previous = workInProgress, workInProgress = workInProgress["return"]; while (workInProgress);
+      do info += describeFiber(workInProgress, previous), previous = workInProgress, workInProgress = workInProgress.return; while (workInProgress);
       return info;
     } catch (x) {
       return "\nError generating stack: " + x.message + "\n" + x.stack;
@@ -711,7 +711,7 @@ module.exports = function ($$$config) {
     } else treeContextId = 1 << length | index << baseLength | baseIdWithLeadingBit, treeContextOverflow = workInProgress;
   }
   function pushMaterializedTreeId(workInProgress) {
-    null !== workInProgress["return"] && (pushTreeFork(workInProgress, 1), pushTreeId(workInProgress, 1, 0));
+    null !== workInProgress.return && (pushTreeFork(workInProgress, 1), pushTreeId(workInProgress, 1, 0));
   }
   function popTreeContext(workInProgress) {
     for (; workInProgress === treeForkProvider;) treeForkProvider = forkStack[--forkStackIndex], forkStack[forkStackIndex] = null, treeForkCount = forkStack[--forkStackIndex], forkStack[forkStackIndex] = null;
@@ -758,7 +758,7 @@ module.exports = function ($$$config) {
     hydrateInstance(fiber.stateNode, fiber.type, fiber.memoizedProps, hostContext, fiber) || throwOnHydrationMismatch(fiber, !0);
   }
   function popToNextHostParent(fiber) {
-    for (hydrationParentFiber = fiber["return"]; hydrationParentFiber;) switch (hydrationParentFiber.tag) {
+    for (hydrationParentFiber = fiber.return; hydrationParentFiber;) switch (hydrationParentFiber.tag) {
       case 5:
       case 31:
       case 13:
@@ -769,7 +769,7 @@ module.exports = function ($$$config) {
         rootOrSingletonContext = !0;
         return;
       default:
-        hydrationParentFiber = hydrationParentFiber["return"];
+        hydrationParentFiber = hydrationParentFiber.return;
     }
   }
   function popHydrationState(fiber) {
@@ -816,12 +816,12 @@ module.exports = function ($$$config) {
       var alternate = parent.alternate;
       (parent.childLanes & renderLanes) !== renderLanes ? (parent.childLanes |= renderLanes, null !== alternate && (alternate.childLanes |= renderLanes)) : null !== alternate && (alternate.childLanes & renderLanes) !== renderLanes && (alternate.childLanes |= renderLanes);
       if (parent === propagationRoot) break;
-      parent = parent["return"];
+      parent = parent.return;
     }
   }
   function propagateContextChanges(workInProgress, contexts, renderLanes, forcePropagateEntireTree) {
     var fiber = workInProgress.child;
-    null !== fiber && (fiber["return"] = workInProgress);
+    null !== fiber && (fiber.return = workInProgress);
     for (; null !== fiber;) {
       var list = fiber.dependencies;
       if (null !== list) {
@@ -834,14 +834,14 @@ module.exports = function ($$$config) {
             list.lanes |= renderLanes;
             dependency = list.alternate;
             null !== dependency && (dependency.lanes |= renderLanes);
-            scheduleContextWorkOnParentPath(list["return"], renderLanes, workInProgress);
+            scheduleContextWorkOnParentPath(list.return, renderLanes, workInProgress);
             forcePropagateEntireTree || (nextFiber = null);
             break a;
           }
           list = dependency.next;
         }
       } else if (18 === fiber.tag) {
-        nextFiber = fiber["return"];
+        nextFiber = fiber.return;
         if (null === nextFiber) throw Error(formatProdErrorMessage(341));
         nextFiber.lanes |= renderLanes;
         list = nextFiber.alternate;
@@ -849,18 +849,18 @@ module.exports = function ($$$config) {
         scheduleContextWorkOnParentPath(nextFiber, renderLanes, workInProgress);
         nextFiber = null;
       } else nextFiber = fiber.child;
-      if (null !== nextFiber) nextFiber["return"] = fiber;else for (nextFiber = fiber; null !== nextFiber;) {
+      if (null !== nextFiber) nextFiber.return = fiber;else for (nextFiber = fiber; null !== nextFiber;) {
         if (nextFiber === workInProgress) {
           nextFiber = null;
           break;
         }
         fiber = nextFiber.sibling;
         if (null !== fiber) {
-          fiber["return"] = nextFiber["return"];
+          fiber.return = nextFiber.return;
           nextFiber = fiber;
           break;
         }
-        nextFiber = nextFiber["return"];
+        nextFiber = nextFiber.return;
       }
       fiber = nextFiber;
     }
@@ -882,7 +882,7 @@ module.exports = function ($$$config) {
         if (null === currentParent) throw Error(formatProdErrorMessage(387));
         currentParent.memoizedState.memoizedState !== parent.memoizedState.memoizedState && (null !== current ? current.push(HostTransitionContext) : current = [HostTransitionContext]);
       }
-      parent = parent["return"];
+      parent = parent.return;
     }
     null !== current && propagateContextChanges(workInProgress, current, renderLanes, forcePropagateEntireTree);
     workInProgress.flags |= 262144;
@@ -1064,7 +1064,7 @@ module.exports = function ($$$config) {
       currentEntangledActionThenable = {
         status: "pending",
         value: void 0,
-        then: function then(resolve) {
+        then: function (resolve) {
           entangledListeners.push(resolve);
         }
       };
@@ -1089,7 +1089,7 @@ module.exports = function ($$$config) {
         status: "pending",
         value: null,
         reason: null,
-        then: function then(resolve) {
+        then: function (resolve) {
           listeners.push(resolve);
         }
       };
@@ -1240,44 +1240,44 @@ module.exports = function ($$$config) {
       return newFiber;
     }
     function updateTextNode(returnFiber, current, textContent, lanes) {
-      if (null === current || 6 !== current.tag) return current = createFiberFromText(textContent, returnFiber.mode, lanes), current["return"] = returnFiber, current;
+      if (null === current || 6 !== current.tag) return current = createFiberFromText(textContent, returnFiber.mode, lanes), current.return = returnFiber, current;
       current = useFiber(current, textContent);
-      current["return"] = returnFiber;
+      current.return = returnFiber;
       return current;
     }
     function updateElement(returnFiber, current, element, lanes) {
       var elementType = element.type;
       if (elementType === REACT_FRAGMENT_TYPE) return updateFragment(returnFiber, current, element.props.children, lanes, element.key);
-      if (null !== current && (current.elementType === elementType || "object" === typeof elementType && null !== elementType && elementType.$$typeof === REACT_LAZY_TYPE && resolveLazy(elementType) === current.type)) return current = useFiber(current, element.props), coerceRef(current, element), current["return"] = returnFiber, current;
+      if (null !== current && (current.elementType === elementType || "object" === typeof elementType && null !== elementType && elementType.$$typeof === REACT_LAZY_TYPE && resolveLazy(elementType) === current.type)) return current = useFiber(current, element.props), coerceRef(current, element), current.return = returnFiber, current;
       current = createFiberFromTypeAndProps(element.type, element.key, element.props, null, returnFiber.mode, lanes);
       coerceRef(current, element);
-      current["return"] = returnFiber;
+      current.return = returnFiber;
       return current;
     }
     function updatePortal(returnFiber, current, portal, lanes) {
-      if (null === current || 4 !== current.tag || current.stateNode.containerInfo !== portal.containerInfo || current.stateNode.implementation !== portal.implementation) return current = createFiberFromPortal(portal, returnFiber.mode, lanes), current["return"] = returnFiber, current;
+      if (null === current || 4 !== current.tag || current.stateNode.containerInfo !== portal.containerInfo || current.stateNode.implementation !== portal.implementation) return current = createFiberFromPortal(portal, returnFiber.mode, lanes), current.return = returnFiber, current;
       current = useFiber(current, portal.children || []);
-      current["return"] = returnFiber;
+      current.return = returnFiber;
       return current;
     }
     function updateFragment(returnFiber, current, fragment, lanes, key) {
-      if (null === current || 7 !== current.tag) return current = createFiberFromFragment(fragment, returnFiber.mode, lanes, key), current["return"] = returnFiber, current;
+      if (null === current || 7 !== current.tag) return current = createFiberFromFragment(fragment, returnFiber.mode, lanes, key), current.return = returnFiber, current;
       current = useFiber(current, fragment);
-      current["return"] = returnFiber;
+      current.return = returnFiber;
       return current;
     }
     function createChild(returnFiber, newChild, lanes) {
-      if ("string" === typeof newChild && "" !== newChild || "number" === typeof newChild || "bigint" === typeof newChild) return newChild = createFiberFromText("" + newChild, returnFiber.mode, lanes), newChild["return"] = returnFiber, newChild;
+      if ("string" === typeof newChild && "" !== newChild || "number" === typeof newChild || "bigint" === typeof newChild) return newChild = createFiberFromText("" + newChild, returnFiber.mode, lanes), newChild.return = returnFiber, newChild;
       if ("object" === typeof newChild && null !== newChild) {
         switch (newChild.$$typeof) {
           case REACT_ELEMENT_TYPE:
-            return lanes = createFiberFromTypeAndProps(newChild.type, newChild.key, newChild.props, null, returnFiber.mode, lanes), coerceRef(lanes, newChild), lanes["return"] = returnFiber, lanes;
+            return lanes = createFiberFromTypeAndProps(newChild.type, newChild.key, newChild.props, null, returnFiber.mode, lanes), coerceRef(lanes, newChild), lanes.return = returnFiber, lanes;
           case REACT_PORTAL_TYPE:
-            return newChild = createFiberFromPortal(newChild, returnFiber.mode, lanes), newChild["return"] = returnFiber, newChild;
+            return newChild = createFiberFromPortal(newChild, returnFiber.mode, lanes), newChild.return = returnFiber, newChild;
           case REACT_LAZY_TYPE:
             return newChild = resolveLazy(newChild), createChild(returnFiber, newChild, lanes);
         }
-        if (isArrayImpl(newChild) || getIteratorFn(newChild)) return newChild = createFiberFromFragment(newChild, returnFiber.mode, lanes, null), newChild["return"] = returnFiber, newChild;
+        if (isArrayImpl(newChild) || getIteratorFn(newChild)) return newChild = createFiberFromFragment(newChild, returnFiber.mode, lanes, null), newChild.return = returnFiber, newChild;
         if ("function" === typeof newChild.then) return createChild(returnFiber, unwrapThenable(newChild), lanes);
         if (newChild.$$typeof === REACT_CONTEXT_TYPE) return createChild(returnFiber, readContextDuringReconciliation(returnFiber, newChild), lanes);
         throwOnInvalidObjectTypeImpl(returnFiber, newChild);
@@ -1341,7 +1341,7 @@ module.exports = function ($$$config) {
         isHydrating && pushTreeFork(returnFiber, newIdx);
         return resultingFirstChild;
       }
-      for (oldFiber = mapRemainingChildren(oldFiber); newIdx < newChildren.length; newIdx++) nextOldFiber = updateFromMap(oldFiber, returnFiber, newIdx, newChildren[newIdx], lanes), null !== nextOldFiber && (shouldTrackSideEffects && null !== nextOldFiber.alternate && oldFiber["delete"](null === nextOldFiber.key ? newIdx : nextOldFiber.key), currentFirstChild = placeChild(nextOldFiber, currentFirstChild, newIdx), null === previousNewFiber ? resultingFirstChild = nextOldFiber : previousNewFiber.sibling = nextOldFiber, previousNewFiber = nextOldFiber);
+      for (oldFiber = mapRemainingChildren(oldFiber); newIdx < newChildren.length; newIdx++) nextOldFiber = updateFromMap(oldFiber, returnFiber, newIdx, newChildren[newIdx], lanes), null !== nextOldFiber && (shouldTrackSideEffects && null !== nextOldFiber.alternate && oldFiber.delete(null === nextOldFiber.key ? newIdx : nextOldFiber.key), currentFirstChild = placeChild(nextOldFiber, currentFirstChild, newIdx), null === previousNewFiber ? resultingFirstChild = nextOldFiber : previousNewFiber.sibling = nextOldFiber, previousNewFiber = nextOldFiber);
       shouldTrackSideEffects && oldFiber.forEach(function (child) {
         return deleteChild(returnFiber, child);
       });
@@ -1369,7 +1369,7 @@ module.exports = function ($$$config) {
         isHydrating && pushTreeFork(returnFiber, newIdx);
         return resultingFirstChild;
       }
-      for (oldFiber = mapRemainingChildren(oldFiber); !step.done; newIdx++, step = newChildren.next()) step = updateFromMap(oldFiber, returnFiber, newIdx, step.value, lanes), null !== step && (shouldTrackSideEffects && null !== step.alternate && oldFiber["delete"](null === step.key ? newIdx : step.key), currentFirstChild = placeChild(step, currentFirstChild, newIdx), null === previousNewFiber ? resultingFirstChild = step : previousNewFiber.sibling = step, previousNewFiber = step);
+      for (oldFiber = mapRemainingChildren(oldFiber); !step.done; newIdx++, step = newChildren.next()) step = updateFromMap(oldFiber, returnFiber, newIdx, step.value, lanes), null !== step && (shouldTrackSideEffects && null !== step.alternate && oldFiber.delete(null === step.key ? newIdx : step.key), currentFirstChild = placeChild(step, currentFirstChild, newIdx), null === previousNewFiber ? resultingFirstChild = step : previousNewFiber.sibling = step, previousNewFiber = step);
       shouldTrackSideEffects && oldFiber.forEach(function (child) {
         return deleteChild(returnFiber, child);
       });
@@ -1389,7 +1389,7 @@ module.exports = function ($$$config) {
                     if (7 === currentFirstChild.tag) {
                       deleteRemainingChildren(returnFiber, currentFirstChild.sibling);
                       lanes = useFiber(currentFirstChild, newChild.props.children);
-                      lanes["return"] = returnFiber;
+                      lanes.return = returnFiber;
                       returnFiber = lanes;
                       break a;
                     }
@@ -1397,7 +1397,7 @@ module.exports = function ($$$config) {
                     deleteRemainingChildren(returnFiber, currentFirstChild.sibling);
                     lanes = useFiber(currentFirstChild, newChild.props);
                     coerceRef(lanes, newChild);
-                    lanes["return"] = returnFiber;
+                    lanes.return = returnFiber;
                     returnFiber = lanes;
                     break a;
                   }
@@ -1406,7 +1406,7 @@ module.exports = function ($$$config) {
                 } else deleteChild(returnFiber, currentFirstChild);
                 currentFirstChild = currentFirstChild.sibling;
               }
-              newChild.type === REACT_FRAGMENT_TYPE ? (lanes = createFiberFromFragment(newChild.props.children, returnFiber.mode, lanes, newChild.key), lanes["return"] = returnFiber, returnFiber = lanes) : (lanes = createFiberFromTypeAndProps(newChild.type, newChild.key, newChild.props, null, returnFiber.mode, lanes), coerceRef(lanes, newChild), lanes["return"] = returnFiber, returnFiber = lanes);
+              newChild.type === REACT_FRAGMENT_TYPE ? (lanes = createFiberFromFragment(newChild.props.children, returnFiber.mode, lanes, newChild.key), lanes.return = returnFiber, returnFiber = lanes) : (lanes = createFiberFromTypeAndProps(newChild.type, newChild.key, newChild.props, null, returnFiber.mode, lanes), coerceRef(lanes, newChild), lanes.return = returnFiber, returnFiber = lanes);
             }
             return placeSingleChild(returnFiber);
           case REACT_PORTAL_TYPE:
@@ -1416,7 +1416,7 @@ module.exports = function ($$$config) {
                   if (4 === currentFirstChild.tag && currentFirstChild.stateNode.containerInfo === newChild.containerInfo && currentFirstChild.stateNode.implementation === newChild.implementation) {
                     deleteRemainingChildren(returnFiber, currentFirstChild.sibling);
                     lanes = useFiber(currentFirstChild, newChild.children || []);
-                    lanes["return"] = returnFiber;
+                    lanes.return = returnFiber;
                     returnFiber = lanes;
                     break a;
                   } else {
@@ -1427,7 +1427,7 @@ module.exports = function ($$$config) {
                 currentFirstChild = currentFirstChild.sibling;
               }
               lanes = createFiberFromPortal(newChild, returnFiber.mode, lanes);
-              lanes["return"] = returnFiber;
+              lanes.return = returnFiber;
               returnFiber = lanes;
             }
             return placeSingleChild(returnFiber);
@@ -1445,7 +1445,7 @@ module.exports = function ($$$config) {
         if (newChild.$$typeof === REACT_CONTEXT_TYPE) return reconcileChildFibersImpl(returnFiber, currentFirstChild, readContextDuringReconciliation(returnFiber, newChild), lanes);
         throwOnInvalidObjectTypeImpl(returnFiber, newChild);
       }
-      return "string" === typeof newChild && "" !== newChild || "number" === typeof newChild || "bigint" === typeof newChild ? (newChild = "" + newChild, null !== currentFirstChild && 6 === currentFirstChild.tag ? (deleteRemainingChildren(returnFiber, currentFirstChild.sibling), lanes = useFiber(currentFirstChild, newChild), lanes["return"] = returnFiber, returnFiber = lanes) : (deleteRemainingChildren(returnFiber, currentFirstChild), lanes = createFiberFromText(newChild, returnFiber.mode, lanes), lanes["return"] = returnFiber, returnFiber = lanes), placeSingleChild(returnFiber)) : deleteRemainingChildren(returnFiber, currentFirstChild);
+      return "string" === typeof newChild && "" !== newChild || "number" === typeof newChild || "bigint" === typeof newChild ? (newChild = "" + newChild, null !== currentFirstChild && 6 === currentFirstChild.tag ? (deleteRemainingChildren(returnFiber, currentFirstChild.sibling), lanes = useFiber(currentFirstChild, newChild), lanes.return = returnFiber, returnFiber = lanes) : (deleteRemainingChildren(returnFiber, currentFirstChild), lanes = createFiberFromText(newChild, returnFiber.mode, lanes), lanes.return = returnFiber, returnFiber = lanes), placeSingleChild(returnFiber)) : deleteRemainingChildren(returnFiber, currentFirstChild);
     }
     return function (returnFiber, currentFirstChild, newChild, lanes) {
       try {
@@ -1457,7 +1457,7 @@ module.exports = function ($$$config) {
         if (x === SuspenseException || x === SuspenseActionException) throw x;
         var fiber = createFiber(29, x, null, returnFiber.mode);
         fiber.lanes = lanes;
-        fiber["return"] = returnFiber;
+        fiber.return = returnFiber;
         return fiber;
       } finally {}
     };
@@ -1502,12 +1502,12 @@ module.exports = function ($$$config) {
     sourceFiber.lanes |= lane;
     var alternate = sourceFiber.alternate;
     null !== alternate && (alternate.lanes |= lane);
-    for (var isHidden = !1, parent = sourceFiber["return"]; null !== parent;) parent.childLanes |= lane, alternate = parent.alternate, null !== alternate && (alternate.childLanes |= lane), 22 === parent.tag && (sourceFiber = parent.stateNode, null === sourceFiber || sourceFiber._visibility & 1 || (isHidden = !0)), sourceFiber = parent, parent = parent["return"];
+    for (var isHidden = !1, parent = sourceFiber.return; null !== parent;) parent.childLanes |= lane, alternate = parent.alternate, null !== alternate && (alternate.childLanes |= lane), 22 === parent.tag && (sourceFiber = parent.stateNode, null === sourceFiber || sourceFiber._visibility & 1 || (isHidden = !0)), sourceFiber = parent, parent = parent.return;
     return 3 === sourceFiber.tag ? (parent = sourceFiber.stateNode, isHidden && null !== update && (isHidden = 31 - clz32(lane), sourceFiber = parent.hiddenUpdates, alternate = sourceFiber[isHidden], null === alternate ? sourceFiber[isHidden] = [update] : alternate.push(update), update.lane = lane | 536870912), parent) : null;
   }
   function getRootForUpdatedFiber(sourceFiber) {
     if (50 < nestedUpdateCount) throw nestedUpdateCount = 0, rootWithNestedUpdates = null, Error(formatProdErrorMessage(185));
-    for (var parent = sourceFiber["return"]; null !== parent;) sourceFiber = parent, parent = sourceFiber["return"];
+    for (var parent = sourceFiber.return; null !== parent;) sourceFiber = parent, parent = sourceFiber.return;
     return 3 === sourceFiber.tag ? sourceFiber.stateNode : null;
   }
   function initializeUpdateQueue(fiber) {
@@ -1744,16 +1744,16 @@ module.exports = function ($$$config) {
       } else if (19 === node.tag && ("forwards" === node.memoizedProps.revealOrder || "backwards" === node.memoizedProps.revealOrder || "unstable_legacy-backwards" === node.memoizedProps.revealOrder || "together" === node.memoizedProps.revealOrder)) {
         if (0 !== (node.flags & 128)) return node;
       } else if (null !== node.child) {
-        node.child["return"] = node;
+        node.child.return = node;
         node = node.child;
         continue;
       }
       if (node === row) break;
       for (; null === node.sibling;) {
-        if (null === node["return"] || node["return"] === row) return null;
-        node = node["return"];
+        if (null === node.return || node.return === row) return null;
+        node = node.return;
       }
-      node.sibling["return"] = node["return"];
+      node.sibling.return = node.return;
       node = node.sibling;
     }
     return null;
@@ -2121,7 +2121,7 @@ module.exports = function ($$$config) {
         value: null,
         reason: null,
         listeners: [],
-        then: function then(listener) {
+        then: function (listener) {
           actionNode.listeners.push(listener);
         }
       };
@@ -2407,7 +2407,7 @@ module.exports = function ($$$config) {
       } else dispatchSetStateInternal(fiber, queue, finishedState, requestUpdateLane(fiber));
     } catch (error) {
       dispatchSetStateInternal(fiber, queue, {
-        then: function then() {},
+        then: function () {},
         status: "rejected",
         reason: error
       }, requestUpdateLane());
@@ -2460,7 +2460,7 @@ module.exports = function ($$$config) {
     return updateWorkInProgressHook().memoizedState;
   }
   function refreshCache(fiber) {
-    for (var provider = fiber["return"]; null !== provider;) {
+    for (var provider = fiber.return; null !== provider;) {
       switch (provider.tag) {
         case 24:
         case 3:
@@ -2474,7 +2474,7 @@ module.exports = function ($$$config) {
           fiber.payload = provider;
           return;
       }
-      provider = provider["return"];
+      provider = provider.return;
     }
   }
   function dispatchReducerAction(fiber, queue, action) {
@@ -2687,7 +2687,7 @@ module.exports = function ($$$config) {
         case 1:
           if (returnFiber = sourceFiber.type, wrapperError = sourceFiber.stateNode, 0 === (sourceFiber.flags & 128) && ("function" === typeof returnFiber.getDerivedStateFromError || null !== wrapperError && "function" === typeof wrapperError.componentDidCatch && (null === legacyErrorBoundariesThatAlreadyFailed || !legacyErrorBoundariesThatAlreadyFailed.has(wrapperError)))) return sourceFiber.flags |= 65536, rootRenderLanes &= -rootRenderLanes, sourceFiber.lanes |= rootRenderLanes, rootRenderLanes = createClassErrorUpdate(rootRenderLanes), initializeClassErrorUpdate(rootRenderLanes, root, sourceFiber, value), enqueueCapturedUpdate(sourceFiber, rootRenderLanes), !1;
       }
-      sourceFiber = sourceFiber["return"];
+      sourceFiber = sourceFiber.return;
     } while (null !== sourceFiber);
     return !1;
   }
@@ -2716,7 +2716,7 @@ module.exports = function ($$$config) {
       if ("function" === typeof type && !shouldConstruct(type) && void 0 === type.defaultProps && null === Component.compare) return workInProgress.tag = 15, workInProgress.type = type, updateSimpleMemoComponent(current, workInProgress, type, nextProps, renderLanes);
       current = createFiberFromTypeAndProps(Component.type, null, nextProps, workInProgress, workInProgress.mode, renderLanes);
       current.ref = workInProgress.ref;
-      current["return"] = workInProgress;
+      current.return = workInProgress;
       return workInProgress.child = current;
     }
     type = current.child;
@@ -2729,7 +2729,7 @@ module.exports = function ($$$config) {
     workInProgress.flags |= 1;
     current = createWorkInProgress(type, nextProps);
     current.ref = workInProgress.ref;
-    current["return"] = workInProgress;
+    current.return = workInProgress;
     return workInProgress.child = current;
   }
   function updateSimpleMemoComponent(current, workInProgress, Component, nextProps, renderLanes) {
@@ -2799,7 +2799,7 @@ module.exports = function ($$$config) {
     }, workInProgress.mode);
     nextProps.ref = workInProgress.ref;
     workInProgress.child = nextProps;
-    nextProps["return"] = workInProgress;
+    nextProps.return = workInProgress;
     return nextProps;
   }
   function retryActivityComponentWithoutHydrating(current, workInProgress, renderLanes) {
@@ -2826,7 +2826,7 @@ module.exports = function ($$$config) {
           } : null,
           retryLane: 536870912,
           hydrationErrors: null
-        }, renderLanes = createFiberFromDehydratedFragment(current), renderLanes["return"] = workInProgress, workInProgress.child = renderLanes, hydrationParentFiber = workInProgress, nextHydratableInstance = null)) : current = null;
+        }, renderLanes = createFiberFromDehydratedFragment(current), renderLanes.return = workInProgress, workInProgress.child = renderLanes, hydrationParentFiber = workInProgress, nextHydratableInstance = null)) : current = null;
         if (null === current) throw throwOnHydrationMismatch(workInProgress);
         workInProgress.lanes = 536870912;
         return null;
@@ -2853,7 +2853,7 @@ module.exports = function ($$$config) {
     });
     current.ref = workInProgress.ref;
     workInProgress.child = current;
-    current["return"] = workInProgress;
+    current.return = workInProgress;
     return current;
   }
   function markRef(current, workInProgress) {
@@ -2993,7 +2993,7 @@ module.exports = function ($$$config) {
           } : null,
           retryLane: 536870912,
           hydrationErrors: null
-        }, renderLanes = createFiberFromDehydratedFragment(current), renderLanes["return"] = workInProgress, workInProgress.child = renderLanes, hydrationParentFiber = workInProgress, nextHydratableInstance = null)) : current = null;
+        }, renderLanes = createFiberFromDehydratedFragment(current), renderLanes.return = workInProgress, workInProgress.child = renderLanes, hydrationParentFiber = workInProgress, nextHydratableInstance = null)) : current = null;
         if (null === current) throw throwOnHydrationMismatch(workInProgress);
         isSuspenseInstanceFallback(current) ? workInProgress.lanes = 32 : workInProgress.lanes = 536870912;
         return null;
@@ -3003,7 +3003,7 @@ module.exports = function ($$$config) {
       if (showFallback) return reuseSuspenseHandlerOnStack(workInProgress), showFallback = workInProgress.mode, nextPrimaryChildren = mountWorkInProgressOffscreenFiber({
         mode: "hidden",
         children: nextPrimaryChildren
-      }, showFallback), nextProps = createFiberFromFragment(nextProps, showFallback, renderLanes, null), nextPrimaryChildren["return"] = workInProgress, nextProps["return"] = workInProgress, nextPrimaryChildren.sibling = nextProps, workInProgress.child = nextPrimaryChildren, nextProps = workInProgress.child, nextProps.memoizedState = mountSuspenseOffscreenState(renderLanes), nextProps.childLanes = getRemainingWorkInPrimaryTree(current, JSCompiler_temp, renderLanes), workInProgress.memoizedState = SUSPENDED_MARKER, bailoutOffscreenComponent(null, nextProps);
+      }, showFallback), nextProps = createFiberFromFragment(nextProps, showFallback, renderLanes, null), nextPrimaryChildren.return = workInProgress, nextProps.return = workInProgress, nextPrimaryChildren.sibling = nextProps, workInProgress.child = nextPrimaryChildren, nextProps = workInProgress.child, nextProps.memoizedState = mountSuspenseOffscreenState(renderLanes), nextProps.childLanes = getRemainingWorkInPrimaryTree(current, JSCompiler_temp, renderLanes), workInProgress.memoizedState = SUSPENDED_MARKER, bailoutOffscreenComponent(null, nextProps);
       pushPrimaryTreeSuspenseHandler(workInProgress);
       return mountSuspensePrimaryChildren(workInProgress, nextPrimaryChildren);
     }
@@ -3012,7 +3012,7 @@ module.exports = function ($$$config) {
       if (didSuspend) workInProgress.flags & 256 ? (pushPrimaryTreeSuspenseHandler(workInProgress), workInProgress.flags &= -257, workInProgress = retrySuspenseComponentWithoutHydrating(current, workInProgress, renderLanes)) : null !== workInProgress.memoizedState ? (reuseSuspenseHandlerOnStack(workInProgress), workInProgress.child = current.child, workInProgress.flags |= 128, workInProgress = null) : (reuseSuspenseHandlerOnStack(workInProgress), nextPrimaryChildren = nextProps.fallback, showFallback = workInProgress.mode, nextProps = mountWorkInProgressOffscreenFiber({
         mode: "visible",
         children: nextProps.children
-      }, showFallback), nextPrimaryChildren = createFiberFromFragment(nextPrimaryChildren, showFallback, renderLanes, null), nextPrimaryChildren.flags |= 2, nextProps["return"] = workInProgress, nextPrimaryChildren["return"] = workInProgress, nextProps.sibling = nextPrimaryChildren, workInProgress.child = nextProps, reconcileChildFibers(workInProgress, current.child, null, renderLanes), nextProps = workInProgress.child, nextProps.memoizedState = mountSuspenseOffscreenState(renderLanes), nextProps.childLanes = getRemainingWorkInPrimaryTree(current, JSCompiler_temp, renderLanes), workInProgress.memoizedState = SUSPENDED_MARKER, workInProgress = bailoutOffscreenComponent(null, nextProps));else if (pushPrimaryTreeSuspenseHandler(workInProgress), isSuspenseInstanceFallback(nextPrimaryChildren)) JSCompiler_temp = getSuspenseInstanceFallbackErrorDetails(nextPrimaryChildren).digest, nextProps = Error(formatProdErrorMessage(419)), nextProps.stack = "", nextProps.digest = JSCompiler_temp, queueHydrationError({
+      }, showFallback), nextPrimaryChildren = createFiberFromFragment(nextPrimaryChildren, showFallback, renderLanes, null), nextPrimaryChildren.flags |= 2, nextProps.return = workInProgress, nextPrimaryChildren.return = workInProgress, nextProps.sibling = nextPrimaryChildren, workInProgress.child = nextProps, reconcileChildFibers(workInProgress, current.child, null, renderLanes), nextProps = workInProgress.child, nextProps.memoizedState = mountSuspenseOffscreenState(renderLanes), nextProps.childLanes = getRemainingWorkInPrimaryTree(current, JSCompiler_temp, renderLanes), workInProgress.memoizedState = SUSPENDED_MARKER, workInProgress = bailoutOffscreenComponent(null, nextProps));else if (pushPrimaryTreeSuspenseHandler(workInProgress), isSuspenseInstanceFallback(nextPrimaryChildren)) JSCompiler_temp = getSuspenseInstanceFallbackErrorDetails(nextPrimaryChildren).digest, nextProps = Error(formatProdErrorMessage(419)), nextProps.stack = "", nextProps.digest = JSCompiler_temp, queueHydrationError({
         value: nextProps,
         source: null,
         stack: null
@@ -3027,7 +3027,7 @@ module.exports = function ($$$config) {
     if (showFallback) return reuseSuspenseHandlerOnStack(workInProgress), nextPrimaryChildren = nextProps.fallback, showFallback = workInProgress.mode, prevState = current.child, didSuspend = prevState.sibling, nextProps = createWorkInProgress(prevState, {
       mode: "hidden",
       children: nextProps.children
-    }), nextProps.subtreeFlags = prevState.subtreeFlags & 65011712, null !== didSuspend ? nextPrimaryChildren = createWorkInProgress(didSuspend, nextPrimaryChildren) : (nextPrimaryChildren = createFiberFromFragment(nextPrimaryChildren, showFallback, renderLanes, null), nextPrimaryChildren.flags |= 2), nextPrimaryChildren["return"] = workInProgress, nextProps["return"] = workInProgress, nextProps.sibling = nextPrimaryChildren, workInProgress.child = nextProps, bailoutOffscreenComponent(null, nextProps), nextProps = workInProgress.child, nextPrimaryChildren = current.child.memoizedState, null === nextPrimaryChildren ? nextPrimaryChildren = mountSuspenseOffscreenState(renderLanes) : (showFallback = nextPrimaryChildren.cachePool, null !== showFallback ? (prevState = isPrimaryRenderer ? CacheContext._currentValue : CacheContext._currentValue2, showFallback = showFallback.parent !== prevState ? {
+    }), nextProps.subtreeFlags = prevState.subtreeFlags & 65011712, null !== didSuspend ? nextPrimaryChildren = createWorkInProgress(didSuspend, nextPrimaryChildren) : (nextPrimaryChildren = createFiberFromFragment(nextPrimaryChildren, showFallback, renderLanes, null), nextPrimaryChildren.flags |= 2), nextPrimaryChildren.return = workInProgress, nextProps.return = workInProgress, nextProps.sibling = nextPrimaryChildren, workInProgress.child = nextProps, bailoutOffscreenComponent(null, nextProps), nextProps = workInProgress.child, nextPrimaryChildren = current.child.memoizedState, null === nextPrimaryChildren ? nextPrimaryChildren = mountSuspenseOffscreenState(renderLanes) : (showFallback = nextPrimaryChildren.cachePool, null !== showFallback ? (prevState = isPrimaryRenderer ? CacheContext._currentValue : CacheContext._currentValue2, showFallback = showFallback.parent !== prevState ? {
       parent: prevState,
       pool: prevState
     } : showFallback) : showFallback = getSuspendedCache(), nextPrimaryChildren = {
@@ -3041,7 +3041,7 @@ module.exports = function ($$$config) {
       mode: "visible",
       children: nextProps.children
     });
-    renderLanes["return"] = workInProgress;
+    renderLanes.return = workInProgress;
     renderLanes.sibling = null;
     null !== current && (JSCompiler_temp = workInProgress.deletions, null === JSCompiler_temp ? (workInProgress.deletions = [current], workInProgress.flags |= 16) : JSCompiler_temp.push(current));
     workInProgress.child = renderLanes;
@@ -3053,7 +3053,7 @@ module.exports = function ($$$config) {
       mode: "visible",
       children: primaryChildren
     }, workInProgress.mode);
-    primaryChildren["return"] = workInProgress;
+    primaryChildren.return = workInProgress;
     return workInProgress.child = primaryChildren;
   }
   function mountWorkInProgressOffscreenFiber(offscreenProps, mode) {
@@ -3072,7 +3072,7 @@ module.exports = function ($$$config) {
     fiber.lanes |= renderLanes;
     var alternate = fiber.alternate;
     null !== alternate && (alternate.lanes |= renderLanes);
-    scheduleContextWorkOnParentPath(fiber["return"], renderLanes, propagationRoot);
+    scheduleContextWorkOnParentPath(fiber.return, renderLanes, propagationRoot);
   }
   function initSuspenseListRenderState(workInProgress, isBackwards, tail, lastContentRow, tailMode, treeForkCount) {
     var renderState = workInProgress.memoizedState;
@@ -3099,16 +3099,16 @@ module.exports = function ($$$config) {
     nextProps = isHydrating ? treeForkCount : 0;
     if (!shouldForceFallback && null !== current && 0 !== (current.flags & 128)) a: for (current = workInProgress.child; null !== current;) {
       if (13 === current.tag) null !== current.memoizedState && scheduleSuspenseWorkOnFiber(current, renderLanes, workInProgress);else if (19 === current.tag) scheduleSuspenseWorkOnFiber(current, renderLanes, workInProgress);else if (null !== current.child) {
-        current.child["return"] = current;
+        current.child.return = current;
         current = current.child;
         continue;
       }
       if (current === workInProgress) break a;
       for (; null === current.sibling;) {
-        if (null === current["return"] || current["return"] === workInProgress) break a;
-        current = current["return"];
+        if (null === current.return || current.return === workInProgress) break a;
+        current = current.return;
       }
-      current.sibling["return"] = current["return"];
+      current.sibling.return = current.return;
       current = current.sibling;
     }
     switch (revealOrder) {
@@ -3155,7 +3155,7 @@ module.exports = function ($$$config) {
       current = workInProgress.child;
       renderLanes = createWorkInProgress(current, current.pendingProps);
       workInProgress.child = renderLanes;
-      for (renderLanes["return"] = workInProgress; null !== current.sibling;) current = current.sibling, renderLanes = renderLanes.sibling = createWorkInProgress(current, current.pendingProps), renderLanes["return"] = workInProgress;
+      for (renderLanes.return = workInProgress; null !== current.sibling;) current = current.sibling, renderLanes = renderLanes.sibling = createWorkInProgress(current, current.pendingProps), renderLanes.return = workInProgress;
       renderLanes.sibling = null;
     }
     return workInProgress.child;
@@ -3375,33 +3375,33 @@ module.exports = function ($$$config) {
   function appendAllChildren(parent, workInProgress, needsVisibilityToggle, isHidden) {
     if (supportsMutation) for (needsVisibilityToggle = workInProgress.child; null !== needsVisibilityToggle;) {
       if (5 === needsVisibilityToggle.tag || 6 === needsVisibilityToggle.tag) appendInitialChild(parent, needsVisibilityToggle.stateNode);else if (!(4 === needsVisibilityToggle.tag || supportsSingletons && 27 === needsVisibilityToggle.tag) && null !== needsVisibilityToggle.child) {
-        needsVisibilityToggle.child["return"] = needsVisibilityToggle;
+        needsVisibilityToggle.child.return = needsVisibilityToggle;
         needsVisibilityToggle = needsVisibilityToggle.child;
         continue;
       }
       if (needsVisibilityToggle === workInProgress) break;
       for (; null === needsVisibilityToggle.sibling;) {
-        if (null === needsVisibilityToggle["return"] || needsVisibilityToggle["return"] === workInProgress) return;
-        needsVisibilityToggle = needsVisibilityToggle["return"];
+        if (null === needsVisibilityToggle.return || needsVisibilityToggle.return === workInProgress) return;
+        needsVisibilityToggle = needsVisibilityToggle.return;
       }
-      needsVisibilityToggle.sibling["return"] = needsVisibilityToggle["return"];
+      needsVisibilityToggle.sibling.return = needsVisibilityToggle.return;
       needsVisibilityToggle = needsVisibilityToggle.sibling;
     } else if (supportsPersistence) for (var node$85 = workInProgress.child; null !== node$85;) {
       if (5 === node$85.tag) {
         var instance = node$85.stateNode;
         needsVisibilityToggle && isHidden && (instance = cloneHiddenInstance(instance, node$85.type, node$85.memoizedProps));
         appendInitialChild(parent, instance);
-      } else if (6 === node$85.tag) instance = node$85.stateNode, needsVisibilityToggle && isHidden && (instance = cloneHiddenTextInstance(instance, node$85.memoizedProps)), appendInitialChild(parent, instance);else if (4 !== node$85.tag) if (22 === node$85.tag && null !== node$85.memoizedState) instance = node$85.child, null !== instance && (instance["return"] = node$85), appendAllChildren(parent, node$85, !0, !0);else if (null !== node$85.child) {
-        node$85.child["return"] = node$85;
+      } else if (6 === node$85.tag) instance = node$85.stateNode, needsVisibilityToggle && isHidden && (instance = cloneHiddenTextInstance(instance, node$85.memoizedProps)), appendInitialChild(parent, instance);else if (4 !== node$85.tag) if (22 === node$85.tag && null !== node$85.memoizedState) instance = node$85.child, null !== instance && (instance.return = node$85), appendAllChildren(parent, node$85, !0, !0);else if (null !== node$85.child) {
+        node$85.child.return = node$85;
         node$85 = node$85.child;
         continue;
       }
       if (node$85 === workInProgress) break;
       for (; null === node$85.sibling;) {
-        if (null === node$85["return"] || node$85["return"] === workInProgress) return;
-        node$85 = node$85["return"];
+        if (null === node$85.return || node$85.return === workInProgress) return;
+        node$85 = node$85.return;
       }
-      node$85.sibling["return"] = node$85["return"];
+      node$85.sibling.return = node$85.return;
       node$85 = node$85.sibling;
     }
   }
@@ -3412,17 +3412,17 @@ module.exports = function ($$$config) {
         var instance = node.stateNode;
         needsVisibilityToggle && isHidden && (instance = cloneHiddenInstance(instance, node.type, node.memoizedProps));
         appendChildToContainerChildSet(containerChildSet, instance);
-      } else if (6 === node.tag) instance = node.stateNode, needsVisibilityToggle && isHidden && (instance = cloneHiddenTextInstance(instance, node.memoizedProps)), appendChildToContainerChildSet(containerChildSet, instance);else if (4 !== node.tag) if (22 === node.tag && null !== node.memoizedState) hasOffscreenComponentChild = node.child, null !== hasOffscreenComponentChild && (hasOffscreenComponentChild["return"] = node), appendAllChildrenToContainer(containerChildSet, node, !0, !0), hasOffscreenComponentChild = !0;else if (null !== node.child) {
-        node.child["return"] = node;
+      } else if (6 === node.tag) instance = node.stateNode, needsVisibilityToggle && isHidden && (instance = cloneHiddenTextInstance(instance, node.memoizedProps)), appendChildToContainerChildSet(containerChildSet, instance);else if (4 !== node.tag) if (22 === node.tag && null !== node.memoizedState) hasOffscreenComponentChild = node.child, null !== hasOffscreenComponentChild && (hasOffscreenComponentChild.return = node), appendAllChildrenToContainer(containerChildSet, node, !0, !0), hasOffscreenComponentChild = !0;else if (null !== node.child) {
+        node.child.return = node;
         node = node.child;
         continue;
       }
       if (node === workInProgress) break;
       for (; null === node.sibling;) {
-        if (null === node["return"] || node["return"] === workInProgress) return hasOffscreenComponentChild;
-        node = node["return"];
+        if (null === node.return || node.return === workInProgress) return hasOffscreenComponentChild;
+        node = node.return;
       }
-      node.sibling["return"] = node["return"];
+      node.sibling.return = node.return;
       node = node.sibling;
     }
     return hasOffscreenComponentChild;
@@ -3480,7 +3480,7 @@ module.exports = function ($$$config) {
     var didBailout = null !== completedWork.alternate && completedWork.alternate.child === completedWork.child,
       newChildLanes = 0,
       subtreeFlags = 0;
-    if (didBailout) for (var child$91 = completedWork.child; null !== child$91;) newChildLanes |= child$91.lanes | child$91.childLanes, subtreeFlags |= child$91.subtreeFlags & 65011712, subtreeFlags |= child$91.flags & 65011712, child$91["return"] = completedWork, child$91 = child$91.sibling;else for (child$91 = completedWork.child; null !== child$91;) newChildLanes |= child$91.lanes | child$91.childLanes, subtreeFlags |= child$91.subtreeFlags, subtreeFlags |= child$91.flags, child$91["return"] = completedWork, child$91 = child$91.sibling;
+    if (didBailout) for (var child$91 = completedWork.child; null !== child$91;) newChildLanes |= child$91.lanes | child$91.childLanes, subtreeFlags |= child$91.subtreeFlags & 65011712, subtreeFlags |= child$91.flags & 65011712, child$91.return = completedWork, child$91 = child$91.sibling;else for (child$91 = completedWork.child; null !== child$91;) newChildLanes |= child$91.lanes | child$91.childLanes, subtreeFlags |= child$91.subtreeFlags, subtreeFlags |= child$91.flags, child$91.return = completedWork, child$91 = child$91.sibling;
     completedWork.subtreeFlags |= subtreeFlags;
     completedWork.childLanes = newChildLanes;
     return didBailout;
@@ -3788,7 +3788,7 @@ module.exports = function ($$$config) {
         } while (updateQueue !== firstEffect);
       }
     } catch (error) {
-      captureCommitPhaseError(finishedWork, finishedWork["return"], error);
+      captureCommitPhaseError(finishedWork, finishedWork.return, error);
     }
   }
   function commitHookEffectListUnmount(flags, finishedWork, nearestMountedAncestor$jscomp$0) {
@@ -3818,7 +3818,7 @@ module.exports = function ($$$config) {
         } while (updateQueue !== firstEffect);
       }
     } catch (error) {
-      captureCommitPhaseError(finishedWork, finishedWork["return"], error);
+      captureCommitPhaseError(finishedWork, finishedWork.return, error);
     }
   }
   function commitClassCallbacks(finishedWork) {
@@ -3828,7 +3828,7 @@ module.exports = function ($$$config) {
       try {
         commitCallbacks(updateQueue, instance);
       } catch (error) {
-        captureCommitPhaseError(finishedWork, finishedWork["return"], error);
+        captureCommitPhaseError(finishedWork, finishedWork.return, error);
       }
     }
   }
@@ -3885,14 +3885,14 @@ module.exports = function ($$$config) {
     try {
       commitMount(instance, type, props, finishedWork);
     } catch (error) {
-      captureCommitPhaseError(finishedWork, finishedWork["return"], error);
+      captureCommitPhaseError(finishedWork, finishedWork.return, error);
     }
   }
   function commitHostUpdate(finishedWork, newProps, oldProps) {
     try {
       commitUpdate(finishedWork.stateNode, finishedWork.type, oldProps, newProps, finishedWork);
     } catch (error) {
-      captureCommitPhaseError(finishedWork, finishedWork["return"], error);
+      captureCommitPhaseError(finishedWork, finishedWork.return, error);
     }
   }
   function isHostParent(fiber) {
@@ -3901,14 +3901,14 @@ module.exports = function ($$$config) {
   function getHostSibling(fiber) {
     a: for (;;) {
       for (; null === fiber.sibling;) {
-        if (null === fiber["return"] || isHostParent(fiber["return"])) return null;
-        fiber = fiber["return"];
+        if (null === fiber.return || isHostParent(fiber.return)) return null;
+        fiber = fiber.return;
       }
-      fiber.sibling["return"] = fiber["return"];
+      fiber.sibling.return = fiber.return;
       for (fiber = fiber.sibling; 5 !== fiber.tag && 6 !== fiber.tag && 18 !== fiber.tag;) {
         if (supportsSingletons && 27 === fiber.tag && isSingletonScope(fiber.type)) continue a;
         if (fiber.flags & 2) continue a;
-        if (null === fiber.child || 4 === fiber.tag) continue a;else fiber.child["return"] = fiber, fiber = fiber.child;
+        if (null === fiber.child || 4 === fiber.tag) continue a;else fiber.child.return = fiber, fiber = fiber.child;
       }
       if (!(fiber.flags & 2)) return fiber.stateNode;
     }
@@ -3926,7 +3926,7 @@ module.exports = function ($$$config) {
     try {
       replaceContainerChildren(portal, pendingChildren);
     } catch (error) {
-      captureCommitPhaseError(finishedWork, finishedWork["return"], error);
+      captureCommitPhaseError(finishedWork, finishedWork.return, error);
     }
   }
   function commitHostSingletonAcquisition(finishedWork) {
@@ -3935,12 +3935,12 @@ module.exports = function ($$$config) {
     try {
       acquireSingletonInstance(finishedWork.type, props, singleton, finishedWork);
     } catch (error) {
-      captureCommitPhaseError(finishedWork, finishedWork["return"], error);
+      captureCommitPhaseError(finishedWork, finishedWork.return, error);
     }
   }
   function commitBeforeMutationEffects(root, firstChild) {
     prepareForCommit(root.containerInfo);
-    for (nextEffect = firstChild; null !== nextEffect;) if (root = nextEffect, firstChild = root.child, 0 !== (root.subtreeFlags & 1028) && null !== firstChild) firstChild["return"] = root, nextEffect = firstChild;else for (; null !== nextEffect;) {
+    for (nextEffect = firstChild; null !== nextEffect;) if (root = nextEffect, firstChild = root.child, 0 !== (root.subtreeFlags & 1028) && null !== firstChild) firstChild.return = root, nextEffect = firstChild;else for (; null !== nextEffect;) {
       root = nextEffect;
       var current = root.alternate;
       firstChild = root.flags;
@@ -3966,7 +3966,7 @@ module.exports = function ($$$config) {
               firstChild = instance.getSnapshotBeforeUpdate(resolvedPrevProps, current);
               instance.__reactInternalSnapshotBeforeUpdate = firstChild;
             } catch (error) {
-              captureCommitPhaseError(ii, ii["return"], error);
+              captureCommitPhaseError(ii, ii.return, error);
             }
           }
           break;
@@ -3985,11 +3985,11 @@ module.exports = function ($$$config) {
       }
       firstChild = root.sibling;
       if (null !== firstChild) {
-        firstChild["return"] = root["return"];
+        firstChild.return = root.return;
         nextEffect = firstChild;
         break;
       }
-      nextEffect = root["return"];
+      nextEffect = root.return;
     }
   }
   function commitLayoutEffectOnFiber(finishedRoot, current, finishedWork) {
@@ -4006,18 +4006,18 @@ module.exports = function ($$$config) {
         if (flags & 4) if (finishedRoot = finishedWork.stateNode, null === current) try {
           finishedRoot.componentDidMount();
         } catch (error) {
-          captureCommitPhaseError(finishedWork, finishedWork["return"], error);
+          captureCommitPhaseError(finishedWork, finishedWork.return, error);
         } else {
           var prevProps = resolveClassComponentProps(finishedWork.type, current.memoizedProps);
           current = current.memoizedState;
           try {
             finishedRoot.componentDidUpdate(prevProps, current, finishedRoot.__reactInternalSnapshotBeforeUpdate);
           } catch (error$123) {
-            captureCommitPhaseError(finishedWork, finishedWork["return"], error$123);
+            captureCommitPhaseError(finishedWork, finishedWork.return, error$123);
           }
         }
         flags & 64 && commitClassCallbacks(finishedWork);
-        flags & 512 && safelyAttachRef(finishedWork, finishedWork["return"]);
+        flags & 512 && safelyAttachRef(finishedWork, finishedWork.return);
         break;
       case 3:
         recursivelyTraverseLayoutEffects(finishedRoot, finishedWork);
@@ -4034,7 +4034,7 @@ module.exports = function ($$$config) {
           try {
             commitCallbacks(flags, finishedRoot);
           } catch (error) {
-            captureCommitPhaseError(finishedWork, finishedWork["return"], error);
+            captureCommitPhaseError(finishedWork, finishedWork.return, error);
           }
         }
         break;
@@ -4050,10 +4050,10 @@ module.exports = function ($$$config) {
           try {
             commitHydratedInstance(prevProps, finishedRoot, current, finishedWork);
           } catch (error) {
-            captureCommitPhaseError(finishedWork, finishedWork["return"], error);
+            captureCommitPhaseError(finishedWork, finishedWork.return, error);
           }
         }
-        flags & 512 && safelyAttachRef(finishedWork, finishedWork["return"]);
+        flags & 512 && safelyAttachRef(finishedWork, finishedWork.return);
         break;
       case 12:
         recursivelyTraverseLayoutEffects(finishedRoot, finishedWork);
@@ -4093,7 +4093,7 @@ module.exports = function ($$$config) {
     fiber.sibling = null;
     5 === fiber.tag && (alternate = fiber.stateNode, null !== alternate && detachDeletedInstance(alternate));
     fiber.stateNode = null;
-    fiber["return"] = null;
+    fiber.return = null;
     fiber.dependencies = null;
     fiber.memoizedProps = null;
     fiber.memoizedState = null;
@@ -4179,7 +4179,7 @@ module.exports = function ($$$config) {
       try {
         commitHydratedActivityInstance(finishedRoot);
       } catch (error) {
-        captureCommitPhaseError(finishedWork, finishedWork["return"], error);
+        captureCommitPhaseError(finishedWork, finishedWork.return, error);
       }
     }
   }
@@ -4187,7 +4187,7 @@ module.exports = function ($$$config) {
     if (supportsHydration && null === finishedWork.memoizedState && (finishedRoot = finishedWork.alternate, null !== finishedRoot && (finishedRoot = finishedRoot.memoizedState, null !== finishedRoot && (finishedRoot = finishedRoot.dehydrated, null !== finishedRoot)))) try {
       commitHydratedSuspenseInstance(finishedRoot);
     } catch (error) {
-      captureCommitPhaseError(finishedWork, finishedWork["return"], error);
+      captureCommitPhaseError(finishedWork, finishedWork.return, error);
     }
   }
   function getRetryCache(finishedWork) {
@@ -4243,7 +4243,7 @@ module.exports = function ($$$config) {
               hostParentIsContainer = !0;
               break a;
           }
-          parent = parent["return"];
+          parent = parent.return;
         }
         if (null === hostParent) throw Error(formatProdErrorMessage(160));
         commitDeletionEffectsOnFiber(root, returnFiber, childToDelete);
@@ -4251,8 +4251,8 @@ module.exports = function ($$$config) {
         hostParentIsContainer = !1;
       } else commitDeletionEffectsOnFiber(root, returnFiber, childToDelete);
       root = childToDelete.alternate;
-      null !== root && (root["return"] = null);
-      childToDelete["return"] = null;
+      null !== root && (root.return = null);
+      childToDelete.return = null;
     }
     if (parentFiber.subtreeFlags & 13886) for (parentFiber = parentFiber.child; null !== parentFiber;) commitMutationEffectsOnFiber(parentFiber, root$jscomp$0), parentFiber = parentFiber.sibling;
   }
@@ -4266,12 +4266,12 @@ module.exports = function ($$$config) {
       case 15:
         recursivelyTraverseMutationEffects(root, finishedWork);
         commitReconciliationEffects(finishedWork);
-        flags & 4 && (commitHookEffectListUnmount(3, finishedWork, finishedWork["return"]), commitHookEffectListMount(3, finishedWork), commitHookEffectListUnmount(5, finishedWork, finishedWork["return"]));
+        flags & 4 && (commitHookEffectListUnmount(3, finishedWork, finishedWork.return), commitHookEffectListMount(3, finishedWork), commitHookEffectListUnmount(5, finishedWork, finishedWork.return));
         break;
       case 1:
         recursivelyTraverseMutationEffects(root, finishedWork);
         commitReconciliationEffects(finishedWork);
-        flags & 512 && (offscreenSubtreeWasHidden || null === current || safelyDetachRef(current, current["return"]));
+        flags & 512 && (offscreenSubtreeWasHidden || null === current || safelyDetachRef(current, current.return));
         flags & 64 && offscreenSubtreeIsHidden && (finishedWork = finishedWork.updateQueue, null !== finishedWork && (flags = finishedWork.callbacks, null !== flags && (current = finishedWork.shared.hiddenCallbacks, finishedWork.shared.hiddenCallbacks = null === current ? flags : current.concat(flags))));
         break;
       case 26:
@@ -4279,7 +4279,7 @@ module.exports = function ($$$config) {
           var hoistableRoot = currentHoistableRoot;
           recursivelyTraverseMutationEffects(root, finishedWork);
           commitReconciliationEffects(finishedWork);
-          flags & 512 && (offscreenSubtreeWasHidden || null === current || safelyDetachRef(current, current["return"]));
+          flags & 512 && (offscreenSubtreeWasHidden || null === current || safelyDetachRef(current, current.return));
           if (flags & 4) {
             flags = null !== current ? current.memoizedState : null;
             var newResource = finishedWork.memoizedState;
@@ -4291,21 +4291,21 @@ module.exports = function ($$$config) {
         if (supportsSingletons) {
           recursivelyTraverseMutationEffects(root, finishedWork);
           commitReconciliationEffects(finishedWork);
-          flags & 512 && (offscreenSubtreeWasHidden || null === current || safelyDetachRef(current, current["return"]));
+          flags & 512 && (offscreenSubtreeWasHidden || null === current || safelyDetachRef(current, current.return));
           null !== current && flags & 4 && commitHostUpdate(finishedWork, finishedWork.memoizedProps, current.memoizedProps);
           break;
         }
       case 5:
         recursivelyTraverseMutationEffects(root, finishedWork);
         commitReconciliationEffects(finishedWork);
-        flags & 512 && (offscreenSubtreeWasHidden || null === current || safelyDetachRef(current, current["return"]));
+        flags & 512 && (offscreenSubtreeWasHidden || null === current || safelyDetachRef(current, current.return));
         if (supportsMutation) {
           if (finishedWork.flags & 32) {
             hoistableRoot = finishedWork.stateNode;
             try {
               resetTextContent(hoistableRoot);
             } catch (error) {
-              captureCommitPhaseError(finishedWork, finishedWork["return"], error);
+              captureCommitPhaseError(finishedWork, finishedWork.return, error);
             }
           }
           flags & 4 && null != finishedWork.stateNode && (hoistableRoot = finishedWork.memoizedProps, commitHostUpdate(finishedWork, hoistableRoot, null !== current ? current.memoizedProps : hoistableRoot));
@@ -4323,7 +4323,7 @@ module.exports = function ($$$config) {
           try {
             commitTextUpdate(hoistableRoot, current, flags);
           } catch (error) {
-            captureCommitPhaseError(finishedWork, finishedWork["return"], error);
+            captureCommitPhaseError(finishedWork, finishedWork.return, error);
           }
         }
         break;
@@ -4334,7 +4334,7 @@ module.exports = function ($$$config) {
           if (supportsMutation && supportsHydration && null !== current && current.memoizedState.isDehydrated) try {
             commitHydratedContainer(root.containerInfo);
           } catch (error) {
-            captureCommitPhaseError(finishedWork, finishedWork["return"], error);
+            captureCommitPhaseError(finishedWork, finishedWork.return, error);
           }
           if (supportsPersistence) {
             flags = root.containerInfo;
@@ -4342,7 +4342,7 @@ module.exports = function ($$$config) {
             try {
               replaceContainerChildren(flags, current);
             } catch (error) {
-              captureCommitPhaseError(finishedWork, finishedWork["return"], error);
+              captureCommitPhaseError(finishedWork, finishedWork.return, error);
             }
           }
         }
@@ -4385,7 +4385,7 @@ module.exports = function ($$$config) {
               try {
                 newResource = wasHidden.stateNode, hoistableRoot ? hideInstance(newResource) : unhideInstance(wasHidden.stateNode, wasHidden.memoizedProps);
               } catch (error) {
-                captureCommitPhaseError(wasHidden, wasHidden["return"], error);
+                captureCommitPhaseError(wasHidden, wasHidden.return, error);
               }
             }
           } else if (6 === root.tag) {
@@ -4395,7 +4395,7 @@ module.exports = function ($$$config) {
                 var instance = wasHidden.stateNode;
                 hoistableRoot ? hideTextInstance(instance) : unhideTextInstance(instance, wasHidden.memoizedProps);
               } catch (error) {
-                captureCommitPhaseError(wasHidden, wasHidden["return"], error);
+                captureCommitPhaseError(wasHidden, wasHidden.return, error);
               }
             }
           } else if (18 === root.tag) {
@@ -4405,22 +4405,22 @@ module.exports = function ($$$config) {
                 var instance$jscomp$0 = wasHidden.stateNode;
                 hoistableRoot ? hideDehydratedBoundary(instance$jscomp$0) : unhideDehydratedBoundary(wasHidden.stateNode);
               } catch (error) {
-                captureCommitPhaseError(wasHidden, wasHidden["return"], error);
+                captureCommitPhaseError(wasHidden, wasHidden.return, error);
               }
             }
           } else if ((22 !== root.tag && 23 !== root.tag || null === root.memoizedState || root === finishedWork) && null !== root.child) {
-            root.child["return"] = root;
+            root.child.return = root;
             root = root.child;
             continue;
           }
           if (root === finishedWork) break a;
           for (; null === root.sibling;) {
-            if (null === root["return"] || root["return"] === finishedWork) break a;
+            if (null === root.return || root.return === finishedWork) break a;
             current === root && (current = null);
-            root = root["return"];
+            root = root.return;
           }
           current === root && (current = null);
-          root.sibling["return"] = root["return"];
+          root.sibling.return = root.return;
           root = root.sibling;
         }
         flags & 4 && (flags = finishedWork.updateQueue, null !== flags && (current = flags.retryQueue, null !== current && (flags.retryQueue = null, attachSuspenseRetryListeners(finishedWork, current))));
@@ -4442,12 +4442,12 @@ module.exports = function ($$$config) {
     var flags = finishedWork.flags;
     if (flags & 2) {
       try {
-        for (var hostParentFiber, parentFiber = finishedWork["return"]; null !== parentFiber;) {
+        for (var hostParentFiber, parentFiber = finishedWork.return; null !== parentFiber;) {
           if (isHostParent(parentFiber)) {
             hostParentFiber = parentFiber;
             break;
           }
-          parentFiber = parentFiber["return"];
+          parentFiber = parentFiber.return;
         }
         if (supportsMutation) {
           if (null == hostParentFiber) throw Error(formatProdErrorMessage(160));
@@ -4476,7 +4476,7 @@ module.exports = function ($$$config) {
           }
         }
       } catch (error) {
-        captureCommitPhaseError(finishedWork, finishedWork["return"], error);
+        captureCommitPhaseError(finishedWork, finishedWork.return, error);
       }
       finishedWork.flags &= -3;
     }
@@ -4501,20 +4501,20 @@ module.exports = function ($$$config) {
         case 11:
         case 14:
         case 15:
-          commitHookEffectListUnmount(4, finishedWork, finishedWork["return"]);
+          commitHookEffectListUnmount(4, finishedWork, finishedWork.return);
           recursivelyTraverseDisappearLayoutEffects(finishedWork);
           break;
         case 1:
-          safelyDetachRef(finishedWork, finishedWork["return"]);
+          safelyDetachRef(finishedWork, finishedWork.return);
           var instance = finishedWork.stateNode;
-          "function" === typeof instance.componentWillUnmount && safelyCallComponentWillUnmount(finishedWork, finishedWork["return"], instance);
+          "function" === typeof instance.componentWillUnmount && safelyCallComponentWillUnmount(finishedWork, finishedWork.return, instance);
           recursivelyTraverseDisappearLayoutEffects(finishedWork);
           break;
         case 27:
           supportsSingletons && releaseSingletonInstance(finishedWork.stateNode);
         case 26:
         case 5:
-          safelyDetachRef(finishedWork, finishedWork["return"]);
+          safelyDetachRef(finishedWork, finishedWork.return);
           recursivelyTraverseDisappearLayoutEffects(finishedWork);
           break;
         case 22:
@@ -4550,7 +4550,7 @@ module.exports = function ($$$config) {
           if ("function" === typeof finishedRoot.componentDidMount) try {
             finishedRoot.componentDidMount();
           } catch (error) {
-            captureCommitPhaseError(current, current["return"], error);
+            captureCommitPhaseError(current, current.return, error);
           }
           current = finishedWork;
           finishedRoot = current.updateQueue;
@@ -4560,11 +4560,11 @@ module.exports = function ($$$config) {
               var hiddenCallbacks = finishedRoot.shared.hiddenCallbacks;
               if (null !== hiddenCallbacks) for (finishedRoot.shared.hiddenCallbacks = null, finishedRoot = 0; finishedRoot < hiddenCallbacks.length; finishedRoot++) callCallback(hiddenCallbacks[finishedRoot], instance);
             } catch (error) {
-              captureCommitPhaseError(current, current["return"], error);
+              captureCommitPhaseError(current, current.return, error);
             }
           }
           includeWorkInProgressEffects && flags & 64 && commitClassCallbacks(finishedWork);
-          safelyAttachRef(finishedWork, finishedWork["return"]);
+          safelyAttachRef(finishedWork, finishedWork.return);
           break;
         case 27:
           supportsSingletons && commitHostSingletonAcquisition(finishedWork);
@@ -4572,7 +4572,7 @@ module.exports = function ($$$config) {
         case 5:
           recursivelyTraverseReappearLayoutEffects(finishedRoot, finishedWork, includeWorkInProgressEffects);
           includeWorkInProgressEffects && null === current && flags & 4 && commitHostMount(finishedWork);
-          safelyAttachRef(finishedWork, finishedWork["return"]);
+          safelyAttachRef(finishedWork, finishedWork.return);
           break;
         case 12:
           recursivelyTraverseReappearLayoutEffects(finishedRoot, finishedWork, includeWorkInProgressEffects);
@@ -4587,7 +4587,7 @@ module.exports = function ($$$config) {
           break;
         case 22:
           null === finishedWork.memoizedState && recursivelyTraverseReappearLayoutEffects(finishedRoot, finishedWork, includeWorkInProgressEffects);
-          safelyAttachRef(finishedWork, finishedWork["return"]);
+          safelyAttachRef(finishedWork, finishedWork.return);
           break;
         case 30:
           break;
@@ -4639,7 +4639,7 @@ module.exports = function ($$$config) {
               onPostCommit = _finishedWork$memoize2.onPostCommit;
             "function" === typeof onPostCommit && onPostCommit(id, null === finishedWork.alternate ? "mount" : "update", finishedRoot.passiveEffectDuration, -0);
           } catch (error) {
-            captureCommitPhaseError(finishedWork, finishedWork["return"], error);
+            captureCommitPhaseError(finishedWork, finishedWork.return, error);
           }
         } else recursivelyTraversePassiveMountEffects(finishedRoot, finishedWork, committedLanes, committedTransitions);
         break;
@@ -4771,7 +4771,7 @@ module.exports = function ($$$config) {
       case 11:
       case 15:
         recursivelyTraversePassiveUnmountEffects(finishedWork);
-        finishedWork.flags & 2048 && commitHookEffectListUnmount(9, finishedWork, finishedWork["return"]);
+        finishedWork.flags & 2048 && commitHookEffectListUnmount(9, finishedWork, finishedWork.return);
         break;
       case 3:
         recursivelyTraversePassiveUnmountEffects(finishedWork);
@@ -4781,7 +4781,7 @@ module.exports = function ($$$config) {
         break;
       case 22:
         var instance = finishedWork.stateNode;
-        null !== finishedWork.memoizedState && instance._visibility & 2 && (null === finishedWork["return"] || 13 !== finishedWork["return"].tag) ? (instance._visibility &= -3, recursivelyTraverseDisconnectPassiveEffects(finishedWork)) : recursivelyTraversePassiveUnmountEffects(finishedWork);
+        null !== finishedWork.memoizedState && instance._visibility & 2 && (null === finishedWork.return || 13 !== finishedWork.return.tag) ? (instance._visibility &= -3, recursivelyTraverseDisconnectPassiveEffects(finishedWork)) : recursivelyTraversePassiveUnmountEffects(finishedWork);
         break;
       default:
         recursivelyTraversePassiveUnmountEffects(finishedWork);
@@ -4803,7 +4803,7 @@ module.exports = function ($$$config) {
         case 0:
         case 11:
         case 15:
-          commitHookEffectListUnmount(8, deletions, deletions["return"]);
+          commitHookEffectListUnmount(8, deletions, deletions.return);
           recursivelyTraverseDisconnectPassiveEffects(deletions);
           break;
         case 22:
@@ -4836,17 +4836,17 @@ module.exports = function ($$$config) {
           releaseCache(fiber.memoizedState.cache);
       }
       cache = fiber.child;
-      if (null !== cache) cache["return"] = fiber, nextEffect = cache;else a: for (fiber = deletedSubtreeRoot; null !== nextEffect;) {
+      if (null !== cache) cache.return = fiber, nextEffect = cache;else a: for (fiber = deletedSubtreeRoot; null !== nextEffect;) {
         cache = nextEffect;
         var sibling = cache.sibling,
-          returnFiber = cache["return"];
+          returnFiber = cache.return;
         detachFiberAfterEffects(cache);
         if (cache === fiber) {
           nextEffect = null;
           break a;
         }
         if (null !== sibling) {
-          sibling["return"] = returnFiber;
+          sibling.return = returnFiber;
           nextEffect = sibling;
           break a;
         }
@@ -5082,13 +5082,13 @@ module.exports = function ($$$config) {
         }
       }
       tag = node.child;
-      if (node.subtreeFlags & 16384 && null !== tag) tag["return"] = node, node = tag;else {
+      if (node.subtreeFlags & 16384 && null !== tag) tag.return = node, node = tag;else {
         if (node === finishedWork) break;
         for (; null === node.sibling;) {
-          if (null === node["return"] || node["return"] === finishedWork) return !0;
-          node = node["return"];
+          if (null === node.return || node.return === finishedWork) return !0;
+          node = node.return;
         }
-        node.sibling["return"] = node["return"];
+        node.sibling.return = node.return;
         node = node.sibling;
       }
     }
@@ -5114,8 +5114,8 @@ module.exports = function ($$$config) {
   }
   function resetWorkInProgressStack() {
     if (null !== workInProgress) {
-      if (0 === workInProgressSuspendedReason) var interruptedWork = workInProgress["return"];else interruptedWork = workInProgress, lastContextDependency = currentlyRenderingFiber$1 = null, resetHooksOnUnwind(interruptedWork), thenableState$1 = null, thenableIndexCounter$1 = 0, interruptedWork = workInProgress;
-      for (; null !== interruptedWork;) unwindInterruptedWork(interruptedWork.alternate, interruptedWork), interruptedWork = interruptedWork["return"];
+      if (0 === workInProgressSuspendedReason) var interruptedWork = workInProgress.return;else interruptedWork = workInProgress, lastContextDependency = currentlyRenderingFiber$1 = null, resetHooksOnUnwind(interruptedWork), thenableState$1 = null, thenableIndexCounter$1 = 0, interruptedWork = workInProgress;
+      for (; null !== interruptedWork;) unwindInterruptedWork(interruptedWork.alternate, interruptedWork), interruptedWork = interruptedWork.return;
       workInProgress = null;
     }
   }
@@ -5251,7 +5251,7 @@ module.exports = function ($$$config) {
               replaySuspendedUnitOfWork(lanes);
               break;
             }
-            lanes = function lanes() {
+            lanes = function () {
               2 !== workInProgressSuspendedReason && 9 !== workInProgressSuspendedReason || workInProgressRoot !== root || (workInProgressSuspendedReason = 7);
               ensureRootIsScheduled(root);
             };
@@ -5281,7 +5281,7 @@ module.exports = function ($$$config) {
                   workInProgressThrownValue = null;
                   var sibling = hostFiber.sibling;
                   if (null !== sibling) workInProgress = sibling;else {
-                    var returnFiber = hostFiber["return"];
+                    var returnFiber = hostFiber.return;
                     null !== returnFiber ? (workInProgress = returnFiber, completeUnitOfWork(returnFiber)) : workInProgress = null;
                   }
                   break b;
@@ -5351,7 +5351,7 @@ module.exports = function ($$$config) {
     resetHooksOnUnwind(unitOfWork);
     thenableState$1 = null;
     thenableIndexCounter$1 = 0;
-    var returnFiber = unitOfWork["return"];
+    var returnFiber = unitOfWork.return;
     try {
       if (throwException(root, returnFiber, unitOfWork, thrownValue, workInProgressRootRenderLanes)) {
         workInProgressRootExitStatus = 1;
@@ -5378,7 +5378,7 @@ module.exports = function ($$$config) {
         unwindUnitOfWork(completedWork, workInProgressRootDidSkipSuspendedSiblings);
         return;
       }
-      unitOfWork = completedWork["return"];
+      unitOfWork = completedWork.return;
       var next = completeWork(completedWork.alternate, completedWork, entangledRenderLanes);
       if (null !== next) {
         workInProgress = next;
@@ -5401,7 +5401,7 @@ module.exports = function ($$$config) {
         workInProgress = next;
         return;
       }
-      next = unitOfWork["return"];
+      next = unitOfWork.return;
       null !== next && (next.flags |= 32768, next.subtreeFlags = 0, next.deletions = null);
       if (!skipSiblings && (unitOfWork = unitOfWork.sibling, null !== unitOfWork)) {
         workInProgress = unitOfWork;
@@ -5601,7 +5601,7 @@ module.exports = function ($$$config) {
           break;
         }
       }
-      nearestMountedAncestor = nearestMountedAncestor["return"];
+      nearestMountedAncestor = nearestMountedAncestor.return;
     }
   }
   function attachPingListener(root, wakeable, lanes) {
@@ -5615,7 +5615,7 @@ module.exports = function ($$$config) {
   }
   function pingSuspendedRoot(root, wakeable, pingedLanes) {
     var pingCache = root.pingCache;
-    null !== pingCache && pingCache["delete"](wakeable);
+    null !== pingCache && pingCache.delete(wakeable);
     root.pingedLanes |= root.suspendedLanes & pingedLanes;
     root.warmLanes &= ~pingedLanes;
     workInProgressRoot === root && (workInProgressRootRenderLanes & pingedLanes) === pingedLanes && (4 === workInProgressRootExitStatus || 3 === workInProgressRootExitStatus && (workInProgressRootRenderLanes & 62914560) === workInProgressRootRenderLanes && 300 > now() - globalMostRecentFallbackTime ? 0 === (executionContext & 2) && prepareFreshStack(root, 0) : workInProgressRootPingedLanes |= pingedLanes, workInProgressSuspendedRetryLanes === workInProgressRootRenderLanes && (workInProgressSuspendedRetryLanes = 0));
@@ -5650,7 +5650,7 @@ module.exports = function ($$$config) {
       default:
         throw Error(formatProdErrorMessage(314));
     }
-    null !== retryCache && retryCache["delete"](wakeable);
+    null !== retryCache && retryCache.delete(wakeable);
     retryTimedOutBoundary(boundaryFiber, retryLane);
   }
   function scheduleCallback(priorityLevel, callback) {
@@ -5659,7 +5659,7 @@ module.exports = function ($$$config) {
   function FiberNode(tag, pendingProps, key, mode) {
     this.tag = tag;
     this.key = key;
-    this.sibling = this.child = this["return"] = this.stateNode = this.type = this.elementType = null;
+    this.sibling = this.child = this.return = this.stateNode = this.type = this.elementType = null;
     this.index = 0;
     this.refCleanup = this.ref = null;
     this.pendingProps = pendingProps;
@@ -5859,27 +5859,27 @@ module.exports = function ($$$config) {
   var React = __webpack_require__("../../../../node_modules/.pnpm/react@19.2.8/node_modules/react/index.js"),
     Scheduler = __webpack_require__("../../../../node_modules/.pnpm/scheduler@0.27.0/node_modules/scheduler/index.js"),
     assign = Object.assign,
-    REACT_LEGACY_ELEMENT_TYPE = Symbol["for"]("react.element"),
-    REACT_ELEMENT_TYPE = Symbol["for"]("react.transitional.element"),
-    REACT_PORTAL_TYPE = Symbol["for"]("react.portal"),
-    REACT_FRAGMENT_TYPE = Symbol["for"]("react.fragment"),
-    REACT_STRICT_MODE_TYPE = Symbol["for"]("react.strict_mode"),
-    REACT_PROFILER_TYPE = Symbol["for"]("react.profiler"),
-    REACT_CONSUMER_TYPE = Symbol["for"]("react.consumer"),
-    REACT_CONTEXT_TYPE = Symbol["for"]("react.context"),
-    REACT_FORWARD_REF_TYPE = Symbol["for"]("react.forward_ref"),
-    REACT_SUSPENSE_TYPE = Symbol["for"]("react.suspense"),
-    REACT_SUSPENSE_LIST_TYPE = Symbol["for"]("react.suspense_list"),
-    REACT_MEMO_TYPE = Symbol["for"]("react.memo"),
-    REACT_LAZY_TYPE = Symbol["for"]("react.lazy");
-  Symbol["for"]("react.scope");
-  var REACT_ACTIVITY_TYPE = Symbol["for"]("react.activity");
-  Symbol["for"]("react.legacy_hidden");
-  Symbol["for"]("react.tracing_marker");
-  var REACT_MEMO_CACHE_SENTINEL = Symbol["for"]("react.memo_cache_sentinel");
-  Symbol["for"]("react.view_transition");
+    REACT_LEGACY_ELEMENT_TYPE = Symbol.for("react.element"),
+    REACT_ELEMENT_TYPE = Symbol.for("react.transitional.element"),
+    REACT_PORTAL_TYPE = Symbol.for("react.portal"),
+    REACT_FRAGMENT_TYPE = Symbol.for("react.fragment"),
+    REACT_STRICT_MODE_TYPE = Symbol.for("react.strict_mode"),
+    REACT_PROFILER_TYPE = Symbol.for("react.profiler"),
+    REACT_CONSUMER_TYPE = Symbol.for("react.consumer"),
+    REACT_CONTEXT_TYPE = Symbol.for("react.context"),
+    REACT_FORWARD_REF_TYPE = Symbol.for("react.forward_ref"),
+    REACT_SUSPENSE_TYPE = Symbol.for("react.suspense"),
+    REACT_SUSPENSE_LIST_TYPE = Symbol.for("react.suspense_list"),
+    REACT_MEMO_TYPE = Symbol.for("react.memo"),
+    REACT_LAZY_TYPE = Symbol.for("react.lazy");
+  Symbol.for("react.scope");
+  var REACT_ACTIVITY_TYPE = Symbol.for("react.activity");
+  Symbol.for("react.legacy_hidden");
+  Symbol.for("react.tracing_marker");
+  var REACT_MEMO_CACHE_SENTINEL = Symbol.for("react.memo_cache_sentinel");
+  Symbol.for("react.view_transition");
   var MAYBE_ITERATOR_SYMBOL = Symbol.iterator,
-    REACT_CLIENT_REFERENCE = Symbol["for"]("react.client.reference"),
+    REACT_CLIENT_REFERENCE = Symbol.for("react.client.reference"),
     isArrayImpl = Array.isArray,
     ReactSharedInternals = React.__CLIENT_INTERNALS_DO_NOT_USE_OR_WARN_USERS_THEY_CANNOT_UPGRADE,
     rendererVersion = $$$config.rendererVersion,
@@ -6111,7 +6111,7 @@ module.exports = function ($$$config) {
       var listeners = [],
         signal = this.signal = {
           aborted: !1,
-          addEventListener: function addEventListener(type, listener) {
+          addEventListener: function (type, listener) {
             listeners.push(listener);
           }
         };
@@ -6153,7 +6153,7 @@ module.exports = function ($$$config) {
     SuspenseyCommitException = Error(formatProdErrorMessage(474)),
     SuspenseActionException = Error(formatProdErrorMessage(542)),
     noopSuspenseyCommitThenable = {
-      then: function then() {}
+      then: function () {}
     },
     suspendedThenable = null,
     thenableState$1 = null,
@@ -6210,23 +6210,23 @@ module.exports = function ($$$config) {
   var HooksDispatcherOnMount = {
       readContext: readContext,
       use: use,
-      useCallback: function useCallback(callback, deps) {
+      useCallback: function (callback, deps) {
         mountWorkInProgressHook().memoizedState = [callback, void 0 === deps ? null : deps];
         return callback;
       },
       useContext: readContext,
       useEffect: mountEffect,
-      useImperativeHandle: function useImperativeHandle(ref, create, deps) {
+      useImperativeHandle: function (ref, create, deps) {
         deps = null !== deps && void 0 !== deps ? deps.concat([ref]) : null;
         mountEffectImpl(4194308, 4, imperativeHandleEffect.bind(null, create, ref), deps);
       },
-      useLayoutEffect: function useLayoutEffect(create, deps) {
+      useLayoutEffect: function (create, deps) {
         return mountEffectImpl(4194308, 4, create, deps);
       },
-      useInsertionEffect: function useInsertionEffect(create, deps) {
+      useInsertionEffect: function (create, deps) {
         mountEffectImpl(4, 2, create, deps);
       },
-      useMemo: function useMemo(nextCreate, deps) {
+      useMemo: function (nextCreate, deps) {
         var hook = mountWorkInProgressHook();
         deps = void 0 === deps ? null : deps;
         var nextValue = nextCreate();
@@ -6241,7 +6241,7 @@ module.exports = function ($$$config) {
         hook.memoizedState = [nextValue, deps];
         return nextValue;
       },
-      useReducer: function useReducer(reducer, initialArg, init) {
+      useReducer: function (reducer, initialArg, init) {
         var hook = mountWorkInProgressHook();
         if (void 0 !== init) {
           var initialState = init(initialArg);
@@ -6266,14 +6266,14 @@ module.exports = function ($$$config) {
         reducer = reducer.dispatch = dispatchReducerAction.bind(null, currentlyRenderingFiber, reducer);
         return [hook.memoizedState, reducer];
       },
-      useRef: function useRef(initialValue) {
+      useRef: function (initialValue) {
         var hook = mountWorkInProgressHook();
         initialValue = {
           current: initialValue
         };
         return hook.memoizedState = initialValue;
       },
-      useState: function useState(initialState) {
+      useState: function (initialState) {
         initialState = mountStateImpl(initialState);
         var queue = initialState.queue,
           dispatch = dispatchSetState.bind(null, currentlyRenderingFiber, queue);
@@ -6281,17 +6281,17 @@ module.exports = function ($$$config) {
         return [initialState.memoizedState, dispatch];
       },
       useDebugValue: mountDebugValue,
-      useDeferredValue: function useDeferredValue(value, initialValue) {
+      useDeferredValue: function (value, initialValue) {
         var hook = mountWorkInProgressHook();
         return mountDeferredValueImpl(hook, value, initialValue);
       },
-      useTransition: function useTransition() {
+      useTransition: function () {
         var stateHook = mountStateImpl(!1);
         stateHook = startTransition.bind(null, currentlyRenderingFiber, stateHook.queue, !0, !1);
         mountWorkInProgressHook().memoizedState = stateHook;
         return [!1, stateHook];
       },
-      useSyncExternalStore: function useSyncExternalStore(subscribe, getSnapshot, getServerSnapshot) {
+      useSyncExternalStore: function (subscribe, getSnapshot, getServerSnapshot) {
         var fiber = currentlyRenderingFiber,
           hook = mountWorkInProgressHook();
         if (isHydrating) {
@@ -6315,7 +6315,7 @@ module.exports = function ($$$config) {
         }, updateStoreInstance.bind(null, fiber, inst, getServerSnapshot, getSnapshot), null);
         return getServerSnapshot;
       },
-      useId: function useId() {
+      useId: function () {
         var hook = mountWorkInProgressHook(),
           identifierPrefix = workInProgressRoot.identifierPrefix;
         if (isHydrating) {
@@ -6332,7 +6332,7 @@ module.exports = function ($$$config) {
       useHostTransitionStatus: useHostTransitionStatus,
       useFormState: mountActionState,
       useActionState: mountActionState,
-      useOptimistic: function useOptimistic(passthrough) {
+      useOptimistic: function (passthrough) {
         var hook = mountWorkInProgressHook();
         hook.memoizedState = hook.baseState = passthrough;
         var queue = {
@@ -6348,10 +6348,10 @@ module.exports = function ($$$config) {
         return [passthrough, hook];
       },
       useMemoCache: useMemoCache,
-      useCacheRefresh: function useCacheRefresh() {
+      useCacheRefresh: function () {
         return mountWorkInProgressHook().memoizedState = refreshCache.bind(null, currentlyRenderingFiber);
       },
-      useEffectEvent: function useEffectEvent(callback) {
+      useEffectEvent: function (callback) {
         var hook = mountWorkInProgressHook(),
           ref = {
             impl: callback
@@ -6375,15 +6375,15 @@ module.exports = function ($$$config) {
       useMemo: updateMemo,
       useReducer: updateReducer,
       useRef: updateRef,
-      useState: function useState() {
+      useState: function () {
         return updateReducer(basicStateReducer);
       },
       useDebugValue: mountDebugValue,
-      useDeferredValue: function useDeferredValue(value, initialValue) {
+      useDeferredValue: function (value, initialValue) {
         var hook = updateWorkInProgressHook();
         return updateDeferredValueImpl(hook, currentHook.memoizedState, value, initialValue);
       },
-      useTransition: function useTransition() {
+      useTransition: function () {
         var booleanOrThenable = updateReducer(basicStateReducer)[0],
           start = updateWorkInProgressHook().memoizedState;
         return ["boolean" === typeof booleanOrThenable ? booleanOrThenable : useThenable(booleanOrThenable), start];
@@ -6393,7 +6393,7 @@ module.exports = function ($$$config) {
       useHostTransitionStatus: useHostTransitionStatus,
       useFormState: updateActionState,
       useActionState: updateActionState,
-      useOptimistic: function useOptimistic(passthrough, reducer) {
+      useOptimistic: function (passthrough, reducer) {
         var hook = updateWorkInProgressHook();
         return updateOptimisticImpl(hook, currentHook, passthrough, reducer);
       },
@@ -6413,15 +6413,15 @@ module.exports = function ($$$config) {
     useMemo: updateMemo,
     useReducer: rerenderReducer,
     useRef: updateRef,
-    useState: function useState() {
+    useState: function () {
       return rerenderReducer(basicStateReducer);
     },
     useDebugValue: mountDebugValue,
-    useDeferredValue: function useDeferredValue(value, initialValue) {
+    useDeferredValue: function (value, initialValue) {
       var hook = updateWorkInProgressHook();
       return null === currentHook ? mountDeferredValueImpl(hook, value, initialValue) : updateDeferredValueImpl(hook, currentHook.memoizedState, value, initialValue);
     },
-    useTransition: function useTransition() {
+    useTransition: function () {
       var booleanOrThenable = rerenderReducer(basicStateReducer)[0],
         start = updateWorkInProgressHook().memoizedState;
       return ["boolean" === typeof booleanOrThenable ? booleanOrThenable : useThenable(booleanOrThenable), start];
@@ -6431,7 +6431,7 @@ module.exports = function ($$$config) {
     useHostTransitionStatus: useHostTransitionStatus,
     useFormState: rerenderActionState,
     useActionState: rerenderActionState,
-    useOptimistic: function useOptimistic(passthrough, reducer) {
+    useOptimistic: function (passthrough, reducer) {
       var hook = updateWorkInProgressHook();
       if (null !== currentHook) return updateOptimisticImpl(hook, currentHook, passthrough, reducer);
       hook.baseState = passthrough;
@@ -6442,7 +6442,7 @@ module.exports = function ($$$config) {
   };
   HooksDispatcherOnRerender.useEffectEvent = updateEvent;
   var classComponentUpdater = {
-      enqueueSetState: function enqueueSetState(inst, payload, callback) {
+      enqueueSetState: function (inst, payload, callback) {
         inst = inst._reactInternals;
         var lane = requestUpdateLane(),
           update = createUpdate(lane);
@@ -6451,7 +6451,7 @@ module.exports = function ($$$config) {
         payload = enqueueUpdate(inst, update, lane);
         null !== payload && (scheduleUpdateOnFiber(payload, inst, lane), entangleTransitions(payload, inst, lane));
       },
-      enqueueReplaceState: function enqueueReplaceState(inst, payload, callback) {
+      enqueueReplaceState: function (inst, payload, callback) {
         inst = inst._reactInternals;
         var lane = requestUpdateLane(),
           update = createUpdate(lane);
@@ -6461,7 +6461,7 @@ module.exports = function ($$$config) {
         payload = enqueueUpdate(inst, update, lane);
         null !== payload && (scheduleUpdateOnFiber(payload, inst, lane), entangleTransitions(payload, inst, lane));
       },
-      enqueueForceUpdate: function enqueueForceUpdate(inst, callback) {
+      enqueueForceUpdate: function (inst, callback) {
         inst = inst._reactInternals;
         var lane = requestUpdateLane(),
           update = createUpdate(lane);
@@ -6489,13 +6489,13 @@ module.exports = function ($$$config) {
     currentHoistableRoot = null,
     suspenseyCommitFlag = 8192,
     DefaultAsyncDispatcher = {
-      getCacheForType: function getCacheForType(resourceType) {
+      getCacheForType: function (resourceType) {
         var cache = readContext(CacheContext),
           cacheForType = cache.data.get(resourceType);
         void 0 === cacheForType && (cacheForType = resourceType(), cache.data.set(resourceType, cacheForType));
         return cacheForType;
       },
-      cacheSignal: function cacheSignal() {
+      cacheSignal: function () {
         return readContext(CacheContext).controller.signal;
       }
     },
@@ -6504,8 +6504,8 @@ module.exports = function ($$$config) {
     ROLE_TYPE = 2,
     TEST_NAME_TYPE = 3,
     TEXT_TYPE = 4;
-  if ("function" === typeof Symbol && Symbol["for"]) {
-    var symbolFor = Symbol["for"];
+  if ("function" === typeof Symbol && Symbol.for) {
+    var symbolFor = Symbol.for;
     COMPONENT_TYPE = symbolFor("selector.component");
     HAS_PSEUDO_CLASS_TYPE = symbolFor("selector.has_pseudo_class");
     ROLE_TYPE = symbolFor("selector.role");
@@ -6797,10 +6797,10 @@ module.exports = function ($$$config) {
   exports.observeVisibleRects = function (hostRoot, selectors, callback, options) {
     if (!supportsTestSelectors) throw Error(formatProdErrorMessage(363));
     hostRoot = findAllNodes(hostRoot, selectors);
-    var _disconnect = setupIntersectionObserver(hostRoot, callback, options).disconnect;
+    var disconnect = setupIntersectionObserver(hostRoot, callback, options).disconnect;
     return {
-      disconnect: function disconnect() {
-        _disconnect();
+      disconnect: function () {
+        disconnect();
       }
     };
   };
@@ -6878,8 +6878,8 @@ if (true) {
 
 
 
-var REACT_ELEMENT_TYPE = Symbol["for"]("react.transitional.element"),
-  REACT_FRAGMENT_TYPE = Symbol["for"]("react.fragment");
+var REACT_ELEMENT_TYPE = Symbol.for("react.transitional.element"),
+  REACT_FRAGMENT_TYPE = Symbol.for("react.fragment");
 function jsxProd(type, config, maybeKey) {
   var key = null;
   void 0 !== maybeKey && (key = "" + maybeKey);
@@ -6918,18 +6918,18 @@ exports.jsxs = jsxProd;
 
 
 
-var REACT_ELEMENT_TYPE = Symbol["for"]("react.transitional.element"),
-  REACT_PORTAL_TYPE = Symbol["for"]("react.portal"),
-  REACT_FRAGMENT_TYPE = Symbol["for"]("react.fragment"),
-  REACT_STRICT_MODE_TYPE = Symbol["for"]("react.strict_mode"),
-  REACT_PROFILER_TYPE = Symbol["for"]("react.profiler"),
-  REACT_CONSUMER_TYPE = Symbol["for"]("react.consumer"),
-  REACT_CONTEXT_TYPE = Symbol["for"]("react.context"),
-  REACT_FORWARD_REF_TYPE = Symbol["for"]("react.forward_ref"),
-  REACT_SUSPENSE_TYPE = Symbol["for"]("react.suspense"),
-  REACT_MEMO_TYPE = Symbol["for"]("react.memo"),
-  REACT_LAZY_TYPE = Symbol["for"]("react.lazy"),
-  REACT_ACTIVITY_TYPE = Symbol["for"]("react.activity"),
+var REACT_ELEMENT_TYPE = Symbol.for("react.transitional.element"),
+  REACT_PORTAL_TYPE = Symbol.for("react.portal"),
+  REACT_FRAGMENT_TYPE = Symbol.for("react.fragment"),
+  REACT_STRICT_MODE_TYPE = Symbol.for("react.strict_mode"),
+  REACT_PROFILER_TYPE = Symbol.for("react.profiler"),
+  REACT_CONSUMER_TYPE = Symbol.for("react.consumer"),
+  REACT_CONTEXT_TYPE = Symbol.for("react.context"),
+  REACT_FORWARD_REF_TYPE = Symbol.for("react.forward_ref"),
+  REACT_SUSPENSE_TYPE = Symbol.for("react.suspense"),
+  REACT_MEMO_TYPE = Symbol.for("react.memo"),
+  REACT_LAZY_TYPE = Symbol.for("react.lazy"),
+  REACT_ACTIVITY_TYPE = Symbol.for("react.activity"),
   MAYBE_ITERATOR_SYMBOL = Symbol.iterator;
 function getIteratorFn(maybeIterable) {
   if (null === maybeIterable || "object" !== typeof maybeIterable) return null;
@@ -6937,12 +6937,12 @@ function getIteratorFn(maybeIterable) {
   return "function" === typeof maybeIterable ? maybeIterable : null;
 }
 var ReactNoopUpdateQueue = {
-    isMounted: function isMounted() {
+    isMounted: function () {
       return !1;
     },
-    enqueueForceUpdate: function enqueueForceUpdate() {},
-    enqueueReplaceState: function enqueueReplaceState() {},
-    enqueueSetState: function enqueueSetState() {}
+    enqueueForceUpdate: function () {},
+    enqueueReplaceState: function () {},
+    enqueueSetState: function () {}
   },
   assign = Object.assign,
   emptyObject = {};
@@ -7082,7 +7082,7 @@ function lazyInitializer(payload) {
     });
     -1 === payload._status && (payload._status = 0, payload._result = ctor);
   }
-  if (1 === payload._status) return payload._result["default"];
+  if (1 === payload._status) return payload._result.default;
   throw payload._result;
 }
 var reportGlobalError = "function" === typeof reportError ? reportError : function (error) {
@@ -7102,24 +7102,24 @@ var reportGlobalError = "function" === typeof reportError ? reportError : functi
   },
   Children = {
     map: mapChildren,
-    forEach: function forEach(children, forEachFunc, forEachContext) {
+    forEach: function (children, forEachFunc, forEachContext) {
       mapChildren(children, function () {
         forEachFunc.apply(this, arguments);
       }, forEachContext);
     },
-    count: function count(children) {
+    count: function (children) {
       var n = 0;
       mapChildren(children, function () {
         n++;
       });
       return n;
     },
-    toArray: function toArray(children) {
+    toArray: function (children) {
       return mapChildren(children, function (child) {
         return child;
       }) || [];
     },
-    only: function only(children) {
+    only: function (children) {
       if (!isValidElement(children)) throw Error("React.Children.only expected to receive a single React element child.");
       return children;
     }
@@ -7135,7 +7135,7 @@ exports.Suspense = REACT_SUSPENSE_TYPE;
 exports.__CLIENT_INTERNALS_DO_NOT_USE_OR_WARN_USERS_THEY_CANNOT_UPGRADE = ReactSharedInternals;
 exports.__COMPILER_RUNTIME = {
   __proto__: null,
-  c: function c(size) {
+  c: function (size) {
     return ReactSharedInternals.H.useMemoCache(size);
   }
 };
@@ -7462,16 +7462,16 @@ function performWorkUntilDeadline() {
   }
 }
 var schedulePerformWorkUntilDeadline;
-if ("function" === typeof localSetImmediate) schedulePerformWorkUntilDeadline = function schedulePerformWorkUntilDeadline() {
+if ("function" === typeof localSetImmediate) schedulePerformWorkUntilDeadline = function () {
   localSetImmediate(performWorkUntilDeadline);
 };else if ("undefined" !== typeof MessageChannel) {
   var channel = new MessageChannel(),
     port = channel.port2;
   channel.port1.onmessage = performWorkUntilDeadline;
-  schedulePerformWorkUntilDeadline = function schedulePerformWorkUntilDeadline() {
+  schedulePerformWorkUntilDeadline = function () {
     port.postMessage(null);
   };
-} else schedulePerformWorkUntilDeadline = function schedulePerformWorkUntilDeadline() {
+} else schedulePerformWorkUntilDeadline = function () {
   localSetTimeout(performWorkUntilDeadline, 0);
 };
 function requestHostTimeout(callback, ms) {
@@ -8652,7 +8652,7 @@ __webpack_require__.d(dist_namespaceObject, {
   "default": () => (ReactUnityRenderer),
   flushSync: () => (flushSync),
   icon: () => (icon),
-  render: () => (_render),
+  render: () => (render),
   unstable_batchedUpdates: () => (batchedUpdates),
   useGlobals: () => (useGlobals),
   useGlobalsContext: () => (useGlobalsContext),
@@ -8697,86 +8697,19 @@ __webpack_require__.d(webgl_compat_namespaceObject, {
   useUnityContext: () => (useUnityContext)
 });
 
-;// ../../../../node_modules/.pnpm/@babel+runtime@7.29.7/node_modules/@babel/runtime/helpers/esm/arrayWithHoles.js
-function _arrayWithHoles(r) {
-  if (Array.isArray(r)) return r;
-}
-
-;// ../../../../node_modules/.pnpm/@babel+runtime@7.29.7/node_modules/@babel/runtime/helpers/esm/iterableToArrayLimit.js
-function _iterableToArrayLimit(r, l) {
-  var t = null == r ? null : "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"];
-  if (null != t) {
-    var e,
-      n,
-      i,
-      u,
-      a = [],
-      f = !0,
-      o = !1;
-    try {
-      if (i = (t = t.call(r)).next, 0 === l) {
-        if (Object(t) !== t) return;
-        f = !1;
-      } else for (; !(f = (e = i.call(t)).done) && (a.push(e.value), a.length !== l); f = !0);
-    } catch (r) {
-      o = !0, n = r;
-    } finally {
-      try {
-        if (!f && null != t["return"] && (u = t["return"](), Object(u) !== u)) return;
-      } finally {
-        if (o) throw n;
-      }
-    }
-    return a;
-  }
-}
-
-;// ../../../../node_modules/.pnpm/@babel+runtime@7.29.7/node_modules/@babel/runtime/helpers/esm/arrayLikeToArray.js
-function _arrayLikeToArray(r, a) {
-  (null == a || a > r.length) && (a = r.length);
-  for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e];
-  return n;
-}
-
-;// ../../../../node_modules/.pnpm/@babel+runtime@7.29.7/node_modules/@babel/runtime/helpers/esm/unsupportedIterableToArray.js
-
-function _unsupportedIterableToArray(r, a) {
-  if (r) {
-    if ("string" == typeof r) return _arrayLikeToArray(r, a);
-    var t = {}.toString.call(r).slice(8, -1);
-    return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray(r, a) : void 0;
-  }
-}
-
-;// ../../../../node_modules/.pnpm/@babel+runtime@7.29.7/node_modules/@babel/runtime/helpers/esm/nonIterableRest.js
-function _nonIterableRest() {
-  throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
-}
-
-;// ../../../../node_modules/.pnpm/@babel+runtime@7.29.7/node_modules/@babel/runtime/helpers/esm/slicedToArray.js
-
-
-
-
-function _slicedToArray(r, e) {
-  return _arrayWithHoles(r) || _iterableToArrayLimit(r, e) || _unsupportedIterableToArray(r, e) || _nonIterableRest();
-}
-
 // EXTERNAL MODULE: ../../../../node_modules/.pnpm/react@19.2.8/node_modules/react/index.js
 var react = __webpack_require__("../../../../node_modules/.pnpm/react@19.2.8/node_modules/react/index.js");
 ;// ../../../../packages/material/dist/helpers-D3F2qDT1.js
 
 //#region src/util/helpers.ts
 function getChildrenOfType(children, type) {
-  return react.Children.toArray(children).filter(function (x) {
-    return x && typeof x === "object" && "type" in x && x.type === type;
-  });
+  return react.Children.toArray(children).filter(x => x && typeof x === "object" && "type" in x && x.type === type);
 }
 function getOnlyChildOfType(children, type) {
   return getChildrenOfType(children, type);
 }
 function getElevationClass(elevation) {
-  if (elevation > 0) return "mat-elevation-".concat(elevation);
+  if (elevation > 0) return `mat-elevation-${elevation}`;
   return "mat-elevation-0";
 }
 //#endregion
@@ -8943,33 +8876,30 @@ var jsx_runtime = __webpack_require__("../../../../node_modules/.pnpm/react@19.2
 
 
 
-
 //#region src/accordion/index.tsx
-var _excluded = ["children", "className", "elevation"];
-var _excluded2 = ["className"];
-var _excluded3 = ["className"];
-var expanderBaseStyle = {
+const _excluded = ["children", "className", "elevation"];
+const _excluded2 = ["className"];
+const _excluded3 = ["className"];
+const expanderBaseStyle = {
   height: 0
 };
 function _Accordion(_ref) {
-  var children = _ref.children,
-    className = _ref.className,
-    _ref$elevation = _ref.elevation,
-    elevation = _ref$elevation === void 0 ? 1 : _ref$elevation,
+  let {
+      children,
+      className,
+      elevation = 1
+    } = _ref,
     props = _objectWithoutProperties(_ref, _excluded);
-  var summary = getOnlyChildOfType(children, _Summary);
-  var content = getOnlyChildOfType(children, _Content);
-  var _useState = (0,react.useState)(false),
-    _useState2 = _slicedToArray(_useState, 2),
-    opened = _useState2[0],
-    setOpened = _useState2[1];
-  var expanderRef = (0,react.useRef)(void 0);
-  var wrapperRef = (0,react.useRef)(void 0);
-  var onResize = function onResize(ev, sender) {
+  const summary = getOnlyChildOfType(children, _Summary);
+  const content = getOnlyChildOfType(children, _Content);
+  const [opened, setOpened] = (0,react.useState)(false);
+  const expanderRef = (0,react.useRef)(void 0);
+  const wrapperRef = (0,react.useRef)(void 0);
+  const onResize = (ev, sender) => {
     if (!expanderRef.current) return;
     if (opened) expanderRef.current.Style.Set("height", sender.RectTransform.rect.height);
   };
-  (0,react.useEffect)(function () {
+  (0,react.useEffect)(() => {
     if (!expanderRef.current || !wrapperRef.current) return;
     expanderRef.current.Style.Set("height", opened ? wrapperRef.current.RectTransform.rect.height : 0);
     expanderRef.current.Style.Set("opacity", opened ? 1 : 0);
@@ -8981,11 +8911,7 @@ function _Accordion(_ref) {
     children: [/* @__PURE__ */(0,jsx_runtime.jsxs)("view", {
       name: "<AccordionHeader>",
       className: dist_clsx(accordion_index_module.header, "mat-accordion-header"),
-      onPointerClick: function onPointerClick() {
-        return setOpened(function (x) {
-          return !x;
-        });
-      },
+      onPointerClick: () => setOpened(x => !x),
       children: [summary, /* @__PURE__ */(0,jsx_runtime.jsx)("icon", {
         children: "expand_more"
       })]
@@ -8994,7 +8920,7 @@ function _Accordion(_ref) {
       ref: expanderRef,
       style: expanderBaseStyle,
       children: /* @__PURE__ */(0,jsx_runtime.jsx)("view", {
-        onResize: onResize,
+        onResize,
         ref: wrapperRef,
         className: accordion_index_module.contentWrapper,
         children: content
@@ -9003,7 +8929,9 @@ function _Accordion(_ref) {
   }));
 }
 function _Summary(_ref2) {
-  var className = _ref2.className,
+  let {
+      className
+    } = _ref2,
     props = _objectWithoutProperties(_ref2, _excluded2);
   return /* @__PURE__ */(0,jsx_runtime.jsx)("view", _objectSpread2({
     name: "<Accordion.Summary>",
@@ -9011,14 +8939,16 @@ function _Summary(_ref2) {
   }, props));
 }
 function _Content(_ref3) {
-  var className = _ref3.className,
+  let {
+      className
+    } = _ref3,
     props = _objectWithoutProperties(_ref3, _excluded3);
   return /* @__PURE__ */(0,jsx_runtime.jsx)("view", _objectSpread2({
     name: "<Accordion.Content>",
     className: dist_clsx(className, accordion_index_module.content, "mat-accordion-content")
   }, props));
 }
-var Accordion = react.memo(_Accordion);
+const Accordion = react.memo(_Accordion);
 Accordion.Summary = _Summary;
 Accordion.Content = _Content;
 //#endregion
@@ -9060,23 +8990,23 @@ var index_module_update = injectStylesIntoStyleTag_default()(ripple_index_module
 //#region src/ripple/index.ts
 function addRipple(containerElement, pressPosition) {
   if (!containerElement) return null;
-  var ripple = UnityBridge.createElement("view", "", HostContainer);
-  ripple.ClassName = "".concat(src_ripple_index_module.ripple, " mat-ripple");
+  const ripple = UnityBridge.createElement("view", "", HostContainer);
+  ripple.ClassName = `${src_ripple_index_module.ripple} mat-ripple`;
   ripple.Name = "<Ripple>";
-  var w = containerElement.RectTransform.rect.width;
-  var h = containerElement.RectTransform.rect.height;
-  var maxDimension = Math.max(w, h);
+  const w = containerElement.RectTransform.rect.width;
+  const h = containerElement.RectTransform.rect.height;
+  const maxDimension = Math.max(w, h);
   if (pressPosition) {
-    var pos = containerElement.GetRelativePosition(pressPosition.x, pressPosition.y);
+    const pos = containerElement.GetRelativePosition(pressPosition.x, pressPosition.y);
     ripple.Style.Set("left", pos.x);
     ripple.Style.Set("top", pos.y);
-    var hw = w / 2;
-    var hh = h / 2;
-    var rx = pos.x > hw ? 0 : w;
-    var ry = pos.y > hh ? 0 : h;
-    var dx = rx - pos.x;
-    var dy = ry - pos.y;
-    var mag = Math.sqrt(dx * dx + dy * dy) * 2.1;
+    const hw = w / 2;
+    const hh = h / 2;
+    const rx = pos.x > hw ? 0 : w;
+    const ry = pos.y > hh ? 0 : h;
+    const dx = rx - pos.x;
+    const dy = ry - pos.y;
+    const mag = Math.sqrt(dx * dx + dy * dy) * 2.1;
     ripple.Style.Set("width", mag);
     ripple.Style.Set("height", mag);
   } else {
@@ -9090,15 +9020,16 @@ function addRipple(containerElement, pressPosition) {
   UnityBridge.appendChild(containerElement, ripple);
   return ripple;
 }
-function useRipple(_ref) {
-  var onPointerDown = _ref.onPointerDown,
-    onPointerUp = _ref.onPointerUp,
-    noRipple = _ref.noRipple,
-    centered = _ref.centered,
-    target = _ref.target;
-  var rippleRef = (0,react.useRef)(void 0);
+function useRipple({
+  onPointerDown,
+  onPointerUp,
+  noRipple,
+  centered,
+  target
+}) {
+  const rippleRef = (0,react.useRef)(void 0);
   return {
-    onPointerDown: (0,react.useCallback)(function (ev, sender) {
+    onPointerDown: (0,react.useCallback)((ev, sender) => {
       onPointerDown === null || onPointerDown === void 0 || onPointerDown.call(null, ev, sender);
       if (!noRipple) {
         var _rippleRef$current;
@@ -9106,11 +9037,8 @@ function useRipple(_ref) {
         rippleRef.current = addRipple(target ? target.current : sender, centered ? null : ev.pressPosition);
       }
     }, [noRipple, onPointerDown, centered, target]),
-    onPointerUp: (0,react.useCallback)(function () {
+    onPointerUp: (0,react.useCallback)((...args) => {
       var _rippleRef$current2;
-      for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
-        args[_key] = arguments[_key];
-      }
       onPointerUp === null || onPointerUp === void 0 || onPointerUp.apply(null, args);
       (_rippleRef$current2 = rippleRef.current) === null || _rippleRef$current2 === void 0 || _rippleRef$current2.Remove();
       rippleRef.current = null;
@@ -9159,87 +9087,38 @@ var button_index_module_update = injectStylesIntoStyleTag_default()(button_index
 
 
 //#region src/button/index.tsx
-var button_excluded = ["children", "className", "elevation", "noRipple", "onPointerDown", "onPointerUp", "variant"];
-var _Button = (0,react.forwardRef)(function _Button(_ref, ref) {
-  var children = _ref.children,
-    className = _ref.className,
-    elevation = _ref.elevation,
-    noRipple = _ref.noRipple,
-    onPointerDown = _ref.onPointerDown,
-    onPointerUp = _ref.onPointerUp,
-    variant = _ref.variant,
+const button_excluded = ["children", "className", "elevation", "noRipple", "onPointerDown", "onPointerUp", "variant"];
+const _Button = (0,react.forwardRef)(function _Button(_ref, ref) {
+  let {
+      children,
+      className,
+      elevation,
+      noRipple,
+      onPointerDown,
+      onPointerUp,
+      variant
+    } = _ref,
     props = _objectWithoutProperties(_ref, button_excluded);
   variant = variant || "text";
-  var ripple = useRipple({
-    onPointerDown: onPointerDown,
-    onPointerUp: onPointerUp,
-    noRipple: noRipple,
+  const ripple = useRipple({
+    onPointerDown,
+    onPointerUp,
+    noRipple,
     centered: variant === "icon"
   });
   return /* @__PURE__ */(0,jsx_runtime.jsx)("button", _objectSpread2(_objectSpread2(_objectSpread2({
     name: "<Button>"
   }, props), ripple), {}, {
-    ref: ref,
-    className: dist_clsx(className, src_button_index_module.host, getElevationClass(elevation), "mat-button", src_button_index_module[variant], "mat-variant-".concat(variant)),
-    children: children
+    ref,
+    className: dist_clsx(className, src_button_index_module.host, getElevationClass(elevation), "mat-button", src_button_index_module[variant], `mat-variant-${variant}`),
+    children
   }));
 });
-var Button = react.memo(_Button);
+const Button = react.memo(_Button);
 //#endregion
 
 
 //# sourceMappingURL=index.js.map
-;// ../../../../node_modules/.pnpm/@babel+runtime@7.29.7/node_modules/@babel/runtime/helpers/esm/createForOfIteratorHelper.js
-
-function _createForOfIteratorHelper(r, e) {
-  var t = "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"];
-  if (!t) {
-    if (Array.isArray(r) || (t = _unsupportedIterableToArray(r)) || e && r && "number" == typeof r.length) {
-      t && (r = t);
-      var _n = 0,
-        F = function F() {};
-      return {
-        s: F,
-        n: function n() {
-          return _n >= r.length ? {
-            done: !0
-          } : {
-            done: !1,
-            value: r[_n++]
-          };
-        },
-        e: function e(r) {
-          throw r;
-        },
-        f: F
-      };
-    }
-    throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
-  }
-  var o,
-    a = !0,
-    u = !1;
-  return {
-    s: function s() {
-      t = t.call(r);
-    },
-    n: function n() {
-      var r = t.next();
-      return a = r.done, r;
-    },
-    e: function e(r) {
-      u = !0, o = r;
-    },
-    f: function f() {
-      try {
-        a || null == t["return"] || t["return"]();
-      } finally {
-        if (u) throw o;
-      }
-    }
-  };
-}
-
 // EXTERNAL MODULE: ../../../../node_modules/.pnpm/css-loader@7.1.4_webpack@5._62043f6a253f8c7f1ce10b9e4bcb0b7c/node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[0].oneOf[7].use[1]!../../../../node_modules/.pnpm/resolve-url-loader@5.0.0/node_modules/resolve-url-loader/index.js??ruleSet[1].rules[0].oneOf[7].use[2]!../../../../node_modules/.pnpm/sass-loader@17.0.0_sass@1.1_20e65d72e5f2ff16ba56ab3dd615796f/node_modules/sass-loader/dist/cjs/index.js??ruleSet[1].rules[0].oneOf[7].use[3]!../../../../packages/material/dist/src/modal/index.module.scss
 var modal_index_module = __webpack_require__("../../../../node_modules/.pnpm/css-loader@7.1.4_webpack@5._62043f6a253f8c7f1ce10b9e4bcb0b7c/node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[0].oneOf[7].use[1]!../../../../node_modules/.pnpm/resolve-url-loader@5.0.0/node_modules/resolve-url-loader/index.js??ruleSet[1].rules[0].oneOf[7].use[2]!../../../../node_modules/.pnpm/sass-loader@17.0.0_sass@1.1_20e65d72e5f2ff16ba56ab3dd615796f/node_modules/sass-loader/dist/cjs/index.js??ruleSet[1].rules[0].oneOf[7].use[3]!../../../../packages/material/dist/src/modal/index.module.scss");
 ;// ../../../../packages/material/dist/src/modal/index.module.scss
@@ -9274,70 +9153,46 @@ var modal_index_module_update = injectStylesIntoStyleTag_default()(modal_index_m
 
 
 
-
 //#region src/util/hooks/use-root-class.ts
 function useRootClass(className) {
-  var classes = dist_clsx(className);
-  (0,react.useEffect)(function () {
-    var classArray = classes.split(" ").filter(function (x) {
-      return x;
-    });
+  const classes = dist_clsx(className);
+  (0,react.useEffect)(() => {
+    const classArray = classes.split(" ").filter(x => x);
     if (classArray.length) {
-      var _iterator = _createForOfIteratorHelper(classArray),
-        _step;
-      try {
-        for (_iterator.s(); !(_step = _iterator.n()).done;) {
-          var cls = _step.value;
-          HostContainer.ClassList.Add(cls);
-        }
-      } catch (err) {
-        _iterator.e(err);
-      } finally {
-        _iterator.f();
-      }
-      return function () {
-        var _iterator2 = _createForOfIteratorHelper(classArray),
-          _step2;
-        try {
-          for (_iterator2.s(); !(_step2 = _iterator2.n()).done;) {
-            var cls = _step2.value;
-            HostContainer.ClassList.Remove(cls);
-          }
-        } catch (err) {
-          _iterator2.e(err);
-        } finally {
-          _iterator2.f();
-        }
+      for (const cls of classArray) HostContainer.ClassList.Add(cls);
+      return () => {
+        for (const cls of classArray) HostContainer.ClassList.Remove(cls);
       };
     }
   }, [classes]);
 }
 //#endregion
 //#region src/modal/index.tsx
-function Modal(_ref) {
-  var open = _ref.open,
-    children = _ref.children,
-    className = _ref.className,
-    onClickBackdrop = _ref.onClickBackdrop,
-    onEscape = _ref.onEscape,
-    onCloseButton = _ref.onCloseButton;
+function Modal({
+  open,
+  children,
+  className,
+  onClickBackdrop,
+  onEscape,
+  onCloseButton
+}) {
   useRootClass(open && [src_modal_index_module.body, "mat-modal-open"]);
-  var portalRef = (0,react.useRef)(void 0);
-  var initialOpen = (0,react.useRef)(open);
-  var openedOnce = (0,react.useRef)(open);
-  var click = function click(ev, sender) {
+  const portalRef = (0,react.useRef)(void 0);
+  const initialOpen = (0,react.useRef)(open);
+  const openedOnce = (0,react.useRef)(open);
+  const click = (ev, sender) => {
     if (!ev.used) onClickBackdrop === null || onClickBackdrop === void 0 || onClickBackdrop();
   };
-  var clickContent = function clickContent(ev, sender) {
+  const clickContent = (ev, sender) => {
     ev.Use();
   };
-  var keyup = function keyup(ev) {
+  const keyup = ev => {
     if (ev.key === "Escape") onEscape === null || onEscape === void 0 || onEscape();
   };
-  var onAnimationEnd = function onAnimationEnd(ev) {
+  const onAnimationEnd = ev => {
     if (ev.AnimationName === src_modal_index_module.closeAnim && portalRef.current) portalRef.current.SetProperty("active", false);
   };
-  (0,react.useEffect)(function () {
+  (0,react.useEffect)(() => {
     openedOnce.current = openedOnce.current || open;
     if (open && portalRef.current) portalRef.current.SetProperty("active", !!open);
   }, [open]);
@@ -9346,7 +9201,7 @@ function Modal(_ref) {
     onPointerClick: onClickBackdrop ? click : null,
     onKeyDown: onEscape ? keyup : null,
     active: initialOpen.current,
-    onAnimationEnd: onAnimationEnd,
+    onAnimationEnd,
     ref: portalRef,
     children: /* @__PURE__ */(0,jsx_runtime.jsxs)("view", {
       className: dist_clsx(src_modal_index_module.content, "mat-modal-content"),
@@ -9403,17 +9258,18 @@ var alert_index_module_update = injectStylesIntoStyleTag_default()(alert_index_m
 
 
 //#region src/alert/index.tsx
-var alert_excluded = ["title", "text", "button", "onClose", "onClickBackdrop", "backdropClose"];
+const alert_excluded = ["title", "text", "button", "onClose", "onClickBackdrop", "backdropClose"];
 function AlertDialog(_ref) {
-  var title = _ref.title,
-    text = _ref.text,
-    _ref$button = _ref.button,
-    button = _ref$button === void 0 ? "Ok" : _ref$button,
-    onClose = _ref.onClose,
-    onClickBackdrop = _ref.onClickBackdrop,
-    backdropClose = _ref.backdropClose,
+  let {
+      title,
+      text,
+      button = "Ok",
+      onClose,
+      onClickBackdrop,
+      backdropClose
+    } = _ref,
     props = _objectWithoutProperties(_ref, alert_excluded);
-  var clickBackdrop = function clickBackdrop() {
+  const clickBackdrop = () => {
     if (backdropClose) onClose();
     if (onClickBackdrop) onClickBackdrop();
   };
@@ -9430,9 +9286,7 @@ function AlertDialog(_ref) {
       className: dist_clsx("mat-alert-dialog-buttons", src_alert_index_module.buttons),
       children: /* @__PURE__ */(0,jsx_runtime.jsx)(Button, {
         className: dist_clsx(src_alert_index_module.button),
-        onClick: function onClick() {
-          return onClose();
-        },
+        onClick: () => onClose(),
         children: button
       })
     })]
@@ -9479,30 +9333,33 @@ var card_index_module_update = injectStylesIntoStyleTag_default()(card_index_mod
 
 
 //#region src/card/index.tsx
-var card_excluded = ["children", "className", "elevation"];
-var card_excluded2 = ["className"];
+const card_excluded = ["children", "className", "elevation"];
+const card_excluded2 = ["className"];
 function _Card(_ref) {
-  var children = _ref.children,
-    className = _ref.className,
-    _ref$elevation = _ref.elevation,
-    elevation = _ref$elevation === void 0 ? 1 : _ref$elevation,
+  let {
+      children,
+      className,
+      elevation = 1
+    } = _ref,
     props = _objectWithoutProperties(_ref, card_excluded);
   return /* @__PURE__ */(0,jsx_runtime.jsx)("view", _objectSpread2(_objectSpread2({
     name: "<Card>",
     className: dist_clsx(className, src_card_index_module.host, getElevationClass(elevation), "mat-card")
   }, props), {}, {
-    children: children
+    children
   }));
 }
 function card_Content(_ref2) {
-  var className = _ref2.className,
+  let {
+      className
+    } = _ref2,
     props = _objectWithoutProperties(_ref2, card_excluded2);
   return /* @__PURE__ */(0,jsx_runtime.jsx)("view", _objectSpread2({
     name: "<Card.Content>",
     className: dist_clsx(className, src_card_index_module.content, "mat-card-content")
   }, props));
 }
-var Card = react.memo(_Card);
+const Card = react.memo(_Card);
 Card.Content = card_Content;
 //#endregion
 
@@ -9546,20 +9403,22 @@ var confirm_index_module_update = injectStylesIntoStyleTag_default()(confirm_ind
 
 
 //#region src/confirm/index.tsx
-var confirm_excluded = ["title", "text", "buttons", "error", "submitting", "yes", "no", "onClose", "backdropClose", "onClickBackdrop"];
+const confirm_excluded = ["title", "text", "buttons", "error", "submitting", "yes", "no", "onClose", "backdropClose", "onClickBackdrop"];
 function ConfirmDialog(_ref) {
-  var title = _ref.title,
-    text = _ref.text,
-    buttons = _ref.buttons,
-    error = _ref.error,
-    submitting = _ref.submitting,
-    yes = _ref.yes,
-    no = _ref.no,
-    onClose = _ref.onClose,
-    backdropClose = _ref.backdropClose,
-    onClickBackdrop = _ref.onClickBackdrop,
+  let {
+      title,
+      text,
+      buttons,
+      error,
+      submitting,
+      yes,
+      no,
+      onClose,
+      backdropClose,
+      onClickBackdrop
+    } = _ref,
     props = _objectWithoutProperties(_ref, confirm_excluded);
-  buttons = (0,react.useMemo)(function () {
+  buttons = (0,react.useMemo)(() => {
     var _buttons;
     return (_buttons = buttons) !== null && _buttons !== void 0 ? _buttons : [no == null && {
       value: false,
@@ -9567,11 +9426,9 @@ function ConfirmDialog(_ref) {
     }, yes == null && {
       value: true,
       text: yes || "Yes"
-    }].filter(function (x) {
-      return x;
-    });
+    }].filter(x => x);
   }, [buttons, yes, no]);
-  var clickBackdrop = function clickBackdrop() {
+  const clickBackdrop = () => {
     if (backdropClose) onClose(null);
     if (onClickBackdrop) onClickBackdrop();
   };
@@ -9589,16 +9446,12 @@ function ConfirmDialog(_ref) {
       children: error
     }), (buttons === null || buttons === void 0 ? void 0 : buttons.length) > 0 && /* @__PURE__ */(0,jsx_runtime.jsx)("div", {
       className: dist_clsx("mat-confirm-dialog-buttons", src_confirm_index_module.buttons),
-      children: buttons.map(function (btn, ind) {
-        return /* @__PURE__ */(0,jsx_runtime.jsx)(Button, {
-          className: dist_clsx(src_confirm_index_module.button),
-          onClick: function onClick() {
-            return onClose(btn.value);
-          },
-          "data-temp-disabled": submitting,
-          children: btn.text
-        }, ind);
-      })
+      children: buttons.map((btn, ind) => /* @__PURE__ */(0,jsx_runtime.jsx)(Button, {
+        className: dist_clsx(src_confirm_index_module.button),
+        onClick: () => onClose(btn.value),
+        "data-temp-disabled": submitting,
+        children: btn.text
+      }, ind))
     })]
   }));
 }
@@ -9642,37 +9495,35 @@ var input_index_module_update = injectStylesIntoStyleTag_default()(input_index_m
 
 
 //#region src/input/index.tsx
-var input_excluded = ["children", "float", "placeholder", "className", "variant"];
-var InputField = (0,react.forwardRef)(function InputField(_ref, ref) {
-  var children = _ref.children,
-    _ref$float = _ref["float"],
-    _float = _ref$float === void 0 ? "auto" : _ref$float,
-    placeholder = _ref.placeholder,
-    className = _ref.className,
-    _ref$variant = _ref.variant,
-    variant = _ref$variant === void 0 ? "filled" : _ref$variant,
+const input_excluded = ["children", "float", "placeholder", "className", "variant"];
+const InputField = (0,react.forwardRef)(function InputField(_ref, ref) {
+  let {
+      children,
+      float = "auto",
+      placeholder,
+      className,
+      variant = "filled"
+    } = _ref,
     other = _objectWithoutProperties(_ref, input_excluded);
-  var hostRef = (0,react.useRef)(void 0);
+  const hostRef = (0,react.useRef)(void 0);
   variant = variant || "filled";
-  var emptyRef = (0,react.useRef)(true);
-  (0,react.useImperativeHandle)(ref, function () {
-    return {
-      setEmpty: function setEmpty(empty) {
-        var _hostRef$current, _hostRef$current2;
-        (_hostRef$current = hostRef.current) === null || _hostRef$current === void 0 || _hostRef$current.ClassList.Toggle(src_input_index_module["float"], !empty);
-        (_hostRef$current2 = hostRef.current) === null || _hostRef$current2 === void 0 || _hostRef$current2.ClassList.Toggle("float", !empty);
-        emptyRef.current = empty;
-      }
-    };
-  }, []);
+  const emptyRef = (0,react.useRef)(true);
+  (0,react.useImperativeHandle)(ref, () => ({
+    setEmpty: empty => {
+      var _hostRef$current, _hostRef$current2;
+      (_hostRef$current = hostRef.current) === null || _hostRef$current === void 0 || _hostRef$current.ClassList.Toggle(src_input_index_module.float, !empty);
+      (_hostRef$current2 = hostRef.current) === null || _hostRef$current2 === void 0 || _hostRef$current2.ClassList.Toggle("float", !empty);
+      emptyRef.current = empty;
+    }
+  }), []);
   return /* @__PURE__ */(0,jsx_runtime.jsxs)("view", _objectSpread2(_objectSpread2({
     name: "<InputField>"
   }, other), {}, {
     ref: hostRef,
-    className: dist_clsx(src_input_index_module.host, "mat-input-field", className, src_input_index_module[variant], "mat-text-field-".concat(variant), !!placeholder && src_input_index_module.hasPlaceholder, src_input_index_module["float-".concat(_float || "auto")], "float-".concat(_float || "auto"), !emptyRef.current && [src_input_index_module["float"], "float"]),
+    className: dist_clsx(src_input_index_module.host, "mat-input-field", className, src_input_index_module[variant], `mat-text-field-${variant}`, !!placeholder && src_input_index_module.hasPlaceholder, src_input_index_module[`float-${float || "auto"}`], `float-${float || "auto"}`, !emptyRef.current && [src_input_index_module.float, "float"]),
     children: [/* @__PURE__ */(0,jsx_runtime.jsx)("view", {
       className: dist_clsx(src_input_index_module.content, "mat-input-content"),
-      children: children
+      children
     }), variant === "outlined" && /* @__PURE__ */(0,jsx_runtime.jsx)("view", {
       className: dist_clsx(src_input_index_module.inputFrame, "mat-input-frame")
     }), !!placeholder && /* @__PURE__ */(0,jsx_runtime.jsxs)("view", {
@@ -9731,20 +9582,22 @@ var paper_index_module_update = injectStylesIntoStyleTag_default()(paper_index_m
 
 
 //#region src/paper/index.tsx
-var paper_excluded = ["children", "className", "elevation"];
+const paper_excluded = ["children", "className", "elevation"];
 function _Paper(_ref) {
-  var children = _ref.children,
-    className = _ref.className,
-    elevation = _ref.elevation,
+  let {
+      children,
+      className,
+      elevation
+    } = _ref,
     props = _objectWithoutProperties(_ref, paper_excluded);
   return /* @__PURE__ */(0,jsx_runtime.jsx)("view", _objectSpread2(_objectSpread2({
     name: "<Paper>",
     className: dist_clsx(className, src_paper_index_module.host, getElevationClass(elevation), "mat-paper")
   }, props), {}, {
-    children: children
+    children
   }));
 }
-var Paper = react.memo(_Paper);
+const Paper = react.memo(_Paper);
 //#endregion
 
 
@@ -9786,65 +9639,57 @@ var text_index_module_update = injectStylesIntoStyleTag_default()(text_index_mod
 
 
 
-
 //#region src/text/index.tsx
-var text_excluded = ["placeholder", "onSelect", "onChange", "onValue", "float", "selectAllOnFocus", "className", "defaultValue", "contentType", "variant"];
-var TextField = (0,react.forwardRef)(function TextField(_ref, ref) {
-  var _ref$placeholder = _ref.placeholder,
-    placeholder = _ref$placeholder === void 0 ? "" : _ref$placeholder,
-    onSelect = _ref.onSelect,
-    onChange = _ref.onChange,
-    onValue = _ref.onValue,
-    _float = _ref["float"],
-    selectAllOnFocus = _ref.selectAllOnFocus,
-    className = _ref.className,
-    defaultValue = _ref.defaultValue,
-    contentType = _ref.contentType,
-    _ref$variant = _ref.variant,
-    variant = _ref$variant === void 0 ? "filled" : _ref$variant,
+const text_excluded = ["placeholder", "onSelect", "onChange", "onValue", "float", "selectAllOnFocus", "className", "defaultValue", "contentType", "variant"];
+const TextField = (0,react.forwardRef)(function TextField(_ref, ref) {
+  let {
+      placeholder = "",
+      onSelect,
+      onChange,
+      onValue,
+      float,
+      selectAllOnFocus,
+      className,
+      defaultValue,
+      contentType,
+      variant = "filled"
+    } = _ref,
     inputProps = _objectWithoutProperties(_ref, text_excluded);
-  var _useState = (0,react.useState)(false),
-    _useState2 = _slicedToArray(_useState, 2),
-    passwordShown = _useState2[0],
-    setPasswordShown = _useState2[1];
+  const [passwordShown, setPasswordShown] = (0,react.useState)(false);
   variant = variant || "filled";
-  var isPassword = contentType === "password" || contentType === "pin";
-  var focusHandler = !selectAllOnFocus ? onSelect : function (ev, sender) {
-    setTimeout(function () {
+  const isPassword = contentType === "password" || contentType === "pin";
+  const focusHandler = !selectAllOnFocus ? onSelect : (ev, sender) => {
+    setTimeout(() => {
       sender.Focus();
     }, 100);
     onSelect === null || onSelect === void 0 || onSelect(ev, sender);
   };
-  var realType = isPassword && passwordShown ? "standard" : contentType;
-  var fieldRef = (0,react.useRef)(void 0);
-  var change = (0,react.useCallback)(function (ev, sender) {
+  const realType = isPassword && passwordShown ? "standard" : contentType;
+  const fieldRef = (0,react.useRef)(void 0);
+  const change = (0,react.useCallback)((ev, sender) => {
     var _fieldRef$current;
-    var val = sender.Value;
+    const val = sender.Value;
     if (onChange && ev) onChange(ev, sender);
     (_fieldRef$current = fieldRef.current) === null || _fieldRef$current === void 0 || _fieldRef$current.setEmpty(!val);
     onValue === null || onValue === void 0 || onValue(val);
   }, [onChange, onValue]);
   return /* @__PURE__ */(0,jsx_runtime.jsxs)(InputField, {
     className: dist_clsx(className, src_text_index_module.host, "mat-text-field", src_text_index_module[variant]),
-    variant: variant,
-    placeholder: placeholder,
-    "float": _float,
+    variant,
+    placeholder,
+    float,
     ref: fieldRef,
     name: "<TextField>",
     children: [/* @__PURE__ */(0,jsx_runtime.jsx)("input", _objectSpread2({
       className: dist_clsx(src_text_index_module.input, "mat-text-input", "mat-input-field-target"),
       contentType: realType,
-      ref: ref,
+      ref,
       placeholder: " ",
       onSelect: focusHandler,
       onChange: change
     }, inputProps)), isPassword && /* @__PURE__ */(0,jsx_runtime.jsx)(Button, {
       variant: "icon",
-      onClick: function onClick() {
-        return setPasswordShown(function (st) {
-          return !st;
-        });
-      },
+      onClick: () => setPasswordShown(st => !st),
       className: dist_clsx(src_text_index_module.passwordToggle, "mat-text-password-toggle"),
       children: /* @__PURE__ */(0,jsx_runtime.jsx)("icon", {
         children: passwordShown ? "visibility" : "visibility_off"
@@ -9895,28 +9740,30 @@ var prompt_index_module_update = injectStylesIntoStyleTag_default()(prompt_index
 
 
 //#region src/prompt/index.tsx
-var prompt_excluded = ["title", "text", "error", "placeholder", "submit", "submitting", "cancel", "onClose", "open", "className", "backdropClose", "onClickBackdrop"];
+const prompt_excluded = ["title", "text", "error", "placeholder", "submit", "submitting", "cancel", "onClose", "open", "className", "backdropClose", "onClickBackdrop"];
 function PromptDialog(_ref) {
-  var title = _ref.title,
-    text = _ref.text,
-    error = _ref.error,
-    placeholder = _ref.placeholder,
-    submit = _ref.submit,
-    submitting = _ref.submitting,
-    cancel = _ref.cancel,
-    onClose = _ref.onClose,
-    open = _ref.open,
-    className = _ref.className,
-    backdropClose = _ref.backdropClose,
-    onClickBackdrop = _ref.onClickBackdrop,
+  let {
+      title,
+      text,
+      error,
+      placeholder,
+      submit,
+      submitting,
+      cancel,
+      onClose,
+      open,
+      className,
+      backdropClose,
+      onClickBackdrop
+    } = _ref,
     inputProps = _objectWithoutProperties(_ref, prompt_excluded);
-  var inputRef = (0,react.useRef)(void 0);
-  var clickBackdrop = function clickBackdrop() {
+  const inputRef = (0,react.useRef)(void 0);
+  const clickBackdrop = () => {
     if (backdropClose) onClose(null, false);
     if (onClickBackdrop) onClickBackdrop();
   };
   return /* @__PURE__ */(0,jsx_runtime.jsxs)(Modal, {
-    open: open,
+    open,
     className: dist_clsx("mat-prompt-dialog", src_prompt_index_module.host, className),
     onClickBackdrop: clickBackdrop,
     children: [title && /* @__PURE__ */(0,jsx_runtime.jsx)("div", {
@@ -9927,7 +9774,7 @@ function PromptDialog(_ref) {
       children: text
     }), /* @__PURE__ */(0,jsx_runtime.jsx)(TextField, _objectSpread2({
       className: dist_clsx("mat-prompt-dialog-input", src_prompt_index_module.input),
-      placeholder: placeholder,
+      placeholder,
       ref: inputRef
     }, inputProps)), error && /* @__PURE__ */(0,jsx_runtime.jsx)("div", {
       className: dist_clsx("mat-prompt-dialog-error", src_prompt_index_module.error),
@@ -9935,14 +9782,10 @@ function PromptDialog(_ref) {
     }), /* @__PURE__ */(0,jsx_runtime.jsxs)("div", {
       className: dist_clsx("mat-prompt-dialog-buttons", src_prompt_index_module.buttons),
       children: [/* @__PURE__ */(0,jsx_runtime.jsx)(Button, {
-        onClick: function onClick() {
-          return onClose(inputRef.current.Value, false);
-        },
+        onClick: () => onClose(inputRef.current.Value, false),
         children: cancel || "Cancel"
       }), /* @__PURE__ */(0,jsx_runtime.jsx)(Button, {
-        onClick: function onClick() {
-          return onClose(inputRef.current.Value, true);
-        },
+        onClick: () => onClose(inputRef.current.Value, true),
         "data-temp-disabled": submitting,
         children: submit || "Submit"
       })]
@@ -9953,63 +9796,12 @@ function PromptDialog(_ref) {
 
 
 //# sourceMappingURL=index.js.map
-;// ../../../../node_modules/.pnpm/@babel+runtime@7.29.7/node_modules/@babel/runtime/helpers/esm/classCallCheck.js
-function _classCallCheck(a, n) {
-  if (!(a instanceof n)) throw new TypeError("Cannot call a class as a function");
-}
-
-;// ../../../../node_modules/.pnpm/@babel+runtime@7.29.7/node_modules/@babel/runtime/helpers/esm/typeof.js
-function typeof_typeof(o) {
-  "@babel/helpers - typeof";
-
-  return typeof_typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) {
-    return typeof o;
-  } : function (o) {
-    return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o;
-  }, typeof_typeof(o);
-}
-
-;// ../../../../node_modules/.pnpm/@babel+runtime@7.29.7/node_modules/@babel/runtime/helpers/esm/toPrimitive.js
-
-function toPrimitive_toPrimitive(t, r) {
-  if ("object" != typeof_typeof(t) || !t) return t;
-  var e = t[Symbol.toPrimitive];
-  if (void 0 !== e) {
-    var i = e.call(t, r || "default");
-    if ("object" != typeof_typeof(i)) return i;
-    throw new TypeError("@@toPrimitive must return a primitive value.");
-  }
-  return ("string" === r ? String : Number)(t);
-}
-
-;// ../../../../node_modules/.pnpm/@babel+runtime@7.29.7/node_modules/@babel/runtime/helpers/esm/toPropertyKey.js
-
-
-function toPropertyKey_toPropertyKey(t) {
-  var i = toPrimitive_toPrimitive(t, "string");
-  return "symbol" == typeof_typeof(i) ? i : i + "";
-}
-
-;// ../../../../node_modules/.pnpm/@babel+runtime@7.29.7/node_modules/@babel/runtime/helpers/esm/createClass.js
-
-function _defineProperties(e, r) {
-  for (var t = 0; t < r.length; t++) {
-    var o = r[t];
-    o.enumerable = o.enumerable || !1, o.configurable = !0, "value" in o && (o.writable = !0), Object.defineProperty(e, toPropertyKey_toPropertyKey(o.key), o);
-  }
-}
-function _createClass(e, r, t) {
-  return r && _defineProperties(e.prototype, r), t && _defineProperties(e, t), Object.defineProperty(e, "prototype", {
-    writable: !1
-  }), e;
-}
-
 ;// ../../../../packages/material/dist/use-auto-ref-DA1SDgWf.js
 
 //#region src/util/hooks/use-auto-ref.ts
 function useAutoRef(value) {
-  var ref = (0,react.useRef)(value);
-  (0,react.useLayoutEffect)(function () {
+  const ref = (0,react.useRef)(value);
+  (0,react.useLayoutEffect)(() => {
     ref.current = value;
   });
   return ref;
@@ -10055,12 +9847,9 @@ var toggle_index_module_update = injectStylesIntoStyleTag_default()(toggle_index
 
 
 
-
-
 //#region src/util/selection.ts
-var SelectionState = /*#__PURE__*/function () {
-  function SelectionState(allowMultiple, initialValue) {
-    _classCallCheck(this, SelectionState);
+var SelectionState = class {
+  constructor(allowMultiple, initialValue) {
     this.allowMultiple = allowMultiple;
     this.initialValue = initialValue;
     _defineProperty(this, "elements", []);
@@ -10075,186 +9864,170 @@ var SelectionState = /*#__PURE__*/function () {
       this.any = this.all = this.value.length > 0;
     } else this.any = this.all = !!this.value;
   }
-  return _createClass(SelectionState, [{
-    key: "changed",
-    value: function changed(sender) {
-      if (this.allowMultiple) {
-        var all = true;
-        var any = false;
-        var res = [];
-        for (var index = 0; index < this.elements.length; index++) {
-          var element = this.elements[index];
-          if (element.el.selected) {
-            res.push(element.el.value);
-            any = true;
-          } else all = false;
-        }
-        this.value = res;
-        this.all = all;
-        this.any = any;
-        return;
+  changed(sender) {
+    if (this.allowMultiple) {
+      let all = true;
+      let any = false;
+      const res = [];
+      for (let index = 0; index < this.elements.length; index++) {
+        const element = this.elements[index];
+        if (element.el.selected) {
+          res.push(element.el.value);
+          any = true;
+        } else all = false;
       }
-      this.all = false;
-      var firstChecked = sender;
-      if (!firstChecked) for (var _index = 0; _index < this.elements.length; _index++) {
-        var _element = this.elements[_index];
-        if (_element.el.selected) {
-          firstChecked = _element.el;
-          break;
-        }
-      }
-      if (!firstChecked) {
-        this.value = void 0;
-        this.any = false;
-        return;
-      }
-      if (!firstChecked.selected) firstChecked.selected = true;
-      for (var _index2 = 0; _index2 < this.elements.length; _index2++) {
-        var _element2 = this.elements[_index2];
-        if (_element2.el !== firstChecked) _element2.el.selected = false;
-      }
-      this.value = firstChecked.value;
-      this.any = true;
+      this.value = res;
+      this.all = all;
+      this.any = any;
+      return;
     }
-  }, {
-    key: "triggerChange",
-    value: function triggerChange() {
-      var _this$onChange;
-      (_this$onChange = this.onChange) === null || _this$onChange === void 0 || _this$onChange.call(this, this.value, this.all, this.any);
-    }
-  }, {
-    key: "triggerUpdate",
-    value: function triggerUpdate() {
-      var _this$onUpdate;
-      (_this$onUpdate = this.onUpdate) === null || _this$onUpdate === void 0 || _this$onUpdate.call(this, this);
-    }
-  }, {
-    key: "register",
-    value: function register(el) {
-      var _this = this;
-      var listener = el.addOnChange(function () {
-        _this.changed(el);
-        _this.triggerChange();
-        _this.triggerUpdate();
-      });
-      this.elements.push({
-        el: el,
-        listener: listener
-      });
-      if (typeof el.value !== "undefined") if (this.allowMultiple && Array.isArray(this.value)) el.selected = this.value.includes(el.value);else el.selected = this.value === el.value;
-      if (this.allowMultiple) {
-        if (this.all && !el.selected) {
-          this.all = false;
-          this.triggerChange();
-        }
-        if (!this.any && el.selected) {
-          this.any = true;
-          this.triggerChange();
-        }
+    this.all = false;
+    let firstChecked = sender;
+    if (!firstChecked) for (let index = 0; index < this.elements.length; index++) {
+      const element = this.elements[index];
+      if (element.el.selected) {
+        firstChecked = element.el;
+        break;
       }
-      this.triggerUpdate();
-      return function () {
-        _this.unregister(el);
-      };
     }
-  }, {
-    key: "unregister",
-    value: function unregister(el) {
-      var ind = this.elements.findIndex(function (x) {
-        return x.el === el;
-      });
-      if (ind >= 0) {
-        var item = this.elements[ind];
-        this.elements.splice(ind, 1);
-        if (item.listener) item.listener();
-      }
-      this.triggerUpdate();
+    if (!firstChecked) {
+      this.value = void 0;
+      this.any = false;
+      return;
     }
-  }, {
-    key: "setAll",
-    value: function setAll(checked) {
-      if (!this.allowMultiple && checked) throw new Error("Multiple values cannot be selected for this selection state");
-      checked = !!checked;
-      this.all = checked;
-      this.any = checked;
-      var values = [];
-      for (var index = 0; index < this.elements.length; index++) {
-        var element = this.elements[index];
-        element.el.selected = checked;
-      }
-      this.value = this.allowMultiple ? values : void 0;
-      this.all = checked;
-      this.any = checked;
+    if (!firstChecked.selected) firstChecked.selected = true;
+    for (let index = 0; index < this.elements.length; index++) {
+      const element = this.elements[index];
+      if (element.el !== firstChecked) element.el.selected = false;
+    }
+    this.value = firstChecked.value;
+    this.any = true;
+  }
+  triggerChange() {
+    var _this$onChange;
+    (_this$onChange = this.onChange) === null || _this$onChange === void 0 || _this$onChange.call(this, this.value, this.all, this.any);
+  }
+  triggerUpdate() {
+    var _this$onUpdate;
+    (_this$onUpdate = this.onUpdate) === null || _this$onUpdate === void 0 || _this$onUpdate.call(this, this);
+  }
+  register(el) {
+    const listener = el.addOnChange(() => {
+      this.changed(el);
       this.triggerChange();
       this.triggerUpdate();
-    }
-  }, {
-    key: "getSelectedElements",
-    value: function getSelectedElements() {
-      var res = [];
-      for (var index = 0; index < this.elements.length; index++) {
-        var el = this.elements[index].el;
-        if (typeof el.value !== "undefined" && (this.allowMultiple && Array.isArray(this.value) ? this.value.includes(el.value) : this.value === el.value)) res.push(el);
+    });
+    this.elements.push({
+      el,
+      listener
+    });
+    if (typeof el.value !== "undefined") if (this.allowMultiple && Array.isArray(this.value)) el.selected = this.value.includes(el.value);else el.selected = this.value === el.value;
+    if (this.allowMultiple) {
+      if (this.all && !el.selected) {
+        this.all = false;
+        this.triggerChange();
       }
-      return res;
+      if (!this.any && el.selected) {
+        this.any = true;
+        this.triggerChange();
+      }
     }
-  }]);
-}();
+    this.triggerUpdate();
+    return () => {
+      this.unregister(el);
+    };
+  }
+  unregister(el) {
+    const ind = this.elements.findIndex(x => x.el === el);
+    if (ind >= 0) {
+      const item = this.elements[ind];
+      this.elements.splice(ind, 1);
+      if (item.listener) item.listener();
+    }
+    this.triggerUpdate();
+  }
+  setAll(checked) {
+    if (!this.allowMultiple && checked) throw new Error("Multiple values cannot be selected for this selection state");
+    checked = !!checked;
+    this.all = checked;
+    this.any = checked;
+    const values = [];
+    for (let index = 0; index < this.elements.length; index++) {
+      const element = this.elements[index];
+      element.el.selected = checked;
+    }
+    this.value = this.allowMultiple ? values : void 0;
+    this.all = checked;
+    this.any = checked;
+    this.triggerChange();
+    this.triggerUpdate();
+  }
+  getSelectedElements() {
+    const res = [];
+    for (let index = 0; index < this.elements.length; index++) {
+      const {
+        el
+      } = this.elements[index];
+      if (typeof el.value !== "undefined" && (this.allowMultiple && Array.isArray(this.value) ? this.value.includes(el.value) : this.value === el.value)) res.push(el);
+    }
+    return res;
+  }
+};
 //#endregion
 //#region src/toggle/index.tsx
-var toggle_DvSooyoZ_excluded = ["children", "className", "noRipple", "onPointerDown", "onPointerUp", "type", "variant", "independent"];
-var ToggleGroupContext = react.createContext(null);
-var _Toggle = react.forwardRef(function _Toggle(_ref, ref) {
-  var children = _ref.children,
-    className = _ref.className,
-    noRipple = _ref.noRipple,
-    onPointerDown = _ref.onPointerDown,
-    onPointerUp = _ref.onPointerUp,
-    type = _ref.type,
-    variant = _ref.variant,
-    independent = _ref.independent,
+const toggle_DvSooyoZ_excluded = ["children", "className", "noRipple", "onPointerDown", "onPointerUp", "type", "variant", "independent"];
+const ToggleGroupContext = react.createContext(null);
+const _Toggle = react.forwardRef(function _Toggle(_ref, ref) {
+  let {
+      children,
+      className,
+      noRipple,
+      onPointerDown,
+      onPointerUp,
+      type,
+      variant,
+      independent
+    } = _ref,
     props = _objectWithoutProperties(_ref, toggle_DvSooyoZ_excluded);
-  var toggleRef = (0,react.useRef)(void 0);
-  var ringRef = (0,react.useRef)(void 0);
-  var ripple = useRipple({
-    onPointerDown: onPointerDown,
-    onPointerUp: onPointerUp,
-    noRipple: noRipple,
+  const toggleRef = (0,react.useRef)(void 0);
+  const ringRef = (0,react.useRef)(void 0);
+  const ripple = useRipple({
+    onPointerDown,
+    onPointerUp,
+    noRipple,
     centered: true,
     target: ringRef
   });
-  var ctx = (0,react.useContext)(ToggleGroupContext);
+  let ctx = (0,react.useContext)(ToggleGroupContext);
   if (independent) ctx = null;
   type = type || (ctx && !ctx.allowMultiple ? "radio" : "checkbox");
-  var selectionRef = (0,react.useMemo)(function () {
-    return {
-      get selected() {
-        var _toggleRef$current;
-        return (_toggleRef$current = toggleRef.current) === null || _toggleRef$current === void 0 ? void 0 : _toggleRef$current.Checked;
-      },
-      set selected(val) {
-        if (toggleRef.current) toggleRef.current.Checked = val;
-      },
-      get value() {
-        var _toggleRef$current2;
-        return (_toggleRef$current2 = toggleRef.current) === null || _toggleRef$current2 === void 0 ? void 0 : _toggleRef$current2.Value;
-      },
-      addOnChange: function addOnChange(callback) {
-        return UnityBridge.addEventListener(toggleRef.current, "onChange", function () {
-          callback === null || callback === void 0 || callback();
-        });
-      }
-    };
-  }, []);
-  var innerRef = (0,react.useCallback)(function (val) {
+  const selectionRef = (0,react.useMemo)(() => ({
+    get selected() {
+      var _toggleRef$current;
+      return (_toggleRef$current = toggleRef.current) === null || _toggleRef$current === void 0 ? void 0 : _toggleRef$current.Checked;
+    },
+    set selected(val) {
+      if (toggleRef.current) toggleRef.current.Checked = val;
+    },
+    get value() {
+      var _toggleRef$current2;
+      return (_toggleRef$current2 = toggleRef.current) === null || _toggleRef$current2 === void 0 ? void 0 : _toggleRef$current2.Value;
+    },
+    addOnChange: callback => {
+      return UnityBridge.addEventListener(toggleRef.current, "onChange", () => {
+        callback === null || callback === void 0 || callback();
+      });
+    }
+  }), []);
+  const innerRef = (0,react.useCallback)(val => {
     toggleRef.current = val;
     if (typeof ref === "function") ref(val);else if (ref) ref.current = val;
   }, [ref]);
-  (0,react.useLayoutEffect)(function () {
+  (0,react.useLayoutEffect)(() => {
     return ctx === null || ctx === void 0 ? void 0 : ctx.register(selectionRef);
   }, [ctx, selectionRef]);
   return /* @__PURE__ */(0,jsx_runtime.jsxs)("label", _objectSpread2(_objectSpread2({
-    className: dist_clsx(className, src_toggle_index_module.label, "mat-toggle-label", src_toggle_index_module[type], "mat-toggle-".concat(type), "mat-variant-".concat(variant))
+    className: dist_clsx(className, src_toggle_index_module.label, "mat-toggle-label", src_toggle_index_module[type], `mat-toggle-${type}`, `mat-variant-${variant}`)
   }, ripple), {}, {
     children: [/* @__PURE__ */(0,jsx_runtime.jsx)("toggle", _objectSpread2(_objectSpread2(_objectSpread2({
       name: "<Toggle>",
@@ -10268,26 +10041,25 @@ var _Toggle = react.forwardRef(function _Toggle(_ref, ref) {
       })
     })), !!children && /* @__PURE__ */(0,jsx_runtime.jsx)("view", {
       className: dist_clsx(src_toggle_index_module.labelContent, "mat-toggle-label-content"),
-      children: children
+      children
     })]
   }));
 });
-var Toggle = react.memo(_Toggle);
-var _ToggleGroup = react.forwardRef(function _ToggleGroupOrig(_ref2, ref) {
-  var children = _ref2.children,
-    multiple = _ref2.multiple,
-    showSelectAll = _ref2.showSelectAll,
-    selectAllLabel = _ref2.selectAllLabel,
-    onChange = _ref2.onChange,
-    initialValue = _ref2.initialValue;
-  var init = (0,react.useRef)(initialValue);
-  var selectAllRef = (0,react.useRef)(void 0);
-  var onChangeRef = useAutoRef(onChange);
-  var state = (0,react.useMemo)(function () {
-    return new SelectionState(multiple, init.current);
-  }, [multiple]);
-  (0,react.useLayoutEffect)(function () {
-    state.onChange = function (val, all, any) {
+const Toggle = react.memo(_Toggle);
+const _ToggleGroup = react.forwardRef(function _ToggleGroupOrig({
+  children,
+  multiple,
+  showSelectAll,
+  selectAllLabel,
+  onChange,
+  initialValue
+}, ref) {
+  const init = (0,react.useRef)(initialValue);
+  const selectAllRef = (0,react.useRef)(void 0);
+  const onChangeRef = useAutoRef(onChange);
+  const state = (0,react.useMemo)(() => new SelectionState(multiple, init.current), [multiple]);
+  (0,react.useLayoutEffect)(() => {
+    state.onChange = (val, all, any) => {
       var _onChangeRef$current;
       (_onChangeRef$current = onChangeRef.current) === null || _onChangeRef$current === void 0 || _onChangeRef$current.call(onChangeRef, val, all, any);
       if (selectAllRef.current) {
@@ -10300,12 +10072,10 @@ var _ToggleGroup = react.forwardRef(function _ToggleGroupOrig(_ref2, ref) {
       selectAllRef.current.Checked = !!state.all;
     }
   }, [state]);
-  var selectAllCallback = (0,react.useCallback)(function (checked, sender) {
+  const selectAllCallback = (0,react.useCallback)((checked, sender) => {
     state.setAll(checked);
   }, [state]);
-  (0,react.useImperativeHandle)(ref, function () {
-    return state;
-  }, [state]);
+  (0,react.useImperativeHandle)(ref, () => state, [state]);
   return /* @__PURE__ */(0,jsx_runtime.jsx)(ToggleGroupContext.Provider, {
     value: state,
     children: /* @__PURE__ */(0,jsx_runtime.jsxs)("view", {
@@ -10321,7 +10091,7 @@ var _ToggleGroup = react.forwardRef(function _ToggleGroupOrig(_ref2, ref) {
     })
   });
 });
-var ToggleGroup = react.memo(_ToggleGroup);
+const ToggleGroup = react.memo(_ToggleGroup);
 //#endregion
 
 
@@ -10366,41 +10136,36 @@ var select_index_module_update = injectStylesIntoStyleTag_default()(select_index
 
 
 
-
 //#region src/select/index.tsx
-var select_excluded = ["keepOpen", "onChange", "name", "children", "initialValue", "multiple", "separator", "chips", "variant", "placeholder", "float", "className", "hideCaret"];
-var SelectContext = (0,react.createContext)(null);
+const select_excluded = ["keepOpen", "onChange", "name", "children", "initialValue", "multiple", "separator", "chips", "variant", "placeholder", "float", "className", "hideCaret"];
+const SelectContext = (0,react.createContext)(null);
 function _Select(_ref) {
-  var _ref$keepOpen = _ref.keepOpen,
-    keepOpen = _ref$keepOpen === void 0 ? "auto" : _ref$keepOpen,
-    onChange = _ref.onChange,
-    name = _ref.name,
-    children = _ref.children,
-    initialValue = _ref.initialValue,
-    multiple = _ref.multiple,
-    separator = _ref.separator,
-    chips = _ref.chips,
-    variant = _ref.variant,
-    placeholder = _ref.placeholder,
-    _float = _ref["float"],
-    className = _ref.className,
-    hideCaret = _ref.hideCaret,
+  let {
+      keepOpen = "auto",
+      onChange,
+      name,
+      children,
+      initialValue,
+      multiple,
+      separator,
+      chips,
+      variant,
+      placeholder,
+      float,
+      className,
+      hideCaret
+    } = _ref,
     otherProps = _objectWithoutProperties(_ref, select_excluded);
-  var init = (0,react.useRef)(initialValue);
-  var selectAllRef = (0,react.useRef)(void 0);
-  var fieldRef = (0,react.useRef)(void 0);
-  var shouldKeepOpen = keepOpen === "auto" ? multiple : !!keepOpen;
-  var onChangeRef = useAutoRef(onChange);
-  var shouldKeepOpenRef = useAutoRef(shouldKeepOpen);
-  var state = (0,react.useMemo)(function () {
-    return new SelectionState(!!multiple, init.current);
-  }, [multiple]);
-  var _useState = (0,react.useState)(state.getSelectedElements()),
-    _useState2 = _slicedToArray(_useState, 2),
-    selectedElements = _useState2[0],
-    setSelectedElements = _useState2[1];
-  (0,react.useLayoutEffect)(function () {
-    state.onChange = function (val, all, any) {
+  const init = (0,react.useRef)(initialValue);
+  const selectAllRef = (0,react.useRef)(void 0);
+  const fieldRef = (0,react.useRef)(void 0);
+  const shouldKeepOpen = keepOpen === "auto" ? multiple : !!keepOpen;
+  const onChangeRef = useAutoRef(onChange);
+  const shouldKeepOpenRef = useAutoRef(shouldKeepOpen);
+  const state = (0,react.useMemo)(() => new SelectionState(!!multiple, init.current), [multiple]);
+  const [selectedElements, setSelectedElements] = (0,react.useState)(state.getSelectedElements());
+  (0,react.useLayoutEffect)(() => {
+    state.onChange = (val, all, any) => {
       var _onChangeRef$current, _fieldRef$current;
       (_onChangeRef$current = onChangeRef.current) === null || _onChangeRef$current === void 0 || _onChangeRef$current.call(onChangeRef, val, all, any);
       if (selectAllRef.current) {
@@ -10410,37 +10175,28 @@ function _Select(_ref) {
       if (!shouldKeepOpenRef.current) setOpened(false);
       (_fieldRef$current = fieldRef.current) === null || _fieldRef$current === void 0 || _fieldRef$current.setEmpty(!any);
     };
-    state.onUpdate = function (st) {
-      var sel = st.getSelectedElements();
+    state.onUpdate = st => {
+      const sel = st.getSelectedElements();
       setSelectedElements(sel);
     };
   }, [state]);
-  var _useState3 = (0,react.useState)(false),
-    _useState4 = _slicedToArray(_useState3, 2),
-    opened = _useState4[0],
-    setOpened = _useState4[1];
-  var toggle = (0,react.useCallback)(function () {
-    return setOpened(function (st) {
-      return !st;
-    });
-  }, []);
-  var close = (0,react.useCallback)(function () {
-    return setOpened(false);
-  }, []);
+  const [opened, setOpened] = (0,react.useState)(false);
+  const toggle = (0,react.useCallback)(() => setOpened(st => !st), []);
+  const close = (0,react.useCallback)(() => setOpened(false), []);
   if (typeof separator === "undefined" && !chips) separator = /* @__PURE__ */(0,jsx_runtime.jsx)("text", {
     className: src_select_index_module.defaultSeparator,
     children: ","
   });
-  var setFieldRef = (0,react.useCallback)(function (val) {
+  const setFieldRef = (0,react.useCallback)(val => {
     var _fieldRef$current2, _init$current;
     fieldRef.current = val;
     (_fieldRef$current2 = fieldRef.current) === null || _fieldRef$current2 === void 0 || _fieldRef$current2.setEmpty(multiple ? ((_init$current = init.current) === null || _init$current === void 0 ? void 0 : _init$current.length) === 0 : typeof init.current === "undefined");
   }, [multiple]);
   return /* @__PURE__ */(0,jsx_runtime.jsxs)(InputField, {
     className: dist_clsx(className, src_select_index_module.host, "mat-select-field", src_select_index_module[variant], chips && src_select_index_module.chips, opened && [src_select_index_module.opened, "mat-select-opened"]),
-    variant: variant,
-    placeholder: placeholder,
-    "float": _float,
+    variant,
+    placeholder,
+    float,
     name: name || "<SelectField>",
     ref: setFieldRef,
     children: [/* @__PURE__ */(0,jsx_runtime.jsxs)("button", _objectSpread2(_objectSpread2({
@@ -10450,14 +10206,12 @@ function _Select(_ref) {
     }, otherProps), {}, {
       children: [/* @__PURE__ */(0,jsx_runtime.jsx)("view", {
         className: src_select_index_module.triggerContent,
-        children: selectedElements.map(function (x, i) {
-          return /* @__PURE__ */(0,jsx_runtime.jsxs)(react.Fragment, {
-            children: [i > 0 && separator, /* @__PURE__ */(0,jsx_runtime.jsx)("view", {
-              className: src_select_index_module.triggerPart,
-              children: x.getTemplate()
-            })]
-          }, i);
-        })
+        children: selectedElements.map((x, i) => /* @__PURE__ */(0,jsx_runtime.jsxs)(react.Fragment, {
+          children: [i > 0 && separator, /* @__PURE__ */(0,jsx_runtime.jsx)("view", {
+            className: src_select_index_module.triggerPart,
+            children: x.getTemplate()
+          })]
+        }, i))
       }), /* @__PURE__ */(0,jsx_runtime.jsxs)("view", {
         className: dist_clsx(src_select_index_module.menuRoot, opened && src_select_index_module.opened),
         children: [/* @__PURE__ */(0,jsx_runtime.jsx)("button", {
@@ -10469,7 +10223,7 @@ function _Select(_ref) {
           children: /* @__PURE__ */(0,jsx_runtime.jsx)("scroll", {
             name: "<SelectMenu>",
             className: dist_clsx(src_select_index_module.menu, getElevationClass(4)),
-            children: children
+            children
           })
         })]
       })]
@@ -10479,65 +10233,58 @@ function _Select(_ref) {
     })]
   });
 }
-function _Option(_ref3) {
-  var className = _ref3.className,
-    children = _ref3.children,
-    value = _ref3.value,
-    triggerTemplate = _ref3.triggerTemplate,
-    _ref3$showToggle = _ref3.showToggle,
-    showToggle = _ref3$showToggle === void 0 ? "auto" : _ref3$showToggle;
-  var ctx = (0,react.useContext)(SelectContext);
-  var _useState5 = (0,react.useState)(false),
-    _useState6 = _slicedToArray(_useState5, 2),
-    selected = _useState6[0],
-    setSelected = _useState6[1];
-  var selectedRef = useAutoRef(selected);
-  var onChangeRef = (0,react.useRef)([]);
-  var childRef = useAutoRef(children);
-  var getTemplateRef = (0,react.useRef)(function () {
+function _Option({
+  className,
+  children,
+  value,
+  triggerTemplate,
+  showToggle = "auto"
+}) {
+  const ctx = (0,react.useContext)(SelectContext);
+  const [selected, setSelected] = (0,react.useState)(false);
+  const selectedRef = useAutoRef(selected);
+  const onChangeRef = (0,react.useRef)([]);
+  const childRef = useAutoRef(children);
+  const getTemplateRef = (0,react.useRef)(() => {
     var _ref2;
     return (_ref2 = triggerTemplate !== null && triggerTemplate !== void 0 ? triggerTemplate : childRef.current) !== null && _ref2 !== void 0 ? _ref2 : children;
   });
-  var shouldShowToggle = showToggle === "auto" ? !!(ctx === null || ctx === void 0 ? void 0 : ctx.allowMultiple) : !!showToggle;
-  (0,react.useEffect)(function () {
-    getTemplateRef.current = function () {
-      return triggerTemplate !== null && triggerTemplate !== void 0 ? triggerTemplate : childRef.current;
-    };
+  const shouldShowToggle = showToggle === "auto" ? !!(ctx === null || ctx === void 0 ? void 0 : ctx.allowMultiple) : !!showToggle;
+  (0,react.useEffect)(() => {
+    getTemplateRef.current = () => triggerTemplate !== null && triggerTemplate !== void 0 ? triggerTemplate : childRef.current;
     ctx === null || ctx === void 0 || ctx.triggerUpdate();
   }, [triggerTemplate, ctx]);
-  var selectionRef = (0,react.useMemo)(function () {
-    return {
-      get selected() {
-        return selectedRef.current;
-      },
-      set selected(val) {
-        selectedRef.current = val;
-        setSelected(val);
-      },
-      value: value,
-      addOnChange: function addOnChange(callback) {
-        if (!callback) return;
-        onChangeRef.current.push(callback);
-        return function () {
-          var ind = onChangeRef.current.indexOf(callback);
-          if (ind >= 0) onChangeRef.current.splice(ind, 1);
-        };
-      },
-      getTemplate: function getTemplate() {
-        return getTemplateRef.current();
-      }
-    };
-  }, [value]);
-  (0,react.useLayoutEffect)(function () {
+  const selectionRef = (0,react.useMemo)(() => ({
+    get selected() {
+      return selectedRef.current;
+    },
+    set selected(val) {
+      selectedRef.current = val;
+      setSelected(val);
+    },
+    value,
+    addOnChange: callback => {
+      if (!callback) return;
+      onChangeRef.current.push(callback);
+      return () => {
+        const ind = onChangeRef.current.indexOf(callback);
+        if (ind >= 0) onChangeRef.current.splice(ind, 1);
+      };
+    },
+    getTemplate: () => {
+      return getTemplateRef.current();
+    }
+  }), [value]);
+  (0,react.useLayoutEffect)(() => {
     return ctx === null || ctx === void 0 ? void 0 : ctx.register(selectionRef);
   }, [ctx, selectionRef]);
   return /* @__PURE__ */(0,jsx_runtime.jsxs)(Button, {
-    onClick: (0,react.useCallback)(function () {
-      var newValue = !selectedRef.current;
+    onClick: (0,react.useCallback)(() => {
+      const newValue = !selectedRef.current;
       selectedRef.current = newValue;
       setSelected(newValue);
-      for (var index = 0; index < onChangeRef.current.length; index++) {
-        var cb = onChangeRef.current[index];
+      for (let index = 0; index < onChangeRef.current.length; index++) {
+        const cb = onChangeRef.current[index];
         cb();
       }
     }, []),
@@ -10551,23 +10298,12 @@ function _Option(_ref3) {
     }), children]
   });
 }
-var Select = (0,react.memo)(_Select);
+const Select = (0,react.memo)(_Select);
 Select.Option = _Option;
 //#endregion
 
 
 //# sourceMappingURL=index.js.map
-;// ../../../../node_modules/.pnpm/@babel+runtime@7.29.7/node_modules/@babel/runtime/helpers/esm/defineProperty.js
-
-function defineProperty_defineProperty(e, r, t) {
-  return (r = toPropertyKey_toPropertyKey(r)) in e ? Object.defineProperty(e, r, {
-    value: t,
-    enumerable: !0,
-    configurable: !0,
-    writable: !0
-  }) : e[r] = t, e;
-}
-
 // EXTERNAL MODULE: ../../../../node_modules/.pnpm/css-loader@7.1.4_webpack@5._62043f6a253f8c7f1ce10b9e4bcb0b7c/node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[0].oneOf[7].use[1]!../../../../node_modules/.pnpm/resolve-url-loader@5.0.0/node_modules/resolve-url-loader/index.js??ruleSet[1].rules[0].oneOf[7].use[2]!../../../../node_modules/.pnpm/sass-loader@17.0.0_sass@1.1_20e65d72e5f2ff16ba56ab3dd615796f/node_modules/sass-loader/dist/cjs/index.js??ruleSet[1].rules[0].oneOf[7].use[3]!../../../../packages/material/dist/src/slider/index.module.scss
 var slider_index_module = __webpack_require__("../../../../node_modules/.pnpm/css-loader@7.1.4_webpack@5._62043f6a253f8c7f1ce10b9e4bcb0b7c/node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[0].oneOf[7].use[1]!../../../../node_modules/.pnpm/resolve-url-loader@5.0.0/node_modules/resolve-url-loader/index.js??ruleSet[1].rules[0].oneOf[7].use[2]!../../../../node_modules/.pnpm/sass-loader@17.0.0_sass@1.1_20e65d72e5f2ff16ba56ab3dd615796f/node_modules/sass-loader/dist/cjs/index.js??ruleSet[1].rules[0].oneOf[7].use[3]!../../../../packages/material/dist/src/slider/index.module.scss");
 ;// ../../../../packages/material/dist/src/slider/index.module.scss
@@ -10604,21 +10340,20 @@ var slider_index_module_update = injectStylesIntoStyleTag_default()(slider_index
 
 
 
-
-
 //#region src/util/hooks/use-control-check.ts
-var error1 = "A component is changing an uncontrolled input to be controlled. This is likely caused by the value changing from undefined to a defined value, which should not happen. Decide between using a controlled or uncontrolled input element for the lifetime of the component. More info: https://reactjs.org/link/controlled-components";
-var error2 = "You provided a `value` prop to a form field without an `onChange` handler. This will render a read-only field. If the field should be mutable use `defaultValue`. Otherwise, set either `onChange` or `readOnly`.";
-var error3 = "App contains an input element with both value and defaultValue props. Input elements must be either controlled or uncontrolled (specify either the value prop, or the defaultValue prop, but not both). Decide between using a controlled or uncontrolled input element and remove one of these props. More info: https://reactjs.org/link/controlled-components";
-var error4 = "A component is changing a controlled input to be uncontrolled. This is likely caused by the value changing from a defined to undefined, which should not happen. Decide between using a controlled or uncontrolled input element for the lifetime of the component. More info: https://reactjs.org/link/controlled-components";
-function useControlCheck(_ref3) {
-  var value = _ref3.value,
-    defaultValue = _ref3.defaultValue,
-    onChange = _ref3.onChange,
-    readOnly = _ref3.readOnly;
-  var valueInit = (0,react.useRef)(value);
-  var warned = (0,react.useRef)(0);
-  (0,react.useEffect)(function () {
+const error1 = "A component is changing an uncontrolled input to be controlled. This is likely caused by the value changing from undefined to a defined value, which should not happen. Decide between using a controlled or uncontrolled input element for the lifetime of the component. More info: https://reactjs.org/link/controlled-components";
+const error2 = "You provided a `value` prop to a form field without an `onChange` handler. This will render a read-only field. If the field should be mutable use `defaultValue`. Otherwise, set either `onChange` or `readOnly`.";
+const error3 = "App contains an input element with both value and defaultValue props. Input elements must be either controlled or uncontrolled (specify either the value prop, or the defaultValue prop, but not both). Decide between using a controlled or uncontrolled input element and remove one of these props. More info: https://reactjs.org/link/controlled-components";
+const error4 = "A component is changing a controlled input to be uncontrolled. This is likely caused by the value changing from a defined to undefined, which should not happen. Decide between using a controlled or uncontrolled input element for the lifetime of the component. More info: https://reactjs.org/link/controlled-components";
+function useControlCheck({
+  value,
+  defaultValue,
+  onChange,
+  readOnly
+}) {
+  const valueInit = (0,react.useRef)(value);
+  const warned = (0,react.useRef)(0);
+  (0,react.useEffect)(() => {
     if (typeof value !== "undefined") {
       if ((warned.current & 1) === 0 && typeof valueInit.current === "undefined") {
         warned.current |= 1;
@@ -10641,130 +10376,115 @@ function useControlCheck(_ref3) {
 }
 //#endregion
 //#region src/slider/index.tsx
-var slider_GNnZnlgJ_excluded = ["onChange", "onScroll", "name", "children", "defaultValue", "value", "direction", "mode", "valuePosition", "min", "max", "step", "keyStep", "allowScroll", "scrollMultiplier", "readOnly"];
-var SliderChild = (0,react.forwardRef)(function _SliderChild(_ref4, ref) {
-  var callback = _ref4.callback,
-    defaultValue = _ref4.defaultValue;
-  var _useState = (0,react.useState)(defaultValue),
-    _useState2 = _slicedToArray(_useState, 2),
-    st = _useState2[0],
-    setSt = _useState2[1];
-  (0,react.useImperativeHandle)(ref, function () {
-    return setSt;
-  });
+const slider_GNnZnlgJ_excluded = ["onChange", "onScroll", "name", "children", "defaultValue", "value", "direction", "mode", "valuePosition", "min", "max", "step", "keyStep", "allowScroll", "scrollMultiplier", "readOnly"];
+const SliderChild = (0,react.forwardRef)(function _SliderChild({
+  callback,
+  defaultValue
+}, ref) {
+  const [st, setSt] = (0,react.useState)(defaultValue);
+  (0,react.useImperativeHandle)(ref, () => setSt);
   return /* @__PURE__ */(0,jsx_runtime.jsx)(jsx_runtime.Fragment, {
     children: callback(st)
   });
 });
-var _Slider = (0,react.forwardRef)(function _Slider(_ref, ref) {
+const _Slider = (0,react.forwardRef)(function _Slider(_ref, ref) {
   var _ref2;
-  var onChange = _ref.onChange,
-    onScroll = _ref.onScroll,
-    name = _ref.name,
-    children = _ref.children,
-    defaultValue = _ref.defaultValue,
-    value = _ref.value,
-    _ref$direction = _ref.direction,
-    direction = _ref$direction === void 0 ? "horizontal" : _ref$direction,
-    _ref$mode = _ref.mode,
-    mode = _ref$mode === void 0 ? "normal" : _ref$mode,
-    _ref$valuePosition = _ref.valuePosition,
-    valuePosition = _ref$valuePosition === void 0 ? "auto" : _ref$valuePosition,
-    _ref$min = _ref.min,
-    min = _ref$min === void 0 ? 0 : _ref$min,
-    _ref$max = _ref.max,
-    max = _ref$max === void 0 ? 1 : _ref$max,
-    _ref$step = _ref.step,
-    step = _ref$step === void 0 ? 0 : _ref$step,
-    _ref$keyStep = _ref.keyStep,
-    keyStep = _ref$keyStep === void 0 ? null : _ref$keyStep,
-    _ref$allowScroll = _ref.allowScroll,
-    allowScroll = _ref$allowScroll === void 0 ? false : _ref$allowScroll,
-    _ref$scrollMultiplier = _ref.scrollMultiplier,
-    scrollMultiplier = _ref$scrollMultiplier === void 0 ? 1 / 6 : _ref$scrollMultiplier,
-    readOnly = _ref.readOnly,
+  let {
+      onChange,
+      onScroll,
+      name,
+      children,
+      defaultValue,
+      value,
+      direction = "horizontal",
+      mode = "normal",
+      valuePosition = "auto",
+      min = 0,
+      max = 1,
+      step = 0,
+      keyStep = null,
+      allowScroll = false,
+      scrollMultiplier = 1 / 6,
+      readOnly
+    } = _ref,
     otherProps = _objectWithoutProperties(_ref, slider_GNnZnlgJ_excluded);
-  var isControlled = useControlCheck({
-    value: value,
-    defaultValue: defaultValue,
-    onChange: onChange,
-    readOnly: readOnly
+  const isControlled = useControlCheck({
+    value,
+    defaultValue,
+    onChange,
+    readOnly
   });
-  var init = (_ref2 = defaultValue !== null && defaultValue !== void 0 ? defaultValue : value) !== null && _ref2 !== void 0 ? _ref2 : min;
-  var curValue = (0,react.useRef)(init);
-  var innerValue = (0,react.useRef)(init);
-  var onChangeRef = useAutoRef(onChange);
-  var orientation = direction === "vertical" || direction === "vertical-reverse" ? "vertical" : "horizontal";
-  var isReverse = direction === "vertical-reverse" || direction === "horizontal-reverse";
-  var sizeProp = orientation === "horizontal" ? "width" : "height";
-  var coordProp = orientation === "horizontal" ? "x" : "y";
-  var crossCoordProp = orientation === "horizontal" ? "y" : "x";
-  var range = max - min;
-  var elementRef = (0,react.useRef)(void 0);
-  var fillRef = (0,react.useRef)(void 0);
-  var childRef = (0,react.useRef)(void 0);
-  var moveStep = keyStep || step || range / 10;
-  var setValWithStep = (0,react.useCallback)(function (val, skipNotify, skipControl) {
+  const init = (_ref2 = defaultValue !== null && defaultValue !== void 0 ? defaultValue : value) !== null && _ref2 !== void 0 ? _ref2 : min;
+  const curValue = (0,react.useRef)(init);
+  const innerValue = (0,react.useRef)(init);
+  const onChangeRef = useAutoRef(onChange);
+  const orientation = direction === "vertical" || direction === "vertical-reverse" ? "vertical" : "horizontal";
+  const isReverse = direction === "vertical-reverse" || direction === "horizontal-reverse";
+  const sizeProp = orientation === "horizontal" ? "width" : "height";
+  const coordProp = orientation === "horizontal" ? "x" : "y";
+  const crossCoordProp = orientation === "horizontal" ? "y" : "x";
+  const range = max - min;
+  const elementRef = (0,react.useRef)(void 0);
+  const fillRef = (0,react.useRef)(void 0);
+  const childRef = (0,react.useRef)(void 0);
+  const moveStep = keyStep || step || range / 10;
+  const setValWithStep = (0,react.useCallback)((val, skipNotify, skipControl) => {
     var _onChangeRef$current;
-    var clampedVal = Math.max(min, Math.min(max, val));
-    var steppedVal = step > 0 ? Math.round(clampedVal / step) * step : clampedVal;
-    var oldValue = curValue.current;
+    const clampedVal = Math.max(min, Math.min(max, val));
+    const steppedVal = step > 0 ? Math.round(clampedVal / step) * step : clampedVal;
+    const oldValue = curValue.current;
     if (!isControlled && !readOnly || skipControl) {
       var _childRef$current;
       innerValue.current = clampedVal;
       curValue.current = steppedVal;
       if (fillRef.current) {
-        var ratio = (curValue.current - min) / range;
+        const ratio = (curValue.current - min) / range;
         fillRef.current.Style.Set(sizeProp === "width" ? "height" : "width", null);
-        fillRef.current.Style.Set(sizeProp, "".concat(ratio * 100, "%"));
+        fillRef.current.Style.Set(sizeProp, `${ratio * 100}%`);
       }
       (_childRef$current = childRef.current) === null || _childRef$current === void 0 || _childRef$current.call(childRef, steppedVal);
     }
     if (!skipNotify && !readOnly && oldValue !== steppedVal) (_onChangeRef$current = onChangeRef.current) === null || _onChangeRef$current === void 0 || _onChangeRef$current.call(onChangeRef, steppedVal);
   }, [min, max, step, sizeProp, range, isControlled, readOnly]);
-  (0,react.useLayoutEffect)(function () {
+  (0,react.useLayoutEffect)(() => {
     if (isControlled) setValWithStep(value, true, true);
   }, [value, isControlled, setValWithStep]);
-  var dragCallback = (0,react.useCallback)(function (ev) {
-    var mul = isReverse ? -1 : 1;
-    var val = innerValue.current;
+  const dragCallback = (0,react.useCallback)(ev => {
+    const mul = isReverse ? -1 : 1;
+    let val = innerValue.current;
     if (mode === "diff" || mode === "falloff") {
-      var diff = ev.delta[coordProp] / 200 * range;
+      const diff = ev.delta[coordProp] / 200 * range;
       if (mode === "falloff") {
-        var yDiff = Math.max(Math.abs(ev.pressPosition[crossCoordProp] - ev.position[crossCoordProp]) / 100, 1);
+        const yDiff = Math.max(Math.abs(ev.pressPosition[crossCoordProp] - ev.position[crossCoordProp]) / 100, 1);
         val += mul * diff / (yDiff * yDiff);
       } else val += mul * diff;
     } else {
-      var relRatio = elementRef.current.GetRelativePosition(ev.position.x, ev.position.y)[coordProp] / elementRef.current.RectTransform.rect[sizeProp];
+      let relRatio = elementRef.current.GetRelativePosition(ev.position.x, ev.position.y)[coordProp] / elementRef.current.RectTransform.rect[sizeProp];
       if (coordProp === "x" && isReverse || coordProp === "y" && !isReverse) relRatio = 1 - relRatio;
       val = relRatio * range + min;
     }
     setValWithStep(val);
   }, [setValWithStep, mode, coordProp, crossCoordProp, sizeProp, isReverse, range, min]);
-  var moveCallback = (0,react.useCallback)(function (ev) {
-    var diff = ev.moveVector[coordProp] * moveStep;
+  const moveCallback = (0,react.useCallback)(ev => {
+    let diff = ev.moveVector[coordProp] * moveStep;
     if (isReverse) diff = -diff;
     setValWithStep(curValue.current + diff);
   }, [coordProp, moveStep, isReverse, setValWithStep]);
-  var scrollCallback = (0,react.useCallback)(function (ev, sender) {
+  const scrollCallback = (0,react.useCallback)((ev, sender) => {
     if (allowScroll) {
-      var diff = (Math.abs(ev.scrollDelta.y) > Math.abs(ev.scrollDelta.x) ? ev.scrollDelta.y : ev.scrollDelta.x) * moveStep * scrollMultiplier;
+      let diff = (Math.abs(ev.scrollDelta.y) > Math.abs(ev.scrollDelta.x) ? ev.scrollDelta.y : ev.scrollDelta.x) * moveStep * scrollMultiplier;
       if (isReverse) diff = -diff;
       setValWithStep(curValue.current + diff);
     }
     onScroll === null || onScroll === void 0 || onScroll(ev, sender);
   }, [moveStep, isReverse, setValWithStep, onScroll, allowScroll, scrollMultiplier]);
-  (0,react.useImperativeHandle)(ref, function () {
-    return {
-      getValue: function getValue() {
-        return curValue.current;
-      },
-      setValue: setValWithStep,
-      get root() {
-        return elementRef.current;
-      }
-    };
-  }, [setValWithStep]);
+  (0,react.useImperativeHandle)(ref, () => ({
+    getValue: () => curValue.current,
+    setValue: setValWithStep,
+    get root() {
+      return elementRef.current;
+    }
+  }), [setValWithStep]);
   return /* @__PURE__ */(0,jsx_runtime.jsx)("view", _objectSpread2(_objectSpread2({
     name: name || "<Slider>"
   }, otherProps), {}, {
@@ -10786,7 +10506,9 @@ var _Slider = (0,react.forwardRef)(function _Slider(_ref, ref) {
         name: "<Slider-Fill>",
         className: dist_clsx(src_slider_index_module.fill, "mat-slider-fill"),
         ref: fillRef,
-        style: defineProperty_defineProperty({}, sizeProp, "".concat(100 * (curValue.current - min) / range, "%")),
+        style: {
+          [sizeProp]: `${100 * (curValue.current - min) / range}%`
+        },
         children: /* @__PURE__ */(0,jsx_runtime.jsx)("view", {
           name: "<Slider-Thumb-Container>",
           className: dist_clsx(src_slider_index_module.thumbContainer, "mat-slider-thumb-container"),
@@ -10808,73 +10530,11 @@ var _Slider = (0,react.forwardRef)(function _Slider(_ref, ref) {
     })
   }));
 });
-var Slider = react.memo(_Slider);
+const Slider = react.memo(_Slider);
 //#endregion
 
 
 //# sourceMappingURL=slider-GNnZnlgJ.js.map
-;// ../../../../node_modules/.pnpm/@babel+runtime@7.29.7/node_modules/@babel/runtime/helpers/esm/getPrototypeOf.js
-function _getPrototypeOf(t) {
-  return _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf.bind() : function (t) {
-    return t.__proto__ || Object.getPrototypeOf(t);
-  }, _getPrototypeOf(t);
-}
-
-;// ../../../../node_modules/.pnpm/@babel+runtime@7.29.7/node_modules/@babel/runtime/helpers/esm/isNativeReflectConstruct.js
-function _isNativeReflectConstruct() {
-  try {
-    var t = !Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {}));
-  } catch (t) {}
-  return (_isNativeReflectConstruct = function _isNativeReflectConstruct() {
-    return !!t;
-  })();
-}
-
-;// ../../../../node_modules/.pnpm/@babel+runtime@7.29.7/node_modules/@babel/runtime/helpers/esm/assertThisInitialized.js
-function _assertThisInitialized(e) {
-  if (void 0 === e) throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
-  return e;
-}
-
-;// ../../../../node_modules/.pnpm/@babel+runtime@7.29.7/node_modules/@babel/runtime/helpers/esm/possibleConstructorReturn.js
-
-
-function _possibleConstructorReturn(t, e) {
-  if (e && ("object" == typeof_typeof(e) || "function" == typeof e)) return e;
-  if (void 0 !== e) throw new TypeError("Derived constructors may only return object or undefined");
-  return _assertThisInitialized(t);
-}
-
-;// ../../../../node_modules/.pnpm/@babel+runtime@7.29.7/node_modules/@babel/runtime/helpers/esm/callSuper.js
-
-
-
-function _callSuper(t, o, e) {
-  return o = _getPrototypeOf(o), _possibleConstructorReturn(t, _isNativeReflectConstruct() ? Reflect.construct(o, e || [], _getPrototypeOf(t).constructor) : o.apply(t, e));
-}
-
-;// ../../../../node_modules/.pnpm/@babel+runtime@7.29.7/node_modules/@babel/runtime/helpers/esm/setPrototypeOf.js
-function _setPrototypeOf(t, e) {
-  return _setPrototypeOf = Object.setPrototypeOf ? Object.setPrototypeOf.bind() : function (t, e) {
-    return t.__proto__ = e, t;
-  }, _setPrototypeOf(t, e);
-}
-
-;// ../../../../node_modules/.pnpm/@babel+runtime@7.29.7/node_modules/@babel/runtime/helpers/esm/inherits.js
-
-function _inherits(t, e) {
-  if ("function" != typeof e && null !== e) throw new TypeError("Super expression must either be null or a function");
-  t.prototype = Object.create(e && e.prototype, {
-    constructor: {
-      value: t,
-      writable: !0,
-      configurable: !0
-    }
-  }), Object.defineProperty(t, "prototype", {
-    writable: !1
-  }), e && _setPrototypeOf(t, e);
-}
-
 ;// ../../../../packages/renderer/dist/objectSpread2-CDDvZyE7.js
 //#region \0@oxc-project+runtime@0.140.0/helpers/esm/typeof.js
 function objectSpread2_CDDvZyE7_typeof(o) {
@@ -10957,12 +10617,6 @@ var react_reconciler_default = /*#__PURE__*/__webpack_require__.n(react_reconcil
 
 
 
-
-
-
-
-
-
 //#region src/helpers/dictionary-watcher.ts
 /**
 * Creates a context that updates its value when the values in the dictionary change
@@ -10970,76 +10624,64 @@ var react_reconciler_default = /*#__PURE__*/__webpack_require__.n(react_reconcil
 * @param displayName A displayName to identify this context easier in case of problems
 */
 function createDictionaryWatcher(dictionary, displayName) {
-  var ctx = (0,react.createContext)(void 0);
+  const ctx = (0,react.createContext)(void 0);
   if (displayName) ctx.displayName = displayName;
-  var createSubscriber = function createSubscriber(fields, isEqual) {
-    var snapshot = objectSpread2_CDDvZyE7_objectSpread2({}, dictionary);
+  const createSubscriber = (fields, isEqual) => {
+    let snapshot = objectSpread2_CDDvZyE7_objectSpread2({}, dictionary);
     return {
-      subscribe: function subscribe(onStoreChange) {
+      subscribe: onStoreChange => {
         snapshot = objectSpread2_CDDvZyE7_objectSpread2({}, dictionary);
-        var remove = dictionary === null || dictionary === void 0 ? void 0 : dictionary.AddListener(function () {
-          var prev = snapshot;
+        const remove = dictionary === null || dictionary === void 0 ? void 0 : dictionary.AddListener(() => {
+          const prev = snapshot;
           snapshot = objectSpread2_CDDvZyE7_objectSpread2({}, dictionary);
           if (!fields) onStoreChange();else {
-            var it = fields.values();
-            for (var field = it.next().value; field; field = it.next().value) if (isEqual ? !isEqual(prev[field], snapshot[field]) : prev[field] !== snapshot[field]) {
+            const it = fields.values();
+            for (let field = it.next().value; field; field = it.next().value) if (isEqual ? !isEqual(prev[field], snapshot[field]) : prev[field] !== snapshot[field]) {
               onStoreChange();
               break;
             }
           }
         });
-        if (!remove) if (displayName) console.warn("".concat(displayName, " dictionary does not provide a change listener"));else console.warn("The dictionary does not provide a change listener");
-        return function () {
-          return remove === null || remove === void 0 ? void 0 : remove();
-        };
+        if (!remove) if (displayName) console.warn(`${displayName} dictionary does not provide a change listener`);else console.warn("The dictionary does not provide a change listener");
+        return () => remove === null || remove === void 0 ? void 0 : remove();
       },
-      getSnapshot: function getSnapshot() {
-        return snapshot;
-      }
+      getSnapshot: () => snapshot
     };
   };
-  var defaultSubscriber = createSubscriber();
-  var Provider = function GlobalsProvider(_ref) {
-    var children = _ref.children;
-    var value = (0,shim.useSyncExternalStore)(defaultSubscriber.subscribe, defaultSubscriber.getSnapshot, defaultSubscriber.getSnapshot);
+  const defaultSubscriber = createSubscriber();
+  const Provider = function GlobalsProvider({
+    children
+  }) {
+    const value = (0,shim.useSyncExternalStore)(defaultSubscriber.subscribe, defaultSubscriber.getSnapshot, defaultSubscriber.getSnapshot);
     return (0,react.createElement)(ctx.Provider, {
-      value: value
+      value
     }, children);
   };
   function useDictionaryContext() {
-    var context = (0,react.useContext)(ctx);
+    const context = (0,react.useContext)(ctx);
     if (context === void 0) {
-      if (displayName) throw new Error("".concat(displayName, ".useContext must be used within a ").concat(displayName, ".Provider"));
+      if (displayName) throw new Error(`${displayName}.useContext must be used within a ${displayName}.Provider`);
       throw new Error("useContext must be used within a provider");
     }
     return context;
   }
-  function useValue() {
-    var subscribeToAllFields = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : false;
-    var fieldEqual = arguments.length > 1 ? arguments[1] : undefined;
-    var fields = (0,react.useMemo)(function () {
-      return /* @__PURE__ */new Set();
-    }, []);
-    var fieldsRef = (0,react.useRef)(fields);
-    var _useState = (0,react.useState)(false),
-      _useState2 = _slicedToArray(_useState, 2),
-      allFieldsSubscribed = _useState2[0],
-      setAllFieldsSubscribed = _useState2[1];
+  function useValue(subscribeToAllFields = false, fieldEqual) {
+    const fields = (0,react.useMemo)(() => /* @__PURE__ */new Set(), []);
+    const fieldsRef = (0,react.useRef)(fields);
+    const [allFieldsSubscribed, setAllFieldsSubscribed] = (0,react.useState)(false);
     subscribeToAllFields || (subscribeToAllFields = allFieldsSubscribed);
-    var subscriber = (0,react.useMemo)(function () {
-      return subscribeToAllFields ? defaultSubscriber : createSubscriber(fieldsRef.current, fieldEqual);
-    }, [subscribeToAllFields, fieldEqual]);
-    var value = (0,shim.useSyncExternalStore)(subscriber.subscribe, subscriber.getSnapshot, subscriber.getSnapshot);
+    const subscriber = (0,react.useMemo)(() => subscribeToAllFields ? defaultSubscriber : createSubscriber(fieldsRef.current, fieldEqual), [subscribeToAllFields, fieldEqual]);
+    const value = (0,shim.useSyncExternalStore)(subscriber.subscribe, subscriber.getSnapshot, subscriber.getSnapshot);
     return new Proxy(value, {
-      get: function get(target, p, receiver) {
+      get(target, p, receiver) {
         fields.add(p);
         return value[p];
       },
-      ownKeys: function ownKeys(target) {
+      ownKeys(target) {
         if (!allFieldsSubscribed) setAllFieldsSubscribed(true);
         return Reflect.ownKeys(target);
       },
-      getOwnPropertyDescriptor: function getOwnPropertyDescriptor(target, p) {
+      getOwnPropertyDescriptor(target, p) {
         fields.add(p);
         return objectSpread2_CDDvZyE7_objectSpread2(objectSpread2_CDDvZyE7_objectSpread2({}, Reflect.getOwnPropertyDescriptor(target, p)), {}, {
           value: value[p]
@@ -11052,62 +10694,56 @@ function createDictionaryWatcher(dictionary, displayName) {
   }
   return {
     context: ctx,
-    Provider: Provider,
-    useValue: useValue,
+    Provider,
+    useValue,
     useContext: useDictionaryContext,
-    useSelector: useSelector
+    useSelector
   };
 }
 //#endregion
 //#region src/helpers/hooks/use-globals.ts
-var globalsWatcher = createDictionaryWatcher(Globals, "globalsContext");
-var useGlobals = globalsWatcher.useValue;
-var useGlobalsContext = globalsWatcher.useContext;
-var useGlobalsSelector = globalsWatcher.useSelector;
-var GlobalsProvider = globalsWatcher.Provider;
+const globalsWatcher = createDictionaryWatcher(Globals, "globalsContext");
+const useGlobals = globalsWatcher.useValue;
+const useGlobalsContext = globalsWatcher.useContext;
+const useGlobalsSelector = globalsWatcher.useSelector;
+const GlobalsProvider = globalsWatcher.Provider;
 //#endregion
 //#region src/helpers/hooks/use-reactive-value.ts
 function createSubscriber(obj, isEqual) {
-  var isReactive = obj && typeof obj === "object" && "Value" in obj;
-  var snapshot = isReactive ? obj.Value : void 0;
+  const isReactive = obj && typeof obj === "object" && "Value" in obj;
+  let snapshot = isReactive ? obj.Value : void 0;
   return {
-    subscribe: function subscribe(onStoreChange) {
+    subscribe: onStoreChange => {
       snapshot = isReactive ? obj.Value : void 0;
-      var remove = isReactive && typeof obj.AddListener === "function" && (obj === null || obj === void 0 ? void 0 : obj.AddListener(function () {
-        var prev = snapshot;
+      const remove = isReactive && typeof obj.AddListener === "function" && (obj === null || obj === void 0 ? void 0 : obj.AddListener(() => {
+        const prev = snapshot;
         snapshot = isReactive ? obj.Value : void 0;
         if (typeof isEqual !== "function" || !isEqual(prev, snapshot)) onStoreChange();
       }));
       if (isReactive && typeof remove !== "function") console.warn("The reactive value does not provide a change listener");
-      return function () {
-        return remove === null || remove === void 0 ? void 0 : remove();
-      };
+      return () => remove === null || remove === void 0 ? void 0 : remove();
     },
-    getSnapshot: function getSnapshot() {
-      return snapshot;
-    }
+    getSnapshot: () => snapshot
   };
 }
 function useReactiveValue(obj, isEqual) {
-  var sb = (0,react.useMemo)(function () {
-    return createSubscriber(obj, isEqual);
-  }, [obj, isEqual]);
+  const sb = (0,react.useMemo)(() => createSubscriber(obj, isEqual), [obj, isEqual]);
   return (0,shim.useSyncExternalStore)(sb.subscribe, sb.getSnapshot, sb.getSnapshot);
 }
 //#endregion
 //#region src/helpers/icons.ts
-var componentCache = {};
-var icon = new Proxy({}, {
-  get: function get(target, key) {
+const componentCache = {};
+const icon = new Proxy({}, {
+  get: (target, key) => {
     if (typeof key === "symbol") return target[key];
-    var icon = key.replace(/^_/, "");
-    var cmp = componentCache[icon];
+    const icon = key.replace(/^_/, "");
+    let cmp = componentCache[icon];
     if (cmp) return cmp;
     cmp = function NamedIcon(props, ref) {
       return react.createElement("icon", objectSpread2_CDDvZyE7_objectSpread2(objectSpread2_CDDvZyE7_objectSpread2({
-        name: "<icon ".concat(icon, ">")
+        name: `<icon ${icon}>`
       }, props), {}, {
-        ref: ref
+        ref
       }), icon);
     };
     cmp = react.forwardRef(cmp);
@@ -11117,114 +10753,103 @@ var icon = new Proxy({}, {
 });
 //#endregion
 //#region src/version.ts
-var version = "0.21.0";
+const version = "0.21.0";
 //#endregion
 //#region src/views/error-boundary.tsx
-var ErrorBoundary = /*#__PURE__*/function (_React$Component) {
-  function ErrorBoundary(props) {
-    var _this;
-    _classCallCheck(this, ErrorBoundary);
-    _this = _callSuper(this, ErrorBoundary, [props]);
-    _this.state = {
+var ErrorBoundary = class extends react.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
       hasError: false,
       error: null
     };
-    return _this;
   }
-  _inherits(ErrorBoundary, _React$Component);
-  return _createClass(ErrorBoundary, [{
-    key: "componentDidCatch",
-    value: function componentDidCatch(error, errorInfo) {}
-  }, {
-    key: "render",
-    value: function render() {
-      if (this.state.hasError) {
-        var _this$state$error, _this$state$error2;
-        return /* @__PURE__ */(0,jsx_runtime.jsxs)("view", {
-          id: "__react-unity-error-boundary",
+  static getDerivedStateFromError(error) {
+    return {
+      hasError: true,
+      error
+    };
+  }
+  componentDidCatch(error, errorInfo) {}
+  render() {
+    if (this.state.hasError) {
+      var _this$state$error, _this$state$error2;
+      return /* @__PURE__ */(0,jsx_runtime.jsxs)("view", {
+        id: "__react-unity-error-boundary",
+        style: {
+          color: "crimson",
+          padding: 20,
+          fontSize: 16
+        },
+        children: [/* @__PURE__ */(0,jsx_runtime.jsx)("view", {
           style: {
-            color: "crimson",
-            padding: 20,
-            fontSize: 16
+            marginBottom: "12px"
           },
-          children: [/* @__PURE__ */(0,jsx_runtime.jsx)("view", {
-            style: {
-              marginBottom: "12px"
-            },
-            children: ((_this$state$error = this.state.error) === null || _this$state$error === void 0 ? void 0 : _this$state$error.message) || ""
-          }), /* @__PURE__ */(0,jsx_runtime.jsx)("view", {
-            children: ((_this$state$error2 = this.state.error) === null || _this$state$error2 === void 0 ? void 0 : _this$state$error2.stack) || ""
-          })]
-        });
-      }
-      return this.props.children;
+          children: ((_this$state$error = this.state.error) === null || _this$state$error === void 0 ? void 0 : _this$state$error.message) || ""
+        }), /* @__PURE__ */(0,jsx_runtime.jsx)("view", {
+          children: ((_this$state$error2 = this.state.error) === null || _this$state$error2 === void 0 ? void 0 : _this$state$error2.stack) || ""
+        })]
+      });
     }
-  }], [{
-    key: "getDerivedStateFromError",
-    value: function getDerivedStateFromError(error) {
-      return {
-        hasError: true,
-        error: error
-      };
-    }
-  }]);
-}(react.Component);
+    return this.props.children;
+  }
+};
 //#endregion
 //#region src/views/default-view.tsx
-function DefaultView(_ref2) {
-  var children = _ref2.children,
-    withHelpers = _ref2.withHelpers,
-    renderCount = _ref2.renderCount;
+function DefaultView({
+  children,
+  withHelpers,
+  renderCount
+}) {
   return /* @__PURE__ */(0,jsx_runtime.jsx)(jsx_runtime.Fragment, {
     children: !withHelpers ? children : /* @__PURE__ */(0,jsx_runtime.jsx)(ErrorBoundary, {
-      children: children
+      children
     }, renderCount)
   });
 }
 //#endregion
 //#region src/renderer/async/objects.ts
-var ObjectsRepo = /*#__PURE__*/_createClass(function ObjectsRepo() {
-  var _this2 = this;
-  _classCallCheck(this, ObjectsRepo);
-  objectSpread2_CDDvZyE7_defineProperty(this, "indices", [{}]);
-  objectSpread2_CDDvZyE7_defineProperty(this, "objects", /* @__PURE__ */new WeakMap());
-  objectSpread2_CDDvZyE7_defineProperty(this, "setObject", function (index, item) {
-    var it = _this2.indices[index];
-    if (!it) it = _this2.indices[index] = {};
-    _this2.objects.set(it, item);
-  });
-  objectSpread2_CDDvZyE7_defineProperty(this, "addObject", function (item) {
-    if (!item) return -1;
-    var it = {};
-    var ind = _this2.indices.length;
-    _this2.indices.push(it);
-    _this2.objects.set(it, item);
-    return ind;
-  });
-  objectSpread2_CDDvZyE7_defineProperty(this, "getObject", function (index) {
-    if (index < 0) return void 0;
-    var it = _this2.indices[index];
-    return _this2.objects.get(it);
-  });
-});
+var ObjectsRepo = class {
+  constructor() {
+    objectSpread2_CDDvZyE7_defineProperty(this, "indices", [{}]);
+    objectSpread2_CDDvZyE7_defineProperty(this, "objects", /* @__PURE__ */new WeakMap());
+    objectSpread2_CDDvZyE7_defineProperty(this, "setObject", (index, item) => {
+      let it = this.indices[index];
+      if (!it) it = this.indices[index] = {};
+      this.objects.set(it, item);
+    });
+    objectSpread2_CDDvZyE7_defineProperty(this, "addObject", item => {
+      if (!item) return -1;
+      const it = {};
+      const ind = this.indices.length;
+      this.indices.push(it);
+      this.objects.set(it, item);
+      return ind;
+    });
+    objectSpread2_CDDvZyE7_defineProperty(this, "getObject", index => {
+      if (index < 0) return void 0;
+      const it = this.indices[index];
+      return this.objects.get(it);
+    });
+  }
+};
 //#endregion
 //#region src/renderer/diffing.ts
-var styleStringSymbol = "__style_as_string__";
-var propDepths = {
+const styleStringSymbol = "__style_as_string__";
+const propDepths = {
   style: 1,
   data: 1,
   custom: 1
 };
-function diffProperties(lastProps, nextProps) {
-  var deepDiffing = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 0;
+function diffProperties(lastProps, nextProps, deepDiffing = 0) {
   if (lastProps === nextProps) return null;
-  var updatePayload = null;
-  var propKey;
+  let updatePayload = null;
+  let propKey;
   for (propKey in lastProps) {
     if (Object.hasOwn(nextProps, propKey) || !Object.hasOwn(lastProps, propKey) || lastProps[propKey] == null) continue;
-    var prop = null;
+    let prop = null;
     if (propKey === "style" && typeof lastProps.style === "string") (updatePayload = updatePayload || {})[styleStringSymbol] = null;else {
-      var depth = deepDiffing > 0 ? deepDiffing : propDepths[propKey] || 0;
+      const depth = deepDiffing > 0 ? deepDiffing : propDepths[propKey] || 0;
       if (depth > 0) {
         prop = diffProperties(lastProps[propKey], {}, depth - 1);
         if (!prop) continue;
@@ -11233,32 +10858,32 @@ function diffProperties(lastProps, nextProps) {
     }
   }
   for (propKey in nextProps) {
-    var nextProp = nextProps[propKey];
-    var lastProp = lastProps != null ? lastProps[propKey] : void 0;
+    const nextProp = nextProps[propKey];
+    const lastProp = lastProps != null ? lastProps[propKey] : void 0;
     if (!Object.hasOwn(nextProps, propKey) || nextProp === lastProp || nextProp == null && lastProp == null) continue;
-    var _prop = nextProp;
+    let prop = nextProp;
     if (propKey === "style") {
-      var prevWasString = typeof lastProp === "string";
-      var curIsString = typeof _prop === "string";
+      const prevWasString = typeof lastProp === "string";
+      const curIsString = typeof prop === "string";
       if (prevWasString !== curIsString) {
-        (updatePayload = updatePayload || {})[styleStringSymbol] = typeof _prop === "string" ? _prop : null;
+        (updatePayload = updatePayload || {})[styleStringSymbol] = typeof prop === "string" ? prop : null;
         if (curIsString) {
-          _prop = diffProperties(lastProp, {}, 0);
-          if (!_prop) continue;
+          prop = diffProperties(lastProp, {}, 0);
+          if (!prop) continue;
         }
       } else {
         if (curIsString) continue;
-        _prop = diffProperties(lastProp, nextProp, 0);
-        if (!_prop) continue;
+        prop = diffProperties(lastProp, nextProp, 0);
+        if (!prop) continue;
       }
     } else {
-      var _depth = deepDiffing > 0 ? deepDiffing : propDepths[propKey] || 0;
-      if (_depth > 0) {
-        _prop = diffProperties(lastProp, nextProp, _depth - 1);
-        if (!_prop) continue;
+      const depth = deepDiffing > 0 ? deepDiffing : propDepths[propKey] || 0;
+      if (depth > 0) {
+        prop = diffProperties(lastProp, nextProp, depth - 1);
+        if (!prop) continue;
       }
     }
-    (updatePayload = updatePayload || {})[propKey] = _prop;
+    (updatePayload = updatePayload || {})[propKey] = prop;
   }
   return updatePayload;
 }
@@ -11288,15 +10913,15 @@ function dist_objectWithoutProperties(e, t) {
 }
 //#endregion
 //#region src/renderer/constants.ts
-var dist_excluded = ["children", "tag", "pool", "ref"];
-var hideClass = "react-unity__renderer__hidden";
-var eventPriorities = {
+const dist_excluded = ["children", "tag", "pool", "ref"];
+const hideClass = "react-unity__renderer__hidden";
+const eventPriorities = {
   discrete: constants.DiscreteEventPriority,
   continuous: constants.ContinuousEventPriority,
-  "default": constants.DefaultEventPriority,
+  default: constants.DefaultEventPriority,
   idle: constants.IdleEventPriority
 };
-var textTypes = {
+const textTypes = {
   text: true,
   icon: true,
   style: true,
@@ -11317,139 +10942,92 @@ function stringizePoolKey(key) {
   }
 }
 function getAllowedProps(props, type) {
-  var children = props.children,
-    tag = props.tag,
-    pool = props.pool,
-    ref = props.ref,
+  const {
+      children,
+      tag,
+      pool,
+      ref
+    } = props,
     rest = dist_objectWithoutProperties(props, dist_excluded);
   if (textTypes[type] && "children" in props) rest.children = !children || typeof children === "boolean" ? null : Array.isArray(children) ? children.join("") : String(children);
   if (typeof props.style === "string") rest[styleStringSymbol] = props.style;
   return rest;
 }
-var HostTransitionContext = (0,react.createContext)(null);
-var currentUpdatePriority = 0;
-var commonReconciler = objectSpread2_CDDvZyE7_objectSpread2({
+const HostTransitionContext = (0,react.createContext)(null);
+let currentUpdatePriority = 0;
+const commonReconciler = objectSpread2_CDDvZyE7_objectSpread2({
   noTimeout: -1,
-  scheduleTimeout: function scheduleTimeout(callback, delay) {
-    return setTimeout(callback, delay);
-  },
-  scheduleMicrotask: typeof queueMicrotask === "function" ? queueMicrotask : function (callback) {
-    return Promise.resolve(null).then(callback)["catch"](function (error) {
-      return setTimeout(function () {
-        throw error;
-      }, 0);
-    });
-  },
-  cancelTimeout: function cancelTimeout(handle) {
-    return clearTimeout(handle);
-  },
-  beforeActiveInstanceBlur: function beforeActiveInstanceBlur() {},
-  afterActiveInstanceBlur: function afterActiveInstanceBlur() {},
-  prepareScopeUpdate: function prepareScopeUpdate() {},
-  getInstanceFromScope: function getInstanceFromScope() {
-    return void 0;
-  },
-  getInstanceFromNode: function getInstanceFromNode() {
-    return void 0;
-  },
-  setCurrentUpdatePriority: function setCurrentUpdatePriority(newPriority) {
-    return currentUpdatePriority = newPriority;
-  },
-  getCurrentUpdatePriority: function getCurrentUpdatePriority() {
-    return currentUpdatePriority;
-  },
-  resolveUpdatePriority: function resolveUpdatePriority() {
-    return currentUpdatePriority || UnityBridge.CurrentEventPriority || eventPriorities["default"];
-  },
-  maySuspendCommit: function maySuspendCommit() {
-    return false;
-  },
-  requestPostPaintCallback: function requestPostPaintCallback() {},
-  preloadInstance: function preloadInstance() {
-    return true;
-  },
-  resetFormInstance: function resetFormInstance() {},
-  resolveEventTimeStamp: function resolveEventTimeStamp() {
-    return -1.1;
-  },
-  resolveEventType: function resolveEventType() {
-    return null;
-  },
-  shouldAttemptEagerTransition: function shouldAttemptEagerTransition() {
-    return false;
-  },
-  startSuspendingCommit: function startSuspendingCommit() {},
-  suspendInstance: function suspendInstance() {},
-  trackSchedulerEvent: function trackSchedulerEvent() {},
-  waitForCommitToBeReady: function waitForCommitToBeReady() {
-    return null;
-  },
+  scheduleTimeout: (callback, delay) => setTimeout(callback, delay),
+  scheduleMicrotask: typeof queueMicrotask === "function" ? queueMicrotask : callback => Promise.resolve(null).then(callback).catch(error => setTimeout(() => {
+    throw error;
+  }, 0)),
+  cancelTimeout: handle => clearTimeout(handle),
+  beforeActiveInstanceBlur() {},
+  afterActiveInstanceBlur() {},
+  prepareScopeUpdate: () => {},
+  getInstanceFromScope: () => void 0,
+  getInstanceFromNode: () => void 0,
+  setCurrentUpdatePriority: newPriority => currentUpdatePriority = newPriority,
+  getCurrentUpdatePriority: () => currentUpdatePriority,
+  resolveUpdatePriority: () => currentUpdatePriority || UnityBridge.CurrentEventPriority || eventPriorities.default,
+  maySuspendCommit: () => false,
+  requestPostPaintCallback: () => {},
+  preloadInstance: () => true,
+  resetFormInstance: () => {},
+  resolveEventTimeStamp: () => -1.1,
+  resolveEventType: () => null,
+  shouldAttemptEagerTransition: () => false,
+  startSuspendingCommit: () => {},
+  suspendInstance: () => {},
+  trackSchedulerEvent: () => {},
+  waitForCommitToBeReady: () => null,
   NotPendingTransition: null,
-  HostTransitionContext: HostTransitionContext
+  HostTransitionContext
 }, {
-  now: typeof performance !== "undefined" && typeof performance.now === "function" ? function () {
-    return performance.now();
-  } : typeof Date !== "undefined" && typeof Date.now === "function" ? function () {
-    return Date.now();
-  } : function () {
-    return 0;
-  },
-  getCurrentEventPriority: function getCurrentEventPriority() {
-    return UnityBridge.CurrentEventPriority || eventPriorities["default"];
-  }
+  now: typeof performance !== "undefined" && typeof performance.now === "function" ? () => performance.now() : typeof Date !== "undefined" && typeof Date.now === "function" ? () => Date.now() : () => 0,
+  getCurrentEventPriority: () => UnityBridge.CurrentEventPriority || eventPriorities.default
 });
-var isDevelopment = "production" === "development";
+const isDevelopment = (/* unused pure expression or super */ null && ("production" === "development"));
 //#endregion
 //#region src/renderer/subcontexts/richtext.ts
 function parametrizeValue(value) {
   if (typeof value === "number") return String(value);
   value = String(value);
-  if (value.includes(" ") || value.includes("-")) return "\"".concat(value, "\"");
+  if (value.includes(" ") || value.includes("-")) return `"${value}"`;
   return value;
 }
 function stringifyRichText(node) {
   var _node$children;
   if (node.hidden) return "";
   if ("text" in node) return node.text;
-  var acc = [];
-  var tag = node.tag;
+  const acc = [];
+  const tag = node.tag;
   if (tag) {
     var _node$attributes;
     acc.push("<");
     acc.push(tag);
     if (((_node$attributes = node.attributes) === null || _node$attributes === void 0 ? void 0 : _node$attributes.value) != null) {
       var _node$attributes2;
-      var value = (_node$attributes2 = node.attributes) === null || _node$attributes2 === void 0 ? void 0 : _node$attributes2.value;
+      const value = (_node$attributes2 = node.attributes) === null || _node$attributes2 === void 0 ? void 0 : _node$attributes2.value;
       acc.push("=");
       acc.push(parametrizeValue(value));
     }
-    for (var key in node.attributes) {
+    for (const key in node.attributes) {
       if (key === "value") continue;
       if (Object.hasOwn(node.attributes, key)) {
-        var _value = node.attributes[key];
-        if (_value != null) {
+        const value = node.attributes[key];
+        if (value != null) {
           acc.push(" ");
           acc.push(key);
           acc.push("=");
-          acc.push(parametrizeValue(_value));
+          acc.push(parametrizeValue(value));
         }
       }
     }
     acc.push(">");
   }
   if (((_node$children = node.children) === null || _node$children === void 0 ? void 0 : _node$children.length) > 0) {
-    var _iterator = _createForOfIteratorHelper(node.children),
-      _step;
-    try {
-      for (_iterator.s(); !(_step = _iterator.n()).done;) {
-        var child = _step.value;
-        acc.push(stringifyRichText(child));
-      }
-    } catch (err) {
-      _iterator.e(err);
-    } finally {
-      _iterator.f();
-    }
+    for (const child of node.children) acc.push(stringifyRichText(child));
     if (tag) {
       acc.push("</");
       acc.push(tag);
@@ -11461,15 +11039,15 @@ function stringifyRichText(node) {
 //#endregion
 //#region src/renderer/subcontexts/svg.ts
 function kebabize(str) {
-  return str.split("").map(function (letter, idx) {
-    return letter.toUpperCase() === letter ? "".concat(idx !== 0 ? "-" : "").concat(letter.toLowerCase()) : letter;
+  return str.split("").map((letter, idx) => {
+    return letter.toUpperCase() === letter ? `${idx !== 0 ? "-" : ""}${letter.toLowerCase()}` : letter;
   }).join("");
 }
 function stringifyStyle(style) {
   if (typeof style === "string") return style;
-  var acc = [];
-  for (var key in style) if (Object.hasOwn(style, key)) {
-    var element = style[key];
+  const acc = [];
+  for (const key in style) if (Object.hasOwn(style, key)) {
+    const element = style[key];
     if (element != null) {
       acc.push(kebabize(key));
       acc.push(":");
@@ -11483,13 +11061,13 @@ function stringifySVG(node) {
   var _node$children;
   if (node.hidden) return "";
   if ("text" in node) return node.text;
-  var acc = [];
-  var tag = node.tag;
+  const acc = [];
+  const tag = node.tag;
   if (tag) {
     acc.push("<");
     acc.push(tag);
-    for (var key in node.attributes) if (Object.hasOwn(node.attributes, key)) {
-      var element = node.attributes[key];
+    for (const key in node.attributes) if (Object.hasOwn(node.attributes, key)) {
+      let element = node.attributes[key];
       if (key === "style") element = stringifyStyle(element);
       if (element != null) {
         acc.push(" ");
@@ -11502,18 +11080,7 @@ function stringifySVG(node) {
   }
   if (((_node$children = node.children) === null || _node$children === void 0 ? void 0 : _node$children.length) > 0) {
     if (tag) acc.push(">");
-    var _iterator2 = _createForOfIteratorHelper(node.children),
-      _step2;
-    try {
-      for (_iterator2.s(); !(_step2 = _iterator2.n()).done;) {
-        var child = _step2.value;
-        acc.push(stringifySVG(child));
-      }
-    } catch (err) {
-      _iterator2.e(err);
-    } finally {
-      _iterator2.f();
-    }
+    for (const child of node.children) acc.push(stringifySVG(child));
     if (tag) {
       acc.push("</");
       acc.push(tag);
@@ -11524,116 +11091,108 @@ function stringifySVG(node) {
 }
 //#endregion
 //#region src/renderer/subcontexts/index.ts
-var subContextRenderers = {
+const subContextRenderers = {
   richtext: stringifyRichText,
   svg: stringifySVG
 };
 //#endregion
 //#region src/renderer/async/callbacks.ts
-var CallbacksRepo = /*#__PURE__*/function (_ObjectsRepo) {
-  function CallbacksRepo() {
-    var _this3;
-    _classCallCheck(this, CallbacksRepo);
-    for (var _len = arguments.length, _args = new Array(_len), _key = 0; _key < _len; _key++) {
-      _args[_key] = arguments[_key];
-    }
-    _this3 = _callSuper(this, CallbacksRepo, [].concat(_args));
-    objectSpread2_CDDvZyE7_defineProperty(_this3, "call", function (ind, args) {
-      var cb = _this3.getObject(ind);
-      var argsAsList = args;
-      var argsAsArray = args;
+var CallbacksRepo = class extends ObjectsRepo {
+  constructor(..._args) {
+    super(..._args);
+    objectSpread2_CDDvZyE7_defineProperty(this, "call", (ind, args) => {
+      const cb = this.getObject(ind);
+      const argsAsList = args;
+      const argsAsArray = args;
       if (typeof argsAsArray.Length === "number") {
         args = [];
-        var length = argsAsArray.Length;
-        for (var index = 0; index < length; index++) args.push(argsAsArray.GetValue(index));
+        const length = argsAsArray.Length;
+        for (let index = 0; index < length; index++) args.push(argsAsArray.GetValue(index));
       } else if (typeof argsAsList.Count === "number") {
         args = [];
-        var _length = argsAsList.Count;
-        for (var _index = 0; _index < _length; _index++) args.push(argsAsList[_index]);
+        const length = argsAsList.Count;
+        for (let index = 0; index < length; index++) args.push(argsAsList[index]);
       } else if (typeof argsAsList.Count === "function") {
         args = [];
-        var _length2 = argsAsList.Count();
-        for (var _index2 = 0; _index2 < _length2; _index2++) args.push(argsAsArray.GetValue(_index2));
+        const length = argsAsList.Count();
+        for (let index = 0; index < length; index++) args.push(argsAsArray.GetValue(index));
       }
       return cb.apply(null, args);
     });
-    return _this3;
   }
-  _inherits(CallbacksRepo, _ObjectsRepo);
-  return _createClass(CallbacksRepo);
-}(ObjectsRepo);
+};
 //#endregion
 //#region src/renderer/async/serializer.ts
-var callbacksRepo = new CallbacksRepo();
-var objectsRepo = new ObjectsRepo();
+const callbacksRepo = new CallbacksRepo();
+const objectsRepo = new ObjectsRepo();
 function convertPropsToSerializable(props) {
-  var res = {};
-  for (var key in props) if (Object.hasOwn(props, key)) {
-    var value = props[key];
+  const res = {};
+  for (const key in props) if (Object.hasOwn(props, key)) {
+    const value = props[key];
     if (value == null) (res.p || (res.p = {}))[key] = null;else if (key === "style") (res.p || (res.p = {}))[key] = convertPropsToSerializable(value);else if (key[0] === "o" && key[1] === "n" && typeof value === "function") {
-      var ind = callbacksRepo.addObject(value);
+      const ind = callbacksRepo.addObject(value);
       (res.e || (res.e = {}))[key] = ind;
     } else if (typeof value === "object" || typeof value === "function") {
-      var _ind = objectsRepo.addObject(value);
-      (res.o || (res.o = {}))[key] = _ind;
+      const ind = objectsRepo.addObject(value);
+      (res.o || (res.o = {}))[key] = ind;
     } else (res.p || (res.p = {}))[key] = value;
   }
   return res;
 }
 //#endregion
 //#region src/renderer/async/reconciler.ts
-var refId = 0;
-var ctxMap = /* @__PURE__ */new Map();
-var updateSubContext = function updateSubContext(instance) {
-  var rend = subContextRenderers[instance.type];
-  var root = instance === null || instance === void 0 ? void 0 : instance.root;
-  var cur = instance;
+let refId = 0;
+const ctxMap = /* @__PURE__ */new Map();
+const updateSubContext = instance => {
+  const rend = subContextRenderers[instance.type];
+  let root = instance === null || instance === void 0 ? void 0 : instance.root;
+  let cur = instance;
   while (cur && !root) {
     root = cur.root;
     cur = cur.parent;
   }
   if (!root) return;
-  var content = rend(root.subContext.node);
+  const content = rend(root.subContext.node);
   if (instance.type === "richtext") instance.hostContext.commands.push([6, root.refId, content]);else if (instance.type === "svg") instance.hostContext.commands.push([5, root.refId, "svg", convertPropsToSerializable({
     innerContent: content
   })]);
 };
-var hostConfig$1 = objectSpread2_CDDvZyE7_objectSpread2(objectSpread2_CDDvZyE7_objectSpread2({}, commonReconciler), {}, {
-  getRootHostContext: function getRootHostContext(rootContainer) {
-    var context = rootContainer.context;
+const hostConfig$1 = objectSpread2_CDDvZyE7_objectSpread2(objectSpread2_CDDvZyE7_objectSpread2({}, commonReconciler), {}, {
+  getRootHostContext: rootContainer => {
+    const context = rootContainer.context;
     if (rootContainer.refId < 0) {
       refId++;
       rootContainer.context.SetRef(refId, rootContainer.component);
       rootContainer.refId = refId;
     }
-    var existing = ctxMap.get(context);
+    const existing = ctxMap.get(context);
     if (existing) return existing;
-    var commands = rootContainer.commands;
-    var flushCommands = function flushCommands() {
-      var serialized = JSON.stringify(commands);
+    const commands = rootContainer.commands;
+    const flushCommands = () => {
+      const serialized = JSON.stringify(commands);
       commands.length = 0;
       return serialized;
     };
-    var fireEventByRef = function fireEventByRef(ind, args) {
+    const fireEventByRef = (ind, args) => {
       return callbacksRepo.call(ind, args);
     };
-    var getObjectRef = function getObjectRef(ind) {
+    const getObjectRef = ind => {
       return objectsRepo.getObject(ind);
     };
-    var getEventAsObjectRef = function getEventAsObjectRef(ind) {
+    const getEventAsObjectRef = ind => {
       return callbacksRepo.getObject(ind);
     };
     context.BindCommands(flushCommands, fireEventByRef, getObjectRef, getEventAsObjectRef);
-    var ctx = {
-      context: context,
-      commands: commands,
+    const ctx = {
+      context,
+      commands,
       refId: rootContainer.refId,
       type: "native"
     };
     ctxMap.set(context, ctx);
     return ctx;
   },
-  getChildHostContext: function getChildHostContext(parentCtx, type) {
+  getChildHostContext: (parentCtx, type) => {
     if (type === "richtext" && parentCtx.type === "native") return {
       type: "richtext",
       hostContext: parentCtx,
@@ -11650,7 +11209,7 @@ var hostConfig$1 = objectSpread2_CDDvZyE7_objectSpread2(objectSpread2_CDDvZyE7_o
     };
     return parentCtx;
   },
-  getPublicInstance: function getPublicInstance(instance) {
+  getPublicInstance: instance => {
     if (instance.type === "native") return instance.context.GetRef(instance.refId, instance.commands.length > 0);
     return null;
   },
@@ -11660,21 +11219,19 @@ var hostConfig$1 = objectSpread2_CDDvZyE7_objectSpread2(objectSpread2_CDDvZyE7_o
   supportsMicrotasks: true,
   isPrimaryRenderer: true,
   warnsIfNotActing: true,
-  prepareForCommit: function prepareForCommit() {
-    return null;
-  },
-  resetAfterCommit: function resetAfterCommit() {},
-  clearContainer: function clearContainer(container) {
+  prepareForCommit: () => null,
+  resetAfterCommit: () => {},
+  clearContainer(container) {
     UnityBridge.clearContainer(container);
   },
-  createInstance: function createInstance(type, props, rootContainer, ctx, internalHandle) {
-    var aProps = getAllowedProps(props, type);
+  createInstance(type, props, rootContainer, ctx, internalHandle) {
+    const aProps = getAllowedProps(props, type);
     if (ctx.type === "native") {
       refId++;
       ctx.commands.push([0, refId, type, convertPropsToSerializable(aProps), stringizePoolKey(props.pool)]);
       if (rootContainer.fiberCache) rootContainer.fiberCache.setObject(refId, internalHandle);
-      var res = objectSpread2_CDDvZyE7_objectSpread2(objectSpread2_CDDvZyE7_objectSpread2({}, ctx), {}, {
-        refId: refId
+      const res = objectSpread2_CDDvZyE7_objectSpread2(objectSpread2_CDDvZyE7_objectSpread2({}, ctx), {}, {
+        refId
       });
       if (type === "richtext") res.subContext = {
         type: "richtext",
@@ -11708,22 +11265,22 @@ var hostConfig$1 = objectSpread2_CDDvZyE7_objectSpread2(objectSpread2_CDDvZyE7_o
       }
     });
   },
-  createTextInstance: function createTextInstance(text, rootContainer, ctx, internalHandle) {
+  createTextInstance(text, rootContainer, ctx, internalHandle) {
     if (ctx.type === "native") {
       refId++;
       ctx.commands.push([1, refId, text]);
       if (rootContainer.fiberCache) rootContainer.fiberCache.setObject(refId, internalHandle);
       return objectSpread2_CDDvZyE7_objectSpread2(objectSpread2_CDDvZyE7_objectSpread2({}, ctx), {}, {
-        refId: refId
+        refId
       });
     }
     if (ctx.type === "richtext" || ctx.type === "svg") return objectSpread2_CDDvZyE7_objectSpread2(objectSpread2_CDDvZyE7_objectSpread2({}, ctx), {}, {
       node: {
-        text: text
+        text
       }
     });
   },
-  appendInitialChild: function appendInitialChild(parent, child) {
+  appendInitialChild(parent, child) {
     if (!child) return;
     if (parent.type === "native" && parent.subContext) parent = parent.subContext;
     if (parent.type === "native" && child.type === "native") parent.commands.push([2, parent.refId, child.refId]);else if (parent.type === "richtext" && child.type === "richtext" || parent.type === "svg" && child.type === "svg") {
@@ -11733,15 +11290,13 @@ var hostConfig$1 = objectSpread2_CDDvZyE7_objectSpread2(objectSpread2_CDDvZyE7_o
       updateSubContext(child);
     }
   },
-  finalizeInitialChildren: function finalizeInitialChildren() {
-    return false;
-  },
-  commitMount: function commitMount(instance) {},
-  shouldSetTextContent: function shouldSetTextContent(type) {
+  finalizeInitialChildren: () => false,
+  commitMount: instance => {},
+  shouldSetTextContent(type) {
     return textTypes[type];
   },
-  commitUpdate: function commitUpdate(instance, type, prevProps, nextProps) {
-    var updatePayload = null;
+  commitUpdate(instance, type, prevProps, nextProps) {
+    let updatePayload = null;
     if (typeof prevProps === "string") {
       updatePayload = type;
       type = prevProps;
@@ -11749,19 +11304,19 @@ var hostConfig$1 = objectSpread2_CDDvZyE7_objectSpread2(objectSpread2_CDDvZyE7_o
       updatePayload = diffProperties(prevProps, nextProps);
       if (!updatePayload) return;
     }
-    var props = getAllowedProps(updatePayload, type);
+    const props = getAllowedProps(updatePayload, type);
     if (instance.type === "native") instance.commands.push([5, instance.refId, type, convertPropsToSerializable(props)]);else if (instance.type === "richtext" || instance.type === "svg") {
       if ("attributes" in instance.node) instance.node.attributes = objectSpread2_CDDvZyE7_objectSpread2(objectSpread2_CDDvZyE7_objectSpread2({}, instance.node.attributes), props);
       updateSubContext(instance);
     }
   },
-  commitTextUpdate: function commitTextUpdate(instance, oldText, newText) {
+  commitTextUpdate(instance, oldText, newText) {
     if (instance.type === "native") instance.commands.push([6, instance.refId, newText]);else if (instance.type === "richtext" || instance.type === "svg") {
       instance.node.text = newText;
       updateSubContext(instance);
     }
   },
-  appendChild: function appendChild(parent, child) {
+  appendChild(parent, child) {
     if (!child) return;
     if (parent.type === "native" && parent.subContext) parent = parent.subContext;
     if (parent.type === "native" && child.type === "native") child.commands.push([2, parent.refId, child.refId]);else if (parent.type === "richtext" && child.type === "richtext" || parent.type === "svg" && child.type === "svg") {
@@ -11771,15 +11326,15 @@ var hostConfig$1 = objectSpread2_CDDvZyE7_objectSpread2(objectSpread2_CDDvZyE7_o
       updateSubContext(child);
     }
   },
-  appendChildToContainer: function appendChildToContainer(parent, child) {
+  appendChildToContainer(parent, child) {
     if (child.type === "native") child.commands.push([2, parent.refId, child.refId]);
   },
-  insertBefore: function insertBefore(parent, child, beforeChild) {
+  insertBefore(parent, child, beforeChild) {
     if (!child) return;
     if (parent.type === "native" && parent.subContext) parent = parent.subContext;
     if (parent.type === "native" && child.type === "native" && beforeChild.type === "native") child.commands.push([4, parent.refId, child.refId, beforeChild.refId]);else if (parent.type === "richtext" && child.type === "richtext" && beforeChild.type === "richtext" || parent.type === "svg" && child.type === "svg" && beforeChild.type === "svg") {
       if ("children" in parent.node) {
-        var index = parent.node.children.indexOf(beforeChild.node);
+        const index = parent.node.children.indexOf(beforeChild.node);
         if (index >= 0) parent.node.children.splice(index, 0, child.node);else parent.node.children.push(child.node);
       }
       child.root = parent.root;
@@ -11787,45 +11342,45 @@ var hostConfig$1 = objectSpread2_CDDvZyE7_objectSpread2(objectSpread2_CDDvZyE7_o
       updateSubContext(child);
     }
   },
-  insertInContainerBefore: function insertInContainerBefore(parent, child, beforeChild) {
+  insertInContainerBefore(parent, child, beforeChild) {
     if (child.type === "native" && beforeChild.type === "native") child.commands.push([4, parent.refId, child.refId, beforeChild.refId]);
   },
-  removeChild: function removeChild(parent, child) {
+  removeChild(parent, child) {
     if (!child) return;
     if (parent.type === "native" && parent.subContext) parent = parent.subContext;
     if (parent.type === "native" && child.type === "native") child.commands.push([3, parent.refId, child.refId]);else if (parent.type === "richtext" && child.type === "richtext" || parent.type === "svg" && child.type === "svg") {
       if ("children" in parent.node) {
-        var index = parent.node.children.indexOf(child.node);
+        const index = parent.node.children.indexOf(child.node);
         if (index >= 0) parent.node.children.splice(index, 1);
       }
       updateSubContext(parent);
     }
   },
-  removeChildFromContainer: function removeChildFromContainer(parent, child) {
+  removeChildFromContainer(parent, child) {
     if (child.type === "native") child.commands.push([3, parent.refId, child.refId]);
   },
-  resetTextContent: function resetTextContent() {},
-  preparePortalMount: function preparePortalMount() {},
-  detachDeletedInstance: function detachDeletedInstance() {},
-  hideInstance: function hideInstance(instance) {
+  resetTextContent: () => {},
+  preparePortalMount: () => {},
+  detachDeletedInstance: () => {},
+  hideInstance: instance => {
     if (instance.type === "native") instance.commands.push([7, instance.refId, true]);else if (instance.type === "richtext" || instance.type === "svg") {
       instance.node.hidden = true;
       updateSubContext(instance);
     }
   },
-  hideTextInstance: function hideTextInstance(instance) {
+  hideTextInstance: instance => {
     if (instance.type === "native") instance.commands.push([7, instance.refId, true]);else if (instance.type === "richtext" || instance.type === "svg") {
       instance.node.hidden = true;
       updateSubContext(instance);
     }
   },
-  unhideInstance: function unhideInstance(instance) {
+  unhideInstance: instance => {
     if (instance.type === "native") instance.commands.push([7, instance.refId, false]);else if (instance.type === "richtext" || instance.type === "svg") {
       instance.node.hidden = false;
       updateSubContext(instance);
     }
   },
-  unhideTextInstance: function unhideTextInstance(instance) {
+  unhideTextInstance: instance => {
     if (instance.type === "native") instance.commands.push([7, instance.refId, false]);else if (instance.type === "richtext" || instance.type === "svg") {
       instance.node.hidden = false;
       updateSubContext(instance);
@@ -11833,66 +11388,52 @@ var hostConfig$1 = objectSpread2_CDDvZyE7_objectSpread2(objectSpread2_CDDvZyE7_o
   }
 }, {
   supportsTestSelectors: false,
-  shouldDeprioritizeSubtree: function shouldDeprioritizeSubtree() {
-    return false;
-  },
-  prepareUpdate: function prepareUpdate(instance, type, oldProps, newProps) {
+  shouldDeprioritizeSubtree: () => false,
+  prepareUpdate(instance, type, oldProps, newProps) {
     return diffProperties(oldProps, newProps);
   }
 });
-var asyncReconciler = null;
-var getAsyncReconciler = function getAsyncReconciler() {
+let asyncReconciler = null;
+const getAsyncReconciler = () => {
   var _asyncReconciler;
   return (_asyncReconciler = asyncReconciler) !== null && _asyncReconciler !== void 0 ? _asyncReconciler : asyncReconciler = react_reconciler_default()(hostConfig$1);
 };
 //#endregion
 //#region src/renderer/sync/reconciler.ts
-var hostContext = {};
-var childContext = {};
-var hostConfig = objectSpread2_CDDvZyE7_objectSpread2(objectSpread2_CDDvZyE7_objectSpread2({}, commonReconciler), {}, {
-  getRootHostContext: function getRootHostContext() {
-    return hostContext;
-  },
-  getChildHostContext: function getChildHostContext() {
-    return childContext;
-  },
-  getPublicInstance: function getPublicInstance(instance) {
-    return instance;
-  },
+const hostContext = {};
+const childContext = {};
+const hostConfig = objectSpread2_CDDvZyE7_objectSpread2(objectSpread2_CDDvZyE7_objectSpread2({}, commonReconciler), {}, {
+  getRootHostContext: () => hostContext,
+  getChildHostContext: () => childContext,
+  getPublicInstance: instance => instance,
   supportsMutation: true,
   supportsHydration: false,
   supportsPersistence: false,
   supportsMicrotasks: true,
   isPrimaryRenderer: true,
   warnsIfNotActing: true,
-  prepareForCommit: function prepareForCommit() {
-    return null;
-  },
-  resetAfterCommit: function resetAfterCommit() {},
-  clearContainer: function clearContainer(container) {
-    return UnityBridge.clearContainer(container);
-  },
-  createInstance: function createInstance(type, props, rootContainerInstance) {
-    var aProps = getAllowedProps(props, type);
-    var children = aProps.children || null;
+  prepareForCommit: () => null,
+  resetAfterCommit: () => {},
+  clearContainer: container => UnityBridge.clearContainer(container),
+  createInstance(type, props, rootContainerInstance) {
+    const aProps = getAllowedProps(props, type);
+    const children = aProps.children || null;
     delete aProps.children;
     return UnityBridge.createElement(props.tag || type, children, rootContainerInstance, aProps, stringizePoolKey(props.pool));
   },
-  createTextInstance: function createTextInstance(text, rootContainerInstance) {
+  createTextInstance(text, rootContainerInstance) {
     return UnityBridge.createText(text, rootContainerInstance);
   },
-  appendInitialChild: function appendInitialChild(parent, child) {
+  appendInitialChild(parent, child) {
     UnityBridge.appendChild(parent, child);
   },
-  finalizeInitialChildren: function finalizeInitialChildren() {
-    return false;
-  },
-  commitMount: function commitMount() {},
-  shouldSetTextContent: function shouldSetTextContent(type) {
+  finalizeInitialChildren: () => false,
+  commitMount: () => {},
+  shouldSetTextContent(type) {
     return textTypes[type];
   },
-  commitUpdate: function commitUpdate(instance, type, prevProps, nextProps) {
-    var updatePayload = null;
+  commitUpdate(instance, type, prevProps, nextProps) {
+    let updatePayload = null;
     if (typeof prevProps === "string") {
       updatePayload = type;
       type = prevProps;
@@ -11902,163 +11443,144 @@ var hostConfig = objectSpread2_CDDvZyE7_objectSpread2(objectSpread2_CDDvZyE7_obj
     }
     UnityBridge.applyUpdate(instance, getAllowedProps(updatePayload, type), type);
   },
-  commitTextUpdate: function commitTextUpdate(textInstance, oldText, newText) {
+  commitTextUpdate(textInstance, oldText, newText) {
     UnityBridge.setText(textInstance, newText);
   },
-  appendChild: function appendChild(parent, child) {
+  appendChild(parent, child) {
     return UnityBridge.appendChild(parent, child);
   },
-  appendChildToContainer: function appendChildToContainer(parent, child) {
+  appendChildToContainer(parent, child) {
     return UnityBridge.appendChildToContainer(parent, child);
   },
-  insertBefore: function insertBefore(parent, child, beforeChild) {
+  insertBefore(parent, child, beforeChild) {
     return UnityBridge.insertBefore(parent, child, beforeChild);
   },
-  insertInContainerBefore: function insertInContainerBefore(parent, child, beforeChild) {
+  insertInContainerBefore(parent, child, beforeChild) {
     return UnityBridge.insertBefore(parent, child, beforeChild);
   },
-  removeChild: function removeChild(parent, child) {
+  removeChild(parent, child) {
     return UnityBridge.removeChild(parent, child);
   },
-  removeChildFromContainer: function removeChildFromContainer(parent, child) {
+  removeChildFromContainer(parent, child) {
     return UnityBridge.removeChild(parent, child);
   },
-  resetTextContent: function resetTextContent() {},
-  preparePortalMount: function preparePortalMount() {},
-  detachDeletedInstance: function detachDeletedInstance() {},
-  hideInstance: function hideInstance(instance) {
+  resetTextContent: () => {},
+  preparePortalMount: () => {},
+  detachDeletedInstance: () => {},
+  hideInstance: instance => {
     instance.ClassList.Add(hideClass);
   },
-  hideTextInstance: function hideTextInstance(instance) {
+  hideTextInstance: instance => {
     instance.ClassList.Add(hideClass);
   },
-  unhideInstance: function unhideInstance(instance) {
+  unhideInstance: instance => {
     instance.ClassList.Remove(hideClass);
   },
-  unhideTextInstance: function unhideTextInstance(instance) {
+  unhideTextInstance: instance => {
     instance.ClassList.Remove(hideClass);
   }
 }, {
   supportsTestSelectors: false,
-  shouldDeprioritizeSubtree: function shouldDeprioritizeSubtree() {
-    return false;
-  },
-  prepareUpdate: function prepareUpdate(instance, type, oldProps, newProps) {
+  shouldDeprioritizeSubtree: () => false,
+  prepareUpdate(instance, type, oldProps, newProps) {
     return diffProperties(oldProps, newProps);
   }
 });
-var syncReconciler = null;
-var getSyncReconciler = function getSyncReconciler() {
+let syncReconciler = null;
+const getSyncReconciler = () => {
   var _syncReconciler;
   return (_syncReconciler = syncReconciler) !== null && _syncReconciler !== void 0 ? _syncReconciler : syncReconciler = react_reconciler_default()(hostConfig);
 };
 //#endregion
 //#region src/renderer/renderer.ts
-var containerMap = /* @__PURE__ */new Map();
-var renderCount = 0;
-function _render(element) {
-  var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+const containerMap = /* @__PURE__ */new Map();
+let renderCount = 0;
+function render(element, options = {}) {
   renderCount++;
-  var hostContainer = (options === null || options === void 0 ? void 0 : options.hostContainer) || HostContainer;
-  var cacheKey = hostContainer.InstanceId >= 0 ? hostContainer.InstanceId : hostContainer;
-  var isAsync = !(options === null || options === void 0 ? void 0 : options.disableBatchRendering);
-  var _ref3 = containerMap.get(cacheKey) || {},
-    hostRoot = _ref3.hostRoot,
-    asyncJobCallback = _ref3.asyncJobCallback;
-  var findFiberByHostInstance = function findFiberByHostInstance() {
-    return null;
-  };
+  const hostContainer = (options === null || options === void 0 ? void 0 : options.hostContainer) || HostContainer;
+  const cacheKey = hostContainer.InstanceId >= 0 ? hostContainer.InstanceId : hostContainer;
+  const isAsync = !(options === null || options === void 0 ? void 0 : options.disableBatchRendering);
+  let {
+    hostRoot,
+    asyncJobCallback
+  } = containerMap.get(cacheKey) || {};
+  let findFiberByHostInstance = () => null;
   if (!hostRoot) {
-    var mode = (options === null || options === void 0 ? void 0 : options.mode) === "legacy" ? constants.LegacyRoot : constants.ConcurrentRoot;
+    const mode = (options === null || options === void 0 ? void 0 : options.mode) === "legacy" ? constants.LegacyRoot : constants.ConcurrentRoot;
     if (isAsync) {
-      var _asyncReconciler2 = getAsyncReconciler();
-      var fiberCache = isDevelopment ? new ObjectsRepo() : null;
-      if (isDevelopment) findFiberByHostInstance = function findFiberByHostInstance(instance) {
-        return !instance ? null : fiberCache.getObject(instance.refId);
-      };
-      var scheduled = false;
-      var commands = [];
-      commands.push = function () {
+      const asyncReconciler = getAsyncReconciler();
+      const fiberCache =  false ? 0 : null;
+      if (false) // removed by dead control flow
+{}
+      let scheduled = false;
+      const commands = [];
+      commands.push = (...args) => {
         if (!scheduled) {
           scheduled = true;
-          Promise.resolve().then(function () {
+          Promise.resolve().then(() => {
             asyncJobCallback();
             scheduled = false;
           });
         }
-        for (var _len2 = arguments.length, args = new Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
-          args[_key2] = arguments[_key2];
-        }
         return Array.prototype.push.apply(commands, args);
       };
-      var hostContainerInstance = {
+      const hostContainerInstance = {
         type: "native",
-        commands: commands,
+        commands,
         component: hostContainer,
         context: hostContainer.Context,
         refId: hostContainer.RefId,
-        fiberCache: fiberCache
+        fiberCache
       };
-      asyncJobCallback = function asyncJobCallback() {
+      asyncJobCallback = () => {
         if (!commands.length) return;
-        var serialized = JSON.stringify(commands);
+        const serialized = JSON.stringify(commands);
         commands.length = 0;
         hostContainerInstance.context.FlushCommands(serialized);
       };
-      hostRoot = _asyncReconciler2.createContainer(hostContainerInstance, mode, null, false, void 0, "", function (error) {
-        return console.error(error);
-      }, function () {}, function () {}, function () {});
-    } else hostRoot = getSyncReconciler().createContainer(hostContainer, mode, null, false, void 0, "", function (error) {
-      return console.error(error);
-    }, function () {}, function () {}, function () {});
+      hostRoot = asyncReconciler.createContainer(hostContainerInstance, mode, null, false, void 0, "", error => console.error(error), () => {}, () => {}, () => {});
+    } else hostRoot = getSyncReconciler().createContainer(hostContainer, mode, null, false, void 0, "", error => console.error(error), () => {}, () => {}, () => {});
     containerMap.set(cacheKey, {
-      hostRoot: hostRoot,
-      asyncJobCallback: asyncJobCallback
+      hostRoot,
+      asyncJobCallback
     });
   }
   if (!(options === null || options === void 0 ? void 0 : options.disableHelpers)) element = (0,react.createElement)(DefaultView, {
     withHelpers: !(options === null || options === void 0 ? void 0 : options.disableHelpers),
-    renderCount: renderCount
+    renderCount
   }, element);
-  var rc = isAsync ? getAsyncReconciler() : getSyncReconciler();
+  const rc = isAsync ? getAsyncReconciler() : getSyncReconciler();
   if ("updateContainerSync" in rc && typeof rc.updateContainerSync === "function" && "flushSyncWork" in rc && typeof rc.flushSyncWork === "function") {
-    rc.updateContainerSync(element, hostRoot, null, function () {});
+    rc.updateContainerSync(element, hostRoot, null, () => {});
     rc.flushSyncWork();
-  } else rc.updateContainer(element, hostRoot, null, function () {});
+  } else rc.updateContainer(element, hostRoot, null, () => {});
   rc.injectIntoDevTools({
-    bundleType: isDevelopment ? 1 : 0,
-    version: version,
+    bundleType:  false ? 0 : 0,
+    version,
     rendererPackageName: "@reactunity/renderer",
     rendererConfig: {
-      isAsync: isAsync
+      isAsync
     },
-    findFiberByHostInstance: findFiberByHostInstance
+    findFiberByHostInstance
   });
   return rc;
 }
 /**
 * @deprecated Instead, import `render` directly from `@reactunity/renderer`
 */
-var Renderer = {
-  render: function render(element) {
-    var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
-    return _render(element, options);
+const Renderer = {
+  render(element, options = {}) {
+    return render(element, options);
   }
 };
-var batchedUpdates = function batchedUpdates() {
-  var _getAsyncReconciler;
-  return (_getAsyncReconciler = getAsyncReconciler()).batchedUpdates.apply(_getAsyncReconciler, arguments);
-};
-var flushSync = function flushSync() {
-  var _getAsyncReconciler2;
-  return (_getAsyncReconciler2 = getAsyncReconciler()).flushSync.apply(_getAsyncReconciler2, arguments);
-};
+const batchedUpdates = (...args) => getAsyncReconciler().batchedUpdates(...args);
+const flushSync = (...args) => getAsyncReconciler().flushSync(...args);
 //#endregion
 //#region index.ts
-var ReactUnityRenderer = {
-  batchedUpdates: batchedUpdates,
-  flushSync: flushSync,
-  render: _render,
+const ReactUnityRenderer = {
+  batchedUpdates,
+  flushSync,
+  render,
   unstable_batchedUpdates: batchedUpdates
 };
 //#endregion
@@ -12100,9 +11622,8 @@ var tooltip_index_module_update = injectStylesIntoStyleTag_default()(tooltip_ind
 
 
 
-
 //#region src/tooltip/index.ts
-var positions = {
+const positions = {
   left: {
     anchor: "left",
     pivot: "right"
@@ -12125,11 +11646,11 @@ var positions = {
   }
 };
 function parseFromPositioningLiteral(str) {
-  var x;
-  var y;
-  var values = str.split(" ");
+  let x;
+  let y;
+  const values = str.split(" ");
   if (values.length > 2) return;
-  var hasDouble = values.length === 2;
+  const hasDouble = values.length === 2;
   if (values.includes("top")) {
     x = .5;
     y = 0;
@@ -12151,85 +11672,72 @@ function parseFromPositioningLiteral(str) {
     x = .5;
     y = .5;
   } else return;
-  return ["".concat(x * 100, "%"), "".concat(y * 100, "%")];
+  return [`${x * 100}%`, `${y * 100}%`];
 }
 function convert2DValue(val) {
   if (!val) return;
   if (typeof val === "string") {
     val = val.trim();
     if (!val) return;
-    var sp = parseFromPositioningLiteral(val);
+    const sp = parseFromPositioningLiteral(val);
     if (sp) return sp;
-    var values = val.split(" ");
+    const values = val.split(" ");
     if (values.length === 2) return values;
     return;
   }
   if (Array.isArray(val)) {
     if (!val.length) return;
-    var v0 = val[0];
-    var v1 = val[1];
-    return [typeof v0 === "number" ? "".concat(v0, "px") : v0, typeof v1 === "number" ? "".concat(v1, "px") : v1];
+    const v0 = val[0];
+    const v1 = val[1];
+    return [typeof v0 === "number" ? `${v0}px` : v0, typeof v1 === "number" ? `${v1}px` : v1];
   }
 }
-function convertToTransform(val) {
-  var negate = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
-  var converted = convert2DValue(val);
+function convertToTransform(val, negate = false) {
+  const converted = convert2DValue(val);
   if (!converted) return "";
-  return "".concat(negate ? converted[0].startsWith("-") ? converted[0].substring(1) : "-".concat(converted[0]) : converted[0], " ").concat(negate ? converted[1].startsWith("-") ? converted[1].substring(1) : "-".concat(converted[1]) : converted[1]);
+  return `${negate ? converted[0].startsWith("-") ? converted[0].substring(1) : `-${converted[0]}` : converted[0]} ${negate ? converted[1].startsWith("-") ? converted[1].substring(1) : `-${converted[1]}` : converted[1]}`;
 }
 function addTooltip(target, props, withBackdrop, hide) {
   target = props.target ? props.target.current : target;
   if (!target) return null;
-  var anchor = UnityBridge.createElement("view", "", HostContainer);
+  const anchor = UnityBridge.createElement("view", "", HostContainer);
   anchor.ClassName = dist_clsx(src_tooltip_index_module.anchor, "mat-tooltip-anchor", props.interactive && src_tooltip_index_module.interactive);
   anchor.Name = "<TooltipAnchor>";
-  var tooltip = UnityBridge.createElement("view", "", HostContainer);
+  const tooltip = UnityBridge.createElement("view", "", HostContainer);
   tooltip.ClassName = dist_clsx(src_tooltip_index_module.tooltip, "mat-tooltip", props.className);
   tooltip.Name = "<Tooltip>";
-  var pos = positions[props.position];
+  const pos = positions[props.position];
   anchor.Style.Set("translate", props.anchor || (pos === null || pos === void 0 ? void 0 : pos.anchor) || "bottom");
   anchor.Style.Set("inset", -(props.offset || 5));
-  var pivotOriginal = props.pivot || (pos === null || pos === void 0 ? void 0 : pos.pivot) || "top";
+  const pivotOriginal = props.pivot || (pos === null || pos === void 0 ? void 0 : pos.pivot) || "top";
   tooltip.Style.Set("translate", convertToTransform(pivotOriginal, true));
   if (withBackdrop) {
-    var backdrop = UnityBridge.createElement("portal", "", HostContainer);
+    const backdrop = UnityBridge.createElement("portal", "", HostContainer);
     backdrop.ClassName = dist_clsx(src_tooltip_index_module.backdrop, "mat-tooltip-backdrop");
     backdrop.Name = "<TooltipBackdrop>";
     UnityBridge.addEventListener(backdrop, "onPointerClick", hide);
     UnityBridge.appendChild(anchor, backdrop);
   }
   UnityBridge.appendChild(anchor, tooltip);
-  _render(props.content, {
+  render(props.content, {
     disableHelpers: true,
     hostContainer: tooltip
   });
   UnityBridge.appendChild(target, anchor);
   return anchor;
 }
-function useTooltip(props) {
-  var trigger = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : "auto";
-  var tooltipRef = (0,react.useRef)(void 0);
-  var timeoutRef = (0,react.useRef)(void 0);
-  var callbacksRef = (0,react.useRef)([]);
-  var elementsRef = (0,react.useRef)([]);
-  var propsRef = useAutoRef(props);
-  var clearAll = (0,react.useCallback)(function () {
-    var callbacks = callbacksRef.current;
-    var _iterator = _createForOfIteratorHelper(callbacks),
-      _step;
-    try {
-      for (_iterator.s(); !(_step = _iterator.n()).done;) {
-        var cb = _step.value;
-        cb === null || cb === void 0 || cb();
-      }
-    } catch (err) {
-      _iterator.e(err);
-    } finally {
-      _iterator.f();
-    }
+function useTooltip(props, trigger = "auto") {
+  const tooltipRef = (0,react.useRef)(void 0);
+  const timeoutRef = (0,react.useRef)(void 0);
+  const callbacksRef = (0,react.useRef)([]);
+  const elementsRef = (0,react.useRef)([]);
+  const propsRef = useAutoRef(props);
+  const clearAll = (0,react.useCallback)(() => {
+    const callbacks = callbacksRef.current;
+    for (const cb of callbacks) cb === null || cb === void 0 || cb();
     callbacks.length = 0;
   }, []);
-  var hide = (0,react.useCallback)(function () {
+  const hide = (0,react.useCallback)(() => {
     var _tooltipRef$current;
     if (timeoutRef.current >= 0) {
       clearTimeout(timeoutRef.current);
@@ -12238,29 +11746,28 @@ function useTooltip(props) {
     (_tooltipRef$current = tooltipRef.current) === null || _tooltipRef$current === void 0 || _tooltipRef$current.Remove();
     tooltipRef.current = null;
   }, []);
-  var show = (0,react.useCallback)(function (target, properties) {
-    var withBackdrop = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
+  const show = (0,react.useCallback)((target, properties, withBackdrop = false) => {
     hide();
     return tooltipRef.current = addTooltip(target, properties, withBackdrop, hide);
   }, [hide]);
-  var showWithCurrent = (0,react.useCallback)(function (ev, sender) {
-    var calculatedProps = typeof propsRef.current === "function" ? propsRef.current(sender) : propsRef.current;
-    var withBackdrop = trigger === "click";
-    var delay = calculatedProps.delay;
-    if (delay > 0) timeoutRef.current = setTimeout(function () {
-      setImmediate(function () {
+  const showWithCurrent = (0,react.useCallback)((ev, sender) => {
+    const calculatedProps = typeof propsRef.current === "function" ? propsRef.current(sender) : propsRef.current;
+    const withBackdrop = trigger === "click";
+    const delay = calculatedProps.delay;
+    if (delay > 0) timeoutRef.current = setTimeout(() => {
+      setImmediate(() => {
         show(sender, calculatedProps, withBackdrop);
       });
     }, delay);else show(sender, calculatedProps, withBackdrop);
   }, [show, trigger]);
-  (0,react.useLayoutEffect)(function () {
+  (0,react.useLayoutEffect)(() => {
     return clearAll;
   }, [trigger, clearAll]);
   return {
-    register: (0,react.useCallback)(function (el) {
+    register: (0,react.useCallback)(el => {
       if (!el) return;
       elementsRef.current.push(el);
-      var callbacks = callbacksRef.current;
+      const callbacks = callbacksRef.current;
       if (trigger === "click") callbacks.push(UnityBridge.addEventListener(el, "onPointerClick", showWithCurrent));else if (trigger === "press" || trigger === "active") {
         callbacks.push(UnityBridge.addEventListener(el, "onPointerDown", showWithCurrent));
         callbacks.push(UnityBridge.addEventListener(el, "onPointerUp", hide));
@@ -12275,23 +11782,20 @@ function useTooltip(props) {
         callbacks.push(UnityBridge.addEventListener(el, "onPointerExit", hide));
       }
     }, [trigger, showWithCurrent, hide]),
-    show: show,
-    hide: hide,
-    clearAll: clearAll
+    show,
+    hide,
+    clearAll
   };
 }
-function useDataTooltip() {
-  var trigger = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : "hover";
-  var props = function props(el) {
-    return propsProxy(el.Data);
-  };
+function useDataTooltip(trigger = "hover") {
+  const props = el => propsProxy(el.Data);
   return useTooltip(props, trigger);
 }
 function propsProxy(data) {
   return new Proxy(data, {
-    get: function get(tg, prop) {
+    get(tg, prop) {
       if (typeof prop === "symbol") return data[prop];
-      return data.GetValueOrDefault("tooltip-".concat(prop));
+      return data.GetValueOrDefault(`tooltip-${prop}`);
     }
   });
 }
@@ -12354,11 +11858,6 @@ function memoizeOne(resultFn, isEqual) {
 
 
 
-
-
-
-
-
 //#region src/virtual-scroll/domHelpers.ts
 function getScrollbarSize(el) {
   return {
@@ -12381,105 +11880,100 @@ function requestTimeout(callback, delay) {
 }
 //#endregion
 //#region src/virtual-scroll/createGridComponent.ts
-var _excluded$1 = ["children", "className", "columnCount", "direction", "height", "innerRef", "innerElementType", "itemData", "itemKey", "outerElementType", "rowCount", "style", "useIsScrolling", "width", "columnWidth", "initialScrollLeft", "initialScrollTop", "onItemsRendered", "onScroll", "outerRef", "overscanColumnCount", "overscanRowCount", "rowHeight"];
-var IS_SCROLLING_DEBOUNCE_INTERVAL$1 = 150;
-var defaultItemKey$1 = function defaultItemKey$1(_ref) {
-  var columnIndex = _ref.columnIndex,
-    data = _ref.data,
-    rowIndex = _ref.rowIndex;
-  return "".concat(rowIndex, ":").concat(columnIndex);
-};
-function createGridComponent(_ref2) {
-  var getColumnOffset = _ref2.getColumnOffset,
-    getColumnStartIndexForOffset = _ref2.getColumnStartIndexForOffset,
-    getColumnStopIndexForStartIndex = _ref2.getColumnStopIndexForStartIndex,
-    getColumnWidth = _ref2.getColumnWidth,
-    getEstimatedTotalHeight = _ref2.getEstimatedTotalHeight,
-    getEstimatedTotalWidth = _ref2.getEstimatedTotalWidth,
-    getOffsetForColumnAndAlignment = _ref2.getOffsetForColumnAndAlignment,
-    getOffsetForRowAndAlignment = _ref2.getOffsetForRowAndAlignment,
-    getRowHeight = _ref2.getRowHeight,
-    getRowOffset = _ref2.getRowOffset,
-    getRowStartIndexForOffset = _ref2.getRowStartIndexForOffset,
-    getRowStopIndexForStartIndex = _ref2.getRowStopIndexForStartIndex,
-    initInstanceProps = _ref2.initInstanceProps,
-    shouldResetStyleCacheOnItemSizeChange = _ref2.shouldResetStyleCacheOnItemSizeChange,
-    validateProps = _ref2.validateProps;
+const _excluded$1 = ["children", "className", "columnCount", "direction", "height", "innerRef", "innerElementType", "itemData", "itemKey", "outerElementType", "rowCount", "style", "useIsScrolling", "width", "columnWidth", "initialScrollLeft", "initialScrollTop", "onItemsRendered", "onScroll", "outerRef", "overscanColumnCount", "overscanRowCount", "rowHeight"];
+const IS_SCROLLING_DEBOUNCE_INTERVAL$1 = 150;
+const defaultItemKey$1 = ({
+  columnIndex,
+  data,
+  rowIndex
+}) => `${rowIndex}:${columnIndex}`;
+function createGridComponent({
+  getColumnOffset,
+  getColumnStartIndexForOffset,
+  getColumnStopIndexForStartIndex,
+  getColumnWidth,
+  getEstimatedTotalHeight,
+  getEstimatedTotalWidth,
+  getOffsetForColumnAndAlignment,
+  getOffsetForRowAndAlignment,
+  getRowHeight,
+  getRowOffset,
+  getRowStartIndexForOffset,
+  getRowStopIndexForStartIndex,
+  initInstanceProps,
+  shouldResetStyleCacheOnItemSizeChange,
+  validateProps
+}) {
   var _Grid;
-  return _Grid = /*#__PURE__*/function (_PureComponent) {
-    function Grid(props) {
-      var _this;
-      _classCallCheck(this, Grid);
-      _this = _callSuper(this, Grid, [props]);
-      _defineProperty(_this, "_instanceProps", initInstanceProps(_this.props, _this));
-      _defineProperty(_this, "_resetIsScrollingTimeoutId", null);
-      _defineProperty(_this, "_outerRef", void 0);
-      _defineProperty(_this, "state", {
-        instance: _this,
+  return _Grid = class Grid extends react.PureComponent {
+    constructor(props) {
+      super(props);
+      _defineProperty(this, "_instanceProps", initInstanceProps(this.props, this));
+      _defineProperty(this, "_resetIsScrollingTimeoutId", null);
+      _defineProperty(this, "_outerRef", void 0);
+      _defineProperty(this, "state", {
+        instance: this,
         isScrolling: false,
         horizontalScrollDirection: "forward",
-        scrollLeft: typeof _this.props.initialScrollLeft === "number" ? _this.props.initialScrollLeft : 0,
-        scrollTop: typeof _this.props.initialScrollTop === "number" ? _this.props.initialScrollTop : 0,
+        scrollLeft: typeof this.props.initialScrollLeft === "number" ? this.props.initialScrollLeft : 0,
+        scrollTop: typeof this.props.initialScrollTop === "number" ? this.props.initialScrollTop : 0,
         scrollUpdateWasRequested: false,
         verticalScrollDirection: "forward"
       });
-      _defineProperty(_this, "_callOnItemsRendered", memoizeOne(function (overscanColumnStartIndex, overscanColumnStopIndex, overscanRowStartIndex, overscanRowStopIndex, visibleColumnStartIndex, visibleColumnStopIndex, visibleRowStartIndex, visibleRowStopIndex) {
-        return _this.props.onItemsRendered({
-          overscanColumnStartIndex: overscanColumnStartIndex,
-          overscanColumnStopIndex: overscanColumnStopIndex,
-          overscanRowStartIndex: overscanRowStartIndex,
-          overscanRowStopIndex: overscanRowStopIndex,
-          visibleColumnStartIndex: visibleColumnStartIndex,
-          visibleColumnStopIndex: visibleColumnStopIndex,
-          visibleRowStartIndex: visibleRowStartIndex,
-          visibleRowStopIndex: visibleRowStopIndex
-        });
-      }));
-      _defineProperty(_this, "_callOnScroll", memoizeOne(function (scrollLeft, scrollTop, horizontalScrollDirection, verticalScrollDirection, scrollUpdateWasRequested) {
-        return _this.props.onScroll({
-          horizontalScrollDirection: horizontalScrollDirection,
-          scrollLeft: scrollLeft,
-          scrollTop: scrollTop,
-          verticalScrollDirection: verticalScrollDirection,
-          scrollUpdateWasRequested: scrollUpdateWasRequested
-        });
-      }));
-      _defineProperty(_this, "_getItemStyle", function (rowIndex, columnIndex) {
-        var _this$props2 = _this.props,
-          columnWidth = _this$props2.columnWidth,
-          direction = _this$props2.direction,
-          rowHeight = _this$props2.rowHeight;
-        var itemStyleCache = _this._getItemStyleCache(shouldResetStyleCacheOnItemSizeChange && columnWidth, shouldResetStyleCacheOnItemSizeChange && direction, shouldResetStyleCacheOnItemSizeChange && rowHeight);
-        var key = "".concat(rowIndex, ":").concat(columnIndex);
-        var style;
+      _defineProperty(this, "_callOnItemsRendered", memoizeOne((overscanColumnStartIndex, overscanColumnStopIndex, overscanRowStartIndex, overscanRowStopIndex, visibleColumnStartIndex, visibleColumnStopIndex, visibleRowStartIndex, visibleRowStopIndex) => this.props.onItemsRendered({
+        overscanColumnStartIndex,
+        overscanColumnStopIndex,
+        overscanRowStartIndex,
+        overscanRowStopIndex,
+        visibleColumnStartIndex,
+        visibleColumnStopIndex,
+        visibleRowStartIndex,
+        visibleRowStopIndex
+      })));
+      _defineProperty(this, "_callOnScroll", memoizeOne((scrollLeft, scrollTop, horizontalScrollDirection, verticalScrollDirection, scrollUpdateWasRequested) => this.props.onScroll({
+        horizontalScrollDirection,
+        scrollLeft,
+        scrollTop,
+        verticalScrollDirection,
+        scrollUpdateWasRequested
+      })));
+      _defineProperty(this, "_getItemStyle", (rowIndex, columnIndex) => {
+        const {
+          columnWidth,
+          direction,
+          rowHeight
+        } = this.props;
+        const itemStyleCache = this._getItemStyleCache(shouldResetStyleCacheOnItemSizeChange && columnWidth, shouldResetStyleCacheOnItemSizeChange && direction, shouldResetStyleCacheOnItemSizeChange && rowHeight);
+        const key = `${rowIndex}:${columnIndex}`;
+        let style;
         if (Object.hasOwn(itemStyleCache, key)) style = itemStyleCache[key];else {
-          var offset = getColumnOffset(_this.props, columnIndex, _this._instanceProps);
-          var isRtl = direction === "rtl";
+          const offset = getColumnOffset(this.props, columnIndex, this._instanceProps);
+          const isRtl = direction === "rtl";
           itemStyleCache[key] = style = {
             position: "absolute",
             left: isRtl ? void 0 : offset,
             right: isRtl ? offset : void 0,
-            top: getRowOffset(_this.props, rowIndex, _this._instanceProps),
-            height: getRowHeight(_this.props, rowIndex, _this._instanceProps),
-            width: getColumnWidth(_this.props, columnIndex, _this._instanceProps)
+            top: getRowOffset(this.props, rowIndex, this._instanceProps),
+            height: getRowHeight(this.props, rowIndex, this._instanceProps),
+            width: getColumnWidth(this.props, columnIndex, this._instanceProps)
           };
         }
         return style;
       });
-      _defineProperty(_this, "_getItemStyleCache", memoizeOne(function (_, __, ___) {
-        return {};
-      }));
-      _defineProperty(_this, "_onScroll", function (event, sender) {
-        var clientHeight = sender.ClientHeight;
-        var clientWidth = sender.ClientWidth;
-        var scrollLeft = sender.ScrollLeft;
-        var scrollTop = sender.ScrollTop;
-        var scrollHeight = sender.ScrollHeight;
-        var scrollWidth = sender.ScrollWidth;
-        _this.setState(function (prevState) {
+      _defineProperty(this, "_getItemStyleCache", memoizeOne((_, __, ___) => ({})));
+      _defineProperty(this, "_onScroll", (event, sender) => {
+        const clientHeight = sender.ClientHeight;
+        const clientWidth = sender.ClientWidth;
+        const scrollLeft = sender.ScrollLeft;
+        const scrollTop = sender.ScrollTop;
+        const scrollHeight = sender.ScrollHeight;
+        const scrollWidth = sender.ScrollWidth;
+        this.setState(prevState => {
           if (prevState.scrollLeft === scrollLeft && prevState.scrollTop === scrollTop) return null;
-          var direction = _this.props.direction;
-          var calculatedScrollLeft = scrollLeft;
+          const {
+            direction
+          } = this.props;
+          let calculatedScrollLeft = scrollLeft;
           if (direction === "rtl") switch (getRTLOffsetType()) {
             case "negative":
               calculatedScrollLeft = -scrollLeft;
@@ -12489,7 +11983,7 @@ function createGridComponent(_ref2) {
               break;
           }
           calculatedScrollLeft = Math.max(0, Math.min(calculatedScrollLeft, scrollWidth - clientWidth));
-          var calculatedScrollTop = Math.max(0, Math.min(scrollTop, scrollHeight - clientHeight));
+          const calculatedScrollTop = Math.max(0, Math.min(scrollTop, scrollHeight - clientHeight));
           return {
             isScrolling: true,
             horizontalScrollDirection: prevState.scrollLeft < scrollLeft ? "forward" : "backward",
@@ -12498,325 +11992,301 @@ function createGridComponent(_ref2) {
             verticalScrollDirection: prevState.scrollTop < scrollTop ? "forward" : "backward",
             scrollUpdateWasRequested: false
           };
-        }, _this._resetIsScrollingDebounced);
+        }, this._resetIsScrollingDebounced);
       });
-      _defineProperty(_this, "_outerRefSetter", function (ref) {
-        var outerRef = _this.props.outerRef;
-        _this._outerRef = ref;
+      _defineProperty(this, "_outerRefSetter", ref => {
+        const {
+          outerRef
+        } = this.props;
+        this._outerRef = ref;
         if (typeof outerRef === "function") outerRef(ref);else if (outerRef != null && typeof outerRef === "object" && Object.hasOwn(outerRef, "current")) outerRef.current = ref;
       });
-      _defineProperty(_this, "_resetIsScrollingDebounced", function () {
-        if (_this._resetIsScrollingTimeoutId !== null) cancelTimeout(_this._resetIsScrollingTimeoutId);
-        _this._resetIsScrollingTimeoutId = requestTimeout(_this._resetIsScrolling, IS_SCROLLING_DEBOUNCE_INTERVAL$1);
-      });
-      _defineProperty(_this, "_resetIsScrolling", function () {
-        _this._resetIsScrollingTimeoutId = null;
-        _this.setState({
-          isScrolling: false
-        }, function () {
-          _this._getItemStyleCache(-1);
-        });
-      });
-      return _this;
-    }
-    _inherits(Grid, _PureComponent);
-    return _createClass(Grid, [{
-      key: "scrollTo",
-      value: function scrollTo(_ref3) {
-        var scrollLeft = _ref3.scrollLeft,
-          scrollTop = _ref3.scrollTop;
-        if (scrollLeft !== void 0) scrollLeft = Math.max(0, scrollLeft);
-        if (scrollTop !== void 0) scrollTop = Math.max(0, scrollTop);
-        this.setState(function (prevState) {
-          if (scrollLeft === void 0) scrollLeft = prevState.scrollLeft;
-          if (scrollTop === void 0) scrollTop = prevState.scrollTop;
-          if (prevState.scrollLeft === scrollLeft && prevState.scrollTop === scrollTop) return null;
-          return {
-            horizontalScrollDirection: prevState.scrollLeft < scrollLeft ? "forward" : "backward",
-            scrollLeft: scrollLeft,
-            scrollTop: scrollTop,
-            scrollUpdateWasRequested: true,
-            verticalScrollDirection: prevState.scrollTop < scrollTop ? "forward" : "backward"
-          };
-        }, this._resetIsScrollingDebounced);
-      }
-    }, {
-      key: "scrollToItem",
-      value: function scrollToItem(_ref4) {
-        var _ref4$align = _ref4.align,
-          align = _ref4$align === void 0 ? "auto" : _ref4$align,
-          columnIndex = _ref4.columnIndex,
-          rowIndex = _ref4.rowIndex;
-        var _this$props3 = this.props,
-          columnCount = _this$props3.columnCount,
-          height = _this$props3.height,
-          rowCount = _this$props3.rowCount,
-          width = _this$props3.width;
-        var _this$state = this.state,
-          scrollLeft = _this$state.scrollLeft,
-          scrollTop = _this$state.scrollTop;
-        var sizes = getScrollbarSize(this._outerRef);
-        if (columnIndex !== void 0) columnIndex = Math.max(0, Math.min(columnIndex, columnCount - 1));
-        if (rowIndex !== void 0) rowIndex = Math.max(0, Math.min(rowIndex, rowCount - 1));
-        var estimatedTotalHeight = getEstimatedTotalHeight(this.props, this._instanceProps);
-        var horizontalScrollbarSize = getEstimatedTotalWidth(this.props, this._instanceProps) > width ? sizes.horizontalHeight : 0;
-        var verticalScrollbarSize = estimatedTotalHeight > height ? sizes.verticalWidth : 0;
-        this.scrollTo({
-          scrollLeft: columnIndex !== void 0 ? getOffsetForColumnAndAlignment(this.props, columnIndex, align, scrollLeft, this._instanceProps, verticalScrollbarSize) : scrollLeft,
-          scrollTop: rowIndex !== void 0 ? getOffsetForRowAndAlignment(this.props, rowIndex, align, scrollTop, this._instanceProps, horizontalScrollbarSize) : scrollTop
-        });
-      }
-    }, {
-      key: "componentDidMount",
-      value: function componentDidMount() {
-        var _this$props4 = this.props,
-          initialScrollLeft = _this$props4.initialScrollLeft,
-          initialScrollTop = _this$props4.initialScrollTop;
-        if (this._outerRef != null) {
-          var outerRef = this._outerRef;
-          if (typeof initialScrollLeft === "number") outerRef.ScrollLeft = initialScrollLeft;
-          if (typeof initialScrollTop === "number") outerRef.ScrollTop = initialScrollTop;
-        }
-        this._callPropsCallbacks();
-      }
-    }, {
-      key: "componentDidUpdate",
-      value: function componentDidUpdate() {
-        var direction = this.props.direction;
-        var _this$state2 = this.state,
-          scrollLeft = _this$state2.scrollLeft,
-          scrollTop = _this$state2.scrollTop,
-          scrollUpdateWasRequested = _this$state2.scrollUpdateWasRequested;
-        if (scrollUpdateWasRequested && this._outerRef != null) {
-          var outerRef = this._outerRef;
-          if (direction === "rtl") switch (getRTLOffsetType()) {
-            case "negative":
-              outerRef.ScrollLeft = -scrollLeft;
-              break;
-            case "positive-ascending":
-              outerRef.ScrollLeft = scrollLeft;
-              break;
-            default:
-              {
-                var clientWidth = outerRef.ClientWidth;
-                outerRef.ScrollLeft = outerRef.ScrollWidth - clientWidth - scrollLeft;
-                break;
-              }
-          } else outerRef.ScrollLeft = Math.max(0, scrollLeft);
-          outerRef.ScrollTop = Math.max(0, scrollTop);
-        }
-        this._callPropsCallbacks();
-      }
-    }, {
-      key: "componentWillUnmount",
-      value: function componentWillUnmount() {
+      _defineProperty(this, "_resetIsScrollingDebounced", () => {
         if (this._resetIsScrollingTimeoutId !== null) cancelTimeout(this._resetIsScrollingTimeoutId);
+        this._resetIsScrollingTimeoutId = requestTimeout(this._resetIsScrolling, IS_SCROLLING_DEBOUNCE_INTERVAL$1);
+      });
+      _defineProperty(this, "_resetIsScrolling", () => {
+        this._resetIsScrollingTimeoutId = null;
+        this.setState({
+          isScrolling: false
+        }, () => {
+          this._getItemStyleCache(-1);
+        });
+      });
+    }
+    static getDerivedStateFromProps(nextProps, prevState) {
+      validateSharedProps$1(nextProps, prevState);
+      validateProps(nextProps);
+      return null;
+    }
+    scrollTo({
+      scrollLeft,
+      scrollTop
+    }) {
+      if (scrollLeft !== void 0) scrollLeft = Math.max(0, scrollLeft);
+      if (scrollTop !== void 0) scrollTop = Math.max(0, scrollTop);
+      this.setState(prevState => {
+        if (scrollLeft === void 0) scrollLeft = prevState.scrollLeft;
+        if (scrollTop === void 0) scrollTop = prevState.scrollTop;
+        if (prevState.scrollLeft === scrollLeft && prevState.scrollTop === scrollTop) return null;
+        return {
+          horizontalScrollDirection: prevState.scrollLeft < scrollLeft ? "forward" : "backward",
+          scrollLeft,
+          scrollTop,
+          scrollUpdateWasRequested: true,
+          verticalScrollDirection: prevState.scrollTop < scrollTop ? "forward" : "backward"
+        };
+      }, this._resetIsScrollingDebounced);
+    }
+    scrollToItem({
+      align = "auto",
+      columnIndex,
+      rowIndex
+    }) {
+      const {
+        columnCount,
+        height,
+        rowCount,
+        width
+      } = this.props;
+      const {
+        scrollLeft,
+        scrollTop
+      } = this.state;
+      const sizes = getScrollbarSize(this._outerRef);
+      if (columnIndex !== void 0) columnIndex = Math.max(0, Math.min(columnIndex, columnCount - 1));
+      if (rowIndex !== void 0) rowIndex = Math.max(0, Math.min(rowIndex, rowCount - 1));
+      const estimatedTotalHeight = getEstimatedTotalHeight(this.props, this._instanceProps);
+      const horizontalScrollbarSize = getEstimatedTotalWidth(this.props, this._instanceProps) > width ? sizes.horizontalHeight : 0;
+      const verticalScrollbarSize = estimatedTotalHeight > height ? sizes.verticalWidth : 0;
+      this.scrollTo({
+        scrollLeft: columnIndex !== void 0 ? getOffsetForColumnAndAlignment(this.props, columnIndex, align, scrollLeft, this._instanceProps, verticalScrollbarSize) : scrollLeft,
+        scrollTop: rowIndex !== void 0 ? getOffsetForRowAndAlignment(this.props, rowIndex, align, scrollTop, this._instanceProps, horizontalScrollbarSize) : scrollTop
+      });
+    }
+    componentDidMount() {
+      const {
+        initialScrollLeft,
+        initialScrollTop
+      } = this.props;
+      if (this._outerRef != null) {
+        const outerRef = this._outerRef;
+        if (typeof initialScrollLeft === "number") outerRef.ScrollLeft = initialScrollLeft;
+        if (typeof initialScrollTop === "number") outerRef.ScrollTop = initialScrollTop;
       }
-    }, {
-      key: "render",
-      value: function render() {
-        var _this$props = this.props,
-          children = _this$props.children,
-          className = _this$props.className,
-          columnCount = _this$props.columnCount,
-          direction = _this$props.direction,
-          height = _this$props.height,
-          innerRef = _this$props.innerRef,
-          innerElementType = _this$props.innerElementType,
-          itemData = _this$props.itemData,
-          _this$props$itemKey = _this$props.itemKey,
-          itemKey = _this$props$itemKey === void 0 ? defaultItemKey$1 : _this$props$itemKey,
-          outerElementType = _this$props.outerElementType,
-          rowCount = _this$props.rowCount,
-          style = _this$props.style,
-          useIsScrolling = _this$props.useIsScrolling,
-          width = _this$props.width,
-          columnWidth = _this$props.columnWidth,
-          initialScrollLeft = _this$props.initialScrollLeft,
-          initialScrollTop = _this$props.initialScrollTop,
-          onItemsRendered = _this$props.onItemsRendered,
-          onScroll = _this$props.onScroll,
-          outerRef = _this$props.outerRef,
-          overscanColumnCount = _this$props.overscanColumnCount,
-          overscanRowCount = _this$props.overscanRowCount,
-          rowHeight = _this$props.rowHeight,
-          rest = _objectWithoutProperties(_this$props, _excluded$1);
-        var isScrolling = this.state.isScrolling;
-        var _this$_getHorizontalR = this._getHorizontalRangeToRender(),
-          _this$_getHorizontalR2 = _slicedToArray(_this$_getHorizontalR, 2),
-          columnStartIndex = _this$_getHorizontalR2[0],
-          columnStopIndex = _this$_getHorizontalR2[1];
-        var _this$_getVerticalRan = this._getVerticalRangeToRender(),
-          _this$_getVerticalRan2 = _slicedToArray(_this$_getVerticalRan, 2),
-          rowStartIndex = _this$_getVerticalRan2[0],
-          rowStopIndex = _this$_getVerticalRan2[1];
-        var items = [];
-        if (columnCount > 0 && rowCount) for (var rowIndex = rowStartIndex; rowIndex <= rowStopIndex; rowIndex++) for (var columnIndex = columnStartIndex; columnIndex <= columnStopIndex; columnIndex++) items.push((0,react.createElement)(children, {
-          columnIndex: columnIndex,
+      this._callPropsCallbacks();
+    }
+    componentDidUpdate() {
+      const {
+        direction
+      } = this.props;
+      const {
+        scrollLeft,
+        scrollTop,
+        scrollUpdateWasRequested
+      } = this.state;
+      if (scrollUpdateWasRequested && this._outerRef != null) {
+        const outerRef = this._outerRef;
+        if (direction === "rtl") switch (getRTLOffsetType()) {
+          case "negative":
+            outerRef.ScrollLeft = -scrollLeft;
+            break;
+          case "positive-ascending":
+            outerRef.ScrollLeft = scrollLeft;
+            break;
+          default:
+            {
+              const clientWidth = outerRef.ClientWidth;
+              outerRef.ScrollLeft = outerRef.ScrollWidth - clientWidth - scrollLeft;
+              break;
+            }
+        } else outerRef.ScrollLeft = Math.max(0, scrollLeft);
+        outerRef.ScrollTop = Math.max(0, scrollTop);
+      }
+      this._callPropsCallbacks();
+    }
+    componentWillUnmount() {
+      if (this._resetIsScrollingTimeoutId !== null) cancelTimeout(this._resetIsScrollingTimeoutId);
+    }
+    render() {
+      const _this$props = this.props,
+        {
+          children,
+          className,
+          columnCount,
+          direction,
+          height,
+          innerRef,
+          innerElementType,
+          itemData,
+          itemKey = defaultItemKey$1,
+          outerElementType,
+          rowCount,
+          style,
+          useIsScrolling,
+          width,
+          columnWidth,
+          initialScrollLeft,
+          initialScrollTop,
+          onItemsRendered,
+          onScroll,
+          outerRef,
+          overscanColumnCount,
+          overscanRowCount,
+          rowHeight
+        } = _this$props,
+        rest = _objectWithoutProperties(_this$props, _excluded$1);
+      const {
+        isScrolling
+      } = this.state;
+      const [columnStartIndex, columnStopIndex] = this._getHorizontalRangeToRender();
+      const [rowStartIndex, rowStopIndex] = this._getVerticalRangeToRender();
+      const items = [];
+      if (columnCount > 0 && rowCount) for (let rowIndex = rowStartIndex; rowIndex <= rowStopIndex; rowIndex++) for (let columnIndex = columnStartIndex; columnIndex <= columnStopIndex; columnIndex++) items.push((0,react.createElement)(children, {
+        columnIndex,
+        data: itemData,
+        isScrolling: useIsScrolling ? isScrolling : void 0,
+        key: itemKey({
+          columnIndex,
           data: itemData,
-          isScrolling: useIsScrolling ? isScrolling : void 0,
-          key: itemKey({
-            columnIndex: columnIndex,
-            data: itemData,
-            rowIndex: rowIndex
-          }),
-          rowIndex: rowIndex,
-          style: this._getItemStyle(rowIndex, columnIndex)
-        }));
-        var estimatedTotalHeight = getEstimatedTotalHeight(this.props, this._instanceProps);
-        var estimatedTotalWidth = getEstimatedTotalWidth(this.props, this._instanceProps);
-        return (0,react.createElement)(outerElementType || "scroll", _objectSpread2(_objectSpread2({}, rest), {}, {
-          className: className,
-          onValueChanged: this._onScroll,
-          ref: this._outerRefSetter,
-          style: _objectSpread2({
-            position: "relative",
-            height: height,
-            width: width,
-            direction: direction
-          }, style)
-        }), (0,react.createElement)(innerElementType || "view", {
-          children: items,
-          ref: innerRef,
-          style: {
-            height: estimatedTotalHeight,
-            pointerEvents: isScrolling ? "none" : void 0,
-            width: estimatedTotalWidth
-          }
-        }));
-      }
-    }, {
-      key: "_callPropsCallbacks",
-      value: function _callPropsCallbacks() {
-        var _this$props5 = this.props,
-          columnCount = _this$props5.columnCount,
-          onItemsRendered = _this$props5.onItemsRendered,
-          onScroll = _this$props5.onScroll,
-          rowCount = _this$props5.rowCount;
-        if (typeof onItemsRendered === "function") {
-          if (columnCount > 0 && rowCount > 0) {
-            var _this$_getHorizontalR3 = this._getHorizontalRangeToRender(),
-              _this$_getHorizontalR4 = _slicedToArray(_this$_getHorizontalR3, 4),
-              overscanColumnStartIndex = _this$_getHorizontalR4[0],
-              overscanColumnStopIndex = _this$_getHorizontalR4[1],
-              visibleColumnStartIndex = _this$_getHorizontalR4[2],
-              visibleColumnStopIndex = _this$_getHorizontalR4[3];
-            var _this$_getVerticalRan3 = this._getVerticalRangeToRender(),
-              _this$_getVerticalRan4 = _slicedToArray(_this$_getVerticalRan3, 4),
-              overscanRowStartIndex = _this$_getVerticalRan4[0],
-              overscanRowStopIndex = _this$_getVerticalRan4[1],
-              visibleRowStartIndex = _this$_getVerticalRan4[2],
-              visibleRowStopIndex = _this$_getVerticalRan4[3];
-            this._callOnItemsRendered(overscanColumnStartIndex, overscanColumnStopIndex, overscanRowStartIndex, overscanRowStopIndex, visibleColumnStartIndex, visibleColumnStopIndex, visibleRowStartIndex, visibleRowStopIndex);
-          }
+          rowIndex
+        }),
+        rowIndex,
+        style: this._getItemStyle(rowIndex, columnIndex)
+      }));
+      const estimatedTotalHeight = getEstimatedTotalHeight(this.props, this._instanceProps);
+      const estimatedTotalWidth = getEstimatedTotalWidth(this.props, this._instanceProps);
+      return (0,react.createElement)(outerElementType || "scroll", _objectSpread2(_objectSpread2({}, rest), {}, {
+        className,
+        onValueChanged: this._onScroll,
+        ref: this._outerRefSetter,
+        style: _objectSpread2({
+          position: "relative",
+          height,
+          width,
+          direction
+        }, style)
+      }), (0,react.createElement)(innerElementType || "view", {
+        children: items,
+        ref: innerRef,
+        style: {
+          height: estimatedTotalHeight,
+          pointerEvents: isScrolling ? "none" : void 0,
+          width: estimatedTotalWidth
         }
-        if (typeof onScroll === "function") {
-          var _this$state3 = this.state,
-            horizontalScrollDirection = _this$state3.horizontalScrollDirection,
-            scrollLeft = _this$state3.scrollLeft,
-            scrollTop = _this$state3.scrollTop,
-            scrollUpdateWasRequested = _this$state3.scrollUpdateWasRequested,
-            verticalScrollDirection = _this$state3.verticalScrollDirection;
-          this._callOnScroll(scrollLeft, scrollTop, horizontalScrollDirection, verticalScrollDirection, scrollUpdateWasRequested);
+      }));
+    }
+    _callPropsCallbacks() {
+      const {
+        columnCount,
+        onItemsRendered,
+        onScroll,
+        rowCount
+      } = this.props;
+      if (typeof onItemsRendered === "function") {
+        if (columnCount > 0 && rowCount > 0) {
+          const [overscanColumnStartIndex, overscanColumnStopIndex, visibleColumnStartIndex, visibleColumnStopIndex] = this._getHorizontalRangeToRender();
+          const [overscanRowStartIndex, overscanRowStopIndex, visibleRowStartIndex, visibleRowStopIndex] = this._getVerticalRangeToRender();
+          this._callOnItemsRendered(overscanColumnStartIndex, overscanColumnStopIndex, overscanRowStartIndex, overscanRowStopIndex, visibleColumnStartIndex, visibleColumnStopIndex, visibleRowStartIndex, visibleRowStopIndex);
         }
       }
-    }, {
-      key: "_getHorizontalRangeToRender",
-      value: function _getHorizontalRangeToRender() {
-        var _this$props6 = this.props,
-          columnCount = _this$props6.columnCount,
-          overscanColumnCount = _this$props6.overscanColumnCount,
-          rowCount = _this$props6.rowCount;
-        var _this$state4 = this.state,
-          horizontalScrollDirection = _this$state4.horizontalScrollDirection,
-          isScrolling = _this$state4.isScrolling,
-          scrollLeft = _this$state4.scrollLeft;
-        var overscanCountResolved = overscanColumnCount || 1;
-        if (columnCount === 0 || rowCount === 0) return [0, 0, 0, 0];
-        var startIndex = getColumnStartIndexForOffset(this.props, scrollLeft, this._instanceProps);
-        var stopIndex = getColumnStopIndexForStartIndex(this.props, startIndex, scrollLeft, this._instanceProps);
-        var overscanBackward = !isScrolling || horizontalScrollDirection === "backward" ? Math.max(1, overscanCountResolved) : 1;
-        var overscanForward = !isScrolling || horizontalScrollDirection === "forward" ? Math.max(1, overscanCountResolved) : 1;
-        return [Math.max(0, startIndex - overscanBackward), Math.max(0, Math.min(columnCount - 1, stopIndex + overscanForward)), startIndex, stopIndex];
+      if (typeof onScroll === "function") {
+        const {
+          horizontalScrollDirection,
+          scrollLeft,
+          scrollTop,
+          scrollUpdateWasRequested,
+          verticalScrollDirection
+        } = this.state;
+        this._callOnScroll(scrollLeft, scrollTop, horizontalScrollDirection, verticalScrollDirection, scrollUpdateWasRequested);
       }
-    }, {
-      key: "_getVerticalRangeToRender",
-      value: function _getVerticalRangeToRender() {
-        var _this$props7 = this.props,
-          columnCount = _this$props7.columnCount,
-          overscanRowCount = _this$props7.overscanRowCount,
-          rowCount = _this$props7.rowCount;
-        var _this$state5 = this.state,
-          isScrolling = _this$state5.isScrolling,
-          verticalScrollDirection = _this$state5.verticalScrollDirection,
-          scrollTop = _this$state5.scrollTop;
-        var overscanCountResolved = overscanRowCount || 1;
-        if (columnCount === 0 || rowCount === 0) return [0, 0, 0, 0];
-        var startIndex = getRowStartIndexForOffset(this.props, scrollTop, this._instanceProps);
-        var stopIndex = getRowStopIndexForStartIndex(this.props, startIndex, scrollTop, this._instanceProps);
-        var overscanBackward = !isScrolling || verticalScrollDirection === "backward" ? Math.max(1, overscanCountResolved) : 1;
-        var overscanForward = !isScrolling || verticalScrollDirection === "forward" ? Math.max(1, overscanCountResolved) : 1;
-        return [Math.max(0, startIndex - overscanBackward), Math.max(0, Math.min(rowCount - 1, stopIndex + overscanForward)), startIndex, stopIndex];
-      }
-    }], [{
-      key: "getDerivedStateFromProps",
-      value: function getDerivedStateFromProps(nextProps, prevState) {
-        validateSharedProps$1(nextProps, prevState);
-        validateProps(nextProps);
-        return null;
-      }
-    }]);
-  }(react.PureComponent), _defineProperty(_Grid, "defaultProps", {
+    }
+    _getHorizontalRangeToRender() {
+      const {
+        columnCount,
+        overscanColumnCount,
+        rowCount
+      } = this.props;
+      const {
+        horizontalScrollDirection,
+        isScrolling,
+        scrollLeft
+      } = this.state;
+      const overscanCountResolved = overscanColumnCount || 1;
+      if (columnCount === 0 || rowCount === 0) return [0, 0, 0, 0];
+      const startIndex = getColumnStartIndexForOffset(this.props, scrollLeft, this._instanceProps);
+      const stopIndex = getColumnStopIndexForStartIndex(this.props, startIndex, scrollLeft, this._instanceProps);
+      const overscanBackward = !isScrolling || horizontalScrollDirection === "backward" ? Math.max(1, overscanCountResolved) : 1;
+      const overscanForward = !isScrolling || horizontalScrollDirection === "forward" ? Math.max(1, overscanCountResolved) : 1;
+      return [Math.max(0, startIndex - overscanBackward), Math.max(0, Math.min(columnCount - 1, stopIndex + overscanForward)), startIndex, stopIndex];
+    }
+    _getVerticalRangeToRender() {
+      const {
+        columnCount,
+        overscanRowCount,
+        rowCount
+      } = this.props;
+      const {
+        isScrolling,
+        verticalScrollDirection,
+        scrollTop
+      } = this.state;
+      const overscanCountResolved = overscanRowCount || 1;
+      if (columnCount === 0 || rowCount === 0) return [0, 0, 0, 0];
+      const startIndex = getRowStartIndexForOffset(this.props, scrollTop, this._instanceProps);
+      const stopIndex = getRowStopIndexForStartIndex(this.props, startIndex, scrollTop, this._instanceProps);
+      const overscanBackward = !isScrolling || verticalScrollDirection === "backward" ? Math.max(1, overscanCountResolved) : 1;
+      const overscanForward = !isScrolling || verticalScrollDirection === "forward" ? Math.max(1, overscanCountResolved) : 1;
+      return [Math.max(0, startIndex - overscanBackward), Math.max(0, Math.min(rowCount - 1, stopIndex + overscanForward)), startIndex, stopIndex];
+    }
+  }, _defineProperty(_Grid, "defaultProps", {
     direction: "ltr",
     itemData: void 0,
     useIsScrolling: false
   }), _Grid;
 }
-var validateSharedProps$1 = function validateSharedProps$1(_ref5, _ref6) {
-  var children = _ref5.children,
-    direction = _ref5.direction,
-    height = _ref5.height,
-    width = _ref5.width;
-  var instance = _ref6.instance;
+const validateSharedProps$1 = ({
+  children,
+  direction,
+  height,
+  width
+}, {
+  instance
+}) => {
   if (false) // removed by dead control flow
 {}
 };
 //#endregion
 //#region src/virtual-scroll/FixedSizeGrid.ts
-var FixedSizeGrid = createGridComponent({
-  getColumnOffset: function getColumnOffset(_ref7, index) {
-    var columnWidth = _ref7.columnWidth;
-    return index * columnWidth;
-  },
-  getColumnWidth: function getColumnWidth(_ref8, index) {
-    var columnWidth = _ref8.columnWidth;
-    return columnWidth;
-  },
-  getRowOffset: function getRowOffset(_ref9, index) {
-    var rowHeight = _ref9.rowHeight;
-    return index * rowHeight;
-  },
-  getRowHeight: function getRowHeight(_ref0, index) {
-    var rowHeight = _ref0.rowHeight;
-    return rowHeight;
-  },
-  getEstimatedTotalHeight: function getEstimatedTotalHeight(_ref1) {
-    var rowCount = _ref1.rowCount,
-      rowHeight = _ref1.rowHeight;
-    return rowHeight * rowCount;
-  },
-  getEstimatedTotalWidth: function getEstimatedTotalWidth(_ref10) {
-    var columnCount = _ref10.columnCount,
-      columnWidth = _ref10.columnWidth;
-    return columnWidth * columnCount;
-  },
-  getOffsetForColumnAndAlignment: function getOffsetForColumnAndAlignment(_ref11, columnIndex, align, scrollLeft, instanceProps, scrollbarSize) {
-    var columnCount = _ref11.columnCount,
-      columnWidth = _ref11.columnWidth,
-      width = _ref11.width;
-    var lastColumnOffset = Math.max(0, columnCount * columnWidth - width);
-    var maxOffset = Math.min(lastColumnOffset, columnIndex * columnWidth);
-    var minOffset = Math.max(0, columnIndex * columnWidth - width + scrollbarSize + columnWidth);
+const FixedSizeGrid = createGridComponent({
+  getColumnOffset: ({
+    columnWidth
+  }, index) => index * columnWidth,
+  getColumnWidth: ({
+    columnWidth
+  }, index) => columnWidth,
+  getRowOffset: ({
+    rowHeight
+  }, index) => index * rowHeight,
+  getRowHeight: ({
+    rowHeight
+  }, index) => rowHeight,
+  getEstimatedTotalHeight: ({
+    rowCount,
+    rowHeight
+  }) => rowHeight * rowCount,
+  getEstimatedTotalWidth: ({
+    columnCount,
+    columnWidth
+  }) => columnWidth * columnCount,
+  getOffsetForColumnAndAlignment: ({
+    columnCount,
+    columnWidth,
+    width
+  }, columnIndex, align, scrollLeft, instanceProps, scrollbarSize) => {
+    const lastColumnOffset = Math.max(0, columnCount * columnWidth - width);
+    const maxOffset = Math.min(lastColumnOffset, columnIndex * columnWidth);
+    const minOffset = Math.max(0, columnIndex * columnWidth - width + scrollbarSize + columnWidth);
     if (align === "smart") if (scrollLeft >= minOffset - width && scrollLeft <= maxOffset + width) align = "auto";else align = "center";
     switch (align) {
       case "start":
@@ -12825,7 +12295,7 @@ var FixedSizeGrid = createGridComponent({
         return minOffset;
       case "center":
         {
-          var middleOffset = Math.round(minOffset + (maxOffset - minOffset) / 2);
+          const middleOffset = Math.round(minOffset + (maxOffset - minOffset) / 2);
           if (middleOffset < Math.ceil(width / 2)) return 0;
           if (middleOffset > lastColumnOffset + Math.floor(width / 2)) return lastColumnOffset;
           return middleOffset;
@@ -12837,13 +12307,14 @@ var FixedSizeGrid = createGridComponent({
         return maxOffset;
     }
   },
-  getOffsetForRowAndAlignment: function getOffsetForRowAndAlignment(_ref12, rowIndex, align, scrollTop, instanceProps, scrollbarSize) {
-    var rowHeight = _ref12.rowHeight,
-      height = _ref12.height,
-      rowCount = _ref12.rowCount;
-    var lastRowOffset = Math.max(0, rowCount * rowHeight - height);
-    var maxOffset = Math.min(lastRowOffset, rowIndex * rowHeight);
-    var minOffset = Math.max(0, rowIndex * rowHeight - height + scrollbarSize + rowHeight);
+  getOffsetForRowAndAlignment: ({
+    rowHeight,
+    height,
+    rowCount
+  }, rowIndex, align, scrollTop, instanceProps, scrollbarSize) => {
+    const lastRowOffset = Math.max(0, rowCount * rowHeight - height);
+    const maxOffset = Math.min(lastRowOffset, rowIndex * rowHeight);
+    const minOffset = Math.max(0, rowIndex * rowHeight - height + scrollbarSize + rowHeight);
     if (align === "smart") if (scrollTop >= minOffset - height && scrollTop <= maxOffset + height) align = "auto";else align = "center";
     switch (align) {
       case "start":
@@ -12852,7 +12323,7 @@ var FixedSizeGrid = createGridComponent({
         return minOffset;
       case "center":
         {
-          var middleOffset = Math.round(minOffset + (maxOffset - minOffset) / 2);
+          const middleOffset = Math.round(minOffset + (maxOffset - minOffset) / 2);
           if (middleOffset < Math.ceil(height / 2)) return 0;
           if (middleOffset > lastRowOffset + Math.floor(height / 2)) return lastRowOffset;
           return middleOffset;
@@ -12864,102 +12335,97 @@ var FixedSizeGrid = createGridComponent({
         return maxOffset;
     }
   },
-  getColumnStartIndexForOffset: function getColumnStartIndexForOffset(_ref13, scrollLeft) {
-    var columnWidth = _ref13.columnWidth,
-      columnCount = _ref13.columnCount;
-    return Math.max(0, Math.min(columnCount - 1, Math.floor(scrollLeft / columnWidth)));
-  },
-  getColumnStopIndexForStartIndex: function getColumnStopIndexForStartIndex(_ref14, startIndex, scrollLeft) {
-    var columnWidth = _ref14.columnWidth,
-      columnCount = _ref14.columnCount,
-      width = _ref14.width;
-    var left = startIndex * columnWidth;
-    var numVisibleColumns = Math.ceil((width + scrollLeft - left) / columnWidth);
+  getColumnStartIndexForOffset: ({
+    columnWidth,
+    columnCount
+  }, scrollLeft) => Math.max(0, Math.min(columnCount - 1, Math.floor(scrollLeft / columnWidth))),
+  getColumnStopIndexForStartIndex: ({
+    columnWidth,
+    columnCount,
+    width
+  }, startIndex, scrollLeft) => {
+    const left = startIndex * columnWidth;
+    const numVisibleColumns = Math.ceil((width + scrollLeft - left) / columnWidth);
     return Math.max(0, Math.min(columnCount - 1, startIndex + numVisibleColumns - 1));
   },
-  getRowStartIndexForOffset: function getRowStartIndexForOffset(_ref15, scrollTop) {
-    var rowHeight = _ref15.rowHeight,
-      rowCount = _ref15.rowCount;
-    return Math.max(0, Math.min(rowCount - 1, Math.floor(scrollTop / rowHeight)));
-  },
-  getRowStopIndexForStartIndex: function getRowStopIndexForStartIndex(_ref16, startIndex, scrollTop) {
-    var rowHeight = _ref16.rowHeight,
-      rowCount = _ref16.rowCount,
-      height = _ref16.height;
-    var top = startIndex * rowHeight;
-    var numVisibleRows = Math.ceil((height + scrollTop - top) / rowHeight);
+  getRowStartIndexForOffset: ({
+    rowHeight,
+    rowCount
+  }, scrollTop) => Math.max(0, Math.min(rowCount - 1, Math.floor(scrollTop / rowHeight))),
+  getRowStopIndexForStartIndex: ({
+    rowHeight,
+    rowCount,
+    height
+  }, startIndex, scrollTop) => {
+    const top = startIndex * rowHeight;
+    const numVisibleRows = Math.ceil((height + scrollTop - top) / rowHeight);
     return Math.max(0, Math.min(rowCount - 1, startIndex + numVisibleRows - 1));
   },
-  initInstanceProps: function initInstanceProps(props) {},
+  initInstanceProps(props) {},
   shouldResetStyleCacheOnItemSizeChange: true,
-  validateProps: function validateProps(_ref17) {
-    var columnWidth = _ref17.columnWidth,
-      rowHeight = _ref17.rowHeight;
+  validateProps: ({
+    columnWidth,
+    rowHeight
+  }) => {
     if (false) // removed by dead control flow
 {}
   }
 });
 //#endregion
 //#region src/virtual-scroll/createListComponent.ts
-var VariableSizeList_DEYjHugc_excluded = ["children", "className", "direction", "height", "innerRef", "innerElementType", "itemCount", "itemData", "itemKey", "layout", "outerElementType", "style", "useIsScrolling", "width", "initialScrollOffset", "itemSize", "onItemsRendered", "onScroll", "outerRef", "overscanCount"];
-var IS_SCROLLING_DEBOUNCE_INTERVAL = 150;
-var defaultItemKey = function defaultItemKey(index, data) {
-  return index;
-};
-function createListComponent(_ref18) {
-  var getItemOffset = _ref18.getItemOffset,
-    getEstimatedTotalSize = _ref18.getEstimatedTotalSize,
-    getItemSize = _ref18.getItemSize,
-    getOffsetForIndexAndAlignment = _ref18.getOffsetForIndexAndAlignment,
-    getStartIndexForOffset = _ref18.getStartIndexForOffset,
-    getStopIndexForStartIndex = _ref18.getStopIndexForStartIndex,
-    initInstanceProps = _ref18.initInstanceProps,
-    shouldResetStyleCacheOnItemSizeChange = _ref18.shouldResetStyleCacheOnItemSizeChange,
-    validateProps = _ref18.validateProps;
+const VariableSizeList_DEYjHugc_excluded = ["children", "className", "direction", "height", "innerRef", "innerElementType", "itemCount", "itemData", "itemKey", "layout", "outerElementType", "style", "useIsScrolling", "width", "initialScrollOffset", "itemSize", "onItemsRendered", "onScroll", "outerRef", "overscanCount"];
+const IS_SCROLLING_DEBOUNCE_INTERVAL = 150;
+const defaultItemKey = (index, data) => index;
+function createListComponent({
+  getItemOffset,
+  getEstimatedTotalSize,
+  getItemSize,
+  getOffsetForIndexAndAlignment,
+  getStartIndexForOffset,
+  getStopIndexForStartIndex,
+  initInstanceProps,
+  shouldResetStyleCacheOnItemSizeChange,
+  validateProps
+}) {
   var _List;
-  return _List = /*#__PURE__*/function (_PureComponent2) {
-    function List(props) {
-      var _this2;
-      _classCallCheck(this, List);
-      _this2 = _callSuper(this, List, [props]);
-      _defineProperty(_this2, "_instanceProps", initInstanceProps(_this2.props, _this2));
-      _defineProperty(_this2, "_outerRef", void 0);
-      _defineProperty(_this2, "_resetIsScrollingTimeoutId", null);
-      _defineProperty(_this2, "state", {
-        instance: _this2,
+  return _List = class List extends react.PureComponent {
+    constructor(props) {
+      super(props);
+      _defineProperty(this, "_instanceProps", initInstanceProps(this.props, this));
+      _defineProperty(this, "_outerRef", void 0);
+      _defineProperty(this, "_resetIsScrollingTimeoutId", null);
+      _defineProperty(this, "state", {
+        instance: this,
         isScrolling: false,
         scrollDirection: "forward",
-        scrollOffset: typeof _this2.props.initialScrollOffset === "number" ? _this2.props.initialScrollOffset : 0,
+        scrollOffset: typeof this.props.initialScrollOffset === "number" ? this.props.initialScrollOffset : 0,
         scrollUpdateWasRequested: false
       });
-      _defineProperty(_this2, "_callOnItemsRendered", memoizeOne(function (overscanStartIndex, overscanStopIndex, visibleStartIndex, visibleStopIndex) {
-        return _this2.props.onItemsRendered({
-          overscanStartIndex: overscanStartIndex,
-          overscanStopIndex: overscanStopIndex,
-          visibleStartIndex: visibleStartIndex,
-          visibleStopIndex: visibleStopIndex
-        });
-      }));
-      _defineProperty(_this2, "_callOnScroll", memoizeOne(function (scrollDirection, scrollOffset, scrollUpdateWasRequested) {
-        return _this2.props.onScroll({
-          scrollDirection: scrollDirection,
-          scrollOffset: scrollOffset,
-          scrollUpdateWasRequested: scrollUpdateWasRequested
-        });
-      }));
-      _defineProperty(_this2, "_getItemStyle", function (index) {
-        var _this2$props = _this2.props,
-          direction = _this2$props.direction,
-          itemSize = _this2$props.itemSize,
-          layout = _this2$props.layout;
-        var itemStyleCache = _this2._getItemStyleCache(shouldResetStyleCacheOnItemSizeChange && itemSize, shouldResetStyleCacheOnItemSizeChange && layout, shouldResetStyleCacheOnItemSizeChange && direction);
-        var style;
+      _defineProperty(this, "_callOnItemsRendered", memoizeOne((overscanStartIndex, overscanStopIndex, visibleStartIndex, visibleStopIndex) => this.props.onItemsRendered({
+        overscanStartIndex,
+        overscanStopIndex,
+        visibleStartIndex,
+        visibleStopIndex
+      })));
+      _defineProperty(this, "_callOnScroll", memoizeOne((scrollDirection, scrollOffset, scrollUpdateWasRequested) => this.props.onScroll({
+        scrollDirection,
+        scrollOffset,
+        scrollUpdateWasRequested
+      })));
+      _defineProperty(this, "_getItemStyle", index => {
+        const {
+          direction,
+          itemSize,
+          layout
+        } = this.props;
+        const itemStyleCache = this._getItemStyleCache(shouldResetStyleCacheOnItemSizeChange && itemSize, shouldResetStyleCacheOnItemSizeChange && layout, shouldResetStyleCacheOnItemSizeChange && direction);
+        let style;
         if (Object.hasOwn(itemStyleCache, index)) style = itemStyleCache[index];else {
-          var offset = getItemOffset(_this2.props, index, _this2._instanceProps);
-          var size = getItemSize(_this2.props, index, _this2._instanceProps);
-          var isHorizontal = layout === "horizontal";
-          var isRtl = direction === "rtl";
-          var offsetHorizontal = isHorizontal ? offset : 0;
+          const offset = getItemOffset(this.props, index, this._instanceProps);
+          const size = getItemSize(this.props, index, this._instanceProps);
+          const isHorizontal = layout === "horizontal";
+          const isRtl = direction === "rtl";
+          const offsetHorizontal = isHorizontal ? offset : 0;
           itemStyleCache[index] = style = {
             position: "absolute",
             left: isRtl ? void 0 : offsetHorizontal,
@@ -12971,17 +12437,17 @@ function createListComponent(_ref18) {
         }
         return style;
       });
-      _defineProperty(_this2, "_getItemStyleCache", memoizeOne(function (_, __, ___) {
-        return {};
-      }));
-      _defineProperty(_this2, "_onScrollHorizontal", function (event, sender) {
-        var clientWidth = sender.ClientWidth;
-        var scrollWidth = sender.ScrollWidth;
-        var scrollLeft = sender.ScrollLeft;
-        _this2.setState(function (prevState) {
+      _defineProperty(this, "_getItemStyleCache", memoizeOne((_, __, ___) => ({})));
+      _defineProperty(this, "_onScrollHorizontal", (event, sender) => {
+        const clientWidth = sender.ClientWidth;
+        const scrollWidth = sender.ScrollWidth;
+        const scrollLeft = sender.ScrollLeft;
+        this.setState(prevState => {
           if (prevState.scrollOffset === scrollLeft) return null;
-          var direction = _this2.props.direction;
-          var scrollOffset = scrollLeft;
+          const {
+            direction
+          } = this.props;
+          let scrollOffset = scrollLeft;
           if (direction === "rtl") switch (getRTLOffsetType()) {
             case "negative":
               scrollOffset = -scrollLeft;
@@ -12994,223 +12460,210 @@ function createListComponent(_ref18) {
           return {
             isScrolling: true,
             scrollDirection: prevState.scrollOffset < scrollLeft ? "forward" : "backward",
-            scrollOffset: scrollOffset,
+            scrollOffset,
             scrollUpdateWasRequested: false
           };
-        }, _this2._resetIsScrollingDebounced);
+        }, this._resetIsScrollingDebounced);
       });
-      _defineProperty(_this2, "_onScrollVertical", function (event, sender) {
-        var clientHeight = sender.ClientHeight;
-        var scrollHeight = sender.ScrollHeight;
-        var scrollTop = sender.ScrollTop;
-        _this2.setState(function (prevState) {
+      _defineProperty(this, "_onScrollVertical", (event, sender) => {
+        const clientHeight = sender.ClientHeight;
+        const scrollHeight = sender.ScrollHeight;
+        const scrollTop = sender.ScrollTop;
+        this.setState(prevState => {
           if (prevState.scrollOffset === scrollTop) return null;
-          var scrollOffset = Math.max(0, Math.min(scrollTop, scrollHeight - clientHeight));
+          const scrollOffset = Math.max(0, Math.min(scrollTop, scrollHeight - clientHeight));
           return {
             isScrolling: true,
             scrollDirection: prevState.scrollOffset < scrollOffset ? "forward" : "backward",
-            scrollOffset: scrollOffset,
+            scrollOffset,
             scrollUpdateWasRequested: false
           };
-        }, _this2._resetIsScrollingDebounced);
+        }, this._resetIsScrollingDebounced);
       });
-      _defineProperty(_this2, "_outerRefSetter", function (ref) {
-        var outerRef = _this2.props.outerRef;
-        _this2._outerRef = ref;
+      _defineProperty(this, "_outerRefSetter", ref => {
+        const {
+          outerRef
+        } = this.props;
+        this._outerRef = ref;
         if (typeof outerRef === "function") outerRef(ref);else if (outerRef != null && typeof outerRef === "object" && Object.hasOwn(outerRef, "current")) outerRef.current = ref;
       });
-      _defineProperty(_this2, "_resetIsScrollingDebounced", function () {
-        if (_this2._resetIsScrollingTimeoutId !== null) cancelTimeout(_this2._resetIsScrollingTimeoutId);
-        _this2._resetIsScrollingTimeoutId = requestTimeout(_this2._resetIsScrolling, IS_SCROLLING_DEBOUNCE_INTERVAL);
+      _defineProperty(this, "_resetIsScrollingDebounced", () => {
+        if (this._resetIsScrollingTimeoutId !== null) cancelTimeout(this._resetIsScrollingTimeoutId);
+        this._resetIsScrollingTimeoutId = requestTimeout(this._resetIsScrolling, IS_SCROLLING_DEBOUNCE_INTERVAL);
       });
-      _defineProperty(_this2, "_resetIsScrolling", function () {
-        _this2._resetIsScrollingTimeoutId = null;
-        _this2.setState({
+      _defineProperty(this, "_resetIsScrolling", () => {
+        this._resetIsScrollingTimeoutId = null;
+        this.setState({
           isScrolling: false
-        }, function () {
-          _this2._getItemStyleCache(-1, null);
+        }, () => {
+          this._getItemStyleCache(-1, null);
         });
       });
-      return _this2;
     }
-    _inherits(List, _PureComponent2);
-    return _createClass(List, [{
-      key: "scrollTo",
-      value: function scrollTo(scrollOffset) {
-        scrollOffset = Math.max(0, scrollOffset);
-        this.setState(function (prevState) {
-          if (prevState.scrollOffset === scrollOffset) return null;
-          return {
-            scrollDirection: prevState.scrollOffset < scrollOffset ? "forward" : "backward",
-            scrollOffset: scrollOffset,
-            scrollUpdateWasRequested: true
-          };
-        }, this._resetIsScrollingDebounced);
+    static getDerivedStateFromProps(nextProps, prevState) {
+      validateSharedProps(nextProps, prevState);
+      validateProps(nextProps);
+      return null;
+    }
+    scrollTo(scrollOffset) {
+      scrollOffset = Math.max(0, scrollOffset);
+      this.setState(prevState => {
+        if (prevState.scrollOffset === scrollOffset) return null;
+        return {
+          scrollDirection: prevState.scrollOffset < scrollOffset ? "forward" : "backward",
+          scrollOffset,
+          scrollUpdateWasRequested: true
+        };
+      }, this._resetIsScrollingDebounced);
+    }
+    scrollToItem(index, align = "auto") {
+      const {
+        itemCount
+      } = this.props;
+      const {
+        scrollOffset
+      } = this.state;
+      index = Math.max(0, Math.min(index, itemCount - 1));
+      this.scrollTo(getOffsetForIndexAndAlignment(this.props, index, align, scrollOffset, this._instanceProps));
+    }
+    componentDidMount() {
+      const {
+        initialScrollOffset,
+        layout
+      } = this.props;
+      if (typeof initialScrollOffset === "number" && this._outerRef != null) {
+        const outerRef = this._outerRef;
+        if (layout === "horizontal") outerRef.ScrollLeft = initialScrollOffset;else outerRef.ScrollTop = initialScrollOffset;
       }
-    }, {
-      key: "scrollToItem",
-      value: function scrollToItem(index) {
-        var align = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : "auto";
-        var itemCount = this.props.itemCount;
-        var scrollOffset = this.state.scrollOffset;
-        index = Math.max(0, Math.min(index, itemCount - 1));
-        this.scrollTo(getOffsetForIndexAndAlignment(this.props, index, align, scrollOffset, this._instanceProps));
+      this._callPropsCallbacks();
+    }
+    componentDidUpdate() {
+      const {
+        direction,
+        layout
+      } = this.props;
+      const {
+        scrollOffset,
+        scrollUpdateWasRequested
+      } = this.state;
+      if (scrollUpdateWasRequested && this._outerRef != null) {
+        const outerRef = this._outerRef;
+        if (layout === "horizontal") {
+          if (direction === "rtl") switch (getRTLOffsetType()) {
+            case "negative":
+              outerRef.ScrollLeft = -scrollOffset;
+              break;
+            case "positive-ascending":
+              outerRef.ScrollLeft = scrollOffset;
+              break;
+            default:
+              outerRef.ScrollLeft = outerRef.ScrollWidth - outerRef.ClientWidth - scrollOffset;
+              break;
+          } else outerRef.ScrollLeft = scrollOffset;
+        } else outerRef.ScrollTop = scrollOffset;
       }
-    }, {
-      key: "componentDidMount",
-      value: function componentDidMount() {
-        var _this$props8 = this.props,
-          initialScrollOffset = _this$props8.initialScrollOffset,
-          layout = _this$props8.layout;
-        if (typeof initialScrollOffset === "number" && this._outerRef != null) {
-          var outerRef = this._outerRef;
-          if (layout === "horizontal") outerRef.ScrollLeft = initialScrollOffset;else outerRef.ScrollTop = initialScrollOffset;
+      this._callPropsCallbacks();
+    }
+    componentWillUnmount() {
+      if (this._resetIsScrollingTimeoutId !== null) cancelTimeout(this._resetIsScrollingTimeoutId);
+    }
+    render() {
+      const _this$props = this.props,
+        {
+          children,
+          className,
+          direction,
+          height,
+          innerRef,
+          innerElementType,
+          itemCount,
+          itemData,
+          itemKey = defaultItemKey,
+          layout,
+          outerElementType,
+          style,
+          useIsScrolling,
+          width,
+          initialScrollOffset,
+          itemSize,
+          onItemsRendered,
+          onScroll: _,
+          outerRef,
+          overscanCount
+        } = _this$props,
+        rest = _objectWithoutProperties(_this$props, VariableSizeList_DEYjHugc_excluded);
+      const {
+        isScrolling
+      } = this.state;
+      const isHorizontal = layout === "horizontal";
+      const onScroll = isHorizontal ? this._onScrollHorizontal : this._onScrollVertical;
+      const [startIndex, stopIndex] = this._getRangeToRender();
+      const items = [];
+      if (itemCount > 0) for (let index = startIndex; index <= stopIndex; index++) items.push((0,react.createElement)(children, {
+        data: itemData,
+        key: itemKey(index, itemData),
+        index,
+        isScrolling: useIsScrolling ? isScrolling : void 0,
+        style: this._getItemStyle(index)
+      }));
+      const estimatedTotalSize = getEstimatedTotalSize(this.props, this._instanceProps);
+      return (0,react.createElement)(outerElementType || "scroll", _objectSpread2(_objectSpread2({}, rest), {}, {
+        className,
+        onValueChanged: onScroll,
+        ref: this._outerRefSetter,
+        style: _objectSpread2({
+          position: "relative",
+          height,
+          width,
+          direction
+        }, style)
+      }), (0,react.createElement)(innerElementType || "view", {
+        children: items,
+        ref: innerRef,
+        style: {
+          height: isHorizontal ? "100%" : estimatedTotalSize,
+          pointerEvents: isScrolling ? "none" : void 0,
+          width: isHorizontal ? estimatedTotalSize : "100%"
         }
-        this._callPropsCallbacks();
-      }
-    }, {
-      key: "componentDidUpdate",
-      value: function componentDidUpdate() {
-        var _this$props9 = this.props,
-          direction = _this$props9.direction,
-          layout = _this$props9.layout;
-        var _this$state6 = this.state,
-          scrollOffset = _this$state6.scrollOffset,
-          scrollUpdateWasRequested = _this$state6.scrollUpdateWasRequested;
-        if (scrollUpdateWasRequested && this._outerRef != null) {
-          var outerRef = this._outerRef;
-          if (layout === "horizontal") {
-            if (direction === "rtl") switch (getRTLOffsetType()) {
-              case "negative":
-                outerRef.ScrollLeft = -scrollOffset;
-                break;
-              case "positive-ascending":
-                outerRef.ScrollLeft = scrollOffset;
-                break;
-              default:
-                outerRef.ScrollLeft = outerRef.ScrollWidth - outerRef.ClientWidth - scrollOffset;
-                break;
-            } else outerRef.ScrollLeft = scrollOffset;
-          } else outerRef.ScrollTop = scrollOffset;
-        }
-        this._callPropsCallbacks();
-      }
-    }, {
-      key: "componentWillUnmount",
-      value: function componentWillUnmount() {
-        if (this._resetIsScrollingTimeoutId !== null) cancelTimeout(this._resetIsScrollingTimeoutId);
-      }
-    }, {
-      key: "render",
-      value: function render() {
-        var _this$props = this.props,
-          children = _this$props.children,
-          className = _this$props.className,
-          direction = _this$props.direction,
-          height = _this$props.height,
-          innerRef = _this$props.innerRef,
-          innerElementType = _this$props.innerElementType,
-          itemCount = _this$props.itemCount,
-          itemData = _this$props.itemData,
-          _this$props$itemKey2 = _this$props.itemKey,
-          itemKey = _this$props$itemKey2 === void 0 ? defaultItemKey : _this$props$itemKey2,
-          layout = _this$props.layout,
-          outerElementType = _this$props.outerElementType,
-          style = _this$props.style,
-          useIsScrolling = _this$props.useIsScrolling,
-          width = _this$props.width,
-          initialScrollOffset = _this$props.initialScrollOffset,
-          itemSize = _this$props.itemSize,
-          onItemsRendered = _this$props.onItemsRendered,
-          _ = _this$props.onScroll,
-          outerRef = _this$props.outerRef,
-          overscanCount = _this$props.overscanCount,
-          rest = _objectWithoutProperties(_this$props, VariableSizeList_DEYjHugc_excluded);
-        var isScrolling = this.state.isScrolling;
-        var isHorizontal = layout === "horizontal";
-        var onScroll = isHorizontal ? this._onScrollHorizontal : this._onScrollVertical;
-        var _this$_getRangeToRend = this._getRangeToRender(),
-          _this$_getRangeToRend2 = _slicedToArray(_this$_getRangeToRend, 2),
-          startIndex = _this$_getRangeToRend2[0],
-          stopIndex = _this$_getRangeToRend2[1];
-        var items = [];
-        if (itemCount > 0) for (var index = startIndex; index <= stopIndex; index++) items.push((0,react.createElement)(children, {
-          data: itemData,
-          key: itemKey(index, itemData),
-          index: index,
-          isScrolling: useIsScrolling ? isScrolling : void 0,
-          style: this._getItemStyle(index)
-        }));
-        var estimatedTotalSize = getEstimatedTotalSize(this.props, this._instanceProps);
-        return (0,react.createElement)(outerElementType || "scroll", _objectSpread2(_objectSpread2({}, rest), {}, {
-          className: className,
-          onValueChanged: onScroll,
-          ref: this._outerRefSetter,
-          style: _objectSpread2({
-            position: "relative",
-            height: height,
-            width: width,
-            direction: direction
-          }, style)
-        }), (0,react.createElement)(innerElementType || "view", {
-          children: items,
-          ref: innerRef,
-          style: {
-            height: isHorizontal ? "100%" : estimatedTotalSize,
-            pointerEvents: isScrolling ? "none" : void 0,
-            width: isHorizontal ? estimatedTotalSize : "100%"
-          }
-        }));
-      }
-    }, {
-      key: "_callPropsCallbacks",
-      value: function _callPropsCallbacks() {
-        if (typeof this.props.onItemsRendered === "function") {
-          var itemCount = this.props.itemCount;
-          if (itemCount > 0) {
-            var _this$_getRangeToRend3 = this._getRangeToRender(),
-              _this$_getRangeToRend4 = _slicedToArray(_this$_getRangeToRend3, 4),
-              overscanStartIndex = _this$_getRangeToRend4[0],
-              overscanStopIndex = _this$_getRangeToRend4[1],
-              visibleStartIndex = _this$_getRangeToRend4[2],
-              visibleStopIndex = _this$_getRangeToRend4[3];
-            this._callOnItemsRendered(overscanStartIndex, overscanStopIndex, visibleStartIndex, visibleStopIndex);
-          }
-        }
-        if (typeof this.props.onScroll === "function") {
-          var _this$state7 = this.state,
-            scrollDirection = _this$state7.scrollDirection,
-            scrollOffset = _this$state7.scrollOffset,
-            scrollUpdateWasRequested = _this$state7.scrollUpdateWasRequested;
-          this._callOnScroll(scrollDirection, scrollOffset, scrollUpdateWasRequested);
+      }));
+    }
+    _callPropsCallbacks() {
+      if (typeof this.props.onItemsRendered === "function") {
+        const {
+          itemCount
+        } = this.props;
+        if (itemCount > 0) {
+          const [overscanStartIndex, overscanStopIndex, visibleStartIndex, visibleStopIndex] = this._getRangeToRender();
+          this._callOnItemsRendered(overscanStartIndex, overscanStopIndex, visibleStartIndex, visibleStopIndex);
         }
       }
-    }, {
-      key: "_getRangeToRender",
-      value: function _getRangeToRender() {
-        var _this$props0 = this.props,
-          itemCount = _this$props0.itemCount,
-          overscanCount = _this$props0.overscanCount;
-        var _this$state8 = this.state,
-          isScrolling = _this$state8.isScrolling,
-          scrollDirection = _this$state8.scrollDirection,
-          scrollOffset = _this$state8.scrollOffset;
-        if (itemCount === 0) return [0, 0, 0, 0];
-        var startIndex = getStartIndexForOffset(this.props, scrollOffset, this._instanceProps);
-        var stopIndex = getStopIndexForStartIndex(this.props, startIndex, scrollOffset, this._instanceProps);
-        var overscanBackward = !isScrolling || scrollDirection === "backward" ? Math.max(1, overscanCount) : 1;
-        var overscanForward = !isScrolling || scrollDirection === "forward" ? Math.max(1, overscanCount) : 1;
-        return [Math.max(0, startIndex - overscanBackward), Math.max(0, Math.min(itemCount - 1, stopIndex + overscanForward)), startIndex, stopIndex];
+      if (typeof this.props.onScroll === "function") {
+        const {
+          scrollDirection,
+          scrollOffset,
+          scrollUpdateWasRequested
+        } = this.state;
+        this._callOnScroll(scrollDirection, scrollOffset, scrollUpdateWasRequested);
       }
-    }], [{
-      key: "getDerivedStateFromProps",
-      value: function getDerivedStateFromProps(nextProps, prevState) {
-        validateSharedProps(nextProps, prevState);
-        validateProps(nextProps);
-        return null;
-      }
-    }]);
-  }(react.PureComponent), _defineProperty(_List, "defaultProps", {
+    }
+    _getRangeToRender() {
+      const {
+        itemCount,
+        overscanCount
+      } = this.props;
+      const {
+        isScrolling,
+        scrollDirection,
+        scrollOffset
+      } = this.state;
+      if (itemCount === 0) return [0, 0, 0, 0];
+      const startIndex = getStartIndexForOffset(this.props, scrollOffset, this._instanceProps);
+      const stopIndex = getStopIndexForStartIndex(this.props, startIndex, scrollOffset, this._instanceProps);
+      const overscanBackward = !isScrolling || scrollDirection === "backward" ? Math.max(1, overscanCount) : 1;
+      const overscanForward = !isScrolling || scrollDirection === "forward" ? Math.max(1, overscanCount) : 1;
+      return [Math.max(0, startIndex - overscanBackward), Math.max(0, Math.min(itemCount - 1, stopIndex + overscanForward)), startIndex, stopIndex];
+    }
+  }, _defineProperty(_List, "defaultProps", {
     direction: "ltr",
     itemData: void 0,
     layout: "vertical",
@@ -13218,43 +12671,43 @@ function createListComponent(_ref18) {
     useIsScrolling: false
   }), _List;
 }
-var validateSharedProps = function validateSharedProps(_ref19, _ref20) {
-  var children = _ref19.children,
-    direction = _ref19.direction,
-    height = _ref19.height,
-    layout = _ref19.layout,
-    width = _ref19.width;
-  var instance = _ref20.instance;
+const validateSharedProps = ({
+  children,
+  direction,
+  height,
+  layout,
+  width
+}, {
+  instance
+}) => {
   if (false) // removed by dead control flow
-{ var isHorizontal; }
+{}
 };
 //#endregion
 //#region src/virtual-scroll/FixedSizeList.ts
-var FixedSizeList = createListComponent({
-  getItemOffset: function getItemOffset(_ref21, index) {
-    var itemSize = _ref21.itemSize;
-    return index * itemSize;
-  },
-  getItemSize: function getItemSize(_ref22, index) {
-    var itemSize = _ref22.itemSize;
-    return itemSize;
-  },
-  getEstimatedTotalSize: function getEstimatedTotalSize(_ref23) {
-    var itemCount = _ref23.itemCount,
-      itemSize = _ref23.itemSize;
-    return itemSize * itemCount;
-  },
-  getOffsetForIndexAndAlignment: function getOffsetForIndexAndAlignment(_ref24, index, align, scrollOffset) {
-    var direction = _ref24.direction,
-      height = _ref24.height,
-      itemCount = _ref24.itemCount,
-      itemSize = _ref24.itemSize,
-      layout = _ref24.layout,
-      width = _ref24.width;
-    var size = layout === "horizontal" ? width : height;
-    var lastItemOffset = Math.max(0, itemCount * itemSize - size);
-    var maxOffset = Math.min(lastItemOffset, index * itemSize);
-    var minOffset = Math.max(0, index * itemSize - size + itemSize);
+const FixedSizeList = createListComponent({
+  getItemOffset: ({
+    itemSize
+  }, index) => index * itemSize,
+  getItemSize: ({
+    itemSize
+  }, index) => itemSize,
+  getEstimatedTotalSize: ({
+    itemCount,
+    itemSize
+  }) => itemSize * itemCount,
+  getOffsetForIndexAndAlignment: ({
+    direction,
+    height,
+    itemCount,
+    itemSize,
+    layout,
+    width
+  }, index, align, scrollOffset) => {
+    const size = layout === "horizontal" ? width : height;
+    const lastItemOffset = Math.max(0, itemCount * itemSize - size);
+    const maxOffset = Math.min(lastItemOffset, index * itemSize);
+    const minOffset = Math.max(0, index * itemSize - size + itemSize);
     if (align === "smart") if (scrollOffset >= minOffset - size && scrollOffset <= maxOffset + size) align = "auto";else align = "center";
     switch (align) {
       case "start":
@@ -13263,7 +12716,7 @@ var FixedSizeList = createListComponent({
         return minOffset;
       case "center":
         {
-          var middleOffset = Math.round(minOffset + (maxOffset - minOffset) / 2);
+          const middleOffset = Math.round(minOffset + (maxOffset - minOffset) / 2);
           if (middleOffset < Math.ceil(size / 2)) return 0;
           if (middleOffset > lastItemOffset + Math.floor(size / 2)) return lastItemOffset;
           return middleOffset;
@@ -13274,66 +12727,71 @@ var FixedSizeList = createListComponent({
         return maxOffset;
     }
   },
-  getStartIndexForOffset: function getStartIndexForOffset(_ref25, offset) {
-    var itemCount = _ref25.itemCount,
-      itemSize = _ref25.itemSize;
-    return Math.max(0, Math.min(itemCount - 1, Math.floor(offset / itemSize)));
-  },
-  getStopIndexForStartIndex: function getStopIndexForStartIndex(_ref26, startIndex, scrollOffset) {
-    var direction = _ref26.direction,
-      height = _ref26.height,
-      itemCount = _ref26.itemCount,
-      itemSize = _ref26.itemSize,
-      layout = _ref26.layout,
-      width = _ref26.width;
-    var isHorizontal = layout === "horizontal";
-    var offset = startIndex * itemSize;
-    var numVisibleItems = Math.ceil(((isHorizontal ? width : height) + scrollOffset - offset) / itemSize);
+  getStartIndexForOffset: ({
+    itemCount,
+    itemSize
+  }, offset) => Math.max(0, Math.min(itemCount - 1, Math.floor(offset / itemSize))),
+  getStopIndexForStartIndex: ({
+    direction,
+    height,
+    itemCount,
+    itemSize,
+    layout,
+    width
+  }, startIndex, scrollOffset) => {
+    const isHorizontal = layout === "horizontal";
+    const offset = startIndex * itemSize;
+    const numVisibleItems = Math.ceil(((isHorizontal ? width : height) + scrollOffset - offset) / itemSize);
     return Math.max(0, Math.min(itemCount - 1, startIndex + numVisibleItems - 1));
   },
-  initInstanceProps: function initInstanceProps(props) {},
+  initInstanceProps(props) {},
   shouldResetStyleCacheOnItemSizeChange: true,
-  validateProps: function validateProps(_ref27) {
-    var itemSize = _ref27.itemSize;
+  validateProps: ({
+    itemSize
+  }) => {
     if (false) // removed by dead control flow
 {}
   }
 });
 //#endregion
 //#region src/virtual-scroll/VariableSizeGrid.ts
-var DEFAULT_ESTIMATED_ITEM_SIZE$1 = 50;
-var getEstimatedTotalHeight = function getEstimatedTotalHeight(_ref28, _ref29) {
-  var rowCount = _ref28.rowCount;
-  var rowMetadataMap = _ref29.rowMetadataMap,
-    estimatedRowHeight = _ref29.estimatedRowHeight,
-    lastMeasuredRowIndex = _ref29.lastMeasuredRowIndex;
-  var totalSizeOfMeasuredRows = 0;
+const DEFAULT_ESTIMATED_ITEM_SIZE$1 = 50;
+const getEstimatedTotalHeight = ({
+  rowCount
+}, {
+  rowMetadataMap,
+  estimatedRowHeight,
+  lastMeasuredRowIndex
+}) => {
+  let totalSizeOfMeasuredRows = 0;
   if (lastMeasuredRowIndex >= rowCount) lastMeasuredRowIndex = rowCount - 1;
   if (lastMeasuredRowIndex >= 0) {
-    var itemMetadata = rowMetadataMap[lastMeasuredRowIndex];
+    const itemMetadata = rowMetadataMap[lastMeasuredRowIndex];
     totalSizeOfMeasuredRows = itemMetadata.offset + itemMetadata.size;
   }
-  var totalSizeOfUnmeasuredItems = (rowCount - lastMeasuredRowIndex - 1) * estimatedRowHeight;
+  const totalSizeOfUnmeasuredItems = (rowCount - lastMeasuredRowIndex - 1) * estimatedRowHeight;
   return totalSizeOfMeasuredRows + totalSizeOfUnmeasuredItems;
 };
-var getEstimatedTotalWidth = function getEstimatedTotalWidth(_ref30, _ref31) {
-  var columnCount = _ref30.columnCount;
-  var columnMetadataMap = _ref31.columnMetadataMap,
-    estimatedColumnWidth = _ref31.estimatedColumnWidth,
-    lastMeasuredColumnIndex = _ref31.lastMeasuredColumnIndex;
-  var totalSizeOfMeasuredRows = 0;
+const getEstimatedTotalWidth = ({
+  columnCount
+}, {
+  columnMetadataMap,
+  estimatedColumnWidth,
+  lastMeasuredColumnIndex
+}) => {
+  let totalSizeOfMeasuredRows = 0;
   if (lastMeasuredColumnIndex >= columnCount) lastMeasuredColumnIndex = columnCount - 1;
   if (lastMeasuredColumnIndex >= 0) {
-    var itemMetadata = columnMetadataMap[lastMeasuredColumnIndex];
+    const itemMetadata = columnMetadataMap[lastMeasuredColumnIndex];
     totalSizeOfMeasuredRows = itemMetadata.offset + itemMetadata.size;
   }
-  var totalSizeOfUnmeasuredItems = (columnCount - lastMeasuredColumnIndex - 1) * estimatedColumnWidth;
+  const totalSizeOfUnmeasuredItems = (columnCount - lastMeasuredColumnIndex - 1) * estimatedColumnWidth;
   return totalSizeOfMeasuredRows + totalSizeOfUnmeasuredItems;
 };
-var getItemMetadata$1 = function getItemMetadata$1(itemType, props, index, instanceProps) {
-  var itemMetadataMap;
-  var itemSize;
-  var lastMeasuredIndex;
+const getItemMetadata$1 = (itemType, props, index, instanceProps) => {
+  let itemMetadataMap;
+  let itemSize;
+  let lastMeasuredIndex;
   if (itemType === "column") {
     itemMetadataMap = instanceProps.columnMetadataMap;
     itemSize = props.columnWidth;
@@ -13344,16 +12802,16 @@ var getItemMetadata$1 = function getItemMetadata$1(itemType, props, index, insta
     lastMeasuredIndex = instanceProps.lastMeasuredRowIndex;
   }
   if (index > lastMeasuredIndex) {
-    var offset = 0;
+    let offset = 0;
     if (lastMeasuredIndex >= 0) {
-      var itemMetadata = itemMetadataMap[lastMeasuredIndex];
+      const itemMetadata = itemMetadataMap[lastMeasuredIndex];
       offset = itemMetadata.offset + itemMetadata.size;
     }
-    for (var i = lastMeasuredIndex + 1; i <= index; i++) {
-      var size = itemSize(i);
+    for (let i = lastMeasuredIndex + 1; i <= index; i++) {
+      const size = itemSize(i);
       itemMetadataMap[i] = {
-        offset: offset,
-        size: size
+        offset,
+        size
       };
       offset += size;
     }
@@ -13361,9 +12819,9 @@ var getItemMetadata$1 = function getItemMetadata$1(itemType, props, index, insta
   }
   return itemMetadataMap[index];
 };
-var findNearestItem$1 = function findNearestItem$1(itemType, props, instanceProps, offset) {
-  var itemMetadataMap;
-  var lastMeasuredIndex;
+const findNearestItem$1 = (itemType, props, instanceProps, offset) => {
+  let itemMetadataMap;
+  let lastMeasuredIndex;
   if (itemType === "column") {
     itemMetadataMap = instanceProps.columnMetadataMap;
     lastMeasuredIndex = instanceProps.lastMeasuredColumnIndex;
@@ -13374,31 +12832,31 @@ var findNearestItem$1 = function findNearestItem$1(itemType, props, instanceProp
   if ((lastMeasuredIndex > 0 ? itemMetadataMap[lastMeasuredIndex].offset : 0) >= offset) return findNearestItemBinarySearch$1(itemType, props, instanceProps, lastMeasuredIndex, 0, offset);
   return findNearestItemExponentialSearch$1(itemType, props, instanceProps, Math.max(0, lastMeasuredIndex), offset);
 };
-var findNearestItemBinarySearch$1 = function findNearestItemBinarySearch$1(itemType, props, instanceProps, high, low, offset) {
+const findNearestItemBinarySearch$1 = (itemType, props, instanceProps, high, low, offset) => {
   while (low <= high) {
-    var middle = low + Math.floor((high - low) / 2);
-    var currentOffset = getItemMetadata$1(itemType, props, middle, instanceProps).offset;
+    const middle = low + Math.floor((high - low) / 2);
+    const currentOffset = getItemMetadata$1(itemType, props, middle, instanceProps).offset;
     if (currentOffset === offset) return middle;
     if (currentOffset < offset) low = middle + 1;else if (currentOffset > offset) high = middle - 1;
   }
   if (low > 0) return low - 1;
   return 0;
 };
-var findNearestItemExponentialSearch$1 = function findNearestItemExponentialSearch$1(itemType, props, instanceProps, index, offset) {
-  var itemCount = itemType === "column" ? props.columnCount : props.rowCount;
-  var interval = 1;
+const findNearestItemExponentialSearch$1 = (itemType, props, instanceProps, index, offset) => {
+  const itemCount = itemType === "column" ? props.columnCount : props.rowCount;
+  let interval = 1;
   while (index < itemCount && getItemMetadata$1(itemType, props, index, instanceProps).offset < offset) {
     index += interval;
     interval *= 2;
   }
   return findNearestItemBinarySearch$1(itemType, props, instanceProps, Math.min(index, itemCount - 1), Math.floor(index / 2), offset);
 };
-var getOffsetForIndexAndAlignment = function getOffsetForIndexAndAlignment(itemType, props, index, align, scrollOffset, instanceProps, scrollbarSize) {
-  var size = itemType === "column" ? props.width : props.height;
-  var itemMetadata = getItemMetadata$1(itemType, props, index, instanceProps);
-  var estimatedTotalSize = itemType === "column" ? getEstimatedTotalWidth(props, instanceProps) : getEstimatedTotalHeight(props, instanceProps);
-  var maxOffset = Math.max(0, Math.min(estimatedTotalSize - size, itemMetadata.offset));
-  var minOffset = Math.max(0, itemMetadata.offset - size + scrollbarSize + itemMetadata.size);
+const getOffsetForIndexAndAlignment = (itemType, props, index, align, scrollOffset, instanceProps, scrollbarSize) => {
+  const size = itemType === "column" ? props.width : props.height;
+  const itemMetadata = getItemMetadata$1(itemType, props, index, instanceProps);
+  const estimatedTotalSize = itemType === "column" ? getEstimatedTotalWidth(props, instanceProps) : getEstimatedTotalHeight(props, instanceProps);
+  const maxOffset = Math.max(0, Math.min(estimatedTotalSize - size, itemMetadata.offset));
+  const minOffset = Math.max(0, itemMetadata.offset - size + scrollbarSize + itemMetadata.size);
   if (align === "smart") if (scrollOffset >= minOffset - size && scrollOffset <= maxOffset + size) align = "auto";else align = "center";
   switch (align) {
     case "start":
@@ -13414,63 +12872,53 @@ var getOffsetForIndexAndAlignment = function getOffsetForIndexAndAlignment(itemT
       return maxOffset;
   }
 };
-var VariableSizeGrid = createGridComponent({
-  getColumnOffset: function getColumnOffset(props, index, instanceProps) {
-    return getItemMetadata$1("column", props, index, instanceProps).offset;
-  },
-  getColumnStartIndexForOffset: function getColumnStartIndexForOffset(props, scrollLeft, instanceProps) {
-    return findNearestItem$1("column", props, instanceProps, scrollLeft);
-  },
-  getColumnStopIndexForStartIndex: function getColumnStopIndexForStartIndex(props, startIndex, scrollLeft, instanceProps) {
-    var columnCount = props.columnCount,
-      width = props.width;
-    var itemMetadata = getItemMetadata$1("column", props, startIndex, instanceProps);
-    var maxOffset = scrollLeft + width;
-    var offset = itemMetadata.offset + itemMetadata.size;
-    var stopIndex = startIndex;
+const VariableSizeGrid = createGridComponent({
+  getColumnOffset: (props, index, instanceProps) => getItemMetadata$1("column", props, index, instanceProps).offset,
+  getColumnStartIndexForOffset: (props, scrollLeft, instanceProps) => findNearestItem$1("column", props, instanceProps, scrollLeft),
+  getColumnStopIndexForStartIndex: (props, startIndex, scrollLeft, instanceProps) => {
+    const {
+      columnCount,
+      width
+    } = props;
+    const itemMetadata = getItemMetadata$1("column", props, startIndex, instanceProps);
+    const maxOffset = scrollLeft + width;
+    let offset = itemMetadata.offset + itemMetadata.size;
+    let stopIndex = startIndex;
     while (stopIndex < columnCount - 1 && offset < maxOffset) {
       stopIndex++;
       offset += getItemMetadata$1("column", props, stopIndex, instanceProps).size;
     }
     return stopIndex;
   },
-  getColumnWidth: function getColumnWidth(props, index, instanceProps) {
-    return instanceProps.columnMetadataMap[index].size;
-  },
-  getEstimatedTotalHeight: getEstimatedTotalHeight,
-  getEstimatedTotalWidth: getEstimatedTotalWidth,
-  getOffsetForColumnAndAlignment: function getOffsetForColumnAndAlignment(props, index, align, scrollOffset, instanceProps, scrollbarSize) {
-    return getOffsetForIndexAndAlignment("column", props, index, align, scrollOffset, instanceProps, scrollbarSize);
-  },
-  getOffsetForRowAndAlignment: function getOffsetForRowAndAlignment(props, index, align, scrollOffset, instanceProps, scrollbarSize) {
-    return getOffsetForIndexAndAlignment("row", props, index, align, scrollOffset, instanceProps, scrollbarSize);
-  },
-  getRowOffset: function getRowOffset(props, index, instanceProps) {
-    return getItemMetadata$1("row", props, index, instanceProps).offset;
-  },
-  getRowHeight: function getRowHeight(props, index, instanceProps) {
-    return instanceProps.rowMetadataMap[index].size;
-  },
-  getRowStartIndexForOffset: function getRowStartIndexForOffset(props, scrollTop, instanceProps) {
-    return findNearestItem$1("row", props, instanceProps, scrollTop);
-  },
-  getRowStopIndexForStartIndex: function getRowStopIndexForStartIndex(props, startIndex, scrollTop, instanceProps) {
-    var rowCount = props.rowCount,
-      height = props.height;
-    var itemMetadata = getItemMetadata$1("row", props, startIndex, instanceProps);
-    var maxOffset = scrollTop + height;
-    var offset = itemMetadata.offset + itemMetadata.size;
-    var stopIndex = startIndex;
+  getColumnWidth: (props, index, instanceProps) => instanceProps.columnMetadataMap[index].size,
+  getEstimatedTotalHeight,
+  getEstimatedTotalWidth,
+  getOffsetForColumnAndAlignment: (props, index, align, scrollOffset, instanceProps, scrollbarSize) => getOffsetForIndexAndAlignment("column", props, index, align, scrollOffset, instanceProps, scrollbarSize),
+  getOffsetForRowAndAlignment: (props, index, align, scrollOffset, instanceProps, scrollbarSize) => getOffsetForIndexAndAlignment("row", props, index, align, scrollOffset, instanceProps, scrollbarSize),
+  getRowOffset: (props, index, instanceProps) => getItemMetadata$1("row", props, index, instanceProps).offset,
+  getRowHeight: (props, index, instanceProps) => instanceProps.rowMetadataMap[index].size,
+  getRowStartIndexForOffset: (props, scrollTop, instanceProps) => findNearestItem$1("row", props, instanceProps, scrollTop),
+  getRowStopIndexForStartIndex: (props, startIndex, scrollTop, instanceProps) => {
+    const {
+      rowCount,
+      height
+    } = props;
+    const itemMetadata = getItemMetadata$1("row", props, startIndex, instanceProps);
+    const maxOffset = scrollTop + height;
+    let offset = itemMetadata.offset + itemMetadata.size;
+    let stopIndex = startIndex;
     while (stopIndex < rowCount - 1 && offset < maxOffset) {
       stopIndex++;
       offset += getItemMetadata$1("row", props, stopIndex, instanceProps).size;
     }
     return stopIndex;
   },
-  initInstanceProps: function initInstanceProps(props, instance) {
-    var estimatedColumnWidth = props.estimatedColumnWidth,
-      estimatedRowHeight = props.estimatedRowHeight;
-    var instanceProps = {
+  initInstanceProps(props, instance) {
+    const {
+      estimatedColumnWidth,
+      estimatedRowHeight
+    } = props;
+    const instanceProps = {
       columnMetadataMap: {},
       estimatedColumnWidth: estimatedColumnWidth || DEFAULT_ESTIMATED_ITEM_SIZE$1,
       estimatedRowHeight: estimatedRowHeight || DEFAULT_ESTIMATED_ITEM_SIZE$1,
@@ -13478,25 +12926,23 @@ var VariableSizeGrid = createGridComponent({
       lastMeasuredRowIndex: -1,
       rowMetadataMap: {}
     };
-    instance.resetAfterColumnIndex = function (columnIndex) {
-      var shouldForceUpdate = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : true;
+    instance.resetAfterColumnIndex = (columnIndex, shouldForceUpdate = true) => {
       instance.resetAfterIndices({
-        columnIndex: columnIndex,
-        shouldForceUpdate: shouldForceUpdate
+        columnIndex,
+        shouldForceUpdate
       });
     };
-    instance.resetAfterRowIndex = function (rowIndex) {
-      var shouldForceUpdate = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : true;
+    instance.resetAfterRowIndex = (rowIndex, shouldForceUpdate = true) => {
       instance.resetAfterIndices({
-        rowIndex: rowIndex,
-        shouldForceUpdate: shouldForceUpdate
+        rowIndex,
+        shouldForceUpdate
       });
     };
-    instance.resetAfterIndices = function (_ref32) {
-      var columnIndex = _ref32.columnIndex,
-        rowIndex = _ref32.rowIndex,
-        _ref32$shouldForceUpd = _ref32.shouldForceUpdate,
-        shouldForceUpdate = _ref32$shouldForceUpd === void 0 ? true : _ref32$shouldForceUpd;
+    instance.resetAfterIndices = ({
+      columnIndex,
+      rowIndex,
+      shouldForceUpdate = true
+    }) => {
       if (typeof columnIndex === "number") instanceProps.lastMeasuredColumnIndex = Math.min(instanceProps.lastMeasuredColumnIndex, columnIndex - 1);
       if (typeof rowIndex === "number") instanceProps.lastMeasuredRowIndex = Math.min(instanceProps.lastMeasuredRowIndex, rowIndex - 1);
       instance._getItemStyleCache(-1);
@@ -13505,31 +12951,36 @@ var VariableSizeGrid = createGridComponent({
     return instanceProps;
   },
   shouldResetStyleCacheOnItemSizeChange: false,
-  validateProps: function validateProps(_ref33) {
-    var columnWidth = _ref33.columnWidth,
-      rowHeight = _ref33.rowHeight;
+  validateProps: ({
+    columnWidth,
+    rowHeight
+  }) => {
     if (false) // removed by dead control flow
 {}
   }
 });
 //#endregion
 //#region src/virtual-scroll/VariableSizeList.ts
-var DEFAULT_ESTIMATED_ITEM_SIZE = 50;
-var getItemMetadata = function getItemMetadata(props, index, instanceProps) {
-  var itemSize = props.itemSize;
-  var itemMetadataMap = instanceProps.itemMetadataMap,
-    lastMeasuredIndex = instanceProps.lastMeasuredIndex;
+const DEFAULT_ESTIMATED_ITEM_SIZE = 50;
+const getItemMetadata = (props, index, instanceProps) => {
+  const {
+    itemSize
+  } = props;
+  const {
+    itemMetadataMap,
+    lastMeasuredIndex
+  } = instanceProps;
   if (index > lastMeasuredIndex) {
-    var offset = 0;
+    let offset = 0;
     if (lastMeasuredIndex >= 0) {
-      var itemMetadata = itemMetadataMap[lastMeasuredIndex];
+      const itemMetadata = itemMetadataMap[lastMeasuredIndex];
       offset = itemMetadata.offset + itemMetadata.size;
     }
-    for (var i = lastMeasuredIndex + 1; i <= index; i++) {
-      var size = itemSize(i);
+    for (let i = lastMeasuredIndex + 1; i <= index; i++) {
+      const size = itemSize(i);
       itemMetadataMap[i] = {
-        offset: offset,
-        size: size
+        offset,
+        size
       };
       offset += size;
     }
@@ -13537,62 +12988,66 @@ var getItemMetadata = function getItemMetadata(props, index, instanceProps) {
   }
   return itemMetadataMap[index];
 };
-var findNearestItem = function findNearestItem(props, instanceProps, offset) {
-  var itemMetadataMap = instanceProps.itemMetadataMap,
-    lastMeasuredIndex = instanceProps.lastMeasuredIndex;
+const findNearestItem = (props, instanceProps, offset) => {
+  const {
+    itemMetadataMap,
+    lastMeasuredIndex
+  } = instanceProps;
   if ((lastMeasuredIndex > 0 ? itemMetadataMap[lastMeasuredIndex].offset : 0) >= offset) return findNearestItemBinarySearch(props, instanceProps, lastMeasuredIndex, 0, offset);
   return findNearestItemExponentialSearch(props, instanceProps, Math.max(0, lastMeasuredIndex), offset);
 };
-var findNearestItemBinarySearch = function findNearestItemBinarySearch(props, instanceProps, high, low, offset) {
+const findNearestItemBinarySearch = (props, instanceProps, high, low, offset) => {
   while (low <= high) {
-    var middle = low + Math.floor((high - low) / 2);
-    var currentOffset = getItemMetadata(props, middle, instanceProps).offset;
+    const middle = low + Math.floor((high - low) / 2);
+    const currentOffset = getItemMetadata(props, middle, instanceProps).offset;
     if (currentOffset === offset) return middle;
     if (currentOffset < offset) low = middle + 1;else if (currentOffset > offset) high = middle - 1;
   }
   if (low > 0) return low - 1;
   return 0;
 };
-var findNearestItemExponentialSearch = function findNearestItemExponentialSearch(props, instanceProps, index, offset) {
-  var itemCount = props.itemCount;
-  var interval = 1;
+const findNearestItemExponentialSearch = (props, instanceProps, index, offset) => {
+  const {
+    itemCount
+  } = props;
+  let interval = 1;
   while (index < itemCount && getItemMetadata(props, index, instanceProps).offset < offset) {
     index += interval;
     interval *= 2;
   }
   return findNearestItemBinarySearch(props, instanceProps, Math.min(index, itemCount - 1), Math.floor(index / 2), offset);
 };
-var getEstimatedTotalSize = function getEstimatedTotalSize(_ref34, _ref35) {
-  var itemCount = _ref34.itemCount;
-  var itemMetadataMap = _ref35.itemMetadataMap,
-    estimatedItemSize = _ref35.estimatedItemSize,
-    lastMeasuredIndex = _ref35.lastMeasuredIndex;
-  var totalSizeOfMeasuredItems = 0;
+const getEstimatedTotalSize = ({
+  itemCount
+}, {
+  itemMetadataMap,
+  estimatedItemSize,
+  lastMeasuredIndex
+}) => {
+  let totalSizeOfMeasuredItems = 0;
   if (lastMeasuredIndex >= itemCount) lastMeasuredIndex = itemCount - 1;
   if (lastMeasuredIndex >= 0) {
-    var itemMetadata = itemMetadataMap[lastMeasuredIndex];
+    const itemMetadata = itemMetadataMap[lastMeasuredIndex];
     totalSizeOfMeasuredItems = itemMetadata.offset + itemMetadata.size;
   }
-  var totalSizeOfUnmeasuredItems = (itemCount - lastMeasuredIndex - 1) * estimatedItemSize;
+  const totalSizeOfUnmeasuredItems = (itemCount - lastMeasuredIndex - 1) * estimatedItemSize;
   return totalSizeOfMeasuredItems + totalSizeOfUnmeasuredItems;
 };
-var VariableSizeList = createListComponent({
-  getItemOffset: function getItemOffset(props, index, instanceProps) {
-    return getItemMetadata(props, index, instanceProps).offset;
-  },
-  getItemSize: function getItemSize(props, index, instanceProps) {
-    return instanceProps.itemMetadataMap[index].size;
-  },
-  getEstimatedTotalSize: getEstimatedTotalSize,
-  getOffsetForIndexAndAlignment: function getOffsetForIndexAndAlignment(props, index, align, scrollOffset, instanceProps) {
-    var height = props.height,
-      layout = props.layout,
-      width = props.width;
-    var size = layout === "horizontal" ? width : height;
-    var itemMetadata = getItemMetadata(props, index, instanceProps);
-    var estimatedTotalSize = getEstimatedTotalSize(props, instanceProps);
-    var maxOffset = Math.max(0, Math.min(estimatedTotalSize - size, itemMetadata.offset));
-    var minOffset = Math.max(0, itemMetadata.offset - size + itemMetadata.size);
+const VariableSizeList = createListComponent({
+  getItemOffset: (props, index, instanceProps) => getItemMetadata(props, index, instanceProps).offset,
+  getItemSize: (props, index, instanceProps) => instanceProps.itemMetadataMap[index].size,
+  getEstimatedTotalSize,
+  getOffsetForIndexAndAlignment: (props, index, align, scrollOffset, instanceProps) => {
+    const {
+      height,
+      layout,
+      width
+    } = props;
+    const size = layout === "horizontal" ? width : height;
+    const itemMetadata = getItemMetadata(props, index, instanceProps);
+    const estimatedTotalSize = getEstimatedTotalSize(props, instanceProps);
+    const maxOffset = Math.max(0, Math.min(estimatedTotalSize - size, itemMetadata.offset));
+    const minOffset = Math.max(0, itemMetadata.offset - size + itemMetadata.size);
     if (align === "smart") if (scrollOffset >= minOffset - size && scrollOffset <= maxOffset + size) align = "auto";else align = "center";
     switch (align) {
       case "start":
@@ -13607,34 +13062,35 @@ var VariableSizeList = createListComponent({
         return maxOffset;
     }
   },
-  getStartIndexForOffset: function getStartIndexForOffset(props, offset, instanceProps) {
-    return findNearestItem(props, instanceProps, offset);
-  },
-  getStopIndexForStartIndex: function getStopIndexForStartIndex(props, startIndex, scrollOffset, instanceProps) {
-    var height = props.height,
-      itemCount = props.itemCount,
-      layout = props.layout,
-      width = props.width;
-    var size = layout === "horizontal" ? width : height;
-    var itemMetadata = getItemMetadata(props, startIndex, instanceProps);
-    var maxOffset = scrollOffset + size;
-    var offset = itemMetadata.offset + itemMetadata.size;
-    var stopIndex = startIndex;
+  getStartIndexForOffset: (props, offset, instanceProps) => findNearestItem(props, instanceProps, offset),
+  getStopIndexForStartIndex: (props, startIndex, scrollOffset, instanceProps) => {
+    const {
+      height,
+      itemCount,
+      layout,
+      width
+    } = props;
+    const size = layout === "horizontal" ? width : height;
+    const itemMetadata = getItemMetadata(props, startIndex, instanceProps);
+    const maxOffset = scrollOffset + size;
+    let offset = itemMetadata.offset + itemMetadata.size;
+    let stopIndex = startIndex;
     while (stopIndex < itemCount - 1 && offset < maxOffset) {
       stopIndex++;
       offset += getItemMetadata(props, stopIndex, instanceProps).size;
     }
     return stopIndex;
   },
-  initInstanceProps: function initInstanceProps(props, instance) {
-    var estimatedItemSize = props.estimatedItemSize;
-    var instanceProps = {
+  initInstanceProps(props, instance) {
+    const {
+      estimatedItemSize
+    } = props;
+    const instanceProps = {
       itemMetadataMap: {},
       estimatedItemSize: estimatedItemSize || DEFAULT_ESTIMATED_ITEM_SIZE,
       lastMeasuredIndex: -1
     };
-    instance.resetAfterIndex = function (index) {
-      var shouldForceUpdate = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : true;
+    instance.resetAfterIndex = (index, shouldForceUpdate = true) => {
       instanceProps.lastMeasuredIndex = Math.min(instanceProps.lastMeasuredIndex, index - 1);
       instance._getItemStyleCache(-1);
       if (shouldForceUpdate) instance.forceUpdate();
@@ -13642,8 +13098,9 @@ var VariableSizeList = createListComponent({
     return instanceProps;
   },
   shouldResetStyleCacheOnItemSizeChange: false,
-  validateProps: function validateProps(_ref36) {
-    var itemSize = _ref36.itemSize;
+  validateProps: ({
+    itemSize
+  }) => {
     if (false) // removed by dead control flow
 {}
   }
@@ -13670,40 +13127,12 @@ var VariableSizeList = createListComponent({
 
 
 
-;// ../../../../node_modules/.pnpm/@babel+runtime@7.29.7/node_modules/@babel/runtime/helpers/esm/arrayWithoutHoles.js
-
-function _arrayWithoutHoles(r) {
-  if (Array.isArray(r)) return _arrayLikeToArray(r);
-}
-
-;// ../../../../node_modules/.pnpm/@babel+runtime@7.29.7/node_modules/@babel/runtime/helpers/esm/iterableToArray.js
-function _iterableToArray(r) {
-  if ("undefined" != typeof Symbol && null != r[Symbol.iterator] || null != r["@@iterator"]) return Array.from(r);
-}
-
-;// ../../../../node_modules/.pnpm/@babel+runtime@7.29.7/node_modules/@babel/runtime/helpers/esm/nonIterableSpread.js
-function _nonIterableSpread() {
-  throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
-}
-
-;// ../../../../node_modules/.pnpm/@babel+runtime@7.29.7/node_modules/@babel/runtime/helpers/esm/toConsumableArray.js
-
-
-
-
-function _toConsumableArray(r) {
-  return _arrayWithoutHoles(r) || _iterableToArray(r) || _unsupportedIterableToArray(r) || _nonIterableSpread();
-}
-
 ;// ../../../../packages/renderer/dist/webgl-compat.js
 
 
 
-
-
-
 //#region src/webgl-compat/error-messages.ts
-var errorMessages = {
+const errorMessages = {
   genericNoUnityInstance: "No Unity Instance found.",
   requestFullscreenNoUnityInstance: "Unable to Set Fullscreen while Unity is not Instantiated.",
   requestPointerLockNoUnityInstanceOrCanvas: "Unable to Request Pointer Lock while Unity is not Instantiated or the Canvas is not found.",
@@ -13714,124 +13143,106 @@ var errorMessages = {
 };
 //#endregion
 //#region src/webgl-compat/use-event-system.ts
-var mountedEventDispatchers = [];
-var dispatchReactUnityEvent = function dispatchReactUnityEvent(eventName) {
-  for (var _len = arguments.length, parameters = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
-    parameters[_key - 1] = arguments[_key];
-  }
-  var returnValue;
-  mountedEventDispatchers.forEach(function (dispatchEvent) {
-    returnValue = dispatchEvent.apply(void 0, [eventName].concat(parameters));
+const mountedEventDispatchers = [];
+const dispatchReactUnityEvent = (eventName, ...parameters) => {
+  let returnValue;
+  mountedEventDispatchers.forEach(dispatchEvent => {
+    returnValue = dispatchEvent(eventName, ...parameters);
   });
   return returnValue;
 };
 if (typeof globalThis !== "undefined" || typeof window !== "undefined") (globalThis || window).dispatchReactUnityEvent = dispatchReactUnityEvent;
-var createEventSystem = function createEventSystem() {
-  var eventListeners = [];
-  var addEventListener = function addEventListener(eventName, callback) {
-    eventListeners = [].concat(_toConsumableArray(eventListeners), [{
-      eventName: eventName,
-      callback: callback
-    }]);
+const createEventSystem = () => {
+  let eventListeners = [];
+  const addEventListener = (eventName, callback) => {
+    eventListeners = [...eventListeners, {
+      eventName,
+      callback
+    }];
   };
-  var removeEventListener = function removeEventListener(eventName, callback) {
-    eventListeners = eventListeners.filter(function (eventListener) {
-      return !(eventListener.eventName === eventName && (!callback || eventListener.callback === callback));
-    });
+  const removeEventListener = (eventName, callback) => {
+    eventListeners = eventListeners.filter(eventListener => !(eventListener.eventName === eventName && (!callback || eventListener.callback === callback)));
   };
-  var removeAllEventListeners = function removeAllEventListeners() {
+  const removeAllEventListeners = () => {
     eventListeners = [];
   };
-  var dispatchEvent = function dispatchEvent(eventName) {
-    var eventListener = eventListeners.find(function (eventListener) {
-      return eventListener.eventName === eventName;
-    });
+  const dispatchEvent = (eventName, ...parameters) => {
+    const eventListener = eventListeners.find(eventListener => eventListener.eventName === eventName);
     if (typeof eventListener === "undefined") {
       console.warn(errorMessages.noEventListener, {
-        eventName: eventName
+        eventName
       });
       return;
     }
-    for (var _len2 = arguments.length, parameters = new Array(_len2 > 1 ? _len2 - 1 : 0), _key2 = 1; _key2 < _len2; _key2++) {
-      parameters[_key2 - 1] = arguments[_key2];
-    }
-    return eventListener.callback.apply(eventListener, parameters);
+    return eventListener.callback(...parameters);
   };
-  var onMount = function onMount() {
+  const onMount = () => {
     mountedEventDispatchers.push(dispatchEvent);
-    return function () {
+    return () => {
       mountedEventDispatchers.splice(mountedEventDispatchers.indexOf(dispatchEvent), 1);
     };
   };
   return {
     on: addEventListener,
-    addEventListener: addEventListener,
-    removeEventListener: removeEventListener,
-    dispatchEvent: dispatchEvent,
-    removeAllEventListeners: removeAllEventListeners,
-    onMount: onMount
+    addEventListener,
+    removeEventListener,
+    dispatchEvent,
+    removeAllEventListeners,
+    onMount
   };
 };
 //#endregion
 //#region src/webgl-compat/use-unity-context.ts
-var createUnityContext = function createUnityContext(unityConfig) {
+const createUnityContext = unityConfig => {
   var _unityInstance$Module;
-  var unityInstance = typeof ReactUnityWebGLCompat !== "undefined" ? ReactUnityWebGLCompat : null;
-  var setUnityInstance = function setUnityInstance(instance) {
-    return unityInstance = instance;
-  };
-  var loadingProgression = 1;
-  var setLoadingProgression = function setLoadingProgression(progression) {
-    return loadingProgression = progression;
-  };
-  var isLoaded = loadingProgression === 1;
-  var setIsLoaded = function setIsLoaded(loaded) {
+  let unityInstance = typeof ReactUnityWebGLCompat !== "undefined" ? ReactUnityWebGLCompat : null;
+  const setUnityInstance = instance => unityInstance = instance;
+  let loadingProgression = 1;
+  const setLoadingProgression = progression => loadingProgression = progression;
+  let isLoaded = loadingProgression === 1;
+  const setIsLoaded = loaded => {
     isLoaded = loaded;
     if (loaded) setLoadingProgression(1);
   };
-  var initialisationError;
-  var setInitialisationError = function setInitialisationError(error) {
-    return initialisationError = error;
-  };
-  var eventSystem = createEventSystem();
-  var unityProvider = objectSpread2_CDDvZyE7_objectSpread2(objectSpread2_CDDvZyE7_objectSpread2({}, unityConfig), {}, {
-    setLoadingProgression: setLoadingProgression,
-    setInitialisationError: setInitialisationError,
-    setUnityInstance: setUnityInstance,
-    setIsLoaded: setIsLoaded
+  let initialisationError;
+  const setInitialisationError = error => initialisationError = error;
+  const eventSystem = createEventSystem();
+  const unityProvider = objectSpread2_CDDvZyE7_objectSpread2(objectSpread2_CDDvZyE7_objectSpread2({}, unityConfig), {}, {
+    setLoadingProgression,
+    setInitialisationError,
+    setUnityInstance,
+    setIsLoaded
   });
-  var requestFullscreen = function requestFullscreen(enabled) {
+  const requestFullscreen = enabled => {
     if (unityInstance === null) {
       console.warn(errorMessages.requestFullscreenNoUnityInstance);
       return;
     }
     unityInstance.SetFullscreen(enabled === true ? 1 : 0);
   };
-  var requestPointerLock = function requestPointerLock() {
+  const requestPointerLock = () => {
     if (unityInstance === null || typeof unityInstance.Module.canvas === "undefined") {
       console.warn(errorMessages.requestPointerLockNoUnityInstanceOrCanvas);
       return;
     }
     return unityInstance.Module.canvas.requestPointerLock();
   };
-  var sendMessage = function sendMessage(gameObjectName, methodName, parameter) {
+  const sendMessage = (gameObjectName, methodName, parameter) => {
     if (unityInstance === null) {
       console.warn(errorMessages.sendMessageNoUnityInstance);
       return;
     }
     unityInstance.SendMessage(gameObjectName, methodName, parameter);
   };
-  var takeScreenshot = function takeScreenshot(dataType, quality) {
+  const takeScreenshot = (dataType, quality) => {
     if (unityInstance === null || typeof unityInstance.Module.canvas === "undefined") {
       console.warn(errorMessages.screenshotNoUnityInstanceOrCanvas);
       return;
     }
     return unityInstance.Module.canvas.toDataURL(dataType, quality);
   };
-  var getMetricsInfo = function getMetricsInfo() {
-    return void 0;
-  };
-  var unload = function unload() {
+  const getMetricsInfo = () => void 0;
+  const unload = () => {
     if (unityInstance === null) {
       console.warn(errorMessages.quitNoUnityInstance);
       return Promise.reject();
@@ -13839,66 +13250,65 @@ var createUnityContext = function createUnityContext(unityConfig) {
     return unityInstance.Quit();
   };
   return objectSpread2_CDDvZyE7_objectSpread2({
-    unityProvider: unityProvider,
+    unityProvider,
     htmlCanvasElement: unityInstance === null || unityInstance === void 0 || (_unityInstance$Module = unityInstance.Module) === null || _unityInstance$Module === void 0 ? void 0 : _unityInstance$Module.canvas,
-    loadingProgression: loadingProgression,
-    initialisationError: initialisationError,
-    isLoaded: isLoaded,
-    unityInstance: unityInstance,
+    loadingProgression,
+    initialisationError,
+    isLoaded,
+    unityInstance,
     UNSAFE__unityInstance: unityInstance,
     setFullscreen: requestFullscreen,
-    requestFullscreen: requestFullscreen,
-    requestPointerLock: requestPointerLock,
-    sendMessage: sendMessage,
-    unload: unload,
-    takeScreenshot: takeScreenshot,
-    getMetricsInfo: getMetricsInfo,
+    requestFullscreen,
+    requestPointerLock,
+    sendMessage,
+    unload,
+    takeScreenshot,
+    getMetricsInfo,
     quitUnityInstance: unload,
     UNSAFE__detachAndUnloadImmediate: unload,
     send: sendMessage,
-    unityConfig: unityConfig
+    unityConfig
   }, eventSystem);
 };
-var useUnityContext = function useUnityContext(unityConfig) {
-  var ref = (0,react.useRef)(void 0);
+const useUnityContext = unityConfig => {
+  const ref = (0,react.useRef)(void 0);
   if (!ref.current) ref.current = createUnityContext(unityConfig);
   (0,react.useEffect)(ref.current.onMount, []);
   return ref.current;
 };
-var UnityContext = /*#__PURE__*/_createClass(function UnityContext(unityConfig) {
-  _classCallCheck(this, UnityContext);
-  objectSpread2_CDDvZyE7_defineProperty(this, "addEventListener", void 0);
-  objectSpread2_CDDvZyE7_defineProperty(this, "removeEventListener", void 0);
-  objectSpread2_CDDvZyE7_defineProperty(this, "unityProvider", void 0);
-  objectSpread2_CDDvZyE7_defineProperty(this, "loadingProgression", void 0);
-  objectSpread2_CDDvZyE7_defineProperty(this, "isLoaded", void 0);
-  objectSpread2_CDDvZyE7_defineProperty(this, "initialisationError", void 0);
-  objectSpread2_CDDvZyE7_defineProperty(this, "UNSAFE__unityInstance", void 0);
-  objectSpread2_CDDvZyE7_defineProperty(this, "requestFullscreen", void 0);
-  objectSpread2_CDDvZyE7_defineProperty(this, "sendMessage", void 0);
-  objectSpread2_CDDvZyE7_defineProperty(this, "takeScreenshot", void 0);
-  objectSpread2_CDDvZyE7_defineProperty(this, "requestPointerLock", void 0);
-  objectSpread2_CDDvZyE7_defineProperty(this, "getMetricsInfo", void 0);
-  objectSpread2_CDDvZyE7_defineProperty(this, "unload", void 0);
-  objectSpread2_CDDvZyE7_defineProperty(this, "UNSAFE__detachAndUnloadImmediate", void 0);
-  objectSpread2_CDDvZyE7_defineProperty(this, "on", void 0);
-  objectSpread2_CDDvZyE7_defineProperty(this, "removeAllEventListeners", void 0);
-  objectSpread2_CDDvZyE7_defineProperty(this, "dispatchEvent", void 0);
-  objectSpread2_CDDvZyE7_defineProperty(this, "onMount", void 0);
-  objectSpread2_CDDvZyE7_defineProperty(this, "unityConfig", void 0);
-  objectSpread2_CDDvZyE7_defineProperty(this, "unityInstance", void 0);
-  objectSpread2_CDDvZyE7_defineProperty(this, "htmlCanvasElement", void 0);
-  objectSpread2_CDDvZyE7_defineProperty(this, "send", void 0);
-  objectSpread2_CDDvZyE7_defineProperty(this, "setFullscreen", void 0);
-  objectSpread2_CDDvZyE7_defineProperty(this, "quitUnityInstance", void 0);
-  Object.assign(this, createUnityContext(unityConfig));
-});
+var UnityContext = class {
+  constructor(unityConfig) {
+    objectSpread2_CDDvZyE7_defineProperty(this, "addEventListener", void 0);
+    objectSpread2_CDDvZyE7_defineProperty(this, "removeEventListener", void 0);
+    objectSpread2_CDDvZyE7_defineProperty(this, "unityProvider", void 0);
+    objectSpread2_CDDvZyE7_defineProperty(this, "loadingProgression", void 0);
+    objectSpread2_CDDvZyE7_defineProperty(this, "isLoaded", void 0);
+    objectSpread2_CDDvZyE7_defineProperty(this, "initialisationError", void 0);
+    objectSpread2_CDDvZyE7_defineProperty(this, "UNSAFE__unityInstance", void 0);
+    objectSpread2_CDDvZyE7_defineProperty(this, "requestFullscreen", void 0);
+    objectSpread2_CDDvZyE7_defineProperty(this, "sendMessage", void 0);
+    objectSpread2_CDDvZyE7_defineProperty(this, "takeScreenshot", void 0);
+    objectSpread2_CDDvZyE7_defineProperty(this, "requestPointerLock", void 0);
+    objectSpread2_CDDvZyE7_defineProperty(this, "getMetricsInfo", void 0);
+    objectSpread2_CDDvZyE7_defineProperty(this, "unload", void 0);
+    objectSpread2_CDDvZyE7_defineProperty(this, "UNSAFE__detachAndUnloadImmediate", void 0);
+    objectSpread2_CDDvZyE7_defineProperty(this, "on", void 0);
+    objectSpread2_CDDvZyE7_defineProperty(this, "removeAllEventListeners", void 0);
+    objectSpread2_CDDvZyE7_defineProperty(this, "dispatchEvent", void 0);
+    objectSpread2_CDDvZyE7_defineProperty(this, "onMount", void 0);
+    objectSpread2_CDDvZyE7_defineProperty(this, "unityConfig", void 0);
+    objectSpread2_CDDvZyE7_defineProperty(this, "unityInstance", void 0);
+    objectSpread2_CDDvZyE7_defineProperty(this, "htmlCanvasElement", void 0);
+    objectSpread2_CDDvZyE7_defineProperty(this, "send", void 0);
+    objectSpread2_CDDvZyE7_defineProperty(this, "setFullscreen", void 0);
+    objectSpread2_CDDvZyE7_defineProperty(this, "quitUnityInstance", void 0);
+    Object.assign(this, createUnityContext(unityConfig));
+  }
+};
 //#endregion
 //#region src/webgl-compat/index.tsx
-var Unity = (0,react.forwardRef)(function Unity(props, ref) {
-  (0,react.useImperativeHandle)(ref, function () {
-    return {};
-  });
+const Unity = (0,react.forwardRef)(function Unity(props, ref) {
+  (0,react.useImperativeHandle)(ref, () => ({}));
   return /* @__PURE__ */(0,jsx_runtime.jsx)(jsx_runtime.Fragment, {});
 });
 //#endregion
@@ -13906,7 +13316,7 @@ var Unity = (0,react.forwardRef)(function Unity(props, ref) {
 
 //# sourceMappingURL=webgl-compat.js.map
 ;// ./src/app.tsx
-var ReactUnity=dist_namespaceObject;var Material=material_dist_namespaceObject;var MaterialStyles=function MaterialStyles(){return __webpack_require__("../../../../packages/material/dist/src/styles/index.js");};/*INJECTABLE_START*/
+const ReactUnity=dist_namespaceObject;const Material=material_dist_namespaceObject;const MaterialStyles=()=>__webpack_require__("../../../../packages/material/dist/src/styles/index.js");/*INJECTABLE_START*/
 ((react, ReactUnity, Material, MaterialStyles, ReactUnityWebGLCompat) => {
   const __originalRender = ReactUnity.__originalRender || ReactUnity.render;
 

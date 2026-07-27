@@ -15,7 +15,6 @@
     "url": "https://github.com/ReactUnity/core/issues"
   },
   "files": ["bin", "config", "lib", "scripts", "tsconfig.json"],
-  "//@babel/core": "Held at 7.x. babel-preset-react-app refuses to load on 8: `Requires Babel \"^7.0.0-0\", but was loaded with \"8.0.1\"`. It is unmaintained, so moving to 8 means replacing the preset; config/babel-preset-extended.js is the seam it would go through.",
   "bin": {
     "react-unity-scripts": "./bin/react-unity-scripts.js"
   },
@@ -31,17 +30,20 @@
   },
   "tsconfig": "./tsconfig.json",
   "dependencies": {
-    "@babel/core": "^7.29.7",
-    "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
-    "@babel/preset-react": "^7.29.7",
+    "@babel/core": "^8.0.1",
+    "@babel/plugin-transform-runtime": "^8.0.1",
+    "@babel/preset-env": "^8.0.2",
+    "@babel/preset-react": "^8.0.1",
+    "@babel/preset-typescript": "^8.0.1",
+    "@babel/runtime": "^8.0.0",
     "@pmmmwh/react-refresh-webpack-plugin": "^0.6.0",
     "@svgr/webpack": "^8.1.0",
     "@types/react": "^19.2.17",
     "@types/webpack-env": "^1.18.8",
     "babel-jest": "^30.0.2",
     "babel-loader": "^10.0.0",
+    "babel-plugin-macros": "^3.1.0",
     "babel-plugin-named-asset-import": "^0.3.8",
-    "babel-preset-react-app": "^10.1.0",
     "bfj": "^9.1.2",
     "camelcase": "^9.0.0",
     "case-sensitive-paths-webpack-plugin": "^2.4.0",
