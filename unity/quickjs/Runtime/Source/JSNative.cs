@@ -46,52 +46,12 @@ namespace QuickJS
             {
                 if (logger != null)
                 {
-                    var err_fileName = JSApi.JS_GetProperty(ctx, ex, JSApi.JS_ATOM_fileName);
-                    var err_lineNumber = JSApi.JS_GetProperty(ctx, ex, JSApi.JS_ATOM_lineNumber);
-                    var err_message = JSApi.JS_GetProperty(ctx, ex, JSApi.JS_ATOM_message);
-                    var err_stack = JSApi.JS_GetProperty(ctx, ex, JSApi.JS_ATOM_stack);
+                    var message = ctx.FormatException(ex);
 
-                    try
-                    {
-                        var fileName = err_fileName.IsNullish() ? "native" : JSApi.GetString(ctx, err_fileName);
-                        var lineNumber = err_lineNumber.IsNullish() ? null : JSApi.GetString(ctx, err_lineNumber);
-                        var message = JSApi.GetString(ctx, err_message);
-                        var stack = JSApi.GetString(ctx, err_stack);
-
-                        if (string.IsNullOrEmpty(lineNumber))
-                        {
-                            if (string.IsNullOrEmpty(stack))
-                            {
-                                logger.Write(logLevel, "[{0}] {1} {2}",
-                                    fileName, title, message);
-                            }
-                            else
-                            {
-                                logger.Write(logLevel, "[{0}] {1} {2}\nJavascript stack:\n{3}",
-                                    fileName, title, message, stack);
-                            }
-                        }
-                        else
-                        {
-                            if (string.IsNullOrEmpty(stack))
-                            {
-                                logger.Write(logLevel, "[{0}:{1}] {2} {3}",
-                                fileName, lineNumber, title, message);
-                            }
-                            else
-                            {
-                                logger.Write(logLevel, "[{0}:{1}] {2} {3}\nJavascript stack:\n{4}",
-                                    fileName, lineNumber, title, message, stack);
-                            }
-                        }
-                    }
-                    finally
-                    {
-                        JSApi.JS_FreeValue(ctx, err_fileName);
-                        JSApi.JS_FreeValue(ctx, err_lineNumber);
-                        JSApi.JS_FreeValue(ctx, err_message);
-                        JSApi.JS_FreeValue(ctx, err_stack);
-                    }
+                    // Deliberately the plain `Write(LogLevel, string)` overload: the composed message
+                    // is not a format string, and JS error messages and stacks routinely contain
+                    // braces, which `string.Format` would either reinterpret or throw on.
+                    logger.Write(logLevel, string.IsNullOrEmpty(title) ? message : title + " " + message);
                 }
             }
             finally
@@ -185,25 +145,7 @@ namespace QuickJS
                 var logger = ScriptEngine.GetLogger(ctx);
                 if (logger != null)
                 {
-                    var reasonStr = JSApi.GetString(ctx, reason);
-                    var is_error = JSApi.JS_IsError(ctx, reason);
-
-                    do
-                    {
-                        if (is_error == 1)
-                        {
-                            var val = JSApi.JS_GetPropertyStr(ctx, reason, "stack");
-                            if (!JSApi.JS_IsUndefined(val))
-                            {
-                                var stack = JSApi.GetString(ctx, val);
-                                JSApi.JS_FreeValue(ctx, val);
-                                logger.Write(Utils.LogLevel.Error, "Unhandled promise rejection: {0}\n{1}", reasonStr, stack);
-                                return;
-                            }
-                            JSApi.JS_FreeValue(ctx, val);
-                        }
-                        logger.Write(Utils.LogLevel.Error, "Unhandled promise rejection: {0}", reasonStr);
-                    } while (false);
+                    logger.Write(Utils.LogLevel.Error, "Unhandled promise rejection: " + ctx.FormatException(reason));
                 }
             }
         }

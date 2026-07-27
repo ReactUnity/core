@@ -185,14 +185,32 @@ namespace ReactUnity.Scripting
             engine.SetGlobal("__console", console);
             engine.Execute(@"(function() {
                 var _console = global.__console;
+
+                // Everything handed to the host is flattened with ToString, and a JS Error
+                // stringifies to just its name and message -- `TypeError: not a function`, with
+                // nothing saying where it was thrown. The stack is only reachable from this side,
+                // so errors are unfolded into text before they cross the boundary.
+                function describe(value) {
+                    if (!value || typeof value !== 'object') return value;
+                    var stack = value.stack;
+                    if (typeof stack !== 'string' || typeof value.message !== 'string') return value;
+
+                    var header = (value.name || 'Error') + (value.message ? ': ' + value.message : '');
+                    // V8 (ClearScript) already prefixes `stack` with that header; QuickJS and Jint
+                    // hand back bare frames.
+                    return stack.indexOf(header) === 0 ? stack : header + '\n' + stack;
+                }
+
+                function rest(args) { return Array.prototype.slice.call(args, 1).map(describe); }
+
                 global.console = {
-                    log:       function log       ()    { _console.log   (arguments[0], Array.prototype.slice.call(arguments, 1)) },
-                    info:      function info      ()    { _console.info  (arguments[0], Array.prototype.slice.call(arguments, 1)) },
-                    debug:     function debug     ()    { _console.debug (arguments[0], Array.prototype.slice.call(arguments, 1)) },
-                    trace:     function trace     ()    { _console.debug (arguments[0], Array.prototype.slice.call(arguments, 1)) },
-                    warn:      function warn      ()    { _console.warn  (arguments[0], Array.prototype.slice.call(arguments, 1)) },
-                    error:     function error     ()    { _console.error (arguments[0], Array.prototype.slice.call(arguments, 1)) },
-                    dir:       function dir       ()    { _console.dir   (arguments[0], Array.prototype.slice.call(arguments, 1)) },
+                    log:       function log       ()    { _console.log   (describe(arguments[0]), rest(arguments)) },
+                    info:      function info      ()    { _console.info  (describe(arguments[0]), rest(arguments)) },
+                    debug:     function debug     ()    { _console.debug (describe(arguments[0]), rest(arguments)) },
+                    trace:     function trace     ()    { _console.debug (describe(arguments[0]), rest(arguments)) },
+                    warn:      function warn      ()    { _console.warn  (describe(arguments[0]), rest(arguments)) },
+                    error:     function error     ()    { _console.error (describe(arguments[0]), rest(arguments)) },
+                    dir:       function dir       ()    { _console.dir   (describe(arguments[0]), rest(arguments)) },
                     clear:     function clear     (arg) { _console.clear(arg)         },
                     assert:    function assert    (arg) { _console.assert(arg)        },
                     count:     function count    (name) { return _console.count(name) },
