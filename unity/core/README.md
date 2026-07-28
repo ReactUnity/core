@@ -30,6 +30,14 @@ npx openupm-cli add com.reactunity.core com.reactunity.quickjs
 https://github.com/ReactUnity/core.git#latest
 ```
 
+`latest` follows the newest release. Pin a version with its tag instead:
+
+```
+https://github.com/ReactUnity/core.git#v0.23.0
+```
+
+Each release publishes this package to a branch with the package at its root, so a git install fetches ~29 MB rather than the whole monorepo.
+
 ## Usage
 
 - Create a canvas and add `ReactRendererUGUI` component to it
