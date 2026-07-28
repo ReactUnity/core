@@ -27,7 +27,16 @@ jobs:
     env:
       DOCS_DEPLOY_TOKEN: ${{ secrets.DOCS_DEPLOY_TOKEN }}
     steps:
+      # persist-credentials: false is what makes the cross-repo deploy below work.
+      # checkout@v7 stores its GITHUB_TOKEN as an `AUTHORIZATION: basic` header in a
+      # temp config included via `includeIf.gitdir:` -- covering `.git/worktrees/*`,
+      # which is where github-pages-deploy-action does its work. That header outranks
+      # the token in the remote URL, so the push went out as github-actions[bot] and
+      # was denied 403; the action's cleanup only clears the pre-v7 `--local` location.
+      # Nothing here needs git credentials after the checkout.
       - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
       - uses: pnpm/action-setup@v6
       - uses: actions/setup-node@v7
         with:
@@ -95,8 +104,11 @@ jobs:
           } >> "$GITHUB_STEP_SUMMARY"
 
       # The built site is kept as an artifact either way, so a skipped deploy can
-      # still be inspected (and uploaded by hand if needed).
+      # still be inspected (and uploaded by hand if needed). `!cancelled()` is what
+      # makes "either way" true: a *failed* deploy would otherwise skip this step,
+      # throwing away the one copy of the build that could be pushed by hand.
       - name: Upload built site
+        if: ${{ !cancelled() }}
         uses: actions/upload-artifact@v7
         with:
           name: docs-site
