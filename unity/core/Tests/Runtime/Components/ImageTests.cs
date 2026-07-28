@@ -4,6 +4,7 @@ using ReactUnity.Scripting;
 using ReactUnity.Types;
 using ReactUnity.UGUI;
 using UnityEngine;
+using Yoga;
 
 namespace ReactUnity.Tests
 {
@@ -182,6 +183,32 @@ namespace ReactUnity.Tests
             yield return null;
             Assert.AreEqual(0, Rect.x, 1);
             Assert.AreEqual(30, Rect.y, 1);
+        }
+
+        [UGUITest(Script = @"
+            function App() {
+                return <image />;
+            }
+")]
+        public IEnumerator MeasuringImageWithoutSourceDoesNotProduceNaN()
+        {
+            yield return null;
+
+            // With no source there is no intrinsic size, and the aspect ratio came out of 0/0. Yoga
+            // rejects a NaN dimension -- with a console error, not a failure -- so assert on what the
+            // measurer returns rather than on the layout Yoga salvages from it.
+            var measurer = Image.Replaced.Measurer;
+
+            foreach (var fit in new[] { ObjectFit.Fill, ObjectFit.Contain, ObjectFit.Cover, ObjectFit.None, ObjectFit.ScaleDown })
+            {
+                measurer.FitMode = fit;
+                var size = measurer.Measure(Image.Layout, 1000, YogaMeasureMode.Exactly, float.NaN, YogaMeasureMode.Undefined);
+
+                Assert.IsFalse(float.IsNaN(size.width), $"width was NaN for object-fit: {fit}");
+                Assert.IsFalse(float.IsNaN(size.height), $"height was NaN for object-fit: {fit}");
+            }
+
+            Assert.AreEqual(0, Image.Layout.LayoutHeight);
         }
 
         [UGUITest(Script = BaseScript, Style = @"

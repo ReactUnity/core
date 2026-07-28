@@ -75,6 +75,12 @@ namespace ReactUnity.UGUI.Measurers
                 ow = texture.width;
                 oh = texture.height;
             }
+
+            // Nothing to fit: no image assigned yet, or a degenerate one. Every branch below divides
+            // by an original dimension or by their ratio, so 0/0 would reach Yoga as a NaN and be
+            // rejected. An image with no intrinsic size occupies none, as on the web.
+            if (ow <= 0 || oh <= 0) return new YogaSize { width = 0, height = 0 };
+
             var ar = ow / oh;
 
             // ObjectFit.None
@@ -194,7 +200,7 @@ namespace ReactUnity.UGUI.Measurers
             if (wnan && hnan)
             {
                 rw = ow;
-                rh = ow;
+                rh = oh;
             }
             else if (hnan)
             {
