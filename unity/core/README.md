@@ -57,6 +57,6 @@ Visit the documentation on the [main website](https://reactunity.github.io) to l
 
 ## Resources and References
 
-- [Sample Project](https://github.com/ReactUnity/full-sample)
+- [Kitchen Sink sample project](https://github.com/ReactUnity/core/tree/kitchen-sink) — a complete Unity project using ReactUnity, cloneable on its own
 - [React Unity Renderer (npm package)](https://github.com/ReactUnity/renderer)
 - [Acknowledgements](https://github.com/ReactUnity/core/blob/main/.github/acknowledgements.md)

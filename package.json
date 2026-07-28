@@ -22,7 +22,9 @@
     "tegami": "node scripts/tegami.mts",
     "//unity": "Headless Unity driver. `pnpm unity help` for the commands; the Editor bridge is separate (see .claude/skills/unity).",
     "unity": "node scripts/unity/cli.mts",
-    "test:unity": "node scripts/unity/cli.mts test tests"
+    "test:unity": "node scripts/unity/cli.mts test tests",
+    "//kitchen-sink": "Exports kitchen-sink/ as a standalone project, the way release-kitchen-sink.yml publishes it. Takes an output directory.",
+    "kitchen-sink": "node scripts/kitchen-sink/prepare.mts"
   },
   "devDependencies": {
     "@biomejs/biome": "2.5.6",

@@ -1,0 +1,40 @@
+# Line endings. Normalisation happens on commit, so Unity, Rider and Visual Studio can each
+# write whatever their platform prefers into the working tree and the blob is still LF.
+# Unity serialises its YAML with LF on every platform, and nothing here misreads it.
+* text=auto eol=lf
+
+# Binaries. `text=auto` detects these by content anyway; listing them also switches off
+# diffing, which is what you want for the sample's textures, audio and fonts.
+#
+# Deliberately absent: *.asset. They are YAML, except Assets/Scenes/Web/LightingData.asset,
+# which is baked lighting data and is binary. Content detection gets both right.
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.webp binary
+*.ico binary
+*.psd binary
+*.tga binary
+
+*.wav binary
+*.mp3 binary
+*.ogg binary
+*.mp4 binary
+*.webm binary
+
+*.ttf binary
+*.otf binary
+*.woff binary
+*.woff2 binary
+
+*.dll binary
+*.so binary
+*.dylib binary
+*.a binary
+*.aar binary
+*.jar binary
+*.bundle binary
+
+*.unitypackage binary
+*.pfx binary

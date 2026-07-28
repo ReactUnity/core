@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## What this repo is
 
-ReactUnity: a React renderer that draws UI inside Unity3D (UGUI, UIToolkit, and the Unity Editor) without a DOM. This is a **monorepo formed by merging ~10 previously separate ReactUnity repos** (`renderer`, `scripts`, `material`, `create`, `core`, `jint`, `quickjs`, `clearscript`, `docs`, `tests`, `full-sample`, `samples`) with their histories preserved — see the `chore: merge X into Y` commits. Much of the layout only makes sense in that light, and the workflow files under `.github/workflows/` carry detailed comments explaining why each piece is shaped the way it is. Read those before changing CI.
+ReactUnity: a React renderer that draws UI inside Unity3D (UGUI, UIToolkit, and the Unity Editor) without a DOM. This is a **monorepo formed by merging ~10 previously separate ReactUnity repos** (`renderer`, `scripts`, `material`, `create`, `core`, `jint`, `quickjs`, `clearscript`, `docs`, `tests`, `full-sample` (now `kitchen-sink/`), `samples`) with their histories preserved — see the `chore: merge X into Y` commits. Much of the layout only makes sense in that light, and the workflow files under `.github/workflows/` carry detailed comments explaining why each piece is shaped the way it is. Read those before changing CI.
 
 ## Two package universes
 
@@ -20,7 +20,7 @@ All eight share **one version number** (currently `0.22.0`). Tegami bumps `packa
 
 ## pnpm workspace membership
 
-Defined in [pnpm-workspace.yaml](pnpm-workspace.yaml), which documents every inclusion and exclusion. Members are: `packages/*`, `unity/core/.react/*` (three React apps embedded in the core Unity package; the `.react` dot-prefix hides them from Unity's asset importer), `full-sample/react`, and `docs`.
+Defined in [pnpm-workspace.yaml](pnpm-workspace.yaml), which documents every inclusion and exclusion. Members are: `packages/*`, `unity/core/.react/*` (three React apps embedded in the core Unity package; the `.react` dot-prefix hides them from Unity's asset importer), `kitchen-sink/react`, and `docs`.
 
 Explicit non-members: `samples/**` (rotted — React 19 alongside React-18-capped redux deps), `packages/create/scaffold/**` (a template whose deps are placeholders), and anything under `Library/` or `PackageCache/` (Unity's own package cache is full of `package.json` files).
 
@@ -61,10 +61,10 @@ pnpm --filter @reactunity/material watch
 
 ### Running a React app against Unity
 
-Each app (`full-sample/react`, `unity/core/.react/*`) uses `react-unity-scripts`, a CRA fork:
+Each app (`kitchen-sink/react`, `unity/core/.react/*`) uses `react-unity-scripts`, a CRA fork:
 
 ```bash
-pnpm --filter reactunity-sample start
+pnpm --filter reactunity-kitchen-sink start
 ```
 
 `start` runs a dev server with HMR that Unity connects to (and serves a browser previewer at the port). `build` emits to `BUILD_PATH` — by default `../Assets/Resources/react`, overridden per app in its `.env`. `react-unity-scripts start --test` swaps the entry point to `test.ts`. See [packages/scripts/README.md](packages/scripts/README.md) for the full env-var surface (`FILENAME`, `BUILD_PATH`, `JSX_IMPORT_SOURCE`, …).
@@ -89,7 +89,7 @@ pnpm unity test tests
 
 [scripts/unity/](scripts/unity/) drives a local Editor headlessly — `compile` (~8 s warm, the cheapest check on any C# edit), `test`, `open`, `editors`, and `bridge` for talking to an Editor that is already open. `pnpm unity help` lists it all, and [.claude/skills/unity](.claude/skills/unity/SKILL.md) covers which path to use and what bites. Two things worth knowing before running it:
 
-- **The editor is pinned per project — `tests/` on 6000.1.4f1, `full-sample` on 6000.5.5f1.** `tests/` cannot use 6000.5: its committed manifest resolves `com.unity.inputsystem`/`test-framework.performance` versions using `TreeView`, which 6000.5 made obsolete-as-error, giving 306 compile errors before any test runs. `UNITY_VERSION=` overrides. CI runs 2023.2.20f1/6000.0.51f1/6000.1.9f1, so a local pass is still not a matrix pass.
+- **The editor is pinned per project — `tests/` on 6000.1.4f1, `kitchen-sink` on 6000.5.5f1.** `tests/` cannot use 6000.5: its committed manifest resolves `com.unity.inputsystem`/`test-framework.performance` versions using `TreeView`, which 6000.5 made obsolete-as-error, giving 306 compile errors before any test runs. `UNITY_VERSION=` overrides. CI runs 2023.2.20f1/6000.0.51f1/6000.1.9f1, so a local pass is still not a matrix pass.
 - **Opening `tests/` rewrites its manifest into a 6000-only shape** — `com.unity.ugui` 2.x, no `textmeshpro`, plus `modules.physicscore2d`/`vectorgraphics`/`adaptiveperformance` — and that manifest fails to resolve on **6000.1 as well as 2023.2** (measured), which yields *zero tests* rather than a red suite. The CLI snapshots those files and restores them after every run; `--no-restore` opts out. Restore covers batch runs only — an interactive Editor churns them freely, so check `git status` after one.
 
 The Test Runner window still works, as does `.github/workflows/unity-tests.yml` for the real matrix. `tests/Packages/manifest.json` already points at `file:../../unity/*`, so the four Unity packages are wired up with no patching.
@@ -104,6 +104,20 @@ Rendering tests compare against snapshots in `unity/core/Tests/.snapshots/{linux
 pnpm tegami
 ```
 Tegami config lives in [scripts/tegami.mts](scripts/tegami.mts) (unrelated to `packages/scripts`, despite the name). Changelog entries are pending `.tegami/*.md` files; `tegami ci` on `main` either opens a "Version Packages" PR or publishes from the committed publish lock. UPM releases are separate and manual (`release-upm.yml`, workflow_dispatch).
+
+### The Kitchen Sink sample
+
+`kitchen-sink/` is both the project ReactUnity is manually tested against and the sample users are pointed at, so it is published standalone on the `kitchen-sink` orphan branch by [release-kitchen-sink.yml](.github/workflows/release-kitchen-sink.yml).
+
+```bash
+node scripts/kitchen-sink/prepare.mts Logs/kitchen-sink --force
+```
+
+[prepare.mts](scripts/kitchen-sink/prepare.mts) is the whole transform, and the workflow only packages what it produces — so run it locally to see exactly what users get. It copies the tracked files (`git ls-files`, which keeps the exclusion list honest), rewrites `file:../../unity/*` and `workspace:*` to the current published version, drops `com.reactunity.jint`/`clearscript` and the `testables` block, strips `REACT_UNITY_DEVELOPER`, and moves any scene pinned to a dropped engine back to `EngineType: Auto`.
+
+Then it verifies, which is the part that matters: **it fails if OpenUPM or npm have not published the pinned version yet.** That is why this workflow is not chained to `release-npm.yml` the way `release-upm.yml` is — both registries build asynchronously after a release, and a manifest pinning a version they do not have gives a user an empty `Packages` folder, the same silent failure the `file:` refs cause. Dispatch it once they have caught up.
+
+Anything added to `kitchen-sink/` that only works inside this checkout has to be handled in `prepare.mts`, or the exported project breaks in a way nothing here would catch.
 
 ## Architecture
 
@@ -138,7 +152,7 @@ These are load-bearing and easy to undo (see commit `43e90688`):
 
 - `packages/scripts/tsconfig.json` must keep `preserveSymlinks: false`. Every consumer extends this config; under pnpm every dependency is a symlink, and `true` breaks module identity (renderer's `fetch`/`Response` globals silently drop out of scope).
 - Loaders in `packages/scripts/config/webpack.config.js` must be `require.resolve`'d, not bare strings — webpack resolves loader strings against the *consuming app's* directory, which only ever worked under npm's flat hoisting.
-- `full-sample/react` is `"type": "module"`, so its webpack config is `webpack.config.cjs`; `config/paths.js` prefers a `.cjs` sibling.
+- `kitchen-sink/react` is `"type": "module"`, so its webpack config is `webpack.config.cjs`; `config/paths.js` prefers a `.cjs` sibling.
 - Root `.npmrc` sets `node-options="--import tsx"` (so `.mts` config is runnable) and `strict-peer-dependencies=false`.
 - TypeScript is 7.x everywhere, `docs` included -- which cost `docs` its type checking: `astro check` runs on the compiler's JS API, and `@astrojs/language-server` throws in `assertCompatibleTypeScript` on 7, so the script and `@astrojs/check` are gone (`docs/package.json` has the note). `astro build` is the remaining gate there. Nothing may reintroduce `require('typescript')` or `resolve.sync('typescript')` — 7 has no CJS entry — and the options it removed (`target: ES5`, `esModuleInterop: false`, `baseUrl`) can't come back into a tsconfig. Everything else in the workspace is on latest.
 - `react-unity-scripts build` does **not** fail on type errors — fork-ts-checker is gone, so `TSC_COMPILE_ON_ERROR` does nothing and `pnpm typecheck` is what catches them. [packages/scripts/config/modules.js](packages/scripts/config/modules.js) derives webpack's `src` alias from `baseUrl`, and accepts `"paths": { "*": ["./*"] }` as the same thing since TS 7 removed `baseUrl`; `unity/core/.react/devtools` relies on that for its `src/…` imports.

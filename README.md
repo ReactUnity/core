@@ -11,7 +11,7 @@
 [![Tests](https://gist.githubusercontent.com/gkurt/f744e86dd53cd0159d4f1d56ae9aae19/raw/ReactUnityTestBadge.svg)](https://github.com/ReactUnity/core/actions/workflows/unity-tests.yml)
 [![Discord](https://img.shields.io/discord/884829138991603792?style=for-the-badge&label=Discord)](https://discord.gg/UY2EFW5ZKG)
 
-[Documentation](https://reactunity.github.io) &nbsp;·&nbsp; [Sample project](full-sample) &nbsp;·&nbsp; [Discord](https://discord.gg/UY2EFW5ZKG)
+[Documentation](https://reactunity.github.io) &nbsp;·&nbsp; [Sample project](kitchen-sink) &nbsp;·&nbsp; [Discord](https://discord.gg/UY2EFW5ZKG)
 
 </div>
 
@@ -85,7 +85,7 @@ their histories intact, so `git log` reaches back through every one of them.
 unity/          Unity (UPM) packages — core plus the three scripting engines
 packages/       npm packages
 docs/           the documentation site, deployed to reactunity.github.io
-full-sample/    a complete Unity project using ReactUnity
+kitchen-sink/   a complete Unity project using ReactUnity, published standalone
 samples/        smaller standalone samples
 tests/          the Unity project that runs the C# test suite
 scripts/        release tooling
@@ -94,7 +94,9 @@ media/          logos and brand assets
 
 Unity packages are published to an orphan branch per package whose tree root *is* the
 package, which is why `core.git#latest` keeps resolving even though the sources now
-live under `unity/core/`.
+live under `unity/core/`. `kitchen-sink/` ships the same way, on the `kitchen-sink`
+branch, with its `file:`/`workspace:` dependencies rewritten to published versions so
+the branch clones as a project that opens on its own.
 
 ## Development
 
@@ -120,12 +122,14 @@ To run a React app against a live Unity editor, start its dev server and press p
 Unity connects to it and hot-reloads:
 
 ```bash
-pnpm --filter reactunity-sample start
+pnpm --filter reactunity-kitchen-sink start
 ```
 
-The C# tests have no local CLI entry point: open `tests/` in Unity and use the Test
-Runner, or let the `Unity Tests` workflow run the full matrix. `tests/Packages/manifest.json`
-already points at the local `unity/*` packages, so no wiring is needed.
+The C# side is driven headlessly by `pnpm unity` — `compile`, `test`, `open`, and a
+`bridge` for talking to an Editor that is already open (`pnpm unity help` lists it all).
+The Test Runner window and the `Unity Tests` workflow still work; the workflow is the
+only one that runs the full editor matrix. `tests/Packages/manifest.json` already points
+at the local `unity/*` packages, so no wiring is needed.
 
 [CLAUDE.md](CLAUDE.md) documents the architecture and the toolchain decisions in more
 detail, and the workflow files under [.github/workflows](.github/workflows) explain why

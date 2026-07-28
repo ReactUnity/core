@@ -1,0 +1,143 @@
+name: Release Kitchen Sink sample
+
+# Publishes kitchen-sink/ to an orphan branch whose tree root IS the Unity project, so
+# `git clone --branch kitchen-sink --single-branch --depth 1` gets a project a user can open
+# without dragging the monorepo along.
+#
+# Same shape as release-upm.yml, with one difference that drives the whole job: the UPM
+# packages ship byte-identical to what is on main, so that workflow can build the commit
+# straight from `HEAD:unity/<pkg>` in O(1). This one cannot -- the sample's manifest points
+# at `file:../../unity/*` and its React app at `workspace:*`, both of which resolve to
+# nothing outside this checkout. scripts/kitchen-sink/prepare.mts rewrites them to published
+# versions, so the tree has to be materialised and re-hashed. It is still not a `git subtree
+# split`: the index is built from the prepared directory and committed with commit-tree,
+# which keeps the branch's history linear and the push incremental.
+#
+# NOT chained to release-npm.yml the way release-upm.yml is, deliberately. OpenUPM and npm
+# both build asynchronously after a release lands, and a manifest pinning a version they
+# have not published yet gives a user an empty Packages folder -- the exact failure the
+# `file:` refs cause, reintroduced. prepare.mts fails the run rather than publish that, so
+# chaining it would just paint every release red until the registries caught up. Dispatch it
+# once they have; there is nothing to remember beyond that, since the version comes from
+# unity/core/package.json.
+on:
+  workflow_dispatch:
+    inputs:
+      dry-run:
+        description: Prepare and verify the export, but do not push
+        type: boolean
+        default: false
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    concurrency:
+      group: release-kitchen-sink
+      cancel-in-progress: false
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+
+      - uses: pnpm/action-setup@v6
+      - uses: actions/setup-node@v7
+        with:
+          node-version-file: .node-version
+          cache: pnpm
+
+      # For tsx, which the root .npmrc wires in as --import so the .mts script is runnable.
+      - run: pnpm install --frozen-lockfile
+
+      # Fails the run if the export is not standalone, or if OpenUPM/npm have not published
+      # the version it pins. Everything after this point is packaging.
+      - name: Prepare the standalone project
+        run: |
+          node scripts/kitchen-sink/prepare.mts "$RUNNER_TEMP/kitchen-sink" \
+            --file-list "$RUNNER_TEMP/kitchen-sink.files"
+
+      - name: Publish to the orphan branch
+        run: |
+          set -euo pipefail
+          ver=$(node -p "require('./unity/core/package.json').version")
+          branch=kitchen-sink
+          tag="kitchen-sink/v$ver"
+
+          git config user.name  github-actions
+          git config user.email github-actions@github.com
+
+          git fetch origin "+refs/heads/$branch:refs/heads/$branch" || true
+          prev=$(git rev-parse -q --verify "refs/heads/$branch" || true)
+
+          # A scratch index over the prepared directory, so the repo's own index and working
+          # tree are untouched. With GIT_DIR set and no GIT_WORK_TREE, git takes the current
+          # directory as the work tree -- which is why this runs from inside the export.
+          #
+          # The pathspec is the explicit list prepare.mts just wrote, not `add -A`, and the
+          # two halves of that matter separately. `-f` is needed because the sample's own
+          # .gitignore came along with it and is written for a live Unity project; every file
+          # in the list was tracked on main under those same rules, so an ignore rule firing
+          # here could only silently drop something that belongs in the export. Naming the
+          # files is what keeps `-f` safe: `add -A -f` would force in whatever else happened
+          # to be in the directory, and one stray `Library/` is a gigabyte on the branch.
+          (
+            cd "$RUNNER_TEMP/kitchen-sink"
+            export GIT_DIR="$GITHUB_WORKSPACE/.git"
+            export GIT_INDEX_FILE="$RUNNER_TEMP/kitchen-sink.index"
+            rm -f "$GIT_INDEX_FILE"
+            git add -f --pathspec-from-file="$RUNNER_TEMP/kitchen-sink.files" --pathspec-file-nul
+            git write-tree > "$RUNNER_TEMP/kitchen-sink.tree"
+          )
+          tree=$(cat "$RUNNER_TEMP/kitchen-sink.tree")
+
+          if [ -n "$prev" ] && [ "$tree" = "$(git rev-parse "$prev^{tree}")" ]; then
+            echo "::notice::the export is identical to the current $branch tip - nothing to publish"
+            exit 0
+          fi
+
+          if [ -n "$prev" ]; then
+            commit=$(git commit-tree "$tree" -p "$prev" -m "kitchen-sink v$ver")
+          else
+            commit=$(git commit-tree "$tree" -m "kitchen-sink v$ver")
+          fi
+
+          refs="refs/heads/$branch"
+          git update-ref "refs/heads/$branch" "$commit"
+
+          # The branch is what the README tells people to clone, so it always moves. The tag
+          # is a version marker and stays immutable -- a sample-only fix between releases
+          # republishes the branch and leaves the release's tag pointing where it did.
+          if git rev-parse -q --verify "refs/tags/$tag" >/dev/null; then
+            echo "::notice::$tag already exists - updating the $branch branch only"
+          else
+            git tag "$tag" "$commit"
+            refs="$refs refs/tags/$tag"
+          fi
+
+          if [ '${{ inputs.dry-run }}' = 'true' ]; then
+            echo "::notice::dry run - would have pushed $refs ($commit)"
+            exit 0
+          fi
+
+          git push origin $refs
+          echo "Published kitchen-sink v$ver on $branch ($commit)"
+          echo "$commit" > published.txt
+
+      # A clone of this branch has to be openable in Unity. The three things that make it not
+      # openable are a missing project root, a manifest that still points into the monorepo,
+      # and a React app that still asks for workspace: dependencies.
+      - name: Verify the published tree
+        run: |
+          set -euo pipefail
+          if [ ! -f published.txt ]; then
+            echo "Nothing was published - nothing to verify"
+            exit 0
+          fi
+          commit=$(cat published.txt)
+          for required in Packages/manifest.json ProjectSettings/ProjectVersion.txt Assets/Scenes/MainScene.unity react/package.json README.md; do
+            git cat-file -e "$commit:$required"
+          done
+          ! git show "$commit:Packages/manifest.json" | grep -q 'file:'
+          ! git show "$commit:react/package.json" | grep -q 'workspace:'
+          echo "$commit is a standalone Unity project"

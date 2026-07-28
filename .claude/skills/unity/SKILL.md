@@ -1,6 +1,6 @@
 ---
 name: unity
-description: Compile, test, and drive Unity for this repo's C# packages (unity/core, jint, quickjs, clearscript) and the two Unity projects (tests/, full-sample/). Use when a change touches C# under unity/**, when Unity test results are needed, when a rendering snapshot has to be checked or regenerated, or when the app has to be started or screenshotted. Also use when asked to "run the Unity tests", "check this compiles", or "see it working in Unity".
+description: Compile, test, and drive Unity for this repo's C# packages (unity/core, jint, quickjs, clearscript) and the two Unity projects (tests/, kitchen-sink/). Use when a change touches C# under unity/**, when Unity test results are needed, when a rendering snapshot has to be checked or regenerated, or when the app has to be started or screenshotted. Also use when asked to "run the Unity tests", "check this compiles", or "see it working in Unity".
 ---
 
 # Driving Unity from here
@@ -61,7 +61,7 @@ Two lessons worth more than the incident:
 ## Working against the open Editor
 
 ```bash
-pnpm unity bridge status full-sample
+pnpm unity bridge status kitchen-sink
 ```
 
 Compile errors, play state, and whether the Editor is busy. The rest: `logs --level error`, `refresh` (reimport + recompile, then report), `test --platform EditMode`, `play` / `stop`, `screenshot --path out.png`, `menu --path "..."`.
@@ -80,23 +80,25 @@ Screenshots need the Editor to actually render a frame. In play mode that is aut
 
 ## Running the sample app
 
-`full-sample` renders a React app served by `react-unity-scripts`:
+`kitchen-sink` renders a React app served by `react-unity-scripts`:
 
 ```bash
-pnpm --filter reactunity-sample start
+pnpm --filter reactunity-kitchen-sink start
 ```
 
 ```bash
-pnpm unity open full-sample && pnpm unity bridge play full-sample
+pnpm unity open kitchen-sink && pnpm unity bridge play kitchen-sink
 ```
 
 ```bash
-pnpm unity bridge screenshot full-sample --path Logs/unity/shot.png
+pnpm unity bridge screenshot kitchen-sink --path Logs/unity/shot.png
 ```
 
 That produces a real PNG of the running app — read it back to check a visual change. Unity connects to the dev server, so JS changes hot-reload without touching the Editor.
 
-Both Unity projects consume the C# packages as `file:../../unity/*`, so both exercise the working tree. **`full-sample` used to point at `https://github.com/ReactUnity/core.git#latest`** — while it did, it compiled the *published* package and local C# changes were invisible there, silently. If a change to `unity/**` seems to have no effect in full-sample, check its manifest first.
+Both Unity projects consume the C# packages as `file:../../unity/*`, so both exercise the working tree. **`kitchen-sink` used to point at `https://github.com/ReactUnity/core.git#latest`** — while it did, it compiled the *published* package and local C# changes were invisible there, silently. If a change to `unity/**` seems to have no effect in kitchen-sink, check its manifest first.
+
+Those `file:` refs are also why `kitchen-sink` cannot be cloned on its own, and why publishing it is a transform rather than a copy — see [prepare.mts](../../../scripts/kitchen-sink/prepare.mts). Anything added here that only resolves inside this checkout has to be handled there too.
 
 ## Things that will bite
 
@@ -106,7 +108,7 @@ Both Unity projects consume the C# packages as `file:../../unity/*`, so both exe
 
 **Unity leaves untracked files behind** (`tests/.vscode/`, `tests/tests.slnx`, new `ProjectSettings/*.asset`). Restore does not delete them — regenerating them each run is worse. Leave them out of commits. A killed PlayMode run also leaks `tests/Assets/InitTestScene*.unity`, which the test framework normally deletes itself; a stray one is debris, not content.
 
-**The editor version is pinned per project, and `tests/` cannot use 6000.5.** `tests/` runs on **6000.1.4f1**, `full-sample` on **6000.5.5f1**. This is not cosmetic: the committed `tests/Packages/manifest.json` resolves `com.unity.inputsystem` and `test-framework.performance` versions that still use `TreeView`/`TreeViewItem`, which 6000.5 made *obsolete-as-error* — 306 compile errors before a single test runs. 6000.1.4f1 compiles it clean and is the nearest install to CI's main job (6000.1.9f1). `UNITY_VERSION=` overrides; `pnpm unity editors` lists what exists. CI runs 2023.2.20f1, 6000.0.51f1 and 6000.1.9f1, so a local pass still is not proof the matrix passes.
+**The editor version is pinned per project, and `tests/` cannot use 6000.5.** `tests/` runs on **6000.1.4f1**, `kitchen-sink` on **6000.5.5f1**. This is not cosmetic: the committed `tests/Packages/manifest.json` resolves `com.unity.inputsystem` and `test-framework.performance` versions that still use `TreeView`/`TreeViewItem`, which 6000.5 made *obsolete-as-error* — 306 compile errors before a single test runs. 6000.1.4f1 compiles it clean and is the nearest install to CI's main job (6000.1.9f1). `UNITY_VERSION=` overrides; `pnpm unity editors` lists what exists. CI runs 2023.2.20f1, 6000.0.51f1 and 6000.1.9f1, so a local pass still is not proof the matrix passes.
 
 **Switching `UNITY_VERSION` is not free.** A different editor deletes and recreates the project's asset database, so the run after a version switch pays a full reimport, and switching back pays it again. Worth it to reproduce a matrix failure; not worth it casually. `ProjectVersion.txt` is deliberately left at whatever version last opened the project — reverting it below the local editor makes `pnpm unity open` hang on a modal "Project Upgrade Required" dialog with no visible window title. CI ignores that file entirely.
 
