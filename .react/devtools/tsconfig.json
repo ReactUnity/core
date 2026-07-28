@@ -1,0 +1,13 @@
+{
+  "extends": "@reactunity/scripts",
+  "compilerOptions": {
+    // src/context/... style imports depend on this. It used to be `baseUrl: "./"`, which
+    // TypeScript 7 removed (TS5102); this is the replacement 7 names, and
+    // @reactunity/scripts reads it back as a baseUrl so the webpack `src` alias survives.
+    "paths": { "*": ["./*"] },
+    "jsxImportSource": "@reactunity/renderer/editor",
+    "types": ["@reactunity/scripts/main"]
+  },
+  "files": ["./src/index.ts"],
+  "include": ["src"]
+}

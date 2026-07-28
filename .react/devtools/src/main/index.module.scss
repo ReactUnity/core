@@ -1,0 +1,20 @@
+.host {
+  flex-direction: column;
+  align-items: stretch;
+}
+
+.logo {
+  max-height: 200px;
+  max-width: 200px;
+  align-self: center;
+  transform-origin: center;
+
+  +view {
+    font-size: 16px;
+    align-self: center;
+  }
+  ~span {
+    font-size: 12px;
+    align-self: center;
+  }
+}

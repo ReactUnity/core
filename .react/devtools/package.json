@@ -1,0 +1,21 @@
+{
+  "name": "@reactunity/devtools",
+  "version": "0.0.1",
+  "description": "",
+  "main": "index.ts",
+  "private": true,
+  "scripts": {
+    "start": "react-unity-scripts start",
+    "typecheck": "tsc",
+    "build": "react-unity-scripts build"
+  },
+  "dependencies": {
+    "@reactunity/renderer": "workspace:*",
+    "clsx": "^2.1.1",
+    "react": "^19.2.8"
+  },
+  "devDependencies": {
+    "@reactunity/scripts": "workspace:*",
+    "typescript": "^7.0.2"
+  }
+}

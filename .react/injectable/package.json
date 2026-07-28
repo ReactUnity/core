@@ -1,0 +1,23 @@
+{
+  "name": "@reactunity/injectable",
+  "version": "0.0.1",
+  "description": "",
+  "main": "index.ts",
+  "private": true,
+  "scripts": {
+    "start": "react-unity-scripts start",
+    "typecheck": "tsc",
+    "build": "pnpm run build:self && pnpm run build:replace",
+    "build:self": "react-unity-scripts build",
+    "build:replace": "node scripts/replace-injectable.mjs"
+  },
+  "dependencies": {
+    "@reactunity/material": "workspace:*",
+    "@reactunity/renderer": "workspace:*",
+    "react": "^19.2.8"
+  },
+  "devDependencies": {
+    "@reactunity/scripts": "workspace:*",
+    "typescript": "^7.0.2"
+  }
+}

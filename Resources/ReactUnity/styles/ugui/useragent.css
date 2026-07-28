@@ -1,0 +1,148 @@
+.react-unity__renderer__hidden {
+  display: none !important;
+}
+
+@font-face {
+  font-family: sans-serif;
+  src: url(resource:ReactUnity/fonts/sans-serif);
+}
+
+@font-face {
+  font-family: monospace;
+  src: url(resource:ReactUnity/fonts/monospace);
+}
+
+:root {
+  font-size: 16px;
+  font-family: sans-serif;
+  color: black;
+
+  z-index: revert;
+  sorting-layer: revert;
+}
+
+:graphic {
+  color: white;
+}
+
+br {
+  width: 0;
+  height: 0;
+  visibility: hidden;
+}
+
+br + br {
+  height: auto;
+}
+
+icon {
+  font-size: 24px;
+  text-align: center;
+  flex-grow: 0;
+  flex-shrink: 0;
+  flex-basis: auto;
+}
+
+button {
+  padding: 8px 12px;
+  align-items: center;
+  justify-content: center;
+  flex-direction: row;
+  background-color: rgba(90%, 90%, 90%, 1);
+  border-radius: 8px;
+  cursor: pointer;
+  text-align: center;
+  appearance: button;
+  pointer-events: all;
+}
+
+input {
+  flex-direction: row;
+  padding: 8px;
+  max-width: 100%;
+  overflow: hidden;
+  background-color: white;
+  border-radius: 8px;
+  text-align: left;
+  vertical-align: middle;
+  cursor: text;
+  appearance: input;
+  pointer-events: all;
+}
+
+input::viewport {
+  max-width: 100%;
+  flex-grow: 1;
+}
+
+input::placeholder {
+  position: absolute;
+  opacity: 0.6;
+}
+
+scroll {
+  overflow: scroll;
+  flex-shrink: 1;
+}
+
+scroll::scrollbar {
+  background-color: rgb(210, 210, 210);
+  appearance: button;
+  width: 12px;
+  height: 12px;
+}
+
+scroll::scrollbar-thumb {
+  background-color: rgba(170, 170, 170);
+}
+
+toggle {
+  width: 24px;
+  aspect-ratio: 1;
+  flex: 0 0 auto;
+  margin: 6px;
+  align-items: center;
+  justify-content: center;
+  flex-direction: row;
+  background-color: rgba(82%, 82%, 82%, 1);
+  border-radius: 6px;
+  cursor: pointer;
+  appearance: toggle;
+  pointer-events: all;
+}
+
+toggle:after {
+  position: absolute;
+  inset: 0;
+  content: "";
+  pointer-events: none;
+  background-blend-mode: multiply;
+  background-color: black;
+  background-image: transparent;
+  background-size: contain;
+  background-position: center;
+}
+
+toggle:checked:after {
+  background-image: url(res:ReactUnity/sprites/check);
+}
+
+toggle:indeterminate:after {
+  background-image: url(res:ReactUnity/sprites/indeterminate);
+}
+
+anchor {
+  font-style: underline;
+  cursor: pointer;
+}
+
+label {
+  cursor: pointer;
+  flex-direction: row;
+  align-items: center;
+}
+
+portal {
+  transform-origin: top left;
+  position: absolute;
+}

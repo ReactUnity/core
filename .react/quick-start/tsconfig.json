@@ -1,0 +1,9 @@
+{
+  "extends": "@reactunity/scripts",
+  "compilerOptions": {
+    "jsxImportSource": "@reactunity/renderer/editor",
+    "types": ["@reactunity/scripts/main"]
+  },
+  "files": ["./src/index.ts"],
+  "include": ["src"]
+}

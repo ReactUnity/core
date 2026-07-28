@@ -1,0 +1,67 @@
+{
+    "name": "ReactUnity.Tests.Performance",
+    "rootNamespace": "ReactUnity.Tests.Performance",
+    "references": [
+        "GUID:27619889b8ba8c24980f49ee34dbb44a",
+        "GUID:0acc523941302664db1f4e527237feb3",
+        "GUID:75469ad4d38634e559750d17036d5f7c",
+        "GUID:dc04f38471c3a459fb4d31124ee9127d",
+        "GUID:3ae5734e49d646442ad24f37762ebdd2",
+        "GUID:478a2357cc57436488a56e564b08d223",
+        "GUID:6055be8ebefd69e48b49212b09b47b2f",
+        "GUID:ed4a920eac98dc342ba18a6baa202849",
+        "GUID:347a20883bb61d74abf78fec0515bb21",
+        "GUID:f3df39452b4b85c48b166389e7ca3670",
+        "GUID:9a66a2efedc711946b7428ea9b41cc0d",
+        "GUID:1d91773c9af12264b8fcdd5d75ddeed5",
+        "GUID:c0dd0d10738d4ad4a9de57c559d0ca1b"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": true,
+    "precompiledReferences": [
+        "nunit.framework.dll",
+        "Jint.dll",
+        "ExCSS.dll",
+        "ClearScript.Core.dll"
+    ],
+    "autoReferenced": false,
+    "defineConstraints": [
+        "UNITY_INCLUDE_TESTS",
+        "REACT_INPUT_SYSTEM"
+    ],
+    "versionDefines": [
+        {
+            "name": "com.unity.inputsystem",
+            "expression": "",
+            "define": "REACT_INPUT_SYSTEM"
+        },
+        {
+            "name": "Unity",
+            "expression": "2021.2.0a",
+            "define": "REACT_UITOOLKIT"
+        },
+        {
+            "name": "com.unity.vectorgraphics",
+            "expression": "",
+            "define": "REACT_VECTOR_GRAPHICS"
+        },
+        {
+            "name": "com.reactunity.jint",
+            "expression": "",
+            "define": "REACT_JINT_AVAILABLE"
+        },
+        {
+            "name": "com.reactunity.clearscript",
+            "expression": "",
+            "define": "REACT_CLEARSCRIPT_AVAILABLE"
+        },
+        {
+            "name": "com.reactunity.quickjs",
+            "expression": "",
+            "define": "REACT_QUICKJS_AVAILABLE"
+        }
+    ],
+    "noEngineReferences": false
+}

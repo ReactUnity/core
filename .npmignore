@@ -1,0 +1,42 @@
+# Ignore all files except the following and their contents
+*
+
+# Folders and their metas
+# NOTE: each folder needs both `!Folder` and `!Folder/**`. Unity 6's Package
+# Manager stopped using npm-packlist for git installs and now applies strict
+# gitignore semantics, where a path under an excluded directory can never be
+# re-included. Without the bare `!Folder` line, `*` excludes the directory
+# itself and everything inside stays unreachable, so a git install produces
+# empty folders.
+!/Runtime
+!/Runtime/**
+!/Runtime.meta
+!/Assets
+!/Assets/**
+!/Assets.meta
+!/Plugins
+!/Plugins/**
+!/Plugins.meta
+!/Resources
+!/Resources/**
+!/Resources.meta
+!/Editor
+!/Editor/**
+!/Editor.meta
+
+# Top level files which should be included
+!/package.json
+!/package.json.meta
+!/LICENSE
+!/LICENSE.meta
+!/README.md
+!/README.md.meta
+
+# Ignore all folders and files starting with dot
+.*
+
+# Other files that should be ignored
+*.pdb
+*.pdb.meta
+*.tgz
+*.tgz.meta

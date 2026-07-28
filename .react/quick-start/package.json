@@ -1,0 +1,20 @@
+{
+  "name": "@reactunity/quick-start",
+  "version": "0.0.1",
+  "description": "",
+  "main": "index.ts",
+  "private": true,
+  "scripts": {
+    "start": "react-unity-scripts start",
+    "typecheck": "tsc",
+    "build": "react-unity-scripts build"
+  },
+  "dependencies": {
+    "@reactunity/renderer": "workspace:*",
+    "react": "^19.2.8"
+  },
+  "devDependencies": {
+    "@reactunity/scripts": "workspace:*",
+    "typescript": "^7.0.2"
+  }
+}
