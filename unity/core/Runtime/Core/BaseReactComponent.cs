@@ -189,9 +189,14 @@ namespace ReactUnity
         {
             UpdatedThisFrame = true;
             if (Destroyed) return;
+            // Resolve first: ApplyEnterLeave reads stateDuration off ComputedStyle, and only a
+            // resolve puts the :enter/:leave block's own value there.
             if (markedStyleResolve) ResolveStyle(markedStyleResolveRecursive);
             ApplyEnterLeave();
             if (Destroyed) return;
+            // Ending a state marks another resolve. Take it now rather than next update, or the
+            // transition that end starts gets created late and timed from the wrong instant.
+            if (markedStyleResolve) ResolveStyle(markedStyleResolveRecursive);
 
             StyleState.Update();
             if (markedForStyleApply) ApplyStyles();

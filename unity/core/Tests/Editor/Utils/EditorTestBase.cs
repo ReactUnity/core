@@ -69,6 +69,10 @@ namespace ReactUnity.Tests.Editor
             else
             {
                 yield return Context.Timer.Yield(advanceBy);
+                // A mock clock only moves in Yield, so a bare frame costs no simulated time. It buys
+                // one more update, which is what a pending state change needs -- how many updates a
+                // single EditMode frame pumps is not the same on every Unity version.
+                yield return null;
             }
         }
 
