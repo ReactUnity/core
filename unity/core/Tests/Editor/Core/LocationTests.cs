@@ -47,12 +47,13 @@ namespace ReactUnity.Tests.Editor
             var href = "react/index.js?param1=5&param2=hello#test-hash";
             var lc = new Location(href);
 
+            // Absent components are "", never null -- see the note in URL.SetHref.
             Assert.AreEqual(href, lc.href);
-            Assert.AreEqual(null, lc.origin);
-            Assert.AreEqual(null, lc.protocol);
-            Assert.AreEqual(null, lc.host);
-            Assert.AreEqual(null, lc.hostname);
-            Assert.AreEqual(null, lc.port);
+            Assert.AreEqual("", lc.origin);
+            Assert.AreEqual("", lc.protocol);
+            Assert.AreEqual("", lc.host);
+            Assert.AreEqual("", lc.hostname);
+            Assert.AreEqual("", lc.port);
             Assert.AreEqual("react/index.js", lc.pathname);
             Assert.AreEqual("?param1=5&param2=hello", lc.search);
             Assert.AreEqual("#test-hash", lc.hash);
