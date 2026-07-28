@@ -1,0 +1,34 @@
+{
+    "name": "jsb.editor.binding",
+    "rootNamespace": "",
+    "references": [
+        "GUID:118b4ca3a1852354bac065cf952c1e85",
+        "GUID:595d45be140461240b6b4358dc45f2c0",
+        "GUID:ac4126d60783f3d4a98aee6be9a997aa"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": true,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [
+        "UNITY_EDITOR || JSB_RUNTIME_REFLECT_BINDING",
+        "!REACT_QUICKJS_ORIGINAL",
+        "!REACT_EXCLUDE_QUICKJS",
+        "!REACT_DISABLE_QUICKJS"
+    ],
+    "versionDefines": [
+        {
+            "name": "Unity",
+            "expression": "",
+            "define": "JSB_RUNTIME_REFLECT_BINDING"
+        },
+        {
+            "name": "Unity",
+            "expression": "",
+            "define": "JSB_UNITYLESS"
+        }
+    ],
+    "noEngineReferences": false
+}
