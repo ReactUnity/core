@@ -5,7 +5,7 @@
 # EditorConfig stops climbing at `root = true`, which every one of them declared, each
 # subtree was governed by its own copy. Eleven were byte-for-byte identical to this file;
 # what the split actually achieved was disagreement about line endings (this file said
-# `crlf`, full-sample/ said `crlf`, the other twelve said `lf`), which is how the repo
+# `crlf`, kitchen-sink/ said `crlf`, the other twelve said `lf`), which is how the repo
 # ended up with 686 CRLF .cs files next to 1085 LF .meta files. Put repo-wide rules here.
 #
 # The one surviving nested copy, packages/create/scaffold/react/.editorconfig, is not
@@ -70,10 +70,10 @@ dotnet_sort_system_directives_first = true
 #Formatting - spacing options
 
 #require space between a cast and the value
-# full-sample/.editorconfig said `false` here (and for csharp_preserve_single_line_blocks
+# kitchen-sink/.editorconfig said `false` here (and for csharp_preserve_single_line_blocks
 # below) before it was folded into this file. Both files were IntelliCode-inferred in 2021,
 # each from the code sitting next to it, so the disagreement is an artifact of sampling two
-# different codebases rather than a decision. This value wins: full-sample has 7 C# files
+# different codebases rather than a decision. This value wins: kitchen-sink has 7 C# files
 # and none of them contains a cast, while unity/** -- 712 files, always governed by this
 # file -- writes `(int) x` 128 times against `(int)x` 81.
 csharp_space_after_cast = true

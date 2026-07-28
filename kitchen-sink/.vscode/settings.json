@@ -49,5 +49,5 @@
     "temp/": true,
     "Temp/": true
   },
-  "dotnet.defaultSolution": "full-sample.sln"
+  "dotnet.defaultSolution": "kitchen-sink.sln"
 }

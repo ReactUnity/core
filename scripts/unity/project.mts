@@ -15,21 +15,21 @@ export const repoRoot = path.resolve(import.meta.dirname, '..', '..');
  * resolves com.unity.inputsystem and test-framework.performance versions that still use
  * TreeView/TreeViewItem, which 6000.5 made obsolete-as-error -- 306 compile errors before a
  * single test runs. 6000.1.4f1 compiles it clean and is the closest install to CI's main
- * job (6000.1.9f1). full-sample has its own manifest and is fine on 6000.5.
+ * job (6000.1.9f1). kitchen-sink has its own manifest and is fine on 6000.5.
  */
 const PINNED_VERSIONS: Record<ProjectName, string> = {
   tests: '6000.1.4f1',
-  'full-sample': '6000.5.5f1',
+  'kitchen-sink': '6000.5.5f1',
 };
 
-export type ProjectName = 'tests' | 'full-sample';
+export type ProjectName = 'tests' | 'kitchen-sink';
 
 export type Project = {
   name: ProjectName;
   path: string;
   version: string;
   /**
-   * Assemblies to hand `-assemblyNames`, matching the CI matrix. Undefined for full-sample,
+   * Assemblies to hand `-assemblyNames`, matching the CI matrix. Undefined for kitchen-sink,
    * which holds no test assemblies -- naming the tests project's there would ask for
    * assemblies that do not exist and report zero tests.
    */
@@ -37,7 +37,7 @@ export type Project = {
 };
 
 export function getProject(name: string): Project {
-  if (name !== 'tests' && name !== 'full-sample') throw new Error(`Unknown project '${name}'. Expected 'tests' or 'full-sample'.`);
+  if (name !== 'tests' && name !== 'kitchen-sink') throw new Error(`Unknown project '${name}'. Expected 'tests' or 'kitchen-sink'.`);
   return {
     name,
     path: path.join(repoRoot, name),

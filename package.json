@@ -37,8 +37,5 @@
     "typescript": "^7.0.2",
     "vite": "^8.1.5",
     "tegami": "^1.2.7"
-  },
-  "lint-staged": {
-    "*": ["biome check --write --no-errors-on-unmatched --files-ignore-unknown=true"]
   }
 }

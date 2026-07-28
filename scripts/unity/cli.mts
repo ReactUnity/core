@@ -38,7 +38,7 @@ const { values: flags, positionals } = parseArgs({
 });
 
 // `bridge` takes an action of its own, so the project shifts one place right:
-// `unity bridge status full-sample`.
+// `unity bridge status kitchen-sink`.
 const [command = 'help', second, third] = positionals;
 const bridgeAction = command === 'bridge' ? (second ?? 'status') : undefined;
 const projectName = (command === 'bridge' ? third : second) ?? 'tests';
@@ -46,9 +46,9 @@ const projectName = (command === 'bridge' ? third : second) ?? 'tests';
 const USAGE = `pnpm unity <command> [project] [options]
 
 Commands:
-  compile [tests|full-sample]   Compile the project's scripts and report C# errors
-  test    [tests|full-sample]   Run the Unity test suites and report failures
-  open    [tests|full-sample]   Launch the Editor GUI (detached, returns immediately)
+  compile [tests|kitchen-sink]  Compile the project's scripts and report C# errors
+  test    [tests|kitchen-sink]  Run the Unity test suites and report failures
+  open    [tests|kitchen-sink]  Launch the Editor GUI (detached, returns immediately)
   editors                       List installed Unity editors
 
   bridge <action> [project]     Drive an Editor that is already open. Actions:

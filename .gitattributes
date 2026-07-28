@@ -38,7 +38,7 @@
 # what you want for 423 PNG snapshots and 37 DLLs.
 #
 # Deliberately absent: *.asset. Unity's text serialisation makes them YAML, but
-# full-sample/Assets/Scenes/Web/LightingData.asset is baked lighting data and is binary,
+# kitchen-sink/Assets/Scenes/Web/LightingData.asset is baked lighting data and is binary,
 # so a blanket rule for the extension would be wrong for one side or the other. Content
 # detection gets both right, which is the general argument for keeping this list to
 # formats that are *never* text.

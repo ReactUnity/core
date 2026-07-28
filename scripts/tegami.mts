@@ -57,7 +57,7 @@ const paper = tegami({
   // resolves locally regardless of the graph, so excluding them is safe.
   ignore: [
     'react-website', // docs/
-    'reactunity-sample', // full-sample/react/
+    'reactunity-kitchen-sink', // kitchen-sink/react/
     '@reactunity/devtools', // unity/core/.react/devtools
     '@reactunity/injectable', // unity/core/.react/injectable
     '@reactunity/quick-start', // unity/core/.react/quick-start

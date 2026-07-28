@@ -10,7 +10,7 @@ on:
     paths:
       - 'packages/**'
       - 'docs/**'
-      - 'full-sample/react/**'
+      - 'kitchen-sink/react/**'
       - 'unity/core/.react/**'
       - '*.json'
       - '*.jsonc'
@@ -40,7 +40,7 @@ jobs:
       # green type check; now it runs tsdown, which transpiles per file and never does
       # whole-program analysis, so type errors have to be asked for separately.
       # Build has to come first: `typecheck` is unfiltered, so it also checks the apps
-      # under unity/core/.react and full-sample, and those resolve @reactunity/renderer
+      # under unity/core/.react and kitchen-sink, and those resolve @reactunity/renderer
       # to dist/index.d.ts -- absent before a build, every import of it is TS2307.
       - name: Build the publishable packages
         run: pnpm build

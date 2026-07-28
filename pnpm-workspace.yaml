@@ -6,8 +6,8 @@ packages:
   # what keeps Unity from importing them as assets.
   - unity/core/.react/*
 
-  # React source of the full Unity sample project
-  - full-sample/react
+  # React source of the Kitchen Sink sample project
+  - kitchen-sink/react
 
   - docs
 
