@@ -7,10 +7,20 @@ import path from 'node:path';
 
 export const repoRoot = path.resolve(import.meta.dirname, '..', '..');
 
-// Pinned rather than read from ProjectVersion.txt, because restoreChurn() puts
-// that file back to whatever is committed -- for tests/ that is a 2020.3 no
-// longer used anywhere. Override per run with UNITY_VERSION.
-const PINNED_VERSION = '6000.5.5f1';
+/**
+ * Pinned per project, and not read from ProjectVersion.txt -- that file only records
+ * whatever last opened the project. Override per run with UNITY_VERSION.
+ *
+ * tests/ is on the 6000.1 line for a hard reason: the committed Packages/manifest.json
+ * resolves com.unity.inputsystem and test-framework.performance versions that still use
+ * TreeView/TreeViewItem, which 6000.5 made obsolete-as-error -- 306 compile errors before a
+ * single test runs. 6000.1.4f1 compiles it clean and is the closest install to CI's main
+ * job (6000.1.9f1). full-sample has its own manifest and is fine on 6000.5.
+ */
+const PINNED_VERSIONS: Record<ProjectName, string> = {
+  tests: '6000.1.4f1',
+  'full-sample': '6000.5.5f1',
+};
 
 export type ProjectName = 'tests' | 'full-sample';
 
@@ -31,7 +41,7 @@ export function getProject(name: string): Project {
   return {
     name,
     path: path.join(repoRoot, name),
-    version: process.env.UNITY_VERSION ?? PINNED_VERSION,
+    version: process.env.UNITY_VERSION ?? PINNED_VERSIONS[name],
     assemblies: name === 'tests' ? 'ReactUnity.Tests;ReactUnity.Tests.Editor' : undefined,
   };
 }

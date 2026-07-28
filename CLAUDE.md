@@ -89,7 +89,7 @@ pnpm unity test tests
 
 [scripts/unity/](scripts/unity/) drives a local Editor headlessly — `compile` (~8 s warm, the cheapest check on any C# edit), `test`, `open`, `editors`, and `bridge` for talking to an Editor that is already open. `pnpm unity help` lists it all, and [.claude/skills/unity](.claude/skills/unity/SKILL.md) covers which path to use and what bites. Two things worth knowing before running it:
 
-- **It runs Unity 6000.5.5f1 by default, and CI runs none of that** (2023.2.20f1, 6000.0.51f1, 6000.1.9f1). `UNITY_VERSION=` overrides it. A local pass is not a matrix pass.
+- **The editor is pinned per project — `tests/` on 6000.1.4f1, `full-sample` on 6000.5.5f1.** `tests/` cannot use 6000.5: its committed manifest resolves `com.unity.inputsystem`/`test-framework.performance` versions using `TreeView`, which 6000.5 made obsolete-as-error, giving 306 compile errors before any test runs. `UNITY_VERSION=` overrides. CI runs 2023.2.20f1/6000.0.51f1/6000.1.9f1, so a local pass is still not a matrix pass.
 - **Opening `tests/` rewrites its manifest into a 6000-only shape** — `com.unity.ugui` 2.x, no `textmeshpro`, plus `modules.physicscore2d`/`vectorgraphics`/`adaptiveperformance` — and that manifest fails to resolve on **6000.1 as well as 2023.2** (measured), which yields *zero tests* rather than a red suite. The CLI snapshots those files and restores them after every run; `--no-restore` opts out. Restore covers batch runs only — an interactive Editor churns them freely, so check `git status` after one.
 
 The Test Runner window still works, as does `.github/workflows/unity-tests.yml` for the real matrix. `tests/Packages/manifest.json` already points at `file:../../unity/*`, so the four Unity packages are wired up with no patching.
