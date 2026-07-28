@@ -1,7 +1,4 @@
----
-packages:
-  "npm:@reactunity/scripts": minor
----
+## @reactunity/scripts@0.23.0
 
 ### Serve the web previewer without installing it
 
