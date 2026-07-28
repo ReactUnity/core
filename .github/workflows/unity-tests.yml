@@ -57,11 +57,23 @@ jobs:
     # pushing the badge gist. It stays on the newest version so a PR is checked against
     # the one most people are on.
     #
-    # 2021.3 and 2022.3 were dropped. 2021.3 had stopped contributing anything: its
+    # 2021.3, 2022.3 and 2023.2 were dropped. 2021.3 had stopped contributing anything: its
     # PlayMode run produced a 0-test result file, so the job only ever reported the
     # EditMode suite. unity/core/package.json still declares `"unity": "2021.3"` --
     # dropping a job is not the same as dropping support, so lower that separately if
     # that is the intent.
+    #
+    # 2023.2 went because tests/Packages/manifest.json pins com.unity.inputsystem 1.14.2,
+    # which references BuildTarget.VisionOS -- absent in 2023.2, so InputSystemPluginControl
+    # fails to compile with CS0117 and no test runs at all. The pin is deliberate (the newer
+    # input system is what the project develops against), so the job could only have been
+    # kept by downgrading it, and older versions use the TreeView API that 6000.5 treats as
+    # obsolete-as-error locally. Trading a CI failure for a local one is not a trade.
+    #
+    # Worth knowing how long that was invisible: the job kept passing for a day after the
+    # pin landed in 555c206e, because its Library cache still held the pre-pin resolution.
+    # The cache key had no content hash, so the stale entry was restored on every run. It
+    # now hashes the manifests (see the cache step), which is what surfaced this.
     #
     # `platform` and `unity.license` are absent from every entry on purpose; the two
     # places that read them fall back to 'ubuntu-latest' and 'UNITY_LICENSE'.
@@ -70,7 +82,7 @@ jobs:
       matrix:
         include: ${{ fromJSON(github.event_name == 'pull_request'
           && '[{"main":true,"unity":{"version":"6000.1.9f1"},"suite":{"name":"Unit Tests","assemblies":"ReactUnity.Tests;ReactUnity.Tests.Editor"}}]'
-          || '[{"main":true,"unity":{"version":"6000.1.9f1"},"suite":{"name":"Unit Tests","assemblies":"ReactUnity.Tests;ReactUnity.Tests.Editor"}},{"unity":{"version":"6000.0.51f1"},"suite":{"name":"Unit Tests","assemblies":"ReactUnity.Tests;ReactUnity.Tests.Editor"}},{"unity":{"version":"2023.2.20f1"},"suite":{"name":"Unit Tests","assemblies":"ReactUnity.Tests;ReactUnity.Tests.Editor"}}]') }}
+          || '[{"main":true,"unity":{"version":"6000.1.9f1"},"suite":{"name":"Unit Tests","assemblies":"ReactUnity.Tests;ReactUnity.Tests.Editor"}},{"unity":{"version":"6000.0.51f1"},"suite":{"name":"Unit Tests","assemblies":"ReactUnity.Tests;ReactUnity.Tests.Editor"}}]') }}
     runs-on: ${{ matrix.platform || 'ubuntu-latest' }}
     steps:
       # One checkout. This replaced five (core, tests@tests branch, jint, quickjs,

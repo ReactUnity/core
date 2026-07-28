@@ -48,8 +48,8 @@ export function getProject(name: string): Project {
 
 /**
  * Files Unity rewrites on open -- package upgrades, the editor version stamp, new
- * settings keys. Committing them from a local 6000.5 run breaks the 2023.2 CI job,
- * which cannot resolve com.unity.ugui 2.x. Snapshotted before a run, put back after.
+ * settings keys. Committing them from a local 6000.5 run breaks CI, which cannot resolve
+ * the com.unity.ugui 2.x shape it upgrades to. Snapshotted before a run, put back after.
  */
 const CHURN_FILES = [
   'Packages/manifest.json',
