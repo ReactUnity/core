@@ -1,0 +1,19 @@
+.host {}
+
+.tabs {
+  margin-bottom: 24px;
+  border-bottom: 1px solid rgb(201, 201, 201);
+
+  >button {
+    border-radius: 0;
+    border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
+    border: 1px solid rgb(201, 201, 201);
+    font-size: 18px;
+    padding: 14px 30px;
+
+    &.active {
+      background-color: rgb(227, 227, 227);
+    }
+  }
+}

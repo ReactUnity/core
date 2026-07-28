@@ -1,0 +1,8 @@
+{
+  "extends": "@reactunity/scripts",
+  "compilerOptions": {
+    "allowImportingTsExtensions": true,
+    "jsxImportSource": "@reactunity/renderer/ugui",
+    "types": ["@reactunity/scripts/main"]
+  }
+}

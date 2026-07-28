@@ -1,0 +1,41 @@
+.black-bar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 250px;
+  // background-color: red;
+  // background: linear-gradient(90deg, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.8) 20%, rgba(0, 0, 0, 0.8) 80%, rgba(0, 0, 0, 0.5));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  text-align: left;
+}
+
+.title {
+  margin: 0;
+  color: white;
+  font-size: 24px;
+}
+
+.gradient-rule {
+  height: 4px;
+  align-self: stretch;
+  // width: 100%;
+  background-color: green;
+  background-image: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.8), transparent);
+  margin: 16px 0;
+}
+
+.message {
+  margin: 0;
+  color: white;
+  font-size: 18px;
+}

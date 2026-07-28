@@ -1,0 +1,61 @@
+.host {
+
+  image,
+  svg,
+  svgimage {
+    flex-grow: 1;
+    flex-shrink: 1;
+    flex-basis: 0;
+    object-fit: scale-down;
+    object-position: 50%;
+    transition: object-position 2s;
+    align-self: stretch;
+  }
+
+  object {
+    border-width: 1px;
+    border-radius: 20px;
+    border-color: black;
+    margin: 5px;
+    background-color: hsla(152deg, 37%, 59%, 0.745);
+    object-fit: none;
+  }
+
+  render,
+  video {
+    object-fit: scale-down;
+    object-position: left;
+
+    &::image {
+      background-color: yellowgreen;
+    }
+  }
+
+  render {
+    border: 2px solid rgb(188, 188, 188);
+    border-radius: 6px;
+  }
+}
+
+.borderImage {
+  border: 1px solid transparent;
+  // border-image-source: url('resource:border-image');
+  border-image-source: url('pool:images/myBorder');
+  border-image-width: calc(80 / 2) calc(72 / 2) calc(84 / 2);
+  border-image-slice: 80 72 84 fill;
+  border-image-repeat: round repeat;
+
+  width: 400px;
+  text-transform: uppercase;
+  font-weight: bold;
+  font-size: 50px;
+  color: white;
+  flex-direction: column;
+  text-align: center;
+  justify-content: center;
+  white-space: normal;
+  word-wrap: normal;
+  padding: 40px;
+
+  text-stroke: 0.3px black;
+}

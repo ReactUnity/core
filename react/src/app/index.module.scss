@@ -1,0 +1,84 @@
+.host {
+  flex-direction: row;
+  align-items: stretch;
+  height: 100%;
+  overflow: hidden;
+  background-color: rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(4px);
+  color: black;
+}
+
+.sidepanel {
+  padding: 20px;
+  width: 200px;
+  flex: 0 0 auto;
+  flex-direction: column;
+  align-items: stretch;
+  background-color: #dedede;
+
+  > button {
+    margin-bottom: 12px;
+    background-color: white;
+    color: black;
+    padding: 6px 10px;
+  }
+}
+
+.scroll {
+  flex: 1 1 0;
+  flex-direction: column;
+}
+
+.content {
+  padding: 40px;
+  flex-direction: column;
+  align-items: stretch;
+  flex-shrink: 0;
+
+  max-width: 960px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+// Global styles
+
+h1 {
+  font-size: 36px;
+  font-style: smallcaps, bold;
+  color: #582a9c;
+  margin-bottom: 20px;
+}
+
+* + h1,
+* + * h1 {
+  margin-top: 24px;
+}
+
+h2 {
+  font-size: 30px;
+  font-style: smallcaps;
+  color: #fb2f8e;
+  margin-bottom: 20px;
+}
+
+* + h2,
+* + * h2 {
+  margin-top: 16px;
+}
+
+section {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+row {
+  flex-direction: row;
+  align-items: center;
+}
+
+column {
+  flex-direction: column;
+  align-items: center;
+  flex-grow: 1;
+  flex-shrink: 0;
+}

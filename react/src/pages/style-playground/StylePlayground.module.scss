@@ -1,0 +1,39 @@
+.stylePlayground {
+  display: flex;
+  flex-direction: column;
+
+  > section {
+    gap: 10px;
+  }
+}
+
+.boxSizingExample {
+  width: 300px;
+  height: 80px;
+  border: 20px solid black;
+  background-color: lightblue;
+}
+
+.displayContentsExample {
+  flex-direction: row;
+  background-color: lightblue;
+  padding: 10px;
+  gap: 8px;
+  border: 2px solid black;
+}
+
+.width100Example {
+  border: 2px solid black;
+  align-items: center;
+  justify-content: center;
+  text-align: left;
+  align-self: flex-start;
+  padding: 4px;
+
+  .width100Inner {
+    width: 100%;
+    align-self: stretch;
+    height: 10px;
+    background-color: crimson;
+  }
+}
