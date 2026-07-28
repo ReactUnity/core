@@ -14,6 +14,12 @@ namespace ReactUnity.Scripting.DomProxies
 
         public DocumentProxy documentElement => this;
 
+        /// Where the running script was loaded from. Bundlers need this: the bundle runs as a
+        /// classic script, so there is no import.meta.url and their fallback resolves against
+        /// baseURI. Without it a Vite HMR client opened `ws://null:null/`.
+        public string baseURI => Context?.Location?.href ?? Origin;
+        public string documentURI => baseURI;
+
         public DocumentProxy(ReactContext context, string origin)
         {
             head = new HeadProxy();

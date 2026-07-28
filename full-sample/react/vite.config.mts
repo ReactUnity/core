@@ -8,9 +8,7 @@ export default defineConfig({
   server: {
     port: 3100,
     strictPort: true,
-    hmr: {
-      overlay: false,
-    },
+    hmr: { host: 'localhost', clientPort: 3100, overlay: false },
   },
   devtools: false,
   plugins: [react()],

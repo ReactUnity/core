@@ -39,26 +39,13 @@ namespace QuickJS.Native
         }
 
         /// <summary>
-        /// Renders a thrown value into the most locatable string available: the error's class name,
-        /// its message, the throw site and the JS stack. Ownership of <paramref name="ex"/> stays
-        /// with the caller.
+        /// Name, message, throw site and stack of a thrown value. Caller keeps ownership of ex.
+        /// Every part is optional -- engine-thrown errors have only a stack -- so nothing is
+        /// assumed present and the stack is always appended.
         /// </summary>
-        /// <remarks>
-        /// Which of those parts exist depends on where the error was raised, and the ones that go
-        /// missing are exactly the ones you want. Errors thrown from inside the engine --
-        /// `TypeError: not a function` being the one everyone meets -- carry no `fileName` and no
-        /// `lineNumber`, only a `stack`. This used to be formatted as
-        /// `"[JS] {fileName}:{lineNumber} {message}\n{stack}"`, which turned those into
-        /// `[JS] undefined:undefined not a function`: the two placeholders rendered literally
-        /// (`JS_GetProperty` returns `undefined` for an absent property, and `JS_ToCString` spells
-        /// that out), and reading `message` alone dropped the one word -- `TypeError` -- that said
-        /// what kind of failure it was. Every part is optional here, and the stack, which is the
-        /// only piece that reliably points at a line of the user's code, is always appended.
-        /// </remarks>
         public string FormatException(JSValue ex)
         {
-            // `throw 'oops'` and `throw 42` are legal: there is no name, no site and no stack to
-            // report, only the value itself.
+            // `throw 'oops'` is legal; then there is only the value.
             if (!ex.IsObject()) return ToStringSafe(ex) ?? "(unprintable value)";
 
             var isError = JSApi.JS_IsError(this, ex) == 1;
@@ -80,14 +67,12 @@ namespace QuickJS.Native
                 string header;
                 if (!string.IsNullOrEmpty(message))
                     header = string.IsNullOrEmpty(name) ? message : name + ": " + message;
-                // An error with an empty message still has its class name to report. A thrown plain
-                // object has neither, so stringify the object itself and hope it has a `toString`.
+                // No message: an error still has its class name, a plain object has only toString.
                 else header = (isError ? name : ToStringSafe(ex)) ?? "Error";
 
                 var sb = new StringBuilder(header);
 
-                // Set for parse and module errors, absent for everything the engine throws at
-                // runtime -- so it can never be the only locator in the message.
+                // Only set for parse and module errors, never for runtime throws.
                 if (!string.IsNullOrEmpty(fileName))
                 {
                     sb.Append("\n    at ").Append(fileName);
@@ -108,10 +93,8 @@ namespace QuickJS.Native
             }
         }
 
-        /// A missing property comes back as `undefined`, which `JS_ToCString` renders as the nine
-        /// characters "undefined" rather than as nothing -- so absence has to be checked first. A
-        /// getter that threw comes back as the exception marker, with the failure left pending;
-        /// neither of those is something an error report should be propagating.
+        /// JS_ToCString renders a missing property as the text "undefined", and a throwing getter
+        /// leaves a pending exception -- neither belongs in an error report.
         private string GetStringIfPresent(JSValue val)
         {
             if (val.IsException())
@@ -123,12 +106,8 @@ namespace QuickJS.Native
             return val.IsNullish() ? null : ToStringSafe(val);
         }
 
-        /// <summary>
-        /// `JS_ToCString` runs `toString`, which can itself throw -- on a Symbol, or on an object
-        /// with a hostile `toString`. It signals that by returning null and leaving a *new*
-        /// exception pending, which would then surface at some unrelated later call. Reporting an
-        /// error must not be able to plant one, so the replacement is taken and dropped here.
-        /// </summary>
+        /// JS_ToCString runs toString, which can throw (Symbols) and leave a new exception pending.
+        /// Reporting an error must not plant one, so it is taken and dropped here.
         private string ToStringSafe(JSValue val)
         {
             var str = JSApi.GetString(this, val);

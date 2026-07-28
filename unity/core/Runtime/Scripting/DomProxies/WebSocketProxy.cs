@@ -52,9 +52,9 @@ namespace ReactUnity.Scripting.DomProxies
 
         public WebSocketProxy(ReactContext context, string url, params string[] protocols)
         {
-            this.url = url;
+            this.url = ResolveUrl(context, url);
             this.context = context;
-            socket = WebSocketFactory.CreateInstance(url, protocols);
+            socket = WebSocketFactory.CreateInstance(this.url, protocols);
             context.Disposables.Add(Dispose);
 
             socket.OnOpen += () => {
@@ -90,6 +90,39 @@ namespace ReactUnity.Scripting.DomProxies
             };
 
             socket.Connect();
+        }
+
+        /// The URL half of `new WebSocket(url)`, which WebSocketSharp skips: resolve against the
+        /// page url and map http(s) onto ws(s). Browsers accept `/hmr` and `http://host/hmr`;
+        /// WebSocketSharp demands an absolute ws:// url and dev-server clients send both forms.
+        internal static string ResolveUrl(ReactContext context, string url)
+        {
+            if (string.IsNullOrWhiteSpace(url))
+                throw new WebSocketInvalidArgumentException("The WebSocket url is empty.");
+
+            var baseUrl = context?.Location?.href;
+            var resolved = string.IsNullOrWhiteSpace(baseUrl) ? new URL(url) : new URL(url, baseUrl);
+            var against = string.IsNullOrWhiteSpace(baseUrl)
+                ? " There is no page url to complete it from either."
+                : $" It was resolved against the page url '{baseUrl}'.";
+
+            var scheme = resolved.protocol;
+            if (scheme == "http:") scheme = "ws:";
+            else if (scheme == "https:") scheme = "wss:";
+
+            if (scheme != "ws:" && scheme != "wss:")
+                throw new WebSocketInvalidArgumentException(
+                    $"The WebSocket url '{url}' resolves to the scheme '{(string.IsNullOrEmpty(scheme) ? "(none)" : scheme)}'." +
+                    $" Only ws, wss, http and https can be used.{against}");
+
+            if (string.IsNullOrEmpty(resolved.host))
+                throw new WebSocketInvalidArgumentException($"The WebSocket url '{url}' has no host.{against}");
+
+            // A SyntaxError in the browser too.
+            if (!string.IsNullOrEmpty(resolved.hash))
+                throw new WebSocketInvalidArgumentException($"The WebSocket url '{url}' has a fragment, which is not allowed.");
+
+            return scheme + "//" + resolved.host + resolved.pathname + resolved.search;
         }
 
         public void close(int? code = null, string reason = null)

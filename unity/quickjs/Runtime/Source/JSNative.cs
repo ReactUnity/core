@@ -48,9 +48,8 @@ namespace QuickJS
                 {
                     var message = ctx.FormatException(ex);
 
-                    // Deliberately the plain `Write(LogLevel, string)` overload: the composed message
-                    // is not a format string, and JS error messages and stacks routinely contain
-                    // braces, which `string.Format` would either reinterpret or throw on.
+                    // Plain Write overload on purpose: JS messages contain braces, which
+                    // string.Format would reinterpret or throw on.
                     logger.Write(logLevel, string.IsNullOrEmpty(title) ? message : title + " " + message);
                 }
             }

@@ -186,18 +186,15 @@ namespace ReactUnity.Scripting
             engine.Execute(@"(function() {
                 var _console = global.__console;
 
-                // Everything handed to the host is flattened with ToString, and a JS Error
-                // stringifies to just its name and message -- `TypeError: not a function`, with
-                // nothing saying where it was thrown. The stack is only reachable from this side,
-                // so errors are unfolded into text before they cross the boundary.
+                // The host flattens arguments with ToString, and an Error stringifies to just its
+                // name and message. Unfold the stack here, the only side that can reach it.
                 function describe(value) {
                     if (!value || typeof value !== 'object') return value;
                     var stack = value.stack;
                     if (typeof stack !== 'string' || typeof value.message !== 'string') return value;
 
                     var header = (value.name || 'Error') + (value.message ? ': ' + value.message : '');
-                    // V8 (ClearScript) already prefixes `stack` with that header; QuickJS and Jint
-                    // hand back bare frames.
+                    // V8 already prefixes stack with the header; QuickJS and Jint do not.
                     return stack.indexOf(header) === 0 ? stack : header + '\n' + stack;
                 }
 
@@ -223,16 +220,9 @@ namespace ReactUnity.Scripting
 
         static void CreatePolyfills(IJavaScriptEngine engine)
         {
-            // Missing language builtins come first: the shims below, and any bundle loaded after
-            // them, are allowed to use them.
-            //
-            // No EngineCapabilities flag guards this one, unlike everything else here. A flag
-            // describes the engine binding, but which ES2022 APIs exist is a property of the
-            // native library that binding happens to load -- the QuickJS binary shipped in
-            // com.reactunity.quickjs is Bellard's 2021-03-27 build and has none of them, while
-            // the same C# binding running under WebGL delegates to the browser and has them all.
-            // The polyfill feature-detects each API instead, so it costs one no-op pass where
-            // they already exist and needs no edit here when an engine gains them.
+            // Language builtins first, so the shims below can use them. No capability flag: which
+            // ES2022 APIs exist depends on the native library, not the binding (the same binding
+            // has none under QuickJS 2021-03-27 and all of them under WebGL), so it self-detects.
             engine.Execute(ResourcesHelper.GetPolyfill("es2022"), "ReactUnity/polyfills/es2022");
 
             // Load essential polyfills

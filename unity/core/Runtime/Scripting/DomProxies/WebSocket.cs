@@ -514,7 +514,8 @@ namespace ReactUnity.Scripting.DomProxies
             catch (Exception e)
             {
 
-                throw new WebSocketUnexpectedException("Failed to create WebSocket Client.", e);
+                // WebSocketSharp's "An invalid URI string" names only the parameter, never the url.
+                throw new WebSocketUnexpectedException($"Failed to create WebSocket Client for url '{url}'.", e);
 
             }
 

@@ -113,7 +113,9 @@ namespace ReactUnity.Scripting.DomProxies
             var hrefSplit = searchless.Split(new string[] { "//" }, 2, StringSplitOptions.None);
 
             var hasProtocol = hrefSplit.Length > 1;
-            var protocol = hasProtocol ? hrefSplit.First() : null;
+            // Absent components are "", never null, as on the web. Script interpolates these --
+            // `${url.hostname}:${url.port}` -- and a null arrives as the text "null:null".
+            var protocol = hasProtocol ? hrefSplit.First() : "";
 
             var hrefWithoutProtocol = string.Join("//", hrefSplit.Skip(hasProtocol ? 1 : 0));
             var hrefWithoutProtocolSplit = hrefWithoutProtocol.Split(new string[] { "/" }, 2, StringSplitOptions.None);
@@ -123,12 +125,12 @@ namespace ReactUnity.Scripting.DomProxies
             var hasHost = hasProtocol || hostCandidate.Contains(":") || (hostCandidate.IndexOf(".") > 0);
 
 
-            var host = hasHost ? hrefWithoutProtocolSplit.FirstOrDefault() : null;
-            var hostSplit = host?.Split(new string[] { ":" }, 2, StringSplitOptions.None);
-            var hostName = hostSplit?.First();
-            var port = hostSplit != null ? (hostSplit.ElementAtOrDefault(1) ?? "") : null;
+            var host = hasHost ? (hrefWithoutProtocolSplit.FirstOrDefault() ?? "") : "";
+            var hostSplit = host.Split(new string[] { ":" }, 2, StringSplitOptions.None);
+            var hostName = hostSplit.First();
+            var port = hostSplit.ElementAtOrDefault(1) ?? "";
 
-            var origin = hasHost ? (protocol + "//" + host) : null;
+            var origin = hasHost ? (protocol + "//" + host) : "";
 
             var rawPathName = string.Join("/", hrefWithoutProtocolSplit.Skip(hasHost ? 1 : 0));
 
