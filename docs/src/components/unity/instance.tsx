@@ -1,5 +1,5 @@
 import cn from 'classnames';
-import { type Ref, useCallback, useEffect, useMemo, useState } from 'react';
+import { type Ref, useEffect, useMemo, useState } from 'react';
 import { createPortal } from 'react-dom';
 import style from './index.module.scss';
 import {
@@ -41,6 +41,7 @@ export function Unity({
   const [progress, setProgress] = useState(0);
   const [scriptLoaded, setScriptLoaded] = useState(isLoaderScriptLoaded());
   const [unityInstance, setUnityInstance] = useState<UnityAPI>();
+  const [canvas, setCanvas] = useState<HTMLCanvasElement | null>(null);
 
   const id = useMemo(
     () => `unity-canvas-ref-${Math.round(Math.random() * 10000)}`,
@@ -55,13 +56,20 @@ export function Unity({
     );
   }, [id]);
 
-  const setCanvasRef = useCallback(
-    async (canvas: HTMLCanvasElement | null) => {
-      if (!canvas || !scriptLoaded) {
-        return;
-      }
+  /*
+   * Booting happens in an effect rather than in the canvas ref, so that producing an
+   * instance cannot trigger another boot. The ref used to hold the boot itself, and
+   * because setUnityInstance re-renders and an inline ref callback gets a fresh identity
+   * every render, React detached and re-attached it each time -- one player per render,
+   * forever.
+   */
+  useEffect(() => {
+    if (!canvas || !scriptLoaded) return;
 
-      const unityInstance: UnityInstance = await global.createUnityInstance(
+    let cancelled = false;
+
+    void (async () => {
+      const unityInstance: UnityInstance = await globalThis.createUnityInstance(
         canvas,
         {
           dataUrl: `/Unity/${sampleName}/Build/WebInjectable.data`,
@@ -74,6 +82,8 @@ export function Unity({
         },
         setProgress
       );
+
+      if (cancelled) return;
 
       setUnityInstance({
         SendMessage: unityInstance.SendMessage.bind(unityInstance),
@@ -93,9 +103,12 @@ export function Unity({
         ReloadScene: () =>
           unityInstance.SendMessage('ReactCanvas', 'ReloadScene'),
       });
-    },
-    [sampleName, scriptLoaded, setUnityInstance]
-  );
+    })();
+
+    return () => {
+      cancelled = true;
+    };
+  }, [canvas, sampleName, scriptLoaded]);
 
   useEffect(() => {
     unityRef?.(unityInstance);
@@ -127,11 +140,10 @@ export function Unity({
         <canvas
           id={id}
           className={style.canvas}
-          // Wrapped rather than passed directly: booting Unity is async, and React 19
-          // reads a ref callback's return value as a cleanup function.
-          ref={(canvas) => {
-            void setCanvasRef(canvas);
-          }}
+          // A state setter, so the identity is stable across renders (an inline callback
+          // makes React re-run the ref every render) and the return value is undefined
+          // (React 19 reads anything else as a cleanup function).
+          ref={setCanvas}
           tabIndex={-1}
         />
 

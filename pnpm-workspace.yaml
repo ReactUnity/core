@@ -62,6 +62,21 @@ minimumReleaseAgeExclude:
   - '@astrojs/mdx@7.0.4'
   - astro@7.1.4
   - tegami@1.2.7
+  - '@biomejs/biome@2.5.6'
+  - '@biomejs/cli-darwin-arm64@2.5.6'
+  - '@biomejs/cli-darwin-x64@2.5.6'
+  - '@biomejs/cli-linux-arm64-musl@2.5.6'
+  - '@biomejs/cli-linux-arm64@2.5.6'
+  - '@biomejs/cli-linux-x64-musl@2.5.6'
+  - '@biomejs/cli-linux-x64@2.5.6'
+  - '@biomejs/cli-win32-arm64@2.5.6'
+  - '@biomejs/cli-win32-x64@2.5.6'
+  - '@docsearch/core@4.7.0'
+  - '@docsearch/css@4.7.0'
+  - '@docsearch/react@4.7.0'
+  - '@types/node@26.1.2'
+  - postcss@8.5.24
+  - webpack@5.109.1
 
 # Force every request for a local package to resolve to the workspace copy.
 #

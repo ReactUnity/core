@@ -24,7 +24,8 @@ declare global {
 }
 
 export function isLoaderScriptLoaded() {
-  return typeof global.createUnityInstance === 'function';
+  // globalThis, not `global` -- the latter only existed via webpack's Node shim under Next.
+  return typeof globalThis.createUnityInstance === 'function';
 }
 
 export const defaultUnityInstanceName = 'injectable';
