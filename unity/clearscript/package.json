@@ -6,7 +6,7 @@
     "url": "https://github.com/KurtGokhan"
   },
   "displayName": "React Unity ClearScript",
-  "version": "0.22.0",
+  "version": "0.23.0",
   "unity": "2019.4",
   "description": "ClearScript (V8) Plugin for ReactUnity",
   "keywords": ["ReactUnity", "ClearScript", "V8"],
