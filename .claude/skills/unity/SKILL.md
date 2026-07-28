@@ -1,0 +1,107 @@
+---
+name: unity
+description: Compile, test, and drive Unity for this repo's C# packages (unity/core, jint, quickjs, clearscript) and the two Unity projects (tests/, full-sample/). Use when a change touches C# under unity/**, when Unity test results are needed, when a rendering snapshot has to be checked or regenerated, or when the app has to be started or screenshotted. Also use when asked to "run the Unity tests", "check this compiles", or "see it working in Unity".
+---
+
+# Driving Unity from here
+
+Two ways in. Pick by whether an Editor is already open on the project.
+
+| | `pnpm unity <cmd>` (batch mode) | `pnpm unity bridge <action>` (open Editor) |
+|---|---|---|
+| Needs | the project **not** open in an Editor | the project **open**, with `REACT_UNITY_DEVELOPER` on the active build target |
+| Speed | ~8 s compile, ~50 s EditMode suite | saves the ~8 s startup, no more |
+| Use for | the default path; anything scriptable, and the only CI-faithful results | an Editor the user already has open, play mode, screenshots |
+
+The bridge is not mainly a speed win — it is how you work *without closing someone's Editor*, and the only way to reach play mode and screenshots.
+
+Both refuse to fight each other: batch mode checks the project lock first and tells you to use the bridge instead.
+
+## The loop for a C# change
+
+```bash
+pnpm unity compile tests
+```
+
+8 seconds warm, and it reports `file(line,col): CSxxxx: message` for every error. Run this after **every** C# edit under `unity/**` — it is far cheaper than the test suite and catches the majority of mistakes. Nothing else in this repo type-checks C#; `pnpm typecheck` is TypeScript only.
+
+Then the suites:
+
+```bash
+pnpm unity test tests
+```
+
+`EditMode` then `PlayMode` (two Unity invocations — `-testPlatform All` is a game-ci concept that Unity rejects with exit code 4). Narrow it while iterating:
+
+```bash
+pnpm unity test tests --platform EditMode --filter ReactUnity.Tests.StyleTests
+```
+
+Expect roughly 325 EditMode and 662 PlayMode tests. **Zero tests is a failure, not a pass** — it means the project failed to load, usually package resolution. The CLI treats it that way; do not read `0 failed` as green without checking the total.
+
+## Rendering snapshots
+
+PlayMode compares captures against `unity/core/Tests/.snapshots/windows/` (committed, so local runs are meaningful). Two traps:
+
+- `--nographics` makes every snapshot assert go **Inconclusive**, not fail. Only pass it when you know you are skipping them.
+- Regenerating is `--overwrite-snapshots`. It **rewrites committed PNGs**, so only do it when the user asked for it, and show them `git status` afterwards.
+
+The `React > Tests > Overwrite Snapshots` menu item is a **toggle** on `EditorPrefs`, not a one-shot. If you drive it through `bridge menu`, you have flipped persistent state that affects every later run — flip it back.
+
+**11 linear-gradient snapshots fail on this machine and are not your fault.** A clean PlayMode run is `643/665` — 74 of 78 non-gradient snapshots match pixel-perfect, while `GradientSnapshots` 01/02/03/04/06/07/08 and the `japanese-cube`/`steps`/`stars`/`weave` advanced patterns do not. The pixel-diff counts are *byte-identical* on 6000.5.5f1 and 6000.1.4f1, so it is not version drift — the committed Windows baselines just do not match what this GPU renders. Radial gradients and the `transparent` case pass. Treat those 11 as the known-bad set; a 12th failure is a real regression. Do not "fix" them with `--overwrite-snapshots` — that would overwrite CI's baselines with this machine's output.
+
+## Working against the open Editor
+
+```bash
+pnpm unity bridge status full-sample
+```
+
+Compile errors, play state, and whether the Editor is busy. The rest: `logs --level error`, `refresh` (reimport + recompile, then report), `test --platform EditMode`, `play` / `stop`, `screenshot --path out.png`, `menu --path "..."`.
+
+Plus `quit`, which closes the Editor and waits for the lock to clear — that is how you hand a project back to batch mode: `pnpm unity bridge quit tests && pnpm unity test tests`.
+
+The bridge lives in [unity/core/Editor/Developer/AgentBridge](unity/core/Editor/Developer/AgentBridge/) on `127.0.0.1`, port in `<project>/Library/ReactUnityAgentBridge.json`. It is compiled out without `REACT_UNITY_DEVELOPER` and never starts in batch mode.
+
+An Editor that was **already running before the bridge was added** has no bridge until it recompiles — click into its window, or `pnpm unity open` a fresh one. The discovery file is the test: no file, no bridge.
+
+Its socket goes down for the length of **every domain reload**, so a refused connection means "busy", not "broken" — the client already polls through it. Long operations never block a request: start them, then poll `status`.
+
+Screenshots need the Editor to actually render a frame. In play mode that is automatic; idle in the Editor it may never come, and the client reports the timeout rather than a bogus success.
+
+**Batch mode is the source of truth; the bridge is for iterating.** The same EditMode suite gives different answers in the two environments — measured on 6000.5.5f1, batch was 316/325 with 9 skipped and 0 failures, while the open Editor ran 3 of those skipped tests and failed 2 others (`ScriptTagDoesNotCrashOnError`, `ActivePropertyShouldWorkForStyleTag`) that batch passes. Both are sensitive to Editor state — log interception and `:active` — not to your change. Use the bridge for the fast loop, then confirm with `pnpm unity test tests` before claiming a suite is green.
+
+## Running the sample app
+
+`full-sample` renders a React app served by `react-unity-scripts`:
+
+```bash
+pnpm --filter reactunity-sample start
+```
+
+```bash
+pnpm unity open full-sample && pnpm unity bridge play full-sample
+```
+
+```bash
+pnpm unity bridge screenshot full-sample --path Logs/unity/shot.png
+```
+
+That produces a real PNG of the running app — read it back to check a visual change. Unity connects to the dev server, so JS changes hot-reload without touching the Editor.
+
+Both Unity projects consume the C# packages as `file:../../unity/*`, so both exercise the working tree. **`full-sample` used to point at `https://github.com/ReactUnity/core.git#latest`** — while it did, it compiled the *published* package and local C# changes were invisible there, silently. If a change to `unity/**` seems to have no effect in full-sample, check its manifest first.
+
+## Things that will bite
+
+**Local runs rewrite the project, and committing that breaks CI.** Opening `tests/` with 6000.5 upgrades `Packages/manifest.json` to a 6000-only shape (`com.unity.ugui` 2.x, no `textmeshpro`) that the 2023.2 CI job cannot resolve — and unresolvable packages produce *zero tests* while still looking like a pass. The CLI snapshots those files and puts them back after every run. Do not pass `--no-restore` unless you intend to commit the upgrade, and check `git status` under `tests/` before committing anything.
+
+**Restore only covers batch runs.** `pnpm unity open` hands the project to an interactive Editor that nothing cleans up after, so it churns `ProjectSettings/*` and the deliberately-tracked `UserSettings/EditorUserSettings.asset` freely. After any session with an open Editor, read `git status` before committing.
+
+**Unity leaves untracked files behind** (`tests/.vscode/`, `tests/tests.slnx`, new `ProjectSettings/*.asset`). Restore does not delete them — regenerating them each run is worse. Leave them out of commits. A killed PlayMode run also leaks `tests/Assets/InitTestScene*.unity`, which the test framework normally deletes itself; a stray one is debris, not content.
+
+**Pin the version deliberately.** Everything defaults to Unity 6000.5.5f1; `UNITY_VERSION=2023.2.18f1 pnpm unity test tests` reproduces a CI-matrix failure. `pnpm unity editors` lists what is installed. CI runs 2023.2.20f1, 6000.0.51f1 and 6000.1.9f1, none of which is the local default — a local pass is not proof the matrix passes.
+
+**Switching `UNITY_VERSION` is not free.** A different editor deletes and recreates the project's asset database, so the run after a version switch pays a full reimport, and switching back pays it again. Worth it to reproduce a matrix failure; not worth it casually. `ProjectVersion.txt` is deliberately left at whatever version last opened the project — reverting it below the local editor makes `pnpm unity open` hang on a modal "Project Upgrade Required" dialog with no visible window title. CI ignores that file entirely.
+
+**Generated TypeScript models are not editable.** `packages/renderer/src/models/generated/*.ts` comes from `unity/core/Editor/Developer/TypescriptModelsGenerator.cs`. Change the C# type and regenerate from the Editor; never hand-edit the output.
+
+Logs and results land in `Logs/unity/` (gitignored) at stable paths, so a failed run can be re-read without re-running it.

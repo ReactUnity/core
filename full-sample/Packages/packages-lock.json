@@ -1,35 +1,31 @@
 {
   "dependencies": {
     "com.reactunity.clearscript": {
-      "version": "0.21.1",
+      "version": "file:../../unity/clearscript",
       "depth": 0,
-      "source": "registry",
-      "dependencies": {},
-      "url": "https://package.openupm.com"
+      "source": "local",
+      "dependencies": {}
     },
     "com.reactunity.core": {
-      "version": "0.21.2",
+      "version": "file:../../unity/core",
       "depth": 0,
-      "source": "registry",
+      "source": "local",
       "dependencies": {
         "com.unity.editorcoroutines": "1.0.0",
         "com.unity.nuget.newtonsoft-json": "3.0.2"
-      },
-      "url": "https://package.openupm.com"
+      }
     },
     "com.reactunity.jint": {
-      "version": "0.21.0",
+      "version": "file:../../unity/jint",
       "depth": 0,
-      "source": "registry",
-      "dependencies": {},
-      "url": "https://package.openupm.com"
+      "source": "local",
+      "dependencies": {}
     },
     "com.reactunity.quickjs": {
-      "version": "0.19.0",
+      "version": "file:../../unity/quickjs",
       "depth": 0,
-      "source": "registry",
-      "dependencies": {},
-      "url": "https://package.openupm.com"
+      "source": "local",
+      "dependencies": {}
     },
     "com.unity.2d.sprite": {
       "version": "1.0.0",

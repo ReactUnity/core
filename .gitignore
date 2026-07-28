@@ -20,6 +20,7 @@ coverage
 *.pdb.meta
 *.csproj
 *.sln
+*.slnx
 *.unityproj
 
 .DS_STORE

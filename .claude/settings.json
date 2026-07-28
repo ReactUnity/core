@@ -1,0 +1,18 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(pnpm unity:*)",
+      "PowerShell(pnpm unity:*)",
+      "Bash(pnpm test:unity:*)",
+      "PowerShell(pnpm test:unity:*)",
+      "Bash(pnpm typecheck)",
+      "PowerShell(pnpm typecheck)",
+      "Bash(pnpm check)",
+      "PowerShell(pnpm check)",
+      "Bash(git status:*)",
+      "PowerShell(git status:*)",
+      "Bash(git diff:*)",
+      "PowerShell(git diff:*)"
+    ]
+  }
+}

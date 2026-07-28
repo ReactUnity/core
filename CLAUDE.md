@@ -79,7 +79,22 @@ pnpm --filter reactunity-sample start
 
 ### Unity C# tests
 
-There is no local CLI entry point — open `tests/` in Unity and use the Test Runner, or let `.github/workflows/unity-tests.yml` run the matrix (Unity 2023.2 → 6000.1). `tests/Packages/manifest.json` already points at `file:../../unity/*`, so the four Unity packages are wired up with no patching.
+```bash
+pnpm unity compile tests
+```
+
+```bash
+pnpm unity test tests
+```
+
+[scripts/unity/](scripts/unity/) drives a local Editor headlessly — `compile` (~8 s warm, the cheapest check on any C# edit), `test`, `open`, `editors`, and `bridge` for talking to an Editor that is already open. `pnpm unity help` lists it all, and [.claude/skills/unity](.claude/skills/unity/SKILL.md) covers which path to use and what bites. Two things worth knowing before running it:
+
+- **It runs Unity 6000.5.5f1 by default, and CI runs none of that** (2023.2.20f1, 6000.0.51f1, 6000.1.9f1). `UNITY_VERSION=` overrides it. A local pass is not a matrix pass.
+- **Opening `tests/` rewrites its manifest into a 6000-only shape** — `com.unity.ugui` 2.x, no `textmeshpro`, plus `modules.physicscore2d`/`vectorgraphics`/`adaptiveperformance` — and that manifest fails to resolve on **6000.1 as well as 2023.2** (measured), which yields *zero tests* rather than a red suite. The CLI snapshots those files and restores them after every run; `--no-restore` opts out. Restore covers batch runs only — an interactive Editor churns them freely, so check `git status` after one.
+
+The Test Runner window still works, as does `.github/workflows/unity-tests.yml` for the real matrix. `tests/Packages/manifest.json` already points at `file:../../unity/*`, so the four Unity packages are wired up with no patching.
+
+The Editor bridge itself is [unity/core/Editor/Developer/AgentBridge](unity/core/Editor/Developer/AgentBridge/): a loopback TCP server in its own asmdef, gated on `REACT_UNITY_DEVELOPER` and never started in batch mode. It is a separate assembly because it references `UnityEditor.TestRunner`, which `ReactUnity.Editor` must not depend on.
 
 Rendering tests compare against snapshots in `unity/core/Tests/.snapshots/{linux,windows}`. To regenerate: the `React > Tests > Overwrite Snapshots` editor menu toggle (needs the `REACT_UNITY_DEVELOPER` define), the `-reactOverwriteSnapshots` command-line arg, `[snapshots]` in a commit message, or the workflow's `overwrite-snapshots` dispatch input. CI commits regenerated snapshots from the one matrix job marked `main: true`.
 

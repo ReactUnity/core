@@ -19,7 +19,10 @@
     "//typecheck": "Unfiltered `-r` on purpose: it reaches the react-unity-scripts apps too, not just packages/*. Nothing else type checks.",
     "typecheck": "pnpm -r run typecheck",
     "prepare": "husky",
-    "tegami": "node scripts/tegami.mts"
+    "tegami": "node scripts/tegami.mts",
+    "//unity": "Headless Unity driver. `pnpm unity help` for the commands; the Editor bridge is separate (see .claude/skills/unity).",
+    "unity": "node scripts/unity/cli.mts",
+    "test:unity": "node scripts/unity/cli.mts test tests"
   },
   "devDependencies": {
     "@biomejs/biome": "2.5.6",
