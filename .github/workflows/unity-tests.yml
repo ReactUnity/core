@@ -81,11 +81,26 @@ jobs:
         with:
           fetch-depth: 0
 
+      # The key carries the package manifests because tests/Library holds PackageCache, and a
+      # Library resolved for one set of packages has no business being restored for another.
+      #
+      # It is worth being clear about what this does NOT fix. The 2023.2 job wedged on a cache
+      # whose PackageCache was simply incomplete -- `CS0006: Metadata file
+      # codecoverage@1.2.5/.../ReportGeneratorMerged.dll could not be found`, and CS2001 for a
+      # dozen test-framework sources. Nothing in a key detects a corrupt entry, and with a key
+      # that never varied, that one was restored on every run until it was deleted by hand
+      # (`gh cache delete <id>`, still the fix for that). What the hash buys is that the wedge
+      # can no longer outlive a package change, and that a manifest edit cannot be served a
+      # Library built for the previous one.
+      #
+      # No restore-keys, deliberately: a prefix fallback would restore the newest older entry
+      # on a miss, which is precisely the poisoned one you are trying to get away from. A key
+      # change pays a cold import instead, which is the point.
       - name: Cache Unity Library
         uses: actions/cache@v6
         with:
           path: tests/Library
-          key: Library-${{ matrix.unity.version }}-${{ matrix.platform || 'ubuntu-latest' }}
+          key: Library-${{ matrix.unity.version }}-${{ matrix.platform || 'ubuntu-latest' }}-${{ hashFiles('tests/Packages/manifest.json', 'tests/Packages/packages-lock.json') }}
 
       # NOTE for tests/Packages/manifest.json, which is JSON and cannot hold this
       # comment: `com.unity.test-framework.performance` was removed from `testables`.
