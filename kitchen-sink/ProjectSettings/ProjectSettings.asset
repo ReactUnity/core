@@ -163,7 +163,7 @@ PlayerSettings:
   androidMaxAspectRatio: 2.4
   androidMinAspectRatio: 1
   applicationIdentifier:
-    Standalone: com.DefaultCompany.full-sample
+    Standalone: com.DefaultCompany.kitchen-sink
   buildNumber:
     Standalone: 0
     VisionOS: 0
@@ -604,14 +604,14 @@ PlayerSettings:
   editorAssembliesCompatibilityLevel: 1
   m_RenderingPath: 1
   m_MobileRenderingPath: 1
-  metroPackageName: full-sample
+  metroPackageName: kitchen-sink
   metroPackageVersion: 
   metroCertificatePath: 
   metroCertificatePassword: 
   metroCertificateSubject: 
   metroCertificateIssuer: 
   metroCertificateNotAfter: 0000000000000000
-  metroApplicationDescription: full-sample
+  metroApplicationDescription: kitchen-sink
   wsaImages: {}
   metroTileShortName: 
   metroTileShowName: 0
