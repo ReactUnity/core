@@ -1,8 +1,12 @@
 name: Lint
 
+# `push` is main-only for the same reason as unity-tests.yml: with `['**']` a branch
+# with an open PR ran this twice, because the concurrency group keys on github.ref and
+# push and pull_request disagree about what that is. The pull_request trigger keeps no
+# paths filter -- the job is 45 seconds, and a type error is worth catching on any PR.
 on:
   push:
-    branches: ['**']
+    branches: [main]
     paths:
       - 'packages/**'
       - 'docs/**'

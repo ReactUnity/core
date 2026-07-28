@@ -3,9 +3,16 @@ name: Unity Tests
 # Path-filtered on purpose. This matrix is five game-ci jobs; before the monorepo
 # it lived in a repo that only held C#, so firing on every push was harmless. Now
 # a renderer or docs commit would light up all five for nothing.
+#
+# `push` is main-only, deliberately. It used to be `['**']` alongside the
+# pull_request trigger, and the concurrency group is keyed on github.ref -- which is
+# refs/heads/<branch> for a push but refs/pull/N/merge for a pull request, so the two
+# runs landed in different groups and neither cancelled the other. Every push to a
+# branch with an open PR ran the whole matrix twice. The cost of main-only is that a
+# branch with no PR gets no run; open a draft PR to get one.
 on:
   push:
-    branches: ['**']
+    branches: [main]
     paths:
       - 'unity/**'
       - 'tests/**'
@@ -37,26 +44,33 @@ jobs:
       contents: write
       checks: write
       pull-requests: write
+    # An explicit job list, not an axis product, because the whole list is swapped per
+    # event: a pull request runs only the job marked `main`, and everything else runs all
+    # three versions. Each job is ~18 minutes and they are parallel, so dropping to one on
+    # PRs cuts machine time to a third and leaves the ~19 minute wall clock alone.
+    #
+    # The cost is that a break in one version only -- as the :enter/:leave transition
+    # timing was, on 6000.x alone -- surfaces after merge rather than in the PR. Run the
+    # workflow by hand on a branch, or push to main, to get the full matrix.
+    #
+    # `main` marks the one job that owns the side effects: committing snapshots and
+    # pushing the badge gist. It stays on the newest version so a PR is checked against
+    # the one most people are on.
+    #
+    # 2021.3 and 2022.3 were dropped. 2021.3 had stopped contributing anything: its
+    # PlayMode run produced a 0-test result file, so the job only ever reported the
+    # EditMode suite. unity/core/package.json still declares `"unity": "2021.3"` --
+    # dropping a job is not the same as dropping support, so lower that separately if
+    # that is the intent.
+    #
+    # `platform` and `unity.license` are absent from every entry on purpose; the two
+    # places that read them fall back to 'ubuntu-latest' and 'UNITY_LICENSE'.
     strategy:
       fail-fast: false
       matrix:
-        platform: [ubuntu-latest]
-        # 2021.3 and 2022.3 were dropped. 2021.3 had stopped contributing anything:
-        # its PlayMode run produced a 0-test result file, so the job only ever
-        # reported the EditMode suite. unity/core/package.json still declares
-        # `"unity": "2021.3"` -- dropping a job is not the same as dropping support,
-        # so lower that separately if that is the intent.
-        unity:
-          - { version: '6000.0.51f1' }
-          - { version: '2023.2.20f1' }
-        suite:
-          - { name: 'Unit Tests', assemblies: 'ReactUnity.Tests;ReactUnity.Tests.Editor' }
-        include:
-          # `main` marks the one job that owns the side effects: committing
-          # snapshots and pushing the badge gist.
-          - main: true
-            unity: { version: '6000.1.9f1' }
-            suite: { name: 'Unit Tests', assemblies: 'ReactUnity.Tests;ReactUnity.Tests.Editor' }
+        include: ${{ fromJSON(github.event_name == 'pull_request'
+          && '[{"main":true,"unity":{"version":"6000.1.9f1"},"suite":{"name":"Unit Tests","assemblies":"ReactUnity.Tests;ReactUnity.Tests.Editor"}}]'
+          || '[{"main":true,"unity":{"version":"6000.1.9f1"},"suite":{"name":"Unit Tests","assemblies":"ReactUnity.Tests;ReactUnity.Tests.Editor"}},{"unity":{"version":"6000.0.51f1"},"suite":{"name":"Unit Tests","assemblies":"ReactUnity.Tests;ReactUnity.Tests.Editor"}},{"unity":{"version":"2023.2.20f1"},"suite":{"name":"Unit Tests","assemblies":"ReactUnity.Tests;ReactUnity.Tests.Editor"}}]') }}
     runs-on: ${{ matrix.platform || 'ubuntu-latest' }}
     steps:
       # One checkout. This replaced five (core, tests@tests branch, jint, quickjs,
@@ -107,8 +121,14 @@ jobs:
             -assemblyNames ${{ matrix.suite.assemblies }}
             ${{ (contains(github.event.head_commit.message, '[snapshots]') || github.event.inputs.overwrite-snapshots == 'true') && '-reactOverwriteSnapshots' || '' }}
 
+      # Never on a pull request: checkout leaves a detached merge commit there, so there is
+      # no branch to push to. Overwrite mode cannot switch on for that event anyway -- it
+      # reads head_commit.message and the dispatch input, both null -- so no lockfile is
+      # written and this was already inert. Stated rather than relied on.
       - name: Commit Snapshots
-        if: hashFiles('unity/core/Tests/.snapshots/snapshots.lock') != '' && matrix.main
+        if: >
+          github.event_name != 'pull_request' && matrix.main &&
+          hashFiles('unity/core/Tests/.snapshots/snapshots.lock') != ''
         uses: EndBug/add-and-commit@v10
         with:
           add: 'unity/core/Tests/.snapshots'
