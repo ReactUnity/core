@@ -7,40 +7,53 @@ name: Release UPM package
 # Deliberately NOT `git subtree split`: that walks every commit and took 3m10s
 # here. Building the commit straight from the tree is O(1) -- 0.198s -- and was
 # verified to produce a byte-identical tree.
+#
+# Two entry points. `workflow_call` is the automated one -- release-npm.yml calls
+# it with `package: all` right after Tegami publishes, so npm and UPM ship the
+# same version from one run. `workflow_dispatch` stays as the escape hatch for
+# re-publishing a single package by hand.
+#
+# NOT triggered on `release: published`, which is the obvious-looking wiring and
+# does not work: Tegami creates the release with GITHUB_TOKEN, and events from
+# that token never start a new workflow run.
 on:
+  workflow_call:
+    inputs:
+      package:
+        description: Which Unity package to publish, or `all` for every one
+        type: string
+        required: true
+      move-latest:
+        description: 'Move the floating `latest` tag (core only)'
+        type: boolean
+        default: true
   workflow_dispatch:
     inputs:
       package:
         description: Which Unity package to publish
         type: choice
         required: true
-        options: [core, jint, quickjs, clearscript]
+        options: [all, core, jint, quickjs, clearscript]
       move-latest:
         description: 'Move the floating `latest` tag (core only)'
         type: boolean
         default: true
-
-concurrency:
-  group: release-upm-${{ github.event.inputs.package }}
-  cancel-in-progress: false
 
 jobs:
   publish:
     runs-on: ubuntu-latest
     permissions:
       contents: write
+    # Job-level, not workflow-level: a called workflow sharing a concurrency
+    # group with its caller can deadlock, since the caller's run is still in the
+    # group while it waits for this one.
+    concurrency:
+      group: release-upm-${{ inputs.package }}
+      cancel-in-progress: false
     steps:
       - uses: actions/checkout@v7
         with:
           fetch-depth: 0
-
-      - name: Resolve version
-        id: v
-        run: |
-          pkg='${{ github.event.inputs.package }}'
-          ver=$(node -p "require('./unity/$pkg/package.json').version")
-          echo "version=$ver" >> "$GITHUB_OUTPUT"
-          echo "Publishing unity/$pkg @ $ver"
 
       # Tag naming:
       #   core  -> v<version> plus the floating `latest`. Unprefixed on purpose:
@@ -51,53 +64,78 @@ jobs:
       #            collide with core's), and they must differ from the <pkg>/v*
       #            tags that the migration created, because those point into main
       #            where the package sits at unity/<pkg>/ rather than at the root.
-      - name: Publish subtree to orphan branch
+      #
+      # None of these collide with Tegami's own release tag, which is
+      # reactunity@<version> (the group name, via syncGitTag).
+      #
+      # One job looping rather than a matrix: the checkout is ~1 GB, and the loop
+      # serialises the ref pushes so the `latest` force-push cannot race.
+      - name: Publish subtrees to orphan branches
         run: |
           set -euo pipefail
-          pkg='${{ github.event.inputs.package }}'
-          ver='${{ steps.v.outputs.version }}'
-          branch="upm/$pkg"
-          if [ "$pkg" = core ]; then tag="v$ver"; else tag="upm/$pkg/v$ver"; fi
+          if [ '${{ inputs.package }}' = all ]; then
+            pkgs='core jint quickjs clearscript'
+          else
+            pkgs='${{ inputs.package }}'
+          fi
 
           git config user.name  github-actions
           git config user.email github-actions@github.com
 
-          if git rev-parse -q --verify "refs/tags/$tag" >/dev/null; then
-            echo "::error::tag $tag already exists - bump the version in unity/$pkg/package.json"
-            exit 1
-          fi
+          for pkg in $pkgs; do
+            ver=$(node -p "require('./unity/$pkg/package.json').version")
+            branch="upm/$pkg"
+            if [ "$pkg" = core ]; then tag="v$ver"; else tag="upm/$pkg/v$ver"; fi
 
-          git fetch origin "+refs/heads/$branch:refs/heads/$branch" || true
-          prev=$(git rev-parse -q --verify "refs/heads/$branch" || true)
+            if git rev-parse -q --verify "refs/tags/$tag" >/dev/null; then
+              # A manual dispatch names one package deliberately, so an existing
+              # tag means the version was not bumped -- fail. The automated path
+              # offers all four every release and only some are ever new, so
+              # there an existing tag is the normal case.
+              if [ '${{ github.event_name }}' = workflow_dispatch ]; then
+                echo "::error::tag $tag already exists - bump the version in unity/$pkg/package.json"
+                exit 1
+              fi
+              echo "::notice::$pkg $ver is already published as $tag - skipping"
+              continue
+            fi
 
-          tree=$(git rev-parse "HEAD:unity/$pkg")
-          if [ -n "$prev" ]; then
-            commit=$(git commit-tree "$tree" -p "$prev" -m "$pkg v$ver")
-          else
-            commit=$(git commit-tree "$tree" -m "$pkg v$ver")
-          fi
+            git fetch origin "+refs/heads/$branch:refs/heads/$branch" || true
+            prev=$(git rev-parse -q --verify "refs/heads/$branch" || true)
 
-          git update-ref "refs/heads/$branch" "$commit"
-          git tag "$tag" "$commit"
+            tree=$(git rev-parse "HEAD:unity/$pkg")
+            if [ -n "$prev" ]; then
+              commit=$(git commit-tree "$tree" -p "$prev" -m "$pkg v$ver")
+            else
+              commit=$(git commit-tree "$tree" -m "$pkg v$ver")
+            fi
 
-          refs="refs/heads/$branch refs/tags/$tag"
-          if [ "$pkg" = core ] && [ '${{ github.event.inputs.move-latest }}' = 'true' ]; then
-            git tag -f latest "$commit"
-            refs="$refs +refs/tags/latest"
-          fi
+            git update-ref "refs/heads/$branch" "$commit"
+            git tag "$tag" "$commit"
 
-          git push origin $refs
-          echo "Published $tag on $branch ($commit)"
+            refs="refs/heads/$branch refs/tags/$tag"
+            if [ "$pkg" = core ] && [ '${{ inputs.move-latest }}' = 'true' ]; then
+              git tag -f latest "$commit"
+              refs="$refs +refs/tags/latest"
+            fi
 
-      - name: Verify the published tree
+            git push origin $refs
+            echo "Published $tag on $branch ($commit)"
+            printf '%s %s\n' "$pkg" "$tag" >> published.txt
+          done
+
+      - name: Verify the published trees
         run: |
           set -euo pipefail
-          pkg='${{ github.event.inputs.package }}'
-          ver='${{ steps.v.outputs.version }}'
-          if [ "$pkg" = core ]; then tag="v$ver"; else tag="upm/$pkg/v$ver"; fi
+          if [ ! -f published.txt ]; then
+            echo "Nothing was published - nothing to verify"
+            exit 0
+          fi
           # A UPM git install resolves package.json at the tree root. If that is
-          # missing the tag is unusable, so fail loudly rather than ship it.
-          git cat-file -e "$tag:package.json"
-          name=$(git show "$tag:package.json" | node -e "let s='';process.stdin.on('data',d=>s+=d).on('end',()=>console.log(JSON.parse(s).name))")
-          echo "$tag has $name at its tree root"
-          test "$name" = "com.reactunity.$pkg"
+          # missing the tag is unusable, so fail loudly rather than leave it up.
+          while read -r pkg tag; do
+            git cat-file -e "$tag:package.json"
+            name=$(git show "$tag:package.json" | node -e "let s='';process.stdin.on('data',d=>s+=d).on('end',()=>console.log(JSON.parse(s).name))")
+            echo "$tag has $name at its tree root"
+            test "$name" = "com.reactunity.$pkg"
+          done < published.txt

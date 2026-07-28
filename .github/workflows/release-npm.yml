@@ -33,6 +33,8 @@ jobs:
   release:
     name: Version & publish
     runs-on: ubuntu-latest
+    outputs:
+      published: ${{ steps.tegami.outputs.published }}
     steps:
       - uses: actions/checkout@v7
         with:
@@ -67,6 +69,38 @@ jobs:
       #     naming this repo and the workflow filename `release-npm.yml`.
       #   - each package's `repository` field pointing at this repo, or the
       #     provenance attestation disagrees with the manifest.
-      - run: pnpm tegami ci
+      #
+      # The tag diff is how the UPM job below learns whether this run published
+      # or merely opened a Version PR. Tegami tags reactunity@<version> only when
+      # it publishes, so a tag appearing across this step is the signal. Testing
+      # whether the tag merely *exists* would read true on every later push to
+      # main too, and re-run the UPM job for nothing.
+      - id: tegami
+        run: |
+          set -euo pipefail
+          before=$(git tag -l 'reactunity@*')
+          pnpm tegami ci
+          after=$(git tag -l 'reactunity@*')
+          if [ "$before" = "$after" ]; then
+            echo 'published=false' >> "$GITHUB_OUTPUT"
+          else
+            echo 'published=true' >> "$GITHUB_OUTPUT"
+          fi
         env:
           GITHUB_TOKEN: ${{ github.token }}
+
+  # Ship the four Unity packages at the same version, in the same run.
+  #
+  # `uses:` rather than a `release: published` trigger on release-upm.yml, or a
+  # `gh workflow run` dispatch from here: Tegami creates the GitHub release with
+  # GITHUB_TOKEN, and events from that token do not start new workflow runs. A
+  # reusable-workflow call runs inside this one, so the rule never applies.
+  upm:
+    name: Publish UPM packages
+    needs: release
+    if: needs.release.outputs.published == 'true'
+    permissions:
+      contents: write
+    uses: ./.github/workflows/release-upm.yml
+    with:
+      package: all
