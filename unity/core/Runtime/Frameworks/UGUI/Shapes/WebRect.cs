@@ -179,10 +179,17 @@ namespace ReactUnity.UGUI.Shapes
             Color32 bottomColor,
             Color32 leftColor,
             Vector2 uv,
-            bool addIndices
+            bool addIndices,
+            // Border style lookup row for this ring, per side in CSS order (top, right, bottom,
+            // left). Opt-in: without it the UVs stay positional, which is what fills and shadows
+            // sample their images with.
+            Vector4? styleUvY = null
         )
         {
             Debug.Assert(fullWidth > 0 && fullHeight > 0);
+
+            var hasStyleUv = styleUvY.HasValue;
+            var styleUv = styleUvY ?? Vector4.zero;
 
             float xMin = center.x - width * 0.5f;
             float yMin = center.y - height * 0.5f;
@@ -213,6 +220,7 @@ namespace ReactUnity.UGUI.Shapes
 
                 tmpUV.x = (tmpPos.x - xMinUV) / fullWidth;
                 tmpUV.y = (tmpPos.y - yMinUV) / fullHeight;
+                if (hasStyleUv) tmpUV.y = i > hl ? styleUv.y : styleUv.x;
 
                 vh.AddVert(tmpPos, i > hl ? rightColor : topColor, tmpUV, GeoUtils.ZeroV2, GeoUtils.UINormal, GeoUtils.UITangent);
             }
@@ -237,6 +245,7 @@ namespace ReactUnity.UGUI.Shapes
 
                 tmpUV.x = (tmpPos.x - xMinUV) / fullWidth;
                 tmpUV.y = (tmpPos.y - yMinUV) / fullHeight;
+                if (hasStyleUv) tmpUV.y = i > hl ? styleUv.z : styleUv.y;
 
                 vh.AddVert(tmpPos, i > hl ? bottomColor : rightColor, tmpUV, GeoUtils.ZeroV2, GeoUtils.UINormal, GeoUtils.UITangent);
             }
@@ -262,6 +271,7 @@ namespace ReactUnity.UGUI.Shapes
 
                 tmpUV.x = (tmpPos.x - xMinUV) / fullWidth;
                 tmpUV.y = (tmpPos.y - yMinUV) / fullHeight;
+                if (hasStyleUv) tmpUV.y = i > hl ? styleUv.w : styleUv.z;
 
                 vh.AddVert(tmpPos, i > hl ? leftColor : bottomColor, tmpUV, GeoUtils.ZeroV2, GeoUtils.UINormal, GeoUtils.UITangent);
             }
@@ -287,6 +297,7 @@ namespace ReactUnity.UGUI.Shapes
 
                 tmpUV.x = (tmpPos.x - xMinUV) / fullWidth;
                 tmpUV.y = (tmpPos.y - yMinUV) / fullHeight;
+                if (hasStyleUv) tmpUV.y = i > hl ? styleUv.x : styleUv.w;
 
                 vh.AddVert(tmpPos, i > hl ? topColor : leftColor, tmpUV, GeoUtils.ZeroV2, GeoUtils.UINormal, GeoUtils.UITangent);
             }
@@ -301,6 +312,7 @@ namespace ReactUnity.UGUI.Shapes
 
             tmpUV.x = (tmpPos.x - xMinUV) / fullWidth;
             tmpUV.y = (tmpPos.y - yMinUV) / fullHeight;
+            if (hasStyleUv) tmpUV.y = styleUv.x;
 
             vh.AddVert(tmpPos, topColor, tmpUV, GeoUtils.ZeroV2, GeoUtils.UINormal, GeoUtils.UITangent);
 

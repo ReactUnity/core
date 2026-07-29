@@ -15,9 +15,7 @@ namespace ReactUnity.UGUI.Shapes
             get => rounding;
             set
             {
-                var hadRounding = HasRounding;
                 rounding = value;
-                if (hadRounding != HasRounding) SetMaterialDirty();
                 RefreshInnerRounding();
                 SetVerticesDirty();
             }
@@ -69,7 +67,7 @@ namespace ReactUnity.UGUI.Shapes
         // Resolved on every material rebuild rather than cached on assignment: the graphic is also
         // created from the layout pass, which never assigns Rounding, and a cached texture stayed
         // null there - making every border style render as solid until the next style update.
-        public override Texture mainTexture => HasRounding ? null : ResourcesHelper.BorderTexture;
+        public override Texture mainTexture => ResourcesHelper.BorderTexture;
 
         RoundedCornerUnitPositionData unitPositionData;
 
@@ -182,6 +180,25 @@ namespace ReactUnity.UGUI.Shapes
                 ref cornerUnitPositions
             );
 
+            // Same bands and the same inversion per side as the non-rounded path: the style is a
+            // ramp across the border width, so the inner ring takes the band's inner edge and the
+            // outer ring its outer edge, and the quad strip between them interpolates it.
+            var topBand = BorderUtils.GetRoundedBorderStyleTextureUVs(outline.Styles.Top, false);
+            var rightBand = BorderUtils.GetRoundedBorderStyleTextureUVs(outline.Styles.Right, true);
+            var bottomBand = BorderUtils.GetRoundedBorderStyleTextureUVs(outline.Styles.Bottom, true);
+            var leftBand = BorderUtils.GetRoundedBorderStyleTextureUVs(outline.Styles.Left, false);
+
+            // Outlines come through with negative sizes, which draws the two rings the other way
+            // round, so the band's edges swap with them. Same normalisation the square path gets
+            // from swapping its positions.
+            if (outline.Sizes.Top < 0) topBand = new Vector2(topBand.y, topBand.x);
+            if (outline.Sizes.Right < 0) rightBand = new Vector2(rightBand.y, rightBand.x);
+            if (outline.Sizes.Bottom < 0) bottomBand = new Vector2(bottomBand.y, bottomBand.x);
+            if (outline.Sizes.Left < 0) leftBand = new Vector2(leftBand.y, leftBand.x);
+
+            var innerUvY = new Vector4(topBand.x, rightBand.x, bottomBand.x, leftBand.x);
+            var outerUvY = new Vector4(topBand.y, rightBand.y, bottomBand.y, leftBand.y);
+
             WebRect.AddRoundedRectVerticesRing(
                 ref vh,
                 center,
@@ -203,7 +220,8 @@ namespace ReactUnity.UGUI.Shapes
                 outline.Colors.Bottom,
                 outline.Colors.Left,
                 uv,
-                false
+                false,
+                innerUvY
             );
 
             var outCenter = new Vector2(
@@ -232,7 +250,8 @@ namespace ReactUnity.UGUI.Shapes
                 outline.Colors.Bottom,
                 outline.Colors.Left,
                 uv,
-                true
+                true,
+                outerUvY
             );
         }
 

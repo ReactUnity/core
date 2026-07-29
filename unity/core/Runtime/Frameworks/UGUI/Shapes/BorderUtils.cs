@@ -41,6 +41,17 @@ namespace ReactUnity.UGUI.Shapes
             }
         }
 
+        /// <summary>
+        /// Same lookup for the rounded ring, which can only carry styles that vary across the
+        /// border width. Dotted and dashed take their pattern from tiling along the edge, which the
+        /// ring cannot do, so they fall back to solid.
+        /// </summary>
+        public static Vector2 GetRoundedBorderStyleTextureUVs(BorderStyle style, bool inverted)
+        {
+            if (style == BorderStyle.Dotted || style == BorderStyle.Dashed) style = BorderStyle.Solid;
+            return GetBorderStyleTextureUVs(style, inverted);
+        }
+
         // Tuple: <Can merge, Repeat, Size, Spacing, Initial Spacing>
         private static (bool, BackgroundRepeat, float, float, float) GetStyleParams(BorderStyle style, float size)
         {
