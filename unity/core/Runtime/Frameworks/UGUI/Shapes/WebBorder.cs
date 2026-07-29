@@ -15,8 +15,9 @@ namespace ReactUnity.UGUI.Shapes
             get => rounding;
             set
             {
+                var hadRounding = HasRounding;
                 rounding = value;
-                BorderTexture = HasRounding ? null : ResourcesHelper.BorderTexture;
+                if (hadRounding != HasRounding) SetMaterialDirty();
                 RefreshInnerRounding();
                 SetVerticesDirty();
             }
@@ -65,20 +66,10 @@ namespace ReactUnity.UGUI.Shapes
             }
         }
 
-        Texture2D borderTexture;
-        Texture2D BorderTexture
-        {
-            get => borderTexture;
-            set
-            {
-                if (borderTexture != value)
-                {
-                    borderTexture = value;
-                    SetMaterialDirty();
-                }
-            }
-        }
-        public override Texture mainTexture => BorderTexture;
+        // Resolved on every material rebuild rather than cached on assignment: the graphic is also
+        // created from the layout pass, which never assigns Rounding, and a cached texture stayed
+        // null there - making every border style render as solid until the next style update.
+        public override Texture mainTexture => HasRounding ? null : ResourcesHelper.BorderTexture;
 
         RoundedCornerUnitPositionData unitPositionData;
 
