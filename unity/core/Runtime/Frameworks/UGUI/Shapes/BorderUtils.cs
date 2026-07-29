@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using ReactUnity.Types;
 using UnityEngine;
 using UnityEngine.UI;
@@ -42,14 +43,134 @@ namespace ReactUnity.UGUI.Shapes
         }
 
         /// <summary>
-        /// Same lookup for the rounded ring, which can only carry styles that vary across the
-        /// border width. Dotted and dashed take their pattern from tiling along the edge, which the
-        /// ring cannot do, so they fall back to solid.
+        /// Whether the style repeats along the edge rather than only varying across the border
+        /// width. Those cannot ride a single ring - each piece needs its own geometry.
         /// </summary>
-        public static Vector2 GetRoundedBorderStyleTextureUVs(BorderStyle style, bool inverted)
+        public static bool IsTiledStyle(BorderStyle style) =>
+            style == BorderStyle.Dotted || style == BorderStyle.Dashed;
+
+        static readonly List<Vector2> sideInner = new List<Vector2>();
+        static readonly List<Vector2> sideOuter = new List<Vector2>();
+        static readonly List<float> sideArc = new List<float>();
+        static UIVertex tmpVertex = UIVertex.simpleVert;
+
+        /// <summary>
+        /// Draws one side of a rounded border, from the mitre it starts at to the mitre it ends at,
+        /// reading the path back out of the two vertex rings already in <paramref name="vh"/>.
+        /// A tiled style is walked out by arc length into one strip per dot or dash; anything else
+        /// is a single strip over the whole side, which is what the ring itself would have drawn.
+        /// </summary>
+        public static void AddRoundedSideStrip(
+            ref VertexHelper vh,
+            int innerBase,
+            int outerBase,
+            int ringCount,
+            int startIndex,
+            int vertexCount,
+            BorderStyle style,
+            Vector2 band,
+            float size,
+            Color32 color
+        )
         {
-            if (style == BorderStyle.Dotted || style == BorderStyle.Dashed) style = BorderStyle.Solid;
-            return GetBorderStyleTextureUVs(style, inverted);
+            if (vertexCount < 2 || size == 0 || style == BorderStyle.None) return;
+
+            sideInner.Clear();
+            sideOuter.Clear();
+            sideArc.Clear();
+
+            // Arc length runs along the centreline, so a dash keeps its length through a corner
+            // instead of stretching with the outer edge.
+            var total = 0f;
+            for (int k = 0; k < vertexCount; k++)
+            {
+                var index = (startIndex + k) % ringCount;
+
+                vh.PopulateUIVertex(ref tmpVertex, innerBase + index);
+                var inner = (Vector2) tmpVertex.position;
+
+                vh.PopulateUIVertex(ref tmpVertex, outerBase + index);
+                var outer = (Vector2) tmpVertex.position;
+
+                if (k > 0)
+                    total += Vector2.Distance(
+                        (sideInner[k - 1] + sideOuter[k - 1]) * 0.5f,
+                        (inner + outer) * 0.5f
+                    );
+
+                sideInner.Add(inner);
+                sideOuter.Add(outer);
+                sideArc.Add(total);
+            }
+
+            if (total <= 0) return;
+
+            if (!IsTiledStyle(style))
+            {
+                AddStripSection(ref vh, 0, total, band, color);
+                return;
+            }
+
+            var absSize = Mathf.Abs(size);
+            float period, on;
+
+            if (style == BorderStyle.Dotted)
+            {
+                // A dot is as long as the border is wide, with a gap to match, so the texture's
+                // circle stays circular. Fitted to a whole number per side.
+                var count = Mathf.Max(1, Mathf.RoundToInt(total / (absSize * 2f)));
+                period = total / count;
+                on = Mathf.Min(absSize, period);
+            }
+            else
+            {
+                // 3:2 dash to gap - the ratio the square path lands on at every width, since it
+                // clamps size and spacing together.
+                var desired = Mathf.Max(10f, absSize * 5f);
+                var count = Mathf.Max(1, Mathf.RoundToInt(total / desired));
+                period = total / count;
+                on = period * 0.6f;
+            }
+
+            // Centred in each period, so a side ends with half a gap at both mitres rather than a
+            // clipped dash at one of them.
+            for (var start = (period - on) * 0.5f; start < total; start += period)
+                AddStripSection(ref vh, start, Mathf.Min(start + on, total), band, color);
+        }
+
+        private static void AddStripSection(ref VertexHelper vh, float from, float to, Vector2 band, Color32 color)
+        {
+            var length = to - from;
+            if (length <= 0) return;
+
+            for (int k = 0; k + 1 < sideArc.Count; k++)
+            {
+                float s0 = sideArc[k], s1 = sideArc[k + 1];
+                if (s1 <= from || s0 >= to || s1 <= s0) continue;
+
+                var c0 = Mathf.Max(from, s0);
+                var c1 = Mathf.Min(to, s1);
+                if (c1 <= c0) continue;
+
+                var t0 = (c0 - s0) / (s1 - s0);
+                var t1 = (c1 - s0) / (s1 - s0);
+
+                var i0 = Vector2.Lerp(sideInner[k], sideInner[k + 1], t0);
+                var o0 = Vector2.Lerp(sideOuter[k], sideOuter[k + 1], t0);
+                var i1 = Vector2.Lerp(sideInner[k], sideInner[k + 1], t1);
+                var o1 = Vector2.Lerp(sideOuter[k], sideOuter[k + 1], t1);
+
+                var u0 = (c0 - from) / length;
+                var u1 = (c1 - from) / length;
+
+                var baseIndex = vh.currentVertCount;
+                vh.AddVert(i0, color, new Vector2(u0, band.x));
+                vh.AddVert(o0, color, new Vector2(u0, band.y));
+                vh.AddVert(o1, color, new Vector2(u1, band.y));
+                vh.AddVert(i1, color, new Vector2(u1, band.x));
+                vh.AddTriangle(baseIndex + 0, baseIndex + 1, baseIndex + 2);
+                vh.AddTriangle(baseIndex + 0, baseIndex + 2, baseIndex + 3);
+            }
         }
 
         // Tuple: <Can merge, Repeat, Size, Spacing, Initial Spacing>

@@ -183,10 +183,10 @@ namespace ReactUnity.UGUI.Shapes
             // Same bands and the same inversion per side as the non-rounded path: the style is a
             // ramp across the border width, so the inner ring takes the band's inner edge and the
             // outer ring its outer edge, and the quad strip between them interpolates it.
-            var topBand = BorderUtils.GetRoundedBorderStyleTextureUVs(outline.Styles.Top, false);
-            var rightBand = BorderUtils.GetRoundedBorderStyleTextureUVs(outline.Styles.Right, true);
-            var bottomBand = BorderUtils.GetRoundedBorderStyleTextureUVs(outline.Styles.Bottom, true);
-            var leftBand = BorderUtils.GetRoundedBorderStyleTextureUVs(outline.Styles.Left, false);
+            var topBand = BorderUtils.GetBorderStyleTextureUVs(outline.Styles.Top, false);
+            var rightBand = BorderUtils.GetBorderStyleTextureUVs(outline.Styles.Right, true);
+            var bottomBand = BorderUtils.GetBorderStyleTextureUVs(outline.Styles.Bottom, true);
+            var leftBand = BorderUtils.GetBorderStyleTextureUVs(outline.Styles.Left, false);
 
             // Outlines come through with negative sizes, which draws the two rings the other way
             // round, so the band's edges swap with them. Same normalisation the square path gets
@@ -198,6 +198,17 @@ namespace ReactUnity.UGUI.Shapes
 
             var innerUvY = new Vector4(topBand.x, rightBand.x, bottomBand.x, leftBand.x);
             var outerUvY = new Vector4(topBand.y, rightBand.y, bottomBand.y, leftBand.y);
+
+            // A tiled style repeats along the edge, which one continuous ring cannot express. When
+            // any side has one, both rings are emitted as vertices only - the path the strips below
+            // are walked out of - and every side is drawn as its own strip instead.
+            var tiled =
+                BorderUtils.IsTiledStyle(outline.Styles.Top) ||
+                BorderUtils.IsTiledStyle(outline.Styles.Right) ||
+                BorderUtils.IsTiledStyle(outline.Styles.Bottom) ||
+                BorderUtils.IsTiledStyle(outline.Styles.Left);
+
+            var innerBase = vh.currentVertCount;
 
             WebRect.AddRoundedRectVerticesRing(
                 ref vh,
@@ -229,6 +240,8 @@ namespace ReactUnity.UGUI.Shapes
                 center.y + (outline.Sizes.Top - outline.Sizes.Bottom) / 2
             );
 
+            var outerBase = vh.currentVertCount;
+
             WebRect.AddRoundedRectVerticesRing(
                 ref vh,
                 outCenter,
@@ -250,9 +263,41 @@ namespace ReactUnity.UGUI.Shapes
                 outline.Colors.Bottom,
                 outline.Colors.Left,
                 uv,
-                true,
+                !tiled,
                 outerUvY
             );
+
+            if (!tiled) return;
+
+            // Each corner arc doubles its vertex at 45 degrees, and the per-side split lands on that
+            // pair, so a side runs from one mitre to the next as [previous corner's second half] +
+            // [next corner's first half] - contiguous once the ring is treated as a cycle.
+            int nTR = cornerUnitPositions.TRUnitPositions.Length;
+            int nBR = cornerUnitPositions.BRUnitPositions.Length;
+            int nBL = cornerUnitPositions.BLUnitPositions.Length;
+            int nTL = cornerUnitPositions.TLUnitPositions.Length;
+
+            // The closing duplicate of vertex 0 sits at the end of each ring; the cycle skips it.
+            var ringCount = nTR + nBR + nBL + nTL;
+
+            int hTR = nTR / 2, hBR = nBR / 2, hBL = nBL / 2, hTL = nTL / 2;
+            int oBR = nTR, oBL = oBR + nBR, oTL = oBL + nBL;
+
+            BorderUtils.AddRoundedSideStrip(ref vh, innerBase, outerBase, ringCount,
+                oTL + hTL + 1, nTL - hTL + hTR,
+                outline.Styles.Top, topBand, outline.Sizes.Top, outline.Colors.Top);
+
+            BorderUtils.AddRoundedSideStrip(ref vh, innerBase, outerBase, ringCount,
+                hTR + 1, nTR - hTR + hBR,
+                outline.Styles.Right, rightBand, outline.Sizes.Right, outline.Colors.Right);
+
+            BorderUtils.AddRoundedSideStrip(ref vh, innerBase, outerBase, ringCount,
+                oBR + hBR + 1, nBR - hBR + hBL,
+                outline.Styles.Bottom, bottomBand, outline.Sizes.Bottom, outline.Colors.Bottom);
+
+            BorderUtils.AddRoundedSideStrip(ref vh, innerBase, outerBase, ringCount,
+                oBL + hBL + 1, nBL - hBL + hTL,
+                outline.Styles.Left, leftBand, outline.Sizes.Left, outline.Colors.Left);
         }
 
     }

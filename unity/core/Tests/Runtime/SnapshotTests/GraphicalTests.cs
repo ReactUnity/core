@@ -349,6 +349,38 @@ namespace ReactUnity.Tests
             Assertions.Snapshot("border-styles/rounded-sided-" + style);
         }
 
+        protected static string[] tiledBorderStyles = new string[] { "dotted", "dashed" };
+
+        // The 20px border above is far too fat to read as a pattern, so the tiled styles get their
+        // own case at a width a project would actually use.
+        [UGUITest(Script = BaseScript, Style = BaseStyle)]
+        public IEnumerator TiledBorderStyleSnapshots([ValueSource("tiledBorderStyles")] string style)
+        {
+            View.Style["margin"] = 40;
+            View.Style["width"] = 216;
+            View.Style["height"] = 128;
+            View.Style["border-width"] = "4px";
+            View.Style["border-color"] = "#847875";
+            View.Style["border-style"] = style;
+            yield return null;
+            Assertions.Snapshot("border-styles/thin-" + style);
+
+            View.Style["border-radius"] = "45px";
+            yield return null;
+            Assertions.Snapshot("border-styles/thin-rounded-" + style);
+
+            // A radius wide enough to clamp leaves no straight run on the short sides.
+            View.Style["border-radius"] = "64px";
+            yield return null;
+            Assertions.Snapshot("border-styles/thin-clamped-" + style);
+
+            // One side left solid: the pattern has to stop at the mitre without disturbing it.
+            View.Style["border-radius"] = "45px";
+            View.Style["border-top-style"] = "solid";
+            yield return null;
+            Assertions.Snapshot("border-styles/thin-mixed-" + style);
+        }
+
         [UGUITest(Script = BaseScript, Style = BaseStyle)]
         public IEnumerator OutlineStyleSnapshots()
         {
