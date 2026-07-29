@@ -9,7 +9,18 @@ import {
   type UnityInstance,
 } from './types';
 
-const LOADER_SRC = '/Unity/injectable/Build/WebInjectable.loader.js';
+/*
+ * The player is a hand-built, >100 MB artifact that nothing in this repository produces,
+ * so it is never present locally -- it lives permanently under /Unity on the gh-pages
+ * branch of reactunity.github.io. Loading it from there absolutely means a dev server and
+ * any non-production deploy get a working preview instead of four 404s.
+ */
+const PLAYER_BASE_URL = 'https://reactunity.github.io/Unity';
+
+const playerFileUrl = (sampleName: string, extension: string) =>
+  `${PLAYER_BASE_URL}/${sampleName}/Build/WebInjectable.${extension}`;
+
+const LOADER_SRC = playerFileUrl(defaultUnityInstanceName, 'loader.js');
 
 /*
  * Unity's loader is a plain script that defines a global `createUnityInstance`, so it
@@ -72,10 +83,10 @@ export function Unity({
       const unityInstance: UnityInstance = await globalThis.createUnityInstance(
         canvas,
         {
-          dataUrl: `/Unity/${sampleName}/Build/WebInjectable.data`,
-          frameworkUrl: `/Unity/${sampleName}/Build/WebInjectable.framework.js`,
-          codeUrl: `/Unity/${sampleName}/Build/WebInjectable.wasm`,
-          streamingAssetsUrl: 'StreamingAssets',
+          dataUrl: playerFileUrl(sampleName, 'data'),
+          frameworkUrl: playerFileUrl(sampleName, 'framework.js'),
+          codeUrl: playerFileUrl(sampleName, 'wasm'),
+          streamingAssetsUrl: `${PLAYER_BASE_URL}/${sampleName}/StreamingAssets`,
           companyName: 'reactunity',
           productName: sampleName,
           productVersion: '0.1',

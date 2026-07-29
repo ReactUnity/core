@@ -71,10 +71,12 @@ that repository's name, so the built site has to live there while the source liv
 The deploy step is skipped when the `DOCS_DEPLOY_TOKEN` secret is not set; the build
 still runs, so the workflow stays useful as a compile check.
 
-The Unity WebGL demos load `/Unity/<sample>/Build/WebInjectable.*`. Those artifacts are
-hand-built, over 100 MB, and nothing in this repository produces them, so they are not
-tracked here — they live permanently under `Unity/` on the `gh-pages` branch, and the
-deploy is configured not to wipe them.
+The Unity WebGL demos load `https://reactunity.github.io/Unity/<sample>/Build/WebInjectable.*`.
+Those artifacts are hand-built, over 100 MB, and nothing in this repository produces them,
+so they are not tracked here — they live permanently under `Unity/` on the `gh-pages`
+branch, and the deploy is configured not to wipe them. The URL is absolute rather than
+site-relative precisely because they are never present locally: a dev server would
+otherwise have no player at all.
 
 The three Optimistic Display fonts are licensed to Meta rather than to this project, so
 they are not committed either; `scripts/downloadFonts.js` fetches them before the build
