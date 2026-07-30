@@ -28,6 +28,8 @@ namespace ReactUnity.Scripting
 
         public JintEngine(ReactContext context, bool debug, bool awaitDebugger)
         {
+            moduleLoader = new JintModuleLoader(context);
+
             Engine = new Engine(opt => {
                 opt.AllowClr(
                     typeof(object).Assembly,
@@ -52,7 +54,7 @@ namespace ReactUnity.Scripting
 
                 opt.SetTypeConverter(e => new JintTypeConverter(context, e));
                 opt.UseHostFactory(_ => new JintHost());
-                opt.EnableModules(new JintModuleLoader(context));
+                opt.EnableModules(moduleLoader);
 
                 // Jint hands a Task to JS as an ordinary CLR wrapper. Its own TaskInterop feature turns
                 // one into a promise but rejects with the AggregateException, so do it here instead and
@@ -94,11 +96,11 @@ namespace ReactUnity.Scripting
         {
             if (documentType == JavascriptDocumentType.Module)
             {
-                // Jint reports the specifier as import.meta.url, so it has to be the address the
-                // code came from - but it also caches by specifier, and the same url is
-                // re-imported on every hot update. A cache-busting query keeps both true, which
-                // is what a dev server does to its own urls anyway.
-                var specifier = $"{fileName ?? "module"}?__ru={moduleCount++}";
+                // import.meta.url is the specifier, so it has to be the address the code came from -
+                // and the cache is keyed on it, so a hot update needs a fresh one. Canonicalized
+                // because Jint matches this module by the key the loader resolves it to, not by
+                // this string.
+                var specifier = moduleLoader.Canonicalize($"{fileName ?? "module"}?__ru={moduleCount++}");
                 Engine.Modules.Add(specifier, code);
 
                 // Not awaited: anything this module imports is fetched by JintModuleLoader, which
@@ -111,8 +113,8 @@ namespace ReactUnity.Scripting
                 // next few Update()s instead.
                 if (!import.IsCompleted) Engine.Advanced.ProcessTasks();
 
-                if (import.IsCompleted) import.GetResult();
-                else pendingImports.Add(import);
+                if (!import.IsCompleted) pendingImports.Add(import);
+                else if (import.IsFaulted) throw new JavaScriptException(import.Error);
                 return;
             }
 
@@ -120,6 +122,7 @@ namespace ReactUnity.Scripting
         }
 
         private int moduleCount;
+        private readonly JintModuleLoader moduleLoader;
         private readonly List<ModuleImportOperation> pendingImports = new List<ModuleImportOperation>();
 
         /// The only place a graph that finished loading after Execute returned can be reported.
@@ -131,8 +134,16 @@ namespace ReactUnity.Scripting
                 if (!import.IsCompleted) continue;
 
                 pendingImports.RemoveAt(i);
-                if (import.IsFaulted) Debug.LogError($"Module import failed: {import.Error}");
+                if (import.IsFaulted) Debug.LogError($"Module import failed: {Describe(import.Error)}");
             }
+        }
+
+        /// A rejected import only names a line in the bundle through the error's own stack, which
+        /// is not part of its message.
+        static string Describe(JsValue error)
+        {
+            var stack = error is ObjectInstance obj ? obj.Get("stack") : JsValue.Undefined;
+            return stack.IsUndefined() || stack.IsNull() ? error?.ToString() : $"{error}\n{stack}";
         }
 
         public Exception TryExecute(string code, string fileName = null, JavascriptDocumentType documentType = JavascriptDocumentType.Script)
@@ -149,7 +160,7 @@ namespace ReactUnity.Scripting
             }
             catch (JavaScriptException ex)
             {
-                Debug.LogError($"JS exception in {ex.Location}");
+                Debug.LogError($"JS exception in {ex.Location}\n{Describe(ex.Error)}");
                 Debug.LogException(ex);
                 return ex;
             }

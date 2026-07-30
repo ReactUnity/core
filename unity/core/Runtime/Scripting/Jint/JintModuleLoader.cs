@@ -28,6 +28,12 @@ namespace ReactUnity.Scripting
             this.context = context;
         }
 
+        /// The name `Engine.Modules.Add` has to register a module under. Jint looks a registered
+        /// module up by the key `Resolve` returned for it, so the two have to be the same string -
+        /// and `http://host` and `http://host/` are one url but not one string.
+        public string Canonicalize(string specifier) =>
+            Resolve(null, new ModuleRequest(specifier, Array.Empty<ModuleImportAttribute>())).Key;
+
         public override ResolvedSpecifier Resolve(string referencingModuleLocation, ModuleRequest moduleRequest)
         {
             var specifier = moduleRequest.Specifier;
@@ -37,7 +43,10 @@ namespace ReactUnity.Scripting
             // error, so the failure names the url and arrives through the same path as a 404.
             if (url == null) return new ResolvedSpecifier(moduleRequest, specifier, null, SpecifierType.Bare);
 
-            return new ResolvedSpecifier(moduleRequest, url.AbsoluteUri, url, SpecifierType.RelativeOrAbsolute);
+            // The Uri is deliberately left out: Jint reduces one to its LocalPath for the module's
+            // location, which drops the origin - and then every relative import inside that module
+            // resolves against a bare path, and import.meta.url reports one.
+            return new ResolvedSpecifier(moduleRequest, url.AbsoluteUri, null, SpecifierType.RelativeOrAbsolute);
         }
 
         Uri ResolveUrl(string referrer, string specifier)
@@ -59,13 +68,13 @@ namespace ReactUnity.Scripting
 
         public void LoadModuleAsync(Engine engine, ResolvedSpecifier resolved, ModuleLoadCompletion completion)
         {
-            if (resolved.Uri == null)
+            if (resolved.Type == SpecifierType.Bare)
             {
                 completion.SetError($"Could not resolve module '{resolved.Key}'");
                 return;
             }
 
-            var url = resolved.Uri.AbsoluteUri;
+            var url = resolved.Key;
 
             context.Dispatcher.StartDeferred(ScriptSource.WatchWebRequest(
                 UnityWebRequest.Get(url),

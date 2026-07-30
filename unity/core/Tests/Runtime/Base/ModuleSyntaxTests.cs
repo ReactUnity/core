@@ -69,6 +69,21 @@ namespace ReactUnity.Tests
         }
 
         [UGUITest]
+        public IEnumerator AModuleAtADevServerRootRunsFromItsOwnSource()
+        {
+            yield return null;
+
+            // A url with no path is how an inline `<script type="module">` in a dev server's entry
+            // document is addressed. If the engine does not recognise it as the code it was already
+            // given, it fetches the root instead - and a dev server answers that with the document.
+            Context.Script.ExecuteScript(
+                "globalThis.__probe_root = 'ran';\nexport {}",
+                "http://localhost:3100", JavascriptDocumentType.Module);
+
+            Assert.AreEqual("ran", Context.Script.Engine.GetGlobal("__probe_root")?.ToString());
+        }
+
+        [UGUITest]
         public IEnumerator AStaticImportGraphLoadsAsynchronously()
         {
             yield return null;
@@ -81,9 +96,12 @@ namespace ReactUnity.Tests
             var dir = Path.Combine(Application.temporaryCachePath, "module-graph-" + graphCount++);
             Directory.CreateDirectory(dir);
 
-            // Two hops, so the second is only discovered once the first has arrived.
+            // Two hops, so the second is only discovered once the first has arrived. The middle one
+            // records its own url: a module the loader fetched has to keep a whole one, or the
+            // relative import below it has nothing to resolve against.
             File.WriteAllText(Path.Combine(dir, "leaf.js"), "export const value = 'loaded';");
-            File.WriteAllText(Path.Combine(dir, "dep.js"), "export { value } from './leaf.js';");
+            File.WriteAllText(Path.Combine(dir, "dep.js"),
+                "export { value } from './leaf.js';\nglobalThis.__probe_dep_url = import.meta.url;");
 
             var entry = new Uri(Path.Combine(dir, "entry.js")).AbsoluteUri;
             Context.Script.ExecuteScript(
@@ -96,6 +114,9 @@ namespace ReactUnity.Tests
             for (var i = 0; i < 300 && Probe() == ""; i++) yield return null;
 
             Assert.AreEqual("loaded", Probe());
+
+            var depUrl = Context.Script.Engine.GetGlobal("__probe_dep_url")?.ToString();
+            StringAssert.StartsWith("file:", depUrl ?? "", "a fetched module lost the origin of its url");
 
             // Only on success: a request still in flight against a deleted file would log an error
             // into whichever test runs next.
