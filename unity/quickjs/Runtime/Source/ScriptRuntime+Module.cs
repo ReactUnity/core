@@ -114,7 +114,20 @@ namespace QuickJS
 
                 if (bModule)
                 {
+#if !JSB_WITH_V8_BACKEND
+                    // Compile before running so import.meta can be filled in. QuickJS only
+                    // populates it for modules that came through module_loader, which leaves
+                    // import.meta.url undefined on a module evaluated directly from source.
+                    var mod_val = JSApi.JS_CompileModule(ctx, input_ptr, input_len, fn_ptr);
+                    if (JSApi.JS_IsException(mod_val)) return mod_val;
+
+                    _SetImportMeta(ctx, mod_val, fileName);
+
+                    // JS_EvalFunction takes ownership of mod_val.
+                    return JSApi.JS_EvalFunction(ctx, mod_val);
+#else
                     return JSApi.JS_EvalModule(ctx, input_ptr, input_len, fn_ptr);
+#endif
                 }
                 return JSApi.JS_EvalSource(ctx, input_ptr, input_len, fn_ptr);
 
@@ -213,13 +226,23 @@ namespace QuickJS
 
         private static JSModuleDef _NewModuleDef(JSContext ctx, JSValue func_val, string module_name)
         {
-            var context = ScriptEngine.GetContext(ctx);
             var mod = new JSModuleDef(func_val.u.ptr);
+            _SetImportMeta(ctx, func_val, $"file://{module_name}");
+            return mod;
+        }
+
+        /// Defines import.meta for a compiled-but-not-yet-evaluated module. `url` is used as given,
+        /// so a module evaluated straight from source can report the address it was fetched from.
+        private static void _SetImportMeta(JSContext ctx, JSValue mod_val, string url)
+        {
+            if (!mod_val.IsModule()) return;
+
+            var context = ScriptEngine.GetContext(ctx);
+            var mod = new JSModuleDef(mod_val.u.ptr);
             var meta = JSApi.JS_GetImportMeta(ctx, mod);
-            JSApi.JS_DefinePropertyValue(ctx, meta, context.GetAtom("url"), ctx.NewString($"file://{module_name}"));
+            JSApi.JS_DefinePropertyValue(ctx, meta, context.GetAtom("url"), ctx.NewString(url));
             JSApi.JS_DefinePropertyValue(ctx, meta, context.GetAtom("main"), JSApi.JS_NewBool(ctx, false));
             JSApi.JS_FreeValue(ctx, meta);
-            return mod;
         }
 #endif
     }

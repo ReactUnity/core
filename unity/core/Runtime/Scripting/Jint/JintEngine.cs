@@ -59,8 +59,22 @@ namespace ReactUnity.Scripting
 
         public void Execute(string code, string fileName = null, JavascriptDocumentType documentType = JavascriptDocumentType.Script)
         {
+            if (documentType == JavascriptDocumentType.Module)
+            {
+                // Jint reports the specifier as import.meta.url, so it has to be the address the
+                // code came from - but it also caches by specifier, and the same url is
+                // re-imported on every hot update. A cache-busting query keeps both true, which
+                // is what a dev server does to its own urls anyway.
+                var specifier = $"{fileName ?? "module"}?__ru={moduleCount++}";
+                Engine.Modules.Add(specifier, code);
+                Engine.Modules.Import(specifier);
+                return;
+            }
+
             Engine.Execute(code);
         }
+
+        private int moduleCount;
 
         public Exception TryExecute(string code, string fileName = null, JavascriptDocumentType documentType = JavascriptDocumentType.Script)
         {

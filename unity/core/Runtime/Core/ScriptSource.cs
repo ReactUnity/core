@@ -200,6 +200,72 @@ namespace ReactUnity
             return url.Split('#')[0].Split('?')[0];
         }
 
+        /// The Content-Type of the last response, when it came over the network.
+        public string ResponseContentType { get; private set; }
+
+        /// Whether the fetched content should go through the HTML pipeline rather than straight
+        /// into the engine. A dev server root usually answers with an HTML document that only
+        /// links the bundle - Vite's is a bare `<script type="module" src="...">` - and the script
+        /// tags in it are what has to run.
+        ///
+        /// Declared type wins over guessing: a Content-Type when the response carried one, then
+        /// the extension. Sniffing the content is the last resort, and the only option left for a
+        /// TextAsset or an extensionless resource, where nothing declares what it holds.
+        public bool IsHtml(string code)
+        {
+            if (Language == ScriptSourceLanguage.Html) return true;
+
+            var contentType = ResponseContentType;
+            if (!string.IsNullOrWhiteSpace(contentType))
+            {
+                // "text/html; charset=utf-8"
+                var mime = contentType.Split(';')[0].Trim().ToLowerInvariant();
+                if (mime.Length > 0) return mime == "text/html" || mime == "application/xhtml+xml";
+            }
+
+            switch (ExtensionOf(GetResolvedSourceUrl()))
+            {
+                case ".html":
+                case ".htm":
+                case ".xhtml":
+                    return true;
+                case ".js":
+                case ".mjs":
+                case ".cjs":
+                case ".jsx":
+                case ".ts":
+                case ".tsx":
+                    return false;
+            }
+
+            return LooksLikeHtml(code);
+        }
+
+        static string ExtensionOf(string url)
+        {
+            if (string.IsNullOrWhiteSpace(url)) return "";
+
+            var path = url.Split('#')[0].Split('?')[0];
+            var slash = path.LastIndexOfAny(new[] { '/', '\\' });
+            var dot = path.LastIndexOf('.');
+
+            return dot > slash && dot >= 0 ? path.Substring(dot).ToLowerInvariant() : "";
+        }
+
+        /// Last-resort sniff: no JavaScript program can begin with `<`, so the first meaningful
+        /// character separates a document from a bundle.
+        public static bool LooksLikeHtml(string code)
+        {
+            if (string.IsNullOrWhiteSpace(code)) return false;
+
+            var i = 0;
+            // A BOM survives into the string when the server does not declare a charset.
+            if (code[0] == '﻿') i++;
+            while (i < code.Length && char.IsWhiteSpace(code[i])) i++;
+
+            return i < code.Length && code[i] == '<';
+        }
+
         public IDisposable GetScript(Action<string> callback, IDispatcher dispatcher = null, bool useDevServer = true)
         {
             if (useDevServer && IsDevServer)
@@ -208,7 +274,7 @@ namespace ReactUnity
 
                 return new DisposableHandle(dispatcher,
                     dispatcher.StartDeferred(
-                        WatchWebRequest(request, callback, err => {
+                        WatchWebRequest(request, RecordContentType(request, callback), err => {
                             DevServerFailed = true;
                             Debug.LogWarning("DevServer seems to be unaccessible. Falling back to the original script. If this is unexpected, make sure the DevServer is running at " + DevServer);
                             GetScript(callback, dispatcher, false);
@@ -249,7 +315,7 @@ namespace ReactUnity
                     var request = UnityEngine.Networking.UnityWebRequest.Get(GetResolvedSourceUrl(false));
 
                     return new DisposableHandle(dispatcher,
-                        dispatcher.StartDeferred(WatchWebRequest(request, callback)));
+                        dispatcher.StartDeferred(WatchWebRequest(request, RecordContentType(request, callback))));
 #else
                     throw new Exception("REACT_DISABLE_WEB is defined. Web API cannot be used.");
 #endif
@@ -285,6 +351,15 @@ namespace ReactUnity
 #endif
 
             return null;
+        }
+
+        /// The header is only readable off the request, and only once it has completed.
+        private Action<string> RecordContentType(UnityEngine.Networking.UnityWebRequest request, Action<string> callback)
+        {
+            return code => {
+                ResponseContentType = request.GetResponseHeader("Content-Type");
+                callback(code);
+            };
         }
 
         static internal IEnumerator WatchWebRequest(

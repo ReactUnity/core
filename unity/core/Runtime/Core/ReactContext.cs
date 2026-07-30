@@ -216,6 +216,15 @@ namespace ReactUnity
                         afterStart?.Invoke();
                         options.AfterStart?.Invoke();
                     }
+                    else if (Source.IsHtml(code))
+                    {
+                        // A dev server answering its root with an entry document rather than the
+                        // bundle. Only its scripts matter - see HtmlEntryPoint.
+                        options.BeforeStart?.Invoke();
+                        RunHtmlEntryPoint(code);
+                        afterStart?.Invoke();
+                        options.AfterStart?.Invoke();
+                    }
                     else
                     {
                         Script.RunMainScript(code, options.BeforeStart, () => {
@@ -229,6 +238,31 @@ namespace ReactUnity
                 }, Dispatcher, true);
 
                 if (scriptJob != null) Disposables.Add(scriptJob.Dispose);
+            }
+        }
+
+        /// Runs the scripts of a dev server entry document. `src` ones go through the same script
+        /// component the DOM shim uses, so they are fetched, executed and watched identically.
+        private void RunHtmlEntryPoint(string html)
+        {
+            var scripts = HtmlEntryPoint.ExtractScripts(html);
+
+            if (scripts.Count == 0)
+            {
+                Debug.LogWarning($"The dev server at {Source.DevServer} returned an HTML document with no runnable script tags.");
+                return;
+            }
+
+            foreach (var script in scripts)
+            {
+                var component = CreateComponent("script", "") as ScriptComponent;
+                if (component == null) continue;
+
+                component.SetProperty("type", script.DocumentType == JavascriptDocumentType.Module ? "module" : "text/javascript");
+                component.SetParent(Host);
+
+                if (!string.IsNullOrEmpty(script.Src)) component.SetProperty("source", script.Src);
+                else component.SetText(script.Code);
             }
         }
 
