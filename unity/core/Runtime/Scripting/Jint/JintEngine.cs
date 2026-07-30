@@ -14,6 +14,7 @@ using Jint.Native;
 using Jint.Native.Object;
 using Jint.Runtime;
 using Jint.Runtime.Interop;
+using Jint.Runtime.Modules;
 using UnityEngine;
 
 namespace ReactUnity.Scripting
@@ -23,7 +24,7 @@ namespace ReactUnity.Scripting
         public string Key { get; } = "jint";
         public Engine Engine { get; }
         public object NativeEngine => Engine;
-        public EngineCapabilities Capabilities { get; } = EngineCapabilities.None;
+        public EngineCapabilities Capabilities { get; } = EngineCapabilities.ModuleResolution;
 
         public JintEngine(ReactContext context, bool debug, bool awaitDebugger)
         {
@@ -51,6 +52,7 @@ namespace ReactUnity.Scripting
 
                 opt.SetTypeConverter(e => new JintTypeConverter(context, e));
                 opt.UseHostFactory(_ => new JintHost());
+                opt.EnableModules(new JintModuleLoader(context));
 
                 // Jint hands a Task to JS as an ordinary CLR wrapper. Its own TaskInterop feature turns
                 // one into a promise but rejects with the AggregateException, so do it here instead and
@@ -98,7 +100,19 @@ namespace ReactUnity.Scripting
                 // is what a dev server does to its own urls anyway.
                 var specifier = $"{fileName ?? "module"}?__ru={moduleCount++}";
                 Engine.Modules.Add(specifier, code);
-                Engine.Modules.Import(specifier);
+
+                // Not awaited: anything this module imports is fetched by JintModuleLoader, which
+                // needs the frames a blocking import would be holding.
+                var import = Engine.Modules.StartImport(specifier);
+
+                // Draining the queue the import just filled is enough to finish a module that
+                // needs nothing from the loader - which is every bundle, so those still evaluate
+                // before this returns. A graph waiting on a request cannot, and finishes over the
+                // next few Update()s instead.
+                if (!import.IsCompleted) Engine.Advanced.ProcessTasks();
+
+                if (import.IsCompleted) import.GetResult();
+                else pendingImports.Add(import);
                 return;
             }
 
@@ -106,6 +120,20 @@ namespace ReactUnity.Scripting
         }
 
         private int moduleCount;
+        private readonly List<ModuleImportOperation> pendingImports = new List<ModuleImportOperation>();
+
+        /// The only place a graph that finished loading after Execute returned can be reported.
+        void ReportFinishedImports()
+        {
+            for (var i = pendingImports.Count - 1; i >= 0; i--)
+            {
+                var import = pendingImports[i];
+                if (!import.IsCompleted) continue;
+
+                pendingImports.RemoveAt(i);
+                if (import.IsFaulted) Debug.LogError($"Module import failed: {import.Error}");
+            }
+        }
 
         public Exception TryExecute(string code, string fileName = null, JavascriptDocumentType documentType = JavascriptDocumentType.Script)
         {
@@ -238,6 +266,7 @@ namespace ReactUnity.Scripting
         public void Update()
         {
             Engine.Advanced.ProcessTasks();
+            if (pendingImports.Count > 0) ReportFinishedImports();
         }
     }
 

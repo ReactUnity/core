@@ -1,6 +1,9 @@
+using System;
 using System.Collections;
+using System.IO;
 using NUnit.Framework;
 using ReactUnity.Scripting;
+using UnityEngine;
 
 namespace ReactUnity.Tests
 {
@@ -12,14 +15,15 @@ namespace ReactUnity.Tests
         public ModuleSyntaxTests(JavascriptEngineType engineType) : base(engineType) { }
 
         [UGUITest]
-        public IEnumerator OnlyClearScriptResolvesSpecifiersItself()
+        public IEnumerator OnlyQuickJSCannotResolveSpecifiersItself()
         {
             yield return null;
 
-            // Executing a module does not imply resolving one: QuickJS and Jint only look in a
-            // local file system, so an http dynamic import has to go through the host loader.
+            // Executing a module does not imply resolving one. ClearScript and Jint both take an
+            // async loader; QuickJS's is synchronous by C ABI, so an http import has to go through
+            // the host loader instead.
             var resolves = Context.Script.Engine.Capabilities.HasFlag(EngineCapabilities.ModuleResolution);
-            Assert.AreEqual(EngineType == JavascriptEngineType.ClearScript, resolves,
+            Assert.AreEqual(EngineType != JavascriptEngineType.QuickJS, resolves,
                 $"{EngineType} module resolution is not what the import hook assumes");
         }
 
@@ -63,6 +67,47 @@ namespace ReactUnity.Tests
             Assert.IsNotNull(actual, $"{EngineType} left import.meta.url unset");
             StringAssert.StartsWith(url, actual);
         }
+
+        [UGUITest]
+        public IEnumerator AStaticImportGraphLoadsAsynchronously()
+        {
+            yield return null;
+
+            // QuickJS has no async loader at all, and ClearScript's resolves a non-http specifier
+            // against the source url rather than the importing module, which a file url needs.
+            IgnoreForEngine(JavascriptEngineType.QuickJS);
+            IgnoreForEngine(JavascriptEngineType.ClearScript);
+
+            var dir = Path.Combine(Application.temporaryCachePath, "module-graph-" + graphCount++);
+            Directory.CreateDirectory(dir);
+
+            // Two hops, so the second is only discovered once the first has arrived.
+            File.WriteAllText(Path.Combine(dir, "leaf.js"), "export const value = 'loaded';");
+            File.WriteAllText(Path.Combine(dir, "dep.js"), "export { value } from './leaf.js';");
+
+            var entry = new Uri(Path.Combine(dir, "entry.js")).AbsoluteUri;
+            Context.Script.ExecuteScript(
+                "import { value } from './dep.js';\nglobalThis.__probe_graph = value;",
+                entry, JavascriptDocumentType.Module);
+
+            // Nothing has evaluated yet - the graph is still being fetched.
+            Assert.AreEqual("", Probe(), "the import graph evaluated before it could have been fetched");
+
+            for (var i = 0; i < 300 && Probe() == ""; i++) yield return null;
+
+            Assert.AreEqual("loaded", Probe());
+
+            // Only on success: a request still in flight against a deleted file would log an error
+            // into whichever test runs next.
+            Directory.Delete(dir, true);
+        }
+
+        static int graphCount;
+
+        /// Reading a global that was never set throws on Jint, and this one is expected to be
+        /// missing until the graph has loaded. A string keeps the assert off Jint's boxed null.
+        string Probe() => Context.Script.Engine.Evaluate(
+            "typeof __probe_graph !== 'undefined' ? String(__probe_graph) : ''")?.ToString();
 
         [UGUITest]
         public IEnumerator AVitePatchChunkRunsOnEveryEngine()
