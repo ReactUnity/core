@@ -123,6 +123,21 @@ export function render(element: React.ReactNode, options: RenderOptions = {}) {
   }
 
   const rc = isAsync ? getAsyncReconciler() : getSyncReconciler();
+
+  // Before the first commit, and once per reconciler. React Refresh only re-renders roots it saw
+  // mount, and it learns about them from the devtools hook's onCommitFiberRoot - so a renderer
+  // that registers after committing is invisible to it and hot updates apply but never repaint.
+  if (!injectedReconcilers.has(rc)) {
+    injectedReconcilers.add(rc);
+    rc.injectIntoDevTools({
+      bundleType: isDevelopment ? 1 : 0,
+      version,
+      rendererPackageName: '@reactunity/renderer',
+      rendererConfig: { isAsync },
+      findFiberByHostInstance,
+    });
+  }
+
   if (
     'updateContainerSync' in rc &&
     typeof rc.updateContainerSync === 'function' &&
@@ -135,16 +150,10 @@ export function render(element: React.ReactNode, options: RenderOptions = {}) {
     rc.updateContainer(element as any, hostRoot, null, () => {});
   }
 
-  rc.injectIntoDevTools({
-    bundleType: isDevelopment ? 1 : 0,
-    version,
-    rendererPackageName: '@reactunity/renderer',
-    rendererConfig: { isAsync },
-    findFiberByHostInstance,
-  });
-
   return rc;
 }
+
+const injectedReconcilers = new WeakSet<object>();
 
 /**
  * @deprecated Instead, import `render` directly from `@reactunity/renderer`
