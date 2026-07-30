@@ -1,7 +1,7 @@
 /// <reference no-default-lib="true"/>
 // es2022, not es2021: ReactUnity's own code (the renderer's diffing, material's
 // virtual-scroll, the devtools app) calls Object.hasOwn, and every engine ReactUnity
-// ships with -- QuickJS, Jint 3, ClearScript -- implements it.
+// ships with -- QuickJS, Jint 4, ClearScript -- implements it.
 /// <reference lib="es2022" />
 /// <reference types="react" />
 /// <reference types="webpack-env" />

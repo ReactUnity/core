@@ -8,6 +8,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Reflection;
+using System.Threading.Tasks;
 using Jint;
 using Jint.Native;
 using Jint.Native.Object;
@@ -49,7 +50,37 @@ namespace ReactUnity.Scripting
                 opt.Interop.AllowSystemReflection = true;
 
                 opt.SetTypeConverter(e => new JintTypeConverter(context, e));
+                opt.UseHostFactory(_ => new JintHost());
+
+                // Jint hands a Task to JS as an ordinary CLR wrapper. Its own TaskInterop feature turns
+                // one into a promise but rejects with the AggregateException, so do it here instead and
+                // unwrap - the other engines reject with the inner exception, and scripts see one shape.
+                var wrapObject = opt.Interop.WrapObjectHandler;
+                opt.Interop.WrapObjectHandler = (engine, target, type) => {
+                    if (!(target is Task task)) return wrapObject(engine, target, type);
+
+                    var (promise, resolve, reject) = engine.Advanced.RegisterPromise();
+
+                    task.GetAwaiter().OnCompleted(() => {
+                        if (task.IsFaulted) reject(JsValue.FromObject(engine, task.Exception.InnerException));
+                        else resolve(JsValue.FromObject(engine, task.GetType().GetProperty("Result")?.GetValue(task)));
+                    });
+
+                    return (ObjectInstance) promise;
+                };
             });
+        }
+
+        // Jint 4.15 stopped filling import.meta by itself, and the Vite client reads its own url off it.
+        private class JintHost : Host
+        {
+            public override List<KeyValuePair<JsValue, JsValue>> GetImportMetaProperties(Jint.Runtime.Modules.Module module)
+            {
+                var props = base.GetImportMetaProperties(module);
+                if (!props.Exists(x => x.Key.ToString() == "url"))
+                    props.Add(new KeyValuePair<JsValue, JsValue>("url", module.Location ?? JsValue.Undefined));
+                return props;
+            }
         }
 
         public object Evaluate(string code, string fileName = null)
@@ -82,21 +113,12 @@ namespace ReactUnity.Scripting
             {
                 Execute(code, fileName, documentType);
             }
-#if REACT_JINT_ACORNIMA
             catch (Acornima.ParseErrorException ex)
             {
                 Debug.LogError($"Parser exception in line {ex.LineNumber} column {ex.Column}");
                 Debug.LogException(ex);
                 return ex;
             }
-#else
-            catch (Esprima.ParserException ex)
-            {
-                Debug.LogError($"Parser exception in line {ex.LineNumber} column {ex.Column}");
-                Debug.LogException(ex);
-                return ex;
-            }
-#endif
             catch (JavaScriptException ex)
             {
                 Debug.LogError($"JS exception in {ex.Location}");

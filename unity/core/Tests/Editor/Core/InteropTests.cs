@@ -139,6 +139,8 @@ namespace ReactUnity.Tests.Editor
         public IEnumerator ListsCanHaveArrayPrototypeMethods()
         {
             IgnoreForEngine(JavascriptEngineType.ClearScript);
+            // Jint reads every Array.prototype method off a CLR list since 4.15, but wraps one read-only
+            // on Unity's runtime, so only the mutating half still throws - splice first.
             IgnoreForEngine(JavascriptEngineType.Jint);
 
             Globals["list"] = new List<int>() { 5, 7 };
@@ -201,8 +203,6 @@ namespace ReactUnity.Tests.Editor
         ", AutoRender = false)]
         public IEnumerator TasksCanBeUsedNaturally()
         {
-            IgnoreForEngine(JavascriptEngineType.Jint);
-
             var t0 = Task.CompletedTask;
             var t1 = new TaskCompletionSource<int>();
             var t2 = new TaskCompletionSource<int>();
