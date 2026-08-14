@@ -97,10 +97,8 @@ namespace ReactUnity.Scripting
             if (documentType == JavascriptDocumentType.Module)
             {
                 // import.meta.url is the specifier, so it has to be the address the code came from -
-                // and the cache is keyed on it, so a hot update needs a fresh one. Canonicalized
-                // because Jint matches this module by the key the loader resolves it to, not by
-                // this string.
-                var specifier = moduleLoader.Canonicalize($"{fileName ?? "module"}?__ru={moduleCount++}");
+                // and the cache is keyed on it, so a hot update needs a fresh one.
+                var specifier = $"{fileName ?? "module"}?__ru={moduleCount++}";
                 Engine.Modules.Add(specifier, code);
 
                 // Not awaited: anything this module imports is fetched by JintModuleLoader, which

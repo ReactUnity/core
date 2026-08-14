@@ -28,12 +28,6 @@ namespace ReactUnity.Scripting
             this.context = context;
         }
 
-        /// The name `Engine.Modules.Add` has to register a module under. Jint looks a registered
-        /// module up by the key `Resolve` returned for it, so the two have to be the same string -
-        /// and `http://host` and `http://host/` are one url but not one string.
-        public string Canonicalize(string specifier) =>
-            Resolve(null, new ModuleRequest(specifier, Array.Empty<ModuleImportAttribute>())).Key;
-
         public override ResolvedSpecifier Resolve(string referencingModuleLocation, ModuleRequest moduleRequest)
         {
             var specifier = moduleRequest.Specifier;
