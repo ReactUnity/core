@@ -1,6 +1,6 @@
 {
   "name": "@reactunity/create",
-  "version": "0.23.0",
+  "version": "0.23.1",
   "description": "Scaffold a ReactUnity app using npm init",
   "license": "MIT",
   "//type": "ESM, as of the chalk 6 / commander 15 upgrade: both dropped CommonJS. index.ts is emitted next to itself as ESM, so `bin` keeps pointing at index.js.",
