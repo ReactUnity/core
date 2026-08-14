@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: cbe0384635fa25549b485010a87231e7
+guid: 691362558245ffe4b8814b6b55d24838
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 547157135840585667
-    second: bg.png_0
+      213: -81426229241727978
+    second: bg-Cds-LjN8_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -70,7 +70,7 @@ TextureImporter:
   swizzle: 50462976
   cookieLightType: 0
   platformSettings:
-  - serializedVersion: 3
+  - serializedVersion: 4
     buildTarget: DefaultTexturePlatform
     maxTextureSize: 2048
     resizeAlgorithm: 0
@@ -83,21 +83,8 @@ TextureImporter:
     ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
-  - serializedVersion: 3
+  - serializedVersion: 4
     buildTarget: Standalone
-    maxTextureSize: 2048
-    resizeAlgorithm: 0
-    textureFormat: -1
-    textureCompression: 1
-    compressionQuality: 50
-    crunchedCompression: 0
-    allowsAlphaSplitting: 0
-    overridden: 0
-    ignorePlatformSupport: 0
-    androidETC2FallbackOverride: 0
-    forceMaximumCompressionQuality_BC6H_BC7: 0
-  - serializedVersion: 3
-    buildTarget: WebGL
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
@@ -113,7 +100,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: bg.png_0
+      name: bg-Cds-LjN8_0
       rect:
         serializedVersion: 2
         x: 0
@@ -123,17 +110,19 @@ TextureImporter:
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 3c7291e1484e79700800000000000000
-      internalID: 547157135840585667
+      spriteID: 614b5a2a647bedef0800000000000000
+      internalID: -81426229241727978
       vertices: []
       indices: 
       edges: []
       weights: []
     outline: []
+    customData: 
     physicsShape: []
     bones: []
     spriteID: 
@@ -143,8 +132,10 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
     nameFileIdTable:
-      bg.png_0: 547157135840585667
+      bg-Cds-LjN8_0: -81426229241727978
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

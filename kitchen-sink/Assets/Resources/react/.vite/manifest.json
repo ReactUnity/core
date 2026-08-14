@@ -1,0 +1,18 @@
+{
+  "index.html": {
+    "file": "assets/index.js",
+    "name": "index",
+    "src": "index.html",
+    "isEntry": true,
+    "dynamicImports": [
+      "index.html"
+    ],
+    "assets": [
+      "assets/bg-Cds-LjN8.png"
+    ]
+  },
+  "src/assets/bg.png": {
+    "file": "assets/bg-Cds-LjN8.png",
+    "src": "src/assets/bg.png"
+  }
+}
