@@ -47,7 +47,7 @@ namespace ReactUnity.Styling.Shorthands
 
                 var (name, args, argsCombined) = ParserHelpers.ParseFunction(expression);
 
-                var argCount = args.Length;
+                var argCount = args?.Length ?? 0;
 
                 object xArg, yArg, zArg;
 

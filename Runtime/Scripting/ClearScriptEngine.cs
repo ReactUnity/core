@@ -19,7 +19,7 @@ namespace ReactUnity.Scripting
     public class ClearScriptEngine : IJavaScriptEngine, IDisposable
     {
         public string Key { get; } = "clearscript";
-        public EngineCapabilities Capabilities { get; } = EngineCapabilities.None;
+        public EngineCapabilities Capabilities { get; } = EngineCapabilities.ModuleResolution;
 
         private const string tempKey = "__$__temp_key__$__";
 

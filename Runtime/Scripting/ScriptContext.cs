@@ -56,7 +56,15 @@ namespace ReactUnity.Scripting
             beforeStartCallbacks.Add(beforeStart);
             afterStartCallbacks.Add((success) => afterStart?.Invoke());
 
-            Initialize(() => engine.TryExecute(script, "ReactUnity/main"));
+            Initialize(() => {
+                // The url doubles as the module specifier, so it has to stand in for
+                // "ReactUnity/main" whenever this turns out to be module-shaped output.
+                var url = Context.Location?.href;
+                var documentType = JavascriptDocumentType.Script;
+                var code = MakeExecutable(script, ref documentType);
+                var fileName = documentType == JavascriptDocumentType.Module && !string.IsNullOrEmpty(url) ? url : "ReactUnity/main";
+                return engine.TryExecute(code, fileName, documentType);
+            });
         }
 
         public void Initialize(Func<Exception> callback)
@@ -81,6 +89,7 @@ namespace ReactUnity.Scripting
                     CreateConsole(engine);
                     CreateScheduler(engine, Context);
                     CreatePolyfills(engine);
+                    CreateImportHook(engine);
 
                     Context.MediaProvider.SetValue("engine", engine.Key);
 
@@ -131,7 +140,26 @@ namespace ReactUnity.Scripting
 
         public void ExecuteScript(string code, string fileName = null, JavascriptDocumentType documentType = JavascriptDocumentType.Script)
         {
-            Engine.Execute(code, fileName, documentType);
+            Engine.Execute(MakeExecutable(code, ref documentType), fileName, documentType);
+        }
+
+        /// Decides how a piece of bundler output has to be run.
+        ///
+        /// Browser-targeted output carries module-only syntax even when it is otherwise a classic
+        /// script - a Vite dev bundle has `import.meta.url` and a trailing `export`, and an HMR
+        /// patch has the `; export {}` Vite appends - so the document type is upgraded to match.
+        /// The code itself is left alone; every engine executes real modules.
+        ///
+        /// Dynamic import is separate: executing a module does not mean the engine can resolve a
+        /// specifier, and the ones that cannot are pointed at the host loader.
+        internal string MakeExecutable(string code, ref JavascriptDocumentType documentType)
+        {
+            if (ModuleCompat.NeedsModuleScope(code)) documentType = JavascriptDocumentType.Module;
+
+            if (!Engine.Capabilities.HasFlag(EngineCapabilities.ModuleResolution))
+                return ModuleCompat.RewriteDynamicImports(code);
+
+            return code;
         }
 
         public object EvaluateScript(string code, string fileName = null)
@@ -237,6 +265,45 @@ namespace ReactUnity.Scripting
 
             if (!engine.Capabilities.HasFlag(EngineCapabilities.AbortController))
                 engine.Execute(ResourcesHelper.GetPolyfill("abortcontroller"), "ReactUnity/polyfills/abortcontroller");
+        }
+
+        /// Stands in for dynamic import on engines that cannot resolve one. Vite's HMR client
+        /// applies every patch with `import(url)`, and a patch chunk is a classic script once its
+        /// trailing export is gone - so fetching it and executing it in global scope is enough.
+        /// ModuleCompat redirects the call sites here.
+        void CreateImportHook(IJavaScriptEngine engine)
+        {
+            if (engine.Capabilities.HasFlag(EngineCapabilities.ModuleResolution)) return;
+
+            engine.SetGlobal("__reactunity_load_script", new Action<string, Callback, Callback>(LoadScript));
+            engine.Execute($@"
+                global.{ModuleCompat.ImportHook} = function {ModuleCompat.ImportHook} (url) {{
+                    return new Promise(function (resolve, reject) {{
+                        global.__reactunity_load_script(String(url), function () {{ resolve({{}}); }}, reject);
+                    }});
+                }};
+            ", "ReactUnity/shims/import");
+        }
+
+        void LoadScript(string url, Callback resolve, Callback reject)
+        {
+            var resolved = Context.ResolvePath(url);
+
+            Context.Dispatcher.StartDeferred(ScriptSource.WatchWebRequest(
+                UnityEngine.Networking.UnityWebRequest.Get(resolved),
+                code => {
+                    try
+                    {
+                        ExecuteScript(code, resolved);
+                        resolve?.Call();
+                    }
+                    catch (Exception ex)
+                    {
+                        UnityEngine.Debug.LogException(ex);
+                        reject?.Call(ex.Message);
+                    }
+                },
+                error => reject?.Call($"Failed to load '{resolved}': {error}")));
         }
 
         static void CreateScheduler(IJavaScriptEngine engine, ReactContext context)

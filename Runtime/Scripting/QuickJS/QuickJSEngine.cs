@@ -125,6 +125,14 @@ namespace ReactUnity.Scripting
 
         public void Execute(string code, string fileName = null, JavascriptDocumentType documentType = JavascriptDocumentType.Script)
         {
+            if (documentType == JavascriptDocumentType.Module)
+            {
+                // Module scope, so `void 0;` is not needed to keep the result marshalable.
+                MainContext.EvalModule<object>(code, fileName ?? "module");
+                Runtime.ExecutePendingJob();
+                return;
+            }
+
             var voidedCode = code + "\n;;void 0;";
             Evaluate(voidedCode, fileName);
         }

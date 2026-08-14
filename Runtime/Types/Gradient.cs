@@ -173,7 +173,14 @@ namespace ReactUnity.Types
 
             length = length - offset;
 
-            var tx = new Texture2D(resolution, 1, TextureFormat.RGBA32, false, true);
+            // Both the texture flag and the conversion below follow the project's colour
+            // space, and must agree. In linear space the ramp holds linear values that the
+            // output pass re-encodes; in gamma space nothing re-encodes, so converting would
+            // darken every gradient by 2.2 (a CSS `green` midpoint landed on 55 instead of
+            // 128). The conversion used to be unconditional -- see the snapshot diff in #132.
+            var linearSpace = QualitySettings.activeColorSpace == ColorSpace.Linear;
+
+            var tx = new Texture2D(resolution, 1, TextureFormat.RGBA32, false, linearSpace);
             tx.wrapMode = Repeating ? TextureWrapMode.Repeat : TextureWrapMode.Clamp;
             var resRp = 1f / (resolution - 1);
 
@@ -183,8 +190,8 @@ namespace ReactUnity.Types
                 var t = i * resRp;
                 var rt = length * t + offset;
 
-                // Convert to linear space as the texture is marked as linear
-                var px = GetColorForOffset(distance, rt).linear;
+                var color = GetColorForOffset(distance, rt);
+                var px = linearSpace ? color.linear : color;
 
                 // This is done so that transparent pixels have same color channel as next pixel
                 // So that the bilinear interpolation shows a better texture

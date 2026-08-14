@@ -8,11 +8,13 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Reflection;
+using System.Threading.Tasks;
 using Jint;
 using Jint.Native;
 using Jint.Native.Object;
 using Jint.Runtime;
 using Jint.Runtime.Interop;
+using Jint.Runtime.Modules;
 using UnityEngine;
 
 namespace ReactUnity.Scripting
@@ -22,10 +24,12 @@ namespace ReactUnity.Scripting
         public string Key { get; } = "jint";
         public Engine Engine { get; }
         public object NativeEngine => Engine;
-        public EngineCapabilities Capabilities { get; } = EngineCapabilities.None;
+        public EngineCapabilities Capabilities { get; } = EngineCapabilities.ModuleResolution;
 
         public JintEngine(ReactContext context, bool debug, bool awaitDebugger)
         {
+            moduleLoader = new JintModuleLoader(context);
+
             Engine = new Engine(opt => {
                 opt.AllowClr(
                     typeof(object).Assembly,
@@ -49,7 +53,38 @@ namespace ReactUnity.Scripting
                 opt.Interop.AllowSystemReflection = true;
 
                 opt.SetTypeConverter(e => new JintTypeConverter(context, e));
+                opt.UseHostFactory(_ => new JintHost());
+                opt.EnableModules(moduleLoader);
+
+                // Jint hands a Task to JS as an ordinary CLR wrapper. Its own TaskInterop feature turns
+                // one into a promise but rejects with the AggregateException, so do it here instead and
+                // unwrap - the other engines reject with the inner exception, and scripts see one shape.
+                var wrapObject = opt.Interop.WrapObjectHandler;
+                opt.Interop.WrapObjectHandler = (engine, target, type) => {
+                    if (!(target is Task task)) return wrapObject(engine, target, type);
+
+                    var (promise, resolve, reject) = engine.Advanced.RegisterPromise();
+
+                    task.GetAwaiter().OnCompleted(() => {
+                        if (task.IsFaulted) reject(JsValue.FromObject(engine, task.Exception.InnerException));
+                        else resolve(JsValue.FromObject(engine, task.GetType().GetProperty("Result")?.GetValue(task)));
+                    });
+
+                    return (ObjectInstance) promise;
+                };
             });
+        }
+
+        // Jint 4.15 stopped filling import.meta by itself, and the Vite client reads its own url off it.
+        private class JintHost : Host
+        {
+            public override List<KeyValuePair<JsValue, JsValue>> GetImportMetaProperties(Jint.Runtime.Modules.Module module)
+            {
+                var props = base.GetImportMetaProperties(module);
+                if (!props.Exists(x => x.Key.ToString() == "url"))
+                    props.Add(new KeyValuePair<JsValue, JsValue>("url", module.Location ?? JsValue.Undefined));
+                return props;
+            }
         }
 
         public object Evaluate(string code, string fileName = null)
@@ -59,7 +94,54 @@ namespace ReactUnity.Scripting
 
         public void Execute(string code, string fileName = null, JavascriptDocumentType documentType = JavascriptDocumentType.Script)
         {
+            if (documentType == JavascriptDocumentType.Module)
+            {
+                // import.meta.url is the specifier, so it has to be the address the code came from -
+                // and the cache is keyed on it, so a hot update needs a fresh one.
+                var specifier = $"{fileName ?? "module"}?__ru={moduleCount++}";
+                Engine.Modules.Add(specifier, code);
+
+                // Not awaited: anything this module imports is fetched by JintModuleLoader, which
+                // needs the frames a blocking import would be holding.
+                var import = Engine.Modules.StartImport(specifier);
+
+                // Draining the queue the import just filled is enough to finish a module that
+                // needs nothing from the loader - which is every bundle, so those still evaluate
+                // before this returns. A graph waiting on a request cannot, and finishes over the
+                // next few Update()s instead.
+                if (!import.IsCompleted) Engine.Advanced.ProcessTasks();
+
+                if (!import.IsCompleted) pendingImports.Add(import);
+                else if (import.IsFaulted) throw new JavaScriptException(import.Error);
+                return;
+            }
+
             Engine.Execute(code);
+        }
+
+        private int moduleCount;
+        private readonly JintModuleLoader moduleLoader;
+        private readonly List<ModuleImportOperation> pendingImports = new List<ModuleImportOperation>();
+
+        /// The only place a graph that finished loading after Execute returned can be reported.
+        void ReportFinishedImports()
+        {
+            for (var i = pendingImports.Count - 1; i >= 0; i--)
+            {
+                var import = pendingImports[i];
+                if (!import.IsCompleted) continue;
+
+                pendingImports.RemoveAt(i);
+                if (import.IsFaulted) Debug.LogError($"Module import failed: {Describe(import.Error)}");
+            }
+        }
+
+        /// A rejected import only names a line in the bundle through the error's own stack, which
+        /// is not part of its message.
+        static string Describe(JsValue error)
+        {
+            var stack = error is ObjectInstance obj ? obj.Get("stack") : JsValue.Undefined;
+            return stack.IsUndefined() || stack.IsNull() ? error?.ToString() : $"{error}\n{stack}";
         }
 
         public Exception TryExecute(string code, string fileName = null, JavascriptDocumentType documentType = JavascriptDocumentType.Script)
@@ -68,24 +150,15 @@ namespace ReactUnity.Scripting
             {
                 Execute(code, fileName, documentType);
             }
-#if REACT_JINT_ACORNIMA
             catch (Acornima.ParseErrorException ex)
             {
                 Debug.LogError($"Parser exception in line {ex.LineNumber} column {ex.Column}");
                 Debug.LogException(ex);
                 return ex;
             }
-#else
-            catch (Esprima.ParserException ex)
-            {
-                Debug.LogError($"Parser exception in line {ex.LineNumber} column {ex.Column}");
-                Debug.LogException(ex);
-                return ex;
-            }
-#endif
             catch (JavaScriptException ex)
             {
-                Debug.LogError($"JS exception in {ex.Location}");
+                Debug.LogError($"JS exception in {ex.Location}\n{Describe(ex.Error)}");
                 Debug.LogException(ex);
                 return ex;
             }
@@ -202,6 +275,7 @@ namespace ReactUnity.Scripting
         public void Update()
         {
             Engine.Advanced.ProcessTasks();
+            if (pendingImports.Count > 0) ReportFinishedImports();
         }
     }
 

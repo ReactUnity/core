@@ -30,6 +30,14 @@ npx openupm-cli add com.reactunity.core com.reactunity.quickjs
 https://github.com/ReactUnity/core.git#latest
 ```
 
+`latest` follows the newest release. Pin a version with its tag instead:
+
+```
+https://github.com/ReactUnity/core.git#v0.23.0
+```
+
+Each release publishes this package to a branch with the package at its root, so a git install fetches ~29 MB rather than the whole monorepo.
+
 ## Usage
 
 - Create a canvas and add `ReactRendererUGUI` component to it
@@ -49,6 +57,6 @@ Visit the documentation on the [main website](https://reactunity.github.io) to l
 
 ## Resources and References
 
-- [Sample Project](https://github.com/ReactUnity/full-sample)
+- [Kitchen Sink sample project](https://github.com/ReactUnity/core/tree/kitchen-sink) — a complete Unity project using ReactUnity, cloneable on its own
 - [React Unity Renderer (npm package)](https://github.com/ReactUnity/renderer)
 - [Acknowledgements](https://github.com/ReactUnity/core/blob/main/.github/acknowledgements.md)

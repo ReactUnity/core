@@ -66,5 +66,21 @@ namespace ReactUnity.Tests
             //Assert.AreEqual(true, sh1.Shadow.inset);
             //Assert.AreEqual(Color.black, sh1.Shadow.color);
         }
+
+        const string BorderStyle = @"
+            #test {
+                background-color: white;
+                border: 4px inset red;
+            }
+        ";
+
+        [UGUITest(Script = BaseScript, Style = BorderStyle)]
+        public IEnumerator BorderStyleLookupTextureIsBoundOnFirstRender()
+        {
+            yield return null;
+
+            var bg = View.BorderAndBackground.BorderGraphic;
+            Assert.IsTrue(bg.mainTexture != null, "Border style lookup texture was not bound on the first render");
+        }
     }
 }

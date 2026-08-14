@@ -319,6 +319,85 @@ namespace ReactUnity.Tests
             Assertions.Snapshot("borders/" + bg.Item1);
         }
 
+
+        protected static string[] borderStyles = new string[] {
+            "none", "solid", "double", "groove", "ridge", "inset", "outset", "dotted", "dashed",
+        };
+
+        [UGUITest(Script = BaseScript, Style = BaseStyle)]
+        public IEnumerator BorderStyleSnapshots([ValueSource("borderStyles")] string style)
+        {
+            View.Style["margin"] = 40;
+            View.Style["width"] = 216;
+            View.Style["height"] = 128;
+            View.Style["border-width"] = "20px";
+            View.Style["border-color"] = "#847875";
+            View.Style["border-style"] = style;
+            yield return null;
+            Assertions.Snapshot("border-styles/" + style);
+
+            // dotted and dashed tile along the edge, which the rounded mesh cannot do - they fall
+            // back to solid here.
+            View.Style["border-radius"] = "45px";
+            yield return null;
+            Assertions.Snapshot("border-styles/rounded-" + style);
+
+            // A distinct colour on one side puts the seam where the per-side colour transition
+            // already is, at 45 degrees through each corner.
+            View.Style["border-top-color"] = "red";
+            yield return null;
+            Assertions.Snapshot("border-styles/rounded-sided-" + style);
+        }
+
+        protected static string[] tiledBorderStyles = new string[] { "dotted", "dashed" };
+
+        // The 20px border above is far too fat to read as a pattern, so the tiled styles get their
+        // own case at a width a project would actually use.
+        [UGUITest(Script = BaseScript, Style = BaseStyle)]
+        public IEnumerator TiledBorderStyleSnapshots([ValueSource("tiledBorderStyles")] string style)
+        {
+            View.Style["margin"] = 40;
+            View.Style["width"] = 216;
+            View.Style["height"] = 128;
+            View.Style["border-width"] = "4px";
+            View.Style["border-color"] = "#847875";
+            View.Style["border-style"] = style;
+            yield return null;
+            Assertions.Snapshot("border-styles/thin-" + style);
+
+            View.Style["border-radius"] = "45px";
+            yield return null;
+            Assertions.Snapshot("border-styles/thin-rounded-" + style);
+
+            // A radius wide enough to clamp leaves no straight run on the short sides.
+            View.Style["border-radius"] = "64px";
+            yield return null;
+            Assertions.Snapshot("border-styles/thin-clamped-" + style);
+
+            // One side left solid: the pattern has to stop at the mitre without disturbing it.
+            View.Style["border-radius"] = "45px";
+            View.Style["border-top-style"] = "solid";
+            yield return null;
+            Assertions.Snapshot("border-styles/thin-mixed-" + style);
+        }
+
+        [UGUITest(Script = BaseScript, Style = BaseStyle)]
+        public IEnumerator OutlineStyleSnapshots()
+        {
+            View.Style["margin"] = 40;
+            View.Style["width"] = 216;
+            View.Style["height"] = 128;
+            View.Style["outline"] = "20px groove #847875";
+            yield return null;
+            Assertions.Snapshot("border-styles/outline-groove");
+
+            // An outline arrives with negative sizes, which reverses the two rings. The ramp must
+            // not reverse with them - this has to match the square outline above.
+            View.Style["border-radius"] = "45px";
+            yield return null;
+            Assertions.Snapshot("border-styles/outline-groove-rounded");
+        }
+
         [UGUITest(Script = BaseScript, Style = BaseStyle)]
         public IEnumerator BackgroundBlendSnapshots()
         {

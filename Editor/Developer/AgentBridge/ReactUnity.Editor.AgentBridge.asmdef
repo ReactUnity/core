@@ -1,0 +1,27 @@
+{
+    "name": "ReactUnity.Editor.AgentBridge",
+    "rootNamespace": "ReactUnity.Editor.Developer",
+    "references": [
+        "UnityEditor.TestRunner",
+        "UnityEngine.TestRunner"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": false,
+    "defineConstraints": [
+        "REACT_UNITY_DEVELOPER"
+    ],
+    "versionDefines": [
+        {
+            "name": "com.unity.test-framework",
+            "expression": "",
+            "define": "REACT_TEST_FRAMEWORK"
+        }
+    ],
+    "noEngineReferences": false
+}
