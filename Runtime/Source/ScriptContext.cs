@@ -833,6 +833,14 @@ namespace QuickJS
             return (T)EvalSource(bytes, fileName, typeof(T));
         }
 
+        /// Evaluates as an ES module rather than a script, so `import.meta`, `export` and dynamic
+        /// `import()` are all legal. The body runs off the job queue, so pump the runtime after.
+        public T EvalModule<T>(string source, string fileName)
+        {
+            var bytes = System.Text.Encoding.UTF8.GetBytes(source);
+            return (T)EvalSource(bytes, fileName, typeof(T), true);
+        }
+
         public void EvalSource(byte[] source, string fileName)
         {
             EvalSource(source, fileName, typeof(void));
@@ -845,7 +853,12 @@ namespace QuickJS
 
         public object EvalSource(byte[] source, string fileName, Type returnType)
         {
-            var jsValue = ScriptRuntime.EvalSource(_ctx, source, fileName, false);
+            return EvalSource(source, fileName, returnType, false);
+        }
+
+        public object EvalSource(byte[] source, string fileName, Type returnType, bool bModule)
+        {
+            var jsValue = ScriptRuntime.EvalSource(_ctx, source, fileName, bModule);
             if (JSApi.JS_IsException(jsValue))
             {
                 var ex = _ctx.GetExceptionString();
