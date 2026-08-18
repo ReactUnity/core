@@ -26,6 +26,10 @@
 # Visual Studio cache directory
 .vs/
 
+# Regenerated per machine by com.unity.ide.visualstudio whenever the project is opened.
+# Anchored: react/.vscode/launch.json is committed on purpose and must stay tracked.
+/.vscode/
+
 # Gradle cache directory
 .gradle/
 
