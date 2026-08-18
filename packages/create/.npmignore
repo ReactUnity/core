@@ -1,3 +1,6 @@
+# The CLI resolves the scaffold as `../scaffold` from dist/, so both have to ship.
+# `!/index.js` was the pre-tsdown output path; dist/index.js only kept being published
+# because npm force-includes `bin`, which silently dropped its sourcemap.
 *
-!/index.js
-!/scaffold
+!/dist/**
+!/scaffold/**

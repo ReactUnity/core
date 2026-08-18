@@ -20,7 +20,7 @@
     "node": ">=20.11"
   },
   "scripts": {
-    "start": "tsx index.ts",
+    "start": "tsx src/index.ts",
     "build": "tsdown",
     "typecheck": "tsc",
     "prepare": "pnpm run build"

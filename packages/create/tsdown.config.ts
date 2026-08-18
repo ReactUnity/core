@@ -7,10 +7,12 @@ import { defineConfig } from 'tsdown';
  * This package is a CLI, so there is nothing to declare: no `types` field, no consumer
  * importing it, hence `dts: false`. Output moved from the package root (where `tsc` put a
  * gitignored index.js next to the source) into dist/, which is where `files`, .gitignore
- * and Biome's ignore list already expect build output to be.
+ * and Biome's ignore list already expect build output to be. The entry sits in src/ so
+ * that dist/ and src/ are the same depth: the CLI resolves scaffold/ as `../scaffold`,
+ * and that has to hold whether it runs bundled or through tsx.
  */
 export default defineConfig({
-  entry: ['index.ts'],
+  entry: ['src/index.ts'],
   outDir: 'dist',
   format: 'esm',
   platform: 'node',

@@ -36,9 +36,11 @@ const unityDir = createUnity ? path.resolve(cwd, unityFolderName) : cwd;
 const reactDir = path.resolve(unityDir, reactFolderName);
 const packageJsonPath = path.join(reactDir, 'package.json');
 
-// `import.meta.dirname` rather than `__dirname`: this package is ESM now.
-const unityScaffold = path.join(import.meta.dirname, 'scaffold');
-const reactScaffold = path.join(import.meta.dirname, 'scaffold/react');
+// `import.meta.dirname` rather than `__dirname`: this package is ESM now. It is src/ under
+// tsx and dist/ once bundled, so the package root -- where scaffold/ ships -- is always `..`.
+const packageRoot = path.join(import.meta.dirname, '..');
+const unityScaffold = path.join(packageRoot, 'scaffold');
+const reactScaffold = path.join(packageRoot, 'scaffold/react');
 const reactScaffoldNodeModules = path.join(reactScaffold, 'node_modules');
 
 async function isDirEmpty(dirname) {
@@ -62,8 +64,7 @@ async function copyScaffold(scaffoldDir: string, targetDir: string) {
 }
 
 async function runOpenUPM() {
-  const cmd = `npx${process.platform === 'win32' ? '.cmd' : ''}`;
-  return await run_script(cmd, ['-y', 'openupm-cli', 'add', 'com.reactunity.core', 'com.reactunity.quickjs'], { cwd: unityDir });
+  return await run_script('npx', ['-y', 'openupm-cli', 'add', 'com.reactunity.core', 'com.reactunity.quickjs'], { cwd: unityDir });
 }
 
 // In some versions of npm, .gitignore is renamed to .npmignore automatically
@@ -108,8 +109,7 @@ async function create() {
   try {
     console.log(chalk.underline('Starting package updates'));
     console.log();
-    const npx = `npx${process.platform === 'win32' ? '.cmd' : ''}`;
-    const npxCode = await run_script(npx, ['-y', 'npm-check-updates', '-u', '--packageFile', packageJsonPath], { cwd: reactDir });
+    const npxCode = await run_script('npx', ['-y', 'npm-check-updates', '-u', '--packageFile', packageJsonPath], { cwd: reactDir });
     if (npxCode !== 0) updateFailCallback();
   } catch (err) {
     console.error(err);
@@ -126,12 +126,10 @@ async function create() {
       process.exit();
     };
 
-    const cmd = install + (process.platform === 'win32' ? '.cmd' : '');
-
     try {
       console.log(chalk.underline(`Starting ${install} install`));
       console.log();
-      const code = await run_script(cmd, ['install'], { cwd: reactDir });
+      const code = await run_script(install, ['install'], { cwd: reactDir });
 
       if (code !== 0) installFailCallback();
     } catch (err) {
@@ -154,7 +152,12 @@ create().catch((err) => {
 function run_script(command: string, args: string[], options: cp.SpawnOptionsWithoutStdio) {
   return new Promise((resolve, reject) => {
     try {
-      const child = cp.spawn(command, args, options);
+      // Node 20.12 stopped spawning .cmd/.bat directly on Windows (CVE-2024-27980) -- npx, npm
+      // and yarn are all .cmd there, so every caller died with EINVAL. A shell resolves them
+      // again, at the cost of having to quote the arguments by hand.
+      const useShell = process.platform === 'win32';
+      const quoted = useShell ? args.map((arg) => (/[\s&|<>^"]/.test(arg) ? `"${arg.replace(/"/g, '""')}"` : arg)) : args;
+      const child = cp.spawn(command, quoted, { ...options, shell: useShell });
 
       child.stdout.setEncoding('utf8');
       child.stdout.on('data', (data) => {

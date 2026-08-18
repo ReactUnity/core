@@ -21,6 +21,6 @@
     "lib": ["es2023"],
     "target": "es2023"
   },
-  "files": ["./index.ts"],
+  "files": ["./src/index.ts"],
   "exclude": ["./dist/**/*.*", "./scaffold/**/*.*"]
 }
