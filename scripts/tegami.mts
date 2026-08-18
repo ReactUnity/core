@@ -22,6 +22,28 @@ const UNITY_PACKAGES = ['core', 'jint', 'quickjs', 'clearscript'];
 // together and land on the same version.
 const VERSION_SOURCE = 'npm:@reactunity/renderer';
 
+// The @reactunity/create scaffold pins ReactUnity by version in two files, and is outside
+// the pnpm workspace (pnpm-workspace.yaml excludes it as a template of placeholders), so
+// nothing was bumping it: the UPM pins sat at 0.18.0 from April 2024 until this was added.
+//
+// The CLI does repair both at scaffold time -- `openupm-cli add` for the manifest, `ncu -u`
+// for the app -- which is what hid the rot. Those are best-effort network calls, and both
+// were dead on Windows for months (Node 20.12 refusing to spawn .cmd), so users got the
+// checked-in numbers verbatim. The pins have to be correct on their own.
+const SCAFFOLD_PINS = [
+  {
+    file: 'packages/create/scaffold/Packages/manifest.json',
+    keys: ['com.reactunity.core', 'com.reactunity.quickjs'],
+    // A UPM manifest takes an exact version; npm ranges mean nothing to it.
+    range: (version: string) => version,
+  },
+  {
+    file: 'packages/create/scaffold/react/package.json',
+    keys: ['@reactunity/renderer', '@reactunity/scripts'],
+    range: (version: string) => `^${version}`,
+  },
+];
+
 const syncUnityVersions: TegamiPlugin = {
   name: 'reactunity:sync-unity-versions',
   // 'post' matters: the npm plugin sets pkg.manifest.version in its own
@@ -42,6 +64,25 @@ const syncUnityVersions: TegamiPlugin = {
       if (next === raw) continue;
       await fs.writeFile(file, next);
       console.log(`[tegami] unity/${name} -> ${version}`);
+    }
+
+    for (const { file: relative, keys, range } of SCAFFOLD_PINS) {
+      const file = path.resolve(process.cwd(), relative);
+      const raw = await fs.readFile(file, 'utf8');
+      let next = raw;
+
+      for (const key of keys) {
+        // Anchored on the key, so only that one dependency's range moves.
+        const pin = new RegExp(`("${RegExp.escape(key)}"\\s*:\\s*")[^"]*(")`);
+        // Throw rather than skip: a key that was renamed away would otherwise leave the
+        // pin frozen and silent, which is the exact failure this plugin exists to end.
+        if (!pin.test(next)) throw new Error(`${relative} has no "${key}" pin to sync`);
+        next = next.replace(pin, `$1${range(version)}$2`);
+      }
+
+      if (next === raw) continue;
+      await fs.writeFile(file, next);
+      console.log(`[tegami] ${relative} -> ${range(version)}`);
     }
   },
 };
