@@ -7,7 +7,7 @@ import path from 'node:path';
 import { parseArgs } from 'node:util';
 import { bridge } from './bridge.mts';
 import { listEditors, resolveEditor } from './editors.mts';
-import { type LogReport, parseLog, parseTestResults } from './parse.mts';
+import { type LogReport, parseLog, parseProbe, parseTestResults } from './parse.mts';
 import { getProject, lockHolder, type Project, repoRoot, restoreChurn, snapshotChurn } from './project.mts';
 import { rel, reportLog, reportTests } from './report.mts';
 
@@ -23,6 +23,11 @@ const { values: flags, positionals } = parseArgs({
     assemblies: { type: 'string' },
     'overwrite-snapshots': { type: 'boolean', default: false },
     nographics: { type: 'boolean', default: false },
+    // player-only
+    backend: { type: 'string', default: 'il2cpp' },
+    stripping: { type: 'string' },
+    graphics: { type: 'boolean', default: false },
+    'skip-build': { type: 'boolean', default: false },
     // Declared as its own flag, not `restore` with a default: parseArgs has no --no-x
     // negation and throws ERR_PARSE_ARGS_UNKNOWN_OPTION on one.
     'no-restore': { type: 'boolean', default: false },
@@ -48,6 +53,7 @@ const USAGE = `pnpm unity <command> [project] [options]
 Commands:
   compile [tests|kitchen-sink]  Compile the project's scripts and report C# errors
   test    [tests|kitchen-sink]  Run the Unity test suites and report failures
+  player  [tests|kitchen-sink]  Build a standalone player and probe the JS engines inside it
   open    [tests|kitchen-sink]  Launch the Editor GUI (detached, returns immediately)
   editors                       List installed Unity editors
 
@@ -60,6 +66,12 @@ Commands:
     screenshot  capture to --path (needs a rendering Editor; play mode is safest)
     menu        run a menu item, e.g. --path "React/Tests/Overwrite Snapshots"
     quit        close the Editor and wait for the project lock to clear
+
+Options (player):
+  --backend <il2cpp|mono>             Scripting backend to build with (default il2cpp)
+  --stripping <level>                 Managed stripping level: Disabled, Minimal, Low, Medium, High
+  --graphics                          Give the player a graphics device (default headless)
+  --skip-build                        Run the player already at the output path
 
 Options:
   --platform <EditMode|PlayMode|All>  Test mode (default All)
@@ -88,6 +100,7 @@ async function main() {
   if (command === 'open') return openEditor(project);
   if (command === 'compile') return await compile(project);
   if (command === 'test') return await test(project);
+  if (command === 'player') return await player(project);
   if (command === 'bridge') {
     return await bridge(project, bridgeAction as string, {
       level: flags.level,
@@ -181,6 +194,141 @@ async function test(project: Project) {
   }
 
   if (anyFailed) process.exitCode = 1;
+}
+
+/**
+ * Builds a standalone player and runs the probe inside it. This is the only check here that
+ * covers IL2CPP: the Editor is always Mono, so nothing `test` reports says anything about a
+ * P/Invoke stub the AOT compiler had to generate, or a type the managed stripper deleted.
+ */
+async function player(project: Project) {
+  const backend = (flags.backend ?? 'il2cpp').toLowerCase();
+  if (backend !== 'il2cpp' && backend !== 'mono') {
+    console.error(`--backend takes il2cpp or mono, not '${backend}'.`);
+    process.exitCode = 1;
+    return;
+  }
+
+  const outputDir = path.join(outDir, `player-${project.name}-${backend}`);
+  let executable = findPlayer(outputDir);
+
+  if (!flags['skip-build']) {
+    const label = `player-build-${backend}`;
+    const args = [
+      '-quit',
+      '-nographics',
+      '-executeMethod',
+      'ReactUnity.Editor.Developer.PlayerBuilder.Build',
+      '-reactBackend',
+      backend,
+      '-reactPlayerPath',
+      outputDir,
+    ];
+    if (flags.stripping) args.push('-reactStripping', flags.stripping);
+
+    // An IL2CPP build compiles the whole managed surface to C++ and then builds it, so it is
+    // minutes rather than the seconds `compile` takes.
+    const { log, code } = await runUnity(project, { label, args, timeoutSeconds: Number(flags.timeout ?? 3600) });
+    reportLog(log);
+
+    executable = builtPath(path.join(outDir, `${project.name}-${label}.log`)) ?? findPlayer(outputDir);
+    if (code !== 0 || !executable) {
+      console.error(
+        `\nThe ${backend} player did not build (Unity exited ${code}). See ${rel(path.join(outDir, `${project.name}-${label}.log`))}.`,
+      );
+      process.exitCode = 1;
+      return;
+    }
+  }
+
+  if (!executable) {
+    console.error(`No player at ${rel(outputDir)}. Drop --skip-build to build one.`);
+    process.exitCode = 1;
+    return;
+  }
+
+  const playerLog = path.join(outDir, `${project.name}-player-${backend}.log`);
+  fs.rmSync(playerLog, { force: true });
+
+  // The probe quits the player itself, so the timeout is a backstop rather than the plan.
+  const args = ['-logFile', playerLog, '-reactProbe'];
+  if (!flags.graphics) args.push('-batchmode', '-nographics');
+
+  console.log(`\nRunning ${rel(executable)} -> ${rel(playerLog)}`);
+  const started = Date.now();
+  const child = spawn(executable, args, { cwd: path.dirname(executable), stdio: 'ignore' });
+  const stopTail = tailLog(playerLog, started);
+  const code = await new Promise<number | null>((resolve) => {
+    const timer = setTimeout(
+      () => {
+        console.error('\nThe player did not exit; killing it. The probe writes its verdict before quitting, so read on.');
+        child.kill();
+      },
+      Number(flags.timeout ?? 300) * 1000,
+    );
+    child.on('exit', (exitCode) => {
+      clearTimeout(timer);
+      resolve(exitCode);
+    });
+    child.on('error', (error) => {
+      clearTimeout(timer);
+      console.error(String(error));
+      resolve(null);
+    });
+  });
+  stopTail();
+  console.log(`Player exited ${code} after ${Math.round((Date.now() - started) / 1000)}s.`);
+
+  const probe = parseProbe(playerLog);
+  reportLog(parseLog(playerLog));
+
+  if (!probe.result) {
+    console.error(
+      `\nThe probe never reported. Its ${probe.engines.length ? 'run was cut short' : 'code was not in the player'} -- REACT_UNITY_DEVELOPER`,
+    );
+    console.error(`has to be defined for Standalone, and the player needs a scene. Full log: ${rel(playerLog)}`);
+    process.exitCode = 1;
+    return;
+  }
+
+  // The whole point is the backend, so a run that silently fell back to Mono is a failure and
+  // not a pass. The player reports what ENABLE_IL2CPP actually was, which is the only honest source.
+  if (probe.backend !== backend) {
+    console.error(`\nAsked for ${backend}, but the player was built as ${probe.backend}. Nothing here is a ${backend} result.`);
+    process.exitCode = 1;
+    return;
+  }
+
+  console.log(`\n${probe.backend} player, ${probe.engines.length} engine(s):`);
+  for (const engine of probe.engines) {
+    console.log(`  ${engine.name.padEnd(12)} ${engine.checks - engine.failed}/${engine.checks} checks`);
+  }
+  for (const failure of probe.failures) console.error(`  ${failure}`);
+
+  if (probe.result === 'pass') return console.log(`\nEvery check passed under ${backend}.`);
+  console.error(`\n${probe.failures.length} check(s) failed under ${backend}. Full log: ${rel(playerLog)}`);
+  process.exitCode = 1;
+}
+
+/** The path PlayerBuilder logged, which beats guessing the executable name from the product name. */
+function builtPath(buildLog: string): string | undefined {
+  try {
+    const match = /^\[player\] built=(.+)$/m.exec(fs.readFileSync(buildLog, 'utf8'));
+    const built = match?.[1].trim();
+    return built && fs.existsSync(built) ? built : undefined;
+  } catch {
+    return undefined;
+  }
+}
+
+function findPlayer(outputDir: string): string | undefined {
+  try {
+    // UnityCrashHandler64.exe ships beside the player, so the name is not enough on its own.
+    const candidates = fs.readdirSync(outputDir).filter((name) => name.endsWith('.exe') && !name.startsWith('UnityCrashHandler'));
+    return candidates.length === 1 ? path.join(outputDir, candidates[0]) : undefined;
+  } catch {
+    return undefined;
+  }
 }
 
 type RunOptions = { label: string; args: string[]; timeoutSeconds: number };

@@ -17,6 +17,8 @@ The bridge is not mainly a speed win — it is how you work *without closing som
 
 Both refuse to fight each other: batch mode checks the project lock first and tells you to use the bridge instead.
 
+There is now a third way in, from outside this repo: **Unity's own `unity` CLI**. See [Unity's own CLI](#unitys-own-cli) below — it overlaps `bridge` almost completely, but knows nothing about the project files a local run rewrites, so it does not replace `compile`/`test`/`player`.
+
 ## The loop for a C# change
 
 ```bash
@@ -38,6 +40,24 @@ pnpm unity test tests --platform EditMode --filter ReactUnity.Tests.StyleTests
 ```
 
 Green as of 2026-07-28 is **316/325 EditMode** (9 skipped) and **655/665 PlayMode** (10 skipped), both with zero failures — so a single failure is a real signal, not background noise. **Zero tests is a failure, not a pass**: it means the project failed to load, usually package resolution. The CLI treats it that way; do not read `0 failed` as green without checking the total.
+
+## IL2CPP, which no suite above covers
+
+The Editor is always Mono, so `compile` and `test` say nothing about the backend that actually ships. A P/Invoke stub the AOT compiler had to generate from a signature, a reverse callback it never saw, a type the managed stripper deleted — those exist only in a player, and they are exactly what the QuickJS binding is made of.
+
+```bash
+pnpm unity player tests --backend il2cpp
+```
+
+Builds a development standalone player (`-executeMethod ReactUnity.Editor.Developer.PlayerBuilder.Build`), runs it with `-reactProbe`, and reads the verdict back out of the player log. The probe is [EngineProbe](../../../unity/core/Runtime/Developer/EngineProbe.cs): it creates every engine in the build and runs seven checks each — evaluate, strings (including `''`, which QuickJS got wrong until `9ac748b3`), a `Func` and an `Action` called from JS, a type reference through the reflect binder, a global round trip, and a module. Then it quits with 0 or 1.
+
+- Both new files are gated on `REACT_UNITY_DEVELOPER`, so none of this ships. If the probe never reports, that define is the first thing to check.
+- `--backend mono` builds the same player the other way. Run it when an IL2CPP failure needs to be told apart from a plain bug — Mono passing and IL2CPP failing is the signal that means AOT.
+- **A run that quietly fell back to Mono is not a pass.** The probe prints the backend the *player* was compiled with (`ENABLE_IL2CPP`, not what we asked for) and the runner fails on a mismatch. Do not weaken that check.
+- IL2CPP compiles the whole managed surface to C++ before building it, so budget minutes, not the ~8 s `compile` takes. `--skip-build` re-runs the player already on disk.
+- `--stripping High` is where `[Preserve]` gets tested. The default is whatever the project has.
+
+Not on CI by design — it needs a C++ toolchain and the IL2CPP module on the runner.
 
 ## Rendering snapshots
 
@@ -100,6 +120,35 @@ Both Unity projects consume the C# packages as `file:../../unity/*`, so both exe
 
 Those `file:` refs are also why `kitchen-sink` cannot be cloned on its own, and why publishing it is a transform rather than a copy — see [prepare.mts](../../../scripts/kitchen-sink/prepare.mts). Anything added here that only resolves inside this checkout has to be handled there too.
 
+## Unity's own CLI
+
+Unity shipped an official CLI in July 2026. It is installed here but **not on PATH in this shell**:
+
+```bash
+"/c/Users/Krtgo/AppData/Local/Unity/bin/unity.exe" status --format json
+```
+
+Its own agent skill is at `~/.claude/skills/unity-cli` (`unity skill install claude-code` wrote it, `unity skill refresh` re-renders it after `unity upgrade`) — read that for the command surface. What matters here is the division of labour.
+
+**It replaces `bridge`, for a project that has `com.unity.pipeline`.** kitchen-sink does as of `b8225447`; tests/ does not. With the package, an open Editor exposes ~200 commands over loopback, and every `bridge` action has an equivalent:
+
+| `pnpm unity bridge …` | `unity command …` |
+|---|---|
+| `status` | `editor_status` |
+| `logs` | `console` / `get_console_logs` |
+| `refresh` | `recompile` + `recompile_status` |
+| `test` | `run_tests` + `test_status` (also `list_tests`) |
+| `play` / `stop` | `editor_play` / `editor_stop` |
+| `screenshot` | `screenshot`, `capture_game_view`, `capture_scene_view` |
+| `menu` | `menu` |
+| `quit` | no equivalent — `eval "EditorApplication.Exit(0);"` |
+
+That is [AgentBridge](../../../unity/core/Editor/Developer/AgentBridge/) (686 lines of C# in its own asmdef) plus [bridge.mts](../../../scripts/unity/bridge.mts) (219 lines) covering less ground than a package dependency does. It also has `build`, `eval`, `set_player_settings`, `audit`, and a `--runtime` mode that attaches to a running development **player**.
+
+**It does not replace `compile`, `test`, or `player`**, for one reason that is not about features: `unity test` and `unity build` launch the Editor without snapshotting the files Unity rewrites for having opened the project. On this repo that silently upgrades `tests/Packages/manifest.json` into a shape CI cannot resolve — the failure mode is *zero tests reported as a pass*. See [project.mts](../../../scripts/unity/project.mts). Two smaller gaps: it has no notion of `-assemblyNames` or our `-reactOverwriteSnapshots`, though `unity test . -- <args>` forwards both; and its editor discovery found 3 of the 6 editors installed here (it misses side-by-side `C:\Program Files\Unity <version>` installs, which `pnpm unity editors` lists).
+
+So: `unity` for anything against a live Editor, `pnpm unity` for anything in batch mode.
+
 ## Things that will bite
 
 **Local runs rewrite the project, and committing that breaks CI.** Opening `tests/` with 6000.5 upgrades `Packages/manifest.json` to a 6000-only shape (`com.unity.ugui` 2.x, no `textmeshpro`) that the CI jobs cannot resolve — measured on 6000.1, and unresolvable packages produce *zero tests* while still looking like a pass. The CLI snapshots those files and puts them back after every run. Do not pass `--no-restore` unless you intend to commit the upgrade, and check `git status` under `tests/` before committing anything.
@@ -108,7 +157,9 @@ Those `file:` refs are also why `kitchen-sink` cannot be cloned on its own, and 
 
 **Unity leaves untracked files behind** (`tests/.vscode/`, `tests/tests.slnx`, new `ProjectSettings/*.asset`). Restore does not delete them — regenerating them each run is worse. Leave them out of commits. A killed PlayMode run also leaks `tests/Assets/InitTestScene*.unity`, which the test framework normally deletes itself; a stray one is debris, not content.
 
-**The editor version is pinned per project, and `tests/` cannot use 6000.5.** `tests/` runs on **6000.1.4f1**, `kitchen-sink` on **6000.5.5f1**. This is not cosmetic: the committed `tests/Packages/manifest.json` resolves `com.unity.inputsystem` and `test-framework.performance` versions that still use `TreeView`/`TreeViewItem`, which 6000.5 made *obsolete-as-error* — 306 compile errors before a single test runs. 6000.1.4f1 compiles it clean and is the nearest install to CI's main job (6000.1.9f1). `UNITY_VERSION=` overrides; `pnpm unity editors` lists what exists. CI runs 6000.0.51f1 and 6000.1.9f1, so a local pass still is not proof the matrix passes.
+**The editor version comes from each project's `ProjectSettings/ProjectVersion.txt`** — whichever Editor last opened the project is the one these commands drive. Nothing is pinned in the scripts (a hard-coded version went stale the first time someone upgraded). `UNITY_VERSION=` overrides per run, and only then is that file restored afterwards; `pnpm unity editors` lists what exists.
+
+**`tests/` cannot run its *suite* on the 6000.5 line.** It resolves `com.unity.inputsystem`, `test-framework.performance` and `testtools.codecoverage` versions whose editor assemblies fail obsolete-as-error there — `TreeView` on 6000.5.5, `GetInstanceID`/`GetAssetPath(int)` after the `EntityId` migration on 6000.5.9 — and the run reports *zero tests* rather than a red suite. **`compile` is not a proxy for this, and neither is `player`:** both build only the project's own assemblies and pass on 6000.5, while `test` pulls in those package editor assemblies and dies. Keep a 6000.1.x editor installed for `test`. CI runs 6000.0.51f1 and 6000.1.9f1, so a local pass still is not proof the matrix passes.
 
 **Switching `UNITY_VERSION` is not free.** A different editor deletes and recreates the project's asset database, so the run after a version switch pays a full reimport, and switching back pays it again. Worth it to reproduce a matrix failure; not worth it casually. `ProjectVersion.txt` is deliberately left at whatever version last opened the project — reverting it below the local editor makes `pnpm unity open` hang on a modal "Project Upgrade Required" dialog with no visible window title. CI ignores that file entirely.
 

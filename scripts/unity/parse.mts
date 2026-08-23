@@ -71,6 +71,53 @@ function readLines(file: string): string[] {
   }
 }
 
+export type ProbeEngine = { name: string; checks: number; failed: number };
+
+export type ProbeReport = {
+  /** The backend the player itself reported, which is the only trustworthy source for it. */
+  backend?: string;
+  engines: ProbeEngine[];
+  result?: 'pass' | 'fail';
+  failures: string[];
+};
+
+/**
+ * Pulls ReactUnity.Developer.EngineProbe's verdict out of a player log. A development player
+ * appends a stack trace to every Debug.Log, and the loaded scene logs too, so the marker is
+ * what separates the verdict from the rest of the file.
+ */
+export function parseProbe(logFile: string): ProbeReport {
+  const report: ProbeReport = { engines: [], failures: [] };
+
+  for (const line of readLines(logFile)) {
+    if (!line.startsWith('REACT_PROBE')) continue;
+    const rest = line.slice('REACT_PROBE'.length).trim();
+
+    const begin = /^begin .*\bbackend=(\S+)/.exec(rest);
+    if (begin) {
+      report.backend = begin[1];
+      continue;
+    }
+
+    const engine = /^engine=(\S+) checks=(\d+) failed=(\d+)/.exec(rest);
+    if (engine) {
+      report.engines.push({ name: engine[1], checks: Number(engine[2]), failed: Number(engine[3]) });
+      continue;
+    }
+
+    const end = /^end result=(pass|fail)/.exec(rest);
+    if (end) {
+      report.result = end[1] as 'pass' | 'fail';
+      continue;
+    }
+
+    // Everything else the probe prints is one failure, already formatted as `<engine>: <what>`.
+    report.failures.push(rest);
+  }
+
+  return report;
+}
+
 export type TestFailure = { name: string; result: string; message: string; stack: string };
 
 export type TestReport = {

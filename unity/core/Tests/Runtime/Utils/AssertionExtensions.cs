@@ -31,6 +31,16 @@ namespace ReactUnity.Tests
                 if (!name.FastEndsWith(".png")) name += ".png";
 
                 var basePath = Path.GetFullPath("Packages/com.reactunity.core/Tests/.snapshots");
+
+                // A player has no project folder, so there is nothing to compare against -- and the
+                // write-if-missing path below would cheerfully lay down a fresh baseline beside the
+                // executable and report a pass. Inconclusive, like the nographics case.
+                if (!Directory.Exists(basePath))
+                {
+                    Assert.Inconclusive($"Snapshots are only comparable where the project is. Not found: {basePath}");
+                    return;
+                }
+
                 var os = SystemInfo.operatingSystemFamily.ToString().ToLower();
                 var filePath = Path.Combine(basePath, os, name);
 

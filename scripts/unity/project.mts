@@ -65,6 +65,9 @@ const CHURN_FILES = [
   'ProjectSettings/ProjectSettings.asset',
   'ProjectSettings/EditorBuildSettings.asset',
   'ProjectSettings/PackageManagerSettings.asset',
+  // A player build reserialises this one: 6000.5 renames CrashReportingSettings.m_Enabled and
+  // adds an InsightsSettings block, which an older editor then writes back on the next run.
+  'ProjectSettings/UnityConnectSettings.asset',
   'ProjectSettings/SceneTemplateSettings.json',
   'ProjectSettings/Packages/com.unity.testtools.codecoverage/Settings.json',
   // Tracked on purpose (see the note in .gitignore), so a run must not leave it changed.

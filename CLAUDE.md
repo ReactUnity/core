@@ -87,7 +87,17 @@ pnpm unity compile tests
 pnpm unity test tests
 ```
 
-[scripts/unity/](scripts/unity/) drives a local Editor headlessly — `compile` (~8 s warm, the cheapest check on any C# edit), `test`, `open`, `editors`, and `bridge` for talking to an Editor that is already open. `pnpm unity help` lists it all, and [.claude/skills/unity](.claude/skills/unity/SKILL.md) covers which path to use and what bites. Two things worth knowing before running it:
+```bash
+pnpm unity player tests --backend il2cpp
+```
+
+[scripts/unity/](scripts/unity/) drives a local Editor headlessly — `compile` (~8 s warm, the cheapest check on any C# edit), `test`, `player`, `open`, `editors`, and `bridge` for talking to an Editor that is already open. `pnpm unity help` lists it all, and [.claude/skills/unity](.claude/skills/unity/SKILL.md) covers which path to use and what bites.
+
+`player` is the only check here that covers **IL2CPP**, and the reason it exists is that the Editor is always Mono: nothing `compile` or `test` reports says anything about a P/Invoke stub the AOT compiler had to generate, a reverse callback it never saw, or a type the managed stripper deleted — which is most of what the QuickJS binding is made of. It builds a development player and runs [EngineProbe](unity/core/Runtime/Developer/EngineProbe.cs) inside it, which drives every engine in the build across the boundary and prints a verdict the runner reads back. Both halves are gated on `REACT_UNITY_DEVELOPER`, so none of it ships, and it is deliberately not on CI (it needs a C++ toolchain and the IL2CPP module). `--backend mono` builds the same player the other way, which is how an AOT failure gets told apart from a plain bug.
+
+Unity's own `unity` CLI (July 2026, installed at `~/AppData/Local/Unity/bin/unity.exe`, its skill at `~/.claude/skills/unity-cli`) covers everything `bridge` does and much more against an Editor that is open, via the `com.unity.pipeline` package kitchen-sink picked up in `b8225447`. It does **not** cover the batch commands, because it launches the Editor without snapshotting the files a local run rewrites — the trap described next. The skill has the mapping.
+
+Two things worth knowing before running any of it:
 
 - **The editor version comes from each project's `ProjectSettings/ProjectVersion.txt`** — whichever Editor last opened the project is the one the CLI drives. Nothing is pinned in the scripts. `UNITY_VERSION=` overrides per run. One trap worth knowing: **`tests/` cannot run its suite on the 6000.5 line.** It resolves `com.unity.inputsystem`, `test-framework.performance` and `testtools.codecoverage` versions whose editor assemblies fail obsolete-as-error there — `TreeView` on 6000.5.5, `GetInstanceID`/`GetAssetPath(int)` after the `EntityId` migration on 6000.5.9 — so the run reports *zero tests* rather than a red suite. **`compile` is not a proxy for this:** it builds the project's own assemblies and passes, while `test` pulls in those package editor assemblies and dies. Keep a 6000.1.x editor installed for `test`. CI runs 6000.0.51f1/6000.1.9f1, so a local pass is still not a matrix pass.
 - **Opening `tests/` rewrites its manifest into a 6000-only shape** — `com.unity.ugui` 2.x, no `textmeshpro`, plus `modules.physicscore2d`/`vectorgraphics`/`adaptiveperformance` — and that manifest fails to resolve on **6000.1** (measured), which yields *zero tests* rather than a red suite. The CLI snapshots those files and restores them after every run; `--no-restore` opts out. Restore covers batch runs only — an interactive Editor churns them freely, so check `git status` after one.
