@@ -19,11 +19,12 @@ cmake --build build --config Release --target quickjs
 **Always name the target.** quickjs-ng registers `run-test262`, `api-test`, `lre-test` and friends
 unconditionally, so a default build compiles all of them.
 
-## The three checks
+## The four checks
 
 None is optional, and they check different things: one runs the shim, one asks whether the library
-exports what the C# names, and one asks whether those names are *declared right* — which is the
-failure mode that does not throw.
+exports what the C# names, one asks whether those names are *declared right* — which is the failure
+mode that does not throw — and one asks the export question again for the WebGL backend, which has
+no native library at all.
 
 ```bash
 cmake --build build --config Release --target shim-test && ./build/Release/shim-test.exe
@@ -78,7 +79,25 @@ header.
 Sabotage this one too: patch a copy of `quickjs.h`, pass it as the argument, and confirm the check
 fires. All four have been shown to.
 
-Both scripts get "the live P/Invoke set" from [pinvoke.py](pinvoke.py), which parses Unity's
+```bash
+python native/quickjs/check-jslib.py
+```
+
+[check-jslib.py](check-jslib.py) asks the `check-exports.py` question about the *other* backend.
+There is no QuickJS on WebGL: `Plugins/QuickJS/WebGL/jsbplugin.jslib` reimplements the whole
+`JSBDLL` surface on the browser's engine, and until this existed nothing kept the two in agreement.
+A name the C# declares and the jslib does not implement is an Emscripten link error; a jslib entry
+nothing declares is dead weight. It re-evaluates liveness with a WebGL define set rather than the
+Editor one, because `JS_SetBaseUrl` is a real P/Invoke exactly where the jslib is.
+
+It found both directions on first run: `JS_GetProperty` and `JS_SetProperty`, which phase 3 bound
+directly and the jslib never grew, and 26 entries left over from what phase 1 and phase 3 deleted.
+
+What it cannot check is signatures. The jslib is hand-written JavaScript with no header to compare
+against, so arity and tag values stay a reading exercise — which is how it came to hold Bellard's
+tag numbers and a `pctx` argument no QuickJS has ever declared.
+
+All three python checks get "the live P/Invoke set" from [pinvoke.py](pinvoke.py), which parses Unity's
 generated `tests/*.csproj` for the real define set and source list — so a declaration inside a dead
 `#if` is not counted as a requirement — and resolves `EntryPoint` aliases. Three declarations named
 `JS_*` bind `JSB_*` symbols, so an audit by member name undercounts. Open `tests/` in the Editor once
