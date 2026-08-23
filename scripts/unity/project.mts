@@ -59,10 +59,9 @@ export function getProject(name: string): Project {
 const CHURN_FILES = [
   'Packages/manifest.json',
   'Packages/packages-lock.json',
-  // ProjectVersion.txt is deliberately NOT here. CI passes unityVersion to game-ci
-  // explicitly, so the file has no effect there -- while reverting it to a version older
-  // than the local Editor makes the GUI open onto a modal "Project Upgrade Required"
-  // dialog and hang. Let it track whatever version is actually being used.
+  // ProjectVersion.txt is not here, it is handled by VERSION_FILE below: reverting it to a
+  // version older than the local Editor makes the GUI open onto a modal "Project Upgrade
+  // Required" dialog and hang, so normally it is left to track whatever version actually ran.
   'ProjectSettings/ProjectSettings.asset',
   'ProjectSettings/EditorBuildSettings.asset',
   'ProjectSettings/PackageManagerSettings.asset',
@@ -72,11 +71,20 @@ const CHURN_FILES = [
   'UserSettings/EditorUserSettings.asset',
 ];
 
+/**
+ * Only restored when UNITY_VERSION asked for an Editor other than the project's own. The version
+ * now decides which Editor these commands drive, so letting a one-off override rewrite the stamp
+ * would make the override permanent and silent -- run `tests` once on 6000.5 to check something
+ * and every later run would pick an Editor that cannot run its suite.
+ */
+const VERSION_FILE = 'ProjectSettings/ProjectVersion.txt';
+
 export type Churn = Map<string, Buffer | null>;
 
 export function snapshotChurn(project: Project): Churn {
   const snapshot: Churn = new Map();
-  for (const rel of CHURN_FILES) {
+  const files = process.env.UNITY_VERSION ? [...CHURN_FILES, VERSION_FILE] : CHURN_FILES;
+  for (const rel of files) {
     const file = path.join(project.path, rel);
     snapshot.set(rel, fs.existsSync(file) ? fs.readFileSync(file) : null);
   }
