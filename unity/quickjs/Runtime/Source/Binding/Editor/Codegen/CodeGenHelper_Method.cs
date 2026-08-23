@@ -413,12 +413,6 @@ namespace QuickJS.Binding
             //TODO: 需要处理参数类型归并问题, 因为如果类型没有导入 ts 中, 可能会在声明中出现相同参数列表的定义
             //      在 MethodVariant 中创建每个方法对应的TS类型名参数列表, 完全相同的不再输出
             var prefix = "";
-            // if (method.Name.StartsWith("op_"))
-            if (bindingInfo is OperatorBindingInfo)
-            {
-                prefix += "// js_op_overloading: ";
-            }
-
             if (method.IsStatic && !isExtension)
             {
                 prefix += "static ";

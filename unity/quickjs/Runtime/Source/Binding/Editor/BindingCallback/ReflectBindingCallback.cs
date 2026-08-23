@@ -229,7 +229,7 @@ namespace QuickJS.Binding
 
         public void AddTypeReference(string moduleName, TypeBindingInfo typeBindingInfo)
         {
-            _runtime.AddTypeReference(_moduleReg, typeBindingInfo.type, register => typeBindingInfo.DoReflectBind(register, _moduleReg), typeBindingInfo.preload, typeBindingInfo.tsTypeNaming.jsFullNameForReflectBind);
+            _runtime.AddTypeReference(_moduleReg, typeBindingInfo.type, register => typeBindingInfo.DoReflectBind(register, _moduleReg), false, typeBindingInfo.tsTypeNaming.jsFullNameForReflectBind);
         }
 
         public void EndStaticModule(string moduleName)

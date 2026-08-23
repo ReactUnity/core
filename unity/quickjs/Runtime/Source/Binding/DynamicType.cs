@@ -84,36 +84,6 @@ namespace QuickJS.Binding
                 var methodInfo = methodInfos[i];
                 var name = methodInfo.Name;
 
-                if (methodInfo.IsSpecialName)
-                {
-                    var enableOperatorOverloading = false;
-
-                    //TODO: 反射方式的运算符重载注册
-                    if (name.StartsWith("op_"))
-                    {
-                        switch (name)
-                        {
-                            case "op_Addition":
-                            case "op_Subtraction":
-                            case "op_Equality":
-                            case "op_Multiply":
-                            case "op_Division":
-                            case "op_UnaryNegation":
-                                //TODO: add operators
-                                // var op = new DynamicMethod(this, methodInfo);
-                                // cls.AddSelfOperator()
-                                // cls.AddLeftOperator()
-                                // cls.AddRightOperator()
-                                break;
-                        }
-                    }
-
-                    if (enableOperatorOverloading)
-                    {
-                        continue;
-                    }
-                }
-
                 var map = methodInfo.IsStatic ? staticMap : instMap;
                 List<MethodInfo> list;
                 if (!map.TryGetValue(name, out list))

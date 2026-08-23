@@ -17,8 +17,6 @@ namespace QuickJS.Binding
         /// </summary>
         public readonly TypeTransform transform;
 
-        public bool preload => operators.Count != 0;
-
         public TypeBindingFlags bindingFlags => transform.bindingFlags;
 
         /// <summary>
@@ -69,8 +67,6 @@ namespace QuickJS.Binding
         /// 绑定代码名
         /// </summary>
         public string csBindingName => _csBindingName;
-
-        public List<OperatorBindingInfo> operators = new List<OperatorBindingInfo>();
 
         public Dictionary<string, MethodBindingInfo> methods = new Dictionary<string, MethodBindingInfo>();
         public Dictionary<string, MethodBindingInfo> staticMethods = new Dictionary<string, MethodBindingInfo>();
@@ -208,23 +204,12 @@ namespace QuickJS.Binding
             }
         }
 
-        public bool IsSupportedOperators(MethodInfo methodInfo)
+        /// An `op_*` method. It is bound as an ordinary static method under that name -- ng has
+        /// no operator overloading, so there is nothing else to do with one, but it is still
+        /// callable and must not be dropped with the other special-named members.
+        public bool IsOperatorMethod(MethodInfo methodInfo)
         {
-            if (methodInfo.IsSpecialName && methodInfo.Name.StartsWith("op_"))
-            {
-                // do not support overloaded operators at present
-                // if (methodInfo.DeclaringType.GetMethods().Count(m => m.IsSpecialName && m.Name.StartsWith("op_") && m.Name == methodInfo.Name) == 1)
-                // {
-                //     return true;
-                // }
-                return true;
-            }
-            return false;
-        }
-
-        public bool IsOperatorOverloadingEnabled(MethodInfo methodInfo)
-        {
-            return Native.JSApi.IsOperatorOverloadingSupported && bindingManager.prefs.enableOperatorOverloading && transform.enableOperatorOverloading && IsSupportedOperators(methodInfo);
+            return methodInfo.IsSpecialName && methodInfo.Name.StartsWith("op_");
         }
 
         public void AddMethod(MethodInfo methodInfo, bool asExtensionAnyway)
@@ -262,94 +247,6 @@ namespace QuickJS.Binding
 
             var methodCSName = methodInfo.Name;
             var methodJSName = this.bindingManager.GetNamingAttribute(this.transform, methodInfo);
-
-            if (IsOperatorOverloadingEnabled(methodInfo))
-            {
-                var parameters = methodInfo.GetParameters();
-                var declaringType = methodInfo.DeclaringType;
-                OperatorBindingInfo operatorBindingInfo = null;
-                switch (methodCSName)
-                {
-                    case "op_LessThan":
-                        if (parameters.Length == 2)
-                        {
-                            if (parameters[0].ParameterType == declaringType && parameters[1].ParameterType == declaringType)
-                            {
-                                operatorBindingInfo = new OperatorBindingInfo(bindingManager, methodInfo, isExtension, isStatic, methodCSName, "<", "<", 2);
-                            }
-                        }
-                        break;
-                    case "op_Addition":
-                        if (parameters.Length == 2)
-                        {
-                            if (parameters[0].ParameterType == declaringType && parameters[1].ParameterType == declaringType)
-                            {
-                                operatorBindingInfo = new OperatorBindingInfo(bindingManager, methodInfo, isExtension, isStatic, methodCSName, "+", "+", 2);
-                            }
-                        }
-                        break;
-                    case "op_Subtraction":
-                        if (parameters.Length == 2)
-                        {
-                            if (parameters[0].ParameterType == declaringType && parameters[1].ParameterType == declaringType)
-                            {
-                                operatorBindingInfo = new OperatorBindingInfo(bindingManager, methodInfo, isExtension, isStatic, methodCSName, "-", "-", 2);
-                            }
-                        }
-                        break;
-                    case "op_Equality":
-                        if (parameters.Length == 2)
-                        {
-                            if (parameters[0].ParameterType == declaringType && parameters[1].ParameterType == declaringType)
-                            {
-                                operatorBindingInfo = new OperatorBindingInfo(bindingManager, methodInfo, isExtension, isStatic, methodCSName, "==", "==", 2);
-                            }
-                        }
-                        break;
-                    case "op_Multiply":
-                        if (parameters.Length == 2)
-                        {
-                            var op0 = bindingManager.GetExportedType(parameters[0].ParameterType);
-                            var op1 = bindingManager.GetExportedType(parameters[1].ParameterType);
-                            if (op0 != null && op1 != null)
-                            {
-                                var bindingName = methodCSName + "_" + op0.csBindingName + "_" + op1.csBindingName;
-                                operatorBindingInfo = new OperatorBindingInfo(bindingManager, methodInfo, isExtension, isStatic, bindingName, "*", "*", 2);
-                            }
-                        }
-                        break;
-                    case "op_Division":
-                        if (parameters.Length == 2)
-                        {
-                            var op0 = bindingManager.GetExportedType(parameters[0].ParameterType);
-                            var op1 = bindingManager.GetExportedType(parameters[1].ParameterType);
-                            if (op0 != null && op1 != null)
-                            {
-                                var bindingName = methodCSName + "_" + op0.csBindingName + "_" + op1.csBindingName;
-                                operatorBindingInfo = new OperatorBindingInfo(bindingManager, methodInfo, isExtension, isStatic, bindingName, "/", "/", 2);
-                            }
-                        }
-                        break;
-                    case "op_UnaryNegation":
-                        {
-                            operatorBindingInfo = new OperatorBindingInfo(bindingManager, methodInfo, isExtension, isStatic, methodCSName, "neg", "-", 1);
-                        }
-                        break;
-                }
-
-                if (operatorBindingInfo != null)
-                {
-                    operators.Add(operatorBindingInfo);
-                    CollectDelegate(methodInfo);
-                    bindingManager.Info("[AddOperator] {0}.{1}", type, methodInfo);
-                    if (!bindingManager.prefs.alwaysEmitOperatorMethod)
-                    {
-                        return;
-                    }
-                }
-
-                // fallback to normal method binding
-            }
 
             var group = isStatic ? staticMethods : methods;
             MethodBindingInfo methodBindingInfo;
@@ -676,7 +573,7 @@ namespace QuickJS.Binding
 
                 if (method.IsSpecialName)
                 {
-                    if (!IsSupportedOperators(method))
+                    if (!IsOperatorMethod(method))
                     {
                         bindingManager.Info("skip special method: {0}", method);
                         continue;
@@ -893,45 +790,6 @@ namespace QuickJS.Binding
                 }
 
                 cls.AddMethod(delegateBindingInfo.isStatic, tsDelegateVar, dynamicMethod);
-            }
-
-            // 注册运算符
-            if (Native.JSApi.JS_ATOM_Operators.IsValid)
-            {
-                if (operators.Count > 0)
-                {
-                    //TODO: 目前运算符必须在同一个 TypeRegister 实例中注册
-                    // proxyModuleRegister.MarkAsCritical();
-                }
-
-                foreach (var operatorBindingInfo in operators)
-                {
-                    var dynamicMethod = Binding.DynamicMethodFactory.CreateMethod(dynamicType, operatorBindingInfo.methodInfo, operatorBindingInfo.isExtension);
-                    var regName = operatorBindingInfo.jsName;
-                    var parameters = operatorBindingInfo.methodInfo.GetParameters();
-                    var declaringType = operatorBindingInfo.methodInfo.DeclaringType;
-
-                    do
-                    {
-                        if (parameters.Length == 2)
-                        {
-                            if (parameters[0].ParameterType != declaringType)
-                            {
-                                var leftType = parameters[0].ParameterType;
-                                cls.AddLeftOperator(regName, dynamicMethod, leftType);
-                                break;
-                            }
-                            else if (parameters[1].ParameterType != declaringType)
-                            {
-                                var rightType = parameters[1].ParameterType;
-                                cls.AddRightOperator(regName, dynamicMethod, rightType);
-                                break;
-                            }
-                        }
-
-                        cls.AddSelfOperator(regName, dynamicMethod);
-                    } while (false);
-                }
             }
 
             return cls;

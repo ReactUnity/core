@@ -113,16 +113,12 @@ declare global {
     static JSB_DupValue(returnValue: JSValue, ctx: JSContext, v: JSValue);
     static JSB_FreeValue(ctx: JSContext, v: JSValue): void;
     static JSB_FreeValueRT(rt: JSRuntime, v: JSValue): void;
-    static JS_AddIntrinsicOperators(ctx: JSContext): void;
     static JSB_ATOM_Proxy(): JSAtom;
     static JSB_ATOM_constructor(): JSAtom;
     static JSB_ATOM_Number(): JSAtom;
     static JSB_ATOM_Object(): JSAtom;
     static JSB_ATOM_String(): JSAtom;
-    static JSB_ATOM_Function(): JSAtom;
     static JSB_ATOM_Error(): JSAtom;
-    static JSB_ATOM_Operators(): JSAtom;
-    static JSB_ATOM_Symbol_operatorSet(): JSAtom;
     static JSB_ATOM_name(): JSAtom;
     static JSB_ATOM_message(): JSAtom;
     static JSB_ATOM_fileName(): JSAtom;

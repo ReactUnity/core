@@ -81,17 +81,6 @@ namespace QuickJS.Binding
         public string preferredBindingMethod = "Reflect Bind";
 
         /// <summary>
-        /// generate binding code for operator overloading support in QuickJS (not fully supported). 
-        /// operators will be generated as ordinary method (op_XXX) if disabled
-        /// </summary>
-        public bool enableOperatorOverloading = true;
-
-        /// <summary>
-        /// emit binding code for operator methods even if operator overlaoding enabled
-        /// </summary>
-        public bool alwaysEmitOperatorMethod = true;
-
-        /// <summary>
         /// optional entry point for editor scripting
         /// </summary>
         public string editorEntryPoint = "";

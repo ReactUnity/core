@@ -29,12 +29,10 @@ namespace QuickJS
         private Regex _stRegex;
 
         private JSValue _globalObject;
-        private JSValue _operatorCreate;
         private JSValue _proxyConstructor;
         private JSValue _objectConstructor;
         private JSValue _numberConstructor;
         private JSValue _stringConstructor;
-        private JSValue _functionConstructor;
 
         private bool _isReloading;
         private List<string> _waitForReloadModules;
@@ -53,7 +51,6 @@ namespace QuickJS
             _contextId = contextId;
             _ctx = JSApi.JS_NewContext(_runtime);
             JSApi.JS_SetContextOpaque(_ctx, (IntPtr)_contextId);
-            JSApi.JS_AddIntrinsicOperators(_ctx);
             _atoms = new AtomCache(_ctx);
             _moduleIdList = new List<string>();
             _stringCache = new JSStringCache(_ctx);
@@ -65,43 +62,6 @@ namespace QuickJS
             _numberConstructor = JSApi.JS_GetProperty(_ctx, _globalObject, JSApi.JS_ATOM_Number);
             _proxyConstructor = JSApi.JS_GetProperty(_ctx, _globalObject, JSApi.JS_ATOM_Proxy);
             _stringConstructor = JSApi.JS_GetProperty(_ctx, _globalObject, JSApi.JS_ATOM_String);
-            _functionConstructor = JSApi.JS_GetProperty(_ctx, _globalObject, JSApi.JS_ATOM_Function);
-            _operatorCreate = JSApi.JS_UNDEFINED;
-
-            if (JSApi.IsOperatorOverloadingSupported && JSApi.JS_ATOM_Operators.IsValid)
-            {
-                var operators = JSApi.JS_GetProperty(_ctx, _globalObject, JSApi.JS_ATOM_Operators);
-                if (!operators.IsNullish())
-                {
-                    if (operators.IsException())
-                    {
-                        _ctx.print_exception();
-                    }
-                    else
-                    {
-                        var create = JSApi.JS_GetProperty(_ctx, operators, GetAtom("create"));
-                        JSApi.JS_FreeValue(_ctx, operators);
-                        if (create.IsException())
-                        {
-                            _ctx.print_exception();
-                        }
-                        else
-                        {
-                            if (JSApi.JS_IsFunction(_ctx, create))
-                            {
-                                _operatorCreate = create;
-
-                                // Function.prototype[Symbol.operatorSet] = Operators.create();
-                                CreateDefaultOperators(_functionConstructor);
-                            }
-                            else
-                            {
-                                JSApi.JS_FreeValue(_ctx, create);
-                            }
-                        }
-                    }
-                }
-            }
         }
 
         public void ReleaseTypeRegister(TypeRegister register)
@@ -121,23 +81,6 @@ namespace QuickJS
             }
 
             return _currentTypeRegister;
-        }
-
-        private unsafe void CreateDefaultOperators(JSValue constructor)
-        {
-            if (!_operatorCreate.IsNullish())
-            {
-                var rval = JSApi.JS_Call(_ctx, _operatorCreate);
-                if (rval.IsException())
-                {
-                    var ex = _ctx.GetExceptionString();
-                    GetLogger()?.Write(LogLevel.Error, ex);
-                }
-                else
-                {
-                    JSApi.JS_DefinePropertyValue(_ctx, constructor, JSApi.JS_ATOM_Symbol_operatorSet, rval);
-                }
-            }
         }
 
         public bool IsValid()
@@ -213,9 +156,7 @@ namespace QuickJS
             JSApi.JS_FreeValue(_ctx, _objectConstructor);
             JSApi.JS_FreeValue(_ctx, _numberConstructor);
             JSApi.JS_FreeValue(_ctx, _stringConstructor);
-            JSApi.JS_FreeValue(_ctx, _functionConstructor);
             JSApi.JS_FreeValue(_ctx, _globalObject);
-            JSApi.JS_FreeValue(_ctx, _operatorCreate);
 
             JSApi.JS_FreeValue(_ctx, _moduleCache);
             JSApi.JS_FreeValue(_ctx, _mainModule);
@@ -257,11 +198,6 @@ namespace QuickJS
             return JSApi.JS_DupValue(_ctx, _stringConstructor);
         }
 
-        public JSValue GetFunctionConstructor()
-        {
-            return JSApi.JS_DupValue(_ctx, _functionConstructor);
-        }
-
         ///<summary>
         /// 获取 number.constructor (增加引用计数)
         ///</summary>
@@ -300,14 +236,6 @@ namespace QuickJS
             }
 
             return false;
-        }
-
-        ///<summary>
-        /// 获取 operator.create (增加引用计数)
-        ///</summary>
-        public JSValue GetOperatorCreate()
-        {
-            return JSApi.JS_DupValue(_ctx, _operatorCreate);
         }
 
         //TODO: 改为消耗 exports_obj 计数
@@ -708,7 +636,6 @@ namespace QuickJS
             ns_jsb.AddFunction("AddModule", _add_module, 2);
             ns_jsb.AddFunction("Now", _now, 0);
             ns_jsb.AddFunction("IsStaticBinding", _IsStaticBinding, 0);
-            ns_jsb.AddConstValue("isOperatorOverloadingSupported", JSApi.IsOperatorOverloadingSupported);
             ns_jsb.AddConstValue("engine", JSApi.JSBDLL);
             ns_jsb.AddConstValue("version", JSApi.SO_JSB_VERSION);
             ns_jsb.AddConstValue("pluginVersion", JSApi.VERSION);

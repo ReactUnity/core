@@ -1,6 +1,11 @@
 /**
  * Build with the following command:
- * npx -p typescript tsc && node postbuild.mjs
+ * npx -p typescript@5 tsc && node postbuild.mjs
+ *
+ * The version is pinned because TypeScript 7 removed every option this build
+ * needs -- target ES5, outFile, module none, baseUrl, moduleResolution node --
+ * and has no ES5 emit at all, which Emscripten still requires. A bare
+ * `npx -p typescript tsc` fails on the config rather than producing anything.
  *
  * BEWARE: Using some syntaxes will make Emscripten fail while building
  * Such known syntaxes: Object spread (...), BigInt literals
@@ -846,9 +851,6 @@ var UnityJSBPlugin = {
     JSB_ATOM_fileName: function () {
         return unityJsbState.atoms.push('fileName');
     },
-    JSB_ATOM_Function: function () {
-        return unityJsbState.atoms.push('Function');
-    },
     JSB_ATOM_length: function () {
         return unityJsbState.atoms.push('length');
     },
@@ -878,12 +880,6 @@ var UnityJSBPlugin = {
     },
     JSB_ATOM_Object: function () {
         return unityJsbState.atoms.push('Object');
-    },
-    JSB_ATOM_Operators: function () {
-        return unityJsbState.atoms.push('Operators');
-    },
-    JSB_ATOM_Symbol_operatorSet: function () {
-        return unityJsbState.atoms.push('operatorSet');
     },
     // #endregion
     // #region Is
@@ -1475,9 +1471,6 @@ var UnityJSBPlugin = {
     JS_ResolveModule: function (ctx, obj) {
         // TODO:
         return 0;
-    },
-    JS_AddIntrinsicOperators: function (ctx) {
-        console.warn('Operator overloading is not supported in WebGL Backend');
     },
     JS_ExecutePendingJob: function (rt, pctx) {
         // Automatically handled by browsers

@@ -214,29 +214,6 @@ namespace QuickJS.Binding
                 }
             }
 
-            if (!typeBindingInfo.type.IsGenericTypeDefinition)
-            {
-                foreach (var operatorBindingInfo in this.typeBindingInfo.operators)
-                {
-                    using (new PInvokeGuardCodeGen(cg, typeof(QuickJS.Native.JSCFunction)))
-                    {
-                        using (new BindingFuncDeclareCodeGen(cg, typeof(QuickJS.Native.JSCFunction), operatorBindingInfo.csBindName))
-                        {
-                            using (new TryCatchGuradCodeGen(cg))
-                            {
-                                using (new OperatorCodeGen(cg, this.typeBindingInfo, operatorBindingInfo))
-                                {
-                                }
-                            }
-                        }
-                    }
-
-                    using (new TSOperatorCodeGen(cg, typeBindingInfo, operatorBindingInfo))
-                    {
-                    }
-                }
-            }
-
             // 所有附加方法
             transform.ForEachAdditionalTSMethodDeclaration(decl => this.cg.tsDeclare.AppendLine(decl));
 
@@ -442,36 +419,6 @@ namespace QuickJS.Binding
                     typeBindingInfo.tsTypeNaming.jsName,
                     this.cg.bindingManager.GetCSTypeFullName(typeBindingInfo.type),
                     constructor);
-
-                // 运算符
-                foreach (var operatorBindingInfo in typeBindingInfo.operators)
-                {
-                    var regName = operatorBindingInfo.jsName;
-                    var funcName = operatorBindingInfo.csBindName;
-                    var parameters = operatorBindingInfo.methodInfo.GetParameters();
-                    var declaringType = operatorBindingInfo.methodInfo.DeclaringType;
-
-                    do
-                    {
-                        if (parameters.Length == 2)
-                        {
-                            if (parameters[0].ParameterType != declaringType)
-                            {
-                                var leftType = typeBindingInfo.bindingManager.GetCSTypeFullName(parameters[0].ParameterType);
-                                cg.cs.AppendLine("cls.AddLeftOperator(\"{0}\", {1}, {2}, typeof({3}));", regName, funcName, operatorBindingInfo.length, leftType);
-                                break;
-                            }
-                            else if (parameters[1].ParameterType != declaringType)
-                            {
-                                var rightType = typeBindingInfo.bindingManager.GetCSTypeFullName(parameters[1].ParameterType);
-                                cg.cs.AppendLine("cls.AddRightOperator(\"{0}\", {1}, {2}, typeof({3}));", regName, funcName, operatorBindingInfo.length, rightType);
-                                break;
-                            }
-                        }
-
-                        cg.cs.AppendLine("cls.AddSelfOperator(\"{0}\", {1}, {2});", regName, funcName, operatorBindingInfo.length);
-                    } while (false);
-                }
 
                 // 非静态方法
                 foreach (var kv in typeBindingInfo.methods)

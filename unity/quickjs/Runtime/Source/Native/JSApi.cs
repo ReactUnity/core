@@ -62,12 +62,6 @@ namespace QuickJS.Native
         public const int CS_JSB_VERSION = 0xa; // expected dll version
         public static readonly int SO_JSB_VERSION; // actual dll version
 
-        // quickjs-ng removed operator overloading outright, so this is no longer a build
-        // choice. Every guard on it now resolves at compile time and the branches behind
-        // them are unreachable, which is what lets JS_AddIntrinsicOperators and the
-        // Operators atoms leave the P/Invoke surface entirely.
-        public const bool IsOperatorOverloadingSupported = false;
-
 #if (UNITY_IPHONE || UNITY_WEBGL) && !UNITY_EDITOR
 	    public const string JSBDLL = "__Internal";
 #else
@@ -726,22 +720,9 @@ namespace QuickJS.Native
         public static readonly JSAtom JS_ATOM_String = JSB_ATOM_String();
 
         [DllImport(JSBDLL, CallingConvention = CallingConvention.Cdecl)]
-        public static extern JSAtom JSB_ATOM_Function();
-
-        public static readonly JSAtom JS_ATOM_Function = JSB_ATOM_Function();
-
-        [DllImport(JSBDLL, CallingConvention = CallingConvention.Cdecl)]
         public static extern JSAtom JSB_ATOM_Error();
 
         public static readonly JSAtom JS_ATOM_Error = JSB_ATOM_Error();
-
-        // No-ops rather than deletions: the call sites are guarded by
-        // IsOperatorOverloadingSupported and reading unreachable-but-compiled code is
-        // cheaper than threading the guard through every one. Both atoms stay default,
-        // i.e. JS_ATOM_NULL, which is what JSAtom.IsValid tests.
-        public static void JS_AddIntrinsicOperators(JSContext ctx) {}
-        public static readonly JSAtom JS_ATOM_Operators;
-        public static readonly JSAtom JS_ATOM_Symbol_operatorSet;
 
         [DllImport(JSBDLL, CallingConvention = CallingConvention.Cdecl)]
         public static extern JSAtom JSB_ATOM_name();

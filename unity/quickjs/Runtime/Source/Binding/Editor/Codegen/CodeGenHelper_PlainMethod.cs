@@ -35,9 +35,9 @@ namespace QuickJS.Binding
             var csNamespace = this.cg.bindingManager.prefs.ns;
             var csBindingName = typeBindingInfo.csBindingName;
             var jsNamespace = CodeGenUtils.Concat(", ", CodeGenUtils.ConcatAsLiteral(", ", typeBindingInfo.tsTypeNaming.jsNamespaceSlice), $"\"{typeBindingInfo.tsTypeNaming.jsNameNormalized}\"");
-            var preload = typeBindingInfo.preload ? "true" : "false";
-            
-            AddStatement($"{runtimeVarName}.AddTypeReference({moduleVarName}, typeof({csType}), {csNamespace}.{csBindingName}.Bind, {preload}, {jsNamespace});");
+            // preload is always false now: declaring operators was the only thing that ever
+            // set it, and ng has no operator overloading to register in one pass.
+            AddStatement($"{runtimeVarName}.AddTypeReference({moduleVarName}, typeof({csType}), {csNamespace}.{csBindingName}.Bind, false, {jsNamespace});");
         }
     }
 }
