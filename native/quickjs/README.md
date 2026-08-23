@@ -19,7 +19,31 @@ cmake --build build --config Release --target quickjs
 **Always name the target.** quickjs-ng registers `run-test262`, `api-test`, `lre-test` and friends
 unconditionally, so a default build compiles all of them.
 
-Then check it against the thing that has to load it:
+## The two checks
+
+Neither is optional, and they check different things: one runs the shim, the other compares it
+against the C# that has to load it.
+
+```bash
+cmake --build build --config Release --target shim-test && ./build/Release/shim-test.exe
+```
+
+[shim_test.c](src/shim_test.c) links the shim against ng in-process and covers what a successful
+link cannot. It asserts all **241** atom accessors return the id ng itself uses and resolve to the
+string in ng's own `quickjs-atom.h`. The shim generates its enum from that header with the same
+`DEF` trick `quickjs.c` uses, so the numbering is right by construction — but ng went from 224 atoms
+to 241, and "by construction" is an argument rather than a check; bad numbering surfaces as every
+atom-keyed property lookup silently addressing a different name. It also round-trips an object and a
+value payload, checks that a plain object reports none, that a negative size is rejected, and that
+the class finalizer fires. `ctest -C Release` runs it too.
+
+Run it in `Debug` as well as `Release`. That is where the leak check lives: ng reports a non-empty
+GC object list by asserting in `JS_FreeRuntime` (`quickjs.c:2717`) instead of returning a value the
+way unity-jsb's patched Bellard did, so a `Debug` pass is the only remaining signal that the shim
+balanced its refcounts.
+
+If you extend it, sabotage it first — a test over a macro-generated table is easy to write
+vacuously. Flipping the expected id to `i + 2` must give 241 failures and exit 1.
 
 ```bash
 python native/quickjs/check-exports.py
@@ -27,9 +51,12 @@ python native/quickjs/check-exports.py
 
 [check-exports.py](check-exports.py) reads the live P/Invoke set out of Unity's generated
 `tests/*.csproj` — the real define set and the real source list, so a declaration inside a dead
-`#if` does not count — and diffs it against `dumpbin -exports`. It exits non-zero on any gap, so it
-can gate CI. Currently 99 of 105; the 6 remaining are C#-side phase 3 work, listed in
-[MIGRATION.md](../../unity/quickjs/MIGRATION.md).
+`#if` does not count — resolves `EntryPoint` aliases, and diffs it against `dumpbin -exports` in
+**both** directions: names C# calls that we do not export, and shim functions we export that nothing
+calls. Either one exits non-zero, so it can gate CI.
+
+Currently 99 of 104 satisfied, 0 stale. The 5 outstanding are C# declarations, listed under phase 3
+in [MIGRATION.md](../../unity/quickjs/MIGRATION.md).
 
 ## What it links
 
@@ -50,22 +77,38 @@ into `dllexport`, which survives into the DLL that links the archive and re-expo
 most of what the C# layer wants is either `static inline` in `quickjs.h` or variadic, and P/Invoke
 can reach neither; plus the bridge class and payload, which are genuinely unity-jsb's own.
 
-Ported to ng with four changes, all in `unity_qjs.c`:
+**The shim exports exactly the 27 functions the C# layer names** — no more, no fewer — plus one atom
+accessor per entry in ng's atom table. The 241 accessors come from one macro and cost nothing to
+keep, so they are exempt from the "no more" half; `check-exports.py` enforces the rest.
+
+### Ported to ng
 
 - **`JS_BOOL`** — ng dropped the alias for C `bool`. Redefined here as `int`, deliberately: it keeps
-  the shim's ABI where it was, so the C# `JS_BOOL = Int32` declarations for these 25 functions stay
-  correct and the `bool`-width problem is confined to ng's own exports.
+  the shim's ABI where it was, so the C# `JS_BOOL = Int32` declarations for these functions stay
+  correct and the `bool`-width problem stays confined to ng's own exports.
 - **`JS_NewClassID`** — gained a `JSRuntime *` and now allocates from `rt->js_class_id_alloc`.
-  Allocated through a zeroed local so each runtime bumps its own counter and actually reserves the
-  id, rather than reusing a process-global one it never claimed.
+  Called per runtime through a zeroed local, so each runtime reserves its own id rather than
+  reusing a process-global one it never claimed.
+- **`JS_SetOpaque`** — returns `int` in ng and rejects anything that is not an object of a
+  registered class, where Bellard's was `void` and wrote unconditionally. Unchecked, a failure leaks
+  the payload *and* hands C# a bridge object whose id reads back as 0, with no error anywhere. Both
+  constructors now go through one helper that checks it.
 - **`JSB_FreeRuntime`** — unity-jsb had patched Bellard's `JS_FreeRuntime` to return whether the GC
   object list came out empty, and `ScriptRuntime` logs "gc object leaks" on 0. ng's is `void` and
-  reports leaks by asserting in debug builds, so this now returns 1 unconditionally. **That
-  diagnostic is lost** — the only deliberate behaviour regression in the port.
-- **`JSB_Init`** — ran from a C# static initialiser, before any runtime exists, so it can no longer
+  reports leaks by asserting in debug builds, so this returns 1 unconditionally. **That diagnostic
+  is lost** — the only deliberate behaviour regression in the port.
+- **`JSB_Init`** — runs from a C# static initialiser, before any runtime exists, so it can no longer
   allocate class ids. `JSB_NewRuntime` already did it, and nothing in C# declares `JSB_GetClassID`.
 
-Two functions were added:
+### Fixed while porting
+
+`js_malloc` and `js_malloc_rt` returns were never checked, so an allocation failure dereferenced
+NULL instead of propagating the exception ng had already thrown. `JS_NewClass`'s return was ignored,
+so a failed registration would have produced a runtime whose bridge objects had no class. And the
+atom accessors were declared K&R `()` rather than `(void)` — which C23 redefines, and which is why
+they did not match a `JSAtom (*)(void)` typedef in the test.
+
+### Added
 
 - **`JSB_ThrowError`** — present in the shipped DLL but **not in unity-jsb's source tree**, which is
   a commit behind the binary. Reconstructed from its only caller, `JSNative.ThrowInternalError`,
@@ -74,11 +117,11 @@ Two functions were added:
 - **`JSB_ATOM_Operators` / `JSB_ATOM_Symbol_operatorSet`** — ng removed operator overloading, so the
   atom table has no entry to generate an accessor from. They return `JS_ATOM_NULL`, which is
   load-bearing rather than a stub: `JSAtom.IsValid` is `_value != 0` and every call site is already
-  guarded by it.
+  guarded by it. Both go when phase 3 makes the no-bignum path permanent, and `check-exports.py`
+  will flag them as stale the moment it does.
 
-The shim still defines ~27 functions the C# layer no longer declares, including the struct fast
-paths. They cost two unused exports each and nothing else; prune them once the DLL is proven in the
-Editor, not before.
+`JS_NewString` is deliberately *not* here. ng made it `static inline`, so the plan was to shim it —
+but the C# declaration turned out to have no callers at all and was deleted instead.
 
 ## Where it does not build yet
 
