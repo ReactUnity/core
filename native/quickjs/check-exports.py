@@ -155,16 +155,26 @@ def main():
 
     wanted = wanted_names()
     missing = sorted(n for n in wanted if n not in exports)
+    # The other direction: shim functions nothing names any more. All 241 atom
+    # accessors come from one macro over quickjs-atom.h, so they are exempt.
+    stale = sorted(
+        n
+        for n in exports
+        if (n.startswith("JSB_") or n.startswith("jsb_")) and not n.startswith("JSB_ATOM_") and n not in wanted
+    )
 
     print("live P/Invoke names bound to JSBDLL: %d" % len(wanted))
     print("exports in %s: %d" % (os.path.basename(dll), len(exports)))
-    print("satisfied: %d, missing: %d" % (len(wanted) - len(missing), len(missing)))
+    print("satisfied: %d, missing: %d, stale shim exports: %d" % (len(wanted) - len(missing), len(missing), len(stale)))
     if missing:
-        print()
+        print("\nnamed by C#, not exported:")
         for n in missing:
             print("  %-32s <- %s" % (n, ", ".join(sorted(wanted[n]))))
-        return 1
-    return 0
+    if stale:
+        print("\nexported by the shim, named by nothing -- delete from src/:")
+        for n in stale:
+            print("  %s" % n)
+    return 1 if (missing or stale) else 0
 
 
 if __name__ == "__main__":

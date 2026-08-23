@@ -72,3 +72,16 @@ if(MSVC)
     target_compile_options(quickjs PRIVATE /wd4146 /wd4703)
     target_compile_definitions(quickjs PRIVATE _CRT_SECURE_NO_WARNINGS)
 endif()
+
+# Runs the shim against ng in-process, checking the things a successful link cannot:
+# the atom ids, and the bridge payloads under ng's stricter JS_SetOpaque. It compiles
+# the shim rather than loading the library, so JS_EXPORT stays empty here.
+enable_testing()
+add_executable(shim-test src/shim_test.c)
+target_link_libraries(shim-test PRIVATE qjs)
+target_include_directories(shim-test PRIVATE ${quickjs_SOURCE_DIR} src)
+if(MSVC)
+    target_compile_options(shim-test PRIVATE /wd4146 /wd4703)
+    target_compile_definitions(shim-test PRIVATE _CRT_SECURE_NO_WARNINGS)
+endif()
+add_test(NAME shim COMMAND shim-test)

@@ -1,2 +1,5 @@
 # CMake build tree, including the fetched quickjs-ng checkout under _deps.
 build/
+
+# check-exports.py gets imported by ad-hoc analysis scripts
+__pycache__/
