@@ -28,7 +28,6 @@ namespace QuickJS
         /// <summary>
         /// this event will be raised after debugger connected if debug server is used, otherwise it will be raised immediately after OnInitialized
         /// </summary>
-        public event Action<ScriptRuntime> OnDebuggerConnected;
         public event Action<int> OnAfterDestroy;
         public event Action OnUpdate;
         public event Action<ScriptContext, string> OnScriptReloading;
@@ -316,18 +315,6 @@ namespace QuickJS
             }
         }
 
-        [MonoPInvokeCallback(typeof(JSWaitingForDebuggerCFunction))]
-        private static void _RunIfWaitingForDebugger(JSContext ctx)
-        {
-            var runtime = ScriptEngine.GetRuntime(ctx);
-            if (runtime != null)
-            {
-                // wait only once
-                JSApi.JS_SetWaitingForDebuggerFunc(ctx, null);
-                runtime.RaiseDebuggerConnectedEvent();
-            }
-        }
-
         // 通用析构函数
         [MonoPInvokeCallback(typeof(JSGCObjectFinalizer))]
         public static void class_finalizer(JSRuntime rt, JSPayloadHeader header)
@@ -357,7 +344,6 @@ namespace QuickJS
                 throw new NullReferenceException(nameof(fileSystem));
             }
 
-            args.withDebugServer = false;
             args.asyncManager.Initialize(_mainThreadId);
 
             _isValid = true;
@@ -379,7 +365,7 @@ namespace QuickJS
 #endif
             JSApi.JSB_SetRuntimeOpaque(_rt, (IntPtr)_runtimeId);
             JSApi.JS_SetModuleLoaderFunc(_rt, module_normalize, module_loader, IntPtr.Zero);
-            CreateContext(args.apiBridge, args.withDebugServer, args.debugServerPort);
+            CreateContext(args.apiBridge);
             _pathResolver = args.pathResolver;
             _asyncManager = args.asyncManager;
             _byteBufferAllocator = args.byteBufferAllocator;
@@ -432,18 +418,10 @@ namespace QuickJS
             }
 #endif
 
-            if (!args.withDebugServer || !args.waitingForDebugger || args.debugServerPort <= 0 || JSApi.JS_IsDebuggerConnected(_mainContext) == 1)
-            {
-                RaiseDebuggerConnectedEvent();
-            }
-            else
-            {
-                _logger?.Write(LogLevel.Info, "[EXPERIMENTAL] Waiting for debugger...");
-                JSApi.JS_SetWaitingForDebuggerFunc((JSContext)_mainContext, _RunIfWaitingForDebugger);
-            }
+            RaiseInitialized();
         }
 
-        private void RaiseDebuggerConnectedEvent()
+        private void RaiseInitialized()
         {
             if (!_isInitialized)
             {
@@ -451,7 +429,6 @@ namespace QuickJS
                 OnInitializing?.Invoke(this);
                 OnInitialized?.Invoke(this);
             }
-            OnDebuggerConnected?.Invoke(this);
         }
 
         [MonoPInvokeCallback(typeof(JSInterruptHandler))]
@@ -563,7 +540,7 @@ namespace QuickJS
             return _objectCollection.RemoveObject(handle);
         }
 
-        private ScriptContext CreateContext(Experimental.IJSApiBridge apiBridge, bool withDebugServer, int debugServerPort)
+        private ScriptContext CreateContext(Experimental.IJSApiBridge apiBridge)
         {
             ScriptContextRef freeEntry;
             int slotIndex;
@@ -582,7 +559,7 @@ namespace QuickJS
                 freeEntry.next = -1;
             }
 
-            var context = new ScriptContext(this, slotIndex + 1, apiBridge, withDebugServer, debugServerPort);
+            var context = new ScriptContext(this, slotIndex + 1, apiBridge);
 
             freeEntry.target = context;
             if (_mainContext == null)

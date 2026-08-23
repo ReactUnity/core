@@ -1,4 +1,4 @@
-#if !REACT_DISABLE_QUICKJS && REACT_QUICKJS_AVAILABLE
+﻿#if !REACT_DISABLE_QUICKJS && REACT_QUICKJS_AVAILABLE
 #define REACT_QUICKJS
 #endif
 
@@ -65,13 +65,10 @@ namespace ReactUnity.Scripting
             Runtime.OnInitialized += Runtime_OnInitialized;
             Runtime.Initialize(new ScriptRuntimeArgs
             {
-                withDebugServer = debug,
-                waitingForDebugger = awaitDebugger,
                 fileSystem = new DefaultFileSystem(logger),
                 asyncManager = new DefaultAsyncManager(),
                 logger = logger,
                 binder = InvokeReflectBinding,
-                debugServerPort = 9222,
                 byteBufferAllocator = new QuickJS.IO.ByteBufferPooledAllocator(),
                 pathResolver = new PathResolver(),
                 apiBridge = ApiBridge,

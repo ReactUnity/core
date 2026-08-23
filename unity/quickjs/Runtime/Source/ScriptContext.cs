@@ -45,28 +45,13 @@ namespace QuickJS
         // id = context slot index + 1
         public int id { get { return _contextId; } }
 
-        [MonoPInvokeCallback(typeof(JSLogCFunction))]
-        private static void _JSLog(int level, string line)
-        {
-#if !JSB_UNITYLESS
-            UnityEngine.Debug.LogFormat("[RAW] {0}", line);
-#endif
-        }
-
-        public ScriptContext(ScriptRuntime runtime, int contextId, Experimental.IJSApiBridge apiBridge, bool withDebugServer, int debugServerPort)
+        public ScriptContext(ScriptRuntime runtime, int contextId, Experimental.IJSApiBridge apiBridge)
         {
             _isValid = true;
             _runtime = runtime;
             _apiBridge = apiBridge ?? new Experimental.DefaultJSApiBridgeImpl();
             _contextId = contextId;
             _ctx = JSApi.JS_NewContext(_runtime);
-            //TODO will be removed later
-            JSApi.JS_SetLogFunc(_ctx, _JSLog);
-            if (withDebugServer && debugServerPort > 0)
-            {
-                JSApi.JS_OpenDebugger(_ctx, debugServerPort);
-                runtime.GetLogger()?.Write(LogLevel.Info, string.Format("[EXPERIMENTAL] Debugger is now available with this URL (Windows x64 only): devtools://devtools/bundled/inspector.html?v8only=true&ws=127.0.0.1:{0}/1", debugServerPort));
-            }
             JSApi.JS_SetContextOpaque(_ctx, (IntPtr)_contextId);
             JSApi.JS_AddIntrinsicOperators(_ctx);
             _atoms = new AtomCache(_ctx);

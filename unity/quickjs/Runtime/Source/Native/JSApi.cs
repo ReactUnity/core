@@ -73,16 +73,6 @@ namespace QuickJS.Native
 #endif
     public delegate JSValue JSGetterCFunctionMagic(JSContext ctx, JSValueConst this_val, int magic);
 
-#if UNITY_EDITOR_WIN || UNITY_STANDALONE_WIN || JSB_UNITYLESS || (UNITY_WSA && !UNITY_EDITOR)
-        [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-#endif
-    public delegate void JSLogCFunction(int level, [MarshalAs(UnmanagedType.LPStr)] string line);
-
-#if UNITY_EDITOR_WIN || UNITY_STANDALONE_WIN || JSB_UNITYLESS || (UNITY_WSA && !UNITY_EDITOR)
-        [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-#endif
-    public delegate void JSWaitingForDebuggerCFunction(JSContext ctx);
-
     public partial class JSApi
     {
         public const int VERSION = 0x010704;
@@ -883,13 +873,6 @@ namespace QuickJS.Native
         #endregion
 
         #region diagnostics
-
-        public static void JS_OpenDebugger(JSContext ctx, int port) { }
-        public static JS_BOOL JS_IsDebuggerConnected(JSContext ctx) { return 0; }
-        public static JS_BOOL JS_IsDebuggerOpen(JSContext ctx) { return 0; }
-        public static void JS_CloseDebugger(JSContext ctx) { }
-        public static void JS_SetLogFunc(JSContext ctx, JSLogCFunction cb) { }
-        public static void JS_SetWaitingForDebuggerFunc(JSContext ctx, JSWaitingForDebuggerCFunction cb) { }
 
         [DllImport(JSBDLL, CallingConvention = CallingConvention.Cdecl)]
         public static extern unsafe void JS_ComputeMemoryUsage(JSRuntime rt, JSMemoryUsage* s);
