@@ -33,6 +33,7 @@ namespace QuickJS
         private JSValue _objectConstructor;
         private JSValue _numberConstructor;
         private JSValue _stringConstructor;
+        private JSValue _moduleRejectHandler;
 
         private bool _isReloading;
         private List<string> _waitForReloadModules;
@@ -62,6 +63,7 @@ namespace QuickJS
             _numberConstructor = JSApi.JS_GetProperty(_ctx, _globalObject, JSApi.JS_ATOM_Number);
             _proxyConstructor = JSApi.JS_GetProperty(_ctx, _globalObject, JSApi.JS_ATOM_Proxy);
             _stringConstructor = JSApi.JS_GetProperty(_ctx, _globalObject, JSApi.JS_ATOM_String);
+            _moduleRejectHandler = JSApi.JS_UNDEFINED;
         }
 
         public void ReleaseTypeRegister(TypeRegister register)
@@ -156,6 +158,7 @@ namespace QuickJS
             JSApi.JS_FreeValue(_ctx, _objectConstructor);
             JSApi.JS_FreeValue(_ctx, _numberConstructor);
             JSApi.JS_FreeValue(_ctx, _stringConstructor);
+            JSApi.JS_FreeValue(_ctx, _moduleRejectHandler);
             JSApi.JS_FreeValue(_ctx, _globalObject);
 
             JSApi.JS_FreeValue(_ctx, _moduleCache);
@@ -683,6 +686,79 @@ namespace QuickJS
         {
             var bytes = System.Text.Encoding.UTF8.GetBytes(source);
             return (T)EvalSource(bytes, fileName, typeof(T), true);
+        }
+
+        /// Evaluates as an ES module whose imports are fetched by the runtime's async module
+        /// loader, so a specifier can name something the host has to go and get.
+        ///
+        /// Returns as soon as the graph has been started, which is the point of it - nothing has
+        /// evaluated yet. A graph that needs nothing from the loader still finishes on the job
+        /// queue, so pump the runtime after; one that is waiting on a request finishes over the
+        /// following updates instead, and reports a failure through the logger.
+        ///
+        /// Requires an AsyncModuleLoader to be installed. Without one the engine has no way to
+        /// answer a request and the graph rejects.
+        public unsafe void EvalModuleAsync(string source, string fileName)
+        {
+            var input_bytes = TextUtils.GetNullTerminatedBytes(source);
+            var fn_bytes = TextUtils.GetNullTerminatedBytes(fileName);
+
+            fixed (byte* input_ptr = input_bytes)
+            fixed (byte* fn_ptr = fn_bytes)
+            {
+                var promise = JSApi.JS_EvalModuleAsync(_ctx, input_ptr, (size_t)(input_bytes.Length - 1), fn_ptr);
+
+                if (JSApi.JS_IsException(promise))
+                {
+                    // A parse error in the root, which is the only failure that surfaces here:
+                    // everything past compiling the root settles the promise instead.
+                    var ex = _ctx.GetExceptionString();
+                    JSApi.JS_FreeValue(_ctx, promise);
+                    throw new JSException(ex, fileName);
+                }
+
+                _WatchModuleGraph(promise);
+                JSApi.JS_FreeValue(_ctx, promise);
+            }
+        }
+
+        /// Reports a graph that failed after EvalModuleAsync returned, which is the only place it
+        /// can be reported at all.
+        // Attaching a handler also marks the rejection handled, so this replaces the "unhandled
+        // promise rejection" the tracker would otherwise log rather than adding to it.
+        private unsafe void _WatchModuleGraph(JSValue promise)
+        {
+            var then = JSApi.JS_GetProperty(_ctx, promise, GetAtom("then"));
+
+            if (JSApi.JS_IsFunction(_ctx, then))
+            {
+                // One handler per context, not one per module: JSB_NewCFunction roots the
+                // delegate for good, so a fresh one per graph leaks a GCHandle on every hot
+                // reload.
+                if (_moduleRejectHandler.IsUndefined())
+                {
+                    _moduleRejectHandler = JSApi.JSB_NewCFunction(_ctx, _module_graph_rejected, GetAtom("onRejected"), 1);
+                }
+
+                var argv = stackalloc JSValue[2];
+                argv[0] = JSApi.JS_UNDEFINED;
+                argv[1] = _moduleRejectHandler;
+
+                var rval = JSApi.JS_Call(_ctx, then, promise, 2, argv);
+                if (rval.IsException()) _ctx.print_exception();
+
+                JSApi.JS_FreeValue(_ctx, rval);
+            }
+
+            JSApi.JS_FreeValue(_ctx, then);
+        }
+
+        [MonoPInvokeCallback(typeof(JSCFunction))]
+        private static JSValue _module_graph_rejected(JSContext ctx, JSValue this_obj, int argc, JSValue[] argv)
+        {
+            var reason = argc > 0 ? ctx.FormatException(argv[0]) : "(no reason given)";
+            ScriptEngine.GetLogger(ctx)?.Write(LogLevel.Error, "failed to load module graph: {0}", reason);
+            return JSApi.JS_UNDEFINED;
         }
 
         public void EvalSource(byte[] source, string fileName)

@@ -29,11 +29,15 @@ namespace QuickJS.Native
     public delegate void JSHostPromiseRejectionTracker(JSContext ctx, JSValueConst promise, JSValueConst reason,
         [MarshalAs(UnmanagedType.U1)] bool is_handled, IntPtr opaque);
 
+    // Both module names arrive as raw pointers, not marshalled strings: LPStr is the ANSI code
+    // page and the engine hands out UTF-8, so a module path outside ASCII came back mangled.
+    // Decode with JSApi.GetString(IntPtr). The returned name must be engine-owned memory, which
+    // is what JSContext.NewCString allocates.
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    public unsafe delegate IntPtr JSModuleNormalizeFunc(JSContext ctx, [MarshalAs(UnmanagedType.LPStr)] string module_base_name, [MarshalAs(UnmanagedType.LPStr)] string module_name, IntPtr opaque);
+    public unsafe delegate IntPtr JSModuleNormalizeFunc(JSContext ctx, IntPtr module_base_name, IntPtr module_name, IntPtr opaque);
 
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    public delegate JSModuleDef JSModuleLoaderFunc(JSContext ctx, [MarshalAs(UnmanagedType.LPStr)] string module_name, IntPtr opaque);
+    public delegate JSModuleDef JSModuleLoaderFunc(JSContext ctx, IntPtr module_name, IntPtr opaque);
 
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
     public delegate void JSGCObjectFinalizer(JSRuntime rt, JSPayloadHeader header);

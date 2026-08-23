@@ -131,12 +131,12 @@ namespace QuickJS
         }
 
         [MonoPInvokeCallback(typeof(JSModuleNormalizeFunc))]
-        public static IntPtr module_normalize(JSContext ctx, string module_base_name, string module_name, IntPtr opaque)
+        public static IntPtr module_normalize(JSContext ctx, IntPtr module_base_name, IntPtr module_name, IntPtr opaque)
         {
             try
             {
                 var runtime = ScriptEngine.GetRuntime(ctx);
-                var resolve_to = runtime.ResolveFilePath(module_base_name, module_name);
+                var resolve_to = runtime.ResolveFilePath(JSApi.GetString(module_base_name), JSApi.GetString(module_name));
                 return ctx.NewCString(resolve_to);
             }
             catch (Exception exception)
@@ -147,9 +147,9 @@ namespace QuickJS
         }
 
         [MonoPInvokeCallback(typeof(JSModuleLoaderFunc))]
-        public static unsafe JSModuleDef module_loader(JSContext ctx, string module_name, IntPtr opaque)
+        public static unsafe JSModuleDef module_loader(JSContext ctx, IntPtr module_name_ptr, IntPtr opaque)
         {
-            // Debug.LogFormat("module_loader: {0}", module_name);
+            var module_name = JSApi.GetString(module_name_ptr);
             var runtime = ScriptEngine.GetRuntime(ctx);
             var fileSystem = runtime._fileSystem;
             if (!fileSystem.Exists(module_name))

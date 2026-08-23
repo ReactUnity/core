@@ -81,6 +81,23 @@ namespace QuickJS.Native
 #endif
         }
 
+        /// <summary>Reads a null-terminated UTF-8 string the engine owns.</summary>
+        // Every `const char *` the engine hands a callback is UTF-8. Declaring such a parameter
+        // as `string` marshals it as the ANSI code page instead, which silently mangles any
+        // module path outside ASCII -- so the delegates take IntPtr and decode here.
+        public static unsafe string GetString(IntPtr ptr)
+        {
+            if (ptr == IntPtr.Zero)
+            {
+                return null;
+            }
+
+            var p = (byte*)(void*)ptr;
+            var len = 0;
+            while (p[len] != 0) len++;
+            return len == 0 ? string.Empty : Encoding.UTF8.GetString(p, len);
+        }
+
         public static unsafe string GetString(JSContext ctx, IntPtr ptr, int len)
         {
             if (len > 0)
