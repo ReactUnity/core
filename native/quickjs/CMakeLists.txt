@@ -43,8 +43,25 @@ FetchContent_MakeAvailable(quickjs)
 target_compile_definitions(qjs PUBLIC BUILDING_QJS_SHARED)
 set_property(TARGET qjs PROPERTY POSITION_INDEPENDENT_CODE ON)
 
+# UWP compiles with /sdl by default, which promotes C4146 (unary minus on an
+# unsigned type) and C4703 (possibly uninitialised pointer) to errors -- both of
+# which quickjs.c and dtoa.c trip deliberately. Desktop MSVC leaves them warnings,
+# so this only ever bites WindowsStore. Same two we already suppress on our own target.
+if(MSVC)
+    target_compile_options(qjs PRIVATE /wd4146 /wd4703)
+endif()
+
 if(IOS)
     add_library(quickjs STATIC src/unity_qjs.c)
+    # A static library does NOT absorb a static library it links, so target_link_libraries
+    # below leaves this archive holding unity_qjs.o alone -- every JS_* symbol missing, and
+    # nothing fails until Unity links the Xcode project. The shipped prebuilt is a merged
+    # archive (it carries cutils.o and friends), so merge ng in the same way.
+    # check-exports.py reads archives, and is what catches this if the merge ever stops.
+    add_custom_command(TARGET quickjs POST_BUILD
+        COMMAND libtool -static -o $<TARGET_FILE:quickjs>.merged $<TARGET_FILE:quickjs> $<TARGET_FILE:qjs>
+        COMMAND ${CMAKE_COMMAND} -E rename $<TARGET_FILE:quickjs>.merged $<TARGET_FILE:quickjs>
+        VERBATIM COMMENT "merging quickjs-ng into libquickjs.a")
 elseif(APPLE)
     add_library(quickjs MODULE src/unity_qjs.c)
     set_target_properties(quickjs PROPERTIES BUNDLE TRUE MACOSX_BUNDLE TRUE)

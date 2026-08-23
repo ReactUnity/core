@@ -51,14 +51,53 @@ vacuously. Flipping the expected id to `i + 2` must give 241 failures and exit 1
 python native/quickjs/check-exports.py
 ```
 
-[check-exports.py](check-exports.py) diffs the live P/Invoke set against `dumpbin -exports` in
+[check-exports.py](check-exports.py) diffs the P/Invoke set against the library's export table in
 **both** directions: names C# calls that we do not export, and shim functions we export that nothing
 calls. The second direction is not cosmetic — 26 dead functions sat in the vendored shim precisely
 because nothing looked. Either direction exits non-zero, so it can gate CI.
 
-Currently 99 of 99 satisfied, 0 stale, exit 0. The live set shrank from 104 because phase 3 removed
-declarations rather than adding exports: the four atoms ng does not have, the two `*Internal`
-property functions, and `JS_AddIntrinsicOperators`.
+Currently 104 of 104 satisfied, 0 stale, exit 0.
+
+It reads **PE, ELF, Mach-O and static archives**, sniffing the format from the file's magic rather
+than the host OS, so one script covers all twelve artifacts and a cross-built one is checkable from
+whichever runner produced it. PE goes through `dumpbin`, or `llvm-readobj` where there is no Visual
+Studio; the rest through `llvm-nm` or `nm`. Pass a path to check something other than the default
+Windows build:
+
+```bash
+python native/quickjs/check-exports.py build/Release/quickjs.dll
+```
+
+The archive case is not hypothetical. iOS ships a `.a`, and a static library does not absorb a
+static library it links — so without the merge step in `CMakeLists.txt` that archive would hold the
+shim alone, with every `JS_*` symbol missing and nothing failing until Unity links the Xcode
+project. This check is what catches that.
+
+### The committed surface
+
+The wanted set comes from the C# `[DllImport]` declarations, which means the generated `.csproj` in
+`tests/` — and those are gitignored, only exist after the project has been opened in Unity, and
+carry absolute paths. No CI job that lacks Unity can derive it. So it is committed:
+
+| file | what | count |
+| --- | --- | --- |
+| [pinvoke-native.txt](pinvoke-native.txt) | symbols P/Invoked from the native library | 104 |
+| [pinvoke-webgl.txt](pinvoke-webgl.txt) | symbols a WebGL build P/Invokes from the jslib | 105 |
+
+`check-exports.py` and `check-jslib.py` use the live declarations when the `.csproj` are there and
+the committed file otherwise. When both are available they are compared, and a mismatch fails with
+the added and removed names — so the file cannot quietly rot. Regenerate after changing any
+`DllImport`, from a checkout Unity has opened:
+
+```bash
+python native/quickjs/check-exports.py --write
+```
+
+```bash
+python native/quickjs/check-jslib.py --write
+```
+
+A side benefit worth having: a change to the native surface now shows up in a diff.
 
 ```bash
 python native/quickjs/check-signatures.py
@@ -167,8 +206,39 @@ are gone. Every atom accessor the shim exports now comes from the one macro over
 `JS_NewString` is deliberately *not* here. ng made it `static inline`, so the plan was to shim it —
 but the C# declaration turned out to have no callers at all and was deleted instead.
 
-## Where it does not build yet
+## The other platforms
 
-Windows x64 with MSVC only. unity-jsb built Windows with MinGW and only WSA with MSVC; both follow
-the Win64 ABI for the 16-byte `JSValue` return, so the switch is safe, but it is untested for the
-other eleven artifacts (3 Android ABIs, iOS, macOS, 4 WSA, Linux x64, Windows x86).
+One CMakeLists covers all of them; the per-target difference is the configure line, which is why
+there is no build script per platform and nothing to vendor from unity-jsb. All of it runs in
+[native-quickjs.yml](../../.github/workflows/native-quickjs.yml), which builds each artifact,
+runs `shim-test` wherever the runner can execute what it built, checks the exports, and uploads —
+**installing them into `Plugins/QuickJS/` stays a manual step**, like `release-upm.yml`.
+
+| artifact | configure | proven |
+| --- | --- | --- |
+| Windows x64 | `-G "Visual Studio 17 2022" -A x64` | yes, and installed |
+| Windows x86 | `-A Win32` | yes, locally |
+| Linux x64 | `-DCMAKE_BUILD_TYPE=Release` | yes, locally (WSL) |
+| WSA x64 / x86 / ARM64 | `+ -DCMAKE_SYSTEM_NAME=WindowsStore -DCMAKE_SYSTEM_VERSION=10.0 -DCMAKE_TRY_COMPILE_TARGET_TYPE=STATIC_LIBRARY` | x64 and ARM64, locally |
+| macOS universal | `-DCMAKE_OSX_ARCHITECTURES=arm64;x86_64` | not yet — needs a Mac |
+| iOS arm64 | `-G Xcode -DCMAKE_SYSTEM_NAME=iOS -DCMAKE_XCODE_ATTRIBUTE_CODE_SIGNING_ALLOWED=NO` | not yet — needs a Mac |
+| Android ×3 | `-DCMAKE_TOOLCHAIN_FILE=$ANDROID_NDK_ROOT/build/cmake/android.toolchain.cmake -DANDROID_ABI=… -DANDROID_PLATFORM=android-24` | not yet — needs the NDK |
+
+Three things about that table are load-bearing.
+
+**WSA needs two warnings suppressed on ng's own target.** UWP compiles with `/sdl`, which promotes
+C4146 and C4703 to errors, and `quickjs.c` and `dtoa.c` trip both deliberately. Desktop MSVC leaves
+them warnings, so this only ever bites WindowsStore. `CMAKE_TRY_COMPILE_TARGET_TYPE` is separate:
+CMake's default compiler probe builds *and signs an appx*, which fails on ARM64.
+
+**WSA ARM (32-bit) is dropped, not pending.** The Windows SDK no longer supports it — `MSB8087`,
+from 10.0.26100 on — and Unity no longer targets it. Rebuilding it would mean pinning an SDK
+Microsoft has ended.
+
+**The Android ABI list changed.** The shipped set is `arm64-v8a`, `armeabi-v7a` and 32-bit `x86`,
+with no `x86_64`. That is a unity-jsb-era list: `x86_64` is the ABI Unity 6 actually targets (the
+emulator, Chromebooks) and 32-bit `x86` is not one it offers. The workflow builds `x86_64` and does
+not build `x86`.
+
+unity-jsb built Windows with MinGW and only WSA with MSVC. Both follow the Win64 ABI for the
+16-byte `JSValue` return, so the switch to MSVC everywhere is safe.

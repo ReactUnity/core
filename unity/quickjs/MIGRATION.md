@@ -214,13 +214,42 @@ thing — `unity_qjs.c` (275 lines) and `unity_ext.c` (414), a `CMakeLists.txt`,
 ng, not writing it. Note Windows is built with **MinGW** (`x86_64-w64-mingw32-gcc`) and only WSA
 with MSVC.
 
-The port itself looks cheap: of the 28 distinct `JS_*` names the two shim files use, 27 are in ng's
-public `quickjs.h` and the 28th is a macro they define themselves. `unity_qjs.c` is a normal
-translation unit over the public header plus `quickjs-atom.h`, not a patch into `quickjs.c`, so
-there is no merge to maintain against ng.
-**Windows x64 is done and installed** — [native/quickjs](../../native/quickjs) builds it, phase 3
-committed it to `Plugins/QuickJS/x64`, and the exit checks are mechanised. Eleven artifacts and the
-CI matrix remain.
+**Vendoring turned out to be the wrong plan, and none of it was needed.** Our own
+[native/quickjs/CMakeLists.txt](../../native/quickjs/CMakeLists.txt) already branches for every
+target shape — `IOS` static, `APPLE` module-and-bundle, shared elsewhere — so the per-platform
+difference is a configure line, not a script. There is nothing to port and nothing to keep in step
+with upstream. [native-quickjs.yml](../../.github/workflows/native-quickjs.yml) is the matrix:
+build, run `shim-test` where the runner can execute what it built, check the exports, upload.
+Installing into `Plugins/QuickJS/` stays manual, like `release-upm.yml`.
+
+Five of twelve are now proven, four of them measured rather than argued: Windows x64 (installed),
+Windows x86, Linux x64, WSA x64 and WSA ARM64, each 104/104 exports, and the shim's 241 atoms
+passing on Linux — the first time that test has run off Windows. macOS, iOS and the three Android
+ABIs need a Mac and an NDK, so CI is their first run.
+
+Four findings from doing it, all in [the README](../../native/quickjs/README.md):
+
+- **WSA was never the hard part.** It compiles the whole of `quickjs.c` and trips only on `/sdl`,
+  which UWP sets by default and which promotes C4146 and C4703 to errors — two warnings `quickjs.c`
+  and `dtoa.c` trip deliberately, and which we already suppressed on our own target but not on ng's.
+  Two flags. Separately, CMake's compiler probe builds *and signs an appx*, which fails on ARM64;
+  `CMAKE_TRY_COMPILE_TARGET_TYPE=STATIC_LIBRARY` skips it.
+- **WSA ARM (32-bit) is dropped, not pending.** The Windows SDK stopped supporting 32-bit ARM
+  (`MSB8087`, 10.0.26100 on) and Unity no longer targets it. Twelve artifacts become eleven.
+- **The Android ABI list is a unity-jsb relic.** It ships `arm64-v8a`, `armeabi-v7a` and 32-bit
+  `x86`, and no `x86_64` — which is the ABI Unity 6 actually targets, while 32-bit `x86` is not one
+  it offers. The workflow builds `x86_64` instead.
+- **iOS would have shipped an empty archive.** A static library does not absorb a static library it
+  links, so `add_library(quickjs STATIC …)` plus `target_link_libraries(… qjs)` yields an archive
+  holding the shim alone, every `JS_*` symbol missing, and nothing failing until Unity links the
+  Xcode project. The shipped prebuilt is a merged archive (it carries `cutils.o`); the CMakeLists now
+  merges too, and `check-exports.py` reads archives so it catches a regression.
+
+The other half of Gate 0 was that the checks could not run without Unity: they derive the wanted set
+from generated `.csproj` that are gitignored and hold absolute paths. The surface is now committed as
+`pinvoke-native.txt` (104) and `pinvoke-webgl.txt` (105), used when the `.csproj` are absent and
+compared against them when they are present, so it cannot rot. `check-exports.py` also grew ELF,
+Mach-O and archive readers, so all twelve artifacts are checkable rather than only the Windows ones.
 
 One thing to know before installing any of those eleven: `unity/quickjs/.gitignore` is a Visual
 Studio template inherited from the merged repo, and its `[Xx]64/` and `[Xx]86/` build-output rules

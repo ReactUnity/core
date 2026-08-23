@@ -1,0 +1,218 @@
+# Builds the twelve native `quickjs` artifacts com.reactunity.quickjs P/Invokes into.
+#
+# Why this exists: the binaries in unity/quickjs/Plugins/QuickJS were unity-jsb
+# prebuilts and this repo had no way to reproduce any of them. See
+# unity/quickjs/MIGRATION.md, "Gate 0".
+#
+# It deliberately does NOT commit what it builds. Every artifact is uploaded and
+# installing them is a separate, manual step -- the same shape as release-upm.yml,
+# and for the same reason: these are tracked binaries in a Unity package, and a
+# half-updated set is worse than a stale one. Nothing here needs Unity.
+#
+# One CMakeLists drives all of it (native/quickjs/CMakeLists.txt); the per-target
+# differences are the toolchain arguments below, which is why there is no build
+# script per platform. The Android and iOS invocations follow quickjs-ng's own CI.
+
+name: native-quickjs
+
+on:
+  workflow_dispatch:
+    inputs:
+      build-type:
+        description: CMake build type
+        type: choice
+        default: Release
+        options: [Release, Debug]
+  pull_request:
+    paths: ['native/quickjs/**', '.github/workflows/native-quickjs.yml']
+  push:
+    branches: [main]
+    paths: ['native/quickjs/**']
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  BUILD_TYPE: ${{ inputs.build-type || 'Release' }}
+
+jobs:
+  build:
+    name: ${{ matrix.name }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          # ---- desktop. `native` means the runner can execute what it built,
+          # which is what lets shim-test run rather than only link.
+          - name: windows-x64
+            os: windows-latest
+            artifact: x64/quickjs.dll
+            built: build/${{ github.event.inputs.build-type || 'Release' }}/quickjs.dll
+            configure: -G "Visual Studio 17 2022" -A x64
+            native: true
+          - name: windows-x86
+            os: windows-latest
+            artifact: x86/quickjs.dll
+            built: build/${{ github.event.inputs.build-type || 'Release' }}/quickjs.dll
+            configure: -G "Visual Studio 17 2022" -A Win32
+          - name: linux-x64
+            os: ubuntu-latest
+            artifact: x64/libquickjs.so
+            built: build/libquickjs.so
+            configure: -DCMAKE_BUILD_TYPE=${{ github.event.inputs.build-type || 'Release' }}
+            native: true
+          - name: macos-universal
+            os: macos-latest
+            artifact: quickjs.bundle/Contents/MacOS/quickjs
+            built: build/quickjs.bundle/Contents/MacOS/quickjs
+            # One bundle for both Macs; Unity ships OSXUniversal, not per-arch.
+            configure: >-
+              -DCMAKE_BUILD_TYPE=${{ github.event.inputs.build-type || 'Release' }}
+              "-DCMAKE_OSX_ARCHITECTURES=arm64;x86_64"
+            native: true
+
+          # ---- WSA. UWP compiles with /sdl, which promotes two warnings quickjs.c
+          # trips deliberately; the CMakeLists suppresses them. The static-library
+          # probe is needed because CMake's default try-compile builds and signs an
+          # appx, which fails on ARM64.
+          # WSA ARM (32-bit) is absent on purpose: the Windows SDK dropped 32-bit ARM
+          # (MSB8087 from 10.0.26100 on) and Unity no longer targets it.
+          - name: wsa-x64
+            os: windows-latest
+            artifact: WSA/x64/quickjs.dll
+            built: build/${{ github.event.inputs.build-type || 'Release' }}/quickjs.dll
+            configure: >-
+              -G "Visual Studio 17 2022" -A x64
+              -DCMAKE_SYSTEM_NAME=WindowsStore -DCMAKE_SYSTEM_VERSION=10.0
+              -DCMAKE_TRY_COMPILE_TARGET_TYPE=STATIC_LIBRARY
+          - name: wsa-x86
+            os: windows-latest
+            artifact: WSA/x86/quickjs.dll
+            built: build/${{ github.event.inputs.build-type || 'Release' }}/quickjs.dll
+            configure: >-
+              -G "Visual Studio 17 2022" -A Win32
+              -DCMAKE_SYSTEM_NAME=WindowsStore -DCMAKE_SYSTEM_VERSION=10.0
+              -DCMAKE_TRY_COMPILE_TARGET_TYPE=STATIC_LIBRARY
+          - name: wsa-arm64
+            os: windows-latest
+            artifact: WSA/ARM64/quickjs.dll
+            built: build/${{ github.event.inputs.build-type || 'Release' }}/quickjs.dll
+            configure: >-
+              -G "Visual Studio 17 2022" -A ARM64
+              -DCMAKE_SYSTEM_NAME=WindowsStore -DCMAKE_SYSTEM_VERSION=10.0
+              -DCMAKE_TRY_COMPILE_TARGET_TYPE=STATIC_LIBRARY
+
+          # ---- Android. android-24 matches Unity 6's minimum API level.
+          # armeabi-v7a and x86_64 are Unity 6's other two ABIs; 32-bit x86 is not
+          # one of them, which is why the shipped set's `x86` is not rebuilt here.
+          - name: android-arm64-v8a
+            os: ubuntu-latest
+            artifact: Android/libs/arm64-v8a/libquickjs.so
+            built: build/libquickjs.so
+            android-abi: arm64-v8a
+          - name: android-armeabi-v7a
+            os: ubuntu-latest
+            artifact: Android/libs/armeabi-v7a/libquickjs.so
+            built: build/libquickjs.so
+            android-abi: armeabi-v7a
+          - name: android-x86_64
+            os: ubuntu-latest
+            artifact: Android/libs/x86_64/libquickjs.so
+            built: build/libquickjs.so
+            android-abi: x86_64
+
+          # ---- iOS. A static archive, per the IOS branch in the CMakeLists:
+          # Unity links it into the generated Xcode project.
+          - name: ios-arm64
+            os: macos-latest
+            artifact: iOS/libquickjs.a
+            built: build/${{ github.event.inputs.build-type || 'Release' }}-iphoneos/libquickjs.a
+            configure: >-
+              -G Xcode -DCMAKE_SYSTEM_NAME=iOS
+              -DCMAKE_XCODE_ATTRIBUTE_CODE_SIGNING_ALLOWED=NO
+              -DCMAKE_OSX_ARCHITECTURES=arm64
+
+    steps:
+      - uses: actions/checkout@v7
+
+      - name: Configure
+        working-directory: native/quickjs
+        shell: bash
+        run: |
+          if [ -n "${{ matrix.android-abi }}" ]; then
+            cmake -B build \
+              -DCMAKE_TOOLCHAIN_FILE="$ANDROID_NDK_ROOT/build/cmake/android.toolchain.cmake" \
+              -DANDROID_ABI=${{ matrix.android-abi }} \
+              -DANDROID_PLATFORM=android-24 \
+              -DCMAKE_BUILD_TYPE=$BUILD_TYPE
+          else
+            cmake -B build ${{ matrix.configure }}
+          fi
+
+      # Always name the target: quickjs-ng registers run-test262, api-test and
+      # friends unconditionally, and a default build compiles all of them.
+      - name: Build
+        working-directory: native/quickjs
+        run: cmake --build build --config ${{ env.BUILD_TYPE }} --target quickjs
+
+      - name: Build and run shim-test
+        if: matrix.native
+        working-directory: native/quickjs
+        shell: bash
+        run: |
+          cmake --build build --config "$BUILD_TYPE" --target shim-test
+          # Multi-config generators put it in a per-config directory, single-config not.
+          for candidate in "build/$BUILD_TYPE/shim-test.exe" "build/$BUILD_TYPE/shim-test" "build/shim-test"; do
+            if [ -x "$candidate" ]; then "$candidate"; exit $?; fi
+          done
+          echo "shim-test binary not found" && exit 1
+
+      # Reads PE, ELF, Mach-O and archives, and takes the wanted set from the
+      # committed pinvoke-native.txt -- the .csproj it is otherwise derived from are
+      # generated by Unity and gitignored, so no job here could produce them.
+      - name: Check exports
+        working-directory: native/quickjs
+        shell: bash
+        run: |
+          # ubuntu images ship python3 without a `python` alias
+          PY=python3; command -v python3 >/dev/null || PY=python
+          "$PY" check-exports.py "${{ matrix.built }}"
+
+      - name: Stage artifact
+        working-directory: native/quickjs
+        shell: bash
+        run: |
+          mkdir -p "staged/$(dirname '${{ matrix.artifact }}')"
+          cp "${{ matrix.built }}" "staged/${{ matrix.artifact }}"
+
+      - uses: actions/upload-artifact@v7
+        with:
+          name: quickjs-${{ matrix.name }}
+          path: native/quickjs/staged/
+          if-no-files-found: error
+
+  # The WebGL backend has no native library, so its check is about the jslib
+  # rather than a binary. It belongs here because it asks the same question.
+  jslib:
+    name: webgl-jslib
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - name: Check the jslib against the P/Invoke surface
+        run: python3 native/quickjs/check-jslib.py
+
+  # One place to see whether the set is complete, and the only job worth making
+  # a required check.
+  collect:
+    name: all artifacts
+    needs: [build, jslib]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/download-artifact@v8
+        with:
+          path: artifacts
+          merge-multiple: true
+      - name: List what was built
+        run: find artifacts -type f | sort
