@@ -170,7 +170,7 @@ namespace QuickJS.Binding
                 var i = this.jsNamespace.IndexOf('.');
                 this.jsModuleAccess = i < 0 ? this.jsNamespace : this.jsNamespace.Substring(0, i);
                 this.jsModuleImportAccess = this.jsModuleAccess;
-                this.jsLocalName = CodeGenUtils.Concat(".", i < 0 ? "" : this.jsNamespace.Substring(i + 1), this.jsName);
+                this.jsLocalName = BindingUtils.Concat(".", i < 0 ? "" : this.jsNamespace.Substring(i + 1), this.jsName);
             }
 
             if (this.jsModuleAccess.EndsWith("[]"))
@@ -179,10 +179,10 @@ namespace QuickJS.Binding
             }
 
             this.jsDepth = this.jsModuleAccess.Split('.').Length;
-            this.jsFullName = CodeGenUtils.Concat(".", jsModule, jsNamespace, this.jsName);
+            this.jsFullName = BindingUtils.Concat(".", jsModule, jsNamespace, this.jsName);
             this.jsNamespaceSlice = jsNamespace.Split('.');
-            this.jsNameNormalized = CodeGenUtils.Normalize(this.jsName);
-            this.jsFullNameForReflectBind = CodeGenUtils.NormalizeEx(jsNamespaceSlice, CodeGenUtils.Normalize(jsName));
+            this.jsNameNormalized = BindingUtils.Normalize(this.jsName);
+            this.jsFullNameForReflectBind = BindingUtils.NormalizeEx(jsNamespaceSlice, BindingUtils.Normalize(jsName));
         }
 
         /// <summary>
@@ -190,7 +190,7 @@ namespace QuickJS.Binding
         /// </summary>
         public string MakeGenericJSFullTypeName(string templateArgs)
         {
-            var name = CodeGenUtils.Concat(".", this.jsNamespace, this.jsPureName);
+            var name = BindingUtils.Concat(".", this.jsNamespace, this.jsPureName);
             return string.Format("{0}<{1}>, ", name, templateArgs);
         }
     }

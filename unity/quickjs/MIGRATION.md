@@ -231,11 +231,11 @@ hit this trying to commit the ng DLL and negated the two paths. Two of the eleve
 directories.
 *Exit: twelve artifacts built reproducibly in CI from a tagged ng commit, Windows x64 loading in the Editor.*
 
-**Phase 1 — subtract, against the old DLL.** Done on this branch except for one item that turned
-out not to be subtraction at all: see "The codegen is not separable" below. Everything else landed —
+**Phase 1 — subtract, against the old DLL.** Done, including the one item that was held back for a
+decision: the codegen is gone — see "The codegen, dropped" below. Everything else landed earlier —
 the dead Unity integration, the struct marshalling, the 18 uncalled shim declarations, the
-`JSB_UNITYLESS` resolution, and the `BindingManager.Bind()` split that takes `CodeGenerator` out of
-the reflect-binding path.
+`JSB_UNITYLESS` resolution, and the `BindingManager.Bind()` split that took `CodeGenerator` out of
+the reflect-binding path, which is what made the drop a clean cut rather than an untangling.
 *Exit: repo compiles and `pnpm unity test tests` passes against the old DLL with those subsystems gone.*
 
 **Phase 2 — port the C shim.** Done. 27 `JSB_*`/`jsb_*` functions and 16 atoms against ng's
@@ -342,8 +342,8 @@ the `Operators.create` lookup in `ScriptContext`, `OperatorBindingInfo`, the `op
 `AddMethod`, `CodeGenHelper_Operator`, and the two places codegen emitted an `AddSelfOperator` call.
 
 What that costs, precisely: **generated bindings can no longer emit operator overloads for C#
-types.** That is a codegen feature on a path ReactUnity does not use, and whose deletion is a
-separate open question — see "The codegen is not separable". `op_*` methods still bind as ordinary
+types.** That was a codegen feature on a path ReactUnity does not use, and the codegen has since
+been dropped outright — see "The codegen, dropped". `op_*` methods still bind as ordinary
 static methods under those names, which is what they already did with the guard false, so no
 call from script changes. `jsb.isOperatorOverloadingSupported` is no longer defined; it read
 `false` and now reads `undefined`, so anything gating on it takes the same branch.
@@ -530,27 +530,42 @@ If you are auditing this, the technique matters more than the number: inject a s
 inside the guard and compile. A `#`-prefixed token will not do — the lexer still scans excluded
 regions for directives, so it errors either way and proves nothing.
 
-## The codegen is not separable
+## The codegen, dropped
 
-This document used to call `Binding/Editor/` "the codegen. Pure C#, no native dependency" with
-zero shim call-sites, and treat dropping it as subtraction. It is not.
+This document used to call `Binding/Editor/` "the codegen. Pure C#, no native dependency" with zero
+shim call-sites, and treat dropping it as subtraction. It was not, and the reason is worth keeping:
+`BindingManager._EmitDelegateMethod` built C# source with `CodeGenerator`, `CSNamespaceCodeGen` and
+`DelegateCodeGen` and compiled it **at runtime**, as the fallback for a delegate signature no
+hand-written template covers (`GetReflectedDelegateMethod` -> `GenerateReflectedDelegateMethod`). So
+`Codegen/` was reachable from the reflect-binding path, not only from an editor menu.
 
-`BindingManager._EmitDelegateMethod` builds C# source with `CodeGenerator`, `CSNamespaceCodeGen`
-and `DelegateCodeGen` and compiles it **at runtime**, as the fallback for a delegate signature no
-hand-written template covers (`GetReflectedDelegateMethod` → `GenerateReflectedDelegateMethod`).
-So `Codegen/` is reachable from the reflect-binding path, not just from the editor menu.
+That fallback could not work either, and failed in a way worth recording: the two guards disagreed.
+`CodeGenUtils.IsCodeEmitSupported()` returned true unless `NETCOREAPP`, but `CodeGenUtils.Compile`
+was `#if !(NETCOREAPP || NET_STANDARD_2_0 || NET_STANDARD_2_1 || NET_STANDARD)` and both test
+projects run `apiCompatibilityLevel: 6` (.NET Standard 2.1). The emit path therefore ran, built the
+source, got `null` from `Compile`, dereferenced it, and swallowed the `NullReferenceException` into
+`Error(exception)`. It has been dead on arrival under Unity for as long as those settings have held.
 
-It also cannot currently work, and fails in a way worth fixing on its own: the two guards
-disagree. `CodeGenUtils.IsCodeEmitSupported()` returns true unless `NETCOREAPP`, but
-`CodeGenUtils.Compile` is `#if !(NETCOREAPP || NET_STANDARD_2_0 || NET_STANDARD_2_1 ||
-NET_STANDARD)` and both test projects run `apiCompatibilityLevel: 6` (.NET Standard 2.1). So the
-emit path runs, builds the source, gets `null` from `Compile`, dereferences it, and swallows the
-`NullReferenceException` into `Error(exception)`.
+Dropped in full: `Binding/Editor/Codegen/` (17 files), the two codegen binding callbacks and
+`ICodeGenCallback`, `BindingManager.Generate(TypeBindingFlags)` with `_WriteCSharp`/`_WriteTSD` and
+the `codeGenCallback` plumbing, `_EmitDelegateMethod` and the `AddAssemblies` pair only it used,
+`DocResolver`, and `BindingManager.UnitylessReflectBind` ~ the sole caller of `Generate`, itself
+called by nothing. `Prefs` lost the 23 members left with no reader; `newLineStyle` stays because the
+live `newline` property is built on it, and the class no longer claims to be loadable from
+`js-bridge.json`, which nothing has read for some time.
 
-Deleting `Codegen/` is therefore a **deliberate feature drop** — delegates with `ref`/`out`
-parameters outside the template set, for users on the .NET Framework API profile — and wants a
-decision rather than a commit. `BindingManager.Bind()` already removes `CodeGenerator` from the
-path everything actually uses, so nothing downstream is blocked on making that call.
+What it costs: **a delegate whose signature no hand-written template covers can no longer be
+bound.** In practice that is `ref`/`out` parameters beyond the template set. Nothing changes for
+Unity, where the emit path already failed and returned `null`; what changes is that
+`GenerateReflectedDelegateMethod` now says so, naming the signature at `Warn` level, instead of
+logging a `NullReferenceException`. Generated bindings a user already has keep working: they
+reference runtime types in `Binding/`, not the generator ~ what goes away is regenerating them.
+
+Two helpers had to survive it. `CodeGenUtils` mixed the runtime compiler in with naming and type
+utilities that `TSTypeNaming` and `TypeBindingInfo` need, so those moved to `BindingUtils`
+(`IsDirectlyImplements`, `Normalize`, `NormalizeEx`, `Concat`); `RemoveAt`, `ToLiteral` and
+`ConcatAsLiteral` had no readers left and went with the rest. `TextGenerator` stays ~ it is also
+`BindingManager`'s log writer, not only a source emitter.
 
 ## Risks
 
@@ -613,6 +628,9 @@ the full suite green at the end (1,029 tests, 0 failures, both before and after)
   ng has no operator overloading to register, and the last dead stub went with it.
 - **`''` no longer marshals back as `null`** — a pre-existing bug in the string marshaller, not an
   ng regression, that made QuickJS the one engine unable to represent the empty string.
+- **The codegen, dropped** — the last phase 1 item, held back because it was a feature decision
+  rather than subtraction. `Binding/Editor/Codegen/` and everything that only fed it, including a
+  runtime C# compiler that could not run under Unity's API profile at all.
 - **The plugin directories were gitignored** — `[Xx]64/`/`[Xx]86/` in `unity/quickjs/.gitignore`
   matched `Plugins/QuickJS/x64` and `x86`. Found by being unable to commit the ng DLL; fixed by
   negating those two paths, which the next eleven artifacts need.

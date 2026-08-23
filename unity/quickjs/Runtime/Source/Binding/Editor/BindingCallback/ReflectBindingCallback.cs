@@ -178,11 +178,6 @@ namespace QuickJS.Binding
             ReflectBindValueOp.Register<ulong>(Binding.Values.js_push_primitive, Binding.Values.js_get_primitive);
             ReflectBindValueOp.Register<DateTime>(Binding.Values.js_push_structvalue, Binding.Values.js_get_structvalue);
 
-
-            if (!CodeGenUtils.IsCodeEmitSupported())
-            {
-                runtime.GetLogger().Write(Utils.LogLevel.Warn, CodeGenUtils.CodeEmitWarning);
-            }
         }
 
         public void OnBindingBegin(BindingManager bindingManager)

@@ -11,7 +11,6 @@ namespace QuickJS.Binding
     {
         public struct Args
         {
-            public ICodeGenCallback codeGenCallback;
             public IBindingCallback bindingCallback;
             public IBindingLogger bindingLogger;
             public Utils.IJsonConverter jsonConverter;
@@ -62,7 +61,6 @@ namespace QuickJS.Binding
         private List<Type> _allBindingProcessTypes = new List<Type>();
         private List<IBindingProcess> _enabledBindingProcess = new List<IBindingProcess>();
 
-        private ICodeGenCallback _codegenCallback;
         private IBindingCallback _bindingCallback;
         private IBindingLogger _bindingLogger;
 
@@ -94,7 +92,6 @@ namespace QuickJS.Binding
             _jsonConv = args.jsonConverter ?? new Utils.DefaultJsonConverter();
             _utils = args.utils ?? new DefaultBindingUtils();
             _bindingLogger = args.bindingLogger;
-            _codegenCallback = args.codeGenCallback;
             _bindingCallback = args.bindingCallback;
             _namespaceBlacklist = new HashSet<string>(prefs.namespaceBlacklist);
             _typeFullNameBlacklist = new HashSet<string>(prefs.typeFullNameBlacklist);
@@ -782,89 +779,14 @@ namespace QuickJS.Binding
                 }
             }
 
-            // dynamically emit method
-            var emittedMethod = _EmitDelegateMethod(returnType, parameters);
-            if (emittedMethod != null)
-            {
-                templates.Add(emittedMethod);
-                return emittedMethod;
-            }
-
+            // No hand-written template fits. This used to fall back on emitting C# and compiling
+            // it at runtime, which the codegen took with it -- and which could not run on either
+            // test project anyway, CodeGenUtils.Compile being compiled out under .NET Standard.
+            Warn("no delegate template for ({0}) -> {1}; a script value cannot be used as this delegate",
+                string.Join(", ", from p in parameters select p.ParameterType.Name), returnType.Name);
             return null;
         }
 
-        private void AddAssemblies(HashSet<Assembly> assemblies, IEnumerable<Type> types)
-        {
-            foreach (var t in types)
-            {
-                AddAssemblies(assemblies, t);
-            }
-        }
-
-        private void AddAssemblies(HashSet<Assembly> assemblies, Type type)
-        {
-            if (type != null && assemblies.Add(type.Assembly))
-            {
-                // UnityEngine.Debug.LogFormat("ref assembly {0}", type.Assembly.Location);
-                AddAssemblies(assemblies, type.BaseType);
-            }
-        }
-
-        private ulong _emitSeq = 0;
-        public MethodInfo _EmitDelegateMethod(Type returnType, ParameterInfo[] parameters)
-        {
-            try
-            {
-                if (!CodeGenUtils.IsCodeEmitSupported())
-                {
-                    return null;
-                }
-                var cg = new CodeGenerator(this, TypeBindingFlags.Default);
-                var ns = "_Generated" + (_emitSeq++);
-                var className = CodeGenerator.NameOfDelegates;
-                var assemblies = new HashSet<Assembly>();
-
-                AddAssemblies(assemblies, returnType);
-                AddAssemblies(assemblies, from p in parameters select p.ParameterType);
-                assemblies.Add(typeof(Values).Assembly);
-                assemblies.Add(typeof(Native.JSApi).Assembly);
-                assemblies.Add(typeof(Exception).Assembly);
-                assemblies.Add(typeof(System.Object).Assembly);
-                using (new CSNamespaceCodeGen(cg, ns))
-                {
-                    cg.cs.AppendLine("public static class " + className);
-                    cg.cs.AppendLine("{");
-                    cg.cs.AddTabLevel();
-                    using (new DelegateCodeGen(cg, "_Generated", returnType, parameters))
-                    {
-                    }
-                    cg.cs.DecTabLevel();
-                    cg.cs.AppendLine("}");
-                }
-
-                var source = cg.cs.Submit();
-                var compiledAssembly = CodeGenUtils.Compile(source, assemblies, "-unsafe", _bindingLogger);
-                if (compiledAssembly.ExportedTypes.Count() == 1)
-                {
-                    var resultType = compiledAssembly.ExportedTypes.First();
-                    if (resultType.Namespace == ns)
-                    {
-                        return resultType.GetMethod("_Generated");
-                    }
-                    Error("not expected type");
-                }
-                else
-                {
-                    Error("no exported type in compiled assembly");
-                }
-            }
-            catch (Exception exception)
-            {
-                Error(exception);
-            }
-            
-            return null;
-        }
 
         public MethodInfo GetReflectedDelegateMethod(Type returnType, ParameterInfo[] parameters)
         {
@@ -2157,174 +2079,6 @@ namespace QuickJS.Binding
             }
         }
 
-        public void Generate(TypeBindingFlags typeBindingFlags)
-        {
-            var cg = new CodeGenerator(this, typeBindingFlags);
-            var csOutDir = _utils.ReplacePathVars(prefs.outDir);
-            var tsOutDir = _utils.ReplacePathVars(prefs.typescriptDir);
-            var cancel = false;
-            var current = 0;
-            var total = _exportedTypes.Count;
-
-            cg.Begin();
-            _codegenCallback?.OnCodeGenBegin(this);
-            _bindingCallback?.OnBindingBegin(this);
-            foreach (var typeKV in _exportedTypes)
-            {
-                var typeBindingInfo = typeKV.Value;
-                try
-                {
-                    current++;
-                    cancel = _codegenCallback != null ? _codegenCallback.OnTypeGenerating(typeBindingInfo, current, total) : false;
-                    if (cancel)
-                    {
-                        Warn("operation canceled");
-                        break;
-                    }
-
-                    if (!typeBindingInfo.omit)
-                    {
-                        cg.Clear();
-                        OnPreGenerateType(typeBindingInfo);
-                        cg.Generate(typeBindingInfo);
-                        OnPostGenerateType(typeBindingInfo);
-
-                        if (_codegenCallback != null)
-                        {
-                            var fileName = typeBindingInfo.GetFileName();
-                            _WriteCSharp(cg, csOutDir, fileName);
-                        }
-                    }
-                }
-                catch (Exception exception)
-                {
-                    Error($"generate failed {typeBindingInfo.type.FullName}: {exception.Message}\n{exception.StackTrace}");
-                }
-            }
-
-            if (!cancel)
-            {
-                try
-                {
-                    var exportedDelegatesArray = new DelegateBridgeBindingInfo[this._exportedDelegates.Count];
-                    this._exportedDelegates.Values.CopyTo(exportedDelegatesArray, 0);
-
-                    if (_bindingCallback != null)
-                    {
-                        for (var i = 0; i < exportedDelegatesArray.Length; i++)
-                        {
-                            var delegateBindingInfo = exportedDelegatesArray[i];
-                            // var nargs = delegateBindingInfo.parameters.Length;
-
-                            _bindingCallback.AddDelegate(delegateBindingInfo);
-                        }
-                    }
-
-                    if (_codegenCallback != null)
-                    {
-                        cg.Clear();
-                        cg.Generate(exportedDelegatesArray, _exportedHotfixDelegates);
-                        _WriteCSharp(cg, csOutDir, CodeGenerator.NameOfDelegates);
-                    }
-                }
-                catch (Exception exception)
-                {
-                    Error($"generate delegates failed: {exception.Message}");
-                }
-            }
-
-            if (!cancel)
-            {
-                try
-                {
-                    var modules = from t in _collectedTypes
-                                  where t.genBindingCode
-                                  orderby t.tsTypeNaming.jsDepth
-                                  group t by t.tsTypeNaming.jsModule;
-
-                    // for reflect binding
-                    if (_bindingCallback != null)
-                    {
-                        _bindingCallback.BindRawTypes(_collectedRawTypes.Values);
-                        foreach (var module in modules)
-                        {
-                            var count = module.Count();
-
-                            if (count > 0)
-                            {
-                                var moduleName = string.IsNullOrEmpty(module.Key) ? this.prefs.defaultJSModule : module.Key;
-                                _bindingCallback.BeginStaticModule(moduleName, count);
-                                foreach (var type in module)
-                                {
-                                    _bindingCallback.AddTypeReference(moduleName, type);
-                                }
-                                _bindingCallback.EndStaticModule(moduleName);
-                            }
-                        }
-                    }
-
-                    if (_codegenCallback != null)
-                    {
-                        cg.Clear();
-                        _codegenCallback.OnGenerateBindingList(cg, modules, _collectedRawTypes.Values);
-                        _WriteCSharp(cg, csOutDir, CodeGenerator.NameOfBindingList);
-                    }
-                }
-                catch (Exception exception)
-                {
-                    Error($"generate delegates failed: {exception.Message}");
-                }
-            }
-            cg.End();
-
-            if (!cancel)
-            {
-                try
-                {
-                    cg.Clear();
-                    _WriteTSD(cg, tsOutDir, "jsb.autogen");
-                }
-                catch (Exception exception)
-                {
-                    Error($"generate delegates failed: {exception.Message}");
-                }
-            }
-
-            _bindingCallback?.OnBindingEnd();
-            _codegenCallback?.OnCodeGenEnd();
-            SubmitLog();
-            _codegenCallback?.OnGenerateFinish();
-        }
-
-        private void _WriteTSD(CodeGenerator cg, string tsOutDir, string tsName)
-        {
-            try
-            {
-                if (cg.tsDeclare.enabled && !cg.tsDeclare.isEmpty)
-                {
-                    _codegenCallback?.OnSourceCodeEmitted(cg, tsOutDir, tsName, SourceCodeType.TSD, cg.tsDeclare);
-                }
-            }
-            catch (Exception exception)
-            {
-                this.Error("write typescript declaration file failed [{0}]: {1}", tsName, exception.Message);
-            }
-        }
-
-        private void _WriteCSharp(CodeGenerator cg, string csOutDir, string csName)
-        {
-            try
-            {
-                if (cg.cs.enabled && !cg.cs.isEmpty)
-                {
-                    _codegenCallback?.OnSourceCodeEmitted(cg, csOutDir, csName, SourceCodeType.CSharp, cg.cs);
-                }
-            }
-            catch (Exception exception)
-            {
-                this.Error("write csharp file failed [{0}]: {1}", csName, exception.Message);
-            }
-        }
 
         public void Report()
         {

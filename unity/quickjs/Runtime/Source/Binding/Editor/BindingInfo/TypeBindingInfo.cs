@@ -39,7 +39,7 @@ namespace QuickJS.Binding
 
         public Type[] interfaces => type.GetInterfaces();
 
-        public Type[] directInterfaces => (from interfaceType in type.GetInterfaces() where CodeGenUtils.IsDirectlyImplements(type, interfaceType) select interfaceType).ToArray();
+        public Type[] directInterfaces => (from interfaceType in type.GetInterfaces() where BindingUtils.IsDirectlyImplements(type, interfaceType) select interfaceType).ToArray();
 
         /// <summary>
         /// 跳过此类型的导出

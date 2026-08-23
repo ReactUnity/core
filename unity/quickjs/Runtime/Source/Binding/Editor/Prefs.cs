@@ -4,22 +4,11 @@ using System.Collections.Generic;
 namespace QuickJS.Binding
 {
     /// <summary>
-    /// [EDITOR_ONLY] configuration for BindingManager
-    /// you can use a json file at './js-bridge.json' without modifying the source file 'Prefs.cs'
+    /// [EDITOR_ONLY] configuration for BindingManager. Defaults only -- nothing loads it from
+    /// disk any more, and the fields that configured code generation went with the codegen.
     /// </summary>
     public class Prefs
     {
-        /// <summary>
-        /// location of this configuration
-        /// </summary>
-        public const string PATH = "js-bridge.json";
-
-        /// <summary>
-        /// the actual location of this configuration (valid only if loaded from disk)
-        /// </summary>
-        [NonSerialized]
-        public string filePath;
-
         #region Configurable Fields
 
         /// <summary>
@@ -28,112 +17,14 @@ namespace QuickJS.Binding
         public string logPath = "Logs/js-bridge.log";
 
         /// <summary>
-        /// JSBehaviourScriptRef will parse 'modulePath' from 'JSBehaviourScriptRef.sourceFile' with this 'sourceDir'
-        /// </summary>
-        public string sourceDir = "Scripts/src";
-
-        /// <summary>
-        /// [optional] read this property as javascript dir for js_reload 
-        /// !! this property is read only when tsconfig.json can not be located at the project root path or compilerOptions.outDir is not configured
-        /// </summary>
-        public string javascriptDir = ""; // Scripts/out
-
-        /// <summary>
-        /// the output directory for generating static binding code
-        /// </summary>
-        public string outDir = "Assets/Generated/${platform}";
-
-        /// <summary>
-        /// the location of the corresponding d.ts of the generated binding code
-        /// </summary>
-        public string typescriptDir = "Assets/Generated/Typings";
-
-        /// <summary>
-        /// used for editor scripting to find out all unity classes implemented in typescript
-        /// </summary>
-        public string typescriptExt = ".ts";
-
-        /// <summary>
-        /// location of XmlDoc generated from Assembly-CSharp.dll 
-        /// </summary>
-        public string xmlDocDir = "Assets/Generated/Docs";
-
-        /// <summary>
-        /// all related modules information generated in the binding process will be written into this file. 
-        /// it's useful to mark these modules as external when using webpack for packaging.
-        /// </summary>
-        public string jsModulePackInfoPath = "jsb-modules.json";
-
-        /// <summary>
-        /// whether to generate doc comments in d.ts or not
-        /// </summary>
-        public bool genTypescriptDoc = true;
-
-        /// <summary>
-        /// enable editor scripting feature
-        /// </summary>
-        public bool editorScripting = true;
-
-        /// <summary>
-        /// [EDITOR_ONLY] preferred to bind types by reflection in editor without generating any binding code (useful for development stage in editor)
-        /// ("Reflect Bind", "In-Memory Bind", "Static Bind")
-        /// </summary>
-        public string preferredBindingMethod = "Reflect Bind";
-
-        /// <summary>
-        /// optional entry point for editor scripting
-        /// </summary>
-        public string editorEntryPoint = "";
-
-        /// <summary>
-        /// Asset Postprocessor(s) implemented in scripts
-        /// </summary>
-        public List<string> assetPostProcessors = new List<string>(new string[]
-        {
-            // "editor/asset_postprocessor",
-        });
-
-        public List<string> editorRequires = new List<string>(new string[]
-        {
-            "plover/editor/js_reload",
-        });
-
-        public string editorDecoratorScript = "plover/editor/editor_decorators";
-
-        /// <summary>
-        /// generate totally commented staticbind code for more conveniently debugging the codegen process itself
-        /// </summary>
-        public bool debugCodegen = false;
-
-        /// <summary>
         /// omit all delegates with ByRef parameter
         /// </summary>
         public bool skipDelegateWithByRefParams = false;
 
         /// <summary>
-        /// output more details to the log file
-        /// </summary>
-        public bool verboseLog = true;
-
-        /// <summary>
         /// automatically rename ToString() into toString()
         /// </summary>
         public bool optToString = true;
-
-        /// <summary>
-        /// the d.ts will be split into parts with this file length threshold 
-        /// </summary>
-        public int tsdSizeThreshold = 512 * 1024;
-
-        /// <summary>
-        /// enable parameter type checking for methods (even if no overloading exists)
-        /// </summary>
-        public bool alwaysCheckArgType = false;
-
-        /// <summary>
-        /// enable checking the number of parameters even if not overloading exists
-        /// </summary>
-        public bool alwaysCheckArgc = true;
 
         /// <summary>
         /// [EXPERIMENTAL, UNFINISHED] generate obfuscated binding code
@@ -156,11 +47,6 @@ namespace QuickJS.Binding
         public string defaultJSModule = "global";
 
         /// <summary>
-        /// the optional suffix for the generated d.ts file
-        /// </summary>
-        public string extraExtForTypescript = "";
-
-        /// <summary>
         /// the new-line style for codegen (cr, lf, crlf). 
         /// it will depend on the operating system if not assigned.
         /// </summary>
@@ -177,14 +63,6 @@ namespace QuickJS.Binding
         public List<string> skipBinding = new List<string>(new string[]
         {
             // "jsb.Editor.UnityEditorBinding",
-        });
-
-        /// <summary>
-        /// the directories will be cleaned up after code generation (only unused files will be deleted)
-        /// </summary>
-        public List<string> cleanupDir = new List<string>(new string[]
-        {
-            "Assets/Generated",
         });
 
         /// <summary>
