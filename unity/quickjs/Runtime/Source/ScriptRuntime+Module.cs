@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
@@ -114,7 +114,6 @@ namespace QuickJS
 
                 if (bModule)
                 {
-#if !JSB_WITH_V8_BACKEND
                     // Compile before running so import.meta can be filled in. QuickJS only
                     // populates it for modules that came through module_loader, which leaves
                     // import.meta.url undefined on a module evaluated directly from source.
@@ -125,16 +124,12 @@ namespace QuickJS
 
                     // JS_EvalFunction takes ownership of mod_val.
                     return JSApi.JS_EvalFunction(ctx, mod_val);
-#else
-                    return JSApi.JS_EvalModule(ctx, input_ptr, input_len, fn_ptr);
-#endif
                 }
                 return JSApi.JS_EvalSource(ctx, input_ptr, input_len, fn_ptr);
 
             }
         }
 
-#if !JSB_WITH_V8_BACKEND
         [MonoPInvokeCallback(typeof(JSModuleNormalizeFunc))]
         public static IntPtr module_normalize(JSContext ctx, string module_base_name, string module_name, IntPtr opaque)
         {
@@ -244,6 +239,5 @@ namespace QuickJS
             JSApi.JS_DefinePropertyValue(ctx, meta, context.GetAtom("main"), JSApi.JS_NewBool(ctx, false));
             JSApi.JS_FreeValue(ctx, meta);
         }
-#endif
     }
 }

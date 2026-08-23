@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
@@ -89,7 +89,7 @@ namespace QuickJS.Native
         public const int CS_JSB_VERSION = 0xa; // expected dll version
         public static readonly int SO_JSB_VERSION; // actual dll version
 
-#if JSB_NO_BIGNUM || ((UNITY_WSA || UNITY_WEBGL) && !UNITY_EDITOR) || JSB_WITH_V8_BACKEND
+#if JSB_NO_BIGNUM || ((UNITY_WSA || UNITY_WEBGL) && !UNITY_EDITOR)
         public const bool IsOperatorOverloadingSupported = false;
 #else
         public const bool IsOperatorOverloadingSupported = true;
@@ -98,11 +98,7 @@ namespace QuickJS.Native
 #if (UNITY_IPHONE || UNITY_WEBGL) && !UNITY_EDITOR
 	    public const string JSBDLL = "__Internal";
 #else
-#if JSB_WITH_V8_BACKEND
-        public const string JSBDLL = "v8-bridge";
-#else
         public const string JSBDLL = "quickjs";
-#endif
 #endif
 
         public const int JS_TAG_FIRST = -11; /* first negative tag */
@@ -572,13 +568,8 @@ namespace QuickJS.Native
         [DllImport(JSBDLL, CallingConvention = CallingConvention.Cdecl)]
         public static extern int JS_ExecutePendingJob(JSRuntime rt, out JSContext pctx);
 
-#if JSB_WITH_V8_BACKEND
-        //TODO unity-jsb: [IMPORTANT] implement it in v8-bridge later
-        public static int JS_IsJobPending(JSRuntime rt, out JSContext pctx) { return 0; }
-#else
         [DllImport(JSBDLL, CallingConvention = CallingConvention.Cdecl)]
         public static extern int JS_IsJobPending(JSRuntime rt, out JSContext pctx);
-#endif
 
         [DllImport(JSBDLL, CallingConvention = CallingConvention.Cdecl)]
         public static extern int JS_ToBool(JSContext ctx, JSValueConst val);
@@ -893,52 +884,12 @@ namespace QuickJS.Native
 
         #region diagnostics
 
-#if JSB_WITH_V8_BACKEND
-        [DllImport(JSBDLL, CallingConvention = CallingConvention.Cdecl)]
-        public static extern unsafe void JS_OpenDebugger(JSContext ctx, int port);
-        [DllImport(JSBDLL, CallingConvention = CallingConvention.Cdecl)]
-        public static extern unsafe JS_BOOL JS_IsDebuggerConnected(JSContext ctx);
-        [DllImport(JSBDLL, CallingConvention = CallingConvention.Cdecl)]
-        public static extern unsafe JS_BOOL JS_IsDebuggerOpen(JSContext ctx);
-        [DllImport(JSBDLL, CallingConvention = CallingConvention.Cdecl)]
-        public static extern unsafe void JS_CloseDebugger(JSContext ctx);
-
-        [DllImport(JSBDLL, CallingConvention = CallingConvention.Cdecl)]
-        private static extern unsafe void JS_SetLogFunc(JSContext ctx, IntPtr func);
-        public static void JS_SetLogFunc(JSContext ctx, JSLogCFunction cb)
-        {
-#if JSB_UNITYLESS || (UNITY_WSA && !UNITY_EDITOR)
-            GCHandle.Alloc(cb);
-#endif
-            var fn = Marshal.GetFunctionPointerForDelegate(cb);
-            JS_SetLogFunc(ctx, fn);
-        }
-
-        [DllImport(JSBDLL, CallingConvention = CallingConvention.Cdecl)]
-        private static extern unsafe void JS_SetWaitingForDebuggerFunc(JSContext ctx, IntPtr func);
-        public static void JS_SetWaitingForDebuggerFunc(JSContext ctx, JSWaitingForDebuggerCFunction cb)
-        {
-            if (cb != null)
-            {
-#if JSB_UNITYLESS || (UNITY_WSA && !UNITY_EDITOR)
-                GCHandle.Alloc(cb);
-#endif
-                var fn = Marshal.GetFunctionPointerForDelegate(cb);
-                JS_SetWaitingForDebuggerFunc(ctx, fn);
-            }
-            else
-            {
-                JS_SetWaitingForDebuggerFunc(ctx, IntPtr.Zero);
-            }
-        }
-#else 
         public static void JS_OpenDebugger(JSContext ctx, int port) { }
         public static JS_BOOL JS_IsDebuggerConnected(JSContext ctx) { return 0; }
         public static JS_BOOL JS_IsDebuggerOpen(JSContext ctx) { return 0; }
         public static void JS_CloseDebugger(JSContext ctx) { }
         public static void JS_SetLogFunc(JSContext ctx, JSLogCFunction cb) { }
         public static void JS_SetWaitingForDebuggerFunc(JSContext ctx, JSWaitingForDebuggerCFunction cb) { }
-#endif // end JSB_WITH_V8_BACKEND
 
         [DllImport(JSBDLL, CallingConvention = CallingConvention.Cdecl)]
         public static extern unsafe void JS_ComputeMemoryUsage(JSRuntime rt, JSMemoryUsage* s);

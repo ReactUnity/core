@@ -357,9 +357,7 @@ namespace QuickJS
                 throw new NullReferenceException(nameof(fileSystem));
             }
 
-#if !JSB_WITH_V8_BACKEND
             args.withDebugServer = false;
-#endif
             args.asyncManager.Initialize(_mainThreadId);
 
             _isValid = true;
@@ -380,9 +378,7 @@ namespace QuickJS
             }
 #endif
             JSApi.JSB_SetRuntimeOpaque(_rt, (IntPtr)_runtimeId);
-#if !JSB_WITH_V8_BACKEND
             JSApi.JS_SetModuleLoaderFunc(_rt, module_normalize, module_loader, IntPtr.Zero);
-#endif
             CreateContext(args.apiBridge, args.withDebugServer, args.debugServerPort);
             _pathResolver = args.pathResolver;
             _asyncManager = args.asyncManager;
@@ -1018,10 +1014,8 @@ namespace QuickJS
             GC.WaitForPendingFinalizers();
             ExecutePendingActions(true);
 
-#if !JSB_WITH_V8_BACKEND
             //TODO unity-jsb: jsvalue's gc finalizer can't be certainly invoked when the jsvalue hasn't any reference, we just do not calling cache.Destroy normally for now.
             _objectCache.Destroy();
-#endif
 
             //
             GC.Collect();
@@ -1061,10 +1055,6 @@ namespace QuickJS
                 _logger?.Write(LogLevel.Assert, "gc object leaks");
             }
 
-#if JSB_WITH_V8_BACKEND
-            //TODO unity-jsb: jsvalue's gc finalizer can't be certainly invoked when the jsvalue hasn't any reference, we just do not calling cache.Destroy normally for now.
-            _objectCache.Destroy();
-#endif
             var id = _runtimeId;
             _runtimeId = -1;
             _rt = JSRuntime.Null;

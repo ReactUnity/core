@@ -1,4 +1,4 @@
-#if !JSB_UNITYLESS
+﻿#if !JSB_UNITYLESS
 using System;
 using System.Linq;
 using System.Collections.Generic;
@@ -11,7 +11,6 @@ namespace QuickJS.Unity
 
     public class ScriptEngineStatsWindow : BaseEditorWindow, IHasCustomMenu
     {
-        private static readonly string[] _backends = { "quickjs", "v8-bridge" };
         private static GUIContent GUIContent_Stats_Operator = new GUIContent("Operator", "Is operator overloading supported?");
 
         private int _categoryIndex;
@@ -453,22 +452,7 @@ namespace QuickJS.Unity
                 Block("Control", () =>
                 {
                     EditorGUI.BeginDisabledGroup(EditorApplication.isCompiling);
-                    EditorGUILayout.BeginHorizontal();
-                    EditorGUILayout.LabelField("Engine");
-                    var selectedBackend = Array.IndexOf(_backends, Native.JSApi.JSBDLL);
-                    var selectedBackendNew = GUILayout.Toolbar(selectedBackend, _backends);
-                    if (selectedBackendNew != selectedBackend)
-                    {
-                        if (EditorUtility.DisplayDialog("Switching backend", "Are you sure to switch to " + _backends[selectedBackendNew] + "?", "Confirm", "Cancel"))
-                        {
-                            UnityHelper.SetDefineSymbol("JSB_WITH_V8_BACKEND", _backends[selectedBackendNew] != "quickjs");
-                        }
-                    }
-                    EditorGUILayout.EndHorizontal();
-                    if (_backends[selectedBackendNew] != "quickjs")
-                    {
-                        EditorGUILayout.HelpBox("v8-bridge is still in experimental stage, the stability and the performance are unsure.", MessageType.Warning);
-                    }
+                    EditorGUILayout.LabelField("Engine", Native.JSApi.JSBDLL);
                     EditorGUI.EndDisabledGroup();
 
                     var old_isDebugMode = Native.JSApi.IsDebugMode();

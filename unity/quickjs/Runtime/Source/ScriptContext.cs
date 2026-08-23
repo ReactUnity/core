@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -703,16 +703,7 @@ namespace QuickJS
                 fixed (byte* resolved_id_ptr = resolved_id_bytes)
                 {
                     var input_len = (size_t)(input_bytes.Length - 1);
-#if JSB_WITH_V8_BACKEND
-                    JSValue func_val;
-                    var filename_bytes = TextUtils.GetNullTerminatedBytes(filename.Replace('/', '\\')); // normalize for v8 debug protocol
-                    fixed (byte* filename_ptr = filename_bytes)
-                    {
-                        func_val = JSApi.JS_EvalSource(ctx, input_ptr, input_len, filename_ptr);
-                    }
-#else
                     var func_val = JSApi.JS_EvalSource(ctx, input_ptr, input_len, resolved_id_ptr);
-#endif
 
                     if (func_val.IsException())
                     {
