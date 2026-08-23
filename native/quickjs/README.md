@@ -19,6 +19,18 @@ cmake --build build --config Release --target quickjs
 **Always name the target.** quickjs-ng registers `run-test262`, `api-test`, `lre-test` and friends
 unconditionally, so a default build compiles all of them.
 
+Then check it against the thing that has to load it:
+
+```bash
+python native/quickjs/check-exports.py
+```
+
+[check-exports.py](check-exports.py) reads the live P/Invoke set out of Unity's generated
+`tests/*.csproj` — the real define set and the real source list, so a declaration inside a dead
+`#if` does not count — and diffs it against `dumpbin -exports`. It exits non-zero on any gap, so it
+can gate CI. Currently 99 of 105; the 6 remaining are C#-side phase 3 work, listed in
+[MIGRATION.md](../../unity/quickjs/MIGRATION.md).
+
 ## What it links
 
 quickjs-ng is fetched by CMake, never vendored, and pinned to a **commit** — `QJS_COMMIT` in
