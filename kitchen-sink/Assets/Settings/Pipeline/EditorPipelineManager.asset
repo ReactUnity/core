@@ -16,4 +16,4 @@ MonoBehaviour:
   m_AutoStart: 1
   m_WatchdogEnabled: 1
   m_WatchdogIntervalSeconds: 5
-  m_LogRequestsResponses: 1
+  m_LogRequestsResponses: 0
