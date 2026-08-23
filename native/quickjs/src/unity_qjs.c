@@ -40,12 +40,6 @@ enum
 #include "quickjs-atom.h"
 #undef DEF
 
-/* quickjs-ng removed operator overloading, so these two atoms do not exist.
-   Returning 0 is not a placeholder: JSAtom.IsValid is `_value != 0`, and every
-   C# call site is already guarded by it or by IsOperatorOverloadingSupported. */
-JS_EXPORT JSAtom JSB_ATOM_Operators(void) { return JS_ATOM_NULL; }
-JS_EXPORT JSAtom JSB_ATOM_Symbol_operatorSet(void) { return JS_ATOM_NULL; }
-
 static JSClassID js_bridge_class_id = 0;
 
 #define JS_BO_TYPE 1

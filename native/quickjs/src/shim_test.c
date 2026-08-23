@@ -34,9 +34,9 @@ static const struct { const char *name; const char *str; atom_accessor fn; } kno
 
 #define ATOM_COUNT ((int)(sizeof(known_atoms) / sizeof(known_atoms[0])))
 
-/* The four the C# layer names and ng does not define. Absent here means the stubs in
-   unity_qjs.c are still needed; present would mean ng grew them back and the stubs
-   now shadow a real atom. */
+/* The four atoms unity-jsb named and ng does not define. Phase 3 rewrote the C# so it
+   no longer asks for any of them, so this now guards the reasoning rather than a stub:
+   if ng grows one back, the workaround written against its absence needs revisiting. */
 static const char *const expected_absent[] = { "fileName", "lineNumber", "Operators", "Symbol_operatorSet" };
 
 static void check_atoms(JSContext *ctx)
@@ -62,9 +62,6 @@ static void check_atoms(JSContext *ctx)
                   "ng now defines the atom %s, which unity_qjs.c stubs out", expected_absent[i]);
         }
     }
-
-    CHECK(JSB_ATOM_Operators() == JS_ATOM_NULL, "JSB_ATOM_Operators must be JS_ATOM_NULL so JSAtom.IsValid is false");
-    CHECK(JSB_ATOM_Symbol_operatorSet() == JS_ATOM_NULL, "JSB_ATOM_Symbol_operatorSet must be JS_ATOM_NULL");
 }
 
 static int finalized = 0;
