@@ -142,6 +142,8 @@ The C# side of that call surface is `unity/core/Runtime/Core/ReactUnityBridge.cs
 
 `unity/core/Runtime/Scripting/` defines `IJavaScriptEngine` plus DOM shims (`DomProxies/` — `fetch`, `XMLHttpRequest`, `WebSocket`, `localStorage`, `URL`). Concrete engines ship as separate UPM packages so a project pulls in only one native binary: `com.reactunity.quickjs` (recommended), `jint` (pure C#, slower), `clearscript` (V8).
 
+`com.reactunity.quickjs` binds unity-jsb's fork of **Bellard-era QuickJS**, not quickjs-ng — the two are different engines, not two versions of one, and the difference is load-bearing for anything touching `Runtime/Source/Native`. [unity/quickjs/MIGRATION.md](unity/quickjs/MIGRATION.md) has the measured plan for moving to quickjs-ng, which is what unblocks asynchronous module loading. Read it before changing that binding.
+
 ### Styling
 
 `unity/core/Runtime/Styling/` implements a CSS subset over Yoga flexbox. Note for anything UI-facing: **flex direction defaults to `column`**, not `row`; CSS cannot style SVG icons from libraries like `react-icons` (use their `color`/`size` props); emoji are not reliably supported.
