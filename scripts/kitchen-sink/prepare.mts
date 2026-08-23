@@ -35,6 +35,15 @@ const DROPPED_UNITY_PACKAGES = ['com.reactunity.jint', 'com.reactunity.clearscri
  *  project, which a user does not want and the perf framework only exists to serve. */
 const DROPPED_UNITY_EXTRAS = ['com.unity.test-framework.performance'];
 
+/**
+ * Agent tooling of this checkout, not of the sample: `com.unity.pipeline` is what lets Unity's
+ * CLI drive an Editor we have open (see .claude/skills/unity), it is `0.5.0-exp.1`, and it opens
+ * a loopback server. Its settings asset has to go with it -- shipping the asset while the package
+ * is gone leaves a dangling script reference in the exported project.
+ */
+const DROPPED_UNITY_TOOLING = ['com.unity.pipeline'];
+const DROPPED_PATHS = ['Assets/Settings/Pipeline'];
+
 /** Only ever set in this checkout: it turns on the agent bridge, the snapshot-overwrite
  *  menu, and the TypeScript model generator. None of it belongs in a sample. */
 const DEVELOPER_DEFINE = 'REACT_UNITY_DEVELOPER';
@@ -103,14 +112,22 @@ function copyTrackedFiles(outDir: string): number {
   const files = listed.split('\0').filter(Boolean);
   if (files.length === 0) throw new Error('git ls-files found nothing under kitchen-sink/');
 
+  let skipped = 0;
   for (const tracked of files) {
     const relative = path.relative('kitchen-sink', tracked);
+    const slashed = relative.replaceAll('\\', '/');
+    // The prefix covers both the folder and the `.meta` beside it.
+    if (DROPPED_PATHS.some((dropped) => slashed.startsWith(dropped))) {
+      skipped++;
+      continue;
+    }
     const target = path.join(outDir, relative);
     fs.mkdirSync(path.dirname(target), { recursive: true });
     fs.copyFileSync(path.join(repoRoot, tracked), target);
-    written.add(relative.replaceAll('\\', '/'));
+    written.add(slashed);
   }
-  return files.length;
+  if (skipped) record(DROPPED_PATHS.join(', '), `${skipped} file(s) left out -- agent tooling`);
+  return files.length - skipped;
 }
 
 /**
@@ -132,7 +149,7 @@ function rewriteUnityManifest(outDir: string, version: string) {
   const file = path.join(outDir, 'Packages', 'manifest.json');
   const manifest = readJson(file);
   const deps = manifest.dependencies as Record<string, string>;
-  const dropped = [...DROPPED_UNITY_PACKAGES, ...DROPPED_UNITY_EXTRAS];
+  const dropped = [...DROPPED_UNITY_PACKAGES, ...DROPPED_UNITY_EXTRAS, ...DROPPED_UNITY_TOOLING];
 
   for (const name of dropped) delete deps[name];
   for (const name of Object.keys(deps)) {
@@ -232,8 +249,13 @@ function verify(outDir: string, version: string) {
   if (manifest.includes('file:')) failures.push('Packages/manifest.json still has a file: dependency');
   if (reactPkg.includes('workspace:')) failures.push('react/package.json still has a workspace: dependency');
   if (settings.includes(DEVELOPER_DEFINE)) failures.push(`ProjectSettings.asset still defines ${DEVELOPER_DEFINE}`);
-  for (const dropped of DROPPED_UNITY_PACKAGES) {
+  for (const dropped of [...DROPPED_UNITY_PACKAGES, ...DROPPED_UNITY_TOOLING]) {
     if (manifest.includes(dropped)) failures.push(`Packages/manifest.json still references ${dropped}`);
+  }
+  // An asset left behind by a package that is gone is a dangling script reference, which Unity
+  // reports as a broken component rather than a missing package.
+  for (const dropped of DROPPED_PATHS) {
+    if (fs.existsSync(path.join(outDir, dropped))) failures.push(`${dropped} was copied, but its package was dropped`);
   }
   if (!manifest.includes(`"com.reactunity.core": "${version}"`)) failures.push(`com.reactunity.core is not pinned to ${version}`);
 
