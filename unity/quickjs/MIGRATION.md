@@ -362,6 +362,33 @@ Two consequences were not obvious from the guard. `TypeBindingInfo.preload` was 
 binding is not an operator concept. And `JSB_ATOM_Function` went with `_functionConstructor`, whose
 only reader was `TypeRegister.GetConstructor(typeof(JSFunction))` on the operator path.
 
+### An empty string is not null
+
+`JSApi.GetString(ctx, ptr, len)` returned `null` for `len == 0`, so QuickJS was the one engine that
+marshalled `''` back into C# as `null` — and since that is the marshaller every JS-to-C# string goes
+through, it made the empty string unrepresentable. It is not an ng regression; `main` has the same
+line. It now returns `string.Empty`, and `null` means only what it should: there is no buffer.
+
+Nothing depended on the old behaviour, which is what made the fix a one-liner rather than an audit.
+Two callers do read that `null` as a signal, and both get *more* correct: `JSContext.ToStringSafe`
+used it to detect a `toString` that threw, and would fire its take-and-drop on a legitimate `''`;
+`js_get_classvalue(out Type)` fed it to `TypeDB.GetType`, which answers the same for `null` and `""`.
+
+`StringMarshallingTests` pins it down for all three engines in both directions, and the measurement
+that motivated it is worth keeping, because only one cell of it was wrong:
+
+| passed from script | Jint / ClearScript | QuickJS, before |
+| --- | --- | --- |
+| `''` | `""` | **`null`** |
+| `'x'`, `'héllo çay'` | verbatim | verbatim |
+| `null`, `undefined` | `null` | `null` |
+
+So JS `null` and `undefined` already arrived as `null` despite `js_get_primitive` carrying a
+`// no check` comment, and non-ASCII already round-tripped — `Marshal.PtrToStringAnsi` resolves to
+UTF-8 under both Mono and IL2CPP, so the ANSI-code-page hazard that bit the module-loader delegates
+does not bite here. The empty string was the whole divergence. The C#-to-script direction was
+already correct, so that half of the test is a guard, not a fix.
+
 ### The jslib build was broken
 
 `npx -p typescript tsc`, the command in the jslib's own header, fails outright: TypeScript 7 removed
@@ -584,6 +611,8 @@ the full suite green at the end (1,029 tests, 0 failures, both before and after)
   at all.
 - **Operator overloading, removed** — the machinery phase 3 left behind a permanently false guard.
   ng has no operator overloading to register, and the last dead stub went with it.
+- **`''` no longer marshals back as `null`** — a pre-existing bug in the string marshaller, not an
+  ng regression, that made QuickJS the one engine unable to represent the empty string.
 - **The plugin directories were gitignored** — `[Xx]64/`/`[Xx]86/` in `unity/quickjs/.gitignore`
   matched `Plugins/QuickJS/x64` and `x86`. Found by being unable to commit the ng DLL; fixed by
   negating those two paths, which the next eleven artifacts need.

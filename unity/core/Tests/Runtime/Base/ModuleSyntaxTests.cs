@@ -125,11 +125,9 @@ namespace ReactUnity.Tests
         static int graphCount;
 
         /// Reading a global that was never set throws on Jint, and this one is expected to be
-        /// missing until the graph has loaded. A string keeps the assert off Jint's boxed null,
-        /// and the coalesce keeps it off QuickJS marshalling `''` back as null - which it does
-        /// for any zero-length string, JSApi.GetString returning null when the length is 0.
+        /// missing until the graph has loaded. A string keeps the assert off Jint's boxed null.
         string Probe() => Context.Script.Engine.Evaluate(
-            "typeof __probe_graph !== 'undefined' ? String(__probe_graph) : ''")?.ToString() ?? "";
+            "typeof __probe_graph !== 'undefined' ? String(__probe_graph) : ''")?.ToString();
 
         [UGUITest]
         public IEnumerator AVitePatchChunkRunsOnEveryEngine()

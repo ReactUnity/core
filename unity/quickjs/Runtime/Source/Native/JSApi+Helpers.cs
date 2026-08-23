@@ -98,8 +98,16 @@ namespace QuickJS.Native
             return len == 0 ? string.Empty : Encoding.UTF8.GetString(p, len);
         }
 
+        /// <summary>Decodes a UTF-8 buffer of a known length. Null only when there is no buffer.</summary>
+        // A zero length is the empty string, not the absence of one: returning null for it made
+        // QuickJS the one engine that marshalled '' back to C# as null.
         public static unsafe string GetString(JSContext ctx, IntPtr ptr, int len)
         {
+            if (ptr == IntPtr.Zero)
+            {
+                return null;
+            }
+
             if (len > 0)
             {
                 var str = Marshal.PtrToStringAnsi(ptr, len);
@@ -118,7 +126,7 @@ namespace QuickJS.Native
                 return str;
             }
 
-            return null;
+            return string.Empty;
         }
     }
 }
