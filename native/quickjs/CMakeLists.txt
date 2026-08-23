@@ -19,7 +19,7 @@ cmake_minimum_required(VERSION 3.20)
 project(reactunity-quickjs LANGUAGES C)
 
 set(QJS_REPOSITORY "https://github.com/gkurt/quickjs.git" CACHE STRING "quickjs-ng remote")
-set(QJS_COMMIT "ebd53d9542090e027f6c73bae8c3fd8c2ae9f1d5" CACHE STRING "pinned quickjs-ng commit")
+set(QJS_COMMIT "30ceffed2c653d2a25b90a955a76422f6c8d796c" CACHE STRING "pinned quickjs-ng commit")
 
 include(FetchContent)
 
