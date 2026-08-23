@@ -2062,6 +2062,101 @@ namespace QuickJS.Binding
             list.Add(filename);
         }
 
+        /// <summary>
+        /// Feeds everything Collect() found to the binding callback, generating no source.
+        /// This is the reflect-binding path; Generate() is the codegen one.
+        /// </summary>
+        public void Bind()
+        {
+            _bindingCallback?.OnBindingBegin(this);
+            foreach (var typeKV in _exportedTypes)
+            {
+                var typeBindingInfo = typeKV.Value;
+                try
+                {
+                    if (!typeBindingInfo.omit)
+                    {
+                        OnPreGenerateType(typeBindingInfo);
+                        OnPostGenerateType(typeBindingInfo);
+                    }
+                }
+                catch (Exception exception)
+                {
+                    Error($"bind failed {typeBindingInfo.type.FullName}: {exception.Message}\n{exception.StackTrace}");
+                }
+            }
+
+            if (_bindingCallback != null)
+            {
+                try
+                {
+                    var exportedDelegatesArray = new DelegateBridgeBindingInfo[this._exportedDelegates.Count];
+                    this._exportedDelegates.Values.CopyTo(exportedDelegatesArray, 0);
+                    for (var i = 0; i < exportedDelegatesArray.Length; i++)
+                    {
+                        _bindingCallback.AddDelegate(exportedDelegatesArray[i]);
+                    }
+                }
+                catch (Exception exception)
+                {
+                    Error($"bind delegates failed: {exception.Message}");
+                }
+
+                try
+                {
+                    var modules = from t in _collectedTypes
+                                  where t.genBindingCode
+                                  orderby t.tsTypeNaming.jsDepth
+                                  group t by t.tsTypeNaming.jsModule;
+
+                    _bindingCallback.BindRawTypes(_collectedRawTypes.Values);
+                    foreach (var module in modules)
+                    {
+                        var count = module.Count();
+
+                        if (count > 0)
+                        {
+                            var moduleName = string.IsNullOrEmpty(module.Key) ? this.prefs.defaultJSModule : module.Key;
+                            _bindingCallback.BeginStaticModule(moduleName, count);
+                            foreach (var type in module)
+                            {
+                                _bindingCallback.AddTypeReference(moduleName, type);
+                            }
+                            _bindingCallback.EndStaticModule(moduleName);
+                        }
+                    }
+                }
+                catch (Exception exception)
+                {
+                    Error($"bind static modules failed: {exception.Message}");
+                }
+            }
+
+            _bindingCallback?.OnBindingEnd();
+            SubmitLog();
+        }
+
+        private void SubmitLog()
+        {
+            try
+            {
+                var logText = _logWriter?.Submit();
+                if (!string.IsNullOrEmpty(logText) && !string.IsNullOrEmpty(prefs.logPath))
+                {
+                    var logPath = prefs.logPath;
+                    var logDir = Path.GetDirectoryName(logPath);
+                    if (!Directory.Exists(logDir))
+                    {
+                        Directory.CreateDirectory(logDir);
+                    }
+                    File.WriteAllText(logPath, logText);
+                }
+            }
+            catch (Exception)
+            {
+            }
+        }
+
         public void Generate(TypeBindingFlags typeBindingFlags)
         {
             var cg = new CodeGenerator(this, typeBindingFlags);
@@ -2197,25 +2292,7 @@ namespace QuickJS.Binding
 
             _bindingCallback?.OnBindingEnd();
             _codegenCallback?.OnCodeGenEnd();
-
-            try
-            {
-                var logText = _logWriter?.Submit();
-                if (!string.IsNullOrEmpty(logText) && !string.IsNullOrEmpty(prefs.logPath))
-                {
-                    var logPath = prefs.logPath;
-                    var logDir = Path.GetDirectoryName(logPath);
-                    if (!Directory.Exists(logDir))
-                    {
-                        Directory.CreateDirectory(logDir);
-                    }
-                    File.WriteAllText(logPath, logText);
-                }
-            }
-            catch (Exception)
-            {
-            }
-
+            SubmitLog();
             _codegenCallback?.OnGenerateFinish();
         }
 

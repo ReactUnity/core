@@ -83,7 +83,7 @@ namespace ReactUnity.Scripting
                 bindingLogger = new DefaultBindingLogger(LogLevel.Error),
             });
             bm.Collect();
-            bm.Generate(TypeBindingFlags.None);
+            bm.Bind();
             bm.Report();
         }
 
