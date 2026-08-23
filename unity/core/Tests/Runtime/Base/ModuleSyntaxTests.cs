@@ -15,16 +15,16 @@ namespace ReactUnity.Tests
         public ModuleSyntaxTests(JavascriptEngineType engineType) : base(engineType) { }
 
         [UGUITest]
-        public IEnumerator OnlyQuickJSCannotResolveSpecifiersItself()
+        public IEnumerator EveryEngineResolvesSpecifiersItself()
         {
             yield return null;
 
-            // Executing a module does not imply resolving one. ClearScript and Jint both take an
-            // async loader; QuickJS's is synchronous by C ABI, so an http import has to go through
-            // the host loader instead.
-            var resolves = Context.Script.Engine.Capabilities.HasFlag(EngineCapabilities.ModuleResolution);
-            Assert.AreEqual(EngineType != JavascriptEngineType.QuickJS, resolves,
-                $"{EngineType} module resolution is not what the import hook assumes");
+            // Executing a module does not imply resolving one, and QuickJS could not until it
+            // gained quickjs-ng's asynchronous loader - its synchronous one has to return a module
+            // there and then, which an http import cannot. The host import hook is what stood in,
+            // and WebGL is the one target still on it: no QuickJS at all there, only `eval`.
+            Assert.IsTrue(Context.Script.Engine.Capabilities.HasFlag(EngineCapabilities.ModuleResolution),
+                $"{EngineType} cannot resolve a module specifier, so the import hook is still load-bearing");
         }
 
         [UGUITest]
@@ -88,9 +88,8 @@ namespace ReactUnity.Tests
         {
             yield return null;
 
-            // QuickJS has no async loader at all, and ClearScript's resolves a non-http specifier
-            // against the source url rather than the importing module, which a file url needs.
-            IgnoreForEngine(JavascriptEngineType.QuickJS);
+            // ClearScript's loader resolves a non-http specifier against the source url rather
+            // than the importing module, which a file url needs.
             IgnoreForEngine(JavascriptEngineType.ClearScript);
 
             var dir = Path.Combine(Application.temporaryCachePath, "module-graph-" + graphCount++);
@@ -126,9 +125,11 @@ namespace ReactUnity.Tests
         static int graphCount;
 
         /// Reading a global that was never set throws on Jint, and this one is expected to be
-        /// missing until the graph has loaded. A string keeps the assert off Jint's boxed null.
+        /// missing until the graph has loaded. A string keeps the assert off Jint's boxed null,
+        /// and the coalesce keeps it off QuickJS marshalling `''` back as null - which it does
+        /// for any zero-length string, JSApi.GetString returning null when the length is 0.
         string Probe() => Context.Script.Engine.Evaluate(
-            "typeof __probe_graph !== 'undefined' ? String(__probe_graph) : ''")?.ToString();
+            "typeof __probe_graph !== 'undefined' ? String(__probe_graph) : ''")?.ToString() ?? "";
 
         [UGUITest]
         public IEnumerator AVitePatchChunkRunsOnEveryEngine()
