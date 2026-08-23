@@ -724,8 +724,10 @@ namespace QuickJS
 
         /// Reports a graph that failed after EvalModuleAsync returned, which is the only place it
         /// can be reported at all.
-        // Attaching a handler also marks the rejection handled, so this replaces the "unhandled
-        // promise rejection" the tracker would otherwise log rather than adding to it.
+        // This names the failure as a module-graph one; it does not replace the tracker's
+        // "unhandled promise rejection". Measured, not assumed: a rejected Vite graph logs both,
+        // because the promises the graph rejects inside itself are separate from the one attached
+        // to here.
         private unsafe void _WatchModuleGraph(JSValue promise)
         {
             var then = JSApi.JS_GetProperty(_ctx, promise, GetAtom("then"));

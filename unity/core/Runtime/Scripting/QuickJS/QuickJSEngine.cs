@@ -248,6 +248,12 @@ namespace ReactUnity.Scripting
             ObjectCache = null;
             OnInitialize = null;
 
+            // Before the runtime, and it has to be: a module load still in flight holds a load
+            // handle and the graph's promise, so leaving one unsettled means JSB_FreeRuntime finds
+            // live objects -- and its host callback, a UnityWebRequest that has not come back yet,
+            // would settle into freed memory once it does.
+            ModuleLoader?.Close();
+
             Runtime?.Shutdown();
             Runtime = null;
 
