@@ -35,11 +35,7 @@ namespace QuickJS
         {
             if (_inbox.Count != 0)
             {
-#if JSB_UNITYLESS
                 Console.WriteLine("worker: not cleaned up");
-#else
-                UnityEngine.Debug.LogError("worker: not cleaned up");
-#endif
             }
         }
 #endif

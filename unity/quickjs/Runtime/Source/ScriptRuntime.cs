@@ -375,14 +375,6 @@ namespace QuickJS
             _objectCollection = new ObjectCollection();
             _timerManager = args.timerManager ?? new DefaultTimerManager(_logger);
             _typeDB = new TypeDB(this, _mainContext);
-#if !JSB_UNITYLESS
-            _typeDB.AddType(typeof(Unity.JSBehaviour), JSApi.JS_UNDEFINED);
-            _typeDB.AddType(typeof(Unity.JSScriptableObject), JSApi.JS_UNDEFINED);
-#endif
-#if !JSB_UNITYLESS && UNITY_EDITOR
-            _typeDB.AddType(Values.FindType("QuickJS.Unity.JSEditorWindow"), JSApi.JS_UNDEFINED);
-            _typeDB.AddType(Values.FindType("QuickJS.Unity.JSBehaviourInspector"), JSApi.JS_UNDEFINED);
-#endif
 
             // await Task.Run(() => runner.OnBind(this, register));
             try
@@ -405,18 +397,6 @@ namespace QuickJS
             AddStaticModule("jsb", ScriptContext.Bind);
             // FindModuleResolver<StaticModuleResolver>().Warmup(_mainContext);
 
-#if !JSB_UNITYLESS
-            //TODO may be changed in the future
-            var plover = UnityEngine.Resources.Load<UnityEngine.TextAsset>("plover.js");
-            if (plover != null)
-            {
-                _mainContext.EvalSource(plover.text, "plover.js");
-            }
-            else
-            {
-                _logger?.Write(LogLevel.Error, "failed to load plover.js from Resources");
-            }
-#endif
 
             RaiseInitialized();
         }

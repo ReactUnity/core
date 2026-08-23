@@ -6,19 +6,6 @@ namespace QuickJS.Binding
 
     public partial class Values
     {
-#if !JSB_UNITYLESS
-        // variant push
-        // explicitly call UnityEngine.Object.operator == 
-        public static JSValue js_push_classvalue(JSContext ctx, UnityEngine.Object o)
-        {
-            if (o == null)
-            {
-                return JSApi.JS_NULL;
-            }
-
-            return js_push_object(ctx, (object)o);
-        }
-#endif
 
         public static JSValue js_push_classvalue(JSContext ctx, ScriptValue o)
         {

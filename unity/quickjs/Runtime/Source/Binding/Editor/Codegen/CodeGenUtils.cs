@@ -13,15 +13,10 @@ namespace QuickJS.Binding
 
         public static bool IsCodeEmitSupported()
         {
-#if JSB_UNITYLESS
 #if NETCOREAPP
             return false;
 #else
             return true;
-#endif
-#else
-            var apiCompatibilityLevel = UnityEditor.PlayerSettings.GetApiCompatibilityLevel(UnityEditor.BuildTargetGroup.Standalone);
-            return apiCompatibilityLevel == UnityEditor.ApiCompatibilityLevel.NET_4_6;
 #endif
         }
 
@@ -73,15 +68,11 @@ namespace QuickJS.Binding
 
         public static void RemoveAt<T>(ref T[] array, int index)
         {
-#if JSB_UNITYLESS
             for (var i = index; i < array.Length - 1; i++)
             {
                 array[i] = array[i + 1];
             }
             Array.Resize(ref array, array.Length - 1);
-#else
-            UnityEditor.ArrayUtility.RemoveAt(ref array, index);
-#endif
         }
 
         public static string ToLiteral(bool v)

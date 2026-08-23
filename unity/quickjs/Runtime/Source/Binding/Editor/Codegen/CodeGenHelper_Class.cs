@@ -424,15 +424,6 @@ namespace QuickJS.Binding
 
                 if (!typeBindingInfo.constructors.available && !typeBindingInfo.type.IsAbstract)
                 {
-#if !JSB_UNITYLESS
-                    if (typeBindingInfo.type.IsSubclassOf(typeof(UnityEngine.Component)))
-                    {
-                        // 因为 ts 泛型约束需要 new() 形式, 所以在定义中产生一个 public 定义
-                        // 例如: GetComponent<T extends Component>(type: { new(): T }): T
-                        cg.tsDeclare.AppendLine("/*protected*/ constructor()");
-                    }
-                    else
-#endif
                     {
                         if (!typeBindingInfo.type.IsGenericTypeDefinition)
                         {

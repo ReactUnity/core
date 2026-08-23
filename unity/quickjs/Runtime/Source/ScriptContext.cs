@@ -377,59 +377,6 @@ namespace QuickJS
             return module_obj;
         }
 
-#if !JSB_UNITYLESS
-        public unsafe bool TrySetScriptRef(ref Unity.JSScriptRef scriptRef, JSValue ctor)
-        {
-            string[] scriptRefValue = null;
-            var sourceString = @"(function (cache, ctor) {
-                for (let mod_id in cache) {
-                    let mod_obj = cache[mod_id];
-                    let exports = mod_obj['exports'];
-                    if (typeof exports === 'object') {
-                        for (let member_id in exports) {
-                            let member_obj = exports[member_id];
-                            if (typeof member_obj === 'function' && member_obj == ctor) {
-                                return [mod_id, member_id];
-                            }
-                        }
-                    }
-                }
-                return null;
-            })";
-            var scriptRefFinder = ScriptRuntime.EvalSource(_ctx, sourceString, "eval", false);
-            if (scriptRefFinder.IsException())
-            {
-                _ctx.print_exception();
-                return false;
-            }
-            var argv = stackalloc JSValue[2]
-            {
-                JSApi.JS_DupValue(_ctx, _moduleCache),
-                JSApi.JS_DupValue(_ctx, ctor),
-            };
-            var retVal = JSApi.JS_Call(_ctx, scriptRefFinder, JSApi.JS_UNDEFINED, 2, argv);
-            JSApi.JS_FreeValue(_ctx, scriptRefFinder);
-            JSApi.JS_FreeValue(_ctx, argv[0]);
-            JSApi.JS_FreeValue(_ctx, argv[1]);
-            if (retVal.IsException())
-            {
-                _ctx.print_exception();
-                return false;
-            }
-            if (Values.js_get_primitive(_ctx, retVal, out scriptRefValue) && scriptRefValue != null && scriptRefValue.Length >= 2)
-            {
-                if (!string.IsNullOrEmpty(scriptRefValue[1]))
-                {
-                    JSApi.JS_FreeValue(_ctx, retVal);
-                    scriptRef.modulePath = scriptRefValue[0];
-                    scriptRef.className = scriptRefValue[1];
-                    return true;
-                }
-            }
-            JSApi.JS_FreeValue(_ctx, retVal);
-            return false;
-        }
-#endif
 
         public bool LoadModuleCacheExports(string module_id, string key, out JSValue value)
         {
@@ -514,12 +461,6 @@ namespace QuickJS
             OnScriptReloaded?.Invoke(this, resolved_id);
         }
 
-#if !JSB_UNITYLESS
-        public bool CheckModuleId(Unity.JSScriptRef scriptRef, string resolved_id)
-        {
-            return _runtime.ResolveModuleId(this, "", scriptRef.modulePath) == resolved_id;
-        }
-#endif
 
         public bool TryGetModuleForReloading(string resolved_id, out JSValue module_obj)
         {

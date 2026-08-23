@@ -178,20 +178,6 @@ namespace QuickJS.Binding
             ReflectBindValueOp.Register<ulong>(Binding.Values.js_push_primitive, Binding.Values.js_get_primitive);
             ReflectBindValueOp.Register<DateTime>(Binding.Values.js_push_structvalue, Binding.Values.js_get_structvalue);
 
-#if !JSB_UNITYLESS
-            ReflectBindValueOp.Register<UnityEngine.Vector2>(Binding.Values.js_push_structvalue, Binding.Values.js_get_structvalue);
-            ReflectBindValueOp.Register<UnityEngine.Vector2Int>(Binding.Values.js_push_structvalue, Binding.Values.js_get_structvalue);
-            ReflectBindValueOp.Register<UnityEngine.Vector3>(Binding.Values.js_push_structvalue, Binding.Values.js_get_structvalue);
-            ReflectBindValueOp.Register<UnityEngine.Vector3Int>(Binding.Values.js_push_structvalue, Binding.Values.js_get_structvalue);
-            ReflectBindValueOp.Register<UnityEngine.Vector4>(Binding.Values.js_push_structvalue, Binding.Values.js_get_structvalue);
-            ReflectBindValueOp.Register<UnityEngine.Rect>(Binding.Values.js_push_structvalue, Binding.Values.js_get_structvalue);
-            ReflectBindValueOp.Register<UnityEngine.Quaternion>(Binding.Values.js_push_structvalue, Binding.Values.js_get_structvalue);
-            ReflectBindValueOp.Register<UnityEngine.LayerMask>(Binding.Values.js_push_structvalue, Binding.Values.js_get_structvalue);
-            ReflectBindValueOp.Register<UnityEngine.Ray>(Binding.Values.js_push_structvalue, Binding.Values.js_get_structvalue);
-            ReflectBindValueOp.Register<UnityEngine.Color>(Binding.Values.js_push_structvalue, Binding.Values.js_get_structvalue);
-            ReflectBindValueOp.Register<UnityEngine.Color32>(Binding.Values.js_push_structvalue, Binding.Values.js_get_structvalue);
-            ReflectBindValueOp.Register<UnityEngine.Matrix4x4>(Binding.Values.js_push_structvalue, Binding.Values.js_get_structvalue);
-#endif
 
             if (!CodeGenUtils.IsCodeEmitSupported())
             {

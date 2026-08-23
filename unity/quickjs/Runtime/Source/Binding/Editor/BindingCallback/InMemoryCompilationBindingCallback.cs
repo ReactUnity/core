@@ -108,30 +108,6 @@ namespace QuickJS.Binding
             return defines;
         }
 
-#if !JSB_UNITYLESS && UNITY_EDITOR
-        public static UnityEditor.BuildTargetGroup GetBuildTargetGroup()
-        {
-            var buildTarget = UnityEditor.EditorUserBuildSettings.activeBuildTarget;
-            switch (buildTarget)
-            {
-                case UnityEditor.BuildTarget.Android: return UnityEditor.BuildTargetGroup.Android;
-                case UnityEditor.BuildTarget.iOS: return UnityEditor.BuildTargetGroup.iOS;
-                case UnityEditor.BuildTarget.WSAPlayer: return UnityEditor.BuildTargetGroup.WSA;
-#if !UNITY_2019_2_OR_NEWER
-                case UnityEditor.BuildTarget.StandaloneLinux:
-                case UnityEditor.BuildTarget.StandaloneLinuxUniversal: 
-#endif
-                case UnityEditor.BuildTarget.StandaloneLinux64:
-                case UnityEditor.BuildTarget.StandaloneOSX:
-                case UnityEditor.BuildTarget.StandaloneWindows:
-                case UnityEditor.BuildTarget.StandaloneWindows64: return UnityEditor.BuildTargetGroup.Standalone;
-                case UnityEditor.BuildTarget.Switch: return UnityEditor.BuildTargetGroup.Switch;
-                case UnityEditor.BuildTarget.PS4: return UnityEditor.BuildTargetGroup.PS4;
-                case UnityEditor.BuildTarget.XboxOne: return UnityEditor.BuildTargetGroup.XboxOne;
-            }
-            throw new NotImplementedException();
-        }
-#endif
 
         public InMemoryCompilationBindingCallback(ScriptRuntime runtime)
         {
@@ -141,19 +117,9 @@ namespace QuickJS.Binding
             var defines = "";
             var compilerOptions = "-unsafe";
 
-#if !JSB_UNITYLESS
-            symbolList.AddRange(GetDefinedSymbols());
-#endif
 
             defines += string.Join(";", symbolList);
 
-#if !JSB_UNITYLESS && UNITY_EDITOR
-            var customDefinedSymbols = UnityEditor.PlayerSettings.GetScriptingDefineSymbolsForGroup(GetBuildTargetGroup());
-            if (!string.IsNullOrEmpty(customDefinedSymbols))
-            {
-                defines += ";" + customDefinedSymbols;
-            }
-#endif
             if (!string.IsNullOrEmpty(defines))
             {
                 compilerOptions += " -defines:" + defines;

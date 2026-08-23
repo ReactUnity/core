@@ -13,10 +13,8 @@ namespace QuickJS.Native
 
         public static void JS_SetModuleLoaderFunc(JSRuntime rt, JSModuleNormalizeFunc module_normalize, JSModuleLoaderFunc module_loader, IntPtr opaque)
         {
-#if JSB_UNITYLESS || (UNITY_WSA && !UNITY_EDITOR)
             GCHandle.Alloc(module_normalize);
             GCHandle.Alloc(module_loader);
-#endif
             JS_SetModuleLoaderFunc(rt,
                 module_normalize != null ? Marshal.GetFunctionPointerForDelegate(module_normalize) : IntPtr.Zero,
                 module_loader != null ? Marshal.GetFunctionPointerForDelegate(module_loader) : IntPtr.Zero, opaque);

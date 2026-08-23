@@ -49,9 +49,6 @@ namespace QuickJS.Binding
 
         private void AppendCommonHead()
         {
-#if !JSB_UNITYLESS
-            this.cg.cs.AppendLine("// Unity: {0}", UnityEngine.Application.unityVersion);
-#endif
             this.cg.cs.AppendLine("using System;");
             this.cg.cs.AppendLine("using System.Collections.Generic;");
             this.cg.cs.AppendLine();
@@ -427,37 +424,6 @@ namespace QuickJS.Binding
             this.bf = bf;
             this.predef = string.Empty;
 
-#if !JSB_UNITYLESS
-            if ((this.bf & TypeBindingFlags.BuildTargetPlatformOnly) != 0)
-            {
-                var buildTarget = UnityEditor.EditorUserBuildSettings.activeBuildTarget;
-                switch (buildTarget)
-                {
-                    case UnityEditor.BuildTarget.Android:
-                        predef = "UNITY_ANDROID";
-                        break;
-                    case UnityEditor.BuildTarget.iOS:
-                        predef = "UNITY_IOS";
-                        break;
-                    case UnityEditor.BuildTarget.WSAPlayer:
-                        predef = "UNITY_WSA"; // not supported
-                        break;
-                    case UnityEditor.BuildTarget.StandaloneWindows:
-                    case UnityEditor.BuildTarget.StandaloneWindows64:
-                        predef = "UNITY_STANDALONE_WIN";
-                        break;
-                    case UnityEditor.BuildTarget.StandaloneOSX:
-                        predef = "UNITY_STANDALONE_OSX";
-                        break;
-                    case UnityEditor.BuildTarget.StandaloneLinux64:
-                        predef = "UNITY_STANDALONE_LINUX";
-                        break;
-                    default:
-                        predef = string.Format("false // {0} is not supported", buildTarget);
-                        break;
-                }
-            }
-#endif
 
             if (!string.IsNullOrEmpty(this.predef))
             {

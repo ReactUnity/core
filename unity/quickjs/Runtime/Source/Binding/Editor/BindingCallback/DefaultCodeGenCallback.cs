@@ -22,21 +22,11 @@ namespace QuickJS.Binding
 
         public bool OnTypeGenerating(TypeBindingInfo typeBindingInfo, int current, int total)
         {
-#if JSB_UNITYLESS
             return false;
-#else
-            return UnityEditor.EditorUtility.DisplayCancelableProgressBar(
-                "Generating",
-                $"{current}/{total}: {typeBindingInfo.FullName}",
-                (float)current / total);
-#endif
         }
 
         public void OnGenerateFinish()
         {
-#if !JSB_UNITYLESS
-            UnityEditor.EditorUtility.ClearProgressBar();
-#endif
         }
 
         public void OnSourceCodeEmitted(CodeGenerator cg, string codeOutDir, string codeName, SourceCodeType type, TextGenerator textGenerator)
