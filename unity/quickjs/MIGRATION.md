@@ -28,7 +28,7 @@ repo at `S:/Work/Unity/quickjs-ng-csharp` (23 assertions passing against a quick
 
 | Group | Count | Disposition |
 |---|---:|---|
-| `JS_*` — real QuickJS API | 72 | 60 exported by ng unchanged; 2 inline (`JS_NewFloat64`, `JS_NewString`) need a shim; 10 absent and all free — see below |
+| `JS_*` — real QuickJS API | 72 | 60 exported by ng unchanged; `JS_NewString` is `static inline` and needs a shim; 10 absent, see below |
 | `JSB_*` / `jsb_*` — unity-jsb C shim | 43 | None exist in ng. **25 live, 18 removed on this branch.** This is the migration. |
 | `JSB_ATOM_*` | 16 | Only 16 of the ~1000 the DLL exports are used. **4 do not exist in ng** — see below |
 | `js_*` — allocator | 3 | `js_malloc`, `js_free`, `js_strdup` all exported by ng |
@@ -40,11 +40,14 @@ not count. See "What JSB_UNITYLESS hid" below for why it dropped so far.
 Every one of the 10 absent `JS_*` costs nothing except two. `JS_GetPropertyInternal` and
 `JS_SetPropertyInternal` are **live** — called from wrapper methods in `JSApi.cs` itself, at lines
 231 and 488 — so phase 3 has to map them onto ng's `JS_GetProperty`/`JS_SetProperty`. For the rest:
-the five `JS_*Debugger*` plus `JS_SetLogFunc` are `#if JSB_WITH_V8_BACKEND` with
-no-op stubs in the `#else`; `JS_SetBaseUrl` is a real P/Invoke only under
-`UNITY_WEBGL && !UNITY_EDITOR` and lives in the jslib; `JS_AddIntrinsicOperators` is already stubbed
-under `JSB_NO_BIGNUM`, which ng makes permanent. Nothing in the QuickJS path touches
-BigFloat/BigDecimal either.
+the five `JS_*Debugger*` and `JS_SetLogFunc` are **gone**, deleted with the debug server on this
+branch; `JS_SetBaseUrl` is a real P/Invoke only under `UNITY_WEBGL && !UNITY_EDITOR` and lives in
+the jslib; `JS_AddIntrinsicOperators` is already stubbed under `JSB_NO_BIGNUM`, which ng makes
+permanent. Nothing in the QuickJS path touches BigFloat/BigDecimal either.
+
+Note that some of these names already reach the shim rather than ng: `JS_NewFloat64` is declared
+with `EntryPoint = "JSB_NewFloat64"`. Any audit of this surface has to honour `EntryPoint` or it
+will report gaps that are not there — `check-exports.py` does.
 
 ## The four atoms ng does not have
 
