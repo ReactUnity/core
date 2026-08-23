@@ -11,9 +11,6 @@ namespace QuickJS.Native
     public partial class JSApi
     {
         [DllImport(JSBDLL, CallingConvention = CallingConvention.Cdecl)]
-        public static extern JSValue jsb_construct_bridge_object(JSContext ctx, JSValue proto, int32_t object_id);
-
-        [DllImport(JSBDLL, CallingConvention = CallingConvention.Cdecl)]
         public static extern JSValue jsb_new_bridge_object(JSContext ctx, JSValue proto, int object_id);
 
         [DllImport(JSBDLL, CallingConvention = CallingConvention.Cdecl)]
@@ -56,58 +53,7 @@ namespace QuickJS.Native
         // !!!
 
         [DllImport(JSBDLL, CallingConvention = CallingConvention.Cdecl)]
-        public static extern JSPayloadHeader JSB_FreePayload(JSContext ctx, JSValue val);
-
-        [DllImport(JSBDLL, CallingConvention = CallingConvention.Cdecl)]
         public static extern JSPayloadHeader jsb_get_payload_header(JSContext ctx, JSValue val);
-
-        [DllImport(JSBDLL, CallingConvention = CallingConvention.Cdecl)]
-        public static extern unsafe JS_BOOL jsb_get_floats(JSContext ctx, JSValue val, int n, float* v0);
-
-        [DllImport(JSBDLL, CallingConvention = CallingConvention.Cdecl)]
-        public static extern unsafe JS_BOOL jsb_set_floats(JSContext ctx, JSValue val, int n, float* v0);
-
-        [DllImport(JSBDLL, CallingConvention = CallingConvention.Cdecl)]
-        public static extern JS_BOOL jsb_get_float_2(JSContext ctx, JSValue val, out float v0, out float v1);
-
-        [DllImport(JSBDLL, CallingConvention = CallingConvention.Cdecl)]
-        public static extern JS_BOOL jsb_set_float_2(JSContext ctx, JSValue val, float v0, float v1);
-
-        [DllImport(JSBDLL, CallingConvention = CallingConvention.Cdecl)]
-        public static extern JS_BOOL jsb_get_float_3(JSContext ctx, JSValue val, out float v0, out float v1, out float v2);
-
-        [DllImport(JSBDLL, CallingConvention = CallingConvention.Cdecl)]
-        public static extern JS_BOOL jsb_set_float_3(JSContext ctx, JSValue val, float v0, float v1, float v2);
-
-        [DllImport(JSBDLL, CallingConvention = CallingConvention.Cdecl)]
-        public static extern JS_BOOL jsb_get_float_4(JSContext ctx, JSValue val, out float v0, out float v1, out float v2, out float v3);
-
-        [DllImport(JSBDLL, CallingConvention = CallingConvention.Cdecl)]
-        public static extern JS_BOOL jsb_set_float_4(JSContext ctx, JSValue val, float v0, float v1, float v2, float v3);
-
-        [DllImport(JSBDLL, CallingConvention = CallingConvention.Cdecl)]
-        public static extern JS_BOOL jsb_get_int_1(JSContext ctx, JSValue val, out int v0);
-
-        [DllImport(JSBDLL, CallingConvention = CallingConvention.Cdecl)]
-        public static extern JS_BOOL jsb_set_int_1(JSContext ctx, JSValue val, int v0);
-
-        [DllImport(JSBDLL, CallingConvention = CallingConvention.Cdecl)]
-        public static extern JS_BOOL jsb_get_int_2(JSContext ctx, JSValue val, out int v0, out int v1);
-
-        [DllImport(JSBDLL, CallingConvention = CallingConvention.Cdecl)]
-        public static extern JS_BOOL jsb_set_int_2(JSContext ctx, JSValue val, int v0, int v1);
-
-        [DllImport(JSBDLL, CallingConvention = CallingConvention.Cdecl)]
-        public static extern JS_BOOL jsb_get_int_3(JSContext ctx, JSValue val, out int v0, out int v1, out int v2);
-
-        [DllImport(JSBDLL, CallingConvention = CallingConvention.Cdecl)]
-        public static extern JS_BOOL jsb_set_int_3(JSContext ctx, JSValue val, int v0, int v1, int v2);
-
-        [DllImport(JSBDLL, CallingConvention = CallingConvention.Cdecl)]
-        public static extern JS_BOOL jsb_get_byte_4(JSContext ctx, JSValue val, out byte v0, out byte v1, out byte v2, out byte v3);
-
-        [DllImport(JSBDLL, CallingConvention = CallingConvention.Cdecl)]
-        public static extern JS_BOOL jsb_set_byte_4(JSContext ctx, JSValue val, byte v0, byte v1, byte v2, byte v3);
 
         [DllImport(JSBDLL, CallingConvention = CallingConvention.Cdecl)]
         public static extern unsafe JS_BOOL jsb_get_bytes(JSContext ctx, JSValue val, int n, byte* v0);
