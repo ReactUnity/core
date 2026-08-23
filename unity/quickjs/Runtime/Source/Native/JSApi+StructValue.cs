@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Runtime.InteropServices;
 using System.Text;
 
@@ -10,9 +10,6 @@ namespace QuickJS.Native
 
     public partial class JSApi
     {
-        [DllImport(JSBDLL, CallingConvention = CallingConvention.Cdecl)]
-        public static extern JSClassID JSB_GetBridgeClassID();
-
         [DllImport(JSBDLL, CallingConvention = CallingConvention.Cdecl)]
         public static extern JSValue jsb_construct_bridge_object(JSContext ctx, JSValue proto, int32_t object_id);
 
@@ -105,12 +102,6 @@ namespace QuickJS.Native
 
         [DllImport(JSBDLL, CallingConvention = CallingConvention.Cdecl)]
         public static extern JS_BOOL jsb_set_int_3(JSContext ctx, JSValue val, int v0, int v1, int v2);
-
-        [DllImport(JSBDLL, CallingConvention = CallingConvention.Cdecl)]
-        public static extern JS_BOOL jsb_get_int_4(JSContext ctx, JSValue val, out int v0, out int v1, out int v2, out int v3);
-
-        [DllImport(JSBDLL, CallingConvention = CallingConvention.Cdecl)]
-        public static extern JS_BOOL jsb_set_int_4(JSContext ctx, JSValue val, int v0, int v1, int v2, int v3);
 
         [DllImport(JSBDLL, CallingConvention = CallingConvention.Cdecl)]
         public static extern JS_BOOL jsb_get_byte_4(JSContext ctx, JSValue val, out byte v0, out byte v1, out byte v2, out byte v3);

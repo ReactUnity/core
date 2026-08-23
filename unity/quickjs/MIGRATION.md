@@ -1,4 +1,4 @@
-# Migrating `com.reactunity.quickjs` to quickjs-ng
+﻿# Migrating `com.reactunity.quickjs` to quickjs-ng
 
 Work in progress on branch `quickjs-ng-migration`. A rendered version of this plan, with the
 full measured tables, is at <https://claude.ai/code/artifact/25feabb3-942e-419e-9394-e48b22bd7d1a>.
@@ -29,12 +29,14 @@ repo at `S:/Work/Unity/quickjs-ng-csharp` (23 assertions passing against a quick
 | Group | Count | Disposition |
 |---|---:|---|
 | `JS_*` — real QuickJS API | 72 | 60 exported by ng unchanged; 2 inline (`JS_NewFloat64`, `JS_NewString`) need a shim; 10 absent and all free — see below |
-| `JSB_*` / `jsb_*` — unity-jsb C shim | 46 | None exist in ng. 41 live, 5 dead. **This is the migration.** |
+| `JSB_*` / `jsb_*` — unity-jsb C shim | 46 | None exist in ng. 43 live, 3 dead (removed on this branch). **This is the migration.** |
 | `JSB_ATOM_*` | 16 | Only 16 of the ~1000 the DLL exports are used |
 | `js_*` — allocator | 3 | `js_malloc`, `js_free`, `js_strdup` all exported by ng |
 
-Every one of the 10 absent `JS_*` costs nothing: `JS_GetPropertyInternal`/`JS_SetPropertyInternal`
-have zero callers; the five `JS_*Debugger*` plus `JS_SetLogFunc` are `#if JSB_WITH_V8_BACKEND` with
+Every one of the 10 absent `JS_*` costs nothing except two. `JS_GetPropertyInternal` and
+`JS_SetPropertyInternal` are **live** — called from wrapper methods in `JSApi.cs` itself, at lines
+231 and 488 — so phase 3 has to map them onto ng's `JS_GetProperty`/`JS_SetProperty`. For the rest:
+the five `JS_*Debugger*` plus `JS_SetLogFunc` are `#if JSB_WITH_V8_BACKEND` with
 no-op stubs in the `#else`; `JS_SetBaseUrl` is a real P/Invoke only under
 `UNITY_WEBGL && !UNITY_EDITOR` and lives in the jslib; `JS_AddIntrinsicOperators` is already stubbed
 under `JSB_NO_BIGNUM`, which ng makes permanent. Nothing in the QuickJS path touches
@@ -154,5 +156,11 @@ Phase 1 subtractions that were verifiable without touching the engine:
 - **The debug server.** All five `JS_*Debugger*` entry points sat behind `JSB_WITH_V8_BACKEND` with
   no-op stubs in the `#else` — `JS_OpenDebugger` was `{ }`, `JS_IsDebuggerConnected` was `return 0`.
   Never functional on QuickJS, so removing it is not a regression.
-- **Dead API.** `JS_GetPropertyInternal`/`JS_SetPropertyInternal` (zero callers) and the five shim
-  declarations with no callers.
+- **Dead API.** Three shim declarations with no callers: `JSB_GetBridgeClassID`, `jsb_get_int_4`,
+  `jsb_set_int_4`.
+
+Two things that looked deletable and were not, both because the first caller search excluded
+`Runtime/Source/Native` itself — check that directory before concluding anything is dead:
+
+- `JSB_Init` is the DLL version handshake, called from `JSApi.cs:151`.
+- `JS_GetPropertyInternal`/`JS_SetPropertyInternal` are called from wrappers in `JSApi.cs`.
