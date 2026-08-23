@@ -91,6 +91,43 @@ def live_source(path, defines):
     return "\n".join(out)
 
 
+def have_projects():
+    """Whether Unity has generated the .csproj the live surface is derived from."""
+    return bool(glob.glob(os.path.join(TESTS, "*.csproj")))
+
+
+def read_surface(name):
+    """The committed surface, for a checkout with no Unity-generated .csproj."""
+    path = os.path.join(HERE, name)
+    if not os.path.exists(path):
+        sys.exit("no %s, and no generated .csproj to derive it from" % name)
+    names = []
+    for line in io.open(path, encoding="utf-8"):
+        line = line.strip()
+        if line and not line.startswith("#"):
+            names.append(line)
+    if not names:
+        sys.exit("%s is empty" % path)
+    return names
+
+
+def write_surface(name, names, what):
+    path = os.path.join(HERE, name)
+    with io.open(path, "w", encoding="utf-8", newline="\n") as fp:
+        fp.write("# %s\n" % what)
+        fp.write("# Generated -- do not edit by hand. Regenerate with the --write flag on\n")
+        fp.write("# the check that owns this file, from a checkout Unity has opened.\n")
+        for n in sorted(names):
+            fp.write("%s\n" % n)
+    print("wrote %s (%d names)" % (path, len(names)))
+
+
+def surface_drift(name, live):
+    """The committed file against the live derivation, as (missing, extra)."""
+    committed = set(read_surface(name))
+    return sorted(set(live) - committed), sorted(committed - set(live))
+
+
 def unity_projects():
     """(project, defines, source paths) per generated csproj that compiles quickjs C#."""
     projects = sorted(glob.glob(os.path.join(TESTS, "*.csproj")))

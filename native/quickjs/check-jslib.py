@@ -56,7 +56,27 @@ def webgl_defines(defines):
     return out
 
 
+SURFACE = "pinvoke-webgl.txt"
+SURFACE_WHAT = "The symbols a WebGL build P/Invokes from the jslib (__Internal)."
+
+
 def declared():
+    """The live surface where Unity has generated the .csproj, else the committed one."""
+    if not pinvoke.have_projects():
+        return {n: SURFACE for n in pinvoke.read_surface(SURFACE)}
+    names = live_declared()
+    missing, extra = pinvoke.surface_drift(SURFACE, names)
+    if missing or extra:
+        print("%s is out of date -- rerun with --write" % SURFACE)
+        for n in missing:
+            print("  + %s" % n)
+        for n in extra:
+            print("  - %s" % n)
+        sys.exit(1)
+    return names
+
+
+def live_declared():
     """Every symbol a WebGL build's `__Internal` P/Invokes name."""
     names = {}
     for _proj, defines, sources in pinvoke.unity_projects():
@@ -77,6 +97,10 @@ def implemented():
 
 
 def main():
+    if "--write" in sys.argv:
+        pinvoke.write_surface(SURFACE, live_declared(), SURFACE_WHAT)
+        return 0
+
     want = declared()
     have = implemented()
 
