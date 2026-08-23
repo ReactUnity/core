@@ -72,7 +72,7 @@ Options:
   --timeout <seconds>                 Kill the run after this long
 
 Environment:
-  UNITY_VERSION       Editor version to use (default 6000.5.5f1)
+  UNITY_VERSION       Editor version to use (default: the project's ProjectVersion.txt)
   UNITY_EDITOR_PATH   Absolute path to Unity.exe, bypassing version lookup`;
 
 async function main() {

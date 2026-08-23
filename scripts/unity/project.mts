@@ -8,19 +8,23 @@ import path from 'node:path';
 export const repoRoot = path.resolve(import.meta.dirname, '..', '..');
 
 /**
- * Pinned per project, and not read from ProjectVersion.txt -- that file only records
- * whatever last opened the project. Override per run with UNITY_VERSION.
+ * The version the project itself records, so whichever Editor you actually opened it with is
+ * the one these commands use. Nothing is pinned here: a hard-coded version goes stale the
+ * first time someone upgrades, and silently drives the wrong Editor. Override per run with
+ * UNITY_VERSION.
  *
- * tests/ is on the 6000.1 line for a hard reason: the committed Packages/manifest.json
- * resolves com.unity.inputsystem and test-framework.performance versions that still use
+ * Worth knowing rather than encoding: `tests/` on the 6000.5 line resolves
+ * com.unity.inputsystem and test-framework.performance versions that still use
  * TreeView/TreeViewItem, which 6000.5 made obsolete-as-error -- 306 compile errors before a
- * single test runs. 6000.1.4f1 compiles it clean and is the closest install to CI's main
- * job (6000.1.9f1). kitchen-sink has its own manifest and is fine on 6000.5.
+ * single test runs. If that is what you are looking at, `UNITY_VERSION=6000.1.x` is the way
+ * out, not a change here.
  */
-const PINNED_VERSIONS: Record<ProjectName, string> = {
-  tests: '6000.1.4f1',
-  'kitchen-sink': '6000.5.5f1',
-};
+function readProjectVersion(projectPath: string): string {
+  const file = path.join(projectPath, 'ProjectSettings', 'ProjectVersion.txt');
+  const found = fs.readFileSync(file, 'utf8').match(/^m_EditorVersion:\s*(\S+)/m);
+  if (!found) throw new Error(`No m_EditorVersion in ${file}`);
+  return found[1];
+}
 
 export type ProjectName = 'tests' | 'kitchen-sink';
 
@@ -38,10 +42,11 @@ export type Project = {
 
 export function getProject(name: string): Project {
   if (name !== 'tests' && name !== 'kitchen-sink') throw new Error(`Unknown project '${name}'. Expected 'tests' or 'kitchen-sink'.`);
+  const projectPath = path.join(repoRoot, name);
   return {
     name,
-    path: path.join(repoRoot, name),
-    version: process.env.UNITY_VERSION ?? PINNED_VERSIONS[name],
+    path: projectPath,
+    version: process.env.UNITY_VERSION ?? readProjectVersion(projectPath),
     assemblies: name === 'tests' ? 'ReactUnity.Tests;ReactUnity.Tests.Editor' : undefined,
   };
 }
