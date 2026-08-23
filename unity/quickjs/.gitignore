@@ -17,6 +17,14 @@
 [Rr]eleases/
 [Xx]64/
 [Xx]86/
+
+# ...but Plugins/QuickJS/x64 and x86 are shipped plugin directories, not build output.
+# The binaries already there are tracked and so survive the rule, which is why this went
+# unnoticed; a newly built artifact is silently dropped, and `git add` on one fails
+# outright, which takes lint-staged and the pre-commit hook with it. Gate 0 still has
+# eleven binaries to install, two of them here.
+!Plugins/QuickJS/[Xx]64/
+!Plugins/QuickJS/[Xx]86/
 [Bb]uild/
 bld/
 [Bb]in/
