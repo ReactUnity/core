@@ -267,6 +267,9 @@
             <param name="instance">The object for which to create a fast asynchronous enumerator.</param>
             <returns>A fast asynchronous enumerator for the specified object's contents.</returns>
         </member>
+        <member name="T:Microsoft.ClearScript.V8.FastProxy.IV8FastJavaScriptObject">
+            <exclude/>
+        </member>
         <member name="T:Microsoft.ClearScript.V8.FastProxy.V8FastArg">
             <summary>
             Represents an argument passed to a fast host object from script code.
@@ -2101,6 +2104,11 @@
             activities. Use this option if you encounter issues related to V8's background work.
             </summary>
         </member>
+        <member name="F:Microsoft.ClearScript.V8.V8GlobalFlags.DisableExplicitResourceManagement">
+            <summary>
+            Specifies that <see href="https://github.com/tc39/proposal-explicit-resource-management">ExplicitResourceManagement</see> is to be disabled.
+            </summary>
+        </member>
         <member name="T:Microsoft.ClearScript.V8.V8RuntimeViolationPolicy">
             <summary>
             Defines options for V8 runtime behavior in response to a violation.
@@ -3898,7 +3906,7 @@
         <member name="F:Microsoft.ClearScript.V8.V8ScriptEngineFlags.AddPerformanceObject">
             <summary>
             Specifies that the
-            <c><see href="https://microsoft.github.io/ClearScript/2024/03/21/performance-api.html">Performance</see></c>
+            <c><see href="https://clearscript.clearfoundry.net/2024/03/21/performance-api.html">Performance</see></c>
             object is to be added to the script engine's global namespace. This object provides a
             set of low-level native facilities for performance-sensitive scripts.
             </summary>
