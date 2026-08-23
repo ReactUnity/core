@@ -1,0 +1,2 @@
+# CMake build tree, including the fetched quickjs-ng checkout under _deps.
+build/
