@@ -75,7 +75,7 @@ namespace QuickJS
                 throw new NullReferenceException("already released");
             }
             
-            if (JSApi.JS_IsFunction(ctx, callback) != 1)
+            if (!JSApi.JS_IsFunction(ctx, callback))
             {
                 Dispose();
                 return;

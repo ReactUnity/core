@@ -75,7 +75,7 @@ namespace QuickJS.Binding
             {
                 if (type == typeof(ScriptFunction) || type.BaseType == typeof(MulticastDelegate))
                 {
-                    return JSApi.JS_IsFunction(ctx, jsValue) == 1;
+                    return JSApi.JS_IsFunction(ctx, jsValue);
                 }
 
                 var context = ScriptEngine.GetContext(ctx);
@@ -124,7 +124,7 @@ namespace QuickJS.Binding
 
                 if (type.IsArray)
                 {
-                    return JSApi.JS_IsArray(ctx, jsValue) == 1;
+                    return JSApi.JS_IsArray(jsValue);
                 }
 
                 return type.IsSubclassOf(typeof(ScriptValue));

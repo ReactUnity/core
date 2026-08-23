@@ -837,9 +837,7 @@ namespace QuickJS
 
                 if (err >= 0)
                 {
-                    var hasPending = JSApi.JS_IsJobPending(_rt, out ctx);
-
-                    if (hasPending == 0)
+                    if (!JSApi.JS_IsJobPending(_rt))
                     {
                         break;
                     }

@@ -87,7 +87,7 @@ namespace QuickJS
                         }
                         else
                         {
-                            if (JSApi.JS_IsFunction(_ctx, create) == 1)
+                            if (JSApi.JS_IsFunction(_ctx, create))
                             {
                                 _operatorCreate = create;
 
@@ -356,7 +356,7 @@ namespace QuickJS
                 if (LoadModuleCache(parent_module_id, out parent_mod_obj))
                 {
                     var children_obj = JSApi.JS_GetProperty(_ctx, parent_mod_obj, GetAtom("children"));
-                    if (JSApi.JS_IsArray(_ctx, children_obj) == 1)
+                    if (JSApi.JS_IsArray(children_obj))
                     {
                         var lengthVal = JSApi.JS_GetProperty(_ctx, children_obj, JSApi.JS_ATOM_length);
                         if (lengthVal.IsNumber())
@@ -495,7 +495,7 @@ namespace QuickJS
             // callee is the function <'require'> of current module
             var callee = JSApi.JS_GetActiveFunction(ctx);
 
-            if (JSApi.JS_IsFunction(ctx, callee) != 1)
+            if (!JSApi.JS_IsFunction(ctx, callee))
             {
                 return ctx.ThrowInternalError("require != function");
             }
@@ -587,7 +587,7 @@ namespace QuickJS
                     if (bytecodeFunc.IsFunctionByteCode())
                     {
                         var func_val = JSApi.JS_EvalFunction(ctx, bytecodeFunc); // it's CallFree (bytecodeFunc)
-                        if (JSApi.JS_IsFunction(ctx, func_val) != 1)
+                        if (!JSApi.JS_IsFunction(ctx, func_val))
                         {
                             JSApi.JS_FreeValue(ctx, func_val);
                             JSApi.JS_FreeValue(ctx, RequireArgNum, require_argv);
@@ -637,7 +637,7 @@ namespace QuickJS
                         return func_val;
                     }
 
-                    if (JSApi.JS_IsFunction(ctx, func_val) == 1)
+                    if (JSApi.JS_IsFunction(ctx, func_val))
                     {
                         var rval = JSApi.JS_Call(ctx, func_val, JSApi.JS_UNDEFINED, RequireArgNum, require_argv);
                         if (rval.IsException())

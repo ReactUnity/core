@@ -29,7 +29,7 @@ namespace QuickJS
         [MonoPInvokeCallback(typeof(JSCFunction))]
         public static unsafe JSValue module_define(JSContext ctx, JSValue this_obj, int argc, JSValue[] argv)
         {
-            if (argc != 3 || !argv[0].IsString() || JSApi.JS_IsArray(ctx, argv[1]) != 1 || JSApi.JS_IsFunction(ctx, argv[2]) != 1)
+            if (argc != 3 || !argv[0].IsString() || !JSApi.JS_IsArray(argv[1]) || !JSApi.JS_IsFunction(ctx, argv[2]))
             {
                 return ctx.ThrowInternalError("unsupported 'define' invocation");
             }
@@ -88,7 +88,7 @@ namespace QuickJS
                     if (bytecodeFunc.IsFunctionByteCode())
                     {
                         var func_val = JSApi.JS_EvalFunction(ctx, bytecodeFunc); // it's CallFree (bytecodeFunc)
-                        if (JSApi.JS_IsFunction(ctx, func_val) != 1)
+                        if (!JSApi.JS_IsFunction(ctx, func_val))
                         {
                             JSApi.JS_FreeValue(ctx, func_val);
                             return ctx.ThrowInternalError("failed to eval bytecode module");

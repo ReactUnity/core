@@ -39,8 +39,8 @@ namespace QuickJS.Binding
 
         public static bool js_get_primitive(JSContext ctx, JSValue val, out IntPtr[] o)
         {
-            var isArray = JSApi.JS_IsArray(ctx, val);
-            if (isArray == 1)
+            var isArray = JSApi.JS_IsArray(val);
+            if (isArray)
             {
                 var lengthVal = JSApi.JS_GetProperty(ctx, val, JSApi.JS_ATOM_length);
                 if (JSApi.JS_IsException(lengthVal))
@@ -69,11 +69,6 @@ namespace QuickJS.Binding
                     }
                 }
                 return true;
-            }
-            if (isArray == -1)
-            {
-                o = null;
-                return false;
             }
             return js_get_classvalue<IntPtr[]>(ctx, val, out o);
         }
@@ -113,8 +108,8 @@ namespace QuickJS.Binding
 
         public static bool js_get_primitive(JSContext ctx, JSValue val, out bool[] o)
         {
-            var isArray = JSApi.JS_IsArray(ctx, val);
-            if (isArray == 1)
+            var isArray = JSApi.JS_IsArray(val);
+            if (isArray)
             {
                 var lengthVal = JSApi.JS_GetProperty(ctx, val, JSApi.JS_ATOM_length);
                 if (JSApi.JS_IsException(lengthVal))
@@ -144,11 +139,6 @@ namespace QuickJS.Binding
                 }
                 return true;
             }
-            if (isArray == -1)
-            {
-                o = null;
-                return false;
-            }
             return js_get_classvalue<bool[]>(ctx, val, out o);
         }
 
@@ -175,8 +165,8 @@ namespace QuickJS.Binding
 
         public static bool js_get_primitive(JSContext ctx, JSValue val, out sbyte[] o)
         {
-            var isArray = JSApi.JS_IsArray(ctx, val);
-            if (isArray == 1)
+            var isArray = JSApi.JS_IsArray(val);
+            if (isArray)
             {
                 var lengthVal = JSApi.JS_GetProperty(ctx, val, JSApi.JS_ATOM_length);
                 if (JSApi.JS_IsException(lengthVal))
@@ -206,11 +196,6 @@ namespace QuickJS.Binding
                 }
                 return true;
             }
-            if (isArray == -1)
-            {
-                o = null;
-                return false;
-            }
             return js_get_classvalue<sbyte[]>(ctx, val, out o);
         }
 
@@ -237,8 +222,8 @@ namespace QuickJS.Binding
 
         public static bool js_get_primitive(JSContext ctx, JSValue val, out byte[] o)
         {
-            var isArray = JSApi.JS_IsArray(ctx, val);
-            if (isArray == 1)
+            var isArray = JSApi.JS_IsArray(val);
+            if (isArray)
             {
                 var lengthVal = JSApi.JS_GetProperty(ctx, val, JSApi.JS_ATOM_length);
                 if (JSApi.JS_IsException(lengthVal))
@@ -299,11 +284,6 @@ namespace QuickJS.Binding
                 JSApi.JS_FreeValue(ctx, asBuffer);
             }
 
-            if (isArray == -1)
-            {
-                o = null;
-                return false;
-            }
             return js_get_classvalue<byte[]>(ctx, val, out o);
         }
 
@@ -330,8 +310,8 @@ namespace QuickJS.Binding
 
         public static bool js_get_primitive(JSContext ctx, JSValue val, out char[] o)
         {
-            var isArray = JSApi.JS_IsArray(ctx, val);
-            if (isArray == 1)
+            var isArray = JSApi.JS_IsArray(val);
+            if (isArray)
             {
                 var lengthVal = JSApi.JS_GetProperty(ctx, val, JSApi.JS_ATOM_length);
                 if (JSApi.JS_IsException(lengthVal))
@@ -361,11 +341,6 @@ namespace QuickJS.Binding
                 }
                 return true;
             }
-            if (isArray == -1)
-            {
-                o = null;
-                return false;
-            }
             return js_get_classvalue<char[]>(ctx, val, out o);
         }
 
@@ -385,8 +360,8 @@ namespace QuickJS.Binding
 
         public static bool js_get_primitive(JSContext ctx, JSValue val, out string[] o)
         {
-            var isArray = JSApi.JS_IsArray(ctx, val);
-            if (isArray == 1)
+            var isArray = JSApi.JS_IsArray(val);
+            if (isArray)
             {
                 var lengthVal = JSApi.JS_GetProperty(ctx, val, JSApi.JS_ATOM_length);
                 if (JSApi.JS_IsException(lengthVal))
@@ -416,11 +391,6 @@ namespace QuickJS.Binding
                 }
                 return true;
             }
-            if (isArray == -1)
-            {
-                o = null;
-                return false;
-            }
             return js_get_classvalue<string[]>(ctx, val, out o);
         }
 
@@ -447,8 +417,8 @@ namespace QuickJS.Binding
 
         public static bool js_get_primitive(JSContext ctx, JSValue val, out short[] o)
         {
-            var isArray = JSApi.JS_IsArray(ctx, val);
-            if (isArray == 1)
+            var isArray = JSApi.JS_IsArray(val);
+            if (isArray)
             {
                 var lengthVal = JSApi.JS_GetProperty(ctx, val, JSApi.JS_ATOM_length);
                 if (JSApi.JS_IsException(lengthVal))
@@ -478,11 +448,6 @@ namespace QuickJS.Binding
                 }
                 return true;
             }
-            if (isArray == -1)
-            {
-                o = null;
-                return false;
-            }
             return js_get_classvalue<short[]>(ctx, val, out o);
         }
 
@@ -509,8 +474,8 @@ namespace QuickJS.Binding
 
         public static bool js_get_primitive(JSContext ctx, JSValue val, out ushort[] o)
         {
-            var isArray = JSApi.JS_IsArray(ctx, val);
-            if (isArray == 1)
+            var isArray = JSApi.JS_IsArray(val);
+            if (isArray)
             {
                 var lengthVal = JSApi.JS_GetProperty(ctx, val, JSApi.JS_ATOM_length);
                 if (JSApi.JS_IsException(lengthVal))
@@ -540,11 +505,6 @@ namespace QuickJS.Binding
                 }
                 return true;
             }
-            if (isArray == -1)
-            {
-                o = null;
-                return false;
-            }
             return js_get_classvalue<ushort[]>(ctx, val, out o);
         }
 
@@ -571,8 +531,8 @@ namespace QuickJS.Binding
 
         public static bool js_get_primitive(JSContext ctx, JSValue val, out int[] o)
         {
-            var isArray = JSApi.JS_IsArray(ctx, val);
-            if (isArray == 1)
+            var isArray = JSApi.JS_IsArray(val);
+            if (isArray)
             {
                 var lengthVal = JSApi.JS_GetProperty(ctx, val, JSApi.JS_ATOM_length);
                 if (JSApi.JS_IsException(lengthVal))
@@ -602,11 +562,6 @@ namespace QuickJS.Binding
                 }
                 return true;
             }
-            if (isArray == -1)
-            {
-                o = null;
-                return false;
-            }
             return js_get_classvalue<int[]>(ctx, val, out o);
         }
 
@@ -633,8 +588,8 @@ namespace QuickJS.Binding
 
         public static bool js_get_primitive(JSContext ctx, JSValue val, out uint[] o)
         {
-            var isArray = JSApi.JS_IsArray(ctx, val);
-            if (isArray == 1)
+            var isArray = JSApi.JS_IsArray(val);
+            if (isArray)
             {
                 var lengthVal = JSApi.JS_GetProperty(ctx, val, JSApi.JS_ATOM_length);
                 if (JSApi.JS_IsException(lengthVal))
@@ -664,11 +619,6 @@ namespace QuickJS.Binding
                 }
                 return true;
             }
-            if (isArray == -1)
-            {
-                o = null;
-                return false;
-            }
             return js_get_classvalue<uint[]>(ctx, val, out o);
         }
 
@@ -695,8 +645,8 @@ namespace QuickJS.Binding
 
         public static bool js_get_primitive(JSContext ctx, JSValue val, out long[] o)
         {
-            var isArray = JSApi.JS_IsArray(ctx, val);
-            if (isArray == 1)
+            var isArray = JSApi.JS_IsArray(val);
+            if (isArray)
             {
                 var lengthVal = JSApi.JS_GetProperty(ctx, val, JSApi.JS_ATOM_length);
                 if (JSApi.JS_IsException(lengthVal))
@@ -726,11 +676,6 @@ namespace QuickJS.Binding
                 }
                 return true;
             }
-            if (isArray == -1)
-            {
-                o = null;
-                return false;
-            }
             return js_get_classvalue<long[]>(ctx, val, out o);
         }
 
@@ -757,8 +702,8 @@ namespace QuickJS.Binding
 
         public static bool js_get_primitive(JSContext ctx, JSValue val, out ulong[] o)
         {
-            var isArray = JSApi.JS_IsArray(ctx, val);
-            if (isArray == 1)
+            var isArray = JSApi.JS_IsArray(val);
+            if (isArray)
             {
                 var lengthVal = JSApi.JS_GetProperty(ctx, val, JSApi.JS_ATOM_length);
                 if (JSApi.JS_IsException(lengthVal))
@@ -787,11 +732,6 @@ namespace QuickJS.Binding
                     }
                 }
                 return true;
-            }
-            if (isArray == -1)
-            {
-                o = null;
-                return false;
             }
             return js_get_classvalue<ulong[]>(ctx, val, out o);
         }
@@ -833,8 +773,8 @@ namespace QuickJS.Binding
 
         public static bool js_get_primitive(JSContext ctx, JSValue val, out float[] o)
         {
-            var isArray = JSApi.JS_IsArray(ctx, val);
-            if (isArray == 1)
+            var isArray = JSApi.JS_IsArray(val);
+            if (isArray)
             {
                 var lengthVal = JSApi.JS_GetProperty(ctx, val, JSApi.JS_ATOM_length);
                 if (JSApi.JS_IsException(lengthVal))
@@ -864,11 +804,6 @@ namespace QuickJS.Binding
                 }
                 return true;
             }
-            if (isArray == -1)
-            {
-                o = null;
-                return false;
-            }
             return js_get_classvalue<float[]>(ctx, val, out o);
         }
 
@@ -895,8 +830,8 @@ namespace QuickJS.Binding
 
         public static bool js_get_primitive(JSContext ctx, JSValue val, out double[] o)
         {
-            var isArray = JSApi.JS_IsArray(ctx, val);
-            if (isArray == 1)
+            var isArray = JSApi.JS_IsArray(val);
+            if (isArray)
             {
                 var lengthVal = JSApi.JS_GetProperty(ctx, val, JSApi.JS_ATOM_length);
                 if (JSApi.JS_IsException(lengthVal))
@@ -925,11 +860,6 @@ namespace QuickJS.Binding
                     }
                 }
                 return true;
-            }
-            if (isArray == -1)
-            {
-                o = null;
-                return false;
             }
             return js_get_classvalue<double[]>(ctx, val, out o);
         }
@@ -961,8 +891,8 @@ namespace QuickJS.Binding
         public static bool js_get_structvalue<T>(JSContext ctx, JSValue val, out T[] o)
         where T : struct
         {
-            var isArray = JSApi.JS_IsArray(ctx, val);
-            if (isArray == 1)
+            var isArray = JSApi.JS_IsArray(val);
+            if (isArray)
             {
                 var lengthVal = JSApi.JS_GetProperty(ctx, val, JSApi.JS_ATOM_length);
                 if (JSApi.JS_IsException(lengthVal))
@@ -992,19 +922,14 @@ namespace QuickJS.Binding
                 }
                 return true;
             }
-            if (isArray == -1)
-            {
-                o = null;
-                return false;
-            }
             return js_get_classvalue<T[]>(ctx, val, out o);
         }
 
         public static bool js_get_structvalue<T>(JSContext ctx, JSValue val, out T?[] o)
         where T : struct
         {
-            var isArray = JSApi.JS_IsArray(ctx, val);
-            if (isArray == 1)
+            var isArray = JSApi.JS_IsArray(val);
+            if (isArray)
             {
                 var lengthVal = JSApi.JS_GetProperty(ctx, val, JSApi.JS_ATOM_length);
                 if (JSApi.JS_IsException(lengthVal))
@@ -1033,11 +958,6 @@ namespace QuickJS.Binding
                     }
                 }
                 return true;
-            }
-            if (isArray == -1)
-            {
-                o = null;
-                return false;
             }
             return js_get_classvalue<T?[]>(ctx, val, out o);
         }
@@ -1149,7 +1069,7 @@ namespace QuickJS.Binding
         /// </summary>
         public static bool js_get_classvalue(JSContext ctx, JSValue val, out ScriptFunction o)
         {
-            if (JSApi.JS_IsFunction(ctx, val) != 0)
+            if (JSApi.JS_IsFunction(ctx, val))
             {
                 var context = ScriptEngine.GetContext(ctx);
                 if (context != null)
@@ -1274,8 +1194,8 @@ namespace QuickJS.Binding
         public static bool js_get_classvalue<T>(JSContext ctx, JSValue val, out T[] o)
         where T : class
         {
-            var isArray = JSApi.JS_IsArray(ctx, val);
-            if (isArray == 1)
+            var isArray = JSApi.JS_IsArray(val);
+            if (isArray)
             {
                 var lengthVal = JSApi.JS_GetProperty(ctx, val, JSApi.JS_ATOM_length);
                 if (JSApi.JS_IsException(lengthVal))
@@ -1306,11 +1226,6 @@ namespace QuickJS.Binding
                 return true;
             }
 
-            if (isArray == -1)
-            {
-                o = null;
-                return false;
-            }
 
             // fallback to get_object
             return js_get_classvalue<T[]>(ctx, val, out o);
@@ -1336,8 +1251,8 @@ namespace QuickJS.Binding
         public static bool js_get_enumvalue<T>(JSContext ctx, JSValue val, out T[] o)
         where T : Enum
         {
-            var isArray = JSApi.JS_IsArray(ctx, val);
-            if (isArray == 1)
+            var isArray = JSApi.JS_IsArray(val);
+            if (isArray)
             {
                 var lengthVal = JSApi.JS_GetProperty(ctx, val, JSApi.JS_ATOM_length);
                 if (JSApi.JS_IsException(lengthVal))
@@ -1368,11 +1283,6 @@ namespace QuickJS.Binding
                 return true;
             }
 
-            if (isArray == -1)
-            {
-                o = null;
-                return false;
-            }
 
             return js_get_classvalue<T[]>(ctx, val, out o);
         }

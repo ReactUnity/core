@@ -39,7 +39,7 @@ namespace QuickJS.Native
         }
 
         /// <summary>
-        /// Name, message, throw site and stack of a thrown value. Caller keeps ownership of ex.
+        /// Name, message and stack of a thrown value. Caller keeps ownership of ex.
         /// Every part is optional -- engine-thrown errors have only a stack -- so nothing is
         /// assumed present and the stack is always appended.
         /// </summary>
@@ -48,20 +48,16 @@ namespace QuickJS.Native
             // `throw 'oops'` is legal; then there is only the value.
             if (!ex.IsObject()) return ToStringSafe(ex) ?? "(unprintable value)";
 
-            var isError = JSApi.JS_IsError(this, ex) == 1;
+            var isError = JSApi.JS_IsError(ex);
 
             var err_name = JSApi.JS_GetProperty(this, ex, JSApi.JS_ATOM_name);
             var err_message = JSApi.JS_GetProperty(this, ex, JSApi.JS_ATOM_message);
-            var err_fileName = JSApi.JS_GetProperty(this, ex, JSApi.JS_ATOM_fileName);
-            var err_lineNumber = JSApi.JS_GetProperty(this, ex, JSApi.JS_ATOM_lineNumber);
             var err_stack = JSApi.JS_GetProperty(this, ex, JSApi.JS_ATOM_stack);
 
             try
             {
                 var name = GetStringIfPresent(err_name);
                 var message = GetStringIfPresent(err_message);
-                var fileName = GetStringIfPresent(err_fileName);
-                var lineNumber = GetStringIfPresent(err_lineNumber);
                 var stack = GetStringIfPresent(err_stack);
 
                 string header;
@@ -72,13 +68,11 @@ namespace QuickJS.Native
 
                 var sb = new StringBuilder(header);
 
-                // Only set for parse and module errors, never for runtime throws.
-                if (!string.IsNullOrEmpty(fileName))
-                {
-                    sb.Append("\n    at ").Append(fileName);
-                    if (!string.IsNullOrEmpty(lineNumber)) sb.Append(':').Append(lineNumber);
-                }
-
+                // The throw site used to come from fileName/lineNumber, which ng no longer
+                // defines on the Error object. Nothing is lost: ng's stack already opens
+                // with "    at <file>:<line>:<col>" for parse and module errors
+                // (quickjs.c:8256) and carries the same location per frame otherwise, so
+                // appending the stack is now the whole job.
                 if (!string.IsNullOrEmpty(stack)) sb.Append('\n').Append(stack.TrimEnd());
 
                 return sb.ToString();
@@ -87,8 +81,6 @@ namespace QuickJS.Native
             {
                 JSApi.JS_FreeValue(this, err_name);
                 JSApi.JS_FreeValue(this, err_message);
-                JSApi.JS_FreeValue(this, err_fileName);
-                JSApi.JS_FreeValue(this, err_lineNumber);
                 JSApi.JS_FreeValue(this, err_stack);
             }
         }
