@@ -19,10 +19,11 @@ cmake --build build --config Release --target quickjs
 **Always name the target.** quickjs-ng registers `run-test262`, `api-test`, `lre-test` and friends
 unconditionally, so a default build compiles all of them.
 
-## The two checks
+## The three checks
 
-Neither is optional, and they check different things: one runs the shim, the other compares it
-against the C# that has to load it.
+None is optional, and they check different things: one runs the shim, one asks whether the library
+exports what the C# names, and one asks whether those names are *declared right* — which is the
+failure mode that does not throw.
 
 ```bash
 cmake --build build --config Release --target shim-test && ./build/Release/shim-test.exe
@@ -49,14 +50,39 @@ vacuously. Flipping the expected id to `i + 2` must give 241 failures and exit 1
 python native/quickjs/check-exports.py
 ```
 
-[check-exports.py](check-exports.py) reads the live P/Invoke set out of Unity's generated
-`tests/*.csproj` — the real define set and the real source list, so a declaration inside a dead
-`#if` does not count — resolves `EntryPoint` aliases, and diffs it against `dumpbin -exports` in
+[check-exports.py](check-exports.py) diffs the live P/Invoke set against `dumpbin -exports` in
 **both** directions: names C# calls that we do not export, and shim functions we export that nothing
-calls. Either one exits non-zero, so it can gate CI.
+calls. The second direction is not cosmetic — 26 dead functions sat in the vendored shim precisely
+because nothing looked. Either direction exits non-zero, so it can gate CI.
 
-Currently 99 of 104 satisfied, 0 stale. The 5 outstanding are C# declarations, listed under phase 3
-in [MIGRATION.md](../../unity/quickjs/MIGRATION.md).
+Currently 99 of 99 satisfied, 0 stale, exit 0. The live set shrank from 104 because phase 3 removed
+declarations rather than adding exports: the four atoms ng does not have, the two `*Internal`
+property functions, and `JS_AddIntrinsicOperators`.
+
+```bash
+python native/quickjs/check-signatures.py
+```
+
+[check-signatures.py](check-signatures.py) compares each of those declarations against its prototype
+in `quickjs.h` — return width, arity, a discarded return, and `bool` parameters marshalled wider than
+one byte. A wrong signature links and runs, it just answers wrongly, so this covers exactly what a
+green `check-exports.py` cannot. It found three mismatches the migration plan had missed, including a
+parameter on `JS_IsJobPending` that no QuickJS header has ever declared.
+
+It reads `DllImport` declarations only, so the eleven callback delegates ng invokes *into* managed
+code stay hand-checked, as do the enums and struct layouts that cross by value. That is not
+hypothetical: `JSHostPromiseRejectionTracker`'s `is_handled` narrowed to a C `bool` in ng, and
+`JS_EVAL_FLAG_STRIP`'s bit became `JS_EVAL_FLAG_ASYNC_LOAD`. Both had to be found by reading the
+header.
+
+Sabotage this one too: patch a copy of `quickjs.h`, pass it as the argument, and confirm the check
+fires. All four have been shown to.
+
+Both scripts get "the live P/Invoke set" from [pinvoke.py](pinvoke.py), which parses Unity's
+generated `tests/*.csproj` for the real define set and source list — so a declaration inside a dead
+`#if` is not counted as a requirement — and resolves `EntryPoint` aliases. Three declarations named
+`JS_*` bind `JSB_*` symbols, so an audit by member name undercounts. Open `tests/` in the Editor once
+if the `.csproj` files are missing.
 
 ## What it links
 
@@ -114,11 +140,10 @@ they did not match a `JSAtom (*)(void)` typedef in the test.
   a commit behind the binary. Reconstructed from its only caller, `JSNative.ThrowInternalError`,
   which passes an explicit length because the message is not null-terminated: despite the name it
   raises an InternalError. Worth re-checking against upstream if it ever turns up.
-- **`JSB_ATOM_Operators` / `JSB_ATOM_Symbol_operatorSet`** — ng removed operator overloading, so the
-  atom table has no entry to generate an accessor from. They return `JS_ATOM_NULL`, which is
-  load-bearing rather than a stub: `JSAtom.IsValid` is `_value != 0` and every call site is already
-  guarded by it. Both go when phase 3 makes the no-bignum path permanent, and `check-exports.py`
-  will flag them as stale the moment it does.
+Two hand-written atom stubs, `JSB_ATOM_Operators` and `JSB_ATOM_Symbol_operatorSet`, lived here
+between phases 2 and 3. Phase 3 made `IsOperatorOverloadingSupported` permanently false, which took
+both off the P/Invoke surface; `check-exports.py` reported them stale exactly as predicted, and they
+are gone. Every atom accessor the shim exports now comes from the one macro over `quickjs-atom.h`.
 
 `JS_NewString` is deliberately *not* here. ng made it `static inline`, so the plan was to shim it —
 but the C# declaration turned out to have no callers at all and was deleted instead.

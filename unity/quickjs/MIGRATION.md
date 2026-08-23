@@ -24,17 +24,24 @@ repo at `S:/Work/Unity/quickjs-ng-csharp` (23 assertions passing against a quick
 
 ## Measured surface
 
-**104 live entry points** bound to `JSBDLL`, re-measured after phase 1 and phase 2. Liveness is
-evaluated with Unity's real define set, so a declaration inside a dead `#if` does not count:
+**99 live entry points** bound to `JSBDLL`, re-measured after phase 3. Liveness is evaluated with
+Unity's real define set, so a declaration inside a dead `#if` does not count:
 
 | Group | Live | Provided by the ng build |
 |---|---:|---|
-| `JS_*` — real QuickJS API | 59 | 56 exported by ng unchanged; 3 need C# work, see phase 3 |
+| `JS_*` — real QuickJS API | 60 | all exported by ng |
 | `JSB_*` / `jsb_*` — unity-jsb C shim | 27 | **all 27** — none exist in ng, so each one is ported in [native/quickjs/src](../../native/quickjs/src) |
-| `JSB_ATOM_*` | 16 | 12 generated from ng's `quickjs-atom.h`, 2 stubbed where operator overloading was, **2 no shim can fake** — see below |
+| `JSB_ATOM_*` | 12 | all generated from ng's `quickjs-atom.h` |
 | `js_*` — allocator | 2 | `js_malloc` and `js_free`, both exported by ng |
 
-`Runtime/Source/Native` declares 105 P/Invokes in total now, against 137 before phase 1.
+Nothing is unaccounted for any more: `check-exports.py` reports 99 of 99 satisfied with no stale
+export, and `check-signatures.py` reports every one of those declarations matching its prototype in
+`quickjs.h`. Both exit 0.
+
+104 became 99 by subtraction, not by adding exports. Phase 3 deleted seven declarations — the four
+atoms ng does not have, `JS_GetPropertyInternal`, `JS_SetPropertyInternal` and
+`JS_AddIntrinsicOperators` — and added two, `JS_GetProperty` and `JS_SetProperty`, which ng exports
+itself.
 
 The shim is **27 functions, not the 25 this document used to claim.** The old count went by C#
 member name and so missed three entry points reached through `EntryPoint` aliases on declarations
@@ -42,30 +49,40 @@ named `JS_*`: `JSB_DupValue`, `JSB_FreeValue` and `JSB_NewFloat64`. An earlier v
 document warned that any audit of this surface has to honour `EntryPoint`, and then got it wrong
 anyway — so re-run `check-exports.py`, which resolves `EntryPoint`, rather than reading the surface.
 
-Of the `JS_*` group, three are live and unexported, all of them phase 3's problem:
-`JS_GetPropertyInternal` and `JS_SetPropertyInternal` are called from wrapper methods in `JSApi.cs`
-itself, and `JS_AddIntrinsicOperators` from `ScriptContext.cs:56`. The names that used to be listed
-here and are no longer a cost: the five `JS_*Debugger*` and `JS_SetLogFunc` went with the debug
-server; `JS_SetBaseUrl` is a real P/Invoke only under `UNITY_WEBGL && !UNITY_EDITOR` and lives in
+The names that used to be listed here and are no longer a cost: the five `JS_*Debugger*` and
+`JS_SetLogFunc` went with the debug server; `JS_SetBaseUrl` is a real P/Invoke only under
+`UNITY_WEBGL && !UNITY_EDITOR` and lives in
 the jslib; and `JS_NewString`, the one name this plan expected to need an inline shim, turned out to
 have no callers anywhere and was deleted instead. Nothing in the QuickJS path touches
 BigFloat/BigDecimal.
 
-## The four atoms ng does not have
+## The four atoms ng does not have — resolved in phase 3
 
 `fileName`, `lineNumber`, `Operators`, `Symbol_operatorSet` are absent from ng's
 `quickjs-atom.h`. They split cleanly into a free case and a real one:
 
 - **`Operators` / `Symbol_operatorSet`** — dropped with operator overloading. Free: every
-  call site already guards on `JS_ATOM_Operators.IsValid` or
+  call site already guarded on `JS_ATOM_Operators.IsValid` or
   `JSApi.IsOperatorOverloadingSupported` (`ScriptContext.cs:71`, `OperatorDecl.cs:110`,
-  `TypeBindingInfo.cs:899`). The shim returns `JS_ATOM_NULL` and the guards do the rest — done, and
-  `shim-test` asserts ng has not grown the atoms back underneath the stubs.
+  `TypeBindingInfo.cs:899`). Phase 2 stubbed the accessors; phase 3 made
+  `IsOperatorOverloadingSupported` permanently `false`, which took both atoms and
+  `JS_AddIntrinsicOperators` off the P/Invoke surface and let the stubs go with them. That is a
+  capability drop, and a bounded one: the only consumers are two checks in `TypeBindingInfo`, so
+  what is lost is generated bindings emitting operator overloads for C# types — a codegen feature,
+  on a path ReactUnity does not use and whose deletion is already an open question. Scripts that
+  gate on `jsb.isOperatorOverloadingSupported` still get a correct answer, now `false`.
 - **`fileName` / `lineNumber`** — not free, and silent. Bellard's `build_backtrace` defines
-  both **on the Error object**; ng only keeps the `Function.prototype` getters. `JSContext.cs:55`
-  reads them off a caught exception to build the error location, so under ng it gets `undefined`
-  twice and every script error loses its file and line without anything failing. Phase 3 has to
-  re-derive the location from ng's `stack`.
+  both **on the Error object**; ng only keeps the `Function.prototype` getters
+  (`quickjs.c:43389`). `JSContext.FormatException` read them off a caught exception to build the
+  error location, so under ng it would have got `undefined` twice and every script error would have
+  lost its file and line without anything failing. Phase 3 deleted both reads: ng's `stack` already
+  opens with `    at <file>:<line>:<col>` in exactly that shape (`quickjs.c:8256`), so appending the
+  stack is now the whole job. Confirmed on a real parse error out of the suite, which now reports
+  `SyntaxError: ... / at ReactUnity/scripts/anonymous:1:16` followed by the call chain — the same
+  location the deleted code produced, plus a column and the frames above it.
+
+`shim-test` still asserts ng defines none of the four, so the reasoning written against their
+absence fails loudly if a future ng brings one back.
 
 Everything else the atom machinery needs is unchanged: ng's `quickjs-atom.h` uses the same
 `DEF(name, str)` shape, so unity-jsb's enum-and-accessor trick ports verbatim (241 atoms in ng
@@ -73,28 +90,61 @@ against 224 in Bellard).
 
 ## What fails silently
 
-Missing symbols throw on first call. **Changed** symbols keep working and return nonsense. Seven of
-those, in two patterns — do not port a declaration by eye:
+Missing symbols throw on first call. **Changed** symbols keep working and return nonsense. This is
+the list phase 3 fixed. Three of its seven rows are corrections to what this document said, all of
+them from an earlier by-eye reading — `check-signatures.py` now derives the whole table from the
+header instead:
 
-| Symbol | Current C# | quickjs-ng | Failure |
+| Symbol | C# before phase 3 | quickjs-ng | Failure |
 |---|---|---|---|
 | `JS_IsArray` | `int (ctx, val)` | `bool (val)` | arity + width |
 | `JS_IsError` | `JS_BOOL (ctx, val)` | `bool (val)` | arity + width |
 | `JS_IsFunction` | `JS_BOOL (ctx, val)` | `bool (ctx, val)` | width |
 | `JS_IsConstructor` | `JS_BOOL (ctx, val)` | `bool (ctx, val)` | width |
-| `JS_IsJobPending` | `int (rt)` | `bool (rt)` | width |
+| `JS_IsJobPending` | `int (rt, out pctx)` | `bool (rt)` | arity + width |
+| `JS_SetConstructor` | `void (ctx, func, proto)` | `int (...)` | discarded error |
+| `JS_ToCStringLen2` | `bool cesu8` as `UnmanagedType.Bool` | `bool` (1 byte) | 4-byte `BOOL` |
+| `JSHostPromiseRejectionTracker` | `JS_BOOL is_handled` | `bool is_handled` | width, **into** managed |
+
+The last row is the same width bug in the other direction, and the only one of these that was
+correct before ng: Bellard's `is_handled` really was `JS_BOOL`. It is a **reverse** P/Invoke — ng
+calls into managed code — so the managed signature decides how many bytes are read off the register,
+and reading four where ng wrote one takes three undefined bytes with it. The handler is
+`if (is_handled != 1)` guarding the "Unhandled promise rejection" log, so the visible symptom would
+have been handled rejections reported as unhandled. `check-signatures.py` reads `DllImport`
+declarations only and never sees a delegate, so this one was found by hand and the delegates are
+still a hand-checked surface.
+
+`JS_IsJobPending` was listed here as width-only. Its C# declaration actually carried a second
+parameter, `out JSContext pctx`, that **no QuickJS header has ever had** — Bellard's included; the
+callee ignored the register and the caller read back an uninitialised local. `JS_SetConstructor` and
+`JS_ToCStringLen2` were not on the list at all. All three came from running the check, not from
+re-reading the header, which is the argument for having built it.
 
 `JS_BOOL` is `Int32` here; ng returns C `bool`. On x64 a `bool` return sets only `AL` and the upper
 three bytes of `EAX` are undefined — usually truthy, occasionally not. Every one needs
-`[return: MarshalAs(UnmanagedType.U1)] bool`. ng's header has 26 `bool`-returning functions, so this
-recurs as the surface grows.
+`[return: MarshalAs(UnmanagedType.U1)] bool`. ng's header has 26 `bool`-returning functions, of which
+this surface declares five, so this recurs as the surface grows.
+
+`JS_IsArray` losing its tri-state is a behaviour change, not just an ABI one. Bellard's returned -1
+for the proxy case; ng's `bool` cannot, so the 18 `if (isArray == -1)` early-returns in
+`Values_get.cs` were unreachable and are gone.
 
 `JS_IsArray` and `JS_IsError` also **lost their `JSContext*`**, which shifts the `JSValue` into the
 wrong register slot. `JS_IsPromise` is a third instance, hit while writing the reference binding: it
 compiled clean and returned the wrong answer.
 
 Also silent: **`JS_TAG_FLOAT64` is 8 in ng and 7 in Bellard** — the enum gained `STRING_ROPE` and
-`SHORT_BIG_INT`. Re-derive every tag from the new header rather than copying it forward.
+`SHORT_BIG_INT`. Re-derive every tag from the new header rather than copying it forward. Phase 3 did,
+and `SHORT_BIG_INT` turns out to occupy 7, the slot `FLOAT64` used to hold, so a stale copy of that
+block reads every double as a bigint. `BIG_DECIMAL` and `BIG_FLOAT` are gone and `BIG_INT` moved from
+-10 to -9; the `JS_WRITE_OBJ_BSWAP` and `JS_READ_OBJ_ROM_DATA` flags are now 0, both obsolete.
+
+**`JS_TAG_STRING_ROPE` was the real find in that enum.** ng represents `a + b` as an unflattened
+rope and hands it out as an ordinary `JSValue` (`quickjs.c:5532`), so ng's own `JS_IsString` tests
+both tags (`quickjs.h:819`). `JSValue.IsString()` tested only `JS_TAG_STRING`, which would have
+silently classified every concatenated string reaching a C# binding as a non-string — no error, just
+a wrong answer, on an input any script can produce.
 
 ## The second implementation
 
@@ -103,8 +153,13 @@ P/Invoke surface — on the browser's own engine, compiled from 1,824 lines of T
 syntax because Emscripten requires it. There is no QuickJS on WebGL at all, so every signature
 change and every tag value has to land here independently. Budget it as a peer of the C# work.
 
-Phase 2 deliberately did not touch it, so it now carries entries nothing names — `JS_NewString`
-among them — to prune when phase 4 brings it back into agreement. It is also why `unity_qjs.c` no
+Phases 2 and 3 deliberately did not touch it, so it now carries entries nothing names —
+`JS_NewString`, `JS_GetPropertyInternal`, `JS_SetPropertyInternal` and `JS_AddIntrinsicOperators`
+among them — to prune when phase 4 brings it back into agreement. Phase 3 also widened what phase 4
+owes it: `JS_IsArray`, `JS_IsError` and `JS_IsJobPending` changed arity, `JS_IsArray` lost its -1,
+the tag constants moved, and `IsString` has to accept a rope. The jslib is hand-written JS against
+the browser engine, so none of that follows automatically and none of it is caught by
+`check-signatures.py`, which only reads the native declarations. It is also why `unity_qjs.c` no
 longer has `UNITY_WEBGL` guards: on WebGL `JSApi.JSBDLL` is `__Internal` and the native library is
 never loaded at all, so those guards protected a configuration that cannot occur (and were
 incoherent anyway — they skipped `quickjs.h` and then used `JSAtom`).
@@ -126,8 +181,17 @@ The port itself looks cheap: of the 28 distinct `JS_*` names the two shim files 
 public `quickjs.h` and the 28th is a macro they define themselves. `unity_qjs.c` is a normal
 translation unit over the public header plus `quickjs-atom.h`, not a patch into `quickjs.c`, so
 there is no merge to maintain against ng.
-**Windows x64 is done** — [native/quickjs](../../native/quickjs) builds it, and the exit check
-below is mechanised. Eleven artifacts and the CI matrix remain.
+**Windows x64 is done and installed** — [native/quickjs](../../native/quickjs) builds it, phase 3
+committed it to `Plugins/QuickJS/x64`, and the exit checks are mechanised. Eleven artifacts and the
+CI matrix remain.
+
+One thing to know before installing any of those eleven: `unity/quickjs/.gitignore` is a Visual
+Studio template inherited from the merged repo, and its `[Xx]64/` and `[Xx]86/` build-output rules
+**also matched `Plugins/QuickJS/x64` and `x86`**, the directories the binaries ship from. The files
+already there are tracked and so survived, which is why nobody noticed; a newly built one was
+silently untracked, and `git add` on it failed outright and took the pre-commit hook with it. Phase 3
+hit this trying to commit the ng DLL and negated the two paths. Two of the eleven land in those
+directories.
 *Exit: twelve artifacts built reproducibly in CI from a tagged ng commit, Windows x64 loading in the Editor.*
 
 **Phase 1 — subtract, against the old DLL.** Done on this branch except for one item that turned
@@ -140,33 +204,99 @@ the reflect-binding path.
 **Phase 2 — port the C shim.** Done. 27 `JSB_*`/`jsb_*` functions and 16 atoms against ng's
 headers, in [native/quickjs/src](../../native/quickjs/src) — see "What phase 2 changed" below for
 the two defects that only ng has, and for the test that covers the atom numbering.
-*Exit: `libquickjs` builds against ng and exports everything the C# layer names.* Met on the C
-side: none of the 27 are missing and nothing stale is exported. The 5 names still unexported are
-C# declarations, which is the phase below.
+*Exit: `libquickjs` builds against ng and exports everything the C# layer names.* Met.
 
-**Phase 3 — rewrite the C# declarations from the header.** Not by eye, not by editing in place.
-Generate or hand-check every declaration against `quickjs.h`, fixing `bool` widths and dropped
-contexts. Re-derive the tag constants.
+**Phase 3 — rewrite the C# declarations from the header.** Done, and done from the header rather
+than by eye: [check-signatures.py](../../native/quickjs/check-signatures.py) parses every prototype
+in `quickjs.h`, parses every live P/Invoke, and diffs them. All five known names are resolved; the
+check found three further mismatches this document had wrong or missing, and a hand audit of what it
+cannot see — delegates, enums, struct layouts — found two more. See "What fails silently" above and
+"What phase 3 changed" below.
 
-Five names are known to need C# work, because the Windows DLL builds and does not export them.
-This is the whole list, not a sample — everything else the C# layer P/Invokes is satisfied:
-
-| Name | What it needs |
-|---|---|
-| `JS_GetPropertyInternal` / `JS_SetPropertyInternal` | delete both declarations and bind `JSApi.JS_GetProperty`/`JS_SetProperty` straight to ng's, which are **exact** identities of the current wrapper bodies: ng's `JS_GetProperty` is `JS_GetPropertyInternal(ctx, obj, prop, obj, false)` and its `JS_SetProperty` is `JS_SetPropertyInternal(…, JS_PROP_THROW)` (`quickjs.c:9266`, `:10807`) |
-| `JS_AddIntrinsicOperators` | make the no-bignum branch of `JSApi.cs:60` permanent rather than stubbing one name. That also takes `JSB_ATOM_Operators` and `JSB_ATOM_Symbol_operatorSet` off the P/Invoke surface, at which point the two stubs in `unity_qjs.c` must go too — `check-exports.py` will say so |
-| `JSB_ATOM_fileName` / `JSB_ATOM_lineNumber` | delete the declarations and rewrite `JSContext.cs:55` against ng's `stack` |
-
-Keep the check honest by re-running it rather than reasoning about it —
-`python native/quickjs/check-exports.py` reads the live P/Invoke set straight out of Unity's
-generated `.csproj` files and diffs it against `dumpbin -exports`, exiting non-zero on any gap.
 *Exit: Unity suite passes on Windows against the ng DLL **and** a desktop IL2CPP player build runs.*
+**First half met, second half blocked on tooling.** The ng DLL is installed at
+`Plugins/QuickJS/x64/quickjs.dll` and the suite passes on it unchanged from the pre-migration
+baseline: EditMode 340/348, PlayMode 689/701, 0 failed. That the *ng* build is what ran is not
+inferred from the pass — ng exports `JS_GetProperty` and `JS_SetProperty`, which are `static inline`
+in Bellard's and absent from the old DLL's exports, and the C# now binds both directly, so the old
+binary would have thrown `EntryPointNotFoundException` on the first property read.
+
+The IL2CPP half cannot run here: none of the six installed editors has the IL2CPP player variation
+(`PlaybackEngines/windowsstandalonesupport/Variations` has only `*_mono`), so it needs the "Windows
+Build Support (IL2CPP)" module from the Hub, plus a batch-mode build entry point, which
+`scripts/unity` does not have. What it would cover that the Editor run does not is specifically
+AOT: managed stripping against the `[Preserve]` set, and reverse-P/Invoke marshalling of the
+delegates. Nothing in phase 3 added a JS-reachable entry point — it removed seven — so no new
+stripping surface was introduced, but that is an argument, not a test.
 
 **Phase 4 — mirror in the jslib, then wire the async loader.** Bring `jsbplugin.ts` into agreement,
 then install `JS_SetModuleLoaderFuncAsync`, port `QuickJSModuleLoader` onto
 `Dispatcher.StartDeferred` + `UnityWebRequest`, set `EngineCapabilities.ModuleResolution`, and
 retire `ModuleCompat.RewriteDynamicImports` for QuickJS.
 *Exit: kitchen-sink loads a module graph over HTTP with no blocking frame, on desktop and in WebGL.*
+
+## What phase 3 changed
+
+Phase 3's instruction to itself was "not by eye". That mattered. The by-eye list in this document
+was wrong about one of its entries and missing two others, and none of the four findings below would
+have come out of re-reading that list at all.
+
+- **`JSValue.IsString()` was wrong for concatenated strings.** ng represents `a + b` as an
+  unflattened rope with its own tag and hands it out as an ordinary value, which is why ng's own
+  `JS_IsString` accepts both tags. Testing only `JS_TAG_STRING` classified every concatenated string
+  reaching a binding as a non-string — reachable from any script, with no error to notice.
+- **`JS_IsJobPending` had a parameter no QuickJS ever declared.** `out JSContext pctx`, present in
+  the C# and in the jslib, absent from Bellard's header and ng's. This document listed the symbol as
+  needing a width fix only.
+- **The promise-rejection callback read `is_handled` four bytes wide.** ng narrowed it to C `bool`,
+  and this is the one direction a P/Invoke audit does not cover: native calling managed. It decides
+  whether an unhandled promise rejection is logged.
+- **`JS_EVAL_FLAG_STRIP` is `JS_EVAL_FLAG_ASYNC_LOAD` in ng.** Same bit, unrelated meaning: ng asks
+  for a module returned with its dependencies unresolved. Nothing passed the flag, so this was
+  latent — but it is bit 4 of the flag word phase 4's async loader has to set, so the old name
+  was a trap laid directly in the next phase's path.
+
+Two smaller ones the list did not have either: `JS_SetConstructor` returns `int` in ng and was
+declared `void`, discarding a failure; and `JS_ToCStringLen2`'s `cesu8` was marshalled as
+`UnmanagedType.Bool`, the four-byte Win32 `BOOL`, against a one-byte C `bool`.
+
+### Everything that crosses by value, not just the tags
+
+"Re-derive the tag constants" was taken to mean every constant and layout that crosses the boundary
+by value. `JSPropFlags`, `JSGPNFlags`, `JSCFunctionEnum` and the `JSMemoryUsage` layout all agree
+with ng field for field; `JSEvalFlags` did not, per above. The eleven callback delegates were
+checked the same way, and `is_handled` was the only mismatch — every getter/setter/magic shape
+matches ng's `JSCFunctionType` union exactly. `JSPropertyEnum.is_enumerable` is the same one-byte
+`bool` narrowing again, this time inside a struct; `atom` sits at offset 4 either way so only the
+flag was at risk, and nothing references the struct yet, but it was corrected rather than left for
+whatever uses it first.
+
+### The mechanical half
+
+The five `bool`/arity fixes from the table above, the tag block re-derived from ng's enum, the
+`JS_WRITE_OBJ`/`JS_READ_OBJ` flags corrected, `JS_GetProperty`/`JS_SetProperty` bound straight to
+ng's exports, operator overloading made permanently unsupported, and the `fileName`/`lineNumber`
+reads replaced by ng's `stack`. On the call-site side that is 25 dropped `JSContext` arguments, 42
+comparisons against `1`/`0` turned into boolean expressions, and 18 unreachable `isArray == -1`
+blocks removed. `JSB_NO_BIGNUM` is now referenced nowhere and was left to lapse rather than removed
+from anything — nothing declares or documents it.
+
+### check-signatures.py
+
+`check-exports.py` answers "does the symbol exist", which is the failure that throws.
+[check-signatures.py](../../native/quickjs/check-signatures.py) answers "is the declaration right",
+which is the failure that does not: it compares return width, arity, discarded returns and `bool`
+parameter width against the prototypes in `quickjs.h`, and reports 0 mismatches across 60
+declarations. Like `shim-test`, it was sabotaged before being trusted — four doctored copies of
+`quickjs.h`, one per check, each of which it caught.
+
+Its blind spot is deliberate and worth remembering: it reads `DllImport` declarations, so the
+callback delegates are outside it, and that is exactly where `is_handled` was hiding. Delegates,
+enums and struct layouts stay a hand-checked surface.
+
+Both scripts now share [pinvoke.py](../../native/quickjs/pinvoke.py) for reading the live P/Invoke
+set, because duplicating the C# preprocessor evaluator to answer the same question twice is how the
+two checks would drift apart.
 
 ## What phase 2 changed
 
@@ -260,12 +390,16 @@ path everything actually uses, so nothing downstream is blocked on making that c
 
 - **IL2CPP diverges from CoreCLR.** The reference binding runs on .NET 8; struct-by-value and
   reverse P/Invoke are exactly where Mono and IL2CPP differ. Made a phase 3 exit criterion, not a
-  phase 4 discovery.
+  phase 4 discovery — and **still open**: no installed editor has the IL2CPP player variation, so
+  phase 3 met the Editor half of that criterion and not this one. It needs the Hub's "Windows Build
+  Support (IL2CPP)" module and a batch-mode build entry point in `scripts/unity`.
 - **No sanitizer off desktop.** ASan and GC-stress cover x64 only. Test every new interop behaviour
   on desktop under ASan first; mobile is validation, never discovery.
 - **Two implementations drifting.** C# and the jslib must agree on 122 signatures and every tag, and
-  nothing enforces it — WebGL just misbehaves. Generate both from one description if possible;
-  failing that, a test asserting tags and arities match across backends.
+  nothing enforces it — WebGL just misbehaves. `check-signatures.py` closed this for the native side
+  only; the jslib is hand-written JS with no header to check against, and phases 2 and 3 have now
+  moved arities, tags and `IsString` out from under it. Generate both from one description if
+  possible; failing that, a test asserting tags and arities match across backends.
 - **The async loader is not upstream yet.** Pin a tagged commit of `gkurt/quickjs`, not a branch, and
   pursue the upstream PR in parallel. Coordinate with quickjs-ng#1522, whose author proposed a
   dynamic-import-only version of the same feature.
@@ -293,12 +427,20 @@ the full suite green at the end (1,029 tests, 0 failures, both before and after)
 - **`BindingManager.Bind()`**, splitting the reflect-binding path out of `Generate(TypeBindingFlags)`
   so it no longer constructs a `CodeGenerator` and walks every type into buffers nobody reads.
 - **Gate 0 for Windows x64** — `native/quickjs` builds `quickjs.dll` from ng plus the ported
-  shim, satisfying 99 of the 105 live P/Invoke names, exporting the four async-loader entry
-  points, and not exporting `JS_NewBigDecimal`.
+  shim, exporting the four async-loader entry points, and not exporting `JS_NewBigDecimal`. It
+  satisfied 99 of the 105 live P/Invoke names at the time; phase 3 closed the gap from the C# side
+  and it is now 99 of 99.
 
 - **Phase 2, the C shim** — 27 functions and 16 atoms ported, 26 uncalled ones deleted, the two
   ng-only defects above fixed, `shim-test` added, and `check-exports.py` taught to diff both
   directions.
+- **Phase 3, the C# declarations** — all 99 live P/Invokes checked against `quickjs.h` by
+  `check-signatures.py` and every mismatch fixed, including two silent bugs the plan did not have;
+  the ng DLL installed for Windows x64 and the suite passing on it at the pre-migration baseline.
+  The IL2CPP player build the exit criterion also asks for is blocked on a missing Hub module.
+- **The plugin directories were gitignored** — `[Xx]64/`/`[Xx]86/` in `unity/quickjs/.gitignore`
+  matched `Plugins/QuickJS/x64` and `x86`. Found by being unable to commit the ng DLL; fixed by
+  negating those two paths, which the next eleven artifacts need.
 
 One thing the port turned up that no amount of reading would have: **unity-jsb's source tree is
 a commit behind its own shipped binary.** `JSB_ThrowError` is exported by
