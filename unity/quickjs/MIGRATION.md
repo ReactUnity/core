@@ -348,6 +348,14 @@ static methods under those names, which is what they already did with the guard 
 call from script changes. `jsb.isOperatorOverloadingSupported` is no longer defined; it read
 `false` and now reads `undefined`, so anything gating on it takes the same branch.
 
+Two operator-named things stay, and both are load-bearing rather than residue. `IsOperatorMethod`
+still lets an `op_*` method past the special-name filter, and the `op_*` switch in
+`CodeGenHelper_Method` still emits `a + b` for one — that switch is *why* a bound operator method
+compiles at all, since C# refuses to call `op_Addition` by name. Together they are what keeps the
+"binds as an ordinary static method" sentence above true, and both predate the migration. The one
+thing that was genuinely dead is gone: `TypeDB._DynamicOperatorInvoke`, a `[MonoPInvokeCallback]`
+stub whose whole body was `throw new NotImplementedException()` and which nothing referenced.
+
 Two consequences were not obvious from the guard. `TypeBindingInfo.preload` was defined as
 "this type declares operators" and nothing else ever set it, so both call sites now pass `false`;
 `ScriptRuntime.AddTypeReference` keeps the parameter, because generated bindings pass it and eager
@@ -575,7 +583,7 @@ the full suite green at the end (1,029 tests, 0 failures, both before and after)
   WebGL keeps the host import hook: that backend evaluates through `eval` and has no module scope
   at all.
 - **Operator overloading, removed** — the machinery phase 3 left behind a permanently false guard.
-  ng has no operator overloading to register.
+  ng has no operator overloading to register, and the last dead stub went with it.
 - **The plugin directories were gitignored** — `[Xx]64/`/`[Xx]86/` in `unity/quickjs/.gitignore`
   matched `Plugins/QuickJS/x64` and `x86`. Found by being unable to commit the ng DLL; fixed by
   negating those two paths, which the next eleven artifacts need.
