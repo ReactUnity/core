@@ -21,7 +21,7 @@ var UnityJSBPlugin = {
                 if (object === null)
                     return 2 /* Tags.JS_TAG_NULL */;
                 if (typeof object === 'number')
-                    return 7 /* Tags.JS_TAG_FLOAT64 */;
+                    return 8 /* Tags.JS_TAG_FLOAT64 */;
                 if (typeof object === 'boolean')
                     return 1 /* Tags.JS_TAG_BOOL */;
                 if (typeof object === 'symbol')
@@ -29,7 +29,7 @@ var UnityJSBPlugin = {
                 if (typeof object === 'string')
                     return -7 /* Tags.JS_TAG_STRING */;
                 if (typeof object === 'bigint')
-                    return -10 /* Tags.JS_TAG_BIG_INT */;
+                    return -9 /* Tags.JS_TAG_BIG_INT */;
                 if (object instanceof Error)
                     return 6 /* Tags.JS_TAG_EXCEPTION */;
                 return -1 /* Tags.JS_TAG_OBJECT */;
@@ -74,7 +74,7 @@ var UnityJSBPlugin = {
                     if (typeof object === 'number') {
                         if (typeof ptr === 'number') {
                             HEAPF64[ptr >> 3] = object;
-                            unityJsbState.HEAP64()[(ptr >> 3) + 1] = BigInt(7 /* Tags.JS_TAG_FLOAT64 */);
+                            unityJsbState.HEAP64()[(ptr >> 3) + 1] = BigInt(8 /* Tags.JS_TAG_FLOAT64 */);
                         }
                         return;
                     }
@@ -110,7 +110,7 @@ var UnityJSBPlugin = {
                     else if (tag === 1 /* Tags.JS_TAG_BOOL */) {
                         return !!HEAP32[val >> 2];
                     }
-                    else if (tag === 7 /* Tags.JS_TAG_FLOAT64 */) {
+                    else if (tag === 8 /* Tags.JS_TAG_FLOAT64 */) {
                         return HEAPF64[val >> 3];
                     }
                     else {
@@ -141,7 +141,7 @@ var UnityJSBPlugin = {
                             tag: tag,
                         };
                     }
-                    else if (tag === 7 /* Tags.JS_TAG_FLOAT64 */) {
+                    else if (tag === 8 /* Tags.JS_TAG_FLOAT64 */) {
                         var value = HEAPF64[val >> 3];
                         return {
                             id: -1,
@@ -167,7 +167,7 @@ var UnityJSBPlugin = {
                 },
                 duplicate: function (obj, ptr) {
                     var tag = Number(unityJsbState.HEAP64()[(obj >> 3) + 1]);
-                    if (tag === 7 /* Tags.JS_TAG_FLOAT64 */) {
+                    if (tag === 8 /* Tags.JS_TAG_FLOAT64 */) {
                         if (typeof ptr === 'number') {
                             var val = HEAPF64[(obj >> 3)];
                             HEAPF64[ptr >> 3] = val;
@@ -215,7 +215,7 @@ var UnityJSBPlugin = {
                 },
                 pop: function (obj) {
                     var tag = Number(unityJsbState.HEAP64()[(obj >> 3) + 1]);
-                    if (tag === 7 /* Tags.JS_TAG_FLOAT64 */
+                    if (tag === 8 /* Tags.JS_TAG_FLOAT64 */
                         || tag === 0 /* Tags.JS_TAG_INT */
                         || tag === 1 /* Tags.JS_TAG_BOOL */)
                         return;
@@ -335,6 +335,26 @@ var UnityJSBPlugin = {
         getContext: function (ctx) {
             var ctxId = ctx;
             return unityJsbState.contexts[ctxId];
+        },
+        /* Resolves a JSValue with no context to resolve it against. ng dropped the JSContext
+           from JS_IsArray and JS_IsError, and references are kept per runtime, so there is
+           nothing left to look one up in. Every live runtime is searched and the one holding
+           that id answers; ambiguity needs two live runtimes, which needs JSWorker, which
+           needs threads WebGL does not have. Primitives carry their value in the JSValue
+           itself, so for those any runtime decodes alike. */
+        getAnyValue: function (val) {
+            var ids = Object.keys(unityJsbState.runtimes);
+            var first;
+            for (var i = 0; i < ids.length; i++) {
+                var runtime = unityJsbState.runtimes[ids[i]];
+                if (!runtime || runtime.isDestroyed)
+                    continue;
+                if (!first)
+                    first = runtime;
+                if (runtime.refs.record[HEAP32[val >> 2]])
+                    return runtime.refs.get(val);
+            }
+            return first ? first.refs.get(val) : undefined;
         },
         HEAP64: function () {
             return new BigInt64Array(HEAPF64.buffer);
@@ -570,14 +590,6 @@ var UnityJSBPlugin = {
         var runtime = unityJsbState.getRuntime(rt);
         runtime.refs.pop(v);
     },
-    JSB_FreePayload: function (ret, ctx, val) {
-        var context = unityJsbState.getContext(ctx);
-        var obj = context.runtime.refs.get(val);
-        var payload = context.runtime.refs.getPayload(obj);
-        HEAP32[ret >> 2] = payload.type;
-        HEAP32[(ret >> 2) + 1] = payload.payload;
-        context.runtime.refs.clearPayload(obj);
-    },
     JSB_DupValue: function (ptr, ctx, v) {
         var context = unityJsbState.getContext(ctx);
         context.runtime.refs.duplicate(v, ptr);
@@ -595,7 +607,7 @@ var UnityJSBPlugin = {
         var res = obj[index];
         context.runtime.refs.push(res, ptr);
     },
-    JS_GetPropertyInternal: function (ptr, ctxId, val, prop, receiver, throwRefError) {
+    JS_GetProperty: function (ptr, ctxId, val, prop) {
         var context = unityJsbState.getContext(ctxId);
         var valObj = context.runtime.refs.get(val);
         var propStr = unityJsbState.atoms.get(prop);
@@ -654,6 +666,7 @@ var UnityJSBPlugin = {
         }
         context.runtime.refs.push(res, ptr);
     },
+    // Returns 0/-1 in ng rather than nothing; nothing here can fail, so it is always 0.
     JS_SetConstructor: function (ctx, ctor, proto) {
         var context = unityJsbState.getContext(ctx);
         var ctorVal = context.runtime.refs.get(ctor);
@@ -664,6 +677,7 @@ var UnityJSBPlugin = {
         if (ctorPayload.type === 1 /* BridgeObjectType.TypeRef */) {
             context.runtime.refs.setPayload(protoVal, ctorPayload.type, ctorPayload.payload);
         }
+        return 0;
     },
     JS_SetPrototype: function (ctx, obj, proto) {
         var context = unityJsbState.getContext(ctx);
@@ -756,7 +770,10 @@ var UnityJSBPlugin = {
         var res = Reflect.has(thisVal, propVal);
         return !!res;
     },
-    JS_SetPropertyInternal: function (ctx, this_obj, prop, val, flags) {
+    // ng's JS_SetProperty is JS_SetPropertyInternal with JS_PROP_THROW, which is the only
+    // flag combination the C# ever passed, so the flags argument is gone with the wrapper.
+    // -1 on exception, otherwise true/false.
+    JS_SetProperty: function (ctx, this_obj, prop, val) {
         var context = unityJsbState.getContext(ctx);
         var runtime = context.runtime;
         var thisVal = runtime.refs.get(this_obj);
@@ -764,19 +781,15 @@ var UnityJSBPlugin = {
         var propVal = unityJsbState.atoms.get(prop);
         // SetProperty frees the value automatically
         runtime.refs.pop(val);
-        var shouldThrow = !!(flags & 16384 /* JSPropFlags.JS_PROP_THROW */) || !!(flags & 32768 /* JSPropFlags.JS_PROP_THROW_STRICT */);
         try {
             thisVal[propVal] = valVal;
-            return true;
+            return 1;
         }
         catch (err) {
             context.lastException = err;
-            if (shouldThrow) {
-                console.error(err);
-                return -1;
-            }
+            console.error(err);
+            return -1;
         }
-        return false;
     },
     JS_SetPropertyUint32: function (ctx, this_obj, idx, val) {
         var context = unityJsbState.getContext(ctx);
@@ -848,14 +861,8 @@ var UnityJSBPlugin = {
     JSB_ATOM_Error: function () {
         return unityJsbState.atoms.push('Error');
     },
-    JSB_ATOM_fileName: function () {
-        return unityJsbState.atoms.push('fileName');
-    },
     JSB_ATOM_length: function () {
         return unityJsbState.atoms.push('length');
-    },
-    JSB_ATOM_lineNumber: function () {
-        return unityJsbState.atoms.push('lineNumber');
     },
     JSB_ATOM_message: function () {
         return unityJsbState.atoms.push('message');
@@ -883,11 +890,11 @@ var UnityJSBPlugin = {
     },
     // #endregion
     // #region Is
-    JS_IsArray: function (ctx, val) {
-        var context = unityJsbState.getContext(ctx);
-        var valVal = context.runtime.refs.get(val);
-        var res = Array.isArray(valVal);
-        return !!res;
+    // No JSContext, and no -1: ng returns a plain bool, having moved the proxy case that
+    // needed the tri-state behind JS_IsProxy.
+    JS_IsArray: function (val) {
+        var valVal = unityJsbState.getAnyValue(val);
+        return !!Array.isArray(valVal);
     },
     JS_IsConstructor: function (ctx, val) {
         var context = unityJsbState.getContext(ctx);
@@ -895,11 +902,9 @@ var UnityJSBPlugin = {
         var res = !!obj.prototype && !!obj.prototype.constructor.name;
         return !!res;
     },
-    JS_IsError: function (ctx, val) {
-        var context = unityJsbState.getContext(ctx);
-        var valVal = context.runtime.refs.get(val);
-        var res = valVal instanceof Error;
-        return !!res;
+    JS_IsError: function (val) {
+        var valVal = unityJsbState.getAnyValue(val);
+        return !!(valVal instanceof Error);
     },
     JS_IsFunction: function (ctx, val) {
         var context = unityJsbState.getContext(ctx);
@@ -947,11 +952,6 @@ var UnityJSBPlugin = {
     JS_NewObject: function (ptr, ctx) {
         var context = unityJsbState.getContext(ctx);
         var res = {};
-        context.runtime.refs.push(res, ptr);
-    },
-    JS_NewString: function (ptr, ctx, str) {
-        var context = unityJsbState.getContext(ctx);
-        var res = unityJsbState.stringify(str);
         context.runtime.refs.push(res, ptr);
     },
     JS_NewStringLen: function (ptr, ctx, str, len) {
@@ -1079,17 +1079,6 @@ var UnityJSBPlugin = {
         res.$$values = new Array(size).fill(0);
         context.runtime.refs.push(res, ret);
     },
-    JSB_GetBridgeClassID: function () {
-        // TODO: I have no idea
-        return 0;
-    },
-    jsb_construct_bridge_object: function (ret, ctx, ctor, object_id) {
-        var context = unityJsbState.getContext(ctx);
-        var ctorVal = context.runtime.refs.get(ctor);
-        var res = Reflect.construct(ctorVal, []);
-        context.runtime.refs.push(res, ret);
-        context.runtime.refs.setPayload(res, 2 /* BridgeObjectType.ObjectRef */, object_id);
-    },
     jsb_crossbind_constructor: function (ret, ctx, new_target) {
         var context = unityJsbState.getContext(ctx);
         var target = context.runtime.refs.get(new_target);
@@ -1149,18 +1138,6 @@ var UnityJSBPlugin = {
         HEAPU8[buffer + n] = 0;
         return buffer;
     },
-    jsb_set_floats: function (ctx, val, n, v0) {
-        var context = unityJsbState.getContext(ctx);
-        var obj = context.runtime.refs.get(val);
-        var count = n / 4 /* Sizes.Single */;
-        if (!Array.isArray(obj.$$values) || count >= obj.$$values.length)
-            return false;
-        for (var index = 0; index < count; index++) {
-            var val_1 = HEAPF32[(v0 >> 2) + index];
-            obj.$$values[index] = val_1;
-        }
-        return true;
-    },
     jsb_set_bytes: function (ctx, val, n, v0) {
         var context = unityJsbState.getContext(ctx);
         var obj = context.runtime.refs.get(val);
@@ -1168,96 +1145,9 @@ var UnityJSBPlugin = {
         if (!Array.isArray(obj.$$values) || count >= obj.$$values.length)
             return false;
         for (var index = 0; index < count; index++) {
-            var val_2 = HEAP32[(v0 >> 2) + index];
-            obj.$$values[index] = val_2;
+            var val_1 = HEAP32[(v0 >> 2) + index];
+            obj.$$values[index] = val_1;
         }
-        return true;
-    },
-    jsb_set_byte_4: function (ctx, val, v0, v1, v2, v3) {
-        var context = unityJsbState.getContext(ctx);
-        var obj = context.runtime.refs.get(val);
-        var count = 4;
-        if (!Array.isArray(obj.$$values) || count >= obj.$$values.length)
-            return false;
-        obj.$$values[0] = HEAP32[(v0 >> 2)];
-        obj.$$values[1] = HEAP32[(v1 >> 2)];
-        obj.$$values[2] = HEAP32[(v2 >> 2)];
-        obj.$$values[3] = HEAP32[(v3 >> 2)];
-        return true;
-    },
-    jsb_set_float_2: function (ctx, val, v0, v1) {
-        var context = unityJsbState.getContext(ctx);
-        var obj = context.runtime.refs.get(val);
-        var count = 2;
-        if (!Array.isArray(obj.$$values) || count >= obj.$$values.length)
-            return false;
-        obj.$$values[0] = HEAPF32[(v0 >> 2)];
-        obj.$$values[1] = HEAPF32[(v1 >> 2)];
-        return true;
-    },
-    jsb_set_float_3: function (ctx, val, v0, v1, v2) {
-        var context = unityJsbState.getContext(ctx);
-        var obj = context.runtime.refs.get(val);
-        var count = 3;
-        if (!Array.isArray(obj.$$values) || count >= obj.$$values.length)
-            return false;
-        obj.$$values[0] = HEAPF32[(v0 >> 2)];
-        obj.$$values[1] = HEAPF32[(v1 >> 2)];
-        obj.$$values[2] = HEAPF32[(v2 >> 2)];
-        return true;
-    },
-    jsb_set_float_4: function (ctx, val, v0, v1, v2, v3) {
-        var context = unityJsbState.getContext(ctx);
-        var obj = context.runtime.refs.get(val);
-        var count = 4;
-        if (!Array.isArray(obj.$$values) || count >= obj.$$values.length)
-            return false;
-        obj.$$values[0] = HEAPF32[(v0 >> 2)];
-        obj.$$values[1] = HEAPF32[(v1 >> 2)];
-        obj.$$values[2] = HEAPF32[(v2 >> 2)];
-        obj.$$values[3] = HEAPF32[(v3 >> 2)];
-        return true;
-    },
-    jsb_set_int_1: function (ctx, val, v0) {
-        var context = unityJsbState.getContext(ctx);
-        var obj = context.runtime.refs.get(val);
-        var count = 1;
-        if (!Array.isArray(obj.$$values) || count >= obj.$$values.length)
-            return false;
-        obj.$$values[0] = HEAP32[(v0 >> 2)];
-        return true;
-    },
-    jsb_set_int_2: function (ctx, val, v0, v1) {
-        var context = unityJsbState.getContext(ctx);
-        var obj = context.runtime.refs.get(val);
-        var count = 2;
-        if (!Array.isArray(obj.$$values) || count >= obj.$$values.length)
-            return false;
-        obj.$$values[0] = HEAP32[(v0 >> 2)];
-        obj.$$values[1] = HEAP32[(v1 >> 2)];
-        return true;
-    },
-    jsb_set_int_3: function (ctx, val, v0, v1, v2) {
-        var context = unityJsbState.getContext(ctx);
-        var obj = context.runtime.refs.get(val);
-        var count = 3;
-        if (!Array.isArray(obj.$$values) || count >= obj.$$values.length)
-            return false;
-        obj.$$values[0] = HEAP32[(v0 >> 2)];
-        obj.$$values[1] = HEAP32[(v1 >> 2)];
-        obj.$$values[2] = HEAP32[(v2 >> 2)];
-        return true;
-    },
-    jsb_set_int_4: function (ctx, val, v0, v1, v2, v3) {
-        var context = unityJsbState.getContext(ctx);
-        var obj = context.runtime.refs.get(val);
-        var count = 4;
-        if (!Array.isArray(obj.$$values) || count >= obj.$$values.length)
-            return false;
-        obj.$$values[0] = HEAP32[(v0 >> 2)];
-        obj.$$values[1] = HEAP32[(v1 >> 2)];
-        obj.$$values[2] = HEAP32[(v2 >> 2)];
-        obj.$$values[3] = HEAP32[(v3 >> 2)];
         return true;
     },
     // #endregion
@@ -1269,108 +1159,9 @@ var UnityJSBPlugin = {
         if (!Array.isArray(obj.$$values) || count >= obj.$$values.length)
             return false;
         for (var index = 0; index < count; index++) {
-            var val_3 = obj.$$values[index];
-            HEAP32[(v0 >> 2) + index] = val_3;
+            var val_2 = obj.$$values[index];
+            HEAP32[(v0 >> 2) + index] = val_2;
         }
-        return true;
-    },
-    jsb_get_floats: function (ctx, val, n, v0) {
-        var context = unityJsbState.getContext(ctx);
-        var obj = context.runtime.refs.get(val);
-        var count = n / 4 /* Sizes.Single */;
-        if (!Array.isArray(obj.$$values) || count >= obj.$$values.length)
-            return false;
-        for (var index = 0; index < count; index++) {
-            var val_4 = obj.$$values[index];
-            HEAPF32[(v0 >> 2) + index] = val_4;
-        }
-        return true;
-    },
-    jsb_get_byte_4: function (ctx, val, v0, v1, v2, v3) {
-        var context = unityJsbState.getContext(ctx);
-        var obj = context.runtime.refs.get(val);
-        var count = 4;
-        if (!Array.isArray(obj.$$values) || count >= obj.$$values.length)
-            return false;
-        HEAP32[(v0 >> 2)] = obj.$$values[0];
-        HEAP32[(v1 >> 2)] = obj.$$values[1];
-        HEAP32[(v2 >> 2)] = obj.$$values[2];
-        HEAP32[(v3 >> 2)] = obj.$$values[3];
-        return true;
-    },
-    jsb_get_float_2: function (ctx, val, v0, v1) {
-        var context = unityJsbState.getContext(ctx);
-        var obj = context.runtime.refs.get(val);
-        var count = 2;
-        if (!Array.isArray(obj.$$values) || count >= obj.$$values.length)
-            return false;
-        HEAPF32[(v0 >> 2)] = obj.$$values[0];
-        HEAPF32[(v1 >> 2)] = obj.$$values[1];
-        return true;
-    },
-    jsb_get_float_3: function (ctx, val, v0, v1, v2) {
-        var context = unityJsbState.getContext(ctx);
-        var obj = context.runtime.refs.get(val);
-        var count = 3;
-        if (!Array.isArray(obj.$$values) || count >= obj.$$values.length)
-            return false;
-        HEAPF32[(v0 >> 2)] = obj.$$values[0];
-        HEAPF32[(v1 >> 2)] = obj.$$values[1];
-        HEAPF32[(v2 >> 2)] = obj.$$values[2];
-        return true;
-    },
-    jsb_get_float_4: function (ctx, val, v0, v1, v2, v3) {
-        var context = unityJsbState.getContext(ctx);
-        var obj = context.runtime.refs.get(val);
-        var count = 4;
-        if (!Array.isArray(obj.$$values) || count >= obj.$$values.length)
-            return false;
-        HEAPF32[(v0 >> 2)] = obj.$$values[0];
-        HEAPF32[(v1 >> 2)] = obj.$$values[1];
-        HEAPF32[(v2 >> 2)] = obj.$$values[2];
-        HEAPF32[(v3 >> 2)] = obj.$$values[3];
-        return true;
-    },
-    jsb_get_int_1: function (ctx, val, v0) {
-        var context = unityJsbState.getContext(ctx);
-        var obj = context.runtime.refs.get(val);
-        var count = 1;
-        if (!Array.isArray(obj.$$values) || count >= obj.$$values.length)
-            return false;
-        HEAP32[(v0 >> 2)] = obj.$$values[0];
-        return true;
-    },
-    jsb_get_int_2: function (ctx, val, v0, v1) {
-        var context = unityJsbState.getContext(ctx);
-        var obj = context.runtime.refs.get(val);
-        var count = 2;
-        if (!Array.isArray(obj.$$values) || count >= obj.$$values.length)
-            return false;
-        HEAP32[(v0 >> 2)] = obj.$$values[0];
-        HEAP32[(v1 >> 2)] = obj.$$values[1];
-        return true;
-    },
-    jsb_get_int_3: function (ctx, val, v0, v1, v2) {
-        var context = unityJsbState.getContext(ctx);
-        var obj = context.runtime.refs.get(val);
-        var count = 3;
-        if (!Array.isArray(obj.$$values) || count >= obj.$$values.length)
-            return false;
-        HEAP32[(v0 >> 2)] = obj.$$values[0];
-        HEAP32[(v1 >> 2)] = obj.$$values[1];
-        HEAP32[(v2 >> 2)] = obj.$$values[2];
-        return true;
-    },
-    jsb_get_int_4: function (ctx, val, v0, v1, v2, v3) {
-        var context = unityJsbState.getContext(ctx);
-        var obj = context.runtime.refs.get(val);
-        var count = 4;
-        if (!Array.isArray(obj.$$values) || count >= obj.$$values.length)
-            return false;
-        HEAP32[(v0 >> 2)] = obj.$$values[0];
-        HEAP32[(v1 >> 2)] = obj.$$values[1];
-        HEAP32[(v2 >> 2)] = obj.$$values[2];
-        HEAP32[(v3 >> 2)] = obj.$$values[3];
         return true;
     },
     // #endregion
@@ -1464,6 +1255,40 @@ var UnityJSBPlugin = {
     JS_SetModuleLoaderFunc: function (rt, module_normalize, module_loader, opaque) {
         // TODO:
     },
+    /* The asynchronous module loader. QuickJSEngine installs one on every platform, so
+       these have to exist or the Emscripten link fails - but nothing drives them here.
+       ES module syntax does not reach this backend at all: `evaluate` is an `eval` inside
+       the sandbox iframe, and `eval` cannot run `import` or `export`. So ModuleResolution
+       is not among the WebGL capabilities, ScriptContext keeps pointing dynamic import at
+       its own host loader, and EvalModuleAsync is never called.
+  
+       Making it real means giving the iframe a module realm - a blob url imported from a
+       `<script type="module">` - and reconciling that with the globals proxy the whole
+       backend is built on, which a module cannot see. That is its own piece of work. */
+    JS_SetModuleLoaderFuncAsync: function (rt, module_normalize, module_loader, module_check_attrs, opaque) {
+        // Recorded nowhere on purpose: nothing in this backend can ask for a module.
+    },
+    JS_SetModuleMetaFunc: function (rt, func, opaque) {
+        // import.meta is unreachable without module scope, so this is never called back.
+    },
+    JS_FulfillModuleLoad: function (ctx, handle, source, source_len) {
+        console.error('Module loading is not supported in WebGL Backend');
+        return -1;
+    },
+    JS_RejectModuleLoad: function (ctx, handle, error) {
+        return 0;
+    },
+    JS_EvalModuleAsync: function (ret, ctx, input, input_len, filename) {
+        var context = unityJsbState.getContext(ctx);
+        var err = new Error('ES modules are not supported in WebGL Backend');
+        context.lastException = err;
+        console.error(err);
+        context.runtime.refs.push(err, ret);
+    },
+    JS_GetModuleName: function (ctx, m) {
+        // JS_ATOM_NULL. Only the import.meta hook asks, and it never runs here.
+        return 0;
+    },
     JS_GetImportMeta: function (ret, ctx, m) {
         // TODO:
         return 0;
@@ -1476,7 +1301,7 @@ var UnityJSBPlugin = {
         // Automatically handled by browsers
         return false;
     },
-    JS_IsJobPending: function (rt, pctx) {
+    JS_IsJobPending: function (rt) {
         // Automatically handled by browsers
         return false;
     },

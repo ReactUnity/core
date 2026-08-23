@@ -16,6 +16,7 @@ declare global {
 
     getRuntime: (ctx: JSRuntime) => PluginRuntime;
     getContext: (ctx: JSContext) => PluginContext;
+    getAnyValue: (val: JSValue) => any;
 
     HEAP64: () => BigInt64Array;
     HEAPU64: () => BigUint64Array;
@@ -134,6 +135,8 @@ declare global {
 
     JS_PROP_NO_ADD = (1 << 16) /* internal use */,
     JS_PROP_NO_EXOTIC = (1 << 17) /* internal use */,
+    JS_PROP_DEFINE_PROPERTY = (1 << 18) /* internal use */,
+    JS_PROP_REFLECT_DEFINE_PROPERTY = (1 << 19) /* internal use */,
 
     // custom values
     CONST_VALUE = JS_PROP_HAS_VALUE | JS_PROP_ENUMERABLE,
@@ -141,13 +144,16 @@ declare global {
     NONE = 0,
   }
 
+  /* Transcribed from quickjs-ng's enum, and the same block as JSApi.cs: ng dropped
+     BigDecimal and BigFloat and added STRING_ROPE and SHORT_BIG_INT, which moved five of
+     these. SHORT_BIG_INT took 7, the slot FLOAT64 used to hold, so a stale copy of this
+     writes every number with the tag the C# side reads as a bigint. */
   const enum Tags {
-    JS_TAG_FIRST = -11, /* first negative tag */
-    JS_TAG_BIG_DECIMAL = -11,
-    JS_TAG_BIG_INT = -10,
-    JS_TAG_BIG_FLOAT = -9,
+    JS_TAG_FIRST = -9, /* first negative tag */
+    JS_TAG_BIG_INT = -9,
     JS_TAG_SYMBOL = -8,
     JS_TAG_STRING = -7,
+    JS_TAG_STRING_ROPE = -6, /* lazily concatenated string; never produced here */
     JS_TAG_MODULE = -3, /* used internally */
     JS_TAG_FUNCTION_BYTECODE = -2, /* used internally */
     JS_TAG_OBJECT = -1,
@@ -155,8 +161,11 @@ declare global {
     JS_TAG_BOOL = 1,
     JS_TAG_NULL = 2,
     JS_TAG_UNDEFINED = 3,
+    JS_TAG_UNINITIALIZED = 4,
+    JS_TAG_CATCH_OFFSET = 5,
     JS_TAG_EXCEPTION = 6,
-    JS_TAG_FLOAT64 = 7,
+    JS_TAG_SHORT_BIG_INT = 7,
+    JS_TAG_FLOAT64 = 8,
   }
 
   const enum Constants {
@@ -164,11 +173,13 @@ declare global {
     CS_JSB_VERSION = 0xa,
 
     JS_WRITE_OBJ_BYTECODE = 1 << 0, /* allow function/module */
-    JS_WRITE_OBJ_BSWAP = 1 << 1, /* byte swapped output */
+    JS_WRITE_OBJ_BSWAP = 0, /* obsolete in ng, handled transparently */
     JS_WRITE_OBJ_SAB = 1 << 2, /* allow SharedArrayBuffer */
     JS_WRITE_OBJ_REFERENCE = 1 << 3, /* allow object references to encode arbitrary object graph */
+    JS_WRITE_OBJ_STRIP_SOURCE = 1 << 4, /* do not write source code information */
+    JS_WRITE_OBJ_STRIP_DEBUG = 1 << 5, /* do not write debug information */
     JS_READ_OBJ_BYTECODE = 1 << 0, /* allow function/module */
-    JS_READ_OBJ_ROM_DATA = 1 << 1, /* avoid duplicating 'buf' data */
+    JS_READ_OBJ_ROM_DATA = 0, /* obsolete in ng, broken by ICs */
     JS_READ_OBJ_SAB = 1 << 2, /* allow SharedArrayBuffer */
     JS_READ_OBJ_REFERENCE = 1 << 3, /* allow object references */
   }
@@ -181,7 +192,10 @@ declare global {
     JS_EVAL_TYPE_MASK = (3 << 0),
 
     JS_EVAL_FLAG_STRICT = (1 << 3) /* force 'strict' mode */,
-    JS_EVAL_FLAG_STRIP = (1 << 4) /* force 'strip' mode */,
+
+    /* Bit 4 was 'strip' mode in Bellard's. In ng it asks for the module to come back with
+       its dependencies unresolved, for the async loader to fetch them. */
+    JS_EVAL_FLAG_ASYNC_LOAD = (1 << 4),
 
     /* compile but do not run. The result is an object with a
        JS_TAG_FUNCTION_BYTECODE or JS_TAG_MODULE tag. It can be executed
@@ -190,6 +204,9 @@ declare global {
 
     /* don't include the stack frames before this eval in the Error() backtraces */
     JS_EVAL_FLAG_BACKTRACE_BARRIER = (1 << 6),
+
+    /* allow top-level await in a normal script; JS_Eval then returns a promise */
+    JS_EVAL_FLAG_ASYNC = (1 << 7),
   }
 
 

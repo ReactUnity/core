@@ -363,6 +363,25 @@ const UnityJSBPlugin: PluginType = {
       const ctxId = ctx;
       return unityJsbState.contexts[ctxId];
     },
+    /* Resolves a JSValue with no context to resolve it against. ng dropped the JSContext
+       from JS_IsArray and JS_IsError, and references are kept per runtime, so there is
+       nothing left to look one up in. Every live runtime is searched and the one holding
+       that id answers; ambiguity needs two live runtimes, which needs JSWorker, which
+       needs threads WebGL does not have. Primitives carry their value in the JSValue
+       itself, so for those any runtime decodes alike. */
+    getAnyValue: function (val) {
+      const ids = Object.keys(unityJsbState.runtimes);
+      let first: PluginRuntime | undefined;
+
+      for (let i = 0; i < ids.length; i++) {
+        const runtime = unityJsbState.runtimes[ids[i]];
+        if (!runtime || runtime.isDestroyed) continue;
+        if (!first) first = runtime;
+        if (runtime.refs.record[HEAP32[val >> 2]]) return runtime.refs.get(val);
+      }
+
+      return first ? first.refs.get(val) : undefined;
+    },
     HEAP64: function () {
       return new BigInt64Array(HEAPF64.buffer);
     },
@@ -658,17 +677,6 @@ const UnityJSBPlugin: PluginType = {
     runtime.refs.pop(v);
   },
 
-  JSB_FreePayload(ret, ctx, val) {
-    const context = unityJsbState.getContext(ctx);
-    const obj = context.runtime.refs.get(val);
-
-    const payload = context.runtime.refs.getPayload(obj);
-    HEAP32[ret >> 2] = payload.type;
-    HEAP32[(ret >> 2) + 1] = payload.payload;
-
-    context.runtime.refs.clearPayload(obj);
-  },
-
   JSB_DupValue(ptr, ctx, v) {
     const context = unityJsbState.getContext(ctx);
     context.runtime.refs.duplicate(v, ptr);
@@ -692,7 +700,7 @@ const UnityJSBPlugin: PluginType = {
     context.runtime.refs.push(res, ptr);
   },
 
-  JS_GetPropertyInternal(ptr, ctxId, val, prop, receiver, throwRefError) {
+  JS_GetProperty(ptr, ctxId, val, prop) {
     const context = unityJsbState.getContext(ctxId);
     const valObj = context.runtime.refs.get(val);
     const propStr = unityJsbState.atoms.get(prop);
@@ -767,6 +775,7 @@ const UnityJSBPlugin: PluginType = {
     context.runtime.refs.push(res, ptr);
   },
 
+  // Returns 0/-1 in ng rather than nothing; nothing here can fail, so it is always 0.
   JS_SetConstructor(ctx, ctor, proto) {
     const context = unityJsbState.getContext(ctx);
     const ctorVal = context.runtime.refs.get(ctor);
@@ -778,6 +787,8 @@ const UnityJSBPlugin: PluginType = {
     if (ctorPayload.type === BridgeObjectType.TypeRef) {
       context.runtime.refs.setPayload(protoVal, ctorPayload.type, ctorPayload.payload);
     }
+
+    return 0;
   },
 
   JS_SetPrototype(ctx, obj, proto) {
@@ -889,7 +900,10 @@ const UnityJSBPlugin: PluginType = {
     return !!res;
   },
 
-  JS_SetPropertyInternal(ctx, this_obj, prop, val, flags) {
+  // ng's JS_SetProperty is JS_SetPropertyInternal with JS_PROP_THROW, which is the only
+  // flag combination the C# ever passed, so the flags argument is gone with the wrapper.
+  // -1 on exception, otherwise true/false.
+  JS_SetProperty(ctx, this_obj, prop, val) {
     const context = unityJsbState.getContext(ctx);
     const runtime = context.runtime;
 
@@ -900,20 +914,14 @@ const UnityJSBPlugin: PluginType = {
     // SetProperty frees the value automatically
     runtime.refs.pop(val);
 
-    const shouldThrow = !!(flags & JSPropFlags.JS_PROP_THROW) || !!(flags & JSPropFlags.JS_PROP_THROW_STRICT);
-
     try {
       thisVal[propVal] = valVal;
-      return true;
+      return 1;
     } catch (err) {
       context.lastException = err;
-      if (shouldThrow) {
-        console.error(err);
-        return -1;
-      }
+      console.error(err);
+      return -1;
     }
-
-    return false;
   },
 
   JS_SetPropertyUint32(ctx, this_obj, idx, val) {
@@ -1014,16 +1022,8 @@ const UnityJSBPlugin: PluginType = {
     return unityJsbState.atoms.push('Error');
   },
 
-  JSB_ATOM_fileName() {
-    return unityJsbState.atoms.push('fileName');
-  },
-
   JSB_ATOM_length() {
     return unityJsbState.atoms.push('length');
-  },
-
-  JSB_ATOM_lineNumber() {
-    return unityJsbState.atoms.push('lineNumber');
   },
 
   JSB_ATOM_message() {
@@ -1062,11 +1062,11 @@ const UnityJSBPlugin: PluginType = {
 
   // #region Is
 
-  JS_IsArray(ctx, val) {
-    const context = unityJsbState.getContext(ctx);
-    const valVal = context.runtime.refs.get(val);
-    const res = Array.isArray(valVal);
-    return !!res;
+  // No JSContext, and no -1: ng returns a plain bool, having moved the proxy case that
+  // needed the tri-state behind JS_IsProxy.
+  JS_IsArray(val) {
+    const valVal = unityJsbState.getAnyValue(val);
+    return !!Array.isArray(valVal);
   },
 
   JS_IsConstructor(ctx, val) {
@@ -1076,11 +1076,9 @@ const UnityJSBPlugin: PluginType = {
     return !!res;
   },
 
-  JS_IsError(ctx, val) {
-    const context = unityJsbState.getContext(ctx);
-    const valVal = context.runtime.refs.get(val);
-    const res = valVal instanceof Error;
-    return !!res;
+  JS_IsError(val) {
+    const valVal = unityJsbState.getAnyValue(val);
+    return !!(valVal instanceof Error);
   },
 
   JS_IsFunction(ctx, val) {
@@ -1141,12 +1139,6 @@ const UnityJSBPlugin: PluginType = {
   JS_NewObject(ptr, ctx) {
     const context = unityJsbState.getContext(ctx);
     const res = {};
-    context.runtime.refs.push(res, ptr);
-  },
-
-  JS_NewString(ptr, ctx, str) {
-    const context = unityJsbState.getContext(ctx);
-    const res = unityJsbState.stringify(str);
     context.runtime.refs.push(res, ptr);
   },
 
@@ -1299,19 +1291,6 @@ const UnityJSBPlugin: PluginType = {
     context.runtime.refs.push(res, ret);
   },
 
-  JSB_GetBridgeClassID() {
-    // TODO: I have no idea
-    return 0;
-  },
-
-  jsb_construct_bridge_object(ret, ctx, ctor, object_id) {
-    const context = unityJsbState.getContext(ctx);
-    const ctorVal = context.runtime.refs.get(ctor);
-    const res = Reflect.construct(ctorVal, []);
-    context.runtime.refs.push(res, ret);
-    context.runtime.refs.setPayload(res, BridgeObjectType.ObjectRef, object_id);
-  },
-
   jsb_crossbind_constructor(ret, ctx, new_target) {
     const context = unityJsbState.getContext(ctx);
     const target = context.runtime.refs.get(new_target);
@@ -1382,21 +1361,6 @@ const UnityJSBPlugin: PluginType = {
     return buffer as IntPtr;
   },
 
-  jsb_set_floats(ctx, val, n, v0) {
-    const context = unityJsbState.getContext(ctx);
-    const obj = context.runtime.refs.get(val) as BridgeStruct;
-
-    const count = n / Sizes.Single;
-    if (!Array.isArray(obj.$$values) || count >= obj.$$values.length) return false;
-
-    for (let index = 0; index < count; index++) {
-      const val = HEAPF32[(v0 >> 2) + index];
-      obj.$$values[index] = val;
-    }
-
-    return true;
-  },
-
   jsb_set_bytes(ctx, val, n, v0) {
     const context = unityJsbState.getContext(ctx);
     const obj = context.runtime.refs.get(val) as BridgeStruct;
@@ -1408,117 +1372,6 @@ const UnityJSBPlugin: PluginType = {
       const val = HEAP32[(v0 >> 2) + index];
       obj.$$values[index] = val;
     }
-
-    return true;
-  },
-
-  jsb_set_byte_4(ctx, val, v0, v1, v2, v3) {
-    const context = unityJsbState.getContext(ctx);
-    const obj = context.runtime.refs.get(val) as BridgeStruct;
-
-    const count = 4;
-    if (!Array.isArray(obj.$$values) || count >= obj.$$values.length) return false;
-
-    obj.$$values[0] = HEAP32[(v0 >> 2)];
-    obj.$$values[1] = HEAP32[(v1 >> 2)];
-    obj.$$values[2] = HEAP32[(v2 >> 2)];
-    obj.$$values[3] = HEAP32[(v3 >> 2)];
-
-    return true;
-  },
-
-  jsb_set_float_2(ctx, val, v0, v1) {
-    const context = unityJsbState.getContext(ctx);
-    const obj = context.runtime.refs.get(val) as BridgeStruct;
-
-    const count = 2;
-    if (!Array.isArray(obj.$$values) || count >= obj.$$values.length) return false;
-
-    obj.$$values[0] = HEAPF32[(v0 >> 2)];
-    obj.$$values[1] = HEAPF32[(v1 >> 2)];
-
-    return true;
-  },
-
-  jsb_set_float_3(ctx, val, v0, v1, v2) {
-    const context = unityJsbState.getContext(ctx);
-    const obj = context.runtime.refs.get(val) as BridgeStruct;
-
-    const count = 3;
-    if (!Array.isArray(obj.$$values) || count >= obj.$$values.length) return false;
-
-    obj.$$values[0] = HEAPF32[(v0 >> 2)];
-    obj.$$values[1] = HEAPF32[(v1 >> 2)];
-    obj.$$values[2] = HEAPF32[(v2 >> 2)];
-
-    return true;
-  },
-
-  jsb_set_float_4(ctx, val, v0, v1, v2, v3) {
-    const context = unityJsbState.getContext(ctx);
-    const obj = context.runtime.refs.get(val) as BridgeStruct;
-
-    const count = 4;
-    if (!Array.isArray(obj.$$values) || count >= obj.$$values.length) return false;
-
-    obj.$$values[0] = HEAPF32[(v0 >> 2)];
-    obj.$$values[1] = HEAPF32[(v1 >> 2)];
-    obj.$$values[2] = HEAPF32[(v2 >> 2)];
-    obj.$$values[3] = HEAPF32[(v3 >> 2)];
-
-    return true;
-  },
-
-  jsb_set_int_1(ctx, val, v0) {
-    const context = unityJsbState.getContext(ctx);
-    const obj = context.runtime.refs.get(val) as BridgeStruct;
-
-    const count = 1;
-    if (!Array.isArray(obj.$$values) || count >= obj.$$values.length) return false;
-
-    obj.$$values[0] = HEAP32[(v0 >> 2)];
-
-    return true;
-  },
-
-  jsb_set_int_2(ctx, val, v0, v1) {
-    const context = unityJsbState.getContext(ctx);
-    const obj = context.runtime.refs.get(val) as BridgeStruct;
-
-    const count = 2;
-    if (!Array.isArray(obj.$$values) || count >= obj.$$values.length) return false;
-
-    obj.$$values[0] = HEAP32[(v0 >> 2)];
-    obj.$$values[1] = HEAP32[(v1 >> 2)];
-
-    return true;
-  },
-
-  jsb_set_int_3(ctx, val, v0, v1, v2) {
-    const context = unityJsbState.getContext(ctx);
-    const obj = context.runtime.refs.get(val) as BridgeStruct;
-
-    const count = 3;
-    if (!Array.isArray(obj.$$values) || count >= obj.$$values.length) return false;
-
-    obj.$$values[0] = HEAP32[(v0 >> 2)];
-    obj.$$values[1] = HEAP32[(v1 >> 2)];
-    obj.$$values[2] = HEAP32[(v2 >> 2)];
-
-    return true;
-  },
-
-  jsb_set_int_4(ctx, val, v0, v1, v2, v3) {
-    const context = unityJsbState.getContext(ctx);
-    const obj = context.runtime.refs.get(val) as BridgeStruct;
-
-    const count = 4;
-    if (!Array.isArray(obj.$$values) || count >= obj.$$values.length) return false;
-
-    obj.$$values[0] = HEAP32[(v0 >> 2)];
-    obj.$$values[1] = HEAP32[(v1 >> 2)];
-    obj.$$values[2] = HEAP32[(v2 >> 2)];
-    obj.$$values[3] = HEAP32[(v3 >> 2)];
 
     return true;
   },
@@ -1538,132 +1391,6 @@ const UnityJSBPlugin: PluginType = {
       const val = obj.$$values[index];
       HEAP32[(v0 >> 2) + index] = val;
     }
-
-    return true;
-  },
-
-  jsb_get_floats(ctx, val, n, v0) {
-    const context = unityJsbState.getContext(ctx);
-    const obj = context.runtime.refs.get(val) as BridgeStruct;
-
-    const count = n / Sizes.Single;
-    if (!Array.isArray(obj.$$values) || count >= obj.$$values.length) return false;
-
-    for (let index = 0; index < count; index++) {
-      const val = obj.$$values[index];
-      HEAPF32[(v0 >> 2) + index] = val;
-    }
-
-    return true;
-  },
-
-  jsb_get_byte_4(ctx, val, v0, v1, v2, v3) {
-    const context = unityJsbState.getContext(ctx);
-    const obj = context.runtime.refs.get(val) as BridgeStruct;
-
-    const count = 4;
-    if (!Array.isArray(obj.$$values) || count >= obj.$$values.length) return false;
-
-    HEAP32[(v0 >> 2)] = obj.$$values[0];
-    HEAP32[(v1 >> 2)] = obj.$$values[1];
-    HEAP32[(v2 >> 2)] = obj.$$values[2];
-    HEAP32[(v3 >> 2)] = obj.$$values[3];
-
-    return true;
-  },
-
-  jsb_get_float_2(ctx, val, v0, v1) {
-    const context = unityJsbState.getContext(ctx);
-    const obj = context.runtime.refs.get(val) as BridgeStruct;
-
-    const count = 2;
-    if (!Array.isArray(obj.$$values) || count >= obj.$$values.length) return false;
-
-    HEAPF32[(v0 >> 2)] = obj.$$values[0];
-    HEAPF32[(v1 >> 2)] = obj.$$values[1];
-
-    return true;
-  },
-
-  jsb_get_float_3(ctx, val, v0, v1, v2) {
-    const context = unityJsbState.getContext(ctx);
-    const obj = context.runtime.refs.get(val) as BridgeStruct;
-
-    const count = 3;
-    if (!Array.isArray(obj.$$values) || count >= obj.$$values.length) return false;
-
-    HEAPF32[(v0 >> 2)] = obj.$$values[0];
-    HEAPF32[(v1 >> 2)] = obj.$$values[1];
-    HEAPF32[(v2 >> 2)] = obj.$$values[2];
-
-    return true;
-  },
-
-  jsb_get_float_4(ctx, val, v0, v1, v2, v3) {
-    const context = unityJsbState.getContext(ctx);
-    const obj = context.runtime.refs.get(val) as BridgeStruct;
-
-    const count = 4;
-    if (!Array.isArray(obj.$$values) || count >= obj.$$values.length) return false;
-
-    HEAPF32[(v0 >> 2)] = obj.$$values[0];
-    HEAPF32[(v1 >> 2)] = obj.$$values[1];
-    HEAPF32[(v2 >> 2)] = obj.$$values[2];
-    HEAPF32[(v3 >> 2)] = obj.$$values[3];
-
-    return true;
-  },
-
-  jsb_get_int_1(ctx, val, v0) {
-    const context = unityJsbState.getContext(ctx);
-    const obj = context.runtime.refs.get(val) as BridgeStruct;
-
-    const count = 1;
-    if (!Array.isArray(obj.$$values) || count >= obj.$$values.length) return false;
-
-    HEAP32[(v0 >> 2)] = obj.$$values[0];
-
-    return true;
-  },
-
-  jsb_get_int_2(ctx, val, v0, v1) {
-    const context = unityJsbState.getContext(ctx);
-    const obj = context.runtime.refs.get(val) as BridgeStruct;
-
-    const count = 2;
-    if (!Array.isArray(obj.$$values) || count >= obj.$$values.length) return false;
-
-    HEAP32[(v0 >> 2)] = obj.$$values[0];
-    HEAP32[(v1 >> 2)] = obj.$$values[1];
-
-    return true;
-  },
-
-  jsb_get_int_3(ctx, val, v0, v1, v2) {
-    const context = unityJsbState.getContext(ctx);
-    const obj = context.runtime.refs.get(val) as BridgeStruct;
-
-    const count = 3;
-    if (!Array.isArray(obj.$$values) || count >= obj.$$values.length) return false;
-
-    HEAP32[(v0 >> 2)] = obj.$$values[0];
-    HEAP32[(v1 >> 2)] = obj.$$values[1];
-    HEAP32[(v2 >> 2)] = obj.$$values[2];
-
-    return true;
-  },
-
-  jsb_get_int_4(ctx, val, v0, v1, v2, v3) {
-    const context = unityJsbState.getContext(ctx);
-    const obj = context.runtime.refs.get(val) as BridgeStruct;
-
-    const count = 4;
-    if (!Array.isArray(obj.$$values) || count >= obj.$$values.length) return false;
-
-    HEAP32[(v0 >> 2)] = obj.$$values[0];
-    HEAP32[(v1 >> 2)] = obj.$$values[1];
-    HEAP32[(v2 >> 2)] = obj.$$values[2];
-    HEAP32[(v3 >> 2)] = obj.$$values[3];
 
     return true;
   },
@@ -1785,6 +1512,46 @@ const UnityJSBPlugin: PluginType = {
     // TODO:
   },
 
+  /* The asynchronous module loader. QuickJSEngine installs one on every platform, so
+     these have to exist or the Emscripten link fails - but nothing drives them here.
+     ES module syntax does not reach this backend at all: `evaluate` is an `eval` inside
+     the sandbox iframe, and `eval` cannot run `import` or `export`. So ModuleResolution
+     is not among the WebGL capabilities, ScriptContext keeps pointing dynamic import at
+     its own host loader, and EvalModuleAsync is never called.
+
+     Making it real means giving the iframe a module realm - a blob url imported from a
+     `<script type="module">` - and reconciling that with the globals proxy the whole
+     backend is built on, which a module cannot see. That is its own piece of work. */
+  JS_SetModuleLoaderFuncAsync(rt, module_normalize, module_loader, module_check_attrs, opaque) {
+    // Recorded nowhere on purpose: nothing in this backend can ask for a module.
+  },
+
+  JS_SetModuleMetaFunc(rt, func, opaque) {
+    // import.meta is unreachable without module scope, so this is never called back.
+  },
+
+  JS_FulfillModuleLoad(ctx, handle, source, source_len) {
+    console.error('Module loading is not supported in WebGL Backend');
+    return -1;
+  },
+
+  JS_RejectModuleLoad(ctx, handle, error) {
+    return 0;
+  },
+
+  JS_EvalModuleAsync(ret, ctx, input, input_len, filename) {
+    const context = unityJsbState.getContext(ctx);
+    const err = new Error('ES modules are not supported in WebGL Backend');
+    context.lastException = err;
+    console.error(err);
+    context.runtime.refs.push(err, ret);
+  },
+
+  JS_GetModuleName(ctx, m) {
+    // JS_ATOM_NULL. Only the import.meta hook asks, and it never runs here.
+    return 0;
+  },
+
   JS_GetImportMeta(ret, ctx, m) {
     // TODO:
     return 0;
@@ -1800,7 +1567,7 @@ const UnityJSBPlugin: PluginType = {
     return false;
   },
 
-  JS_IsJobPending(rt, pctx) {
+  JS_IsJobPending(rt) {
     // Automatically handled by browsers
     return false;
   },
