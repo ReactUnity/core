@@ -4,29 +4,11 @@
  * Vendored from unity-jsb (jsb_build/quickjs/unity_qjs.c), MIT, Copyright (c) 2019
  * huliangjie, and ported to quickjs-ng. See ../README.md for every change and why.
  */
-/*
-vim /etc/apt/sources.list
-deb http://us.archive.ubuntu.com/ubuntu trusty main universe
-sudo apt-get update
-sudo apt-get install mingw32
-    sudo apt-get install mingw-w64
-./configure --host=i686-w64-mingw32
-    ./configure --host=x86_64-w64-mingw32
-make
-*/
 
-#ifndef UNITY_WEBGL
 #include "quickjs.h"
-#endif
 
 #ifndef JS_EXPORT
 #define JS_EXPORT
-#endif
-
-#ifndef EMSCRIPTEN
-#ifndef CONFIG_ATOMICS
-#define CONFIG_ATOMICS
-#endif
 #endif
 
 #define byte unsigned char
@@ -35,59 +17,40 @@ make
 #ifndef JS_BOOL
 #define JS_BOOL int
 #endif
-// #define JS_HIDDEN_PROP(s) ("\xFF" s)
 
-#ifndef UNITY_WEBGL
-
-#ifndef FALSE
 enum
 {
     FALSE = 0,
     TRUE = 1,
 };
-#endif // !FALSE
 
+/* Byte-identical to the enum quickjs.c builds from the same header, which is what
+   makes the accessors below return ids the engine agrees with. */
 enum
 {
     __JS_ATOM_NULL = JS_ATOM_NULL,
 #define DEF(name, str) JS_ATOM_##name,
-#define SSR
 #include "quickjs-atom.h"
 #undef DEF
     JS_ATOM_END,
 };
 
 #define DEF(name, str) \
-    JS_EXPORT JSAtom JSB_ATOM_##name() { return JS_ATOM_##name; }
+    JS_EXPORT JSAtom JSB_ATOM_##name(void) { return JS_ATOM_##name; }
 #include "quickjs-atom.h"
 #undef DEF
 
 /* quickjs-ng removed operator overloading, so these two atoms do not exist.
    Returning 0 is not a placeholder: JSAtom.IsValid is `_value != 0`, and every
    C# call site is already guarded by it or by IsOperatorOverloadingSupported. */
-JS_EXPORT JSAtom JSB_ATOM_Operators() { return JS_ATOM_NULL; }
-JS_EXPORT JSAtom JSB_ATOM_Symbol_operatorSet() { return JS_ATOM_NULL; }
+JS_EXPORT JSAtom JSB_ATOM_Operators(void) { return JS_ATOM_NULL; }
+JS_EXPORT JSAtom JSB_ATOM_Symbol_operatorSet(void) { return JS_ATOM_NULL; }
 
-#endif // !UNITY_WEBGL
-
-static JSClassID js_class_id_begin = 0;
 static JSClassID js_bridge_class_id = 0;
-
-// quickjs 内置 class id 之后的第一个可用 id
-JS_EXPORT JSClassID JSB_GetClassID()
-{
-    return js_class_id_begin;
-}
-
-JS_EXPORT JSClassID JSB_GetBridgeClassID()
-{
-    return js_bridge_class_id;
-}
 
 #define JS_BO_TYPE 1
 #define JS_BO_OBJECT 2
 #define JS_BO_VALUE 3
-// #define JS_BO_STRICT_OBJECT 4
 
 typedef struct JSPayloadHeader
 {
@@ -164,12 +127,6 @@ JS_EXPORT JSValue JSB_DupValue(JSContext *ctx, JSValueConst v)
     return JS_DupValue(ctx, v);
 }
 
-JS_EXPORT JSValue JSB_Eval(JSContext *ctx, const char *input, int input_len,
-                 const char *filename, int eval_flags)
-{
-    return JS_Eval(ctx, input, input_len, filename, eval_flags);
-}
-
 JS_EXPORT JSValue JSB_NewCFunction(JSContext *ctx, JSCFunction *func, JSAtom atom, int length, JSCFunctionEnum cproto, int magic)
 {
     const char *name = JS_AtomToCString(ctx, atom);
@@ -201,21 +158,7 @@ typedef struct JSBRuntimePayload {
     JSGCObjectFinalizer* finalizer;
 } JSBRuntimePayload;
 
-// 释放数据, 返回头信息副本
-JS_EXPORT JSPayloadHeader JSB_FreePayload(JSContext *ctx, JSValue val)
-{
-    void *sv = JS_GetOpaque(val, js_bridge_class_id);
-    if (sv)
-    {
-        JSPayloadHeader header = *(JSPayloadHeader *)sv;
-        JS_SetOpaque(val, NULL);
-        js_free(ctx, sv);
-        return header;
-    }
-    return _null_payload;
-}
-
-static void _JSBClass_Finalizer(JSRuntime* rt, JSValue obj) 
+static void _JSBClass_Finalizer(JSRuntime* rt, JSValue obj)
 {
     void *sv = JS_GetOpaque(obj, js_bridge_class_id);
     if (sv)
@@ -234,11 +177,11 @@ static void _JSBClass_Finalizer(JSRuntime* rt, JSValue obj)
 JS_EXPORT JSRuntime* JSB_NewRuntime(JSGCObjectFinalizer* finalizer)
 {
     JSRuntime* rt = JS_NewRuntime();
-    JSBRuntimePayload* payload = js_malloc_rt(rt, sizeof(JSBRuntimePayload));
-    payload->opaque = 0;
-    payload->finalizer = finalizer;
-    JS_SetRuntimeOpaque(rt, payload);
-    
+    if (!rt)
+    {
+        return NULL;
+    }
+
     JSClassDef cls_def;
 
     cls_def.class_name = "CSharpClass";
@@ -247,10 +190,28 @@ JS_EXPORT JSRuntime* JSB_NewRuntime(JSGCObjectFinalizer* finalizer)
     cls_def.gc_mark = NULL;
     cls_def.call = NULL;
 
+    /* ng allocates class ids out of the runtime, so this must run per runtime and
+       through a zeroed local -- a shared static would hand back an id it never
+       reserved here. Registered before the payload so neither failure path has
+       anything to unwind. */
     JSClassID bridge_class_id = 0;
     JS_NewClassID(rt, &bridge_class_id);
+    if (JS_NewClass(rt, bridge_class_id, &cls_def) < 0)
+    {
+        JS_FreeRuntime(rt);
+        return NULL;
+    }
     js_bridge_class_id = bridge_class_id;
-    JS_NewClass(rt, js_bridge_class_id, &cls_def);
+
+    JSBRuntimePayload* payload = js_malloc_rt(rt, sizeof(JSBRuntimePayload));
+    if (!payload)
+    {
+        JS_FreeRuntime(rt);
+        return NULL;
+    }
+    payload->opaque = 0;
+    payload->finalizer = finalizer;
+    JS_SetRuntimeOpaque(rt, payload);
 
     return rt;
 }
@@ -277,18 +238,15 @@ JS_EXPORT void* JSB_GetRuntimeOpaque(JSRuntime* rt)
 JS_EXPORT void JSB_SetRuntimeOpaque(JSRuntime* rt, void* opaque)
 {
     JSBRuntimePayload* payload = (JSBRuntimePayload*)JS_GetRuntimeOpaque(rt);
-    if (payload) 
+    if (payload)
     {
         payload->opaque = opaque;
     }
 }
 
-#define JSB_SetOpaque(ctx, obj, opaque) JS_SetOpaque((obj), (opaque))
-#define JSB_GetOpaque(ctx, val, class_id) JS_GetOpaque((val), (class_id))
-
-JS_EXPORT int JSB_Init()
+JS_EXPORT int JSB_Init(void)
 {
-    return 0xa; // version tag for unity_qjs.c
+    return 0xa; // version tag, checked against JSApi.CS_JSB_VERSION
 }
 
 #include "unity_ext.c"

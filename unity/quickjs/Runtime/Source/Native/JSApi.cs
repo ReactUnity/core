@@ -277,9 +277,6 @@ namespace QuickJS.Native
         public static extern JSValue JSB_NewEmptyString(JSContext ctx);
 
         [DllImport(JSBDLL, CallingConvention = CallingConvention.Cdecl)]
-        public static extern unsafe JSValue JS_NewString(JSContext ctx, byte* str);
-
-        [DllImport(JSBDLL, CallingConvention = CallingConvention.Cdecl)]
         public static extern unsafe JSValue JS_NewStringLen(JSContext ctx, byte* buf, size_t buf_len);
 
         [DllImport(JSBDLL, CallingConvention = CallingConvention.Cdecl)]
