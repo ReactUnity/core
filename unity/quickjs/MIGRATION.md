@@ -14,34 +14,39 @@ and BigFloat outright.
 Both upstreams are dormant. The immediate driver is **asynchronous module loading** — the spec's
 `HostLoadImportedModule`, which lets a host fetch modules over a network without blocking. It is
 implemented and tested on <https://github.com/gkurt/quickjs> branch `async-module-loading`
-(28 assertions, clean under ASan and `QJS_ENABLE_GC_STRESS`), and it cannot reach Unity until this
+(36 assertions, clean under ASan and `QJS_ENABLE_GC_STRESS`), and it cannot reach Unity until this
 migration lands. Bellard-era QuickJS has no async loader and never will.
 
 A proven C# binding for the new API — P/Invoke declarations, UTF-8 marshalling, delegate rooting,
 `GCHandle` handling, and a `QuickJSModuleLoader` shaped like `JintModuleLoader` — lives outside this
 repo at `S:/Work/Unity/quickjs-ng-csharp` (23 assertions passing against a quickjs-ng DLL on
-.NET 8). Use it as the reference in phase 3.
+.NET 8). It was the reference for phases 3 and 4, and `AsyncModuleLoader` is its shape.
 
 ## Measured surface
 
-**99 live entry points** bound to `JSBDLL`, re-measured after phase 3. Liveness is evaluated with
+**104 live entry points** bound to `JSBDLL`, re-measured after phase 4. Liveness is evaluated with
 Unity's real define set, so a declaration inside a dead `#if` does not count:
 
 | Group | Live | Provided by the ng build |
 |---|---:|---|
-| `JS_*` — real QuickJS API | 60 | all exported by ng |
+| `JS_*` — real QuickJS API | 66 | all exported by ng |
 | `JSB_*` / `jsb_*` — unity-jsb C shim | 27 | **all 27** — none exist in ng, so each one is ported in [native/quickjs/src](../../native/quickjs/src) |
-| `JSB_ATOM_*` | 12 | all generated from ng's `quickjs-atom.h` |
+| `JSB_ATOM_*` | 11 | all generated from ng's `quickjs-atom.h` |
 | `js_*` — allocator | 2 | `js_malloc` and `js_free`, both exported by ng |
 
-Nothing is unaccounted for any more: `check-exports.py` reports 99 of 99 satisfied with no stale
-export, and `check-signatures.py` reports every one of those declarations matching its prototype in
+Nothing is unaccounted for: `check-exports.py` reports 104 of 104 satisfied with no stale export,
+and `check-signatures.py` reports all 66 `JS_*` declarations matching their prototypes in
 `quickjs.h`. Both exit 0.
 
-104 became 99 by subtraction, not by adding exports. Phase 3 deleted seven declarations — the four
-atoms ng does not have, `JS_GetPropertyInternal`, `JS_SetPropertyInternal` and
-`JS_AddIntrinsicOperators` — and added two, `JS_GetProperty` and `JS_SetProperty`, which ng exports
-itself.
+The count has moved twice by subtraction and once by addition. Phase 3 deleted seven declarations —
+the four atoms ng does not have, `JS_GetPropertyInternal`, `JS_SetPropertyInternal` and
+`JS_AddIntrinsicOperators` — and added `JS_GetProperty` and `JS_SetProperty`, which ng exports
+itself, for 99. Removing operator overloading took `JSB_ATOM_Function` with it, for 98. Phase 4
+added the six the async loader needs: `JS_SetModuleLoaderFuncAsync`, `JS_SetModuleMetaFunc`,
+`JS_FulfillModuleLoad`, `JS_RejectModuleLoad`, `JS_EvalModuleAsync` and `JS_GetModuleName`.
+
+A WebGL build binds 105: the same set plus `JS_SetBaseUrl`, which is a real P/Invoke only there.
+That is the number [check-jslib.py](../../native/quickjs/check-jslib.py) holds the jslib to.
 
 The shim is **27 functions, not the 25 this document used to claim.** The old count went by C#
 member name and so missed three entry points reached through `EntryPoint` aliases on declarations
@@ -56,21 +61,19 @@ the jslib; and `JS_NewString`, the one name this plan expected to need an inline
 have no callers anywhere and was deleted instead. Nothing in the QuickJS path touches
 BigFloat/BigDecimal.
 
-## The four atoms ng does not have — resolved in phase 3
+## The four atoms ng does not have — resolved
 
 `fileName`, `lineNumber`, `Operators`, `Symbol_operatorSet` are absent from ng's
 `quickjs-atom.h`. They split cleanly into a free case and a real one:
 
-- **`Operators` / `Symbol_operatorSet`** — dropped with operator overloading. Free: every
-  call site already guarded on `JS_ATOM_Operators.IsValid` or
-  `JSApi.IsOperatorOverloadingSupported` (`ScriptContext.cs:71`, `OperatorDecl.cs:110`,
-  `TypeBindingInfo.cs:899`). Phase 2 stubbed the accessors; phase 3 made
-  `IsOperatorOverloadingSupported` permanently `false`, which took both atoms and
-  `JS_AddIntrinsicOperators` off the P/Invoke surface and let the stubs go with them. That is a
-  capability drop, and a bounded one: the only consumers are two checks in `TypeBindingInfo`, so
-  what is lost is generated bindings emitting operator overloads for C# types — a codegen feature,
-  on a path ReactUnity does not use and whose deletion is already an open question. Scripts that
-  gate on `jsb.isOperatorOverloadingSupported` still get a correct answer, now `false`.
+- **`Operators` / `Symbol_operatorSet`** — dropped with operator overloading, and now so is
+  everything that named them. Phase 2 stubbed the accessors, phase 3 made
+  `IsOperatorOverloadingSupported` permanently `false` and took both atoms and
+  `JS_AddIntrinsicOperators` off the P/Invoke surface, and phase 4 deleted the machinery behind the
+  guard: `OperatorDecl`, `TypeRegister`'s six `RegisterOperator` overloads, `ClassDecl`'s three
+  `Add*Operator` methods, `ScriptContext`'s `Operators.create` lookup, `OperatorBindingInfo`, the
+  `op_*` switch in `AddMethod`, and `CodeGenHelper_Operator`. See "Removing operator overloading"
+  below for what that costs.
 - **`fileName` / `lineNumber`** — not free, and silent. Bellard's `build_backtrace` defines
   both **on the Error object**; ng only keeps the `Function.prototype` getters
   (`quickjs.c:43389`). `JSContext.FormatException` read them off a caught exception to build the
@@ -148,24 +151,58 @@ a wrong answer, on an input any script can produce.
 
 ## The second implementation
 
-`Plugins/QuickJS/WebGL/jsbplugin.jslib` reimplements 125 functions — 122 overlapping the C#
-P/Invoke surface — on the browser's own engine, compiled from 1,824 lines of TypeScript in ES5-safe
-syntax because Emscripten requires it. There is no QuickJS on WebGL at all, so every signature
-change and every tag value has to land here independently. Budget it as a peer of the C# work.
+`Plugins/QuickJS/WebGL/jsbplugin.jslib` reimplements the whole `JSBDLL` surface on the browser's
+own engine, compiled from `jsbplugin.ts` in ES5-safe syntax because Emscripten requires it. There is
+no QuickJS on WebGL at all, so every signature change and every tag value has to land here
+independently. Budget it as a peer of the C# work.
 
-Phases 2 and 3 deliberately did not touch it, so it now carries entries nothing names —
-`JS_NewString`, `JS_GetPropertyInternal`, `JS_SetPropertyInternal` and `JS_AddIntrinsicOperators`
-among them — to prune when phase 4 brings it back into agreement. Phase 3 also widened what phase 4
-owes it: `JS_IsArray`, `JS_IsError` and `JS_IsJobPending` changed arity, `JS_IsArray` lost its -1,
-the tag constants moved, and `IsString` has to accept a rope. The jslib is hand-written JS against
-the browser engine, so none of that follows automatically and none of it is caught by
-`check-signatures.py`, which only reads the native declarations. It is also why `unity_qjs.c` no
-longer has `UNITY_WEBGL` guards: on WebGL `JSApi.JSBDLL` is `__Internal` and the native library is
-never loaded at all, so those guards protected a configuration that cannot occur (and were
-incoherent anyway — they skipped `quickjs.h` and then used `JSAtom`).
+Phase 4 brought it back into agreement and mechanised the part that can be:
+[check-jslib.py](../../native/quickjs/check-jslib.py) is `check-exports.py` for this backend, and it
+reports 105 of 105 with nothing unused. It found both directions on its first run — which is the
+argument for having written it rather than reading the file:
 
-The async loader is *easier* here: the browser has real promises and real `import()`, so
-`JS_EvalModuleAsync` is a thin `async function` rather than a state machine.
+- **`JS_GetProperty` and `JS_SetProperty` were missing**, so this branch did not link for WebGL at
+  all. Phase 3 replaced the two `*Internal` wrappers with ng's own exports and the jslib never grew
+  them: an undefined symbol on the first property read, which is every property read.
+- **26 entries were named by nothing**: the 18 `jsb_get_*`/`jsb_set_*` struct accessors phase 1
+  deleted, both `*Internal` functions, `JS_NewString`, `JSB_ATOM_fileName`, `JSB_ATOM_lineNumber`
+  and three bridge functions.
+
+Liveness has to be re-evaluated with a WebGL define set rather than the Editor one, and that is not
+cosmetic: `JS_SetBaseUrl` is a real P/Invoke exactly where the jslib is, so an Editor-define reading
+reports it as unused. Sabotaging that line is one of the three checks the script was shown to catch.
+
+What the check cannot see is signatures — there is no header to compare against — so those were
+read: the tag block, the `JS_WRITE_OBJ`/`JS_READ_OBJ` flags, `JSEvalFlags`, `JSPropFlags`, and the
+arities of `JS_IsArray`, `JS_IsError`, `JS_IsJobPending`, `JS_SetProperty` and `JS_SetConstructor`.
+Two things are worth knowing before touching it again:
+
+- **Widths do not matter here and arities do.** wasm passes a C `bool` as an `i32`, so nothing like
+  phase 3's `is_handled` exists on this side. An arity change is the whole risk, and it is silent:
+  `JS_IsArray(ctx, val)` against a caller passing one argument reads `val` out of the `ctx` slot.
+- **ng dropped the `JSContext` from `JS_IsArray` and `JS_IsError`, and references are per runtime**,
+  so there is nothing left to resolve a `JSValue` against. `unityJsbState.getAnyValue` searches the
+  live runtimes; two of them would be ambiguous, which needs `JSWorker`, which needs threads WebGL
+  does not have.
+
+`unity_qjs.c` no longer has `UNITY_WEBGL` guards for the same underlying reason: on WebGL
+`JSApi.JSBDLL` is `__Internal` and the native library is never loaded, so those guards protected a
+configuration that cannot occur (and were incoherent anyway — they skipped `quickjs.h` and then used
+`JSAtom`).
+
+**The async loader is not easier here, and this document had that wrong.** The claim was that the
+browser's real promises and real `import()` make `JS_EvalModuleAsync` a thin `async function`. What
+that missed is that this backend has no module scope to run one in: `context.evaluate` is an `eval`
+inside a sandbox iframe, wrapped in `with (globals)` so the bundle sees ReactUnity's globals, and
+`eval` cannot run `import` or `export` at all. ES module syntax has therefore never worked on WebGL
+— phase 4 did not change that either way. Making it work means giving the iframe a module realm (a
+blob url imported from a `<script type="module">`) and reconciling that with a globals proxy a
+module cannot see, which is its own piece of work.
+
+So WebGL keeps the host import hook: `EngineCapabilities.ModuleResolution` is claimed everywhere
+*except* there, `ModuleCompat.RewriteDynamicImports` stays in play for that one target, and the six
+async entry points exist in the jslib because the Emscripten link needs them, each returning a clear
+failure rather than pretending.
 
 ## Phases
 
@@ -229,11 +266,105 @@ AOT: managed stripping against the `[Preserve]` set, and reverse-P/Invoke marsha
 delegates. Nothing in phase 3 added a JS-reachable entry point — it removed seven — so no new
 stripping surface was introduced, but that is an argument, not a test.
 
-**Phase 4 — mirror in the jslib, then wire the async loader.** Bring `jsbplugin.ts` into agreement,
-then install `JS_SetModuleLoaderFuncAsync`, port `QuickJSModuleLoader` onto
-`Dispatcher.StartDeferred` + `UnityWebRequest`, set `EngineCapabilities.ModuleResolution`, and
-retire `ModuleCompat.RewriteDynamicImports` for QuickJS.
+**Phase 4 — mirror in the jslib, then wire the async loader.** Done on desktop. The jslib is back in
+agreement and held there by a check; `AsyncModuleLoader` installs
+`JS_SetModuleLoaderFuncAsync`, `QuickJSModuleLoader` fetches over `Dispatcher.StartDeferred` +
+`UnityWebRequest`, and `EngineCapabilities.ModuleResolution` is claimed everywhere except WebGL.
+
 *Exit: kitchen-sink loads a module graph over HTTP with no blocking frame, on desktop and in WebGL.*
+**Desktop met, WebGL not.** `AStaticImportGraphLoadsAsynchronously` covers the desktop half, and
+covers it better than a kitchen-sink walkthrough would: two hops, the second only discoverable once
+the first arrives, asserting both that nothing has evaluated when `ExecuteScript` returns and that
+the graph completes over the following frames. The first of those is what proves the *asynchronous*
+part — the synchronous loader would have resolved and run the whole graph inline. It also pins
+`import.meta.url` on a fetched module, which is what the relative import below it resolves against.
+PlayMode goes from 689/701 to 690/701: one more test, not one fewer skip. The kitchen-sink
+walkthrough itself is still a manual step nobody has run.
+
+WebGL cannot be met without giving that backend module scope at all — see "The second
+implementation" above — so it keeps the host import hook and `ModuleCompat.RewriteDynamicImports`
+stays alive for it.
+
+One thing phase 4 needed that the fork did not have: **the async loader gave the host no way to set
+`import.meta`.** `JS_FulfillModuleLoad` compiles the source itself and settles the graph internally,
+so unlike the synchronous loaders it never hands out a `JSModuleDef` — and the engine has never
+populated `import.meta.url`, that being host policy. Two tests assert on it for every engine.
+gkurt/quickjs `30ceffe` adds `JS_SetModuleMetaFunc`, ECMA-262's `HostGetImportMetaProperties`,
+called from `js_import_meta` on first read and skipped when the object already exists so the
+synchronous path keeps precedence. It also implements the `JS_LoadModuleAsync` that `quickjs.h`
+named twice without declaring. Both are covered in `async-module-test.c`, and both guards were
+sabotaged to confirm the coverage: without the call both urls read `undefined`, without the
+freshness test the host's own value is overwritten.
+
+## What phase 4 changed
+
+### The module loader
+
+`AsyncModuleLoader` (in the package) owns the three trampolines and the `GCHandle` the engine
+carries as its opaque pointer; `QuickJSModuleLoader` (in core) resolves a specifier against the
+importing module and fetches it with `UnityWebRequest` over `Dispatcher.StartDeferred`. It is
+deliberately the same shape as `JintModuleLoader`, down to `ModuleLoadCompletion`, because the two
+answer the same question and reading them side by side is how a divergence gets noticed.
+
+Four things about it are load-bearing:
+
+- **`Execute` does not await the graph.** `ScriptContext.EvalModuleAsync` returns as soon as the
+  root is compiled and the first requests are out, then `Runtime.ExecutePendingJob()` drains what the
+  graph queued. A module needing nothing from the loader — which is every bundle — therefore still
+  finishes before `Execute` returns, and one waiting on a request finishes over the following
+  `Update()`s. That is the same bargain `JintEngine` strikes, and the same reason a blocking fetch
+  is not an option: the requests need the frames the import would be holding.
+- **A rejected graph is reported once.** `EvalModuleAsync` attaches a rejection handler, which also
+  marks the rejection handled — so this replaces the "unhandled promise rejection" the tracker would
+  otherwise log rather than adding a second line to it. Only a parse error in the root still throws,
+  because that is the one failure that happens before there is a promise.
+- **An exception must not cross back into C.** Every trampoline catches: unwinding through the
+  engine's own frames would leave the load handle unsettled and hang the graph for good. A failure
+  to even start the fetch settles the completion instead.
+- **The delegates are rooted, and the handle is freed after the runtime.** `Marshal
+  .GetFunctionPointerForDelegate` does not keep a delegate alive, and the engine holds the pointer
+  the `GCHandle` backs, so `QuickJSEngine` disposes the loader *after* `Runtime.Shutdown()`.
+
+Two smaller corrections came out of writing it. `JSModuleNormalizeFunc` and `JSModuleLoaderFunc`
+declared their module names as `[MarshalAs(UnmanagedType.LPStr)] string`, which is the ANSI code
+page against a `const char *` the engine encodes as UTF-8 — any module path outside ASCII arrived
+mangled. Both now take `IntPtr` and decode explicitly. And `JS_EvalModuleAsync` replaces the
+compile-then-`_SetImportMeta`-then-`JS_EvalFunction` dance the synchronous path needed, because
+`import.meta` is now filled in by the engine calling back rather than by the host reaching for a
+`JSModuleDef` it no longer has.
+
+### Removing operator overloading
+
+ng removed the engine feature, so phase 3 pinned `IsOperatorOverloadingSupported` to `false` and
+left the machinery behind the guard. Phase 4 deleted it: `OperatorDecl`, six `RegisterOperator`
+overloads with `SubmitOperators` and `GetOperatorDecl`, three `Add*Operator` methods on `ClassDecl`,
+the `Operators.create` lookup in `ScriptContext`, `OperatorBindingInfo`, the `op_*` switch in
+`AddMethod`, `CodeGenHelper_Operator`, and the two places codegen emitted an `AddSelfOperator` call.
+
+What that costs, precisely: **generated bindings can no longer emit operator overloads for C#
+types.** That is a codegen feature on a path ReactUnity does not use, and whose deletion is a
+separate open question — see "The codegen is not separable". `op_*` methods still bind as ordinary
+static methods under those names, which is what they already did with the guard false, so no
+call from script changes. `jsb.isOperatorOverloadingSupported` is no longer defined; it read
+`false` and now reads `undefined`, so anything gating on it takes the same branch.
+
+Two consequences were not obvious from the guard. `TypeBindingInfo.preload` was defined as
+"this type declares operators" and nothing else ever set it, so both call sites now pass `false`;
+`ScriptRuntime.AddTypeReference` keeps the parameter, because generated bindings pass it and eager
+binding is not an operator concept. And `JSB_ATOM_Function` went with `_functionConstructor`, whose
+only reader was `TypeRegister.GetConstructor(typeof(JSFunction))` on the operator path.
+
+### The jslib build was broken
+
+`npx -p typescript tsc`, the command in the jslib's own header, fails outright: TypeScript 7 removed
+every option this tsconfig needs — `target: ES5`, `outFile`, `module: none`, `baseUrl`,
+`moduleResolution: node` — and has no ES5 emit at all, which Emscripten still requires. The
+instructions now pin `typescript@5`. That the pipeline is otherwise intact was checked before
+changing anything: rebuilding the untouched source reproduced the committed jslib byte for byte.
+
+Worth knowing for next time: a TS 7 run does not fail cleanly. It rejected the config, then emitted
+`jsbplugin.js` next to the jslib from the leftover `outDir`, which Unity imported and gave a `.meta`
+file. Check `git status` after touching that directory.
 
 ## What phase 3 changed
 
@@ -395,11 +526,11 @@ path everything actually uses, so nothing downstream is blocked on making that c
   Support (IL2CPP)" module and a batch-mode build entry point in `scripts/unity`.
 - **No sanitizer off desktop.** ASan and GC-stress cover x64 only. Test every new interop behaviour
   on desktop under ASan first; mobile is validation, never discovery.
-- **Two implementations drifting.** C# and the jslib must agree on 122 signatures and every tag, and
-  nothing enforces it — WebGL just misbehaves. `check-signatures.py` closed this for the native side
-  only; the jslib is hand-written JS with no header to check against, and phases 2 and 3 have now
-  moved arities, tags and `IsString` out from under it. Generate both from one description if
-  possible; failing that, a test asserting tags and arities match across backends.
+- **Two implementations drifting.** Half closed. `check-jslib.py` now holds the *names* in
+  agreement in both directions and exits non-zero on either, which is what caught WebGL failing to
+  link at all. Signatures are still unenforced: the jslib has no header to check against, so arity
+  and tag values remain a reading exercise. Generating both from one description is still the real
+  fix; failing that, a test asserting tags and arities match across backends.
 - **The async loader is not upstream yet.** Pin a tagged commit of `gkurt/quickjs`, not a branch, and
   pursue the upstream PR in parallel. Coordinate with quickjs-ng#1522, whose author proposed a
   dynamic-import-only version of the same feature.
@@ -427,9 +558,9 @@ the full suite green at the end (1,029 tests, 0 failures, both before and after)
 - **`BindingManager.Bind()`**, splitting the reflect-binding path out of `Generate(TypeBindingFlags)`
   so it no longer constructs a `CodeGenerator` and walks every type into buffers nobody reads.
 - **Gate 0 for Windows x64** — `native/quickjs` builds `quickjs.dll` from ng plus the ported
-  shim, exporting the four async-loader entry points, and not exporting `JS_NewBigDecimal`. It
-  satisfied 99 of the 105 live P/Invoke names at the time; phase 3 closed the gap from the C# side
-  and it is now 99 of 99.
+  shim, exporting the async-loader entry points and not exporting `JS_NewBigDecimal`. It satisfied
+  99 of the 105 live P/Invoke names at the time; phase 3 closed the gap from the C# side, and after
+  phase 4 it is 104 of 104.
 
 - **Phase 2, the C shim** — 27 functions and 16 atoms ported, 26 uncalled ones deleted, the two
   ng-only defects above fixed, `shim-test` added, and `check-exports.py` taught to diff both
@@ -438,6 +569,13 @@ the full suite green at the end (1,029 tests, 0 failures, both before and after)
   `check-signatures.py` and every mismatch fixed, including two silent bugs the plan did not have;
   the ng DLL installed for Windows x64 and the suite passing on it at the pre-migration baseline.
   The IL2CPP player build the exit criterion also asks for is blocked on a missing Hub module.
+- **Phase 4, the async module loader** — desktop only. `AsyncModuleLoader` +
+  `QuickJSModuleLoader` fetch a graph over HTTP without blocking a frame, `import.meta.url` comes
+  from a hook added to the fork, and the jslib is back in agreement with a check to keep it there.
+  WebGL keeps the host import hook: that backend evaluates through `eval` and has no module scope
+  at all.
+- **Operator overloading, removed** — the machinery phase 3 left behind a permanently false guard.
+  ng has no operator overloading to register.
 - **The plugin directories were gitignored** — `[Xx]64/`/`[Xx]86/` in `unity/quickjs/.gitignore`
   matched `Plugins/QuickJS/x64` and `x86`. Found by being unable to commit the ng DLL; fixed by
   negating those two paths, which the next eleven artifacts need.
