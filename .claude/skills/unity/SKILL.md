@@ -40,7 +40,7 @@ pnpm unity test tests
 pnpm unity test tests --platform EditMode --filter ReactUnity.Tests.StyleTests
 ```
 
-Green as of 2026-08-24 on 6000.5.9f1 is **346/354 EditMode** (8 skipped) and **690/701 PlayMode** (11 skipped), both with zero failures — so a single failure is a real signal, not background noise. **Zero tests is a failure, not a pass**: it means the project failed to load, usually package resolution. The CLI treats it that way; do not read `0 failed` as green without checking the total.
+Green on CI's **6000.1.9f1** is **346/354 EditMode** (8 skipped) and **690/701 PlayMode** (11 skipped), both with zero failures — so on that editor a single failure is a real signal. On the local **6000.5.9f1** the EditMode figure holds but PlayMode has 15 pre-existing failures; see the 6000.5 note below before reading a PlayMode failure as yours. **Zero tests is a failure, not a pass**: it means the project failed to load, usually package resolution. The CLI treats it that way; do not read `0 failed` as green without checking the total.
 
 ## IL2CPP, which no suite above covers
 
@@ -174,7 +174,7 @@ So: `unity` for anything against a live Editor, `pnpm unity` for anything in bat
 
 **The editor version comes from each project's `ProjectSettings/ProjectVersion.txt`** — whichever Editor last opened the project is the one these commands drive. Nothing is pinned in the scripts (a hard-coded version went stale the first time someone upgraded). `UNITY_VERSION=` overrides per run, and only then is that file restored afterwards; `pnpm unity editors` lists what exists.
 
-**`tests/` runs on the 6000.5 line** — an earlier note here said it could not, and that was wrong twice over. Measured 2026-08-24 on **6000.5.9f1** with no `UNITY_VERSION`: EditMode **346/354** (8 skipped), PlayMode **690/701** (11 skipped), zero failures.
+**`tests/` runs on the 6000.5 line, but PlayMode is not green there** — an earlier note here said it could not load at all, and that was wrong; a later one said both suites were green, and that is wrong too. Measured on **6000.5.9f1** with no `UNITY_VERSION`: EditMode **346/354** (8 skipped, zero failures), PlayMode **675/701** with **15 failures** — `ButtonTests` and `InputTests` across all three engines, each a `StackOverflowException` in `BeforeTest`. Verified pre-existing by stashing every local change and re-running, and CI's 6000.1.9f1 passes the same commit. So a PlayMode failure in those two fixtures on 6000.5 is the editor, not your change; confirm anything else against a CI editor.
 
 What the old note got right is that `com.unity.inputsystem` **1.14.2** does not compile there — nine `CS0619`s in its editor assemblies, `GetInstanceID`/`GetAssetPath(int)`/`InstanceIDToObject(int)` after the `EntityId` migration, which produce *zero tests* rather than a red suite. What it got wrong is the conclusion: 1.14.2 was only ever the manifest's **minimum**, and 6000.5 was picking 1.20.0 over it whenever the lockfile let it. Whether a run worked came down to whether the resolver had a reason to fall back to minimums — and adding a package is such a reason, which is how this got diagnosed. So the minimums are now raised to the versions that work on 6000.5 (`inputsystem` 1.20.0, `test-framework.performance` 3.5.0, `testtools.codecoverage` 1.3.0), each of which still declares `unity: 6000.0` or older and so stays resolvable on CI.
 
