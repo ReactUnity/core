@@ -624,9 +624,12 @@ utilities that `TSTypeNaming` and `TypeBindingInfo` need, so those moved to `Bin
   link at all. Signatures are still unenforced: the jslib has no header to check against, so arity
   and tag values remain a reading exercise. Generating both from one description is still the real
   fix; failing that, a test asserting tags and arities match across backends.
-- **The async loader is not upstream yet.** Pin a tagged commit of `gkurt/quickjs`, not a branch, and
-  pursue the upstream PR in parallel. Coordinate with quickjs-ng#1522, whose author proposed a
-  dynamic-import-only version of the same feature.
+- **The async loader is not upstream yet.** Half closed. The pin is now
+  `gkurt/quickjs` **v0.16.2-reactunity.1**, an annotated tag on `30ceffe` describing what the fork
+  adds and why, so the commit cannot be lost to a rebase or GC. The CMakeLists still pins the SHA
+  rather than the tag name, because a tag can be moved and a SHA cannot — the tag is for identity,
+  not for resolution. What remains is the upstream PR: coordinate with quickjs-ng#1522, whose author
+  proposed a dynamic-import-only version of the same feature.
 
 ## Done on this branch
 

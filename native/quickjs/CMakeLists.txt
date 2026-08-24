@@ -18,8 +18,12 @@
 cmake_minimum_required(VERSION 3.20)
 project(reactunity-quickjs LANGUAGES C)
 
+# quickjs-ng 0.16.2 plus JS_SetModuleMetaFunc and JS_LoadModuleAsync, which the async
+# module loader needs and which are not upstream yet (see MIGRATION.md). The commit is
+# tagged v0.16.2-reactunity.1, so it cannot be lost to a rebase or GC; the SHA rather than
+# the tag name is what is pinned here, because a tag can be moved and a SHA cannot.
 set(QJS_REPOSITORY "https://github.com/gkurt/quickjs.git" CACHE STRING "quickjs-ng remote")
-set(QJS_COMMIT "30ceffed2c653d2a25b90a955a76422f6c8d796c" CACHE STRING "pinned quickjs-ng commit")
+set(QJS_COMMIT "30ceffed2c653d2a25b90a955a76422f6c8d796c" CACHE STRING "pinned quickjs-ng commit (v0.16.2-reactunity.1)")
 
 include(FetchContent)
 
