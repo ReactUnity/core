@@ -29,10 +29,13 @@ namespace QuickJS
         /// ordinary JS exception.
         ///
         /// Measured on Unity 6000.5.9f1, main thread inside a PlayMode coroutine: 768 KB still
-        /// raises cleanly, 1 MB does not - so the headroom there is between the two. It is not set
-        /// by default because the test suite's own JSX transform (Babel, which is far deeper than
-        /// anything a built bundle does) needs more than that, and capping it would break the
-        /// suite on the editors where it currently fits.
+        /// raises cleanly, 1 MB does not - so the headroom there is between the two.
+        ///
+        /// Still off by default, but the original reason has expired: the test suite used to run
+        /// Babel through this engine to transform its JSX, and Babel needed more depth than any
+        /// safe cap allowed. The suite uses Sucrase now, which is far shallower, so nothing here
+        /// is known to want more than 768 KB any more. Turning the cap on by default is a
+        /// user-facing behaviour change that has not been measured across the matrix yet.
         ///
         /// Zero is a sentinel, not a value to forward: the engine reads a zero stack_size as
         /// *unlimited*, which is worse than the default.

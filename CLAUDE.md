@@ -99,12 +99,34 @@ Unity's own `unity` CLI (July 2026, installed at `~/AppData/Local/Unity/bin/unit
 
 Two things worth knowing before running any of it:
 
-- **The editor version comes from each project's `ProjectSettings/ProjectVersion.txt`** — whichever Editor last opened the project is the one the CLI drives. Nothing is pinned in the scripts. `UNITY_VERSION=` overrides per run, and only then is that stamp restored afterwards. `tests/` loads and runs on **6000.5.9f1**, so the older note that the 6000.5 line could not run it at all is wrong. It is not fully green there, though: EditMode is 342/350 with zero failures, but PlayMode has **15 failures** on that editor — `ButtonTests` and `InputTests`, every engine — which reproduce on a clean checkout and do *not* reproduce on CI's 6000.1.9f1. They are stack headroom, not a bug: the suite transforms JSX by running Babel through QuickJS, Babel's parser is the deepest thing in the suite, and 6000.5 leaves it slightly less main-thread stack than it needs. [.claude/skills/unity/SKILL.md](.claude/skills/unity/SKILL.md) has the measurements and the reason capping the stack is the wrong fix. Treat 6000.5 as usable for `compile` and EditMode, and check PlayMode against a CI editor before believing a PlayMode failure is yours. That failure was `com.unity.inputsystem` 1.14.2, whose editor assemblies fail obsolete-as-error there — and 1.14.2 was only ever the manifest's *minimum*, which the resolver dropped back to whenever it had reason to re-resolve. The minimums are now raised past it. `test-framework`, `ugui` and `ext.nunit` stay where they are because they are `builtin` and the editor supplies its own. CI runs 6000.0.51f1/6000.1.9f1, so a local pass is still not a matrix pass.
+- **The editor version comes from each project's `ProjectSettings/ProjectVersion.txt`** — whichever Editor last opened the project is the one the CLI drives. Nothing is pinned in the scripts. `UNITY_VERSION=` overrides per run, and only then is that stamp restored afterwards. `tests/` loads and runs on **6000.5.9f1**, so the older note that the 6000.5 line could not run it at all is wrong. Both suites are green there: EditMode 342/350 and PlayMode 690/701, zero failures. It was not always — `ButtonTests` and `InputTests` used to fail on that editor and only that editor, because the suite transformed its JSX by running Babel inside QuickJS and Babel's parse-then-traverse depth did not fit the main-thread stack 6000.5 leaves. Replacing it with Sucrase fixed all 15; [.claude/skills/unity/SKILL.md](.claude/skills/unity/SKILL.md) keeps the measurements, and they are the ones to beat before putting Babel back. A local pass is still not a matrix pass. That failure was `com.unity.inputsystem` 1.14.2, whose editor assemblies fail obsolete-as-error there — and 1.14.2 was only ever the manifest's *minimum*, which the resolver dropped back to whenever it had reason to re-resolve. The minimums are now raised past it. `test-framework`, `ugui` and `ext.nunit` stay where they are because they are `builtin` and the editor supplies its own. CI runs 6000.0.51f1/6000.1.9f1, so a local pass is still not a matrix pass.
 - **Opening `tests/` rewrites its manifest into a 6000-only shape** — `com.unity.ugui` 2.x, no `textmeshpro`, plus `modules.physicscore2d`/`vectorgraphics`/`adaptiveperformance` — and that manifest fails to resolve on **6000.1** (measured), which yields *zero tests* rather than a red suite. The CLI snapshots those files and restores them after every run; `--no-restore` opts out. Restore covers batch runs only — an interactive Editor churns them freely, so check `git status` after one.
 
 The Test Runner window still works, as does `.github/workflows/unity-tests.yml` for the real matrix. `tests/Packages/manifest.json` already points at `file:../../unity/*`, so the four Unity packages are wired up with no patching.
 
 Driving an Editor that is **already open** is not this CLI's job any more. It was, through an `AgentBridge` loopback server in its own asmdef plus a `pnpm unity bridge` client; both were deleted once `com.unity.pipeline` was in both projects, because Unity's CLI covers every action they had and a great deal more. A repo-specific action wanted in a live Editor is now a `[CliCommand]` static method in an Editor assembly, which `unity list` discovers with no CLI release.
+
+Each fixture's JSX snippet is transpiled **at runtime, inside the engine under test**, by
+[CodeTransformer](unity/core/Tests/Runtime/Utils/CodeTransformer.cs) — so the transpiler's own call
+depth is charged to Unity's main-thread C stack, which is already deep. That budget is the whole
+reason it is **Sucrase** and not Babel: Sucrase rewrites a token stream, where Babel parses to an
+AST and traverses it, and Babel's floor did not fit on the 6000.5 editor. `disableESTransforms` is
+on deliberately — lowering optional chaining breaks C# method handles under ClearScript, and all
+three engines run the modern syntax natively anyway.
+
+The bundle it loads is generated, so do not edit
+`unity/core/Editor/Resources/ReactUnity/tests/scripts/sucrase-standalone.js`:
+
+```bash
+pnpm build:test-transformer
+```
+
+[scripts/test-transformer/build.mts](scripts/test-transformer/build.mts) bundles it with esbuild and
+stamps the Sucrase version into a header comment. Commit the result. Biome excludes it as generated
+output rather than for size — unlike the 3.7 MB `@babel/standalone` it replaced, which was over
+Biome's 1 MiB per-file ceiling and so failed `pnpm check` outright. The `docs` site still uses
+`@babel/standalone` (8.x, a real dependency) for its Sandpack examples, which is fine: that one runs
+in the browser, where stack is not scarce.
 
 Rendering tests compare against snapshots in `unity/core/Tests/.snapshots/{linux,windows}`. To regenerate: the `React > Tests > Overwrite Snapshots` editor menu toggle (needs the `REACT_UNITY_DEVELOPER` define), the `-reactOverwriteSnapshots` command-line arg, `[snapshots]` in a commit message, or the workflow's `overwrite-snapshots` dispatch input. CI commits regenerated snapshots from the one matrix job marked `main: true`.
 

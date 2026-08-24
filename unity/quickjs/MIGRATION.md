@@ -735,10 +735,19 @@ the full suite green at the end (1,029 tests, 0 failures, both before and after)
   where less than 1 MB is left. So the guard never fires: a deeply recursive script exhausts the
   real stack, Mono notices at the managed-to-native boundary, and the `StackOverflowException`
   that follows cannot be caught. Found by chasing 15 PlayMode failures on 6000.5.9f1, where the
-  suite's own Babel-based JSX transform is deep enough to trip it. `JS_SetMaxStackSize` is now
-  bound and `ScriptRuntime.MaxStackSize` exposes it, defaulting to off — any cap low enough to be
-  safe is below what Babel needs, so capping it by default would break the suite on the editors
-  where it currently fits. The measurement: 768 KB raises cleanly, 1 MB does not raise at all.
+  suite's own Babel-based JSX transform was deep enough to trip it. `JS_SetMaxStackSize` is now
+  bound and `ScriptRuntime.MaxStackSize` exposes it, defaulting to off. The measurement: 768 KB
+  raises cleanly, 1 MB does not raise at all.
+
+  Those 15 failures are since fixed, and not by capping anything. Pruning Babel's presets down to
+  the single plugin the suite needs changed nothing — the depth is Babel's parse-then-traverse
+  floor, not the plugins on top of it — so the transform moved to Sucrase, which rewrites a token
+  stream and never builds an AST. That is worth recording here because it is the one place a
+  *host* decision, not a binding one, was what the engine could not absorb: ng's stack accounting
+  is correct, the 1 MB default is simply larger than Unity's main thread has left, and everything
+  running inside it has to be shallow enough to live in the remainder. The cap stays off by
+  default only because turning it on is a user-facing change nobody has measured across the
+  matrix; the reason it *could not* be turned on is gone.
 - **Operator overloading, removed** — the machinery phase 3 left behind a permanently false guard.
   ng has no operator overloading to register, and the last dead stub went with it.
 - **`''` no longer marshals back as `null`** — a pre-existing bug in the string marshaller, not an
