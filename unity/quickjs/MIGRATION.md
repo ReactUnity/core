@@ -280,20 +280,34 @@ cannot see — delegates, enums, struct layouts — found two more. See "What fa
 "What phase 3 changed" below.
 
 *Exit: Unity suite passes on Windows against the ng DLL **and** a desktop IL2CPP player build runs.*
-**First half met, second half blocked on tooling.** The ng DLL is installed at
+**Met, both halves.** The ng DLL is installed at
 `Plugins/QuickJS/x64/quickjs.dll` and the suite passes on it unchanged from the pre-migration
 baseline: EditMode 340/348, PlayMode 689/701, 0 failed. That the *ng* build is what ran is not
 inferred from the pass — ng exports `JS_GetProperty` and `JS_SetProperty`, which are `static inline`
 in Bellard's and absent from the old DLL's exports, and the C# now binds both directly, so the old
 binary would have thrown `EntryPointNotFoundException` on the first property read.
 
-The IL2CPP half cannot run here: none of the six installed editors has the IL2CPP player variation
-(`PlaybackEngines/windowsstandalonesupport/Variations` has only `*_mono`), so it needs the "Windows
-Build Support (IL2CPP)" module from the Hub, plus a batch-mode build entry point, which
-`scripts/unity` does not have. What it would cover that the Editor run does not is specifically
-AOT: managed stripping against the `[Preserve]` set, and reverse-P/Invoke marshalling of the
-delegates. Nothing in phase 3 added a JS-reachable entry point — it removed seven — so no new
-stripping surface was introduced, but that is an argument, not a test.
+The IL2CPP half was blocked on tooling and no longer is. The Hub's "Windows Build Support (IL2CPP)"
+module is installed, and `pnpm unity player` is the batch-mode entry point `scripts/unity` was
+missing: it builds a development standalone player and runs
+[EngineProbe](../core/Runtime/Developer/EngineProbe.cs) inside it, which drives every engine in the
+build across the boundary — evaluate, strings, a `Func` and an `Action` called from JS, a type
+reference through the reflect binder, a global round trip, a module — and prints a verdict the
+runner reads back. Measured on 6000.5.9f1 against `tests/`:
+
+| backend | build | result |
+|---|---|---|
+| il2cpp | 309 s | QuickJS 7/7, Jint 7/7 |
+| mono | 15 s | QuickJS 7/7, Jint 7/7, ClearScript 7/7 |
+
+**QuickJS works under IL2CPP.** That is now a test rather than the argument this section used to
+make. Two engines against three is the gating working — ClearScript is compiled out under IL2CPP by
+design, and the probe is what shows you that instead of you assuming it. The `--backend mono` column
+is not decoration: an AOT failure is only distinguishable from a plain bug by Mono passing where
+IL2CPP does not.
+
+What this does *not* cover is the other ten artifacts. It exercises Windows x64 AOT; Android and iOS
+have their own stripping and their own P/Invoke conventions, and CI has never built either.
 
 **Phase 4 — mirror in the jslib, then wire the async loader.** Done on desktop. The jslib is back in
 agreement and held there by a check; `AsyncModuleLoader` installs
@@ -600,9 +614,9 @@ utilities that `TSTypeNaming` and `TypeBindingInfo` need, so those moved to `Bin
 
 - **IL2CPP diverges from CoreCLR.** The reference binding runs on .NET 8; struct-by-value and
   reverse P/Invoke are exactly where Mono and IL2CPP differ. Made a phase 3 exit criterion, not a
-  phase 4 discovery — and **still open**: no installed editor has the IL2CPP player variation, so
-  phase 3 met the Editor half of that criterion and not this one. It needs the Hub's "Windows Build
-  Support (IL2CPP)" module and a batch-mode build entry point in `scripts/unity`.
+  phase 4 discovery — and **closed on Windows x64**: `pnpm unity player tests --backend il2cpp`
+  passes every probe check, including the reverse-callback ones. Open everywhere else, and Android
+  and iOS are where it would bite hardest; nothing has built those artifacts yet, let alone run one.
 - **No sanitizer off desktop.** ASan and GC-stress cover x64 only. Test every new interop behaviour
   on desktop under ASan first; mobile is validation, never discovery.
 - **Two implementations drifting.** Half closed. `check-jslib.py` now holds the *names* in
@@ -647,7 +661,9 @@ the full suite green at the end (1,029 tests, 0 failures, both before and after)
 - **Phase 3, the C# declarations** — all 99 live P/Invokes checked against `quickjs.h` by
   `check-signatures.py` and every mismatch fixed, including two silent bugs the plan did not have;
   the ng DLL installed for Windows x64 and the suite passing on it at the pre-migration baseline.
-  The IL2CPP player build the exit criterion also asks for is blocked on a missing Hub module.
+- **The IL2CPP player build** phase 3's exit criterion also asked for — `pnpm unity player`, plus
+  the probe it runs inside the player. QuickJS and Jint pass all seven checks under IL2CPP on
+  Windows x64, and the same player built as Mono passes with ClearScript alongside them.
 - **Phase 4, the async module loader** — desktop only. `AsyncModuleLoader` +
   `QuickJSModuleLoader` fetch a graph over HTTP without blocking a frame, `import.meta.url` comes
   from a hook added to the fork, and the jslib is back in agreement with a check to keep it there.
