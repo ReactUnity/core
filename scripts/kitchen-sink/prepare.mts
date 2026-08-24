@@ -44,8 +44,9 @@ const DROPPED_UNITY_EXTRAS = ['com.unity.test-framework.performance'];
 const DROPPED_UNITY_TOOLING = ['com.unity.pipeline'];
 const DROPPED_PATHS = ['Assets/Settings/Pipeline'];
 
-/** Only ever set in this checkout: it turns on the agent bridge, the snapshot-overwrite
- *  menu, and the TypeScript model generator. None of it belongs in a sample. */
+/** Only ever set in this checkout: it turns on the IL2CPP player builder and its engine probe,
+ *  the snapshot-overwrite menu, and the TypeScript model generator. None of it belongs in a
+ *  sample -- and stripping it is also what keeps the probe out of a user's player. */
 const DEVELOPER_DEFINE = 'REACT_UNITY_DEVELOPER';
 
 type Step = { file: string; note: string };

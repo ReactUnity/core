@@ -5,7 +5,6 @@ import { spawn } from 'node:child_process';
 import fs from 'node:fs';
 import path from 'node:path';
 import { parseArgs } from 'node:util';
-import { bridge } from './bridge.mts';
 import { listEditors, resolveEditor } from './editors.mts';
 import { type LogReport, parseLog, parseProbe, parseTestResults } from './parse.mts';
 import { getProject, lockHolder, type Project, repoRoot, restoreChurn, snapshotChurn } from './project.mts';
@@ -34,19 +33,11 @@ const { values: flags, positionals } = parseArgs({
     verbose: { type: 'boolean', default: false },
     timeout: { type: 'string' },
     help: { type: 'boolean', default: false, short: 'h' },
-    // bridge-only
-    level: { type: 'string' },
-    limit: { type: 'string' },
-    path: { type: 'string' },
-    supersize: { type: 'string' },
   },
 });
 
-// `bridge` takes an action of its own, so the project shifts one place right:
-// `unity bridge status kitchen-sink`.
-const [command = 'help', second, third] = positionals;
-const bridgeAction = command === 'bridge' ? (second ?? 'status') : undefined;
-const projectName = (command === 'bridge' ? third : second) ?? 'tests';
+const [command = 'help', second] = positionals;
+const projectName = second ?? 'tests';
 
 const USAGE = `pnpm unity <command> [project] [options]
 
@@ -57,15 +48,10 @@ Commands:
   open    [tests|kitchen-sink]  Launch the Editor GUI (detached, returns immediately)
   editors                       List installed Unity editors
 
-  bridge <action> [project]     Drive an Editor that is already open. Actions:
-    status      compile errors, play state, whether the Editor is busy
-    logs        recent console entries (--level error|warning, --limit N)
-    refresh     reimport + recompile, then report errors
-    test        run a suite in the open Editor (--platform, --filter)
-    play|stop   enter or leave play mode
-    screenshot  capture to --path (needs a rendering Editor; play mode is safest)
-    menu        run a menu item, e.g. --path "React/Tests/Overwrite Snapshots"
-    quit        close the Editor and wait for the project lock to clear
+An Editor that is already open belongs to Unity's own CLI, not to this one:
+  unity status                          which Editors are up, and whether they are ready
+  unity command --project-path <path>   the ~140 commands that Editor exposes
+See .claude/skills/unity for the mapping.
 
 Options (player):
   --backend <il2cpp|mono>             Scripting backend to build with (default il2cpp)
@@ -101,18 +87,6 @@ async function main() {
   if (command === 'compile') return await compile(project);
   if (command === 'test') return await test(project);
   if (command === 'player') return await player(project);
-  if (command === 'bridge') {
-    return await bridge(project, bridgeAction as string, {
-      level: flags.level,
-      limit: flags.limit,
-      path: flags.path,
-      supersize: flags.supersize,
-      platform: flags.platform === 'All' ? undefined : flags.platform,
-      filter: flags.filter,
-      assemblies: flags.assemblies,
-      timeout: flags.timeout,
-    });
-  }
 
   console.error(`Unknown command '${command}'.\n\n${USAGE}`);
   process.exitCode = 1;
@@ -337,7 +311,7 @@ async function runUnity(project: Project, options: RunOptions): Promise<{ log: L
   const held = lockHolder(project);
   if (held) {
     console.error(`${project.name} is open in ${held}. Batch mode needs the project lock -- close that Editor, or drive`);
-    console.error(`the running one instead: pnpm unity bridge status ${project.name}`);
+    console.error(`the running one instead: unity command --project-path ${project.path}`);
     process.exitCode = 1;
     process.exit();
   }

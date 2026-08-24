@@ -5,19 +5,20 @@ description: Compile, test, and drive Unity for this repo's C# packages (unity/c
 
 # Driving Unity from here
 
-Two ways in. Pick by whether an Editor is already open on the project.
+Two ways in, and they are two different tools. Pick by whether an Editor is already open on the project.
 
-| | `pnpm unity <cmd>` (batch mode) | `pnpm unity bridge <action>` (open Editor) |
+| | `pnpm unity <cmd>` (batch mode) | `unity <cmd>` (open Editor) |
 |---|---|---|
-| Needs | the project **not** open in an Editor | the project **open**, with `REACT_UNITY_DEVELOPER` on the active build target |
-| Speed | ~8 s compile, ~50 s EditMode suite | saves the ~8 s startup, no more |
-| Use for | the default path; anything scriptable, and the only CI-faithful results | an Editor the user already has open, play mode, screenshots |
+| Is | this repo's driver, [scripts/unity/](../../../scripts/unity/) | **Unity's own CLI**, installed on this machine |
+| Needs | the project **not** open in an Editor | the project **open**, with `com.unity.pipeline` (both have it) |
+| Speed | ~8 s compile, ~70 s EditMode suite | 200–600 ms per command, no recompile, no domain reload |
+| Use for | compile, the suites, IL2CPP players — anything scriptable, and the only CI-faithful results | an Editor the user already has open, play mode, screenshots, scene and asset edits |
 
-The bridge is not mainly a speed win — it is how you work *without closing someone's Editor*, and the only way to reach play mode and screenshots.
+The second one is not mainly a speed win — it is how you work *without closing someone's Editor*, and the only way to reach play mode and screenshots. See [Unity's own CLI](#unitys-own-cli) for what it can do and where it must not be used.
 
-Both refuse to fight each other: batch mode checks the project lock first and tells you to use the bridge instead.
+This repo used to carry its own version of that: an `AgentBridge` loopback server plus a `pnpm unity bridge` client. Both are gone — the Pipeline package does all of it and more. A `pnpm unity bridge …` invocation found anywhere is stale; [the table below](#unitys-own-cli) says what it became.
 
-There is now a third way in, from outside this repo: **Unity's own `unity` CLI**. See [Unity's own CLI](#unitys-own-cli) below — it overlaps `bridge` almost completely, but knows nothing about the project files a local run rewrites, so it does not replace `compile`/`test`/`player`.
+The two refuse to fight each other: batch mode checks the project lock first and points at the other tool.
 
 ## The loop for a C# change
 
@@ -67,7 +68,7 @@ PlayMode compares captures against `unity/core/Tests/.snapshots/windows/` (commi
 - Regenerating is `--overwrite-snapshots`. It **rewrites committed PNGs** — and only ever the `windows/` set when run here, since the directory is chosen by `SystemInfo.operatingSystemFamily`. Only do it when asked, and show `git status` afterwards.
 - If `TextMesh Pro Essential Resources are missing` shows up, that is environmental, not yours: Unity 6's ugui 2.x does not recognise the old `com.unity.textmeshpro` layout, pops its importer window, and the error attaches to whichever test is mid-flight — so it lands on a different one each run. Fixed by importing TMP essentials into `tests/`; reimport via `Window > TextMeshPro > Import TMP Essential Resources` if it returns.
 
-The `React > Tests > Overwrite Snapshots` menu item is a **toggle** on `EditorPrefs`, not a one-shot. If you drive it through `bridge menu`, you have flipped persistent state that affects every later run — flip it back.
+The `React > Tests > Overwrite Snapshots` menu item is a **toggle** on `EditorPrefs`, not a one-shot. If you drive it through `unity command menu`, you have flipped persistent state that affects every later run — flip it back.
 
 **A failing snapshot is a bug report until you have proven otherwise.** On 2026-07-28 eleven gradient snapshots failed, were assumed stale, and were overwritten — enshrining a real regression ([b0fc47885](unity/core/Runtime/Types/Gradient.cs:181) had made a linear-space colour conversion unconditional, darkening every gradient by 2.2 in gamma-space projects). It had gone unnoticed for seven months because the UGUI PlayMode suite was not running on CI.
 
@@ -81,22 +82,33 @@ Two lessons worth more than the incident:
 ## Working against the open Editor
 
 ```bash
-pnpm unity bridge status kitchen-sink
+unity status --format json
 ```
 
-Compile errors, play state, and whether the Editor is busy. The rest: `logs --level error`, `refresh` (reimport + recompile, then report), `test --platform EditMode`, `play` / `stop`, `screenshot --path out.png`, `menu --path "..."`.
+Which Editors are up, their project, port, pid, and whether each is `ready`. Then discover and drive:
 
-Plus `quit`, which closes the Editor and waits for the lock to clear — that is how you hand a project back to batch mode: `pnpm unity bridge quit tests && pnpm unity test tests`.
+```bash
+unity command --project-path S:/Work/Unity/reactunity/tests --query test
+unity command editor_status --project-path S:/Work/Unity/reactunity/tests
+unity command run_tests --project-path <path> -- --mode EditMode --filter ReactUnity.Tests.StyleTests
+```
 
-The bridge lives in [unity/core/Editor/Developer/AgentBridge](unity/core/Editor/Developer/AgentBridge/) on `127.0.0.1`, port in `<project>/Library/ReactUnityAgentBridge.json`. It is compiled out without `REACT_UNITY_DEVELOPER` and never starts in batch mode.
+**Never assume a command name — list them.** The Editor defines the set, so it varies by project and package version: 142 commands in `tests/`, ~200 in kitchen-sink. `unity command` with no name lists them; `--query`, `--tag` and `--detail compact` keep that listing small. Note `--group_by` is spelled with an underscore, deliberately.
 
-An Editor that was **already running before the bridge was added** has no bridge until it recompiles — click into its window, or `pnpm unity open` a fresh one. The discovery file is the test: no file, no bridge.
+Things that carry over from the bridge this replaced, all still true:
 
-Its socket goes down for the length of **every domain reload**, so a refused connection means "busy", not "broken" — the client already polls through it. Long operations never block a request: start them, then poll `status`.
+- **A refused connection usually means "busy", not "broken".** The Pipeline server goes down for the length of every domain reload. Long operations do not block a request either — `build`, `recompile`, `audit` and the bakes all return immediately and have a matching `*_status` command to poll.
+- **Screenshots need the Editor to actually render a frame.** In play mode that is automatic; idle in the Editor it may never come. `capture_game_view` misses Screen Space - Overlay UI unless you pass `source=screen`, which is play-mode only.
+- **A project with C# compile errors boots into Safe Mode, where the Pipeline package does not load at all** — so "cannot connect" can mean "compile error", not "no Editor". `unity pipeline list` reports Safe Mode explicitly. Fix the C# and restart; there is no CLI-side way around it.
+- **Batch mode is the source of truth; the live Editor is for iterating.** The same EditMode suite gives different answers in the two environments — measured on 6000.5.5f1, batch was 316/325 with 9 skipped and 0 failures, while the open Editor ran 3 of those skipped tests and failed 2 others (`ScriptTagDoesNotCrashOnError`, `ActivePropertyShouldWorkForStyleTag`) that batch passes. Both are sensitive to Editor state — log interception and `:active` — not to your change. Confirm with `pnpm unity test tests` before calling a suite green.
 
-Screenshots need the Editor to actually render a frame. In play mode that is automatic; idle in the Editor it may never come, and the client reports the timeout rather than a bogus success.
+To hand a project back to batch mode, quit the Editor:
 
-**Batch mode is the source of truth; the bridge is for iterating.** The same EditMode suite gives different answers in the two environments — measured on 6000.5.5f1, batch was 316/325 with 9 skipped and 0 failures, while the open Editor ran 3 of those skipped tests and failed 2 others (`ScriptTagDoesNotCrashOnError`, `ActivePropertyShouldWorkForStyleTag`) that batch passes. Both are sensitive to Editor state — log interception and `:active` — not to your change. Use the bridge for the fast loop, then confirm with `pnpm unity test tests` before claiming a suite is green.
+```bash
+unity command eval --project-path <path> -- "UnityEditor.EditorApplication.Exit(0);"
+```
+
+That works, but **reports a failure** — `COMMAND_FAILED: Invalid response format from Pipeline server` — because the Editor exits before the server can answer. Confirm with `unity status`, not the exit code. (The old bridge deferred its response a few frames to avoid exactly this; nothing in the Pipeline package does.)
 
 ## Running the sample app
 
@@ -107,11 +119,12 @@ pnpm --filter reactunity-kitchen-sink start
 ```
 
 ```bash
-pnpm unity open kitchen-sink && pnpm unity bridge play kitchen-sink
+pnpm unity open kitchen-sink
+unity command editor_play --project-path S:/Work/Unity/reactunity/kitchen-sink
 ```
 
 ```bash
-pnpm unity bridge screenshot kitchen-sink --path Logs/unity/shot.png
+unity command capture_game_view --project-path S:/Work/Unity/reactunity/kitchen-sink -- --source screen --save_path Logs/unity/shot.png
 ```
 
 That produces a real PNG of the running app — read it back to check a visual change. Unity connects to the dev server, so JS changes hot-reload without touching the Editor.
@@ -128,11 +141,11 @@ Unity shipped an official CLI in July 2026. It is installed here but **not on PA
 "/c/Users/Krtgo/AppData/Local/Unity/bin/unity.exe" status --format json
 ```
 
-Its own agent skill is at `~/.claude/skills/unity-cli` (`unity skill install claude-code` wrote it, `unity skill refresh` re-renders it after `unity upgrade`) — read that for the command surface. What matters here is the division of labour.
+Its own agent skill is at `~/.claude/skills/unity-cli` (`unity skill install claude-code` wrote it, `unity skill refresh` re-renders it after `unity upgrade`) — read that for the full command surface. What matters here is the division of labour, and the mapping from what this repo used to have.
 
-**It replaces `bridge`.** Both projects now have `com.unity.pipeline` — kitchen-sink as of `b8225447`, tests/ since. An open Editor exposes 142 commands over loopback (200 in kitchen-sink, which has more packages), and every `bridge` action has an equivalent:
+**It replaced the AgentBridge**, deleted in the same commit as this note. Both projects have `com.unity.pipeline` — kitchen-sink as of `b8225447`, tests/ since — and every bridge action had an equivalent, which is the whole reason 686 lines of C# in their own asmdef plus a 219-line client could go:
 
-| `pnpm unity bridge …` | `unity command …` |
+| `pnpm unity bridge …` (gone) | `unity command …` |
 |---|---|
 | `status` | `editor_status` |
 | `logs` | `console` / `get_console_logs` |
@@ -141,15 +154,13 @@ Its own agent skill is at `~/.claude/skills/unity-cli` (`unity skill install cla
 | `play` / `stop` | `editor_play` / `editor_stop` |
 | `screenshot` | `screenshot`, `capture_game_view`, `capture_scene_view` |
 | `menu` | `menu` |
-| `quit` | no equivalent — `eval "UnityEditor.EditorApplication.Exit(0);"` |
+| `quit` | `eval "UnityEditor.EditorApplication.Exit(0);"` |
 
-That is [AgentBridge](../../../unity/core/Editor/Developer/AgentBridge/) (686 lines of C# in its own asmdef) plus [bridge.mts](../../../scripts/unity/bridge.mts) (219 lines) covering less ground than a package dependency does. It also has `build`, `eval`, `set_player_settings`, `audit`, and a `--runtime` mode that attaches to a running development **player**.
-
-Two measured details. `run_tests` returns a structured summary plus a row per test, so it needs no results file — `unity command run_tests --project-path tests -- --mode EditMode --filter <name>` reported 6/6 across all three engines. And the `quit` recipe above *works but reports a failure*: the Editor exits before the Pipeline server can answer, so the CLI says `COMMAND_FAILED: Invalid response format from Pipeline server`. Check `unity status` rather than believing it.
+It goes well past that: `build` + `build_status`, `eval`, `get`/`set_player_settings`, `switch_build_target`, `package_add`/`remove`, `audit`, the scene and asset editing surface, and a `--runtime` mode that attaches to a running development **player**. `run_tests` returns a structured summary plus a row per test, so it needs no results file at all.
 
 **It does not replace `compile`, `test`, or `player`**, for one reason that is not about features: `unity test` and `unity build` launch the Editor without snapshotting the files Unity rewrites for having opened the project. On this repo that silently upgrades `tests/Packages/manifest.json` into a shape CI cannot resolve — the failure mode is *zero tests reported as a pass*. See [project.mts](../../../scripts/unity/project.mts). Two smaller gaps: it has no notion of `-assemblyNames` or our `-reactOverwriteSnapshots`, though `unity test . -- <args>` forwards both; and its editor discovery found 3 of the 6 editors installed here (it misses side-by-side `C:\Program Files\Unity <version>` installs, which `pnpm unity editors` lists).
 
-So: `unity` for anything against a live Editor, `pnpm unity` for anything in batch mode.
+So: `unity` for anything against a live Editor, `pnpm unity` for anything in batch mode. Nothing in this repo needs to grow a third client for either job — if a repo-specific action is wanted in a live Editor, it is a `[CliCommand]` static method in an Editor assembly, discoverable by `unity list` with no CLI release. The `unity-cli` skill documents that.
 
 ## Things that will bite
 

@@ -104,7 +104,7 @@ Two things worth knowing before running any of it:
 
 The Test Runner window still works, as does `.github/workflows/unity-tests.yml` for the real matrix. `tests/Packages/manifest.json` already points at `file:../../unity/*`, so the four Unity packages are wired up with no patching.
 
-The Editor bridge itself is [unity/core/Editor/Developer/AgentBridge](unity/core/Editor/Developer/AgentBridge/): a loopback TCP server in its own asmdef, gated on `REACT_UNITY_DEVELOPER` and never started in batch mode. It is a separate assembly because it references `UnityEditor.TestRunner`, which `ReactUnity.Editor` must not depend on.
+Driving an Editor that is **already open** is not this CLI's job any more. It was, through an `AgentBridge` loopback server in its own asmdef plus a `pnpm unity bridge` client; both were deleted once `com.unity.pipeline` was in both projects, because Unity's CLI covers every action they had and a great deal more. A repo-specific action wanted in a live Editor is now a `[CliCommand]` static method in an Editor assembly, which `unity list` discovers with no CLI release.
 
 Rendering tests compare against snapshots in `unity/core/Tests/.snapshots/{linux,windows}`. To regenerate: the `React > Tests > Overwrite Snapshots` editor menu toggle (needs the `REACT_UNITY_DEVELOPER` define), the `-reactOverwriteSnapshots` command-line arg, `[snapshots]` in a commit message, or the workflow's `overwrite-snapshots` dispatch input. CI commits regenerated snapshots from the one matrix job marked `main: true`.
 
