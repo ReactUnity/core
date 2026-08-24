@@ -16,30 +16,31 @@ namespace QuickJS
     public partial class ScriptRuntime
     {
         /// <summary>How much C stack a script may use before the engine raises a catchable JS
-        /// "stack overflow". Zero, the default, leaves the engine's own limit alone.</summary>
+        /// "stack overflow", set before the runtime is created. Zero leaves quickjs-ng's own
+        /// limit alone, which on Unity's main thread means no working limit at all.</summary>
         ///
-        /// Set it before creating a runtime, and only if you know your thread's stack. It exists
-        /// because the engine's default is wrong here in a way that is invisible until it bites:
-        /// quickjs-ng defaults to 1 MB (JS_DEFAULT_STACK_SIZE), and it measures against the stack
-        /// of whichever thread created the runtime - Unity's main thread, already deep in Unity's
-        /// own frames and deeper still inside a coroutine. There is less than 1 MB left there, so
-        /// the guard never fires: a deeply recursive script exhausts the real stack instead, Mono
-        /// notices at the managed-to-native boundary, and the StackOverflowException that follows
-        /// cannot be caught. A limit under what the thread actually has turns that into an
-        /// ordinary JS exception.
+        /// It defaults to 768 KB rather than to ng's behaviour, because ng's default cannot fire
+        /// here: it is 1 MB (JS_DEFAULT_STACK_SIZE) and it measures against the stack of whichever
+        /// thread created the runtime - Unity's main thread, already deep in Unity's own frames and
+        /// deeper still inside a coroutine, where less than 1 MB is left. So a deeply recursive
+        /// script exhausts the real stack first, Mono notices at the managed-to-native boundary,
+        /// and the StackOverflowException that follows cannot be caught: it takes the player or the
+        /// Editor with it. Under a limit the thread can actually reach, the same script raises an
+        /// ordinary RangeError that a caller can catch and a console can show.
         ///
-        /// Measured on Unity 6000.5.9f1, main thread inside a PlayMode coroutine: 768 KB still
-        /// raises cleanly, 1 MB does not - so the headroom there is between the two.
+        /// The asymmetry is why this is on by default. A cap too high for its platform simply never
+        /// fires, which is no worse than having none. A cap too low costs recursion that would have
+        /// completed - but only in the window between the cap and the stack that was really there,
+        /// which is 768 KB to about 1 MB on the editors measured (6000.5.9f1, main thread inside a
+        /// PlayMode coroutine: 768 KB raises cleanly, 1 MB does not raise at all). Trading that
+        /// window for a crash that cannot be caught or reported is worth it for a UI framework.
         ///
-        /// Still off by default, but the original reason has expired: the test suite used to run
-        /// Babel through this engine to transform its JSX, and Babel needed more depth than any
-        /// safe cap allowed. The suite uses Sucrase now, which is far shallower, so nothing here
-        /// is known to want more than 768 KB any more. Turning the cap on by default is a
-        /// user-facing behaviour change that has not been measured across the matrix yet.
-        ///
-        /// Zero is a sentinel, not a value to forward: the engine reads a zero stack_size as
-        /// *unlimited*, which is worse than the default.
-        public static int MaxStackSize = 0;
+        /// Raise it if you have deliberately deep code and know your thread's stack; lower it if
+        /// you want the guard to fire on a platform with a smaller main-thread stack, where 768 KB
+        /// may sit above the real headroom and so never trip. Zero restores ng's unusable default.
+        /// Note that zero is a local sentinel meaning "do not call", never a value to forward - ng
+        /// reads a zero stack_size as *unlimited*, which is worse still.
+        public static int MaxStackSize = 768 * 1024;
 
         private class ScriptContextRef
         {
@@ -380,7 +381,8 @@ namespace QuickJS
             _logger?.Write(LogLevel.Info, "initializing script runtime: {0}", _runtimeId);
 #endif
             _rt = JSApi.JSB_NewRuntime(class_finalizer);
-            // Before anything can evaluate, and only when asked for - zero would mean unlimited.
+            // Before anything can evaluate. Guarded because zero means "leave ng's limit alone";
+            // forwarding it would ask ng for an unlimited stack.
             if (MaxStackSize > 0) JSApi.JS_SetMaxStackSize(_rt, (size_t)MaxStackSize);
             JSApi.JS_SetHostPromiseRejectionTracker(_rt, JSNative.PromiseRejectionTracker, IntPtr.Zero);
 #if UNITY_EDITOR
