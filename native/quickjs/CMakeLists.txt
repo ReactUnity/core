@@ -58,10 +58,14 @@ if(IOS)
     # nothing fails until Unity links the Xcode project. The shipped prebuilt is a merged
     # archive (it carries cutils.o and friends), so merge ng in the same way.
     # check-exports.py reads archives, and is what catches this if the merge ever stops.
+    # Deliberately not VERBATIM. Under the Xcode generator TARGET_FILE expands to a path
+    # containing the literal `${EFFECTIVE_PLATFORM_NAME}`, which Xcode substitutes in the
+    # script phase's own shell -- and VERBATIM escapes the `$` so it never gets the chance,
+    # which is how the first CI run reached libtool with the placeholder still in the path.
     add_custom_command(TARGET quickjs POST_BUILD
-        COMMAND libtool -static -o $<TARGET_FILE:quickjs>.merged $<TARGET_FILE:quickjs> $<TARGET_FILE:qjs>
-        COMMAND ${CMAKE_COMMAND} -E rename $<TARGET_FILE:quickjs>.merged $<TARGET_FILE:quickjs>
-        VERBATIM COMMENT "merging quickjs-ng into libquickjs.a")
+        COMMAND libtool -static -o "$<TARGET_FILE:quickjs>.merged" "$<TARGET_FILE:quickjs>" "$<TARGET_FILE:qjs>"
+        COMMAND mv "$<TARGET_FILE:quickjs>.merged" "$<TARGET_FILE:quickjs>"
+        COMMENT "merging quickjs-ng into libquickjs.a")
 elseif(APPLE)
     add_library(quickjs MODULE src/unity_qjs.c)
     set_target_properties(quickjs PROPERTIES BUNDLE TRUE MACOSX_BUNDLE TRUE)

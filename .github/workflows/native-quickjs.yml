@@ -40,6 +40,8 @@ jobs:
   build:
     name: ${{ matrix.name }}
     runs-on: ${{ matrix.os }}
+    # Empty for every leg but linux-x64, which runs the job inside the image named there.
+    container: ${{ matrix.container || '' }}
     strategy:
       fail-fast: false
       matrix:
@@ -50,15 +52,23 @@ jobs:
             os: windows-latest
             artifact: x64/quickjs.dll
             built: build/${{ github.event.inputs.build-type || 'Release' }}/quickjs.dll
-            configure: -G "Visual Studio 17 2022" -A x64
+            configure: -A x64
             native: true
           - name: windows-x86
             os: windows-latest
             artifact: x86/quickjs.dll
             built: build/${{ github.event.inputs.build-type || 'Release' }}/quickjs.dll
-            configure: -G "Visual Studio 17 2022" -A Win32
+            configure: -A Win32
           - name: linux-x64
             os: ubuntu-latest
+            # Built in an old container on purpose: glibc is backward compatible, never
+            # forward, so the floor a binary records is the oldest system it will load on.
+            # ubuntu-latest is 24.04 (2.39) and the Unity test container is older, so a
+            # runner-native build produced a .so Unity could not load at all --
+            # DllNotFoundException, which reads like a missing file rather than a too-new
+            # one. 22.04 gives 2.35. The binary this replaces asked for 2.17, so this is a
+            # narrower reach than users had; an older base is the fix if that matters.
+            container: ubuntu:22.04
             artifact: x64/libquickjs.so
             built: build/libquickjs.so
             configure: -DCMAKE_BUILD_TYPE=${{ github.event.inputs.build-type || 'Release' }}
@@ -84,7 +94,7 @@ jobs:
             artifact: WSA/x64/quickjs.dll
             built: build/${{ github.event.inputs.build-type || 'Release' }}/quickjs.dll
             configure: >-
-              -G "Visual Studio 17 2022" -A x64
+              -A x64
               -DCMAKE_SYSTEM_NAME=WindowsStore -DCMAKE_SYSTEM_VERSION=10.0
               -DCMAKE_TRY_COMPILE_TARGET_TYPE=STATIC_LIBRARY
           - name: wsa-x86
@@ -92,7 +102,7 @@ jobs:
             artifact: WSA/x86/quickjs.dll
             built: build/${{ github.event.inputs.build-type || 'Release' }}/quickjs.dll
             configure: >-
-              -G "Visual Studio 17 2022" -A Win32
+              -A Win32
               -DCMAKE_SYSTEM_NAME=WindowsStore -DCMAKE_SYSTEM_VERSION=10.0
               -DCMAKE_TRY_COMPILE_TARGET_TYPE=STATIC_LIBRARY
           - name: wsa-arm64
@@ -100,7 +110,7 @@ jobs:
             artifact: WSA/ARM64/quickjs.dll
             built: build/${{ github.event.inputs.build-type || 'Release' }}/quickjs.dll
             configure: >-
-              -G "Visual Studio 17 2022" -A ARM64
+              -A ARM64
               -DCMAKE_SYSTEM_NAME=WindowsStore -DCMAKE_SYSTEM_VERSION=10.0
               -DCMAKE_TRY_COMPILE_TARGET_TYPE=STATIC_LIBRARY
 
@@ -135,6 +145,15 @@ jobs:
               -DCMAKE_OSX_ARCHITECTURES=arm64
 
     steps:
+      # A bare distro image has none of this. GitHub mounts its own node in, so the
+      # actions themselves run, but git and a toolchain are ours -- and this has to
+      # precede checkout, which shells out to git.
+      - name: Container prerequisites
+        if: matrix.container
+        run: |
+          apt-get update
+          apt-get install -y --no-install-recommends git cmake build-essential ca-certificates
+
       - uses: actions/checkout@v7
 
       - name: Configure
