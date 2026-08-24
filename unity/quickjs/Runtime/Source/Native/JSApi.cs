@@ -131,6 +131,14 @@ namespace QuickJS.Native
             return CS_JSB_VERSION == SO_JSB_VERSION;
         }
 
+        /// <summary>Caps the C stack the engine will use before raising a JS "stack overflow",
+        /// rather than running on until the thread's real stack is gone.</summary>
+        ///
+        /// Beware `stack_size` of 0: the engine reads it as *no limit*, not as a default.
+        /// See <see cref="ScriptRuntime.MaxStackSize"/> for why this is not set by default.
+        [DllImport(JSBDLL, CallingConvention = CallingConvention.Cdecl)]
+        public static extern void JS_SetMaxStackSize(JSRuntime rt, size_t stack_size);
+
         [DllImport(JSBDLL, CallingConvention = CallingConvention.Cdecl)]
         private static extern JSRuntime JSB_NewRuntime(IntPtr class_finalizer);
 

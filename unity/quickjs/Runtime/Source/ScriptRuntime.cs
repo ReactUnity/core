@@ -15,6 +15,29 @@ namespace QuickJS
 
     public partial class ScriptRuntime
     {
+        /// <summary>How much C stack a script may use before the engine raises a catchable JS
+        /// "stack overflow". Zero, the default, leaves the engine's own limit alone.</summary>
+        ///
+        /// Set it before creating a runtime, and only if you know your thread's stack. It exists
+        /// because the engine's default is wrong here in a way that is invisible until it bites:
+        /// quickjs-ng defaults to 1 MB (JS_DEFAULT_STACK_SIZE), and it measures against the stack
+        /// of whichever thread created the runtime - Unity's main thread, already deep in Unity's
+        /// own frames and deeper still inside a coroutine. There is less than 1 MB left there, so
+        /// the guard never fires: a deeply recursive script exhausts the real stack instead, Mono
+        /// notices at the managed-to-native boundary, and the StackOverflowException that follows
+        /// cannot be caught. A limit under what the thread actually has turns that into an
+        /// ordinary JS exception.
+        ///
+        /// Measured on Unity 6000.5.9f1, main thread inside a PlayMode coroutine: 768 KB still
+        /// raises cleanly, 1 MB does not - so the headroom there is between the two. It is not set
+        /// by default because the test suite's own JSX transform (Babel, which is far deeper than
+        /// anything a built bundle does) needs more than that, and capping it would break the
+        /// suite on the editors where it currently fits.
+        ///
+        /// Zero is a sentinel, not a value to forward: the engine reads a zero stack_size as
+        /// *unlimited*, which is worse than the default.
+        public static int MaxStackSize = 0;
+
         private class ScriptContextRef
         {
             public int next;
@@ -354,6 +377,8 @@ namespace QuickJS
             _logger?.Write(LogLevel.Info, "initializing script runtime: {0}", _runtimeId);
 #endif
             _rt = JSApi.JSB_NewRuntime(class_finalizer);
+            // Before anything can evaluate, and only when asked for - zero would mean unlimited.
+            if (MaxStackSize > 0) JSApi.JS_SetMaxStackSize(_rt, (size_t)MaxStackSize);
             JSApi.JS_SetHostPromiseRejectionTracker(_rt, JSNative.PromiseRejectionTracker, IntPtr.Zero);
 #if UNITY_EDITOR
             JSApi.JS_SetInterruptHandler(_rt, _InterruptHandler, IntPtr.Zero);

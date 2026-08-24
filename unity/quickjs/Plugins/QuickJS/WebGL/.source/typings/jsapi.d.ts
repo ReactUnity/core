@@ -132,6 +132,7 @@ declare global {
     static JS_NewArrayBufferCopy(returnValue: JSValue, ctx: JSContext, buf: Pointer<Byte>, len: size_t);
     static JS_ComputeMemoryUsage(rt: JSRuntime, s: Pointer<JSMemoryUsage>): void;
     static JS_SetInterruptHandler(rt: JSRuntime, cb: IntPtr, opaque: IntPtr): void;
+    static JS_SetMaxStackSize(rt: JSRuntime, stack_size: size_t): void;
 
     static JS_IsJobPending(rt: JSRuntime): Boolish;
     static JS_ExecutePendingJob(rt: JSRuntime, pctx: Out<JSContext>): Boolish;

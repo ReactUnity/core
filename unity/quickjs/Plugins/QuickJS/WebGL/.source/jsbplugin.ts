@@ -2196,6 +2196,12 @@ const UnityJSBPlugin: PluginType = {
     // TODO:
   },
 
+  JS_SetMaxStackSize(rt, stack_size) {
+    // Nothing to cap. Scripts run on the browser's own engine, which enforces its own call
+    // stack limit and raises a catchable RangeError - the thing the native backends need this
+    // for is already true here.
+  },
+
   JS_SetModuleLoaderFunc(rt, module_normalize, module_loader, opaque) {
     // TODO:
   },

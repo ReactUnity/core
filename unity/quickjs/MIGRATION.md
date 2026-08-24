@@ -729,6 +729,16 @@ the full suite green at the end (1,029 tests, 0 failures, both before and after)
   from a hook added to the fork, and the jslib is back in agreement with a check to keep it there.
   WebGL shares the host half and hands the linking to the browser, which is what the earlier note
   here said could not be done without a module realm in the iframe. It has not run in a player.
+- **The stack limit was never set, and ng's default is wrong here.** ng defaults to 1 MB
+  (`JS_DEFAULT_STACK_SIZE`) and measures against the stack of whichever thread created the
+  runtime — Unity's main thread, already deep in Unity's frames and deeper inside a coroutine,
+  where less than 1 MB is left. So the guard never fires: a deeply recursive script exhausts the
+  real stack, Mono notices at the managed-to-native boundary, and the `StackOverflowException`
+  that follows cannot be caught. Found by chasing 15 PlayMode failures on 6000.5.9f1, where the
+  suite's own Babel-based JSX transform is deep enough to trip it. `JS_SetMaxStackSize` is now
+  bound and `ScriptRuntime.MaxStackSize` exposes it, defaulting to off — any cap low enough to be
+  safe is below what Babel needs, so capping it by default would break the suite on the editors
+  where it currently fits. The measurement: 768 KB raises cleanly, 1 MB does not raise at all.
 - **Operator overloading, removed** — the machinery phase 3 left behind a permanently false guard.
   ng has no operator overloading to register, and the last dead stub went with it.
 - **`''` no longer marshals back as `null`** — a pre-existing bug in the string marshaller, not an

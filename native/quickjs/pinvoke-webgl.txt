@@ -84,6 +84,7 @@ JS_SetConstructor
 JS_SetContextOpaque
 JS_SetHostPromiseRejectionTracker
 JS_SetInterruptHandler
+JS_SetMaxStackSize
 JS_SetModuleLoaderFunc
 JS_SetModuleLoaderFuncAsync
 JS_SetModuleMetaFunc
