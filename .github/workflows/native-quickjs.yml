@@ -152,7 +152,9 @@ jobs:
         if: matrix.container
         run: |
           apt-get update
-          apt-get install -y --no-install-recommends git cmake build-essential ca-certificates
+          # python-is-python3 because the shared check step calls `python`, which a
+          # bare 22.04 does not provide even with python3 installed.
+          apt-get install -y --no-install-recommends git cmake build-essential ca-certificates python3 python-is-python3
 
       - uses: actions/checkout@v7
 

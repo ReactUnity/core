@@ -108,8 +108,13 @@ def nm_exports(path, fmt):
                 # T/t text, D/B/R data -- lower case is local, which -g should
                 # already have dropped; W is a weak definition, still exported.
                 if kind.upper() in ("T", "D", "B", "R", "W", "S"):
-                    # Mach-O prefixes every C symbol with an underscore
-                    names.add(name[1:] if fmt == "MACHO" and name.startswith("_") else name)
+                    names.add(name)
+                    # Mach-O prefixes every C symbol with an underscore -- and a Mach-O
+                    # static archive is detected as ARCHIVE, so the format cannot be what
+                    # decides. The iOS leg read 591 symbols and matched none of the 104
+                    # while that was keyed on MACHO. Recording both spellings costs nothing.
+                    if name.startswith("_"):
+                        names.add(name[1:])
             if names:
                 return names
     sys.exit("no symbol reader for %s: install LLVM (llvm-nm) or binutils (nm)" % fmt)
