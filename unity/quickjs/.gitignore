@@ -18,13 +18,17 @@
 [Xx]64/
 [Xx]86/
 
-# ...but Plugins/QuickJS/x64 and x86 are shipped plugin directories, not build output.
-# The binaries already there are tracked and so survive the rule, which is why this went
-# unnoticed; a newly built artifact is silently dropped, and `git add` on one fails
-# outright, which takes lint-staged and the pre-commit hook with it. Gate 0 still has
-# eleven binaries to install, two of them here.
-!Plugins/QuickJS/[Xx]64/
-!Plugins/QuickJS/[Xx]86/
+# ...but every x64 and x86 directory under Plugins/QuickJS is a shipped plugin directory,
+# not build output. The binaries already there are tracked and so survive the rule, which
+# is why this went unnoticed; a newly built artifact is silently dropped, and `git add` on
+# the *directory* fails outright -- which takes lint-staged and the pre-commit hook with it.
+#
+# `**/` because there are four of them, not two: WSA/x64 and WSA/x86 as well as the desktop
+# pair. Negating only the two direct ones is what left installing the WSA binaries unable
+# to commit. Note `git check-ignore <dir>` says "not ignored" here while `git add` refuses
+# it; ask with a trailing slash and --no-index to see the truth.
+!Plugins/QuickJS/**/[Xx]64/
+!Plugins/QuickJS/**/[Xx]86/
 [Bb]uild/
 bld/
 [Bb]in/
