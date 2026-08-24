@@ -92,8 +92,17 @@ def live_source(path, defines):
 
 
 def have_projects():
-    """Whether Unity has generated the .csproj the live surface is derived from."""
-    return bool(glob.glob(os.path.join(TESTS, "*.csproj")))
+    """Whether the live surface can be derived *here*.
+
+    Their existence is not enough. Unity writes `<Compile Include>` as an absolute path for
+    every file outside the project -- which is all of the quickjs C# -- so a checkout mounted
+    somewhere else resolves none of them. That used to yield a live set missing most of the
+    surface and a drift report naming every function in it, which reads like a real regression
+    and is not one; WSL hits it every time, reading the same tree through /mnt.
+    """
+    if not glob.glob(os.path.join(TESTS, "*.csproj")):
+        return False
+    return any(sources for _, _, sources in unity_projects())
 
 
 def read_surface(name):
