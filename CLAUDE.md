@@ -152,7 +152,11 @@ The C# side of that call surface is `unity/core/Runtime/Core/ReactUnityBridge.cs
 
 `unity/core/Runtime/Scripting/` defines `IJavaScriptEngine` plus DOM shims (`DomProxies/` — `fetch`, `XMLHttpRequest`, `WebSocket`, `localStorage`, `URL`). Concrete engines ship as separate UPM packages so a project pulls in only one native binary: `com.reactunity.quickjs` (recommended), `jint` (pure C#, slower), `clearscript` (V8).
 
-`com.reactunity.quickjs` binds unity-jsb's fork of **Bellard-era QuickJS**, not quickjs-ng — the two are different engines, not two versions of one, and the difference is load-bearing for anything touching `Runtime/Source/Native`. [unity/quickjs/MIGRATION.md](unity/quickjs/MIGRATION.md) has the measured plan for moving to quickjs-ng, which is what unblocks asynchronous module loading. Read it before changing that binding.
+`com.reactunity.quickjs` binds **[quickjs-ng](https://github.com/quickjs-ng/quickjs)**. It used to bind unity-jsb's fork of Bellard-era QuickJS, and the two are different engines rather than two versions of one — which is why the binary, the C shim and every P/Invoke declaration were rebuilt rather than upgraded. [unity/quickjs/MIGRATION.md](unity/quickjs/MIGRATION.md) is the record of that, and is worth reading before changing anything under `Runtime/Source/Native`.
+
+The C# is still unity-jsb's design — namespace `QuickJS.*`, assemblies `jsb.core`/`jsb.native`/`jsb.shared`/`jsb.editor.binding`, and the `JSB_*` shim symbols — but nothing is fetched from or linked against unity-jsb any more. All eleven native artifacts are built from [native/quickjs](native/quickjs) by [native-quickjs.yml](.github/workflows/native-quickjs.yml) and pinned to `gkurt/quickjs` `v0.16.2-reactunity.1`, a fork carrying the two async-module-loader additions that are not upstream yet.
+
+**Asynchronous module loading is what this bought**: an `import` of an http URL, and so a dynamic `import()`, resolves without blocking a frame. WebGL is the exception and keeps the host import hook — that backend evaluates through `eval` and has no module scope at all.
 
 ### Styling
 

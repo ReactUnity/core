@@ -1,16 +1,21 @@
 # `native/quickjs` — building the engine binary
 
 Builds `quickjs.dll` / `libquickjs.so` / `quickjs.bundle` / `libquickjs.a`, the native library
-`com.reactunity.quickjs` P/Invokes into. Artifacts are copied into
-[unity/quickjs/Plugins/QuickJS](../../unity/quickjs/Plugins/QuickJS) by hand for now.
+`com.reactunity.quickjs` P/Invokes into. Every artifact in
+[unity/quickjs/Plugins/QuickJS](../../unity/quickjs/Plugins/QuickJS) is now built here, by CI;
+copying them into place is still a manual step.
 
-This exists because the shipped binaries are unity-jsb prebuilts and this repo had no way to
-reproduce them. See [MIGRATION.md](../../unity/quickjs/MIGRATION.md) for why we are moving off
-Bellard-era QuickJS at all.
+This exists because the shipped binaries used to be unity-jsb prebuilts of Bellard-era QuickJS,
+with nothing in this repo able to reproduce them. See
+[MIGRATION.md](../../unity/quickjs/MIGRATION.md) for how that was moved onto quickjs-ng.
 
 ```bash
-cmake -B build -S . -G "Visual Studio 17 2022" -A x64
+cmake -B build -S . -A x64
 ```
+
+**No `-G`.** Naming a generator pins you to one Visual Studio: the CI legs were configured with
+`-G "Visual Studio 17 2022"` until `windows-latest` moved to VS 2026 and every Windows and WSA leg
+failed with *"could not find any instance of Visual Studio"*. Let CMake pick the newest it finds.
 
 ```bash
 cmake --build build --config Release --target quickjs
@@ -145,7 +150,9 @@ if the `.csproj` files are missing.
 ## What it links
 
 quickjs-ng is fetched by CMake, never vendored, and pinned to a **commit** — `QJS_COMMIT` in
-[CMakeLists.txt](CMakeLists.txt). It points at a fork because the asynchronous module loader
+[CMakeLists.txt](CMakeLists.txt), tagged `v0.16.2-reactunity.1` on the fork so it cannot be lost to
+a rebase or GC. The SHA rather than the tag name is what is pinned, because a tag can be moved and a
+SHA cannot. It points at a fork because the asynchronous module loader
 (`JS_SetModuleLoaderFuncAsync`, `JS_FulfillModuleLoad`, `JS_RejectModuleLoad`,
 `JS_EvalModuleAsync`) is not upstream yet. Override `QJS_REPOSITORY`/`QJS_COMMIT` to build against
 plain upstream.
@@ -214,17 +221,37 @@ there is no build script per platform and nothing to vendor from unity-jsb. All 
 runs `shim-test` wherever the runner can execute what it built, checks the exports, and uploads —
 **installing them into `Plugins/QuickJS/` stays a manual step**, like `release-upm.yml`.
 
-| artifact | configure | proven |
-| --- | --- | --- |
-| Windows x64 | `-G "Visual Studio 17 2022" -A x64` | yes, and installed |
-| Windows x86 | `-A Win32` | yes, locally |
-| Linux x64 | `-DCMAKE_BUILD_TYPE=Release` | yes, locally (WSL) |
-| WSA x64 / x86 / ARM64 | `+ -DCMAKE_SYSTEM_NAME=WindowsStore -DCMAKE_SYSTEM_VERSION=10.0 -DCMAKE_TRY_COMPILE_TARGET_TYPE=STATIC_LIBRARY` | x64 and ARM64, locally |
-| macOS universal | `-DCMAKE_OSX_ARCHITECTURES=arm64;x86_64` | not yet — needs a Mac |
-| iOS arm64 | `-G Xcode -DCMAKE_SYSTEM_NAME=iOS -DCMAKE_XCODE_ATTRIBUTE_CODE_SIGNING_ALLOWED=NO` | not yet — needs a Mac |
-| Android ×3 | `-DCMAKE_TOOLCHAIN_FILE=$ANDROID_NDK_ROOT/build/cmake/android.toolchain.cmake -DANDROID_ABI=… -DANDROID_PLATFORM=android-24` | not yet — needs the NDK |
+All eleven are built by CI and installed, each verified at 104 of 104 live P/Invoke names.
 
-Three things about that table are load-bearing.
+| artifact | configure | notes |
+| --- | --- | --- |
+| Windows x64 / x86 | `-A x64` / `-A Win32` | |
+| Linux x64 | `-DCMAKE_BUILD_TYPE=Release` | built in an `ubuntu:22.04` container, see below |
+| WSA x64 / x86 / ARM64 | `+ -DCMAKE_SYSTEM_NAME=WindowsStore -DCMAKE_SYSTEM_VERSION=10.0 -DCMAKE_TRY_COMPILE_TARGET_TYPE=STATIC_LIBRARY` | |
+| macOS universal | `-DCMAKE_OSX_ARCHITECTURES=arm64;x86_64` | `shim-test` runs here |
+| iOS arm64 | `-G Xcode -DCMAKE_SYSTEM_NAME=iOS -DCMAKE_XCODE_ATTRIBUTE_CODE_SIGNING_ALLOWED=NO` | merged archive, see below |
+| Android arm64-v8a / armeabi-v7a / x86_64 | `-DCMAKE_TOOLCHAIN_FILE=$ANDROID_NDK_ROOT/build/cmake/android.toolchain.cmake -DANDROID_ABI=… -DANDROID_PLATFORM=android-24` | |
+
+Five things about that table are load-bearing.
+
+**Linux is built against an old glibc on purpose.** glibc is backward compatible and never forward,
+so the floor a binary records is the oldest system it will load on. Built natively on
+`ubuntu-latest` (24.04) the `.so` records `GLIBC_2.38`, and the Unity test container is older — the
+result loads nowhere useful and Unity reports `DllNotFoundException`, which reads like a missing
+file rather than a too-new one. The leg runs in an `ubuntu:22.04` container for a 2.35 floor. The
+unity-jsb binary it replaced asked for 2.17, so this is a narrower reach than users had; an older
+base is the fix if that turns out to matter.
+
+**iOS ships a merged archive, and the merge is easy to break.** A static library does not absorb a
+static library it links, so `add_library(quickjs STATIC …)` plus `target_link_libraries(… qjs)`
+yields an archive holding the shim alone — every `JS_*` symbol missing, and nothing failing until
+Unity links the Xcode project. A `libtool -static` POST_BUILD step merges ng in. It is deliberately
+**not** `VERBATIM`: under the Xcode generator `TARGET_FILE` expands to a path containing the literal
+`${EFFECTIVE_PLATFORM_NAME}`, which Xcode substitutes in the script phase's own shell, and VERBATIM
+escapes the `$` so it never gets the chance. `check-exports.py` reading the archive is what catches
+a regression here, and it only catches it because it records both the plain and underscore-prefixed
+spelling of every symbol — Mach-O prefixes C symbols with `_`, and a Mach-O *archive* is detected as
+`ARCHIVE` rather than `MACHO`, so the format cannot be what decides.
 
 **WSA needs two warnings suppressed on ng's own target.** UWP compiles with `/sdl`, which promotes
 C4146 and C4703 to errors, and `quickjs.c` and `dtoa.c` trip both deliberately. Desktop MSVC leaves
@@ -235,10 +262,15 @@ CMake's default compiler probe builds *and signs an appx*, which fails on ARM64.
 from 10.0.26100 on — and Unity no longer targets it. Rebuilding it would mean pinning an SDK
 Microsoft has ended.
 
-**The Android ABI list changed.** The shipped set is `arm64-v8a`, `armeabi-v7a` and 32-bit `x86`,
-with no `x86_64`. That is a unity-jsb-era list: `x86_64` is the ABI Unity 6 actually targets (the
-emulator, Chromebooks) and 32-bit `x86` is not one it offers. The workflow builds `x86_64` and does
-not build `x86`.
+**The Android ABI list changed.** unity-jsb shipped `arm64-v8a`, `armeabi-v7a` and 32-bit `x86`,
+with no `x86_64` — and `x86_64` is the ABI Unity 6 actually targets (the emulator, Chromebooks)
+while 32-bit `x86` is not one it offers at all. So `x86_64` is built and installed, and `x86` is
+gone rather than left sitting there as an old-engine binary that loads and then throws.
+
+Adding that one was not a file copy: a native Android plugin needs `CPU: X86_64` on its importer,
+and a batch import writes only a stub `.meta` carrying a guid and no `PluginImporter` block. It was
+set through a live Editor (`unity command eval_file` against `PluginImporter`), which is the right
+tool for it — hand-writing importer YAML is not.
 
 unity-jsb built Windows with MinGW and only WSA with MSVC. Both follow the Win64 ABI for the
 16-byte `JSValue` return, so the switch to MSVC everywhere is safe.
