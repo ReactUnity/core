@@ -21,10 +21,11 @@ namespace ReactUnity.Tests
 
             // Executing a module does not imply resolving one, and QuickJS could not until it
             // gained quickjs-ng's asynchronous loader - its synchronous one has to return a module
-            // there and then, which an http import cannot. The host import hook is what stood in,
-            // and WebGL is the one target still on it: no QuickJS at all there, only `eval`.
+            // there and then, which an http import cannot. A host import hook stood in until then,
+            // and this is what let it be deleted: every engine on every target answers yes here,
+            // WebGL included, where the jslib drives the same loader and the browser links.
             Assert.IsTrue(Context.Script.Engine.Capabilities.HasFlag(EngineCapabilities.ModuleResolution),
-                $"{EngineType} cannot resolve a module specifier, so the import hook is still load-bearing");
+                $"{EngineType} cannot resolve a module specifier, and there is no longer a hook to stand in");
         }
 
         [UGUITest]

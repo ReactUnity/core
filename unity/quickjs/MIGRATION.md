@@ -375,9 +375,15 @@ walkthrough itself is still a manual step nobody has run.
 
 The WebGL half came later, and the reasoning that said it could not — that it needed a module realm
 in the iframe — was wrong; see "The second implementation" above for what it actually took.
-`ModuleCompat.RewriteDynamicImports` is now unreachable from the QuickJS engine on any target,
-though Jint and ClearScript still have no use for it either: it stays for any future engine that
-executes modules without resolving specifiers.
+That closed the last gap in `EngineCapabilities.ModuleResolution`, so **the host import hook is
+gone**: `ScriptContext.CreateImportHook`, the `LoadScript` it installed, and
+`ModuleCompat.RewriteDynamicImports` with its string-literal scanner. All three were unreachable
+from every shipped engine once WebGL stopped needing them, and keeping them as an extension point
+did not survive a look at how an engine is chosen - `ScriptContext` builds the factory itself from
+an `internal` switch over a closed enum, so a third party cannot supply an engine at all. Whoever
+adds the next one is editing these files anyway, and would write the hook against what that engine
+needs rather than inherit one shaped around a constraint that no longer exists. `NeedsModuleScope`
+stays; deciding that a chunk needs module scope is still the job.
 
 One thing phase 4 needed that the fork did not have: **the async loader gave the host no way to set
 `import.meta`.** `JS_FulfillModuleLoad` compiles the source itself and settles the graph internally,

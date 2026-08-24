@@ -5,8 +5,6 @@ namespace ReactUnity.Editor.Tests
 {
     public class ModuleCompatTests
     {
-        const string Url = "http://localhost:3100/assets/index.js";
-
         [Test]
         public void PlainScriptNeedsNoModuleScope()
         {
@@ -35,38 +33,6 @@ namespace ReactUnity.Editor.Tests
         public void TheWordExportInsideCodeIsNotModuleSyntax()
         {
             Assert.IsFalse(ModuleCompat.NeedsModuleScope("var exported = 1; obj.export = 2; exports.a = 3;"));
-        }
-
-        [Test]
-        public void DynamicImportGoesToTheHostHook()
-        {
-            // The line the Vite HMR client applies each patch with.
-            var code = "const importPromise = import(base + url).then(() => globalThis.__rolldown_runtime__.loadExports(p));";
-
-            var result = ModuleCompat.RewriteDynamicImports(code);
-            StringAssert.Contains(ModuleCompat.ImportHook + "(base + url)", result);
-        }
-
-        [Test]
-        public void ImportInsideAStringIsNotRewritten()
-        {
-            // React logs this text; rewriting it would corrupt the message.
-            var code = "console.error(\"Expected the result of a dynamic import() call. Instead received: %s\");";
-            Assert.AreEqual(code, ModuleCompat.RewriteDynamicImports(code));
-        }
-
-        [Test]
-        public void EscapedQuotesDoNotConfuseTheStringCheck()
-        {
-            var code = "var a = \"he said \\\"hi\\\"\"; var p = import(x);";
-            StringAssert.Contains(ModuleCompat.ImportHook + "(x)", ModuleCompat.RewriteDynamicImports(code));
-        }
-
-        [Test]
-        public void ImportAsAPropertyOrIdentifierIsNotRewritten()
-        {
-            var code = "obj.import(x); myimport(y);";
-            Assert.AreEqual(code, ModuleCompat.RewriteDynamicImports(code));
         }
 
         [TestCase("<script type=\"module\" src=\"/assets/index.js\"></script>", true, TestName = "IsHtml_ViteDevServerRoot")]
