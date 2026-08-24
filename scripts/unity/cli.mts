@@ -376,7 +376,7 @@ async function runUnity(project: Project, options: RunOptions): Promise<{ log: L
   console.log(`Unity exited ${code} after ${Math.round((Date.now() - started) / 1000)}s.`);
 
   if (churn) {
-    const { restored, created } = restoreChurn(project, churn);
+    const { restored, created } = restoreChurn(churn);
     if (restored.length) console.log(`Restored ${restored.length} project file(s) Unity rewrote: ${restored.join(', ')}`);
     if (created.length) console.log(`Unity created (left in place, check git status): ${created.join(', ')}`);
   }

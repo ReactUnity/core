@@ -39,7 +39,7 @@ pnpm unity test tests
 pnpm unity test tests --platform EditMode --filter ReactUnity.Tests.StyleTests
 ```
 
-Green as of 2026-07-28 is **316/325 EditMode** (9 skipped) and **655/665 PlayMode** (10 skipped), both with zero failures — so a single failure is a real signal, not background noise. **Zero tests is a failure, not a pass**: it means the project failed to load, usually package resolution. The CLI treats it that way; do not read `0 failed` as green without checking the total.
+Green as of 2026-08-24 on 6000.5.9f1 is **346/354 EditMode** (8 skipped) and **690/701 PlayMode** (11 skipped), both with zero failures — so a single failure is a real signal, not background noise. **Zero tests is a failure, not a pass**: it means the project failed to load, usually package resolution. The CLI treats it that way; do not read `0 failed` as green without checking the total.
 
 ## IL2CPP, which no suite above covers
 
@@ -130,7 +130,7 @@ Unity shipped an official CLI in July 2026. It is installed here but **not on PA
 
 Its own agent skill is at `~/.claude/skills/unity-cli` (`unity skill install claude-code` wrote it, `unity skill refresh` re-renders it after `unity upgrade`) — read that for the command surface. What matters here is the division of labour.
 
-**It replaces `bridge`, for a project that has `com.unity.pipeline`.** kitchen-sink does as of `b8225447`; tests/ does not. With the package, an open Editor exposes ~200 commands over loopback, and every `bridge` action has an equivalent:
+**It replaces `bridge`.** Both projects now have `com.unity.pipeline` — kitchen-sink as of `b8225447`, tests/ since. An open Editor exposes 142 commands over loopback (200 in kitchen-sink, which has more packages), and every `bridge` action has an equivalent:
 
 | `pnpm unity bridge …` | `unity command …` |
 |---|---|
@@ -141,9 +141,11 @@ Its own agent skill is at `~/.claude/skills/unity-cli` (`unity skill install cla
 | `play` / `stop` | `editor_play` / `editor_stop` |
 | `screenshot` | `screenshot`, `capture_game_view`, `capture_scene_view` |
 | `menu` | `menu` |
-| `quit` | no equivalent — `eval "EditorApplication.Exit(0);"` |
+| `quit` | no equivalent — `eval "UnityEditor.EditorApplication.Exit(0);"` |
 
 That is [AgentBridge](../../../unity/core/Editor/Developer/AgentBridge/) (686 lines of C# in its own asmdef) plus [bridge.mts](../../../scripts/unity/bridge.mts) (219 lines) covering less ground than a package dependency does. It also has `build`, `eval`, `set_player_settings`, `audit`, and a `--runtime` mode that attaches to a running development **player**.
+
+Two measured details. `run_tests` returns a structured summary plus a row per test, so it needs no results file — `unity command run_tests --project-path tests -- --mode EditMode --filter <name>` reported 6/6 across all three engines. And the `quit` recipe above *works but reports a failure*: the Editor exits before the Pipeline server can answer, so the CLI says `COMMAND_FAILED: Invalid response format from Pipeline server`. Check `unity status` rather than believing it.
 
 **It does not replace `compile`, `test`, or `player`**, for one reason that is not about features: `unity test` and `unity build` launch the Editor without snapshotting the files Unity rewrites for having opened the project. On this repo that silently upgrades `tests/Packages/manifest.json` into a shape CI cannot resolve — the failure mode is *zero tests reported as a pass*. See [project.mts](../../../scripts/unity/project.mts). Two smaller gaps: it has no notion of `-assemblyNames` or our `-reactOverwriteSnapshots`, though `unity test . -- <args>` forwards both; and its editor discovery found 3 of the 6 editors installed here (it misses side-by-side `C:\Program Files\Unity <version>` installs, which `pnpm unity editors` lists).
 
@@ -153,13 +155,23 @@ So: `unity` for anything against a live Editor, `pnpm unity` for anything in bat
 
 **Local runs rewrite the project, and committing that breaks CI.** Opening `tests/` with 6000.5 upgrades `Packages/manifest.json` to a 6000-only shape (`com.unity.ugui` 2.x, no `textmeshpro`) that the CI jobs cannot resolve — measured on 6000.1, and unresolvable packages produce *zero tests* while still looking like a pass. The CLI snapshots those files and puts them back after every run. Do not pass `--no-restore` unless you intend to commit the upgrade, and check `git status` under `tests/` before committing anything.
 
+**A PlayMode run empties a font asset that ships.** `unity/core/Assets/Material Icons/Material Icons SDF - TMP.asset` is a dynamic-atlas TMP font, and a run clears its `m_GlyphTable` on the way to repopulating it at runtime — 375 lines of glyph metrics gone. It is in a *package*, not a project, so nothing project-relative reached it until `PACKAGE_CHURN_FILES` in [project.mts](../../../scripts/unity/project.mts) was added. That list is the only thing standing between a test run and publishing a font with no glyphs in it, so leave it in place, and if another package asset starts showing up in `git status` after runs, add it there rather than reverting by hand each time.
+
 **Restore only covers batch runs.** `pnpm unity open` hands the project to an interactive Editor that nothing cleans up after, so it churns `ProjectSettings/*` and the deliberately-tracked `UserSettings/EditorUserSettings.asset` freely. After any session with an open Editor, read `git status` before committing.
 
 **Unity leaves untracked files behind** (`tests/.vscode/`, `tests/tests.slnx`, new `ProjectSettings/*.asset`). Restore does not delete them — regenerating them each run is worse. Leave them out of commits. A killed PlayMode run also leaks `tests/Assets/InitTestScene*.unity`, which the test framework normally deletes itself; a stray one is debris, not content.
 
 **The editor version comes from each project's `ProjectSettings/ProjectVersion.txt`** — whichever Editor last opened the project is the one these commands drive. Nothing is pinned in the scripts (a hard-coded version went stale the first time someone upgraded). `UNITY_VERSION=` overrides per run, and only then is that file restored afterwards; `pnpm unity editors` lists what exists.
 
-**`tests/` cannot run its *suite* on the 6000.5 line.** It resolves `com.unity.inputsystem`, `test-framework.performance` and `testtools.codecoverage` versions whose editor assemblies fail obsolete-as-error there — `TreeView` on 6000.5.5, `GetInstanceID`/`GetAssetPath(int)` after the `EntityId` migration on 6000.5.9 — and the run reports *zero tests* rather than a red suite. **`compile` is not a proxy for this, and neither is `player`:** both build only the project's own assemblies and pass on 6000.5, while `test` pulls in those package editor assemblies and dies. Keep a 6000.1.x editor installed for `test`. CI runs 6000.0.51f1 and 6000.1.9f1, so a local pass still is not proof the matrix passes.
+**`tests/` runs on the 6000.5 line** — an earlier note here said it could not, and that was wrong twice over. Measured 2026-08-24 on **6000.5.9f1** with no `UNITY_VERSION`: EditMode **346/354** (8 skipped), PlayMode **690/701** (11 skipped), zero failures.
+
+What the old note got right is that `com.unity.inputsystem` **1.14.2** does not compile there — nine `CS0619`s in its editor assemblies, `GetInstanceID`/`GetAssetPath(int)`/`InstanceIDToObject(int)` after the `EntityId` migration, which produce *zero tests* rather than a red suite. What it got wrong is the conclusion: 1.14.2 was only ever the manifest's **minimum**, and 6000.5 was picking 1.20.0 over it whenever the lockfile let it. Whether a run worked came down to whether the resolver had a reason to fall back to minimums — and adding a package is such a reason, which is how this got diagnosed. So the minimums are now raised to the versions that work on 6000.5 (`inputsystem` 1.20.0, `test-framework.performance` 3.5.0, `testtools.codecoverage` 1.3.0), each of which still declares `unity: 6000.0` or older and so stays resolvable on CI.
+
+`test-framework`, `ugui` and `ext.nunit` are deliberately left alone — they are `builtin`, so the editor supplies its own version whatever the manifest says (1.7.0 and 2.5.0 on 6000.5), and the recorded number is informational. Do not "fix" those to match a local run: the 6000-only manifest shape, with `ugui` 2.x and no `textmeshpro`, is the one that fails to resolve on 6000.1.
+
+**The first run after the package graph changes can crash.** Adding the Pipeline package produced one `0xC0000005` mid-suite, inside Unity's own `EditorWindow.Close` → `DockArea.RemoveTab` → `ContainerWindow.Close` teardown, on a run that was also re-resolving and re-importing. The identical run straight afterwards was green and it has not returned. Re-run once before investigating a crash whose stack is entirely Unity's.
+
+CI runs 6000.0.51f1 and 6000.1.9f1, so a local pass still is not proof the matrix passes — and the raised minimums in particular have only been measured on 6000.5.
 
 **Switching `UNITY_VERSION` is not free.** A different editor deletes and recreates the project's asset database, so the run after a version switch pays a full reimport, and switching back pays it again. Worth it to reproduce a matrix failure; not worth it casually. `ProjectVersion.txt` is deliberately left at whatever version last opened the project — reverting it below the local editor makes `pnpm unity open` hang on a modal "Project Upgrade Required" dialog with no visible window title. CI ignores that file entirely.
 

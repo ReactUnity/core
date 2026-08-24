@@ -82,25 +82,38 @@ const CHURN_FILES = [
  */
 const VERSION_FILE = 'ProjectSettings/ProjectVersion.txt';
 
+/**
+ * Assets inside the packages, which belong to no project and which nothing project-relative
+ * reaches. A PlayMode run empties this font's glyph table on its way to repopulating the
+ * dynamic atlas at runtime -- and unlike the files above, this one *ships*: committing it
+ * publishes a font with no glyphs in it.
+ */
+const PACKAGE_CHURN_FILES = ['unity/core/Assets/Material Icons/Material Icons SDF - TMP.asset'];
+
+/** Keyed by absolute path, valued by the bytes before the run (null when it did not exist). */
 export type Churn = Map<string, Buffer | null>;
 
 export function snapshotChurn(project: Project): Churn {
   const snapshot: Churn = new Map();
   const files = process.env.UNITY_VERSION ? [...CHURN_FILES, VERSION_FILE] : CHURN_FILES;
-  for (const rel of files) {
-    const file = path.join(project.path, rel);
-    snapshot.set(rel, fs.existsSync(file) ? fs.readFileSync(file) : null);
-  }
+
+  for (const relative of files) snapshot.set(path.join(project.path, relative), read(path.join(project.path, relative)));
+  for (const relative of PACKAGE_CHURN_FILES) snapshot.set(path.join(repoRoot, relative), read(path.join(repoRoot, relative)));
+
   return snapshot;
 }
 
+function read(file: string): Buffer | null {
+  return fs.existsSync(file) ? fs.readFileSync(file) : null;
+}
+
 /** Returns the files it put back, plus any Unity created that were not there before. */
-export function restoreChurn(project: Project, snapshot: Churn): { restored: string[]; created: string[] } {
+export function restoreChurn(snapshot: Churn): { restored: string[]; created: string[] } {
   const restored: string[] = [];
   const created: string[] = [];
 
-  for (const [rel, before] of snapshot) {
-    const file = path.join(project.path, rel);
+  for (const [file, before] of snapshot) {
+    const rel = path.relative(repoRoot, file).replaceAll('\\', '/');
     const exists = fs.existsSync(file);
 
     if (before === null) {
