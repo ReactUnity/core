@@ -141,6 +141,22 @@ What it cannot check is signatures. The jslib is hand-written JavaScript with no
 against, so arity and tag values stay a reading exercise — which is how it came to hold Bellard's
 tag numbers and a `pctx` argument no QuickJS has ever declared.
 
+Two more checks live with it in the `webgl-jslib` job, neither of them Python. The jslib is
+**generated** from `Plugins/QuickJS/WebGL/.source/jsbplugin.ts`, so CI rebuilds it and diffs — a
+hand-edit or a forgotten rebuild fails there rather than shipping. And the module machinery is the
+one part of the jslib that runs outside a browser, so it is tested:
+
+```bash
+node --test unity/quickjs/Plugins/QuickJS/WebGL/.source/jsbplugin.test.mjs
+```
+
+Those tests run against the *generated* jslib, not the TypeScript — [extract.mjs](../../unity/quickjs/Plugins/QuickJS/WebGL/.source/extract.mjs)
+cuts the members out by brace matching and substitutes the `{{{ makeDynCall }}}` macros for a direct
+call, because an Emscripten library object cannot be imported. What they cover is the source scanner
+and the graph loader, driven through the platform's own dynamic import. What no amount of this
+reaches is the C boundary — dyncall signatures, the `JSValue` layout, and whether Unity's WebGL
+output permits `new Function` and `blob:` imports. Only a player answers those.
+
 All three python checks get "the live P/Invoke set" from [pinvoke.py](pinvoke.py), which parses Unity's
 generated `tests/*.csproj` for the real define set and source list — so a declaration inside a dead
 `#if` is not counted as a requirement — and resolves `EntryPoint` aliases. Three declarations named

@@ -156,7 +156,15 @@ The C# side of that call surface is `unity/core/Runtime/Core/ReactUnityBridge.cs
 
 The C# is still unity-jsb's design — namespace `QuickJS.*`, assemblies `jsb.core`/`jsb.native`/`jsb.shared`/`jsb.editor.binding`, and the `JSB_*` shim symbols — but nothing is fetched from or linked against unity-jsb any more. All eleven native artifacts are built from [native/quickjs](native/quickjs) by [native-quickjs.yml](.github/workflows/native-quickjs.yml) and pinned to `gkurt/quickjs` `v0.16.2-reactunity.1`, a fork carrying the two async-module-loader additions that are not upstream yet.
 
-**Asynchronous module loading is what this bought**: an `import` of an http URL, and so a dynamic `import()`, resolves without blocking a frame. WebGL is the exception and keeps the host import hook — that backend evaluates through `eval` and has no module scope at all.
+**Asynchronous module loading is what this bought**: an `import` of an http URL, and so a dynamic `import()`, resolves without blocking a frame. Every target has it, WebGL included — `EngineCapabilities.ModuleResolution` is claimed everywhere, so `ModuleCompat.RewriteDynamicImports` and `ScriptContext.CreateImportHook` are now unreachable from any shipped engine.
+
+WebGL gets there differently, because there is no QuickJS in it. The host half is shared — `QuickJSModuleLoader` resolves and fetches, so `import './x'` obeys ReactUnity's paths on both — but the linking is the browser's: [jsbplugin.ts](unity/quickjs/Plugins/QuickJS/WebGL/.source/jsbplugin.ts) assembles each module into a blob URL, rewriting every specifier to its dependency's URL, and imports the root. A module cannot see the globals proxy the rest of that backend runs inside (`with` is illegal in module code), so each one opens with a generated `var {…} = …` prelude of the host globals it mentions. `MIGRATION.md`'s "The second implementation" has the four rules that prelude has to follow and why each was a bug first. **Cycles are refused there** — a blob URL needs final text, and a cycle's is not.
+
+**The jslib is generated; edit [.source/jsbplugin.ts](unity/quickjs/Plugins/QuickJS/WebGL/.source/jsbplugin.ts), never `jsbplugin.jslib`.** TypeScript 5 is pinned (`npx -p typescript@5 tsc && node postbuild.mjs` in `.source`) because TS 7 removed every option the build needs and has no ES5 emit, which Emscripten still requires. ES5 is not decoration: `async`/`await`, spread and `for…of` all downlevel to helper functions tsc puts at the top of the file, and Emscripten only emits the library object's own members — so a helper reference is `undefined` at runtime. Plain `.then()` chains and `forEach` only. `native-quickjs.yml` rebuilds and diffs the jslib, so a hand-edit or a forgotten rebuild fails CI, and runs the module tests:
+
+```bash
+node --test unity/quickjs/Plugins/QuickJS/WebGL/.source/jsbplugin.test.mjs
+```
 
 ### Styling
 

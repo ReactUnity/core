@@ -18,6 +18,12 @@ declare global {
     getContext: (ctx: JSContext) => PluginContext;
     getAnyValue: (val: JSValue) => any;
 
+    moduleRegistryKey: string;
+    moduleImportHook: string;
+    moduleReservedNames: Record<string, boolean>;
+    scanModule: (source: string) => ModuleScan;
+    createModuleRegistry: (context: PluginContext) => ModuleRegistry;
+
     HEAP64: () => BigInt64Array;
     HEAPU64: () => BigUint64Array;
   }
@@ -29,6 +35,57 @@ declare global {
     refs: ObjectReferences;
     isDestroyed: boolean;
     garbageCollect(): number;
+
+    /** The host's asynchronous module loader, as installed by JS_SetModuleLoaderFuncAsync. */
+    moduleNormalize?: IntPtr;
+    moduleLoader?: IntPtr;
+    moduleOpaque?: IntPtr;
+    /** Loads handed to the host and not settled yet, by ticket. */
+    pendingModuleLoads?: Record<number, ModuleLoadPending>;
+    lastModuleLoadId?: number;
+  };
+
+  export declare type ModuleLoadPending = {
+    resolve: (source: string) => void;
+    reject: (error: any) => void;
+  };
+
+  /** A rewrite the assembled module text has to carry. */
+  // `specifier` is the specifier as written, or null for the keyword of a dynamic import.
+  export declare type ModuleEdit = {
+    start: number;
+    end: number;
+    specifier: string | null;
+  };
+
+  export declare type ModuleScan = {
+    edits: ModuleEdit[];
+    /** Names declared at the module's top level, which the globals prelude must not shadow. */
+    bindings: Record<string, boolean>;
+    /** Every name the module uses as a free identifier - not after a `.`, not inside a string
+     *  or a comment. The globals prelude declares nothing outside this set. */
+    mentions: Record<string, boolean>;
+  };
+
+  export declare type ModuleRecord = {
+    name: string;
+    source: string;
+    scan: ModuleScan;
+    /** Specifier as written -> resolved module name. */
+    deps: Record<string, string>;
+    /** Settles once this module and everything below it has been fetched. */
+    ready: Promise<ModuleRecord>;
+    url: string;
+  };
+
+  export declare type ModuleRegistry = {
+    /** Loads, links and evaluates a graph from the root's source. */
+    evaluate: (name: string, source: string) => Promise<any>;
+    /** The `import()` a module or script of the given referrer gets. */
+    dynamicImport: (referrer: string) => (specifier: string) => Promise<any>;
+    /** Points a script's dynamic imports at the host loader. */
+    rewriteScript: (code: string) => string;
+    free: () => void;
   };
 
   export declare type PluginContext = {
@@ -44,12 +101,20 @@ declare global {
 
     globalObject: Window;
     globalObjectId?: number;
+    /** The object the host's own globals are installed on, behind the globalObject proxy. */
+    hostGlobals: Record<string, any>;
 
     evaluate: ((script: string, filename?: string) => any);
+    /** Native dynamic import, in the same realm `evaluate` runs in. */
+    importModule: ((url: string) => Promise<any>);
     lastException?: Error;
+
+    modules: ModuleRegistry;
 
     free(): void;
     setBaseUrl(url: string): void;
+    createBlobUrl(text: string): string;
+    revokeBlobUrl(url: string): void;
   };
 
   export declare type AtomReferences = {

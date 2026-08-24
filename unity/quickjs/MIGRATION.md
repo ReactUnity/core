@@ -190,19 +190,66 @@ Two things are worth knowing before touching it again:
 configuration that cannot occur (and were incoherent anyway — they skipped `quickjs.h` and then used
 `JSAtom`).
 
-**The async loader is not easier here, and this document had that wrong.** The claim was that the
-browser's real promises and real `import()` make `JS_EvalModuleAsync` a thin `async function`. What
-that missed is that this backend has no module scope to run one in: `context.evaluate` is an `eval`
-inside a sandbox iframe, wrapped in `with (globals)` so the bundle sees ReactUnity's globals, and
-`eval` cannot run `import` or `export` at all. ES module syntax has therefore never worked on WebGL
-— phase 4 did not change that either way. Making it work means giving the iframe a module realm (a
-blob url imported from a `<script type="module">`) and reconciling that with a globals proxy a
-module cannot see, which is its own piece of work.
+**The async loader is not easier here, and this document had that wrong twice.** The first claim was
+that the browser's real promises and real `import()` make `JS_EvalModuleAsync` a thin `async
+function`. What that missed is that this backend has no module scope to run one in: `context.evaluate`
+is an `eval` wrapped in `with (globals)` so the bundle sees ReactUnity's globals, and `eval` cannot
+run `import` or `export` at all. The second claim was the correction — that fixing it needs "a module
+realm in the iframe", and is therefore out of reach. That was the wrong shape, and it is what made
+the work look bigger than it is.
 
-So WebGL keeps the host import hook: `EngineCapabilities.ModuleResolution` is claimed everywhere
-*except* there, `ModuleCompat.RewriteDynamicImports` stays in play for that one target, and the six
-async entry points exist in the jslib because the Emscripten link needs them, each returning a clear
-failure rather than pretending.
+**WebGL has ES modules now.** The realm was never the problem; the globals were, and the fix is
+smaller than a realm. Modules run in the *same* realm `evaluate` does — the page's, reached through
+`new Function('url', 'return import(url);')`, so a module and a script produce objects of one realm
+and the `instanceof Error` checks all through the jslib keep working. What a module cannot do is see
+the globals proxy, because `with` is illegal in module code and a module's `globalThis` is its
+realm's. So the proxy is published on the page under one key and every module is assembled with a
+prelude that declares the host globals it mentions:
+
+```js
+var {console,fetch,UnityBridge,location} = globalThis["__reactunity_jsb__"][1].globals;
+```
+
+Four details make that hold up, and each was a bug before it was a rule:
+
+- **`var`, not `const`.** A bundle is free to declare `var URL` itself; two `var` declarations of one
+  name are legal where two lexical ones are a `SyntaxError`. The scanner still collects `let`,
+  `const`, `class`, `function` and import bindings so the prelude skips those.
+- **Only the names the module mentions**, matched as free identifiers rather than after a `.`. A name
+  that is never injected can never collide.
+- **The prelude rides on the source's own first line**, with no newline of its own, so no line number
+  moves — which matters most for the source map the bundle arrived with, since that cannot be
+  corrected from here once it is off by one.
+- **Specifiers have to be rewritten.** A module reaches the browser as a blob url, and a blob has no
+  base for a relative specifier to resolve against, so every specifier is replaced with the blob url
+  of the dependency the host already fetched. Dynamic `import()` is rewritten too — left alone the
+  browser would resolve it against the blob url and fetch it itself, which is not where this
+  backend's modules live.
+
+The host's half is unchanged and shared with desktop: `QuickJSModuleLoader` resolves and fetches,
+`JS_FulfillModuleLoad` settles each load, so `import './x'` resolves against ReactUnity's own paths
+on both. What differs is who links and evaluates — there is no QuickJS here, so the assembled blob
+urls are handed to the engine the page already runs, and live bindings, top-level await and the
+module cache come from it for free.
+
+`JS_SetModuleMetaFunc` is the one hook that cannot be served: it identifies a module by its
+`JSModuleDef`, and this backend has none to hand out. The prelude sets `import.meta.url` to the name
+the normalizer resolved, which is the same value `MetaTrampoline` would have written.
+
+**One divergence from desktop, deliberate: a cycle is refused.** A blob url can only be minted for
+text that is already final, and a cycle's is not — each side needs the other's url first. It is
+reported where the path that closes it is still known (`Circular imports are not supported on WebGL:
+a -> b -> a`) rather than left as a deadlocked import. Bundler output does not contain ESM cycles;
+hand-written module graphs can.
+
+**None of this has run in a WebGL player.** The WebGL build module is not installed on the machine
+this was written on, so what is verified is the scanner and the graph loader, against the generated
+jslib and the platform's own dynamic import — 42 tests in
+`Plugins/QuickJS/WebGL/.source/jsbplugin.test.mjs`, run by CI. What that cannot reach is the C
+boundary: the two new dyncall signatures (`iiiii` for the normalizer, `viiiii` for the loader),
+whether IL2CPP's reverse wrapper passes `JSModuleLoadHandle` as a flattened `i32` the way clang's
+wasm ABI says it should, and whether Unity's WebGL output lets `new Function` and blob-url imports
+through. A player is the only thing that settles those.
 
 ## Phases
 
@@ -309,13 +356,15 @@ IL2CPP does not.
 What this does *not* cover is the other ten artifacts. It exercises Windows x64 AOT; Android and iOS
 have their own stripping and their own P/Invoke conventions, and CI has never built either.
 
-**Phase 4 — mirror in the jslib, then wire the async loader.** Done on desktop. The jslib is back in
+**Phase 4 — mirror in the jslib, then wire the async loader.** Done. The jslib is back in
 agreement and held there by a check; `AsyncModuleLoader` installs
 `JS_SetModuleLoaderFuncAsync`, `QuickJSModuleLoader` fetches over `Dispatcher.StartDeferred` +
-`UnityWebRequest`, and `EngineCapabilities.ModuleResolution` is claimed everywhere except WebGL.
+`UnityWebRequest`, and `EngineCapabilities.ModuleResolution` is claimed on every target including
+WebGL, where the jslib implements the same loader hooks and the browser links the graph.
 
 *Exit: kitchen-sink loads a module graph over HTTP with no blocking frame, on desktop and in WebGL.*
-**Desktop met, WebGL not.** `AStaticImportGraphLoadsAsynchronously` covers the desktop half, and
+**Desktop met and tested; WebGL implemented but not run in a player.**
+`AStaticImportGraphLoadsAsynchronously` covers the desktop half, and
 covers it better than a kitchen-sink walkthrough would: two hops, the second only discoverable once
 the first arrives, asserting both that nothing has evaluated when `ExecuteScript` returns and that
 the graph completes over the following frames. The first of those is what proves the *asynchronous*
@@ -324,9 +373,11 @@ part — the synchronous loader would have resolved and run the whole graph inli
 PlayMode goes from 689/701 to 690/701: one more test, not one fewer skip. The kitchen-sink
 walkthrough itself is still a manual step nobody has run.
 
-WebGL cannot be met without giving that backend module scope at all — see "The second
-implementation" above — so it keeps the host import hook and `ModuleCompat.RewriteDynamicImports`
-stays alive for it.
+The WebGL half came later, and the reasoning that said it could not — that it needed a module realm
+in the iframe — was wrong; see "The second implementation" above for what it actually took.
+`ModuleCompat.RewriteDynamicImports` is now unreachable from the QuickJS engine on any target,
+though Jint and ClearScript still have no use for it either: it stays for any future engine that
+executes modules without resolving specifiers.
 
 One thing phase 4 needed that the fork did not have: **the async loader gave the host no way to set
 `import.meta`.** `JS_FulfillModuleLoad` compiles the source itself and settles the graph internally,
@@ -667,11 +718,11 @@ the full suite green at the end (1,029 tests, 0 failures, both before and after)
 - **The IL2CPP player build** phase 3's exit criterion also asked for — `pnpm unity player`, plus
   the probe it runs inside the player. QuickJS and Jint pass all seven checks under IL2CPP on
   Windows x64, and the same player built as Mono passes with ClearScript alongside them.
-- **Phase 4, the async module loader** — desktop only. `AsyncModuleLoader` +
+- **Phase 4, the async module loader** — every target. `AsyncModuleLoader` +
   `QuickJSModuleLoader` fetch a graph over HTTP without blocking a frame, `import.meta.url` comes
   from a hook added to the fork, and the jslib is back in agreement with a check to keep it there.
-  WebGL keeps the host import hook: that backend evaluates through `eval` and has no module scope
-  at all.
+  WebGL shares the host half and hands the linking to the browser, which is what the earlier note
+  here said could not be done without a module realm in the iframe. It has not run in a player.
 - **Operator overloading, removed** — the machinery phase 3 left behind a permanently false guard.
   ng has no operator overloading to register, and the last dead stub went with it.
 - **`''` no longer marshals back as `null`** — a pre-existing bug in the string marshaller, not an

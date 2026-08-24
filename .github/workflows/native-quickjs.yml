@@ -224,6 +224,25 @@ jobs:
       - name: Check the jslib against the P/Invoke surface
         run: python3 native/quickjs/check-jslib.py
 
+      - uses: actions/setup-node@v6
+        with:
+          node-version-file: .node-version
+
+      # The jslib is generated from .source, and nothing else checks that the committed
+      # one is what .source produces -- a hand-edit or a forgotten rebuild would ship.
+      - name: Rebuild the jslib and check it matches
+        working-directory: unity/quickjs/Plugins/QuickJS/WebGL/.source
+        run: |
+          npx -y -p typescript@5 tsc
+          node postbuild.mjs
+          git diff --exit-code -- ../jsbplugin.jslib
+
+      # The module machinery is the one part of the jslib that runs outside a browser, and
+      # the part with a scanner in it. It is tested against the generated file, not .source.
+      - name: Run the jslib module tests
+        working-directory: unity/quickjs/Plugins/QuickJS/WebGL/.source
+        run: node --test jsbplugin.test.mjs
+
   # One place to see whether the set is complete, and the only job worth making
   # a required check.
   collect:

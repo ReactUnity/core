@@ -157,6 +157,10 @@ declare global {
     static JSHostPromiseRejectionTracker(ctx: JSContext, promise: JSValueConst, reason: JSValueConst, is_handled: bool, opaque: IntPtr): void;
     static JSModuleNormalizeFunc(ctx: JSContext, module_base_name: Pointer<string>, module_name: Pointer<string>, opaque: IntPtr): IntPtr;
     static JSModuleLoaderFunc(ctx: JSContext, module_name: Pointer<string>, opaque: IntPtr): JSModuleDef;
+    // `attributes` is a JSValue by value, which this ABI passes as a pointer to one, and
+    // `handle` is the load's ticket - opaque to the host, handed straight back to
+    // JS_FulfillModuleLoad or JS_RejectModuleLoad.
+    static JSModuleLoaderAsyncFunc(ctx: JSContext, module_name: Pointer<string>, attributes: JSValueConst, opaque: IntPtr, handle: IntPtr): void;
     static JSGCObjectFinalizer(rt: JSRuntime, header: JSPayloadHeader): void;
     static JSCFunction(returnValue: JSValue, ctx: JSContext, this_obj: JSValueConst, argc: int, argv: PointerArray<JSValueConst>);
     static JSCFunctionMagic(returnValue: JSValue, ctx: JSContext, this_obj: JSValueConst, argc: int, argv: PointerArray<JSValueConst>, magic: int);

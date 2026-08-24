@@ -10,6 +10,22 @@
  * BEWARE: Using some syntaxes will make Emscripten fail while building
  * Such known syntaxes: Object spread (...), BigInt literals
  * The output is targeted for es5 as Emscripten only understands that syntax
+ *
+ * ES5 rules out more than syntax: anything tsc downlevels through a helper is unusable
+ * here. `async`/`await` and generators become `__awaiter`/`__generator`, spread becomes
+ * `__spreadArray`, `for...of` over an iterator becomes `__values`, and `class` with a base
+ * becomes `__extends` -- and tsc emits those as top-level functions, of which Emscripten
+ * emits nothing. It stringifies the library object's own members and drops the rest of the
+ * file, so a helper reference is `undefined` the first time it runs. Plain `.then()`
+ * chains, `forEach`, and functions.
+ *
+ * For the same reason a helper function has to live *on* `$unityJsbState` rather than at
+ * the top of this file: only what is reachable from the library object survives.
+ *
+ * Also of note: `native/quickjs/check-jslib.py` reads `^    Name: function` out of the
+ * generated jslib to find the entry points, and fails on one nothing declares. Members of
+ * `$unityJsbState` are a level deeper and so invisible to it, which is what makes them the
+ * right home for a helper.
  */
 var UnityJSBPlugin = {
     $unityJsbState__postset: 'unityJsbState.atoms = unityJsbState.createAtoms();\n',
@@ -324,6 +340,654 @@ var UnityJSBPlugin = {
             stringToUTF8(arg, buffer, bufferSize);
             return [buffer, bufferSize];
         },
+        // #region ES modules
+        /** The page-level object a generated module reaches its context through. */
+        // A module cannot see the globals proxy the rest of this backend runs inside: `with` is
+        // illegal in module code, and a module's globalThis is its realm's, which the proxy is not.
+        // So the proxy is published here and every module opens with a `var` destructuring of the
+        // names it mentions.
+        moduleRegistryKey: '__reactunity_jsb__',
+        /** What a dynamic `import(...)` is rewritten to call. */
+        moduleImportHook: '$$reactunityImport',
+        /** Names the globals prelude can never declare, whatever the host installed. */
+        // `this` is in here because the host really does install one - extraGlobals.this is the
+        // proxy, so that `this` at the top of a script is the global object.
+        moduleReservedNames: {
+            arguments: true, await: true, break: true, case: true, catch: true, class: true,
+            const: true, continue: true, debugger: true, default: true, delete: true, do: true,
+            else: true, enum: true, eval: true, export: true, extends: true, false: true,
+            finally: true, for: true, function: true, if: true, implements: true, import: true,
+            in: true, instanceof: true, interface: true, let: true, new: true, null: true,
+            package: true, private: true, protected: true, public: true, return: true, static: true,
+            super: true, switch: true, this: true, throw: true, true: true, try: true, typeof: true,
+            var: true, void: true, while: true, with: true, yield: true,
+        },
+        /** Everything in a module's source that has to change before a browser can run it.
+         *
+         * Rewriting is not a choice: a module reaches the browser as a blob url, and a blob has no
+         * base for a relative specifier to resolve against, so every specifier has to be absolute
+         * by then. The same pass finds the dynamic imports, which have to reach the host's loader
+         * rather than the browser's own fetcher, and the names declared at the top level, which the
+         * globals prelude must not redeclare.
+         */
+        // A scanner rather than a regex: `import` inside a string, a comment or a regex literal is
+        // not an import, and generated bundles are full of all three. It is not a parser either --
+        // it tracks bracket depth and skips anything quoted, which is enough to find declarations
+        // at the top level and nothing deeper.
+        scanModule: function (source) {
+            var edits = [];
+            var bindings = {};
+            var mentions = {};
+            var len = source.length;
+            // Keywords a regex literal can follow. Everything else that ends in a value position
+            // makes the next `/` a division.
+            var beforeRegex = {
+                return: true, typeof: true, instanceof: true, in: true, of: true, new: true,
+                delete: true, void: true, do: true, else: true, yield: true, await: true, throw: true,
+                case: true,
+            };
+            var i = 0;
+            var depth = 0;
+            var afterValue = false;
+            // Whether the previous token was `.`, which makes the next word a property name -
+            // `obj.import(x)` is a method call, not a dynamic import.
+            var afterDot = false;
+            // The declaration being read at depth 0, and whether the next name in it binds.
+            var declaring = null;
+            var expectBinding = false;
+            function isIdStart(c) {
+                return (c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z') || c === '_' || c === '$' || c > '~';
+            }
+            function isIdPart(c) {
+                return isIdStart(c) || (c >= '0' && c <= '9');
+            }
+            function skipTrivia(at) {
+                while (at < len) {
+                    var c = source.charAt(at);
+                    if (c === ' ' || c === '\t' || c === '\r' || c === '\n') {
+                        at++;
+                        continue;
+                    }
+                    if (c === '/' && source.charAt(at + 1) === '/') {
+                        while (at < len && source.charAt(at) !== '\n')
+                            at++;
+                        continue;
+                    }
+                    if (c === '/' && source.charAt(at + 1) === '*') {
+                        var close_1 = source.indexOf('*/', at + 2);
+                        at = close_1 < 0 ? len : close_1 + 2;
+                        continue;
+                    }
+                    return at;
+                }
+                return at;
+            }
+            function skipString(at) {
+                var quote = source.charAt(at);
+                at++;
+                while (at < len) {
+                    var c = source.charAt(at);
+                    if (c === '\\') {
+                        at += 2;
+                        continue;
+                    }
+                    at++;
+                    if (c === quote)
+                        return at;
+                }
+                return len;
+            }
+            function skipTemplate(at) {
+                at++;
+                while (at < len) {
+                    var c = source.charAt(at);
+                    if (c === '\\') {
+                        at += 2;
+                        continue;
+                    }
+                    if (c === '`')
+                        return at + 1;
+                    if (c === '$' && source.charAt(at + 1) === '{') {
+                        at = skipBalanced(at + 1);
+                        continue;
+                    }
+                    at++;
+                }
+                return len;
+            }
+            /** Past the bracket at `at` and everything it encloses. */
+            function skipBalanced(at) {
+                var open = source.charAt(at);
+                var close = open === '{' ? '}' : open === '(' ? ')' : ']';
+                var level = 0;
+                while (at < len) {
+                    var c = source.charAt(at);
+                    if (c === '/' && (source.charAt(at + 1) === '/' || source.charAt(at + 1) === '*')) {
+                        at = skipTrivia(at);
+                        continue;
+                    }
+                    if (c === '"' || c === '\'') {
+                        at = skipString(at);
+                        continue;
+                    }
+                    if (c === '`') {
+                        at = skipTemplate(at);
+                        continue;
+                    }
+                    if (c === open) {
+                        level++;
+                        at++;
+                        continue;
+                    }
+                    if (c === close) {
+                        at++;
+                        if (--level === 0)
+                            return at;
+                        continue;
+                    }
+                    at++;
+                }
+                return len;
+            }
+            function skipRegex(at) {
+                at++;
+                var inClass = false;
+                while (at < len) {
+                    var c = source.charAt(at);
+                    if (c === '\\') {
+                        at += 2;
+                        continue;
+                    }
+                    // An unterminated one was a division after all; give up rather than eat the file.
+                    if (c === '\n')
+                        return at;
+                    if (c === '[')
+                        inClass = true;
+                    else if (c === ']')
+                        inClass = false;
+                    else if (c === '/' && !inClass) {
+                        at++;
+                        while (at < len && isIdPart(source.charAt(at)))
+                            at++;
+                        return at;
+                    }
+                    at++;
+                }
+                return len;
+            }
+            function bind(name) {
+                if (name)
+                    bindings[name] = true;
+            }
+            /** Records the module specifier at `at`, if a string literal is what is there. */
+            function readSpecifier(at) {
+                at = skipTrivia(at);
+                var c = source.charAt(at);
+                if (c !== '"' && c !== '\'')
+                    return at;
+                var end = skipString(at);
+                edits.push({
+                    start: at,
+                    end: end,
+                    specifier: source.substring(at + 1, end - 1).replace(/\\(.)/g, '$1'),
+                });
+                return end;
+            }
+            /** The names an import clause binds: the last identifier of each comma-separated entry,
+             *  so `{ a as b, c }` binds `b` and `c`. */
+            function readClause(from, to) {
+                var at = from;
+                var entry = null;
+                while (at < to) {
+                    var c = source.charAt(at);
+                    if (isIdStart(c)) {
+                        var start = at;
+                        while (at < to && isIdPart(source.charAt(at)))
+                            at++;
+                        var word = source.substring(start, at);
+                        if (word !== 'as')
+                            entry = word;
+                        continue;
+                    }
+                    if (c === ',') {
+                        bind(entry);
+                        entry = null;
+                    }
+                    at++;
+                }
+                bind(entry);
+            }
+            /** An `import ... from '...'` declaration, from just past the keyword. */
+            function readImport(at) {
+                while (at < len) {
+                    at = skipTrivia(at);
+                    if (at >= len)
+                        return at;
+                    var c = source.charAt(at);
+                    if (c === '"' || c === '\'')
+                        return readSpecifier(at);
+                    if (c === ';')
+                        return at + 1;
+                    if (c === '{') {
+                        var end = skipBalanced(at);
+                        readClause(at + 1, end - 1);
+                        at = end;
+                        continue;
+                    }
+                    if (isIdStart(c)) {
+                        var start = at;
+                        while (at < len && isIdPart(source.charAt(at)))
+                            at++;
+                        var word = source.substring(start, at);
+                        // A default import, or the local name of `* as ns`; either way it binds.
+                        if (word !== 'from' && word !== 'as')
+                            bind(word);
+                        continue;
+                    }
+                    at++;
+                }
+                return at;
+            }
+            /** An `export` declaration, from just past the keyword. Only a re-export carries a
+             *  specifier; the rest declare names the main loop picks up on its own. */
+            function readExport(at) {
+                at = skipTrivia(at);
+                var c = source.charAt(at);
+                if (c === '*') {
+                    // `export * from 'x'`, or `export * as ns from 'x'` - `ns` is an export name, not a
+                    // local binding, so nothing here binds.
+                    at++;
+                    while (at < len) {
+                        at = skipTrivia(at);
+                        var d = source.charAt(at);
+                        if (d === '"' || d === '\'')
+                            return readSpecifier(at);
+                        if (!isIdStart(d))
+                            return at;
+                        while (at < len && isIdPart(source.charAt(at)))
+                            at++;
+                    }
+                    return at;
+                }
+                if (c === '{') {
+                    var end = skipBalanced(at);
+                    var next = skipTrivia(end);
+                    // `export {a} from 'x'` re-exports; `export {a}` names bindings that already exist.
+                    if (source.substring(next, next + 4) === 'from' && !isIdPart(source.charAt(next + 4))) {
+                        return readSpecifier(next + 4);
+                    }
+                    return end;
+                }
+                return at;
+            }
+            while (i < len) {
+                var c = source.charAt(i);
+                if (c === ' ' || c === '\t' || c === '\r' || c === '\n') {
+                    i++;
+                    continue;
+                }
+                if (c === '/') {
+                    var next = source.charAt(i + 1);
+                    if (next === '/' || next === '*') {
+                        i = skipTrivia(i);
+                        continue;
+                    }
+                    afterDot = false;
+                    if (!afterValue) {
+                        i = skipRegex(i);
+                        afterValue = true;
+                        continue;
+                    }
+                    i++;
+                    afterValue = false;
+                    continue;
+                }
+                if (c === '"' || c === '\'') {
+                    i = skipString(i);
+                    afterValue = true;
+                    afterDot = false;
+                    continue;
+                }
+                if (c === '`') {
+                    i = skipTemplate(i);
+                    afterValue = true;
+                    afterDot = false;
+                    continue;
+                }
+                if (c === '(' || c === '[' || c === '{') {
+                    depth++;
+                    i++;
+                    afterValue = false;
+                    afterDot = false;
+                    continue;
+                }
+                if (c === ')' || c === ']' || c === '}') {
+                    depth--;
+                    i++;
+                    afterValue = true;
+                    afterDot = false;
+                    if (depth <= 0) {
+                        depth = 0;
+                        declaring = null;
+                        expectBinding = false;
+                    }
+                    continue;
+                }
+                if (c >= '0' && c <= '9') {
+                    while (i < len && (isIdPart(source.charAt(i)) || source.charAt(i) === '.'))
+                        i++;
+                    afterValue = true;
+                    afterDot = false;
+                    continue;
+                }
+                if (isIdStart(c)) {
+                    var start = i;
+                    var wasProperty = afterDot;
+                    while (i < len && isIdPart(source.charAt(i)))
+                        i++;
+                    var word = source.substring(start, i);
+                    afterValue = !beforeRegex[word];
+                    afterDot = false;
+                    // A property, not a keyword: `obj.import(x)` and `obj.export` are neither. It is
+                    // not a free name either, so the globals prelude has no reason to declare it.
+                    if (wasProperty)
+                        continue;
+                    mentions[word] = true;
+                    if (word === 'import') {
+                        var at = skipTrivia(i);
+                        var after = source.charAt(at);
+                        if (after === '(') {
+                            // Dynamic. Left to the browser it would resolve against the blob url and fetch
+                            // it itself, which is not where this backend's modules live.
+                            edits.push({ start: start, end: i, specifier: null });
+                            continue;
+                        }
+                        // import.meta, which the prelude fills in.
+                        if (after === '.')
+                            continue;
+                        if (depth === 0) {
+                            i = readImport(i);
+                            declaring = null;
+                            expectBinding = false;
+                        }
+                        continue;
+                    }
+                    if (word === 'export' && depth === 0) {
+                        i = readExport(i);
+                        continue;
+                    }
+                    // `var` is deliberately absent: the prelude declares with `var` too, and two `var`
+                    // declarations of one name are legal, so that collision needs no avoiding.
+                    if (depth === 0 && (word === 'let' || word === 'const' || word === 'class' || word === 'function')) {
+                        declaring = word;
+                        expectBinding = true;
+                        continue;
+                    }
+                    if (depth === 0 && declaring && expectBinding) {
+                        // `{a: b}` - a key, not a binding. Patterns are not parsed further, so a
+                        // destructured top-level name is missed, and a prelude that collides with one is a
+                        // loud redeclaration error rather than a silent wrong answer.
+                        if (source.charAt(skipTrivia(i)) !== ':')
+                            bind(word);
+                        expectBinding = false;
+                    }
+                    continue;
+                }
+                if (depth === 0 && declaring) {
+                    if (c === ',')
+                        expectBinding = true;
+                    else if (c === '=')
+                        expectBinding = false;
+                    else if (c === ';') {
+                        declaring = null;
+                        expectBinding = false;
+                    }
+                }
+                afterValue = false;
+                afterDot = c === '.';
+                i++;
+            }
+            return { edits: edits, bindings: bindings, mentions: mentions };
+        },
+        /** Loads, links and evaluates ES module graphs for one context.
+         *
+         * The browser does the linking and the evaluating. Every module in the graph becomes a blob
+         * url whose specifiers point at the blob urls of its dependencies, so importing the root
+         * hands the whole graph to the engine the page already runs - which is where live bindings,
+         * cycles within one module's own imports and top-level await come from for free.
+         *
+         * What this owns is getting the sources, and they come from the host's asynchronous loader:
+         * the same `QuickJSModuleLoader` the desktop backend drives, so `import './x'` resolves
+         * against Unity's own paths on both.
+         */
+        createModuleRegistry: function (context) {
+            var state = unityJsbState;
+            var records = {};
+            var urls = [];
+            // The context's own Promise, so a graph still in flight when the context dies stops
+            // where the rest of its microtasks do.
+            var Promise = context.contentWindow.Promise;
+            function fail(message) {
+                return Promise.reject(new Error(message));
+            }
+            /** The host's answer for a specifier written inside `referrer`. */
+            function resolve(referrer, specifier) {
+                var runtime = context.runtime;
+                var normalize = runtime.moduleNormalize;
+                if (!normalize)
+                    return specifier;
+                var referrerBuffer = state.bufferify(referrer || '');
+                var specifierBuffer = state.bufferify(specifier);
+                var result;
+                try {
+                    result = {{{ makeDynCall('iiiii', 'normalize') }}}(context.id, referrerBuffer[0], specifierBuffer[0], runtime.moduleOpaque);
+                }
+                finally {
+                    _free(referrerBuffer[0]);
+                    _free(specifierBuffer[0]);
+                }
+                if (!result)
+                    return null;
+                var name = state.stringify(result);
+                // The caller frees what the normalizer returns, as the engine does; the host allocated
+                // it through js_strndup, which is _malloc here.
+                _free(result);
+                return name;
+            }
+            /** Hands a module to the host to fetch, and settles when it comes back. */
+            function request(name) {
+                var runtime = context.runtime;
+                var loader = runtime.moduleLoader;
+                if (!loader)
+                    return fail('No module loader is installed, so \'' + name + '\' cannot be fetched');
+                return new Promise(function (resolveSource, rejectSource) {
+                    // Registered before the call: the host is allowed to settle from inside it, and the
+                    // error paths do exactly that.
+                    var ticket = ++runtime.lastModuleLoadId;
+                    runtime.pendingModuleLoads[ticket] = { resolve: resolveSource, reject: rejectSource };
+                    var nameBuffer = state.bufferify(name);
+                    // Import attributes, which nothing here reads; the host's loader ignores them too.
+                    var attributes = runtime.refs.allocate(undefined);
+                    try {
+                        {{{ makeDynCall('viiiii', 'loader') }}}(context.id, nameBuffer[0], attributes[0], runtime.moduleOpaque, ticket);
+                    }
+                    finally {
+                        _free(nameBuffer[0]);
+                        _free(attributes[0]);
+                    }
+                });
+            }
+            /** Fetches `name` and everything below it. `stack` is the path that asked for it. */
+            function load(name, stack) {
+                var existing = records[name];
+                if (existing)
+                    return existing.ready;
+                var record = records[name] = {
+                    name: name, source: null, scan: null, deps: {}, ready: null, url: null,
+                };
+                record.ready = request(name).then(function (source) {
+                    return link(record, source, stack);
+                });
+                return record.ready;
+            }
+            function link(record, source, stack) {
+                record.source = source;
+                record.scan = state.scanModule(source);
+                var waiting = [];
+                record.scan.edits.forEach(function (edit) {
+                    if (edit.specifier === null || record.deps[edit.specifier])
+                        return;
+                    var resolved = resolve(record.name, edit.specifier);
+                    if (!resolved)
+                        throw new Error('Could not resolve \'' + edit.specifier + '\' from \'' + record.name + '\'');
+                    record.deps[edit.specifier] = resolved;
+                    // A blob url can only be minted for text that is already final, and a cycle's text
+                    // is not: each side needs the other's url first. Reported here, where the path that
+                    // closes the cycle is still known, rather than as a deadlocked import.
+                    if (stack.indexOf(resolved) >= 0) {
+                        throw new Error('Circular imports are not supported on WebGL: ' + stack.concat([resolved]).join(' -> '));
+                    }
+                    waiting.push(load(resolved, stack.concat([resolved])));
+                });
+                return Promise.all(waiting).then(function () { return record; });
+            }
+            /** The blob url for a fetched module, building its dependencies' first. */
+            function urlFor(record) {
+                if (record.url)
+                    return record.url;
+                var depUrls = {};
+                Object.keys(record.deps).forEach(function (specifier) {
+                    depUrls[specifier] = urlFor(records[record.deps[specifier]]);
+                });
+                var url = context.createBlobUrl(assemble(record, depUrls));
+                urls.push(url);
+                record.url = url;
+                return url;
+            }
+            function assemble(record, depUrls) {
+                var source = record.source;
+                var parts = [];
+                var at = 0;
+                record.scan.edits.forEach(function (edit) {
+                    parts.push(source.substring(at, edit.start));
+                    parts.push(edit.specifier === null
+                        ? state.moduleImportHook
+                        : JSON.stringify(depUrls[edit.specifier]));
+                    at = edit.end;
+                });
+                parts.push(source.substring(at));
+                // No newline between them, deliberately: the prelude rides on the source's own first
+                // line, so no line number moves. That matters most for the source map the bundle
+                // arrived with, which cannot be corrected from here once it is off by one.
+                return prelude(record) + parts.join('') + '\n//# sourceURL=' + record.name;
+            }
+            /** The globals a module opens with, and its import.meta. */
+            function prelude(record) {
+                var scan = record.scan;
+                var reserved = state.moduleReservedNames;
+                var names = [];
+                Object.keys(context.hostGlobals).forEach(function (name) {
+                    // Only names the module mentions as a free identifier. That keeps the declaration
+                    // short, and keeps out a name the module declares in a way scanModule does not parse
+                    // - which would otherwise be a redeclaration error rather than a shadowed global.
+                    if (!scan.mentions[name] || scan.bindings[name])
+                        return;
+                    if (reserved[name] || name === state.moduleImportHook)
+                        return;
+                    if (!/^[A-Za-z_$][A-Za-z_0-9$]*$/.test(name))
+                        return;
+                    names.push(name);
+                });
+                // A bare identifier, not `globalThis[...]`. `globalThis` is itself one of the host
+                // globals - it is the proxy, not the realm's - so a module that mentions it gets a `var`
+                // for it, which hoists over the whole module and would leave the initializer below
+                // reading a property of `undefined`. The registry key cannot be shadowed that way
+                // because it is never one of the names declared here.
+                var entry = state.moduleRegistryKey + '[' + context.id + ']';
+                var parts = [];
+                // `var`, not `const`: a module is free to declare `var URL` itself, and two `var`
+                // declarations of one name are legal where two lexical ones are a SyntaxError.
+                if (names.length)
+                    parts.push('var {' + names.join(',') + '} = ' + entry + '.globals;');
+                parts.push('var ' + state.moduleImportHook + ' = ' + entry + '.dynamicImport(' + JSON.stringify(record.name) + ');');
+                // The host's JS_SetModuleMetaFunc hook cannot serve this backend - there is no
+                // JSModuleDef for it to name a module by - so import.meta is filled in here instead.
+                parts.push('import.meta.url = ' + JSON.stringify(record.name) + ';');
+                parts.push('import.meta.main = false;');
+                return parts.join('');
+            }
+            function release(record) {
+                if (!record)
+                    return;
+                if (record.url) {
+                    var index = urls.indexOf(record.url);
+                    if (index >= 0)
+                        urls.splice(index, 1);
+                    context.revokeBlobUrl(record.url);
+                }
+                delete records[record.name];
+            }
+            return {
+                evaluate: function (name, source) {
+                    // A root evaluated again is a reload, and has to be a new module rather than the
+                    // cached one: the browser keys its module cache on the url, so re-importing the same
+                    // blob would resolve without running anything.
+                    release(records[name]);
+                    var root = records[name] = {
+                        name: name, source: null, scan: null, deps: {}, ready: null, url: null,
+                    };
+                    root.ready = Promise.resolve().then(function () { return link(root, source, [name]); });
+                    return root.ready.then(function () { return context.importModule(urlFor(root)); });
+                },
+                dynamicImport: function (referrer) {
+                    return function (specifier) {
+                        var resolved;
+                        try {
+                            resolved = resolve(referrer, String(specifier));
+                        }
+                        catch (err) {
+                            return Promise.reject(err);
+                        }
+                        if (!resolved)
+                            return fail('Could not resolve \'' + specifier + '\' from \'' + (referrer || 'a script') + '\'');
+                        var existing = records[resolved];
+                        var ready = existing ? existing.ready : load(resolved, [resolved]);
+                        return ready.then(function () { return context.importModule(urlFor(records[resolved])); });
+                    };
+                },
+                /** Points a script's dynamic imports at the host loader.
+                 *
+                 * `import()` in eval code is legal and would work - against the page's base url and the
+                 * browser's fetcher, which is not where this backend's modules live. The desktop
+                 * engine's loader gets the call, so it has to here too.
+                 */
+                rewriteScript: function (code) {
+                    if (code.indexOf('import') < 0)
+                        return code;
+                    var edits = state.scanModule(code).edits;
+                    var parts = [];
+                    var at = 0;
+                    edits.forEach(function (edit) {
+                        // Only the dynamic ones: a static import is not legal in a script at all, and
+                        // rewriting a specifier there would hide the syntax error rather than fix it.
+                        if (edit.specifier !== null)
+                            return;
+                        parts.push(code.substring(at, edit.start));
+                        parts.push(state.moduleImportHook);
+                        at = edit.end;
+                    });
+                    if (!parts.length)
+                        return code;
+                    parts.push(code.substring(at));
+                    return parts.join('');
+                },
+                free: function () {
+                    urls.forEach(function (url) { context.revokeBlobUrl(url); });
+                    urls.length = 0;
+                },
+            };
+        },
+        // #endregion
         runtimes: {},
         contexts: {},
         lastRuntimeId: 1,
@@ -506,19 +1170,43 @@ var UnityJSBPlugin = {
                 }
             }).call(globals, code + sourceUrlSuffix);
         };
+        // Native dynamic import, which is how a module graph actually gets evaluated here. Built
+        // with `new Function` rather than written as `import(url)` for two reasons: tsc targets ES5
+        // for this file and rejects the syntax outright, and a string is opaque to whatever
+        // minifier the WebGL build runs over the generated JS afterwards.
+        //
+        // Deliberately this realm and not the iframe's: `evaluate` runs its `eval` here too, so a
+        // module and a script produce objects of the same realm - and `instanceof Error` all over
+        // this plugin depends on that.
+        var importModule = new Function('url', 'return import(url);');
+        // Modules are handed to the browser as blob urls, so the page - not the iframe - is what
+        // has to hold them: it is the realm doing the importing, and it outlives the iframe.
+        var pageRegistry = window[unityJsbState.moduleRegistryKey] ||
+            (window[unityJsbState.moduleRegistryKey] = {});
         var context = {
             id: id,
             runtime: runtime,
             runtimeId: rtId,
             window: window,
             globalObject: globals,
+            hostGlobals: extraGlobals,
             evaluate: evaluate,
+            importModule: importModule,
             iframe: iframe,
             contentWindow: contentWindow,
             isDestroyed: false,
+            modules: null,
+            createBlobUrl: function (text) {
+                return window.URL.createObjectURL(new window.Blob([text], { type: 'text/javascript' }));
+            },
+            revokeBlobUrl: function (url) {
+                window.URL.revokeObjectURL(url);
+            },
             free: function () {
                 if (iframe.parentNode)
                     iframe.parentNode.removeChild(iframe);
+                context.modules.free();
+                delete pageRegistry[context.id];
                 context.isDestroyed = true;
                 delete runtime.contexts[context.id];
                 delete unityJsbState.contexts[context.id];
@@ -536,6 +1224,12 @@ var UnityJSBPlugin = {
                 }
             },
         };
+        context.modules = unityJsbState.createModuleRegistry(context);
+        pageRegistry[id] = { globals: globals, dynamicImport: context.modules.dynamicImport };
+        // A script's dynamic imports are rewritten to call this; a module's prelude declares its
+        // own, bound to that module's url so a relative specifier resolves against it. A script has
+        // no url, and an empty referrer is what sends the host to ReactUnity's own path resolution.
+        extraGlobals[unityJsbState.moduleImportHook] = context.modules.dynamicImport('');
         runtime.contexts[id] = context;
         unityJsbState.contexts[id] = context;
         return id;
@@ -563,7 +1257,7 @@ var UnityJSBPlugin = {
         try {
             var code = unityJsbState.stringify(input, input_len);
             var filenameStr = unityJsbState.stringify(filename);
-            var res = context.evaluate(code, filenameStr);
+            var res = context.evaluate(context.modules.rewriteScript(code), filenameStr);
             context.runtime.refs.push(res, ptr);
         }
         catch (err) {
@@ -1090,43 +1784,48 @@ var UnityJSBPlugin = {
     },
     // #endregion
     // #region Errors
+    /* Each of these records the error as the context's pending exception as well as returning
+       it. The host throws and takes straight back - ThrowInternalError then JS_GetException is
+       how AsyncModuleLoader builds the error it rejects a module load with - so an exception
+       that is returned and not recorded reaches the host as whatever was thrown before it. */
     JSB_ThrowError: function (ret, ctx, buf, buf_len) {
         var context = unityJsbState.getContext(ctx);
         var str = unityJsbState.stringify(buf, buf_len);
         var err = new Error(str);
         console.error(err);
+        context.lastException = err;
         context.runtime.refs.push(err, ret);
         // TODO: throw?
     },
     JSB_ThrowTypeError: function (ret, ctx, msg) {
         var context = unityJsbState.getContext(ctx);
-        var str = 'Type Error';
-        var err = new Error(str);
+        var err = new TypeError(unityJsbState.stringify(msg) || 'Type Error');
         console.error(err);
+        context.lastException = err;
         context.runtime.refs.push(err, ret);
         // TODO: throw?
     },
     JSB_ThrowRangeError: function (ret, ctx, msg) {
         var context = unityJsbState.getContext(ctx);
-        var str = 'Range Error';
-        var err = new Error(str);
+        var err = new RangeError(unityJsbState.stringify(msg) || 'Range Error');
         console.error(err);
+        context.lastException = err;
         context.runtime.refs.push(err, ret);
         // TODO: throw?
     },
     JSB_ThrowInternalError: function (ret, ctx, msg) {
         var context = unityJsbState.getContext(ctx);
-        var str = 'Internal Error';
-        var err = new Error(str);
+        var err = new Error(unityJsbState.stringify(msg) || 'Internal Error');
         console.error(err);
+        context.lastException = err;
         context.runtime.refs.push(err, ret);
         // TODO: throw?
     },
     JSB_ThrowReferenceError: function (ret, ctx, msg) {
         var context = unityJsbState.getContext(ctx);
-        var str = 'Reference Error';
-        var err = new Error(str);
+        var err = new ReferenceError(unityJsbState.stringify(msg) || 'Reference Error');
         console.error(err);
+        context.lastException = err;
         context.runtime.refs.push(err, ret);
         // TODO: throw?
     },
@@ -1255,38 +1954,58 @@ var UnityJSBPlugin = {
     JS_SetModuleLoaderFunc: function (rt, module_normalize, module_loader, opaque) {
         // TODO:
     },
-    /* The asynchronous module loader. QuickJSEngine installs one on every platform, so
-       these have to exist or the Emscripten link fails - but nothing drives them here.
-       ES module syntax does not reach this backend at all: `evaluate` is an `eval` inside
-       the sandbox iframe, and `eval` cannot run `import` or `export`. So ModuleResolution
-       is not among the WebGL capabilities, ScriptContext keeps pointing dynamic import at
-       its own host loader, and EvalModuleAsync is never called.
-  
-       Making it real means giving the iframe a module realm - a blob url imported from a
-       `<script type="module">` - and reconciling that with the globals proxy the whole
-       backend is built on, which a module cannot see. That is its own piece of work. */
+    /* The asynchronous module loader, which is what makes ES modules work here at all.
+       The host's half is identical to the desktop one - QuickJSModuleLoader resolves and
+       fetches, and settles each load through JS_FulfillModuleLoad - so an `import` resolves
+       against ReactUnity's own paths on both. What differs is who links and evaluates: there
+       is no QuickJS here, so the graph is assembled into blob urls and handed to the browser.
+       unityJsbState.createModuleRegistry is the whole of it. */
     JS_SetModuleLoaderFuncAsync: function (rt, module_normalize, module_loader, module_check_attrs, opaque) {
-        // Recorded nowhere on purpose: nothing in this backend can ask for a module.
+        var runtime = unityJsbState.getRuntime(rt);
+        runtime.moduleNormalize = module_normalize;
+        runtime.moduleLoader = module_loader;
+        runtime.moduleOpaque = opaque;
+        runtime.pendingModuleLoads = {};
+        runtime.lastModuleLoadId = 0;
+        // module_check_attrs is ignored, as it is by the host: nothing here reads an import
+        // attribute, and the host passes a null pointer for it.
     },
     JS_SetModuleMetaFunc: function (rt, func, opaque) {
-        // import.meta is unreachable without module scope, so this is never called back.
+        // Never called back. The hook identifies a module by its JSModuleDef, and this backend
+        // has none to hand out - so a module's prelude sets import.meta.url from the name the
+        // normalizer resolved, which is the same value the host's hook would have written.
     },
     JS_FulfillModuleLoad: function (ctx, handle, source, source_len) {
-        console.error('Module loading is not supported in WebGL Backend');
-        return -1;
+        var context = unityJsbState.getContext(ctx);
+        var pending = context.runtime.pendingModuleLoads[handle];
+        // Already settled, or settled after the runtime went away.
+        if (!pending)
+            return -1;
+        delete context.runtime.pendingModuleLoads[handle];
+        pending.resolve(unityJsbState.stringify(source, source_len));
+        return 0;
     },
     JS_RejectModuleLoad: function (ctx, handle, error) {
+        var context = unityJsbState.getContext(ctx);
+        var pending = context.runtime.pendingModuleLoads[handle];
+        if (!pending)
+            return -1;
+        delete context.runtime.pendingModuleLoads[handle];
+        var value = context.runtime.refs.get(error);
+        pending.reject(value instanceof Error ? value : new Error(String(value)));
         return 0;
     },
     JS_EvalModuleAsync: function (ret, ctx, input, input_len, filename) {
         var context = unityJsbState.getContext(ctx);
-        var err = new Error('ES modules are not supported in WebGL Backend');
-        context.lastException = err;
-        console.error(err);
-        context.runtime.refs.push(err, ret);
+        var code = unityJsbState.stringify(input, input_len);
+        var name = unityJsbState.stringify(filename);
+        // A promise, always - including for a graph that fails, which the host reports by
+        // attaching to it. Pushing an Error here instead would be read as a parse error in the
+        // root and thrown from EvalModuleAsync.
+        context.runtime.refs.push(context.modules.evaluate(name, code), ret);
     },
     JS_GetModuleName: function (ctx, m) {
-        // JS_ATOM_NULL. Only the import.meta hook asks, and it never runs here.
+        // JS_ATOM_NULL. Only the import.meta hook asks, and that hook is never installed here.
         return 0;
     },
     JS_GetImportMeta: function (ret, ctx, m) {

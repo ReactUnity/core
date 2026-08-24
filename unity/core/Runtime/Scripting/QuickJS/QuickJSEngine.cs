@@ -21,9 +21,9 @@ namespace ReactUnity.Scripting
         public object NativeEngine => Runtime;
         public EngineCapabilities Capabilities { get; } = EngineCapabilities.None
 #if !UNITY_EDITOR && UNITY_WEBGL
-            // No ModuleResolution: the WebGL backend has no QuickJS, and the jslib evaluates
-            // through `eval`, which cannot run `import` or `export` at all. Module syntax has
-            // never worked there, so the host import hook stays in play for this one target.
+            // ModuleResolution included: there is no QuickJS here, but the jslib implements the
+            // same asynchronous loader hooks, so QuickJSModuleLoader resolves and fetches a graph
+            // exactly as it does on desktop and the browser links and evaluates it.
             | EngineCapabilities.Fetch
             | EngineCapabilities.XHR
             | EngineCapabilities.Encoding
@@ -32,9 +32,8 @@ namespace ReactUnity.Scripting
             | EngineCapabilities.Base64
             | EngineCapabilities.AbortController
             | EngineCapabilities.QueueMicrotask
-#else
-            | EngineCapabilities.ModuleResolution
 #endif
+            | EngineCapabilities.ModuleResolution
             | EngineCapabilities.None;
 
         private Action<IJavaScriptEngine> OnInitialize;
