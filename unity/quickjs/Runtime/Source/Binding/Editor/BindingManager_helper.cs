@@ -7,17 +7,6 @@ namespace QuickJS.Binding
 {
     public partial class BindingManager
     {
-        public static void UnitylessReflectBind(ScriptRuntime runtime)
-        {
-            var bm = new BindingManager(new Prefs(), new BindingManager.Args
-            {
-                bindingCallback = new ReflectBindingCallback(runtime),
-            });
-            bm.Collect();
-            bm.Generate(TypeBindingFlags.None);
-            bm.Report();
-        }
-
         public static int GetTSParameterCount(ParameterInfo[] parameters)
         {
             var len = parameters.Length;

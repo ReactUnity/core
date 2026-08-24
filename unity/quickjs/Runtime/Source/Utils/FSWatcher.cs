@@ -86,7 +86,7 @@ namespace QuickJS.Utils
 
         private unsafe void Call(JSValue func, string name, string fullPath)
         {
-            if (!_jsContext.IsValid() || JSApi.JS_IsFunction(_jsContext, func) != 1)
+            if (!_jsContext.IsValid() || !JSApi.JS_IsFunction(_jsContext, func))
             {
                 return;
             }

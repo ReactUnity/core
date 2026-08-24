@@ -27,9 +27,6 @@ namespace QuickJS.Utils
 
         private int _mainThreadId;
 
-#if !JSB_UNITYLESS
-        private Unity.UnityCoroutineContext _mb = null;
-#endif
 
         public DefaultAsyncManager()
         {
@@ -43,13 +40,6 @@ namespace QuickJS.Utils
 
         public void Destroy()
         {
-#if !JSB_UNITYLESS
-            if (_mb != null)
-            {
-                UnityEngine.Object.DestroyImmediate(_mb.gameObject);
-                _mb = null;
-            }
-#endif
         }
 
         // return promise
@@ -75,32 +65,7 @@ namespace QuickJS.Utils
 #endif
                 return promise;
             }
-#if !JSB_UNITYLESS
-            else
-            {
-                if (_mainThreadId != Thread.CurrentThread.ManagedThreadId)
-                {
-                    return ctx.ThrowInternalError("not supported on background thread");
-                }
-
-                if (_mb == null)
-                {
-                    var container = new UnityEngine.GameObject("JSRuntimeContainer");
-                    container.hideFlags = UnityEngine.HideFlags.HideInHierarchy;
-                    UnityEngine.Object.DontDestroyOnLoad(container);
-                    _mb = container.AddComponent<Unity.UnityCoroutineContext>();
-                }
-
-                var resolving_funcs = stackalloc[] { JSApi.JS_UNDEFINED, JSApi.JS_UNDEFINED };
-                var promise = JSApi.JS_NewPromiseCapability(ctx, resolving_funcs);
-                var safeRelease = new SafeRelease(context).Append(2, resolving_funcs);
-
-                _mb.RunTask(awaitObject, context, safeRelease);
-                return promise;
-            }
-#else 
             return ctx.ThrowInternalError("not supported await object");
-#endif // !JSB_UNITYLESS
         }
 
         private static unsafe void _OnTaskCompleted(ScriptRuntime runtime, object cbArgs, JSValue cbValue)

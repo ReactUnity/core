@@ -1,5 +1,5 @@
 {
-  "$schema": "https://biomejs.dev/schemas/2.5.5/schema.json",
+  "$schema": "https://biomejs.dev/schemas/2.5.6/schema.json",
   "vcs": {
     "enabled": true,
     "clientKind": "git",
@@ -40,10 +40,12 @@
       // and is replaced wholesale on update, so reformatting it only adds diff noise.
       "!**/unity/core/Resources/ReactUnity/polyfills",
 
-      // Vendored @babel/standalone, loaded by the editor test runner. At 3.7 MiB it is
-      // over Biome's 1 MiB per-file ceiling, and being unable to read a file is an
-      // error, not a skip -- leaving it in fails `pnpm check` outright.
-      "!**/unity/core/Editor/Resources/ReactUnity/tests/scripts/babel-standalone.js"
+      // Generated Sucrase bundle loaded by the editor test runner, built by
+      // scripts/test-transformer/build.mts. Excluded as generated output rather than for
+      // size -- it is under Biome's 1 MiB per-file ceiling, unlike the 3.7 MiB
+      // @babel/standalone it replaced, which failed `pnpm check` outright because being
+      // unable to read a file is an error there, not a skip.
+      "!**/unity/core/Editor/Resources/ReactUnity/tests/scripts/sucrase-standalone.js"
     ]
   },
   "assist": { "actions": { "source": { "organizeImports": "on" } } },

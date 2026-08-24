@@ -87,14 +87,46 @@ pnpm unity compile tests
 pnpm unity test tests
 ```
 
-[scripts/unity/](scripts/unity/) drives a local Editor headlessly — `compile` (~8 s warm, the cheapest check on any C# edit), `test`, `open`, `editors`, and `bridge` for talking to an Editor that is already open. `pnpm unity help` lists it all, and [.claude/skills/unity](.claude/skills/unity/SKILL.md) covers which path to use and what bites. Two things worth knowing before running it:
+```bash
+pnpm unity player tests --backend il2cpp
+```
 
-- **The editor is pinned per project — `tests/` on 6000.1.4f1, `kitchen-sink` on 6000.5.5f1.** `tests/` cannot use 6000.5: its committed manifest resolves `com.unity.inputsystem`/`test-framework.performance` versions using `TreeView`, which 6000.5 made obsolete-as-error, giving 306 compile errors before any test runs. `UNITY_VERSION=` overrides. CI runs 6000.0.51f1/6000.1.9f1, so a local pass is still not a matrix pass.
+[scripts/unity/](scripts/unity/) drives a local Editor headlessly — `compile` (~8 s warm, the cheapest check on any C# edit), `test`, `player`, `open`, `editors`, and `bridge` for talking to an Editor that is already open. `pnpm unity help` lists it all, and [.claude/skills/unity](.claude/skills/unity/SKILL.md) covers which path to use and what bites.
+
+`player` is the only check here that covers **IL2CPP**, and the reason it exists is that the Editor is always Mono: nothing `compile` or `test` reports says anything about a P/Invoke stub the AOT compiler had to generate, a reverse callback it never saw, or a type the managed stripper deleted — which is most of what the QuickJS binding is made of. It builds a development player and runs [EngineProbe](unity/core/Runtime/Developer/EngineProbe.cs) inside it, which drives every engine in the build across the boundary and prints a verdict the runner reads back. Both halves are gated on `REACT_UNITY_DEVELOPER`, so none of it ships, and it is deliberately not on CI (it needs a C++ toolchain and the IL2CPP module). `--backend mono` builds the same player the other way, which is how an AOT failure gets told apart from a plain bug.
+
+Unity's own `unity` CLI (July 2026, installed at `~/AppData/Local/Unity/bin/unity.exe`, its skill at `~/.claude/skills/unity-cli`) covers everything `bridge` does and much more against an Editor that is open, via the `com.unity.pipeline` package kitchen-sink picked up in `b8225447`. It does **not** cover the batch commands, because it launches the Editor without snapshotting the files a local run rewrites — the trap described next. The skill has the mapping.
+
+Two things worth knowing before running any of it:
+
+- **The editor version comes from each project's `ProjectSettings/ProjectVersion.txt`** — whichever Editor last opened the project is the one the CLI drives. Nothing is pinned in the scripts. `UNITY_VERSION=` overrides per run, and only then is that stamp restored afterwards. `tests/` loads and runs on **6000.5.9f1**, so the older note that the 6000.5 line could not run it at all is wrong. Both suites are green there: EditMode 342/350 and PlayMode 690/701, zero failures. It was not always — `ButtonTests` and `InputTests` used to fail on that editor and only that editor, because the suite transformed its JSX by running Babel inside QuickJS and Babel's parse-then-traverse depth did not fit the main-thread stack 6000.5 leaves. Replacing it with Sucrase fixed all 15; [.claude/skills/unity/SKILL.md](.claude/skills/unity/SKILL.md) keeps the measurements, and they are the ones to beat before putting Babel back. A local pass is still not a matrix pass. That failure was `com.unity.inputsystem` 1.14.2, whose editor assemblies fail obsolete-as-error there — and 1.14.2 was only ever the manifest's *minimum*, which the resolver dropped back to whenever it had reason to re-resolve. The minimums are now raised past it. `test-framework`, `ugui` and `ext.nunit` stay where they are because they are `builtin` and the editor supplies its own. CI runs 6000.0.51f1/6000.1.9f1, so a local pass is still not a matrix pass.
 - **Opening `tests/` rewrites its manifest into a 6000-only shape** — `com.unity.ugui` 2.x, no `textmeshpro`, plus `modules.physicscore2d`/`vectorgraphics`/`adaptiveperformance` — and that manifest fails to resolve on **6000.1** (measured), which yields *zero tests* rather than a red suite. The CLI snapshots those files and restores them after every run; `--no-restore` opts out. Restore covers batch runs only — an interactive Editor churns them freely, so check `git status` after one.
 
 The Test Runner window still works, as does `.github/workflows/unity-tests.yml` for the real matrix. `tests/Packages/manifest.json` already points at `file:../../unity/*`, so the four Unity packages are wired up with no patching.
 
-The Editor bridge itself is [unity/core/Editor/Developer/AgentBridge](unity/core/Editor/Developer/AgentBridge/): a loopback TCP server in its own asmdef, gated on `REACT_UNITY_DEVELOPER` and never started in batch mode. It is a separate assembly because it references `UnityEditor.TestRunner`, which `ReactUnity.Editor` must not depend on.
+Driving an Editor that is **already open** is not this CLI's job any more. It was, through an `AgentBridge` loopback server in its own asmdef plus a `pnpm unity bridge` client; both were deleted once `com.unity.pipeline` was in both projects, because Unity's CLI covers every action they had and a great deal more. A repo-specific action wanted in a live Editor is now a `[CliCommand]` static method in an Editor assembly, which `unity list` discovers with no CLI release.
+
+Each fixture's JSX snippet is transpiled **at runtime, inside the engine under test**, by
+[CodeTransformer](unity/core/Tests/Runtime/Utils/CodeTransformer.cs) — so the transpiler's own call
+depth is charged to Unity's main-thread C stack, which is already deep. That budget is the whole
+reason it is **Sucrase** and not Babel: Sucrase rewrites a token stream, where Babel parses to an
+AST and traverses it, and Babel's floor did not fit on the 6000.5 editor. `disableESTransforms` is
+on deliberately — lowering optional chaining breaks C# method handles under ClearScript, and all
+three engines run the modern syntax natively anyway.
+
+The bundle it loads is generated, so do not edit
+`unity/core/Editor/Resources/ReactUnity/tests/scripts/sucrase-standalone.js`:
+
+```bash
+pnpm build:test-transformer
+```
+
+[scripts/test-transformer/build.mts](scripts/test-transformer/build.mts) bundles it with esbuild and
+stamps the Sucrase version into a header comment. Commit the result. Biome excludes it as generated
+output rather than for size — unlike the 3.7 MB `@babel/standalone` it replaced, which was over
+Biome's 1 MiB per-file ceiling and so failed `pnpm check` outright. The `docs` site still uses
+`@babel/standalone` (8.x, a real dependency) for its Sandpack examples, which is fine: that one runs
+in the browser, where stack is not scarce.
 
 Rendering tests compare against snapshots in `unity/core/Tests/.snapshots/{linux,windows}`. To regenerate: the `React > Tests > Overwrite Snapshots` editor menu toggle (needs the `REACT_UNITY_DEVELOPER` define), the `-reactOverwriteSnapshots` command-line arg, `[snapshots]` in a commit message, or the workflow's `overwrite-snapshots` dispatch input. CI commits regenerated snapshots from the one matrix job marked `main: true`.
 
@@ -141,6 +173,20 @@ The C# side of that call surface is `unity/core/Runtime/Core/ReactUnityBridge.cs
 ### JavaScript engines
 
 `unity/core/Runtime/Scripting/` defines `IJavaScriptEngine` plus DOM shims (`DomProxies/` — `fetch`, `XMLHttpRequest`, `WebSocket`, `localStorage`, `URL`). Concrete engines ship as separate UPM packages so a project pulls in only one native binary: `com.reactunity.quickjs` (recommended), `jint` (pure C#, slower), `clearscript` (V8).
+
+`com.reactunity.quickjs` binds **[quickjs-ng](https://github.com/quickjs-ng/quickjs)**. It used to bind unity-jsb's fork of Bellard-era QuickJS, and the two are different engines rather than two versions of one — which is why the binary, the C shim and every P/Invoke declaration were rebuilt rather than upgraded. [unity/quickjs/MIGRATION.md](unity/quickjs/MIGRATION.md) is the record of that, and is worth reading before changing anything under `Runtime/Source/Native`.
+
+The C# is still unity-jsb's design — namespace `QuickJS.*`, assemblies `jsb.core`/`jsb.native`/`jsb.shared`/`jsb.editor.binding`, and the `JSB_*` shim symbols — but nothing is fetched from or linked against unity-jsb any more. All eleven native artifacts are built from [native/quickjs](native/quickjs) by [native-quickjs.yml](.github/workflows/native-quickjs.yml) and pinned to `gkurt/quickjs` `v0.16.2-reactunity.1`, a fork carrying the two async-module-loader additions that are not upstream yet.
+
+**Asynchronous module loading is what this bought**: an `import` of an http URL, and so a dynamic `import()`, resolves without blocking a frame. Every target has it, WebGL included, so `EngineCapabilities.ModuleResolution` is claimed everywhere and the host import hook that stood in for it is gone. `ModuleCompat` is down to `NeedsModuleScope`: no engine needs its code rewritten, only its document type decided.
+
+WebGL gets there differently, because there is no QuickJS in it. The host half is shared — `QuickJSModuleLoader` resolves and fetches, so `import './x'` obeys ReactUnity's paths on both — but the linking is the browser's: [jsbplugin.ts](unity/quickjs/Plugins/QuickJS/WebGL/.source/jsbplugin.ts) assembles each module into a blob URL, rewriting every specifier to its dependency's URL, and imports the root. A module cannot see the globals proxy the rest of that backend runs inside (`with` is illegal in module code), so each one opens with a generated `var {…} = …` prelude of the host globals it mentions. `MIGRATION.md`'s "The second implementation" has the four rules that prelude has to follow and why each was a bug first. **Cycles are refused there** — a blob URL needs final text, and a cycle's is not.
+
+**The jslib is generated; edit [.source/jsbplugin.ts](unity/quickjs/Plugins/QuickJS/WebGL/.source/jsbplugin.ts), never `jsbplugin.jslib`.** TypeScript 5 is pinned (`npx -p typescript@5 tsc && node postbuild.mjs` in `.source`) because TS 7 removed every option the build needs and has no ES5 emit, which Emscripten still requires. ES5 is not decoration: `async`/`await`, spread and `for…of` all downlevel to helper functions tsc puts at the top of the file, and Emscripten only emits the library object's own members — so a helper reference is `undefined` at runtime. Plain `.then()` chains and `forEach` only. `native-quickjs.yml` rebuilds and diffs the jslib, so a hand-edit or a forgotten rebuild fails CI, and runs the module tests:
+
+```bash
+node --test unity/quickjs/Plugins/QuickJS/WebGL/.source/jsbplugin.test.mjs
+```
 
 ### Styling
 

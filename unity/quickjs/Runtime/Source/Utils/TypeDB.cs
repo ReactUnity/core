@@ -404,13 +404,6 @@ namespace QuickJS.Utils
 
         // 用于中转动态注册的反射调用
         [MonoPInvokeCallback(typeof(JSCFunctionMagic))]
-        public static JSValue _DynamicOperatorInvoke(JSContext ctx, JSValue this_obj, int argc, JSValue[] argv, int magic)
-        {
-            throw new NotImplementedException();
-        }
-
-        // 用于中转动态注册的反射调用
-        [MonoPInvokeCallback(typeof(JSCFunctionMagic))]
         public static JSValue _DynamicMethodInvoke(JSContext ctx, JSValue this_obj, int argc, JSValue[] argv, int magic)
         {
             var typeDB = ScriptEngine.GetTypeDB(ctx);

@@ -188,7 +188,7 @@ namespace QuickJS.Binding
 
         public static bool js_get_var(JSContext ctx, JSValue val, out object[] o)
         {
-            if (JSApi.JS_IsArray(ctx, val) == 1)
+            if (JSApi.JS_IsArray(val))
             {
                 var lengthVal = JSApi.JS_GetProperty(ctx, val, JSApi.JS_ATOM_length);
                 if (JSApi.JS_IsException(lengthVal))
@@ -264,7 +264,7 @@ namespace QuickJS.Binding
 
             if (type.IsArray)
             {
-                if (type.GetArrayRank() == 1 && JSApi.JS_IsArray(ctx, val) == 1)
+                if (type.GetArrayRank() == 1 && JSApi.JS_IsArray(val))
                 {
                     var lengthVal = JSApi.JS_GetProperty(ctx, val, JSApi.JS_ATOM_length);
                     if (JSApi.JS_IsException(lengthVal))

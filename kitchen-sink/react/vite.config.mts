@@ -22,8 +22,4 @@ export default defineConfig(({ command }) => ({
       output: command === 'build' ? { format: 'iife', inlineDynamicImports: true, entryFileNames: 'assets/[name].js' } : {},
     },
   },
-  experimental: {
-    // Required for QuickJS
-    // bundledDev: true,
-  },
 }));

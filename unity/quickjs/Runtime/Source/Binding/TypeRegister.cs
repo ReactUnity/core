@@ -16,9 +16,6 @@ namespace QuickJS.Binding
         private AtomCache _atoms;
         private List<Type> _pendingTypes = new List<Type>();
         private List<ClassDecl> _pendingClasses = new List<ClassDecl>();
-        
-        private List<OperatorDecl> _operatorDecls = new List<OperatorDecl>();
-        private Dictionary<Type, int> _operatorDeclIndex = new Dictionary<Type, int>();
 
         public static implicit operator JSContext(TypeRegister register)
         {
@@ -195,120 +192,6 @@ namespace QuickJS.Binding
             return _db.AddType(type, proto);
         }
 
-        private void SubmitOperators()
-        {
-            // 提交运算符重载
-            var ctx = (JSContext)_context;
-            var operatorCreate = _context.GetOperatorCreate();
-
-            if (!operatorCreate.IsUndefined())
-            {
-                var count = _operatorDecls.Count;
-                for (var i = 0; i < count; i++)
-                {
-                    _operatorDecls[i].Register(this, ctx, operatorCreate);
-                }
-            }
-
-            JSApi.JS_FreeValue(ctx, operatorCreate);
-            _operatorDeclIndex.Clear();
-            _operatorDecls.Clear();
-        }
-
-        private OperatorDecl GetOperatorDecl(Type type, out int index)
-        {
-            if (_operatorDeclIndex.TryGetValue(type, out index))
-            {
-                return _operatorDecls[index];
-            }
-            var decl = new OperatorDecl(type);
-            index = _operatorDecls.Count;
-            _operatorDeclIndex[type] = index;
-            _operatorDecls.Add(decl);
-            return decl;
-        }
-        
-        public void RegisterOperator(Type type, string op, JSCFunction func, int length)
-        {
-            RegisterOperator(type, op, JSApi.JSB_NewCFunction(_context, func, GetAtom(op), length));
-        }
-
-        public void RegisterOperator(Type type, string op, IDynamicMethod func)
-        {
-            RegisterOperator(type, op, _db.NewDynamicMethod(GetAtom(op), func));
-        }
-
-        public void RegisterOperator(Type type, string op, JSCFunction func, int length, bool left, Type sideType)
-        {
-            RegisterOperator(type, op, JSApi.JSB_NewCFunction(_context, func, GetAtom(op), length), left, sideType);
-        }
-
-        public void RegisterOperator(Type type, string op, IDynamicMethod func, bool left, Type sideType)
-        {
-            RegisterOperator(type, op, _db.NewDynamicMethod(GetAtom(op), func), left, sideType);
-        }
-
-        // self operator for type
-        public void RegisterOperator(Type type, string op, JSValue value)
-        {
-            int index;
-            var decl = GetOperatorDecl(type, out index);
-            decl.AddOperator(op, value);
-        }
-
-        // left/right operator for type
-        public void RegisterOperator(Type type, string op, JSValue value, bool left, Type sideType)
-        {
-            if (sideType == typeof(string) || sideType == typeof(void) || (sideType.IsValueType && (sideType.IsPrimitive || sideType.IsEnum)))
-            {
-                int index;
-                var decl = GetOperatorDecl(type, out index);
-                decl.AddCrossOperator(op, value, left, sideType);
-            }
-            else
-            {
-                int index1, index2;
-                var decl1 = GetOperatorDecl(type, out index1);
-                var decl2 = GetOperatorDecl(sideType, out index2);
-                if (index2 > index1)
-                {
-                    decl2.AddCrossOperator(op, value, !left, type);
-                }
-                else
-                {
-                    decl1.AddCrossOperator(op, value, left, sideType);
-                }
-            }
-        }
-
-        // 返回值已经过 DupValue
-        public JSValue GetConstructor(Type type)
-        {
-            if (type == typeof(JSFunction))
-            {
-                return _context.GetFunctionConstructor();
-            }
-
-            if (type == typeof(string) || type == typeof(char))
-            {
-                return _context.GetStringConstructor();
-            }
-
-            if (type.IsValueType && (type.IsPrimitive || type.IsEnum))
-            {
-                return _context.GetNumberConstructor();
-            }
-
-            var val = _db.FindChainedPrototypeOf(type);
-            return JSApi.JS_GetProperty(_context, val, JSApi.JS_ATOM_constructor);
-        }
-
-        public JSValue FindChainedPrototypeOf(Type type)
-        {
-            var val = _db.FindChainedPrototypeOf(type);
-            return val;
-        }
-
         public void Finish()
         {
             _refCount--;
@@ -316,7 +199,6 @@ namespace QuickJS.Binding
             if (_refCount == 0)
             {
                 _context.ReleaseTypeRegister(this);
-                SubmitOperators();
                 _atoms.Clear();
                 var ctx = (JSContext)_context;
 

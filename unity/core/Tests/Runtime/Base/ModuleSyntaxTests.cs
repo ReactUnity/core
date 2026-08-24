@@ -15,16 +15,17 @@ namespace ReactUnity.Tests
         public ModuleSyntaxTests(JavascriptEngineType engineType) : base(engineType) { }
 
         [UGUITest]
-        public IEnumerator OnlyQuickJSCannotResolveSpecifiersItself()
+        public IEnumerator EveryEngineResolvesSpecifiersItself()
         {
             yield return null;
 
-            // Executing a module does not imply resolving one. ClearScript and Jint both take an
-            // async loader; QuickJS's is synchronous by C ABI, so an http import has to go through
-            // the host loader instead.
-            var resolves = Context.Script.Engine.Capabilities.HasFlag(EngineCapabilities.ModuleResolution);
-            Assert.AreEqual(EngineType != JavascriptEngineType.QuickJS, resolves,
-                $"{EngineType} module resolution is not what the import hook assumes");
+            // Executing a module does not imply resolving one, and QuickJS could not until it
+            // gained quickjs-ng's asynchronous loader - its synchronous one has to return a module
+            // there and then, which an http import cannot. A host import hook stood in until then,
+            // and this is what let it be deleted: every engine on every target answers yes here,
+            // WebGL included, where the jslib drives the same loader and the browser links.
+            Assert.IsTrue(Context.Script.Engine.Capabilities.HasFlag(EngineCapabilities.ModuleResolution),
+                $"{EngineType} cannot resolve a module specifier, and there is no longer a hook to stand in");
         }
 
         [UGUITest]
@@ -88,9 +89,8 @@ namespace ReactUnity.Tests
         {
             yield return null;
 
-            // QuickJS has no async loader at all, and ClearScript's resolves a non-http specifier
-            // against the source url rather than the importing module, which a file url needs.
-            IgnoreForEngine(JavascriptEngineType.QuickJS);
+            // ClearScript's loader resolves a non-http specifier against the source url rather
+            // than the importing module, which a file url needs.
             IgnoreForEngine(JavascriptEngineType.ClearScript);
 
             var dir = Path.Combine(Application.temporaryCachePath, "module-graph-" + graphCount++);

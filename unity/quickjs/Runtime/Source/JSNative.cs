@@ -1,10 +1,10 @@
 using System;
+using System.Runtime.InteropServices;
 
 namespace QuickJS
 {
     using Native;
     using JSValueConst = Native.JSValue;
-    using JS_BOOL = Int32;
 
     /// <summary>
     /// A thin layer wrapping the raw JSApi which depends on some methods from jsb.core module.
@@ -27,7 +27,7 @@ namespace QuickJS
 
             var ctx = (JSContext)context;
             var prop = JSApi.JS_GetProperty(ctx, self, context.GetAtom(name));
-            var res = JSApi.JS_IsFunction(context, prop) == 1;
+            var res = JSApi.JS_IsFunction(context, prop);
             
             JSApi.JS_FreeValue(ctx, prop);
             return res;
@@ -137,9 +137,10 @@ namespace QuickJS
         }
 
         [MonoPInvokeCallback(typeof(JSHostPromiseRejectionTracker))]
-        public static void PromiseRejectionTracker(JSContext ctx, JSValueConst promise, JSValueConst reason, JS_BOOL is_handled, IntPtr opaque)
+        public static void PromiseRejectionTracker(JSContext ctx, JSValueConst promise, JSValueConst reason,
+            [MarshalAs(UnmanagedType.U1)] bool is_handled, IntPtr opaque)
         {
-            if (is_handled != 1)
+            if (!is_handled)
             {
                 var logger = ScriptEngine.GetLogger(ctx);
                 if (logger != null)

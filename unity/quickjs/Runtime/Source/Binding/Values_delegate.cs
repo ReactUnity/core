@@ -52,7 +52,7 @@ namespace QuickJS.Binding
         public static bool js_get_delegate<T>(JSContext ctx, JSValue val, out T[] o)
         where T : class
         {
-            if (JSApi.JS_IsArray(ctx, val) == 1)
+            if (JSApi.JS_IsArray(val))
             {
                 var lengthVal = JSApi.JS_GetProperty(ctx, val, JSApi.JS_ATOM_length);
                 if (JSApi.JS_IsException(lengthVal))
@@ -97,7 +97,7 @@ namespace QuickJS.Binding
                 return true;
             }
 
-            if (JSApi.JS_IsFunction(ctx, val) == 1)
+            if (JSApi.JS_IsFunction(ctx, val))
             {
                 ScriptDelegate fn;
                 var cache = ScriptEngine.GetObjectCache(ctx);
@@ -143,7 +143,7 @@ namespace QuickJS.Binding
                 {
                     return o == null || o.GetType() == delegateType;
                 }
-                if (JSApi.JS_IsFunction(ctx, val) == 1)
+                if (JSApi.JS_IsFunction(ctx, val))
                 {
                     ScriptDelegate fn;
                     var cache = ScriptEngine.GetObjectCache(ctx);

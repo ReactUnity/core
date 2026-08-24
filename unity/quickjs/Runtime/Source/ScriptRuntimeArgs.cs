@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -15,22 +15,6 @@ namespace QuickJS
 
     public struct ScriptRuntimeArgs
     {
-        /// <summary>
-        /// [v8-bridge] open debug server automatically after JSContext created
-        /// </summary>
-        public bool withDebugServer;
-
-        /// <summary>
-        /// the ScriptRuntime will complete the initialization process until the debugger is actually connected.
-        /// if very early breakpoints are required to be set, 'debugger' should be added to the script to hit before these breakpoints.
-        /// </summary>
-        public bool waitingForDebugger;
-
-        /// <summary>
-        /// [v8-bridge] the port to listen of the debug server
-        /// </summary>
-        public int debugServerPort;
-
         public IFileSystem fileSystem;
         
         public IPathResolver pathResolver;

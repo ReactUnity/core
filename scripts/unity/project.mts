@@ -8,19 +8,23 @@ import path from 'node:path';
 export const repoRoot = path.resolve(import.meta.dirname, '..', '..');
 
 /**
- * Pinned per project, and not read from ProjectVersion.txt -- that file only records
- * whatever last opened the project. Override per run with UNITY_VERSION.
+ * The version the project itself records, so whichever Editor you actually opened it with is
+ * the one these commands use. Nothing is pinned here: a hard-coded version goes stale the
+ * first time someone upgrades, and silently drives the wrong Editor. Override per run with
+ * UNITY_VERSION.
  *
- * tests/ is on the 6000.1 line for a hard reason: the committed Packages/manifest.json
- * resolves com.unity.inputsystem and test-framework.performance versions that still use
+ * Worth knowing rather than encoding: `tests/` on the 6000.5 line resolves
+ * com.unity.inputsystem and test-framework.performance versions that still use
  * TreeView/TreeViewItem, which 6000.5 made obsolete-as-error -- 306 compile errors before a
- * single test runs. 6000.1.4f1 compiles it clean and is the closest install to CI's main
- * job (6000.1.9f1). kitchen-sink has its own manifest and is fine on 6000.5.
+ * single test runs. If that is what you are looking at, `UNITY_VERSION=6000.1.x` is the way
+ * out, not a change here.
  */
-const PINNED_VERSIONS: Record<ProjectName, string> = {
-  tests: '6000.1.4f1',
-  'kitchen-sink': '6000.5.5f1',
-};
+function readProjectVersion(projectPath: string): string {
+  const file = path.join(projectPath, 'ProjectSettings', 'ProjectVersion.txt');
+  const found = fs.readFileSync(file, 'utf8').match(/^m_EditorVersion:\s*(\S+)/m);
+  if (!found) throw new Error(`No m_EditorVersion in ${file}`);
+  return found[1];
+}
 
 export type ProjectName = 'tests' | 'kitchen-sink';
 
@@ -38,10 +42,11 @@ export type Project = {
 
 export function getProject(name: string): Project {
   if (name !== 'tests' && name !== 'kitchen-sink') throw new Error(`Unknown project '${name}'. Expected 'tests' or 'kitchen-sink'.`);
+  const projectPath = path.join(repoRoot, name);
   return {
     name,
-    path: path.join(repoRoot, name),
-    version: process.env.UNITY_VERSION ?? PINNED_VERSIONS[name],
+    path: projectPath,
+    version: process.env.UNITY_VERSION ?? readProjectVersion(projectPath),
     assemblies: name === 'tests' ? 'ReactUnity.Tests;ReactUnity.Tests.Editor' : undefined,
   };
 }
@@ -54,37 +59,61 @@ export function getProject(name: string): Project {
 const CHURN_FILES = [
   'Packages/manifest.json',
   'Packages/packages-lock.json',
-  // ProjectVersion.txt is deliberately NOT here. CI passes unityVersion to game-ci
-  // explicitly, so the file has no effect there -- while reverting it to a version older
-  // than the local Editor makes the GUI open onto a modal "Project Upgrade Required"
-  // dialog and hang. Let it track whatever version is actually being used.
+  // ProjectVersion.txt is not here, it is handled by VERSION_FILE below: reverting it to a
+  // version older than the local Editor makes the GUI open onto a modal "Project Upgrade
+  // Required" dialog and hang, so normally it is left to track whatever version actually ran.
   'ProjectSettings/ProjectSettings.asset',
   'ProjectSettings/EditorBuildSettings.asset',
   'ProjectSettings/PackageManagerSettings.asset',
+  // A player build reserialises this one: 6000.5 renames CrashReportingSettings.m_Enabled and
+  // adds an InsightsSettings block, which an older editor then writes back on the next run.
+  'ProjectSettings/UnityConnectSettings.asset',
   'ProjectSettings/SceneTemplateSettings.json',
   'ProjectSettings/Packages/com.unity.testtools.codecoverage/Settings.json',
   // Tracked on purpose (see the note in .gitignore), so a run must not leave it changed.
   'UserSettings/EditorUserSettings.asset',
 ];
 
+/**
+ * Only restored when UNITY_VERSION asked for an Editor other than the project's own. The version
+ * now decides which Editor these commands drive, so letting a one-off override rewrite the stamp
+ * would make the override permanent and silent -- run `tests` once on 6000.5 to check something
+ * and every later run would pick an Editor that cannot run its suite.
+ */
+const VERSION_FILE = 'ProjectSettings/ProjectVersion.txt';
+
+/**
+ * Assets inside the packages, which belong to no project and which nothing project-relative
+ * reaches. A PlayMode run empties this font's glyph table on its way to repopulating the
+ * dynamic atlas at runtime -- and unlike the files above, this one *ships*: committing it
+ * publishes a font with no glyphs in it.
+ */
+const PACKAGE_CHURN_FILES = ['unity/core/Assets/Material Icons/Material Icons SDF - TMP.asset'];
+
+/** Keyed by absolute path, valued by the bytes before the run (null when it did not exist). */
 export type Churn = Map<string, Buffer | null>;
 
 export function snapshotChurn(project: Project): Churn {
   const snapshot: Churn = new Map();
-  for (const rel of CHURN_FILES) {
-    const file = path.join(project.path, rel);
-    snapshot.set(rel, fs.existsSync(file) ? fs.readFileSync(file) : null);
-  }
+  const files = process.env.UNITY_VERSION ? [...CHURN_FILES, VERSION_FILE] : CHURN_FILES;
+
+  for (const relative of files) snapshot.set(path.join(project.path, relative), read(path.join(project.path, relative)));
+  for (const relative of PACKAGE_CHURN_FILES) snapshot.set(path.join(repoRoot, relative), read(path.join(repoRoot, relative)));
+
   return snapshot;
 }
 
+function read(file: string): Buffer | null {
+  return fs.existsSync(file) ? fs.readFileSync(file) : null;
+}
+
 /** Returns the files it put back, plus any Unity created that were not there before. */
-export function restoreChurn(project: Project, snapshot: Churn): { restored: string[]; created: string[] } {
+export function restoreChurn(snapshot: Churn): { restored: string[]; created: string[] } {
   const restored: string[] = [];
   const created: string[] = [];
 
-  for (const [rel, before] of snapshot) {
-    const file = path.join(project.path, rel);
+  for (const [file, before] of snapshot) {
+    const rel = path.relative(repoRoot, file).replaceAll('\\', '/');
     const exists = fs.existsSync(file);
 
     if (before === null) {

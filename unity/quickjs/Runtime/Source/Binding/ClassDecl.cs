@@ -1,34 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 using QuickJS.Native;
 using System.Runtime.CompilerServices;
 
 namespace QuickJS.Binding
 {
-    public struct OperatorDef
-    {
-        public string op;
-        public JSValue value;
-
-        public OperatorDef(string op, JSValue value)
-        {
-            this.op = op;
-            this.value = value;
-        }
-    }
-
-    public struct CrossOperatorDef
-    {
-        public Type type;
-        public List<OperatorDef> operators;
-
-        public CrossOperatorDef(Type type)
-        {
-            this.type = type;
-            this.operators = new List<OperatorDef>();
-        }
-    }
-
     public struct ClassDecl
     {
         private TypeRegister _register;
@@ -67,36 +42,6 @@ namespace QuickJS.Binding
                 _proto = JSApi.JS_UNDEFINED;
                 _context = null;
             }
-        }
-
-        public void AddSelfOperator(string op, IDynamicMethod func)
-        {
-            _register.RegisterOperator(_type, op, func);
-        }
-
-        public void AddLeftOperator(string op, IDynamicMethod func, Type type)
-        {
-            _register.RegisterOperator(_type, op, func, true, type);
-        }
-
-        public void AddRightOperator(string op, IDynamicMethod func, Type type)
-        {
-            _register.RegisterOperator(_type, op, func, false, type);
-        }
-
-        public void AddSelfOperator(string op, JSCFunction func, int length)
-        {
-            _register.RegisterOperator(_type, op, func, length);
-        }
-
-        public void AddLeftOperator(string op, JSCFunction func, int length, Type type)
-        {
-            _register.RegisterOperator(_type, op, func, length, true, type);
-        }
-
-        public void AddRightOperator(string op, JSCFunction func, int length, Type type)
-        {
-            _register.RegisterOperator(_type, op, func, length, false, type);
         }
 
         public void AddFunction(string name, JSCFunctionMagic func, int length, int magic)

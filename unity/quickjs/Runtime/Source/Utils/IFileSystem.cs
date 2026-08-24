@@ -110,43 +110,4 @@ namespace QuickJS.Utils
         }
     }
 
-#if !JSB_UNITYLESS
-    public class ResourcesFileSystem : IFileSystem
-    {
-        private IScriptLogger _logger;
-
-        public ResourcesFileSystem(IScriptLogger logger)
-        {
-            _logger = logger;
-        }
-
-        public bool Exists(string path)
-        {
-            var asset = UnityEngine.Resources.Load<UnityEngine.TextAsset>(path);
-            return asset != null;
-        }
-
-        public string GetFullPath(string path)
-        {
-            return path;
-        }
-
-        public byte[] ReadAllBytes(string path)
-        {
-            try
-            {
-                var asset = UnityEngine.Resources.Load<UnityEngine.TextAsset>(path);
-                return asset.bytes;
-            }
-            catch (Exception exception)
-            {
-                if (_logger != null)
-                {
-                    _logger.Write(LogLevel.Error, "{0}: {1}\n{2}", path, exception.Message, exception.StackTrace);
-                }
-                return null;
-            }
-        }
-    }
-#endif
 }
