@@ -241,16 +241,35 @@ namespace ReactUnity
             }
         }
 
-        /// Runs the scripts of a dev server entry document. `src` ones go through the same script
-        /// component the DOM shim uses, so they are fetched, executed and watched identically.
+        /// Runs the scripts and applies the stylesheets of an entry document. `src` and `href`
+        /// ones go through the same components the DOM shim uses, so they are fetched, executed
+        /// and watched identically.
+        ///
+        /// Styles are inserted before any script runs, the way a browser has the document's
+        /// stylesheets in hand before it renders what the scripts build.
         private void RunHtmlEntryPoint(string html)
         {
             var scripts = HtmlEntryPoint.ExtractScripts(html);
+            var styles = HtmlEntryPoint.ExtractStyles(html);
 
-            if (scripts.Count == 0)
+            if (scripts.Count == 0 && styles.Count == 0)
             {
-                Debug.LogWarning($"The dev server at {Source.DevServer} returned an HTML document with no runnable script tags.");
+                Debug.LogWarning($"The entry document at {Source.GetResolvedSourceUrl()} has no runnable script tags or stylesheets.");
                 return;
+            }
+
+            foreach (var style in styles)
+            {
+                var component = CreateComponent("style", "") as Styling.StyleComponent;
+                if (component == null) continue;
+
+                // Document-level styles, so they apply to the whole tree rather than to the
+                // detached node the component itself sits on.
+                component.SetProperty("scope", ":root");
+                component.SetParent(Host);
+
+                if (!string.IsNullOrEmpty(style.Href)) component.SetProperty("source", style.Href);
+                else component.SetText(style.Code);
             }
 
             foreach (var script in scripts)
