@@ -34,6 +34,15 @@ namespace QuickJS
         private JSValue _numberConstructor;
         private JSValue _stringConstructor;
         private JSValue _moduleRejectHandler;
+        private JSValue _moduleFulfillHandler;
+        private struct PendingModule
+        {
+            public string Source;
+            public string FileName;
+        }
+
+        private readonly Queue<PendingModule> _moduleEvalQueue = new Queue<PendingModule>();
+        private bool _moduleGraphInFlight;
 
         private bool _isReloading;
         private List<string> _waitForReloadModules;
@@ -64,6 +73,7 @@ namespace QuickJS
             _proxyConstructor = JSApi.JS_GetProperty(_ctx, _globalObject, JSApi.JS_ATOM_Proxy);
             _stringConstructor = JSApi.JS_GetProperty(_ctx, _globalObject, JSApi.JS_ATOM_String);
             _moduleRejectHandler = JSApi.JS_UNDEFINED;
+            _moduleFulfillHandler = JSApi.JS_UNDEFINED;
         }
 
         public void ReleaseTypeRegister(TypeRegister register)
@@ -159,6 +169,7 @@ namespace QuickJS
             JSApi.JS_FreeValue(_ctx, _numberConstructor);
             JSApi.JS_FreeValue(_ctx, _stringConstructor);
             JSApi.JS_FreeValue(_ctx, _moduleRejectHandler);
+            JSApi.JS_FreeValue(_ctx, _moduleFulfillHandler);
             JSApi.JS_FreeValue(_ctx, _globalObject);
 
             JSApi.JS_FreeValue(_ctx, _moduleCache);
@@ -698,7 +709,61 @@ namespace QuickJS
         ///
         /// Requires an AsyncModuleLoader to be installed. Without one the engine has no way to
         /// answer a request and the graph rejects.
-        public unsafe void EvalModuleAsync(string source, string fileName)
+        ///
+        /// Graphs are evaluated one at a time, in the order they were handed over. A document's
+        /// module scripts run in document order in a browser, and the entry point relies on it:
+        /// Vite's React preamble is an inline module that has to install its refresh hooks before
+        /// the app module it precedes is evaluated. Started concurrently they race, and the app
+        /// loses often enough to fail with "@vitejs/plugin-react can't detect preamble".
+        ///
+        /// Only host-initiated roots queue here. A dynamic `import()` inside JS is resolved by the
+        /// engine through the loader and never reaches this method, so nothing an evaluating graph
+        /// awaits can be stuck behind it.
+        public void EvalModuleAsync(string source, string fileName)
+        {
+            if (_moduleGraphInFlight)
+            {
+                _moduleEvalQueue.Enqueue(new PendingModule { Source = source, FileName = fileName });
+                return;
+            }
+
+            _moduleGraphInFlight = true;
+            try
+            {
+                EvalModuleAsyncNow(source, fileName);
+            }
+            catch
+            {
+                // A root that never started settles nothing, so release the queue before the
+                // parse error goes up to the caller.
+                _OnModuleGraphSettled();
+                throw;
+            }
+        }
+
+        /// Starts the next queued graph, if the one that just settled was not the last.
+        private void _OnModuleGraphSettled()
+        {
+            _moduleGraphInFlight = false;
+
+            while (!_moduleGraphInFlight && _moduleEvalQueue.Count > 0)
+            {
+                var next = _moduleEvalQueue.Dequeue();
+                _moduleGraphInFlight = true;
+                try
+                {
+                    EvalModuleAsyncNow(next.Source, next.FileName);
+                }
+                catch (Exception ex)
+                {
+                    // One bad root must not strand the ones behind it.
+                    _moduleGraphInFlight = false;
+                    ScriptEngine.GetLogger(_ctx)?.Write(LogLevel.Error, "failed to evaluate module '{0}': {1}", next.FileName, ex.Message);
+                }
+            }
+        }
+
+        private unsafe void EvalModuleAsyncNow(string source, string fileName)
         {
             var input_bytes = TextUtils.GetNullTerminatedBytes(source);
             var fn_bytes = TextUtils.GetNullTerminatedBytes(fileName);
@@ -740,19 +805,25 @@ namespace QuickJS
                 if (_moduleRejectHandler.IsUndefined())
                 {
                     _moduleRejectHandler = JSApi.JSB_NewCFunction(_ctx, _module_graph_rejected, GetAtom("onRejected"), 1);
+                    _moduleFulfillHandler = JSApi.JSB_NewCFunction(_ctx, _module_graph_fulfilled, GetAtom("onFulfilled"), 1);
                 }
 
                 var argv = stackalloc JSValue[2];
-                argv[0] = JSApi.JS_UNDEFINED;
+                argv[0] = _moduleFulfillHandler;
                 argv[1] = _moduleRejectHandler;
 
                 var rval = JSApi.JS_Call(_ctx, then, promise, 2, argv);
                 if (rval.IsException()) _ctx.print_exception();
 
                 JSApi.JS_FreeValue(_ctx, rval);
+                JSApi.JS_FreeValue(_ctx, then);
+                return;
             }
 
             JSApi.JS_FreeValue(_ctx, then);
+
+            // Nothing to settle against, so the queue would stall behind this graph.
+            _OnModuleGraphSettled();
         }
 
         [MonoPInvokeCallback(typeof(JSCFunction))]
@@ -760,6 +831,17 @@ namespace QuickJS
         {
             var reason = argc > 0 ? ctx.FormatException(argv[0]) : "(no reason given)";
             ScriptEngine.GetLogger(ctx)?.Write(LogLevel.Error, "failed to load module graph: {0}", reason);
+            ScriptEngine.GetContext(ctx)?._OnModuleGraphSettled();
+            return JSApi.JS_UNDEFINED;
+        }
+
+        // One shared handler for every graph, like the reject one above and for the same reason.
+        // It carries no per-graph state because it needs none: exactly one graph is ever in
+        // flight, so "a graph settled" is all the queue has to know.
+        [MonoPInvokeCallback(typeof(JSCFunction))]
+        private static JSValue _module_graph_fulfilled(JSContext ctx, JSValue this_obj, int argc, JSValue[] argv)
+        {
+            ScriptEngine.GetContext(ctx)?._OnModuleGraphSettled();
             return JSApi.JS_UNDEFINED;
         }
 

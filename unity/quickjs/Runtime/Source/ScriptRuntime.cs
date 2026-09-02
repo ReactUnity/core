@@ -94,6 +94,7 @@ namespace QuickJS
         private bool _isInitialized;
         private bool _isWorker;
         private bool _isStaticBinding;
+        private bool _isPumpingJobs;
 
         public bool withStacktrace
         {
@@ -860,23 +861,42 @@ namespace QuickJS
 
         public void ExecutePendingJob()
         {
-            JSContext ctx;
-            while (true)
-            {
-                var err = JSApi.JS_ExecutePendingJob(_rt, out ctx);
+            // Not reentrant. A job can evaluate a module, and js_inner_module_evaluation walks a
+            // stack threaded through JSModuleDef.stack_prev - one field, shared by every traversal
+            // in flight. Pumping from inside a job overlaps two of them, and the second one to
+            // finish pops until it hits the module it started from, which is no longer on the
+            // chain: it dereferences NULL and takes the process down. A host binding reaching back
+            // into the engine is enough to get here - `document.querySelectorAll` evaluates a
+            // script to marshal its result, and Vite's HMR client calls it at module scope, which
+            // crashed the editor. The outer loop drains whatever the nested code queued, so
+            // returning early loses nothing.
+            if (_isPumpingJobs) return;
 
-                if (err >= 0)
+            _isPumpingJobs = true;
+            try
+            {
+                JSContext ctx;
+                while (true)
                 {
-                    if (!JSApi.JS_IsJobPending(_rt))
+                    var err = JSApi.JS_ExecutePendingJob(_rt, out ctx);
+
+                    if (err >= 0)
                     {
-                        break;
+                        if (!JSApi.JS_IsJobPending(_rt))
+                        {
+                            break;
+                        }
+                    }
+
+                    if (err < 0)
+                    {
+                        ctx.print_exception();
                     }
                 }
-
-                if (err < 0)
-                {
-                    ctx.print_exception();
-                }
+            }
+            finally
+            {
+                _isPumpingJobs = false;
             }
         }
 
