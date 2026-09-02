@@ -43,8 +43,8 @@
   "devDependencies": {
     "@reactunity/renderer": "workspace:^",
     "@reactunity/scripts": "workspace:^",
-    "@types/react": "^19.2.17",
-    "concurrently": "^10.0.4",
+    "@types/react": "^19.2.18",
+    "concurrently": "^10.0.5",
     "copyfiles": "^2.4.1",
     "onchange": "^7.1.0",
     "rimraf": "^6.1.3",

@@ -74,9 +74,9 @@ minimumReleaseAgeExclude:
   - '@docsearch/core@4.7.0'
   - '@docsearch/css@4.7.0'
   - '@docsearch/react@4.7.0'
-  - '@types/node@26.1.2'
+  - '@types/node@26.1.2 || 26.4.1'
   - postcss@8.5.24
-  - webpack@5.109.1
+  - webpack@5.109.1 || 5.110.3
 
 # Force every request for a local package to resolve to the workspace copy.
 #

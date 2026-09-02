@@ -5,7 +5,10 @@
     "src": "index.html",
     "isEntry": true,
     "dynamicImports": [
-      "index.html"
+      "src/pages/style-frameworks/tailwind/index.tsx"
+    ],
+    "css": [
+      "assets/index-DtPSOCnr.css"
     ],
     "assets": [
       "assets/bg-Cds-LjN8.png"
@@ -14,5 +17,17 @@
   "src/assets/bg.png": {
     "file": "assets/bg-Cds-LjN8.png",
     "src": "src/assets/bg.png"
+  },
+  "src/pages/style-frameworks/tailwind/index.tsx": {
+    "file": "assets/tailwind-BqiS25lY.js",
+    "name": "tailwind",
+    "src": "src/pages/style-frameworks/tailwind/index.tsx",
+    "isDynamicEntry": true,
+    "imports": [
+      "index.html"
+    ],
+    "css": [
+      "assets/tailwind-BWWWtJxx.css"
+    ]
   }
 }
