@@ -119,6 +119,32 @@ namespace ReactUnity.Scripting
                     engine.SetGlobal("removeEventListener", new EventTarget.removeEventListener((e, h, o) => GlobalEventTarget.RemoveEventListener(e, h)));
                     engine.SetGlobal("dispatchEvent", new EventTarget.dispatchEvent((e, a) => GlobalEventTarget.DispatchEvent(e, Context, EventPriority.Unknown, a)));
 
+                    // An Event, and a dispatchEvent that takes one. Bundler output reports a
+                    // failure this way and reads `defaultPrevented` to decide whether to rethrow --
+                    // Vite's dynamic-import wrapper does, so without this a chunk that fails to
+                    // load reports `Event is not defined` and the real reason is lost. Only the
+                    // event's own members are here; there is no tree for it to travel through.
+                    engine.Execute(@"
+                        global.Event = function Event (type, options) {
+                            this.type = type;
+                            this.cancelable = !!(options && options.cancelable);
+                            this.defaultPrevented = false;
+                        };
+                        global.Event.prototype.preventDefault = function preventDefault () {
+                            if (this.cancelable) this.defaultPrevented = true;
+                        };
+
+                        var hostDispatchEvent = global.dispatchEvent;
+                        global.dispatchEvent = function dispatchEvent (event) {
+                            var rest = Array.prototype.slice.call(arguments, 1);
+                            if (event === null || typeof event !== 'object') return hostDispatchEvent(event, rest);
+
+                            hostDispatchEvent(event.type, [event].concat(rest));
+                            return !event.defaultPrevented;
+                        };
+                        void 0;
+                    ", "ReactUnity/shims/event");
+
                     afterStartCallbacks.Add((success) => GlobalEventTarget.DispatchEvent("DOMContentLoaded", Context, EventPriority.Discrete, success, this));
 
                     EngineInitialized = true;

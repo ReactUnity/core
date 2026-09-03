@@ -13,8 +13,6 @@ import { StylePlayground } from '#src/pages/style-playground/StylePlayground.tsx
 import SvgsPage from '#src/pages/svgs/index.tsx';
 import TodoPage from '#src/pages/todo/index.jsx';
 
-// Lazy on purpose, so the sample exercises a dynamic `import()` -- which resolves without
-// blocking a frame on every engine now that module loading is asynchronous.
 const TailwindPage = React.lazy(() => import('#src/pages/tailwind/index.tsx'));
 
 export function AppRoutes() {

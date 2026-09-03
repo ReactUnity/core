@@ -140,6 +140,10 @@ namespace ReactUnity.Scripting
         {
             if (documentType == JavascriptDocumentType.Module)
             {
+                // Registered under the url its own specifiers resolve against, so a chunk importing
+                // the entry back finds the module already here.
+                fileName = ModuleUrl.Canonical(fileName);
+
                 // Not awaited: anything this module imports is fetched by QuickJSModuleLoader,
                 // which needs the frames a blocking import would be holding.
                 if (ModuleLoader != null) MainContext.EvalModuleAsync(code, fileName ?? "module");

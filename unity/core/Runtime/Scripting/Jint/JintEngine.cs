@@ -110,9 +110,11 @@ namespace ReactUnity.Scripting
 
         private void StartModule(string code, string fileName)
         {
-            // import.meta.url is the specifier, so it has to be the address the code came from -
-            // and the cache is keyed on it, so a hot update needs a fresh one.
-            var specifier = $"{fileName ?? "module"}?__ru={moduleCount++}";
+            // import.meta.url is the specifier, so it has to be the address the code came from - and
+            // a chunk importing the entry back resolves to exactly that address, so the first run of
+            // one keeps it. The cache is keyed on the specifier, so only a re-run needs a fresh one.
+            var url = ModuleUrl.Canonical(fileName) ?? "module";
+            var specifier = moduleSpecifiers.Add(url) ? url : $"{url}?__ru={moduleCount++}";
             Engine.Modules.Add(specifier, code);
 
             // Not awaited: anything this module imports is fetched by JintModuleLoader, which
@@ -154,6 +156,7 @@ namespace ReactUnity.Scripting
         }
 
         private int moduleCount;
+        private readonly HashSet<string> moduleSpecifiers = new HashSet<string>();
         private readonly JintModuleLoader moduleLoader;
         private readonly List<ModuleImportOperation> pendingImports = new List<ModuleImportOperation>();
 

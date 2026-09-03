@@ -392,6 +392,24 @@ describe('dynamic import', () => {
     assert.deepEqual(seen.at(-1), ['https://host/app.js', './rel']);
   });
 
+  it('reuses the root when a chunk imports it back, rather than assembling a second copy', async () => {
+    // How a code-split bundle shares its runtime: the entry lazily imports a chunk, and the chunk
+    // imports the entry back for what the two have in common. A second copy of the entry would
+    // evaluate a second renderer, whose callbacks the host holds no ids for.
+    const tally = { evaluations: 0 };
+    const ns = await evaluate(
+      {
+        root: "tally.evaluations++;\nexport const tag = 'root';\nexport const load = () => import('chunk');",
+        chunk: "import { tag } from 'root';\nexport const viaRoot = tag;",
+      },
+      { hostGlobals: { tally } }
+    );
+
+    const chunk = await ns.load();
+    assert.equal(chunk.viaRoot, 'root');
+    assert.equal(tally.evaluations, 1);
+  });
+
   it('rejects rather than throwing when the host cannot resolve one', async () => {
     const context = createTestContext(state, stubs, { resolve: () => null, load: () => '' });
     const ns = await context.modules.evaluate('root', "export const load = () => import('./nope');");
