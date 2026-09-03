@@ -117,6 +117,8 @@ namespace ReactUnity.Styling
 
         private static readonly Regex MediaConditionRegex = new Regex(@"@media\s*([^\{]*){.*");
 
+        private CascadeLayers Layers = new CascadeLayers();
+
         private void ProcessParsed(Stylesheet stylesheet)
         {
             using (ReactProfiling.ProcessStyles.Auto())
@@ -126,13 +128,45 @@ namespace ReactUnity.Styling
                 FontFamilies.Clear();
                 Declarations.Clear();
 
+                Layers = new CascadeLayers();
+
                 if (stylesheet == null) return;
 
-                ProcessRules(stylesheet.Children, null, null);
+                // Layer order has to be settled before any rule is indexed, because a layer's place
+                // can depend on a name that only appears further down the sheet.
+                CollectLayers(stylesheet.Children, null);
+                ProcessRules(stylesheet.Children, null, null, null);
             }
         }
 
-        private void ProcessRules(IEnumerable<IStylesheetNode> children, MediaQueryList media, string mediaCondition)
+        /// <summary>
+        /// Registers every layer the sheet mentions, in the order it mentions them. Conditional
+        /// blocks are walked into unconditionally: a @media condition can flip at runtime, and
+        /// letting that reshuffle the layer order would move rules that have nothing to do with it.
+        /// </summary>
+        private void CollectLayers(IEnumerable<IStylesheetNode> children, string layerPath)
+        {
+            foreach (var child in children)
+            {
+                if (child is ILayerRule layerRule)
+                {
+                    var nested = Layers.Qualify(layerPath, layerRule);
+                    Layers.Declare(nested);
+                    CollectLayers(layerRule.Rules, nested);
+                }
+                else if (child is IRule rule && rule.Type == RuleType.LayerStatement)
+                {
+                    foreach (var name in CascadeLayers.ParseStatement(rule))
+                        Layers.Declare(Layers.Qualify(layerPath, name));
+                }
+                else if (child is IGroupingRule grouping)
+                {
+                    CollectLayers(grouping.Rules, layerPath);
+                }
+            }
+        }
+
+        private void ProcessRules(IEnumerable<IStylesheetNode> children, MediaQueryList media, string mediaCondition, string layerPath)
         {
             foreach (var child in children)
             {
@@ -148,7 +182,7 @@ namespace ReactUnity.Styling
 
                     var mql = MediaQueryList.Create(Context.MediaProvider, condition, Context.Context);
 
-                    ProcessRules(mediaRule.Rules, mql, condition);
+                    ProcessRules(mediaRule.Rules, mql, condition, layerPath);
 
                     MediaQueries.Add(mql);
                 }
@@ -157,7 +191,13 @@ namespace ReactUnity.Styling
                     // The condition is evaluated here rather than through ExCSS, which only knows
                     // which properties and values the web supports.
                     if (SupportsCondition.Evaluate(supportsRule.ConditionText))
-                        ProcessRules(((IGroupingRule) supportsRule).Rules, media, mediaCondition);
+                        ProcessRules(((IGroupingRule) supportsRule).Rules, media, mediaCondition, layerPath);
+                }
+                else if (child is ILayerRule layerRule)
+                {
+                    // The block's rules are ordinary rules; only their place in the cascade differs,
+                    // and CollectLayers has already worked that out.
+                    ProcessRules(layerRule.Rules, media, mediaCondition, Layers.Qualify(layerPath, layerRule));
                 }
                 else if (child is IKeyframesRule kfs)
                 {
@@ -170,9 +210,33 @@ namespace ReactUnity.Styling
                 }
                 else if (child is StyleRule str)
                 {
-                    var dcl = Context.StyleTree.AddStyle(str, ImportanceOffset, media, Scope);
-                    Declarations.AddRange(dcl);
+                    AddStyleRule(str, media, mediaCondition, layerPath);
                 }
+            }
+        }
+
+        /// <summary>
+        /// A style rule and the rules nested inside it, whose selectors the parser has already
+        /// resolved against their parent's. They come after the parent's own declarations, as in
+        /// CSS, and share its layer and media context.
+        /// </summary>
+        private void AddStyleRule(StyleRule rule, MediaQueryList media, string mediaCondition, string layerPath)
+        {
+            // An at-rule that cannot nest inside a style rule -- @container, for one -- is parsed as
+            // a style rule with no selector at all, and a selectorless rule would match every
+            // element. Dropping it leaves the block ignored, which is what it was before.
+            if (!string.IsNullOrWhiteSpace(rule.SelectorText))
+            {
+                var dcl = Context.StyleTree.AddStyle(rule, ImportanceOffset, media, Scope, Layers.Order(layerPath));
+                Declarations.AddRange(dcl);
+            }
+
+            // A nested @media or @supports arrives as the conditional rule it is, holding an
+            // implicit rule with this one's selector, so the ordinary path handles it.
+            foreach (var nested in rule.NestedRules)
+            {
+                if (nested is StyleRule nestedRule) AddStyleRule(nestedRule, media, mediaCondition, layerPath);
+                else ProcessRules(new IStylesheetNode[] { nested }, media, mediaCondition, layerPath);
             }
         }
 

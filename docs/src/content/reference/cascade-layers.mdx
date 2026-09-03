@@ -1,0 +1,87 @@
+---
+title: Cascade Layers
+---
+
+`@layer` groups rules into named layers whose order you control, independently of how specific the
+selectors inside them are. It is the CSS at-rule described at
+[MDN Docs](https://developer.mozilla.org/en-US/docs/Web/CSS/@layer), and its main use is keeping a
+framework's rules from outranking your own.
+
+```css
+@layer framework, app;
+
+@layer framework {
+  #title {
+    color: white;
+  }
+}
+
+@layer app {
+  text {
+    color: red;
+  }
+}
+```
+
+`#title` is far more specific than `text`, and loses anyway: `app` is the later layer, and the layer
+order is consulted before specificity.
+
+### Declaring layers {/*declaring-layers*/}
+
+| Form                                | What it does                                              |
+| ----------------------------------- | --------------------------------------------------------- |
+| `@layer name { … }`                 | Puts the rules in `name`, creating it if it is new        |
+| `@layer name;`                      | Creates `name` in this position without adding rules      |
+| `@layer a, b, c;`                   | Creates several at once, in that order                    |
+| `@layer { … }`                      | An anonymous layer, which nothing else can add to         |
+| `@layer outer { @layer inner { … } }` | A sub-layer of `outer`                                  |
+| `@layer outer.inner { … }`          | The same sub-layer, addressed by its full name            |
+
+A layer takes its position from where its name is **first seen**, so reopening it later adds rules
+to the original position rather than moving it to the end. That is what makes the leading
+`@layer a, b, c;` statement worth writing: it fixes the whole order up front, whatever order the
+blocks then arrive in.
+
+### How layers order {/*how-layers-order*/}
+
+1. **Unlayered rules beat every layer**, wherever they appear in the sheet.
+2. Among layers, the **later** layer wins.
+3. Inside one layer, specificity and source order decide as usual.
+4. A sub-layer sits **inside its parent's slot**, and loses to the parent's own rules. So
+   `outer.inner` loses to `outer`, and both lose to any layer declared after `outer`.
+5. `!important` reverses 1 and 2: an important declaration in the **earliest** layer wins, and an
+   important declaration in any layer beats an important unlayered one.
+
+Layers nest inside `@media` and `@supports` in either order. A layer declared inside a `@media`
+block still takes its position from the source, so a condition turning on or off never reshuffles
+the order of rules that have nothing to do with it.
+
+```css
+@layer base {
+  view {
+    background-color: black;
+  }
+}
+
+@media (min-width: 600px) {
+  @layer base {
+    view {
+      padding: 20px;
+    }
+  }
+}
+```
+
+### Limitations {/*limitations*/}
+
+**Layers are scoped to one stylesheet.** In a browser, all sheets in a document share one set of
+layers, and a layer name reopened in a second sheet lands back in the first sheet's slot. Here each
+stylesheet keeps its own layer order, and stylesheets are ordered relative to each other the way
+they always were. So the same layer name in two sheets is two unrelated layers.
+
+A stylesheet has room for 30 distinct layer positions. Beyond that, every further layer shares the
+last position, so they fall back to specificity and source order against each other. Sub-layers
+count towards the same 30.
+
+`revert-layer` is not implemented, and neither is `@import`, so `@import url(…) layer(name)` has
+nothing to attach to.

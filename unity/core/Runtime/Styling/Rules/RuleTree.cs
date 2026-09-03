@@ -14,9 +14,12 @@ namespace ReactUnity.Styling.Rules
     public class StyleTree : RuleTree<StyleData>
     {
         public List<Tuple<RuleTreeNode<StyleData>, Dictionary<IStyleProperty, object>>> AddStyle
-            (StyleRule rule, int importanceOffset = 0, MediaQueryList mql = null, IReactComponent scope = null)
+            (StyleRule rule, int importanceOffset = 0, MediaQueryList mql = null, IReactComponent scope = null, int layerOrder = 0)
         {
-            var added = AddSelector(rule.Selector.StylesheetText.Text, importanceOffset, mql, scope);
+            // A nested rule's selector was resolved by the parser rather than lifted from the
+            // source, so it has no stylesheet text of its own to read back.
+            var selectorText = rule.Selector.StylesheetText?.Text ?? rule.SelectorText;
+            var added = AddSelector(selectorText, importanceOffset, mql, scope, layerOrder);
             var pairs = new List<Tuple<RuleTreeNode<StyleData>, Dictionary<IStyleProperty, object>>>();
 
             foreach (var leaf in added)
@@ -30,7 +33,7 @@ namespace ReactUnity.Styling.Rules
 
                 if (importantDic.Count > 0)
                 {
-                    var importantLeaf = leaf.AddChildCascading("** !", mql, scope, importanceOffset);
+                    var importantLeaf = leaf.AddChildCascading("** !", mql, scope, importanceOffset, layerOrder);
                     if (importantLeaf.Data == null) importantLeaf.Data = new StyleData();
                     pairs.Add(Tuple.Create(importantLeaf, importantDic));
 
@@ -47,10 +50,10 @@ namespace ReactUnity.Styling.Rules
 
         public List<Tuple<RuleTreeNode<StyleData>, Dictionary<IStyleProperty, object>>> AddStyle(
             string selectorText, Dictionary<IStyleProperty, object> rules, Dictionary<IStyleProperty, object> importantRules,
-            int importanceOffset = 0, MediaQueryList mql = null, IReactComponent scope = null
+            int importanceOffset = 0, MediaQueryList mql = null, IReactComponent scope = null, int layerOrder = 0
         )
         {
-            var added = AddSelector(selectorText, importanceOffset);
+            var added = AddSelector(selectorText, importanceOffset, null, null, layerOrder);
             var pairs = new List<Tuple<RuleTreeNode<StyleData>, Dictionary<IStyleProperty, object>>>();
 
             foreach (var leaf in added)
@@ -61,7 +64,7 @@ namespace ReactUnity.Styling.Rules
 
                 if (importantRules != null && importantRules.Count > 0)
                 {
-                    var importantLeaf = leaf.AddChildCascading("** !", mql, scope, importanceOffset);
+                    var importantLeaf = leaf.AddChildCascading("** !", mql, scope, importanceOffset, layerOrder);
                     if (importantLeaf.Data == null) importantLeaf.Data = new StyleData();
                     pairs.Add(Tuple.Create(importantLeaf, importantRules));
 
@@ -167,15 +170,16 @@ namespace ReactUnity.Styling.Rules
             return false;
         }
 
-        public List<RuleTreeNode<T>> AddSelector(string selectorText, int importanceOffset = 0, MediaQueryList mql = null, IReactComponent scope = null)
+        public List<RuleTreeNode<T>> AddSelector(string selectorText, int importanceOffset = 0, MediaQueryList mql = null, IReactComponent scope = null, int layerOrder = 0)
         {
-            var splits = selectorText.Split(',');
+            var splits = RuleHelpers.SplitSelectorList(selectorText);
 
             var added = new List<RuleTreeNode<T>>();
             foreach (var split in splits)
+            foreach (var expanded in RuleHelpers.ExpandIs(split))
             {
-                var selector = RuleHelpers.NormalizeSelector(split);
-                var leaf = AddChildCascading("** " + selector, mql, scope, importanceOffset);
+                var selector = RuleHelpers.NormalizeSelector(expanded);
+                var leaf = AddChildCascading("** " + selector, mql, scope, importanceOffset, layerOrder);
 
                 if (leaf == null) continue;
 

@@ -97,7 +97,9 @@ namespace ReactUnity
             CursorAPI = new CursorAPI(this);
             LocalStorage = new LocalStorage();
 
-            StyleParser = new StylesheetParser(true, true, true, true, true, false, true);
+            // The last flag is the vendored patch: declarations arrive with the name and value as
+            // written, since ReactUnity's property set and its shorthands are not the web's.
+            StyleParser = new StylesheetParser(true, true, true, true, true, false, true, true);
             Style = CreateStyleContext();
 
             Html = new HtmlContext(this);

@@ -224,6 +224,14 @@
           "path": "/reference/feature-queries"
         },
         {
+          "title": "CSS Cascade Layers",
+          "path": "/reference/cascade-layers"
+        },
+        {
+          "title": "CSS Nesting",
+          "path": "/reference/nesting"
+        },
+        {
           "hasSectionHeader": true,
           "sectionHeader": "Material Components"
         },

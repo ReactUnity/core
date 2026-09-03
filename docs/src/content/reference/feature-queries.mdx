@@ -63,6 +63,5 @@ when both conditions hold.
 Feature queries that are not declarations always evaluate to **false**, because ReactUnity does not
 implement them. This includes `selector()`, `font-tech()` and `font-format()`.
 
-`@supports` must be a top-level rule. Writing it nested inside a style rule, which CSS nesting
-allows, does not work — the bundled CSS parser drops the nested block while keeping the declarations
-around it.
+`@supports` also nests inside a style rule, where the declarations it holds belong to the enclosing
+selector — see [Nesting](/reference/nesting).

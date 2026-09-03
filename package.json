@@ -22,6 +22,8 @@
     "tegami": "node scripts/tegami.mts",
     "//build:test-transformer": "Rebuilds the Sucrase bundle the Unity test runner evaluates inside QuickJS. Commit the result.",
     "build:test-transformer": "node scripts/test-transformer/build.mts",
+    "//build:excss": "Rebuilds the vendored ExCSS.dll from the fork commit pinned in the script. Needs a dotnet SDK. Commit the result.",
+    "build:excss": "node scripts/excss/build.mts",
     "//unity": "Headless Unity driver. `pnpm unity help` for the commands; the Editor bridge is separate (see .claude/skills/unity).",
     "unity": "node scripts/unity/cli.mts",
     "test:unity": "node scripts/unity/cli.mts test tests",

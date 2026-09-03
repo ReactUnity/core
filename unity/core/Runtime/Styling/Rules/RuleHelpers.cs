@@ -10,7 +10,35 @@ namespace ReactUnity.Styling.Rules
 {
     public static class RuleHelpers
     {
-        public static int ImportantSpecifity = 1 << 18;
+        // Specificity is packed into one int, most significant field first:
+        //
+        //   bits 24+     importance offset, one step per inserted stylesheet
+        //   bit  23      !important
+        //   bits 18-22   cascade layer rank
+        //   bits 12-17   id count
+        //   bits 6-11    class and pseudo-class count
+        //   bits 0-5     tag count
+        //
+        // Layer sits above specificity and below importance because that is the order CSS Cascade 5
+        // resolves them in. Its five bits leave exactly enough room below bit 23 for a full
+        // specificity alongside the highest rank, so nothing can carry into the importance bit.
+        public static int ImportantSpecifity = 1 << 23;
+        public static int LayerSpecifityStep = 1 << 18;
+        public const int MaxLayerRank = 31;
+
+        /// <summary>
+        /// Where a layer sits in the cascade, given a one-based layer order (0 being unlayered).
+        /// Unlayered rules beat layered ones and a later layer beats an earlier one -- both of
+        /// which reverse for important declarations.
+        /// </summary>
+        public static int LayerRank(int layerOrder, bool important)
+        {
+            if (layerOrder <= 0) return important ? 0 : MaxLayerRank;
+
+            var clamped = Math.Min(layerOrder, MaxLayerRank - 1);
+            return important ? MaxLayerRank - clamped : clamped;
+        }
+
         public static Regex SplitSelectorRegex = new Regex("\\s+");
         public static Regex NthChildRegex = new Regex(@"\((\-?\d*n)\s*\+\s*(\d+)\)");
 
@@ -186,6 +214,216 @@ namespace ReactUnity.Styling.Rules
             return dic;
         }
 
+        /// <summary>
+        /// Splits a selector list on its top-level commas only, so a comma inside
+        /// <c>:is(a, b)</c> or an attribute value is not mistaken for a separator.
+        /// </summary>
+        public static List<string> SplitSelectorList(string selectorText)
+        {
+            var parts = new List<string>();
+            if (selectorText == null) return parts;
+
+            var start = 0;
+            var depth = 0;
+            var quote = '\0';
+
+            for (int i = 0; i < selectorText.Length; i++)
+            {
+                var ch = selectorText[i];
+
+                if (ch == '\\') { i++; continue; }
+
+                if (quote != '\0')
+                {
+                    if (ch == quote) quote = '\0';
+                    continue;
+                }
+
+                if (ch == '"' || ch == '\'') quote = ch;
+                else if (ch == '(' || ch == '[') depth++;
+                else if (ch == ')' || ch == ']') { if (depth > 0) depth--; }
+                else if (ch == ',' && depth == 0)
+                {
+                    parts.Add(selectorText.Substring(start, i - start));
+                    start = i + 1;
+                }
+            }
+
+            parts.Add(selectorText.Substring(start));
+            return parts;
+        }
+
+        /// <summary>
+        /// Rewrites <c>:is()</c> away by inlining its argument, which is the form every resolved
+        /// nested selector arrives in. A list argument expands into one selector per branch, so
+        /// <c>:is(.a, .b) text</c> becomes <c>.a text</c> and <c>.b text</c>.
+        /// </summary>
+        /// <remarks>
+        /// Inlining is only equivalent where <c>:is()</c> begins its compound selector, or where its
+        /// argument is a single compound. Anything else -- <c>.x:is(.a .b)</c>, or an <c>:is()</c>
+        /// nested inside another function such as <c>:not()</c>, where a list is an intersection
+        /// rather than a union -- is left alone, and then matches nothing, as before.
+        /// Specificity is the flattened selector's, not <c>:is()</c>'s "most specific argument".
+        /// </remarks>
+        public static List<string> ExpandIs(string selector)
+        {
+            var done = new List<string>();
+            var pending = new List<string> { selector };
+
+            while (pending.Count > 0)
+            {
+                var last = pending.Count - 1;
+                var current = pending[last];
+                pending.RemoveAt(last);
+
+                if (!TryFindIs(current, out var open, out var close) || done.Count + pending.Count >= MaxSelectorExpansion)
+                {
+                    done.Add(current);
+                    continue;
+                }
+
+                var prefix = current.Substring(0, open);
+                var suffix = current.Substring(close + 1);
+                var args = SplitSelectorList(current.Substring(open + IsFunction.Length, close - open - IsFunction.Length));
+
+                // Whether this occurrence begins its compound decides whether inlining an argument
+                // that is more than one compound would change what the selector means.
+                var startsCompound = prefix.Length == 0 || " \t>+~".IndexOf(prefix[prefix.Length - 1]) >= 0;
+                var inlinable = true;
+
+                for (int i = 0; i < args.Count && inlinable; i++)
+                {
+                    var arg = args[i].Trim();
+                    inlinable = arg.Length > 0 && (startsCompound || arg.IndexOfAny(CompoundBreaks) < 0);
+                }
+
+                if (!inlinable)
+                {
+                    done.Add(current);
+                    continue;
+                }
+
+                foreach (var arg in args) pending.Add(prefix + arg.Trim() + suffix);
+            }
+
+            return done;
+        }
+
+        private const string IsFunction = ":is(";
+        private const int MaxSelectorExpansion = 32;
+        private static readonly char[] CompoundBreaks = { ' ', '\t', '>', '+', '~' };
+
+        /// <summary>Locates the first <c>:is(</c> that is not itself inside a function.</summary>
+        private static bool TryFindIs(string selector, out int open, out int close)
+        {
+            open = close = -1;
+
+            var depth = 0;
+            var quote = '\0';
+
+            for (int i = 0; i < selector.Length; i++)
+            {
+                var ch = selector[i];
+
+                if (ch == '\\') { i++; continue; }
+
+                if (quote != '\0')
+                {
+                    if (ch == quote) quote = '\0';
+                    continue;
+                }
+
+                if (ch == '"' || ch == '\'') { quote = ch; continue; }
+
+                if (ch == ':' && depth == 0 && i + IsFunction.Length <= selector.Length
+                    && string.Compare(selector, i, IsFunction, 0, IsFunction.Length, StringComparison.OrdinalIgnoreCase) == 0)
+                {
+                    open = i;
+                    close = MatchingParen(selector, i + IsFunction.Length - 1);
+                    if (close > 0) return true;
+                    open = -1;
+                    return false;
+                }
+
+                if (ch == '(' || ch == '[') depth++;
+                else if (ch == ')' || ch == ']') { if (depth > 0) depth--; }
+            }
+
+            return false;
+        }
+
+        private static int MatchingParen(string selector, int openIndex)
+        {
+            var depth = 0;
+            var quote = '\0';
+
+            for (int i = openIndex; i < selector.Length; i++)
+            {
+                var ch = selector[i];
+
+                if (ch == '\\') { i++; continue; }
+
+                if (quote != '\0')
+                {
+                    if (ch == quote) quote = '\0';
+                    continue;
+                }
+
+                if (ch == '"' || ch == '\'') quote = ch;
+                else if (ch == '(') depth++;
+                else if (ch == ')' && --depth == 0) return i;
+            }
+
+            return -1;
+        }
+
+        /// <summary>
+        /// Reads the CSS escape starting at the backslash at <paramref name="index"/>, and returns
+        /// how many characters it spans. Both forms are handled: one backslashed character, and a
+        /// hexadecimal code point with an optional whitespace terminator.
+        /// </summary>
+        private static int ReadEscape(string selector, int index, out string decoded)
+        {
+            decoded = "";
+            if (index + 1 >= selector.Length) return 1;
+
+            var digits = 0;
+            var point = 0;
+
+            while (digits < 6 && index + 1 + digits < selector.Length)
+            {
+                var value = HexValue(selector[index + 1 + digits]);
+                if (value < 0) break;
+                point = point * 16 + value;
+                digits++;
+            }
+
+            if (digits == 0)
+            {
+                decoded = selector[index + 1].ToString();
+                return 2;
+            }
+
+            var length = 1 + digits;
+            // A single whitespace character may terminate the escape, and is not part of the name.
+            if (index + length < selector.Length && char.IsWhiteSpace(selector[index + length])) length++;
+
+            // Zero, out of range, or a surrogate is a replacement character, per CSS Syntax.
+            decoded = point == 0 || point > 0x10FFFF || (point >= 0xD800 && point <= 0xDFFF)
+                ? "\ufffd"
+                : char.ConvertFromUtf32(point);
+
+            return length;
+        }
+
+        private static int HexValue(char ch)
+        {
+            if (ch >= '0' && ch <= '9') return ch - '0';
+            if (ch >= 'a' && ch <= 'f') return ch - 'a' + 10;
+            if (ch >= 'A' && ch <= 'F') return ch - 'A' + 10;
+            return -1;
+        }
+
         public static string NormalizeSelector(string selector)
         {
             var spaced = new StringBuilder();
@@ -196,16 +434,21 @@ namespace ReactUnity.Styling.Rules
             {
                 var ch = selector[i];
 
-                if (prev == '\\')
+                if (ch == '\\')
                 {
-                    spaced.Append('\\');
-                    spaced.Append(ch);
+                    // Re-emitted one backslash per character, which is the form ParseSelector
+                    // reads as a literal. The hexadecimal form is resolved here rather than
+                    // there, because it is how a name that starts with a digit is written:
+                    // `2xl:flex` as `\\32 xl\\:flex`.
+                    i += ReadEscape(selector, i, out var decoded) - 1;
+
+                    foreach (var c in decoded)
+                    {
+                        spaced.Append('\\');
+                        spaced.Append(c);
+                    }
+
                     prev = '\0';
-                    continue;
-                }
-                else if (ch == '\\')
-                {
-                    prev = ch;
                     continue;
                 }
                 else if (ch == '>' || ch == '+' || ch == '~')

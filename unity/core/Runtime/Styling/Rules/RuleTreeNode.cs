@@ -47,7 +47,7 @@ namespace ReactUnity.Styling.Rules
             return child;
         }
 
-        private void RecalculateSpecificity(int importanceOffset, bool important)
+        private void RecalculateSpecificity(int importanceOffset, bool important, int layerOrder)
         {
             RawSpecifity = Parent == null ? 0 : Parent.RawSpecifity;
 
@@ -109,10 +109,14 @@ namespace ReactUnity.Styling.Rules
                 }
             }
 
-            Specifity = RawSpecifity + importanceOffset * (1 << 24);
+            // The layer term is applied here rather than accumulated into RawSpecifity, because
+            // the important leaf hangs off the normal one and its rank is the reverse of its parent's.
+            Specifity = RawSpecifity
+                + RuleHelpers.LayerRank(layerOrder, important) * RuleHelpers.LayerSpecifityStep
+                + importanceOffset * (1 << 24);
         }
 
-        public RuleTreeNode<T> AddChildCascading(string selector, MediaQueryList mq, IReactComponent scope, int importanceOffset = 0)
+        public RuleTreeNode<T> AddChildCascading(string selector, MediaQueryList mq, IReactComponent scope, int importanceOffset = 0, int layerOrder = 0)
         {
             var shadowParent = selector.FastStartsWith(":deep ") || selector.FastStartsWith(">>> ");
             var directParent = selector[0] == '>';
@@ -158,7 +162,7 @@ namespace ReactUnity.Styling.Rules
                     }
                 }
             }
-            RecalculateSpecificity(importanceOffset, important);
+            RecalculateSpecificity(importanceOffset, important, layerOrder);
 
             if (!hasChild)
             {
@@ -168,7 +172,7 @@ namespace ReactUnity.Styling.Rules
                     if (ParsedSelector.Count > 1)
                     {
                         var pseudoChild = CreateChildNode(this, mq, scope, pseudoType);
-                        pseudoChild.RecalculateSpecificity(importanceOffset, important);
+                        pseudoChild.RecalculateSpecificity(importanceOffset, important, layerOrder);
                         return pseudoChild;
                     }
                     else
@@ -186,7 +190,7 @@ namespace ReactUnity.Styling.Rules
             {
                 if (pseudoType != RulePseudoType.None) return null;
                 var child = CreateChildNode(this, mq, scope, RulePseudoType.None);
-                return child.AddChildCascading(selectorOther, mq, scope, importanceOffset);
+                return child.AddChildCascading(selectorOther, mq, scope, importanceOffset, layerOrder);
             }
         }
 

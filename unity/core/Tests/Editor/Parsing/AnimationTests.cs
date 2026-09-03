@@ -10,7 +10,7 @@ namespace ReactUnity.Tests.Editor
     [TestFixture]
     public class AnimationTests
     {
-        static StylesheetParser Parser = new StylesheetParser(true, true, true, true, true);
+        static StylesheetParser Parser = new StylesheetParser(true, true, true, true, true, false, true, true);
 
         [Test]
         public void KeyframesParser()

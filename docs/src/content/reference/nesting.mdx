@@ -1,0 +1,117 @@
+---
+title: Nesting
+---
+
+A style rule may contain other style rules, which saves repeating the enclosing selector on every
+one of them. It is the CSS feature described at
+[MDN Docs](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_nesting), and it works here as it
+does in a browser.
+
+```css
+#panel {
+  background-color: black;
+
+  text {
+    color: white;
+  }
+
+  &:hover {
+    background-color: #222;
+  }
+
+  > .header {
+    padding: 10px;
+  }
+}
+```
+
+### How a nested selector resolves {/*how-a-nested-selector-resolves*/}
+
+A nested selector is resolved against the one that encloses it, and the result is an ordinary
+selector matched the ordinary way.
+
+| Written                          | Means                     |
+| -------------------------------- | ------------------------- |
+| `#panel { text { … } }`          | `#panel text`             |
+| `#panel { &:hover { … } }`       | `#panel:hover`            |
+| `#panel { &.dark { … } }`        | `#panel.dark`             |
+| `#panel { > .header { … } }`     | `#panel > .header`        |
+| `.a, .b { text { … } }`          | `.a text`, `.b text`      |
+| `#panel { .list { text { … } } }` | `#panel .list text`      |
+
+`&` stands for the enclosing selector. Without it the nested selector is a **descendant** of the
+enclosing one, so `#panel { text { … } }` never matches `#panel` itself. `&` may appear anywhere,
+including after the rest of the selector: `.item { #panel & { … } }` matches an `.item` inside
+`#panel`.
+
+A rule nests as deep as you like, and the declarations of each rule along the way still apply to
+what that rule matches.
+
+### Conditions nest too {/*conditions-nest-too*/}
+
+`@media` and `@supports` can be written inside a style rule. The declarations directly inside one
+belong to the enclosing selector, so this
+
+```css
+#panel {
+  padding: 10px;
+
+  @media (min-width: 600px) {
+    padding: 20px;
+  }
+}
+```
+
+means the same as this.
+
+```css
+#panel {
+  padding: 10px;
+}
+
+@media (min-width: 600px) {
+  #panel {
+    padding: 20px;
+  }
+}
+```
+
+Rules nest inside a nested condition as well, and resolve against the same enclosing selector.
+
+### `:is()` {/*is*/}
+
+`:is()` matches an element against any of the selectors it is given, and it is what a resolved
+nested selector is built from, so it works wherever a selector does.
+
+```css
+:is(#panel, #sidebar) > text {
+  color: white;
+}
+```
+
+It is rewritten to one plain selector per argument, which is why the specificity is that of the
+argument that matched rather than `:is()`'s own rule of taking its most specific argument. That
+only differs when the arguments differ in specificity, as in `:is(.a, #b)`.
+
+Two forms are not rewritten, and match nothing: an `:is()` that is not at the start of its compound
+selector and whose argument spans a combinator, such as `.x:is(.a .b)`; and an `:is()` inside
+another functional selector, such as `:not(:is(.a, .b))`, where a list means *all of* rather than
+*any of*. `:where()` is not implemented.
+
+### Escaped class names {/*escaped-class-names*/}
+
+A class name containing characters that a selector would otherwise read as syntax is written with
+escapes, which is how utility frameworks name theirs. Both forms work, including inside a nested
+selector.
+
+```css
+.hover\:underline { color: red; }
+.w-1\/2 { width: 50%; }
+.\32 xl\:flex { display: flex; }
+```
+
+### Limitations {/*limitations*/}
+
+An at-rule other than `@media` and `@supports` cannot be nested inside a style rule. `@container`
+is the one worth naming, since ReactUnity has no container queries at all; a block like that is
+ignored, and the declarations around it are unaffected.
