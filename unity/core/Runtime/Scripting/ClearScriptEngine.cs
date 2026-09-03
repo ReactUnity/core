@@ -312,14 +312,40 @@ namespace ReactUnity.Scripting
             {
                 if (!specifier.StartsWith("http"))
                 {
-                    specifier = Context.ResolvePath(specifier);
-                    if (sourceInfo.HasValue) sourceInfo = new DocumentInfo(new Uri(specifier))
+                    var url = ResolveUrl(sourceInfo, specifier);
+
+                    if (url != null)
                     {
-                        Category = category,
-                        ContextCallback = (di) => DocumentContextCallback((DocumentInfo) sourceInfo),
-                    };
+                        specifier = url.AbsoluteUri;
+
+                        // The document being loaded stands in for the one that imported it, so its
+                        // own relative imports resolve against its url and not the referrer's.
+                        sourceInfo = new DocumentInfo(url)
+                        {
+                            Category = category,
+                            ContextCallback = (di) => DocumentContextCallback(di),
+                        };
+                    }
                 }
                 return base.LoadDocumentAsync(settings, sourceInfo, specifier, category, contextCallback);
+            }
+
+            /// Relative to the importing module first, the way the QuickJS and Jint loaders resolve.
+            /// The entry source only stands in when the referrer has no absolute url of its own,
+            /// which is the root of a module added from source.
+            Uri ResolveUrl(DocumentInfo? sourceInfo, string specifier)
+            {
+                var referrer = sourceInfo?.Uri;
+                if (referrer != null && referrer.IsAbsoluteUri && Uri.TryCreate(referrer, specifier, out var resolved)) return resolved;
+
+                try
+                {
+                    return Uri.TryCreate(Context.ResolvePath(specifier), UriKind.Absolute, out var fromSource) ? fromSource : null;
+                }
+                catch
+                {
+                    return null;
+                }
             }
         }
 

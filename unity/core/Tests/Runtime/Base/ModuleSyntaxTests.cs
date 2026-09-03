@@ -89,10 +89,6 @@ namespace ReactUnity.Tests
         {
             yield return null;
 
-            // ClearScript's loader resolves a non-http specifier against the source url rather
-            // than the importing module, which a file url needs.
-            IgnoreForEngine(JavascriptEngineType.ClearScript);
-
             var dir = Path.Combine(Application.temporaryCachePath, "module-graph-" + graphCount++);
             Directory.CreateDirectory(dir);
 
@@ -108,8 +104,12 @@ namespace ReactUnity.Tests
                 "import { value } from './dep.js';\nglobalThis.__probe_graph = value;",
                 entry, JavascriptDocumentType.Module);
 
-            // Nothing has evaluated yet - the graph is still being fetched.
-            Assert.AreEqual("", Probe(), "the import graph evaluated before it could have been fetched");
+            // Nothing has evaluated yet - the graph is still being fetched. ClearScript is the
+            // exception, and only here: its loader hands a file document to ClearScript's own,
+            // which reads it inline, so the whole graph is already evaluated. Everything below
+            // still holds for it.
+            if (EngineType != JavascriptEngineType.ClearScript)
+                Assert.AreEqual("", Probe(), "the import graph evaluated before it could have been fetched");
 
             for (var i = 0; i < 300 && Probe() == ""; i++) yield return null;
 
@@ -141,9 +141,8 @@ namespace ReactUnity.Tests
             // document tripped over: it inlines the React Refresh preamble and then loads the app,
             // and the app reads what the preamble installs.
             //
-            // Deliberately no imports: this has to hold on every engine, and ClearScript's loader
-            // resolves a relative specifier against the entry source rather than the importing
-            // module, which would fail here for an unrelated reason.
+            // Deliberately no imports: what is being pinned down is the order of the roots
+            // themselves, and a fetch in between would only add a way for it to fail.
             Context.Script.Engine.Evaluate("globalThis.__probe_order = ''");
 
             Context.Script.ExecuteScript(
