@@ -1,8 +1,35 @@
 {
-  "extends": "@reactunity/scripts",
+  "compileOnSave": false,
+  // Self-contained on purpose. This project is published standalone by
+  // scripts/kitchen-sink/prepare.mts, so it cannot extend anything that only exists inside
+  // this checkout -- which is also why it no longer extends @reactunity/scripts.
   "compilerOptions": {
-    "allowImportingTsExtensions": true,
+    "target": "ES2022",
+    // What Unity's JS engines provide, not what a browser does: no DOM. ES2022 because
+    // ReactUnity's own code calls Object.hasOwn, and QuickJS, Jint 4 and ClearScript all
+    // implement it.
+    "lib": ["ES2022"],
+    "module": "ESNext",
+    "moduleResolution": "Bundler",
+    "jsx": "react-jsx",
+    // Types only: the runtime JSX comes from react, which is what this re-exports.
     "jsxImportSource": "@reactunity/renderer/ugui",
-    "types": ["@reactunity/scripts/main"]
-  }
+    // vite/client is what declares the asset imports (*.png, *.scss, *.svg?raw) and
+    // import.meta.env; vite-plugin-svgr/client adds *.svg?react. Together they replace the
+    // @reactunity/scripts/main declarations.
+    "types": ["vite/client", "vite-plugin-svgr/client"],
+    "allowImportingTsExtensions": true,
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "isolatedModules": true,
+    "noEmit": true,
+    "noFallthroughCasesInSwitch": true,
+    "resolveJsonModule": true,
+    "skipLibCheck": true,
+    "strict": true,
+    "strictNullChecks": false,
+    "noImplicitAny": false
+  },
+  "include": ["src", "vite.config.mts"]
 }

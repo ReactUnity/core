@@ -1,13 +1,30 @@
 {
-  "extends": "@reactunity/scripts",
+  "compileOnSave": false,
   "compilerOptions": {
-    // src/context/... style imports depend on this. It used to be `baseUrl: "./"`, which
-    // TypeScript 7 removed (TS5102); this is the replacement 7 names, and
-    // @reactunity/scripts reads it back as a baseUrl so the webpack `src` alias survives.
-    "paths": { "*": ["./*"] },
+    "target": "ES2022",
+    // Unity's JS engines, not a browser: no DOM. ES2022 for Object.hasOwn, which all three
+    // engines implement.
+    "lib": ["ES2022"],
+    "module": "ESNext",
+    "moduleResolution": "Bundler",
+    "jsx": "react-jsx",
+    // Types only: the runtime JSX comes from react, which is what this re-exports.
     "jsxImportSource": "@reactunity/renderer/editor",
-    "types": ["@reactunity/scripts/main"]
+    // vite/client declares the asset imports and import.meta.env, in place of the
+    // @reactunity/scripts/main declarations this used to pull in.
+    "types": ["vite/client"],
+    // The #src/... imports name the file they mean, extension and all -- see package.json.
+    "allowImportingTsExtensions": true,
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "isolatedModules": true,
+    "noEmit": true,
+    "resolveJsonModule": true,
+    "skipLibCheck": true,
+    "strict": true,
+    "strictNullChecks": false,
+    "noImplicitAny": false
   },
-  "files": ["./src/index.ts"],
-  "include": ["src"]
+  "include": ["src", "vite.config.mts"]
 }

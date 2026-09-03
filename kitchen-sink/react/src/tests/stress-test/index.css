@@ -1,3 +1,4 @@
-/* @tailwind base; */
-@tailwind components;
-@tailwind utilities;
+/* See src/pages/style-frameworks/tailwind/index.css for why these are imported piecemeal. */
+@import "tailwindcss/theme.css";
+@import "tailwindcss/utilities.css";
+@source "../../";

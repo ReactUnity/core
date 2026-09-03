@@ -1,3 +1,6 @@
-/* @tailwind base; */
-@tailwind components;
-@tailwind utilities;
+/* Not `@import 'tailwindcss'` -- that one wraps everything in `@layer`, which ReactUnity's CSS
+   subset drops on the floor. Importing the pieces without `layer()` emits them flat. Preflight
+   is left out on purpose; it targets DOM elements that do not exist here. */
+@import "tailwindcss/theme.css";
+@import "tailwindcss/utilities.css";
+@source "../../../";

@@ -26,8 +26,9 @@ export default defineConfig({ plugins: [reactUnity()] });
 It adds [`@vitejs/plugin-react`](https://www.npmjs.com/package/@vitejs/plugin-react), finds the Unity
 project above the app and builds into its `Assets/Resources/react`, and empties that folder before
 each build while keeping Unity's `.meta` files — so the GUIDs your scenes reference survive a
-rebuild. Filenames carry no content hash for the same reason. It also turns off the Vite devtools and
-the HMR error overlay, neither of which Unity can display.
+rebuild. Filenames carry no content hash for the same reason, assets are never inlined as `data:`
+URIs, and CSS is lowered for an old browser so ReactUnity's parser can read it. It also turns off the
+Vite devtools and the HMR error overlay, neither of which Unity can display.
 
 Every part of that is an option:
 

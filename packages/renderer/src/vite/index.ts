@@ -84,12 +84,22 @@ function reactUnityConfig(options: ReactUnityOptions): Plugin {
         }
       }
 
+      // Unity resolves an asset URL through its own loaders, and a small file inlined as a
+      // data: URI never reaches them the same way -- react-unity-scripts pinned the same
+      // limit to 0 rather than take CRA's 10 kB.
+      if (config.build?.assetsInlineLimit === undefined) build.assetsInlineLimit = 0;
+
+      // ReactUnity's CSS subset is roughly a 2020 browser: no oklch, color-mix or nesting.
+      // Naming an old target is what makes Lightning CSS lower them on the way out.
+      if (config.build?.cssTarget === undefined) build.cssTarget = ['chrome87'];
+
       // Vite's own emptying would take the .meta files with it, and warns about an outDir
       // outside the root besides. The clean plugin below does the job instead.
       if (options.clean !== false && config.build?.emptyOutDir === undefined) build.emptyOutDir = false;
 
+      // Library mode names its own output, and an entryFileNames here would override it.
       const output = config.build?.rolldownOptions?.output ?? config.build?.rollupOptions?.output;
-      if (!options.hashFileNames && output === undefined) {
+      if (!options.hashFileNames && output === undefined && !config.build?.lib) {
         const dir = config.build?.assetsDir ?? 'assets';
         build.rolldownOptions = {
           output: {

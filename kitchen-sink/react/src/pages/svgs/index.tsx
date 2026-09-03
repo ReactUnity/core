@@ -3,7 +3,7 @@ import { useMemo, useState } from 'react';
 import { FaAlignCenter, FaBeer } from 'react-icons/fa';
 import { FcDoughnutChart } from 'react-icons/fc';
 import { IconContext } from 'react-icons/lib';
-import CheckSVG from '#src/assets/check.svg';
+import CheckSVG from '#src/assets/check.svg?react';
 import { Graph } from './graph';
 import styles from './index.module.scss';
 

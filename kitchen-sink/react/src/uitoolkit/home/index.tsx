@@ -2,9 +2,9 @@
 
 import { icon, ReactUnity, render } from '@reactunity/renderer';
 import { useState } from 'react';
-import base64Image from '#src/assets/base64Image.txt';
+import base64Image from '#src/assets/base64Image.txt?raw';
 import pngImage from '#src/assets/bg.png';
-import CheckSVG from '#src/assets/check.svg';
+import CheckSVG from '#src/assets/check.svg?react';
 import style from './index.module.scss';
 
 const webImage = 'https://www.google.com.tr/images/branding/googlelogo/1x/googlelogo_color_272x92dp.png';

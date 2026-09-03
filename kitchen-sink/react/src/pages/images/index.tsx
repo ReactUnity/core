@@ -1,8 +1,7 @@
 import { icon, ReactUnity, UnityEngine, useGlobals } from '@reactunity/renderer';
 import { useEffect, useState } from 'react';
-import base64Image from '#src/assets/base64Image.txt';
+import base64Image from '#src/assets/base64Image.txt?raw';
 import pngImage from '#src/assets/bg.png';
-// @ts-expect-error
 import check from '#src/assets/check.svg?raw';
 import styles from './index.module.scss';
 

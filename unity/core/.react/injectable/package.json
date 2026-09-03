@@ -5,11 +5,8 @@
   "main": "index.ts",
   "private": true,
   "scripts": {
-    "start": "react-unity-scripts start",
-    "typecheck": "tsc",
-    "build": "pnpm run build:self && pnpm run build:replace",
-    "build:self": "react-unity-scripts build",
-    "build:replace": "node scripts/replace-injectable.mjs"
+    "build": "vite build && node scripts/append-harness.mjs",
+    "typecheck": "tsc"
   },
   "dependencies": {
     "@reactunity/material": "workspace:*",
@@ -17,7 +14,7 @@
     "react": "^19.2.8"
   },
   "devDependencies": {
-    "@reactunity/scripts": "workspace:*",
-    "typescript": "^7.0.2"
+    "typescript": "^7.0.2",
+    "vite": "^8.2.2"
   }
 }

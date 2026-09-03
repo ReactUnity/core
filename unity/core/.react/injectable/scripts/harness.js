@@ -1,4 +1,18 @@
-((react, ReactUnity, Material, MaterialStyles, ReactUnityWebGLCompat) => {
+// Appended to the built bundle by append-harness.mjs, and never bundled itself: the
+// INJECT_CODE marker below is what TestHelpers replaces with a fixture's code, and no
+// bundler is obliged to keep a comment. src/index.ts is what leaves the dependencies on
+// globalThis for it to pick up.
+//
+// biome-ignore-all lint/correctness/noUnusedVariables: they are the API the fixture's code uses
+// biome-ignore-all lint/correctness/noUnusedFunctionParameters: module, exports, render and require are that API too
+((__injectable) => {
+  // The bundle it is appended to is strict, and the fixture code spliced in below used to
+  // run inside it. Kept that way now that the harness sits outside.
+  // biome-ignore lint/suspicious/noRedundantUseStrict: appended to a classic script, so nothing else makes it strict
+  'use strict';
+
+  let { react, ReactUnity, Material, MaterialStyles, ReactUnityWebGLCompat } = __injectable;
+
   const __originalRender = ReactUnity.__originalRender || ReactUnity.render;
 
   let renderCalled = false;
@@ -80,4 +94,4 @@
       console.error('Nothing was rendered');
     }
   }
-})(react, ReactUnity, Material, MaterialStyles, ReactUnityWebGLCompat);
+})(globalThis.__reactUnityInjectable);
