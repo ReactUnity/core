@@ -22,7 +22,7 @@ import { defineConfig } from 'tsdown';
  * Listing entries as an object pins each output path instead of letting rolldown infer a
  * common base and shift everything up a directory.
  */
-export default defineConfig({
+const runtime = defineConfig({
   entry: {
     index: 'index.ts',
     tests: 'tests.ts',
@@ -65,3 +65,31 @@ export default defineConfig({
   // these through a bundler, which reads the ESM in them regardless of extension.
   outExtensions: () => ({ js: '.js' }),
 });
+
+/*
+ * The Vite plugin (`@reactunity/renderer/vite`) is the one entry that never reaches
+ * Unity: it runs in Node, inside the consumer's Vite config, so it gets its own config
+ * rather than the es2015 lowering above.
+ *
+ * The extension is the load-bearing part. This package is not `"type": "module"`, and
+ * Vite externalises a config file's bare imports for Node to load -- which would read a
+ * .js file here as CommonJS and fail on its first `import`. Hence tsdown's default .mjs
+ * for ESM output, rather than the .js the entries above are pinned to.
+ *
+ * `clean` stays on in both configs on purpose: tsdown empties the shared outDir once for
+ * every config in the array, before any of them builds.
+ */
+const vitePlugin = defineConfig({
+  entry: { vite: 'vite.ts' },
+  outDir: 'dist',
+  // vite.ts is not in the base tsconfig's file list, so the dts step would find nothing.
+  tsconfig: 'tsconfig.vite.json',
+  format: 'esm',
+  platform: 'node',
+  target: 'node20.11',
+  dts: true,
+  sourcemap: true,
+  clean: true,
+});
+
+export default [runtime, vitePlugin];

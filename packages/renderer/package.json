@@ -8,6 +8,7 @@
   "sideEffects": false,
   "files": ["dist"],
   "//exports": "`./tests` is the entry that exists: the source file is tests.ts and packages/scripts/lib/types/tests.d.ts references `@reactunity/renderer/tests`. The map only ever declared `./test`, pointed at ./dist/test.js -- a name tsc never emitted -- so both spellings failed to resolve under an exports-aware resolver. `./test` is kept as an alias for the same file rather than dropped, since it costs nothing and it is the name published so far.",
+  "//exports-vite": "Node-only, and the one entry a consumer imports outside the Unity bundle -- hence .mjs. This package is not an ESM package, and Vite loads a config file's externalised imports through Node, which would read a .js file here as CommonJS and choke on its imports.",
   "exports": {
     ".": "./dist/index.js",
     "./tests": "./dist/tests.js",
@@ -18,11 +19,16 @@
     "./uitoolkit/*": "./dist/uitoolkit/*.js",
     "./editor": "./dist/editor/index.js",
     "./editor/*": "./dist/editor/*.js",
-    "./webgl-compat": "./dist/webgl-compat.js"
+    "./webgl-compat": "./dist/webgl-compat.js",
+    "./vite": {
+      "types": "./dist/vite.d.mts",
+      "default": "./dist/vite.mjs"
+    }
   },
   "scripts": {
     "build": "tsdown",
-    "typecheck": "tsc",
+    "typecheck": "tsc && tsc -p tsconfig.vite.json",
+    "test": "node --test src/vite/*.test.mts",
     "prepack": "pnpm run build",
     "watch": "tsdown --watch",
     "lint": "react-unity-scripts lint",
@@ -37,14 +43,23 @@
   },
   "keywords": ["react", "react-renderer", "unity", "unity3d"],
   "dependencies": {
+    "@vitejs/plugin-react": "^6.1.1",
     "react-reconciler": "^0.33.0",
     "use-sync-external-store": "^1.6.0"
   },
   "peerDependencies": {
-    "react": "^19.0.0"
+    "react": "^19.0.0",
+    "vite": "^8.0.0"
+  },
+  "//peerDependenciesMeta": "Only ./vite needs Vite, and only for its types -- the runtime entries never touch it.",
+  "peerDependenciesMeta": {
+    "vite": {
+      "optional": true
+    }
   },
   "devDependencies": {
     "@reactunity/scripts": "workspace:^",
+    "@types/node": "^26.4.1",
     "@types/react-reconciler": "^0.33.0",
     "react-unity-webgl": "^10.2.0",
     "rimraf": "^6.1.3",

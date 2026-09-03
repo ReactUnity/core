@@ -1,0 +1,26 @@
+{
+  "compileOnSave": false,
+  // The Vite plugin is the one thing in this package that runs in Node rather than in
+  // Unity's JS engine, so it gets its own config: Node's globals instead of the empty
+  // `types` list, and none of the base config's Unity-facing assumptions. tsdown builds
+  // it separately for the same reason (see tsdown.config.ts).
+  "compilerOptions": {
+    "noEmit": true,
+    "allowImportingTsExtensions": true,
+    "pretty": true,
+    "strict": true,
+    "strictNullChecks": false,
+    "noImplicitAny": false,
+    "skipLibCheck": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "forceConsistentCasingInFileNames": true,
+    "isolatedModules": true,
+    "module": "ESNext",
+    "moduleResolution": "Bundler",
+    "lib": ["ES2023"],
+    "target": "ES2023",
+    "types": ["node"]
+  },
+  "files": ["vite.ts", "src/vite/vite.test.mts"]
+}
