@@ -56,6 +56,12 @@ namespace ReactUnity
         public bool CalculatesLayout { get; }
         public IHostComponent Host { get; protected set; }
         public HashSet<IReactComponent> DetachedRoots { get; protected set; } = new HashSet<IReactComponent>();
+        // A ProxyComponent never enters the tree itself -- SetParent delegates to the component it
+        // wraps, so that one is what a parent's Children holds -- leaving the weak Refs table as
+        // the only thing pointing at a mounted <style> or <script>. Collect one and every later
+        // command for its ref is dropped in silence. Held here for exactly as long as it is
+        // parented, which is what Children does for everything else.
+        internal HashSet<IReactComponent> MountedProxies { get; } = new HashSet<IReactComponent>();
         public GlobalRecord Globals { get; private set; }
         public bool IsDisposed { get; private set; }
         public virtual bool IsEditorContext => false;
@@ -298,6 +304,7 @@ namespace ReactUnity
             Refs.Clear();
             foreach (var dr in DetachedRoots) dr.Destroy(false);
             DetachedRoots.Clear();
+            MountedProxies.Clear();
             Dispatcher?.Dispose();
             Globals?.Dispose();
             foreach (var item in Disposables) item?.Invoke();
