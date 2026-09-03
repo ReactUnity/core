@@ -14,7 +14,7 @@ namespace ReactUnity.Styling
         public static ICssFunction Resource = new UrlFunction() { DefaultProtocol = Types.UrlProtocol.Resource };
         public static ICssFunction Rgba = new RgbaFunction();
         public static ICssFunction Hsla = new HslaFunction();
-        public static ICssFunction Oklch = new OklchFunction();
+        public static ICssFunction LabColor = new LabColorFunction();
         public static ICssFunction ColorMix = new ColorMixFunction();
         public static ICssFunction Var = new VarFunction();
         public static ICssFunction Vector3 = new Vector3Function();
@@ -36,8 +36,10 @@ namespace ReactUnity.Styling
             { "resource", Resource },
             { "rgba", Rgba },
             { "hsla", Hsla },
-            { "oklch", Oklch },
-            { "oklab", Oklch },
+            { "oklch", LabColor },
+            { "oklab", LabColor },
+            { "lch", LabColor },
+            { "lab", LabColor },
             { "color-mix", ColorMix },
             { "var", Var },
             { "vector3", Vector3 },

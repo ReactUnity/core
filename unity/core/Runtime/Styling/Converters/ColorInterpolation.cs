@@ -8,6 +8,8 @@ namespace ReactUnity.Styling.Converters
         Srgb,
         SrgbLinear,
         Hsl,
+        Lab,
+        Lch,
         Oklab,
         Oklch,
     }
@@ -39,6 +41,12 @@ namespace ReactUnity.Styling.Converters
                     return true;
                 case "hsl":
                     space = ColorInterpolationSpace.Hsl;
+                    return true;
+                case "lab":
+                    space = ColorInterpolationSpace.Lab;
+                    return true;
+                case "lch":
+                    space = ColorInterpolationSpace.Lch;
                     return true;
                 case "oklab":
                     space = ColorInterpolationSpace.Oklab;
@@ -80,6 +88,7 @@ namespace ReactUnity.Styling.Converters
             switch (space)
             {
                 case ColorInterpolationSpace.Hsl: return 0;
+                case ColorInterpolationSpace.Lch: return 2;
                 case ColorInterpolationSpace.Oklch: return 2;
                 default: return -1;
             }
@@ -170,6 +179,12 @@ namespace ReactUnity.Styling.Converters
                 case ColorInterpolationSpace.Hsl:
                     ColorSpaces.ColorToHsl(color, out c0, out c1, out c2);
                     break;
+                case ColorInterpolationSpace.Lab:
+                    ColorSpaces.ColorToLab(color, out c0, out c1, out c2);
+                    break;
+                case ColorInterpolationSpace.Lch:
+                    ColorSpaces.ColorToLch(color, out c0, out c1, out c2);
+                    break;
                 case ColorInterpolationSpace.Oklab:
                     ColorSpaces.ColorToOklab(color, out c0, out c1, out c2);
                     break;
@@ -197,6 +212,10 @@ namespace ReactUnity.Styling.Converters
                         alpha);
                 case ColorInterpolationSpace.Hsl:
                     return ColorSpaces.HslToColor(comps[0], Mathf.Clamp01(comps[1]), Mathf.Clamp01(comps[2]), alpha);
+                case ColorInterpolationSpace.Lab:
+                    return ColorSpaces.LabToColor(comps[0], comps[1], comps[2], alpha);
+                case ColorInterpolationSpace.Lch:
+                    return ColorSpaces.LchToColor(comps[0], Mathf.Max(0, comps[1]), comps[2], alpha);
                 case ColorInterpolationSpace.Oklab:
                     return ColorSpaces.OklabToColor(comps[0], comps[1], comps[2], alpha);
                 case ColorInterpolationSpace.Oklch:

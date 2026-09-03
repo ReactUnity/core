@@ -22,9 +22,12 @@ namespace ReactUnity.Tests.Editor
         [TestCase("(color:)", false)]
         [TestCase("(color)", false)]
         // The functions this change adds, which is what Tailwind gates its output on.
-        [TestCase("(color: color-mix(in lab, red, red))", false)]
+        [TestCase("(color: color-mix(in lab, red, red))", true)]
         [TestCase("(color: color-mix(in oklab, red, red))", true)]
+        [TestCase("(color: color-mix(in rec2020, red, red))", false)]
         [TestCase("(color: oklch(0.5 0.1 200))", true)]
+        [TestCase("(color: lch(50 50 200))", true)]
+        [TestCase("(color: lab(50 40 -30))", true)]
         [TestCase("not (color: oklch(0.5 0.1 200))", false)]
         [TestCase("not (float: left)", true)]
         [TestCase("not not (color: red)", true)]

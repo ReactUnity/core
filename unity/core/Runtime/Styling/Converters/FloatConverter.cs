@@ -157,6 +157,42 @@ namespace ReactUnity.Styling.Converters
         { }
     }
 
+    /// <summary>
+    /// Lightness in lab() and lch(), which is 0..100 rather than 0..1, so a percentage is itself.
+    /// </summary>
+    public class LabLightnessConverter : FloatConverter
+    {
+        public LabLightnessConverter() : base(new Dictionary<string, float>
+        {
+            { "%", 1f },
+        })
+        { }
+    }
+
+    /// <summary>
+    /// The a/b axes in lab(), where 100% means 125.
+    /// </summary>
+    public class LabAxisConverter : FloatConverter
+    {
+        public LabAxisConverter() : base(new Dictionary<string, float>
+        {
+            { "%", ColorSpaces.LabAxisReference / 100f },
+        })
+        { }
+    }
+
+    /// <summary>
+    /// Chroma in lch(), where 100% means 150.
+    /// </summary>
+    public class LchChromaConverter : FloatConverter
+    {
+        public LchChromaConverter() : base(new Dictionary<string, float>
+        {
+            { "%", ColorSpaces.LchChromaReference / 100f },
+        })
+        { }
+    }
+
     public class LengthConverter : FloatConverter
     {
         private const float CM = 37.8f;

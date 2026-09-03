@@ -12,21 +12,34 @@ Sets the background color of a component.
 - HSL color: `hsl(152, 37%, 59%)`, `hsla(152 37% 59% / 0.75)`
 - OKLCh color: `oklch(63.7% 0.237 25.331)`, `oklch(0.5 0.2 30deg / 50%)`
 - OKLab color: `oklab(0.5 0.1 -0.1)`
+- LCh color: `lch(54.29% 106.84 40.86)`, `lch(70 30 0.5turn)`
+- Lab color: `lab(50 40 -30)`, `lab(50 40 -30 / 50%)`
 - Mixed color: `color-mix(in oklab, red 30%, blue)` — see below
 - CSS keywords: `inherit`
 
-Lightness in `oklch()` and `oklab()` is a number or a percentage. Chroma, and the `a`/`b` axes, are
-a number or a percentage of `0.4`. Hue takes any angle unit. A component written as `none` is `0`.
+Every component of these four is a number or a percentage, and one written as `none` is `0`. What
+`100%` means differs by function, because each space has its own ranges:
 
-`color-mix()` interpolates two colors in `srgb`, `srgb-linear`, `hsl`, `oklab` or `oklch`. Each
-percentage is optional and may be written on either side of its color; giving one implies the other,
-and a pair summing to under `100%` scales the result's alpha by that sum. Alpha is premultiplied, so
-mixing with `transparent` fades the color instead of darkening it. In `hsl` and `oklch` the hue may
-carry `shorter hue`, `longer hue`, `increasing hue` or `decreasing hue`, defaulting to `shorter`.
+| Function   | Lightness  | Chroma, or the `a`/`b` axes |
+| ---------- | ---------- | --------------------------- |
+| `oklch()`  | `0`–`1`    | `0.4`                       |
+| `oklab()`  | `0`–`1`    | `0.4`                       |
+| `lch()`    | `0`–`100`  | `150`                       |
+| `lab()`    | `0`–`100`  | `125`                       |
 
-The `lab` and `lch` interpolation spaces are not implemented; naming one makes the declaration
-invalid rather than silently mixing in a different space. A color outside the sRGB gamut is clamped
-per channel, which shifts the hue of a very saturated color.
+So `oklch(0.637 …)` and `oklch(63.7% …)` are the same lightness, while in `lch()` both `54.29` and
+`54.29%` mean `54.29`. Hue takes any angle unit.
+
+`color-mix()` interpolates two colors in `srgb`, `srgb-linear`, `hsl`, `lab`, `lch`, `oklab` or
+`oklch`. Each percentage is optional and may be written on either side of its color; giving one
+implies the other, and a pair summing to under `100%` scales the result's alpha by that sum. Alpha
+is premultiplied, so mixing with `transparent` fades the color instead of darkening it. In the polar
+spaces — `hsl`, `lch` and `oklch` — the hue may carry `shorter hue`, `longer hue`, `increasing hue`
+or `decreasing hue`, defaulting to `shorter`.
+
+A color outside the sRGB gamut is clamped per channel, which shifts the hue of a very saturated
+color. Naming an interpolation space that is not in the list above, such as `display-p3` or
+`rec2020`, makes the declaration invalid rather than silently mixing in a different space.
 
 <Sandpack>
 

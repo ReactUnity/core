@@ -130,6 +130,7 @@ namespace ReactUnity.Styling.Converters
             return OklabToColor(l, a, b, alpha);
         }
 
+        /// <summary>Rectangular to polar. Unit-agnostic, so both Lab families share it.</summary>
         public static void LabToLch(float a, float b, out float c, out float h)
         {
             c = Mathf.Sqrt(a * a + b * b);
@@ -141,6 +142,110 @@ namespace ReactUnity.Styling.Converters
             var rad = h * Mathf.Deg2Rad;
             a = c * Mathf.Cos(rad);
             b = c * Mathf.Sin(rad);
+        }
+
+        #endregion
+
+        #region CIE Lab
+
+        /// <summary>a/b axis value that a 100% percentage refers to in lab().</summary>
+        public const float LabAxisReference = 125f;
+
+        /// <summary>Chroma that a 100% chroma percentage refers to in lch().</summary>
+        public const float LchChromaReference = 150f;
+
+        private const double Epsilon = 216d / 24389d;
+        private const double Kappa = 24389d / 27d;
+
+        // The D50 white point, from the chromaticity CSS Color 4 specifies for lab().
+        private const double WhiteX = 0.3457d / 0.3585d;
+        private const double WhiteY = 1d;
+        private const double WhiteZ = (1d - 0.3457d - 0.3585d) / 0.3585d;
+
+        // CSS lab() is referenced to D50, so the chain is linear sRGB -> XYZ D65 -> XYZ D50 -> Lab.
+        // The two matrices are kept apart rather than folded into one so each can be checked
+        // against the table in CSS Color 4 that it came from.
+
+        internal static void LinearSrgbToXyzD50(double r, double g, double b, out double x, out double y, out double z)
+        {
+            var x65 = 0.41239079926595934d * r + 0.357584339383878d * g + 0.1804807884018343d * b;
+            var y65 = 0.21263900587151027d * r + 0.715168678767756d * g + 0.07219231536073371d * b;
+            var z65 = 0.01933081871559182d * r + 0.11919477979462598d * g + 0.9505321522496607d * b;
+
+            // Bradford-adapted D65 -> D50.
+            x = 1.0479298208405488d * x65 + 0.022946793341019088d * y65 - 0.05019222954313557d * z65;
+            y = 0.029627815688159344d * x65 + 0.990434484573249d * y65 - 0.01707382502938514d * z65;
+            z = -0.009243058152591178d * x65 + 0.015055144896577895d * y65 + 0.7518742899580008d * z65;
+        }
+
+        internal static void XyzD50ToLinearSrgb(double x, double y, double z, out double r, out double g, out double b)
+        {
+            var x65 = 0.9554734527042182d * x - 0.023098536874261423d * y + 0.0632593086610217d * z;
+            var y65 = -0.028369706963208136d * x + 1.0099954580058226d * y + 0.021041398966943008d * z;
+            var z65 = 0.012314001688319899d * x - 0.020507696433477912d * y + 1.3303659366080753d * z;
+
+            r = 3.2409699419045226d * x65 - 1.537383177570094d * y65 - 0.4986107602930034d * z65;
+            g = -0.9692436362808796d * x65 + 1.8759675015077202d * y65 + 0.04155505740717559d * z65;
+            b = 0.05563007969699366d * x65 - 0.20397695888897652d * y65 + 1.0569715142428786d * z65;
+        }
+
+        /// <summary>Lightness is 0..100 here, not 0..1 as in <see cref="ColorToOklab"/>.</summary>
+        public static void ColorToLab(Color color, out float l, out float a, out float b)
+        {
+            LinearSrgbToXyzD50(
+                SrgbToLinearPrecise(color.r),
+                SrgbToLinearPrecise(color.g),
+                SrgbToLinearPrecise(color.b),
+                out var x, out var y, out var z);
+
+            var fx = LabF(x / WhiteX);
+            var fy = LabF(y / WhiteY);
+            var fz = LabF(z / WhiteZ);
+
+            l = (float) (116d * fy - 16d);
+            a = (float) (500d * (fx - fy));
+            b = (float) (200d * (fy - fz));
+        }
+
+        public static Color LabToColor(float l, float a, float b, float alpha)
+        {
+            var fy = (l + 16d) / 116d;
+            var fx = a / 500d + fy;
+            var fz = fy - b / 200d;
+
+            // Y is recovered from L rather than from f(y), which is exact on the linear leg of the curve.
+            var x = LabFInverse(fx) * WhiteX;
+            var y = (l > Kappa * Epsilon ? fy * fy * fy : l / Kappa) * WhiteY;
+            var z = LabFInverse(fz) * WhiteZ;
+
+            XyzD50ToLinearSrgb(x, y, z, out var lr, out var lg, out var lb);
+
+            // Clamped per channel, with the same hue-shifting caveat as OklabToColor.
+            return new Color(
+                Mathf.Clamp01((float) LinearToSrgbPrecise(lr)),
+                Mathf.Clamp01((float) LinearToSrgbPrecise(lg)),
+                Mathf.Clamp01((float) LinearToSrgbPrecise(lb)),
+                alpha);
+        }
+
+        public static void ColorToLch(Color color, out float l, out float c, out float h)
+        {
+            ColorToLab(color, out l, out var a, out var b);
+            LabToLch(a, b, out c, out h);
+        }
+
+        public static Color LchToColor(float l, float c, float h, float alpha)
+        {
+            LchToLab(c, h, out var a, out var b);
+            return LabToColor(l, a, b, alpha);
+        }
+
+        private static double LabF(double t) => t > Epsilon ? Math.Pow(t, 1d / 3d) : (Kappa * t + 16d) / 116d;
+
+        private static double LabFInverse(double f)
+        {
+            var cubed = f * f * f;
+            return cubed > Epsilon ? cubed : (116d * f - 16d) / Kappa;
         }
 
         #endregion
