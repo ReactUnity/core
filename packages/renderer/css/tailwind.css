@@ -1,0 +1,16 @@
+/*
+  Tailwind, for ReactUnity: a Preflight rewritten for what ReactUnity renders, and the theme values
+  whose defaults name web fonts. Import it instead of `tailwindcss`:
+
+    @layer theme, base, components, utilities;
+    @import "tailwindcss/theme.css" layer(theme);
+    @import "tailwindcss/utilities.css" layer(utilities);
+    @import "@reactunity/renderer/tailwind.css";
+
+  Those first three lines are Tailwind's own recipe for leaving its Preflight out; this file is what
+  goes in its place, and comes last so its theme values win. Either half can be imported on its own
+  from `@reactunity/renderer/tailwind/preflight.css` and `@reactunity/renderer/tailwind/theme.css`.
+*/
+
+@import "./preflight.css" layer(base);
+@import "./theme.css";

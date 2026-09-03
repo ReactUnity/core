@@ -69,6 +69,12 @@ namespace ReactUnity.Styling.Converters
             return base.ConvertInternal(value, out result);
         }
 
+        /// <summary>
+        /// What a number with no unit means. A length in pixels, other than where CSS gives a bare
+        /// number a meaning of its own.
+        /// </summary>
+        internal virtual IComputedValue Suffixless(float value) => new ComputedConstant(value);
+
         private bool ParseVal(string value, out IComputedValue result)
         {
             var i = 0;
@@ -94,21 +100,25 @@ namespace ReactUnity.Styling.Converters
             {
                 var suffix = suffixPart.ToString();
 
-                var multiplier = 1f;
-                if (suffix != "")
+                if (suffix == "")
                 {
-                    if (SuffixMapper.TryGetValue(suffix, out var mapper))
-                    {
-                        result = StylingUtils.CreateComputed(mapper(res));
-                        return true;
-                    }
-                    if (!SuffixMap.TryGetValue(suffix, out multiplier))
+                    if (!AllowSuffixless && res != 0)
                     {
                         result = null;
                         return false;
                     }
+
+                    result = Suffixless(res);
+                    return true;
                 }
-                else if (!AllowSuffixless && res != 0)
+
+                if (SuffixMapper.TryGetValue(suffix, out var mapper))
+                {
+                    result = StylingUtils.CreateComputed(mapper(res));
+                    return true;
+                }
+
+                if (!SuffixMap.TryGetValue(suffix, out var multiplier))
                 {
                     result = null;
                     return false;
@@ -255,6 +265,16 @@ namespace ReactUnity.Styling.Converters
         public override string StringifyTyped(float value) => value + "px";
     }
 
+    /// <summary>
+    /// <c>line-height</c>, where a number with no unit is a multiple of the element's own font size
+    /// rather than a length -- which is what the CSS property means, and what a framework's type
+    /// scale is written in: Tailwind's `text-base` asks for a line height of `calc(1.5 / 1)`.
+    /// </summary>
+    public class LineHeightConverter : FontSizeConverter
+    {
+        internal override IComputedValue Suffixless(float value) => new ComputedFontSize(value);
+    }
+
     public class AngleConverter : FloatConverter
     {
         public AngleConverter() : base(new Dictionary<string, float>
@@ -327,6 +347,10 @@ namespace ReactUnity.Styling.Converters
 
         protected override bool ParseInternal(string value, out IComputedValue result)
         {
+            // An operand with no unit is a plain number, whatever the property makes of a bare number
+            // alone: `calc(var(--spacing) * 6)` is six times a length, and a divisor has to be unitless.
+            if (AllowsUnitless && TryParseUnitless(value, out result)) return true;
+
             if (BaseConverter.TryConvert(value, out var floatResult))
             {
                 result = ComputedMapper.Create(floatResult, BaseConverter, (res) => {
@@ -336,16 +360,24 @@ namespace ReactUnity.Styling.Converters
                 return true;
             }
 
-            if (!AllowsUnitless && AllConverters.FloatConverter.TryConvert(value, out var floatResultUnitless))
-            {
-                result = ComputedMapper.Create(floatResultUnitless, AllConverters.FloatConverter, (res) => {
-                    if (res is float f) return new ComputedCalc.CalcValue { Value = f, HasUnit = false };
-                    return null;
-                });
-                return true;
-            }
+            if (TryParseUnitless(value, out result)) return true;
 
             return base.ParseInternal(value, out result);
+        }
+
+        private static bool TryParseUnitless(string value, out IComputedValue result)
+        {
+            if (!AllConverters.FloatConverter.TryConvert(value, out var unitless))
+            {
+                result = null;
+                return false;
+            }
+
+            result = ComputedMapper.Create(unitless, AllConverters.FloatConverter, (res) => {
+                if (res is float f) return new ComputedCalc.CalcValue { Value = f, HasUnit = false };
+                return null;
+            });
+            return result != null;
         }
     }
 }

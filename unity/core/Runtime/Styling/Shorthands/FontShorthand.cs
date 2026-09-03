@@ -93,7 +93,7 @@ namespace ReactUnity.Styling.Shorthands
                         {
                             if (lineHeightSet) return null;
 
-                            if (AllConverters.FontSizeConverter.TryParse(lineSplit, out var lh))
+                            if (AllConverters.LineHeightConverter.TryParse(lineSplit, out var lh))
                             {
                                 lineHeight = lh;
                                 lineHeightSet = true;

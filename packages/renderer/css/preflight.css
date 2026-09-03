@@ -1,0 +1,54 @@
+/*
+  Tailwind's Preflight, for ReactUnity.
+
+  Tailwind's own resets what a browser does to a document. There is no browser here, so this resets
+  what ReactUnity does -- the padding and the paint its user-agent stylesheet gives its controls --
+  and leaves out everything about elements ReactUnity has not got, which is most of the original.
+
+  Belongs in the `base` layer, or it would win over the utilities:
+    @import "@reactunity/renderer/tailwind/preflight.css" layer(base);
+*/
+
+/*
+  Remove the padding ReactUnity gives a button, an input and a toggle, and the margin around a
+  toggle, so a `p-*` or `m-*` utility is the only thing that decides. There are no borders to reset:
+  a border here is 0 wide and already solid.
+*/
+*,
+:before,
+:after {
+  margin: 0;
+  padding: 0;
+}
+
+/*
+  1. Tailwind's default line height. ReactUnity's is whatever the font says, and a `text-*` utility
+     replaces this with the type scale's own value anyway.
+  2. `sans-serif` and `monospace` are the two families ReactUnity ships, and what the theme values
+     in `@reactunity/renderer/tailwind/theme.css` name. A stack of web font names resolves to none.
+*/
+:root {
+  line-height: 1.5; /* 1 */
+  font-family: --theme(--default-font-family, sans-serif); /* 2 */
+}
+
+/*
+  Unpaint the controls. ReactUnity gives them a grey fill and rounded corners, which is opt-out here
+  the same way a browser's button styling is under Preflight. `appearance` is left alone -- it is
+  what makes them behave as controls, not what makes them look styled.
+*/
+button,
+input,
+toggle {
+  background-color: transparent;
+  border-radius: 0;
+}
+
+/*
+  Half of whatever colour the placeholder is given, in place of the opacity ReactUnity dims it with
+  -- which no colour utility can undo. This is Tailwind's own rule for it.
+*/
+input::placeholder {
+  opacity: 1;
+  color: color-mix(in oklab, currentcolor 50%, transparent);
+}

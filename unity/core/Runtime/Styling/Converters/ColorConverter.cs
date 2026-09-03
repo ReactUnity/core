@@ -164,17 +164,20 @@ namespace ReactUnity.Styling.Converters
             { "yellowgreen", "#9acd32" },
         };
 
+        // A CSS keyword is case-insensitive, and `currentcolor` is how Tailwind writes it.
+        private static bool Keyword(string value, string keyword) => string.Equals(value, keyword, StringComparison.OrdinalIgnoreCase);
+
         protected override bool ParseInternal(string value, out IComputedValue result)
         {
             if (KnownColors.TryGetValue(value, out var known)) value = known;
 
-            if (value == "clear" || value == "transparent")
+            if (Keyword(value, "clear") || Keyword(value, "transparent"))
             {
                 result = new ComputedConstant(Color.clear);
                 return true;
             }
 
-            if (value == "currentColor")
+            if (Keyword(value, "currentColor"))
             {
                 result = ComputedCurrentColor.Instance;
                 return true;

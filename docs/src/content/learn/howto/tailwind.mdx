@@ -1,0 +1,116 @@
+---
+title: Using Tailwind CSS
+---
+
+<Intro>
+
+Tailwind v4 works with ReactUnity. Its utilities are ordinary CSS, and what they are built out of — cascade layers, `@property`, `oklch()`, `rem` and unitless line heights — is read here. What does not carry over is Preflight, Tailwind's reset for a document, so `@reactunity/renderer` ships one written for what ReactUnity renders instead.
+
+</Intro>
+
+### Setting it up {/*setting-it-up*/}
+
+Install Tailwind and its Vite plugin:
+
+```bash
+npm install -D tailwindcss @tailwindcss/vite
+```
+
+Add the plugin to the app's Vite config, before ReactUnity's own:
+
+```js
+import reactUnity from '@reactunity/renderer/vite';
+import tailwind from '@tailwindcss/vite';
+import { defineConfig } from 'vite';
+
+export default defineConfig({ plugins: [tailwind(), reactUnity()] });
+```
+
+Then write the entry stylesheet, and import it once from the app's entry file rather than per page:
+
+```css
+@layer theme, base, components, utilities;
+@import "tailwindcss/theme.css" layer(theme);
+@import "tailwindcss/utilities.css" layer(utilities);
+@import "@reactunity/renderer/tailwind.css";
+```
+
+The first three lines are Tailwind's own recipe for leaving Preflight out. The last one is what goes
+in its place, and comes last so its theme values win.
+
+`@import "tailwindcss"` on its own also works, but its Preflight lands unevenly: every rule in it
+that names `html` fails to match, so the root font family and line height it means to set never
+apply, while `*` still strips the padding ReactUnity's controls carry.
+
+### What the ReactUnity Preflight does {/*what-the-reactunity-preflight-does*/}
+
+- Clears every margin and padding, which here means the padding on a `button` and an `input` and the
+  margin around a `toggle`, so a `p-*` or `m-*` utility is the only thing that decides
+- Removes the grey fill and the rounded corners those controls come with, leaving that to `bg-*` and
+  `rounded-*`. `appearance` is left alone — it is what makes them behave as controls
+- Sets `line-height: 1.5` and the shipped `sans-serif` family on the root
+- Gives a placeholder half of whatever colour it inherits, in place of the opacity ReactUnity dims
+  it with, which a colour utility cannot undo
+
+Either half can be imported alone. To keep ReactUnity's control styling and take only the theme:
+
+```css
+@import "@reactunity/renderer/tailwind/theme.css";
+```
+
+To take only the reset, `@import "@reactunity/renderer/tailwind/preflight.css" layer(base);`. The
+layer matters: an unlayered rule beats every utility, so a preflight outside one would undo them.
+
+Taking the reset and then writing a control look of your own back into the same layer is the third
+option, and what the kitchen-sink sample does — its entry stylesheet ends with a `@layer base` block
+giving `button`, `input` and `toggle` their padding and fill again. Write those values as literals
+rather than as `var(--color-*)` or `--spacing()`: a theme variable is only emitted where a utility
+that was generated needs it, so a `var()` in your own rule resolves to nothing unless some page
+happens to use the matching utility.
+
+### The theme {/*the-theme*/}
+
+Nearly all of Tailwind's default theme carries over untouched — the spacing scale and radii in
+`rem`, the type scale with its unitless line heights, the colours in `oklch()`, the shadows, the
+transition timings. Two values are replaced, because their defaults are stacks of web font names
+that resolve to nothing here: `--font-sans` and `--font-mono` become `sans-serif` and `monospace`,
+the two families ReactUnity ships. See [Using custom fonts](/learn/howto/fonts) to add more, and
+name them in a `@theme` block of your own after the import.
+
+`--font-serif` is left as it is. ReactUnity ships no serif font, and naming one it has not got would
+be worse than a `font-serif` utility that does nothing.
+
+### `flex` does not mean a row {/*flex-does-not-mean-a-row*/}
+
+Every element in ReactUnity is a flex container already, and the default direction is `column`, not
+`row` — which is closer to how a document stacks its blocks than to how CSS flexbox starts out. So
+`flex` on its own changes nothing, and `flex-row` is the utility that turns the axis around.
+
+### Dark mode {/*dark-mode*/}
+
+Tailwind's `dark:` variant is `@media (prefers-color-scheme: dark)`, and nothing in ReactUnity
+answers that query — there is no engine setting to read it from. The class strategy works fully:
+
+```css
+@custom-variant dark (&:where(.dark, .dark *));
+```
+
+`dark:` then follows a `dark` class on any ancestor. The other way is to answer the query yourself,
+from anywhere that can reach the context, after which the default variant starts working:
+
+```csharp
+context.MediaProvider.SetValue("prefers-color-scheme", "dark");
+```
+
+### What does not work {/*what-does-not-work*/}
+
+| Utilities                                        | Why                                                            |
+| ------------------------------------------------ | -------------------------------------------------------------- |
+| `grid`, `grid-cols-*`, `col-span-*`              | Layout is flexbox only. The flex utilities are the way         |
+| `space-x-*`, `ps-*`, `ms-*`, `start-*`           | Logical properties are not implemented; `gap-*`, `px-*`, `left-*` are |
+| `@container`, `@sm:`                             | Container queries are not implemented                          |
+| `has-*` variants                                 | `:has()` is not implemented                                    |
+| `line-clamp-*`, `contents`, `mix-blend-*`        | The properties behind them are not implemented                 |
+
+Arbitrary values (`p-[13px]`, `leading-[1.7]`), arbitrary properties, `@theme`, `@utility`,
+`@custom-variant` and the `hover:`, `active:`, `focus:` and `disabled:` variants all work.

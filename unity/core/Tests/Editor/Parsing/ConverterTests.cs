@@ -346,6 +346,10 @@ namespace ReactUnity.Tests.Editor
         // families are pinned to the same two colors.
         [TestCase("lab(55.5764 75.1391 49.157)", "fb2c36ff")]
         [TestCase("lch(78.4347 76.1655 148.4604)", "05df72ff")]
+        // A keyword is case-insensitive, which is how Tailwind writes `currentcolor`.
+        [TestCase("TRANSPARENT", "00000000")]
+        [TestCase("Clear", "00000000")]
+        [TestCase("RED", "ff0000ff")]
         public void ColorConverter(object input, object expected)
         {
             var converted = AllConverters.ColorConverter.TryGetConstantValue<Color>(input, out var c);
@@ -454,6 +458,31 @@ namespace ReactUnity.Tests.Editor
             Assert.AreEqual("fb2c3680", ColorUtility.ToHtmlStringRGBA(style.color).ToLowerInvariant());
         }
 
+
+        [Test]
+        public void CurrentColorIsCaseInsensitive()
+        {
+            var (collection, style) = TestHelpers.CreateStyle();
+
+            // Lowercase is the spelling in the spec, and the one Tailwind's `ring-*` utilities and
+            // `var(--tw-shadow-color, currentcolor)` fallbacks are written in.
+            collection["color"] = "red";
+            collection["box-shadow"] = "0 0 0 2px currentcolor";
+
+            Assert.AreEqual(1, style.boxShadow.Count);
+            Assert.AreEqual(Color.red, style.boxShadow.Get(0, default).color);
+        }
+
+        [Test]
+        public void ColorMixTakesCurrentColor()
+        {
+            var (collection, style) = TestHelpers.CreateStyle();
+
+            collection["color"] = "red";
+            collection["background-color"] = "color-mix(in oklab, currentcolor 50%, transparent)";
+
+            Assert.AreEqual("ff000080", ColorUtility.ToHtmlStringRGBA(style.backgroundColor).ToLowerInvariant());
+        }
 
         [Test]
         public void NoneAndDefaultWorksForSupportingTypes()

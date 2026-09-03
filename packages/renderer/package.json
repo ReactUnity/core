@@ -6,8 +6,9 @@
   "typings": "dist/index.d.ts",
   "main": "dist/index.js",
   "sideEffects": false,
-  "files": ["dist"],
+  "files": ["dist", "css"],
   "//exports": "`./tests` is the entry that exists: the source file is tests.ts and packages/scripts/lib/types/tests.d.ts references `@reactunity/renderer/tests`. The map only ever declared `./test`, pointed at ./dist/test.js -- a name tsc never emitted -- so both spellings failed to resolve under an exports-aware resolver. `./test` is kept as an alias for the same file rather than dropped, since it costs nothing and it is the name published so far.",
+  "//exports-tailwind": "Plain CSS, so `css/` joins `dist/` in `files`. Tailwind reads these through the exports map like any other import; nothing bundles them.",
   "//exports-vite": "Node-only, and the one entry a consumer imports outside the Unity bundle -- hence .mjs. This package is not an ESM package, and Vite loads a config file's externalised imports through Node, which would read a .js file here as CommonJS and choke on its imports.",
   "exports": {
     ".": "./dist/index.js",
@@ -20,6 +21,9 @@
     "./editor": "./dist/editor/index.js",
     "./editor/*": "./dist/editor/*.js",
     "./webgl-compat": "./dist/webgl-compat.js",
+    "./tailwind.css": "./css/tailwind.css",
+    "./tailwind/preflight.css": "./css/preflight.css",
+    "./tailwind/theme.css": "./css/theme.css",
     "./vite": {
       "types": "./dist/vite.d.mts",
       "default": "./dist/vite.mjs"

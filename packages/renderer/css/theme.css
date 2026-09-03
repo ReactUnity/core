@@ -1,0 +1,17 @@
+/*
+  The theme values whose defaults mean nothing outside a browser.
+
+  ReactUnity ships two font families, `sans-serif` and `monospace`, as @font-face aliases for the
+  fonts in its resources. Tailwind's defaults are stacks of web font names, so `font-sans`,
+  `font-mono` and the `--default-font-family` Preflight reads would all resolve to nothing. Every
+  other default carries over: the spacing scale, the type scale and the colours are `rem`, `oklch`
+  and unitless line heights, all of which ReactUnity reads.
+
+  `--font-serif` is left as it is. ReactUnity ships no serif font, and naming one it has not got
+  would be worse than a `font-serif` utility that does nothing.
+*/
+
+@theme {
+  --font-sans: sans-serif;
+  --font-mono: monospace;
+}

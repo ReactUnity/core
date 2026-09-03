@@ -1,0 +1,39 @@
+/*
+  Tailwind for the whole sample, so any page can reach for a utility. Imported from index.tsx, and
+  the reason the Tailwind page has no stylesheet of its own any more.
+
+  Tailwind's own Preflight is left out the way its docs describe -- it resets a document, and there
+  is no document here. ReactUnity's goes in its place, and it unpaints the controls, so the look
+  they had from the user-agent stylesheet is written back below. All of it is in the `base` layer,
+  so a utility or a page's own stylesheet still wins over it.
+*/
+
+@layer theme, base, components, utilities;
+@import "tailwindcss/theme.css" layer(theme);
+@import "tailwindcss/utilities.css" layer(utilities);
+@import "@reactunity/renderer/tailwind.css";
+
+@layer base {
+  /*
+    The user-agent stylesheet's own values, as literals rather than through `var(--color-*)` and
+    `--spacing()`: Tailwind emits a theme variable only where a utility it generated needs one, so a
+    `var()` written here resolves to nothing unless some page happens to use that utility.
+  */
+  button {
+    padding: 8px 12px;
+    border-radius: 8px;
+    background-color: #e5e5e5;
+  }
+
+  input {
+    padding: 8px;
+    border-radius: 8px;
+    background-color: #fff;
+  }
+
+  toggle {
+    margin: 6px;
+    border-radius: 6px;
+    background-color: #d1d1d1;
+  }
+}

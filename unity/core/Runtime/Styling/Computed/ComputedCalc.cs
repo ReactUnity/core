@@ -62,8 +62,20 @@ namespace ReactUnity.Styling.Computed
             }
 
             var res = Evaluate(results, Operators, AllowUnitless, true);
-            if (res.HasValue) return res.Value;
-            return null;
+            if (!res.HasValue) return null;
+            if (res.Value.HasUnit) return res.Value.Value;
+            return Suffixless(res.Value.Value, Converter).ResolveValue(prop, style, converter);
+        }
+
+        /// <summary>
+        /// What is left of a calculation with no unit in it is a plain number, which is not always a
+        /// length: `line-height: calc(1.5 * 2)` is three times the font size. The base converter says.
+        /// </summary>
+        private static IComputedValue Suffixless(float value, StyleConverterBase converter)
+        {
+            var fc = converter is CalcConverter cc ? cc.BaseConverter : converter as FloatConverter;
+            if (fc == null) return new ComputedConstant(value);
+            return fc.Suffixless(value);
         }
 
         public static bool Create(out IComputedValue result, List<object> values, IList<CalcOperator> operators, StyleConverterBase converter)
@@ -105,14 +117,15 @@ namespace ReactUnity.Styling.Computed
                 else allowUnitless = true;
 
                 var res = Evaluate(constants, operators, allowUnitless, true);
-                if (res.HasValue) return new ComputedConstant(res.Value);
-                return null;
+                if (!res.HasValue) return null;
+                if (res.Value.HasUnit) return new ComputedConstant(res.Value.Value);
+                return Suffixless(res.Value.Value, converter);
             }
 
             return new ComputedCalc(values, operators, converter);
         }
 
-        private static float? Evaluate(IList<object> values, IList<CalcOperator> operators, bool allowUnitless, bool multiplyPass)
+        private static CalcValue? Evaluate(IList<object> values, IList<CalcOperator> operators, bool allowUnitless, bool multiplyPass)
         {
             if (values.Count == 0) return null;
 
@@ -218,7 +231,7 @@ namespace ReactUnity.Styling.Computed
 
             if (!allowUnitless && !hasUnit) return null;
 
-            return value;
+            return new CalcValue { Value = value, HasUnit = hasUnit };
         }
     }
 }
