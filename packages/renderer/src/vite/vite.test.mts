@@ -8,7 +8,9 @@ import fs from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
 import { test } from 'node:test';
+import type { ConfigEnv, Plugin, UserConfig } from 'vite';
 import { cleanOutDir, removeOrphanMetaFiles, unsafeOutDirReason } from './clean.ts';
+import { reactUnity } from './index.ts';
 import { findUnityProject } from './unity-project.ts';
 
 function fixture(files: string[]): { root: string; out: string; has: (rel: string) => boolean } {
@@ -85,4 +87,18 @@ test('a Unity project is found above the app, and beside it', () => {
   fs.writeFileSync(path.join(project, 'ProjectSettings', 'ProjectVersion.txt'), 'm_EditorVersion: 6000.0.51f1');
   assert.equal(findUnityProject(app), project, 'from an app inside the project');
   assert.equal(findUnityProject(path.join(root, 'ui')), project, 'and from one beside it');
+});
+
+test('output names stay distinct once Unity drops the last extension', () => {
+  const config = reactUnity({ react: false }).find((p) => p && 'name' in p && p.name === 'reactunity') as Plugin;
+  const patch = (config.config as (c: UserConfig, e: ConfigEnv) => UserConfig)({}, { command: 'build', mode: 'production' });
+  const { entryFileNames, chunkFileNames, assetFileNames } = (patch?.build?.rolldownOptions?.output ?? {}) as Record<string, string>;
+
+  // Unity keys a resource on its path minus the last extension, so an entry and its stylesheet
+  // must not land on the same one.
+  const named = (pattern: string, extension: string) => pattern.replace('[name]', 'index').replaceAll('[extname]', extension);
+  const resource = (name: string) => name.replace(/\.[^./]+$/, '');
+
+  assert.notEqual(resource(named(entryFileNames, '.js')), resource(named(assetFileNames, '.css')));
+  assert.notEqual(resource(named(chunkFileNames, '.js')), resource(named(assetFileNames, '.png')));
 });

@@ -1,8 +1,8 @@
 import path from 'node:path';
 import react from '@vitejs/plugin-react';
 import type { Plugin, PluginOption, UserConfig } from 'vite';
-import { cleanOutDir, removeOrphanMetaFiles, unsafeOutDirReason } from './clean';
-import { findUnityProject } from './unity-project';
+import { cleanOutDir, removeOrphanMetaFiles, unsafeOutDirReason } from './clean.ts';
+import { findUnityProject } from './unity-project.ts';
 
 type ReactOptions = Parameters<typeof react>[0];
 
@@ -105,7 +105,10 @@ function reactUnityConfig(options: ReactUnityOptions): Plugin {
           output: {
             entryFileNames: `${dir}/[name].js`,
             chunkFileNames: `${dir}/[name].js`,
-            assetFileNames: `${dir}/[name].[ext]`,
+            // Doubled on purpose. Unity keys a resource on its path minus the last extension, so
+            // index.js and index.css both answer to `assets/index` and asking for one can hand you
+            // the other. index.css.css keeps its type in the name it is looked up by.
+            assetFileNames: `${dir}/[name][extname][extname]`,
           },
         };
       }
