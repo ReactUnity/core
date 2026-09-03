@@ -53,10 +53,14 @@
   },
   "peerDependencies": {
     "react": "^19.0.0",
+    "tailwindcss": "^4.0.0",
     "vite": "^8.0.0"
   },
-  "//peerDependenciesMeta": "Only ./vite needs Vite, and only for its types -- the runtime entries never touch it.",
+  "//peerDependenciesMeta": "Only ./vite needs Vite, and only for its types -- the runtime entries never touch it. Tailwind is the app's own dependency; css/tailwind.css imports its theme and utilities, and nothing else here mentions it.",
   "peerDependenciesMeta": {
+    "tailwindcss": {
+      "optional": true
+    },
     "vite": {
       "optional": true
     }
@@ -67,6 +71,7 @@
     "@types/react-reconciler": "^0.33.0",
     "react-unity-webgl": "^10.2.0",
     "rimraf": "^6.1.3",
+    "tailwindcss": "^4.3.3",
     "tsdown": "^0.22.14",
     "typescript": "^7.0.2"
   },

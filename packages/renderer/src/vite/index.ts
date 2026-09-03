@@ -32,11 +32,22 @@ export interface ReactUnityOptions {
 
   /** Options for `@vitejs/plugin-react`, or `false` to add the React plugin yourself. */
   react?: ReactOptions | false;
+
+  /**
+   * Resolve a bare `@import "tailwindcss"` to `@reactunity/renderer/tailwind.css`, which is the
+   * same thing with a Preflight written for what ReactUnity renders. Default `true`; `false`
+   * leaves the import alone. Only the bare specifier is aliased -- `tailwindcss/theme.css` and
+   * the rest keep resolving to the package, which is where that entry gets them from.
+   */
+  tailwind?: boolean;
 }
+
+const TAILWIND_ENTRY = '@reactunity/renderer/tailwind.css';
 
 /**
  * Vite preset for a ReactUnity app: React Fast Refresh, output into the Unity project's
- * `Assets/Resources/react`, and a clean that keeps Unity's `.meta` files.
+ * `Assets/Resources/react`, a clean that keeps Unity's `.meta` files, and a Tailwind entry with
+ * ReactUnity's Preflight in place of the browser one.
  *
  * ```ts
  * export default defineConfig({ plugins: [reactUnity()] });
@@ -65,6 +76,13 @@ function reactUnityConfig(options: ReactUnityOptions): Plugin {
       const hmr = config.server?.hmr;
       if (hmr !== false && (hmr === undefined || (typeof hmr === 'object' && hmr.overlay === undefined))) {
         patch.server = { hmr: { overlay: false } };
+      }
+
+      // Tailwind's own Preflight resets a document, and there is no document here. Aliasing the
+      // entry is what lets an app write the one line its docs tell it to. `@tailwindcss/vite`
+      // resolves `@import` through Vite's resolver, so it sees this the way an app's own CSS does.
+      if (options.tailwind !== false) {
+        patch.resolve = { alias: [{ find: /^tailwindcss$/, replacement: TAILWIND_ENTRY }] };
       }
 
       const build: UserConfig['build'] = {};

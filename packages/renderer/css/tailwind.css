@@ -1,16 +1,21 @@
 /*
-  Tailwind, for ReactUnity: a Preflight rewritten for what ReactUnity renders, and the theme values
-  whose defaults name web fonts. Import it instead of `tailwindcss`:
+  Tailwind, for ReactUnity: everything `@import "tailwindcss"` brings, except that the Preflight is
+  one written for what ReactUnity renders rather than the one that resets a document, and the theme
+  values whose defaults name web fonts are replaced.
 
-    @layer theme, base, components, utilities;
-    @import "tailwindcss/theme.css" layer(theme);
-    @import "tailwindcss/utilities.css" layer(utilities);
+  `@reactunity/renderer/vite` points a bare `@import "tailwindcss"` at this file, so an app writes
+  that line and nothing else. Without the plugin, or with its `tailwind` option off, import it by
+  name instead:
+
     @import "@reactunity/renderer/tailwind.css";
 
-  Those first three lines are Tailwind's own recipe for leaving its Preflight out; this file is what
-  goes in its place, and comes last so its theme values win. Either half can be imported on its own
-  from `@reactunity/renderer/tailwind/preflight.css` and `@reactunity/renderer/tailwind/theme.css`.
+  Either half can also be taken on its own, from `@reactunity/renderer/tailwind/preflight.css`
+  (into `layer(base)`, since an unlayered rule beats every utility) and
+  `@reactunity/renderer/tailwind/theme.css`.
 */
 
+@layer theme, base, components, utilities;
+@import "tailwindcss/theme.css" layer(theme);
 @import "./preflight.css" layer(base);
+@import "tailwindcss/utilities.css" layer(utilities);
 @import "./theme.css";

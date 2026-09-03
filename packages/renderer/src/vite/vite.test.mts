@@ -102,3 +102,21 @@ test('output names stay distinct once Unity drops the last extension', () => {
   assert.notEqual(resource(named(entryFileNames, '.js')), resource(named(assetFileNames, '.css')));
   assert.notEqual(resource(named(chunkFileNames, '.js')), resource(named(assetFileNames, '.png')));
 });
+
+test('a bare tailwindcss import is aliased, and only the bare one', () => {
+  const configOf = (options: Parameters<typeof reactUnity>[0]) => {
+    const plugin = reactUnity({ ...options, react: false }).find((p) => p && 'name' in p && p.name === 'reactunity') as Plugin;
+    return (plugin.config as (c: UserConfig, e: ConfigEnv) => UserConfig)({}, { command: 'build', mode: 'production' });
+  };
+
+  const alias = (configOf({})?.resolve?.alias ?? []) as { find: RegExp; replacement: string }[];
+  assert.equal(alias.length, 1);
+  assert.match(alias[0].replacement, /^@reactunity\/renderer\/tailwind\.css$/);
+
+  // css/tailwind.css gets the theme and the utilities from the real package, so a subpath that
+  // followed the alias would resolve to our own file and take the import with it.
+  assert.ok(alias[0].find.test('tailwindcss'));
+  assert.ok(!alias[0].find.test('tailwindcss/theme.css'));
+
+  assert.equal(configOf({ tailwind: false })?.resolve, undefined);
+});

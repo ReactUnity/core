@@ -29,6 +29,20 @@ export default defineConfig({ plugins: [tailwind(), reactUnity()] });
 Then write the entry stylesheet, and import it once from the app's entry file rather than per page:
 
 ```css
+@import "tailwindcss";
+```
+
+That is the line Tailwind's own docs give you, and it is all you need: ReactUnity's Vite plugin
+aliases the bare `tailwindcss` import to `@reactunity/renderer/tailwind.css`, which is everything
+`@import "tailwindcss"` brings except that Preflight is ReactUnity's. Subpaths are left alone, so
+`tailwindcss/theme.css` and the rest still resolve to the package.
+
+Pass `tailwind: false` to `reactUnity()` to turn the alias off. Tailwind's own Preflight then applies,
+and it lands unevenly: every rule in it that names `html` fails to match, so the root font family and
+line height it means to set never apply, while `*` still strips the padding ReactUnity's controls
+carry. Without the plugin at all — or with the alias off — spell it out instead:
+
+```css
 @layer theme, base, components, utilities;
 @import "tailwindcss/theme.css" layer(theme);
 @import "tailwindcss/utilities.css" layer(utilities);
@@ -37,10 +51,6 @@ Then write the entry stylesheet, and import it once from the app's entry file ra
 
 The first three lines are Tailwind's own recipe for leaving Preflight out. The last one is what goes
 in its place, and comes last so its theme values win.
-
-`@import "tailwindcss"` on its own also works, but its Preflight lands unevenly: every rule in it
-that names `html` fails to match, so the root font family and line height it means to set never
-apply, while `*` still strips the padding ReactUnity's controls carry.
 
 ### What the ReactUnity Preflight does {/*what-the-reactunity-preflight-does*/}
 
@@ -63,10 +73,22 @@ layer matters: an unlayered rule beats every utility, so a preflight outside one
 
 Taking the reset and then writing a control look of your own back into the same layer is the third
 option, and what the kitchen-sink sample does — its entry stylesheet ends with a `@layer base` block
-giving `button`, `input` and `toggle` their padding and fill again. Write those values as literals
-rather than as `var(--color-*)` or `--spacing()`: a theme variable is only emitted where a utility
-that was generated needs it, so a `var()` in your own rule resolves to nothing unless some page
-happens to use the matching utility.
+giving `button`, `input` and `toggle` their padding and fill again:
+
+```css
+@import "tailwindcss";
+
+@layer base {
+  button {
+    @apply rounded-lg bg-neutral-200 pt-2 pr-3 pb-2 pl-3;
+  }
+}
+```
+
+Reach the theme through `@apply` rather than by writing `var(--color-neutral-200)` yourself. A theme
+variable is only emitted where a utility that was generated needs it, and `@apply` is what counts as
+generating one — a `var()` written by hand resolves to nothing unless some page happens to use the
+matching utility.
 
 ### The theme {/*the-theme*/}
 
@@ -104,13 +126,14 @@ context.MediaProvider.SetValue("prefers-color-scheme", "dark");
 
 ### What does not work {/*what-does-not-work*/}
 
-| Utilities                                        | Why                                                            |
-| ------------------------------------------------ | -------------------------------------------------------------- |
-| `grid`, `grid-cols-*`, `col-span-*`              | Layout is flexbox only. The flex utilities are the way         |
-| `space-x-*`, `ps-*`, `ms-*`, `start-*`           | Logical properties are not implemented; `gap-*`, `px-*`, `left-*` are |
-| `@container`, `@sm:`                             | Container queries are not implemented                          |
-| `has-*` variants                                 | `:has()` is not implemented                                    |
-| `line-clamp-*`, `contents`, `mix-blend-*`        | The properties behind them are not implemented                 |
+| Utilities                                            | Why                                                        |
+| ---------------------------------------------------- | ---------------------------------------------------------- |
+| `grid`, `grid-cols-*`, `col-span-*`                  | Layout is flexbox only. The flex utilities are the way      |
+| `px-*`, `py-*`, `mx-*`, `my-*`, `inset-x-*`, `border-x-*` | v4 writes the two-axis utilities as `padding-inline` and friends, and no logical property is implemented. Reach for `pt-*`/`pr-*`/`pb-*`/`pl-*`, `p-*`, `gap-*` and `left-*`/`top-*` instead |
+| `ps-*`, `ms-*`, `start-*`, `space-x-*`               | Same reason — these are the `*-inline-start` half of it     |
+| `@container`, `@sm:`                                 | Container queries are not implemented                       |
+| `has-*` variants                                     | `:has()` is not implemented                                 |
+| `line-clamp-*`, `contents`, `mix-blend-*`            | The properties behind them are not implemented              |
 
 Arbitrary values (`p-[13px]`, `leading-[1.7]`), arbitrary properties, `@theme`, `@utility`,
 `@custom-variant` and the `hover:`, `active:`, `focus:` and `disabled:` variants all work.

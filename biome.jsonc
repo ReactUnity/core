@@ -28,6 +28,10 @@
       "!**/packages-lock.json",
       "!**/models/generated",
 
+      "!**/ProjectSettings",
+      "!**/Packages/manifest.json",
+      "!**/Packages/package-lock.json",
+
       // Build output of the three React apps under unity/core/.react, committed
       // because the Unity package has to ship them. Each path is the BUILD_PATH
       // from the matching app's .env, so anything here is webpack's, not ours.
