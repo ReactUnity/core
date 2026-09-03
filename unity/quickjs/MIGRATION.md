@@ -682,14 +682,18 @@ utilities that `TSTypeNaming` and `TypeBindingInfo` need, so those moved to `Bin
   and tag values remain a reading exercise. Generating both from one description is still the real
   fix; failing that, a test asserting tags and arities match across backends.
 - **The fork is not upstream yet.** Half closed. The pin is now
-  `gkurt/quickjs` **v0.16.2-reactunity.2**, an annotated tag on `352f551` describing what the fork
+  `gkurt/quickjs` **v0.16.2-reactunity.3**, an annotated tag on `987f262` describing what the fork
   adds and why, so the commit cannot be lost to a rebase or GC. The CMakeLists still pins the SHA
   rather than the tag name, because a tag can be moved and a SHA cannot — the tag is for identity,
-  not for resolution. The fork now has a `next` integration branch (its default), with each addition
-  kept on its own topic branch so it can be offered upstream on its own. Two are waiting: the async
-  loader, where the PR has to coordinate with quickjs-ng#1522, whose author proposed a
-  dynamic-import-only version of the same feature; and the non-reentrant `JS_ExecutePendingJob`,
-  which stands alone and needs no coordination.
+  not for resolution. The fork now has a `next` integration branch (its default), with the loader
+  kept on its own topic branch so it can be offered upstream on its own; that PR has to coordinate
+  with quickjs-ng#1522, whose author proposed a dynamic-import-only version of the same feature.
+  The second commit on `next` is a straight bug fix rather than a feature — `js_inner_module_linking`
+  omitted `JS_MODULE_STATUS_EVALUATING` from its early return, so a link pass could push a module a
+  running evaluation was holding and splice the chain both phases share through
+  `JSModuleDef.stack_prev`. Upstream cannot reach it, because synchronous loading never lets the two
+  phases interleave; asynchronous loading is what made it reachable, so it belongs to this fork and
+  needs no coordination to offer back.
 
 ## Done on this branch
 

@@ -19,12 +19,13 @@ cmake_minimum_required(VERSION 3.20)
 project(reactunity-quickjs LANGUAGES C)
 
 # quickjs-ng 0.16.2 plus JS_SetModuleMetaFunc and JS_LoadModuleAsync, which the async
-# module loader needs, and a non-reentrant JS_ExecutePendingJob -- none of it upstream yet
-# (see MIGRATION.md). The fork's integration branch is `next`; the commit is tagged
-# v0.16.2-reactunity.2, so it cannot be lost to a rebase or GC. The SHA rather than the tag
+# module loader needs, and a fix for the module status guard that made asynchronous loading
+# able to splice a link pass into a running evaluation -- none of it upstream yet (see
+# MIGRATION.md). The fork's integration branch is `next`; the commit is tagged
+# v0.16.2-reactunity.3, so it cannot be lost to a rebase or GC. The SHA rather than the tag
 # name is what is pinned here, because a tag can be moved and a SHA cannot.
 set(QJS_REPOSITORY "https://github.com/gkurt/quickjs.git" CACHE STRING "quickjs-ng remote")
-set(QJS_COMMIT "352f55148189de907b6f25a209b954027c80f575" CACHE STRING "pinned quickjs-ng commit (v0.16.2-reactunity.2)")
+set(QJS_COMMIT "987f262004ee73f4c9bdb38f2806b1bedd166f3d" CACHE STRING "pinned quickjs-ng commit (v0.16.2-reactunity.3)")
 
 include(FetchContent)
 

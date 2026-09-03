@@ -170,9 +170,11 @@ quickjs-ng is fetched by CMake, never vendored, and pinned to a **commit** — `
 a rebase or GC. The SHA rather than the tag name is what is pinned, because a tag can be moved and a
 SHA cannot. It points at a fork because two things are not upstream yet: the asynchronous module
 loader (`JS_SetModuleLoaderFuncAsync`, `JS_FulfillModuleLoad`, `JS_RejectModuleLoad`,
-`JS_EvalModuleAsync`), and a `JS_ExecutePendingJob` that refuses to run a job from inside one.
-The fork's integration branch is `next`, and each addition stays on its own topic branch so it can
-be offered upstream separately. Override `QJS_REPOSITORY`/`QJS_COMMIT` to build against
+`JS_EvalModuleAsync`), and the module status guard that loader turned out to need -- linking and
+evaluation thread their stacks through one field on `JSModuleDef`, and once loading was
+asynchronous a link pass could splice itself into a running evaluation. The fork's integration
+branch is `next`, and the loader stays on its own topic branch so it can be offered upstream
+separately. Override `QJS_REPOSITORY`/`QJS_COMMIT` to build against
 plain upstream.
 
 ng is built **static** and linked into one shared library, so there is a single binary to ship per
