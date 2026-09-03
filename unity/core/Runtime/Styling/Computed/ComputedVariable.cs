@@ -15,7 +15,16 @@ namespace ReactUnity.Styling.Computed
 
         public object GetValue(IStyleProperty prop, NodeStyle style, IStyleConverter converter)
         {
-            var val = style.GetRawStyleValue(Property, false);
+            var registered = style.Context?.Style?.GetRegisteredProperty(Property.name);
+
+            // A registered property that does not inherit is only ever read off the element itself.
+            var val = registered != null && !registered.Inherits
+                ? style.GetOwnStyleValue(Property)
+                : style.GetRawStyleValue(Property, false);
+
+            // The registered initial value stands in ahead of this var()'s own fallback: a property
+            // registered with one is never the guaranteed-invalid value that makes a fallback apply.
+            if (val == null) val = registered?.InitialValue;
 
             if (val == null) val = FallbackValue ?? Property.defaultValue;
 

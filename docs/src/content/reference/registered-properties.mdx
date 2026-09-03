@@ -1,0 +1,102 @@
+---
+title: Registered Properties
+---
+
+`@property` registers a custom property and says what it starts as, so a `var()` reading it has a
+value even where nothing has declared one. It is the CSS at-rule described at
+[MDN Docs](https://developer.mozilla.org/en-US/docs/Web/CSS/@property), and it is what utility
+frameworks build their composed properties on.
+
+```css
+@property --shadow-ring {
+  syntax: "*";
+  inherits: false;
+  initial-value: 0 0 #0000;
+}
+
+#panel {
+  --shadow-drop: 0 4px 6px #0004;
+  box-shadow: var(--shadow-ring), var(--shadow-drop);
+}
+```
+
+Without the registration that `box-shadow` is thrown away whole, because `--shadow-ring` has no
+value and a declaration containing an unresolvable `var()` is invalid. With it, the property starts
+as a transparent shadow and the declaration says what it looks like it says.
+
+### The descriptors {/*the-descriptors*/}
+
+| Descriptor      | Required                         | What it does                                     |
+| --------------- | -------------------------------- | ------------------------------------------------ |
+| `syntax`        | always                           | Declares the kind of value, e.g. `"<color>"`     |
+| `inherits`      | always                           | `true` or `false`                                |
+| `initial-value` | unless `syntax` is `"*"`         | The value where the property is not declared     |
+
+A rule missing any of those is invalid and ignored, leaving the rest of the stylesheet alone. So is
+one whose name is not a dashed identifier.
+
+**`syntax` is read but not enforced.** The value is kept as written and converted where it is used,
+the way a declared variable's value is, so `syntax` only decides whether the rule needed an initial
+value to be valid. A value that does not match what it claims is not rejected here as a browser
+would reject it — the property that reads it decides whether it can make sense of it.
+
+**No initial value is not the same as an initial value of nothing.** With `syntax: "*"` and no
+`initial-value`, the property is registered but has no value until something declares one, so a
+`var()` reading it still falls through to its own fallback:
+
+```css
+@property --accent {
+  syntax: "*";
+  inherits: false;
+}
+
+#panel {
+  /* red, until something declares --accent */
+  color: var(--accent, red);
+}
+```
+
+An initial value takes precedence over that fallback, because a property that has one is never
+missing.
+
+### `inherits` {/*inherits*/}
+
+A custom property is inherited otherwise, so `inherits: false` is the registration deciding that an
+ancestor's value is not this element's — it gets the initial value instead.
+
+```css
+@property --gap {
+  syntax: "*";
+  inherits: false;
+  initial-value: 8px;
+}
+
+#panel {
+  --gap: 2px;
+}
+
+#panel text {
+  /* 8px: the value on #panel does not reach here */
+  translate: var(--gap) 0;
+}
+```
+
+### Where it can be written {/*where-it-can-be-written*/}
+
+At the top level of a stylesheet, or inside `@supports` and `@layer`. A `@supports` condition is
+evaluated before the rules inside it are read, so a registration under one that does not hold never
+happens. Registering the same name twice is the later rule winning, as with `@keyframes`.
+
+A registration belongs to the whole context rather than to the stylesheet it came from, so one sheet
+can register what another reads. Removing that sheet withdraws it, and the properties it registered
+go back to having no value.
+
+### Limitations {/*limitations*/}
+
+A `@property` inside `@media` registers whether or not the query matches, and stays registered when
+it flips. A media condition gates the rules a stylesheet contributes, not what it registers — the
+same reason one cannot reshuffle the layer order.
+
+`syntax` does not make a custom property animatable. In a browser, registering one as `<length>`
+lets a transition interpolate it; here a custom property is still text as far as animation is
+concerned, and it is the property reading it that transitions.

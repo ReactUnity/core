@@ -180,6 +180,19 @@ namespace ReactUnity.Styling
             return Cache[prop] = GetStyleValueSpecial(value, prop, activeStyle ?? this) ?? prop?.defaultValue;
         }
 
+        /// <summary>
+        /// The value declared on this node itself, skipping the walk up to the parent that an
+        /// inherited property does. A custom property registered with <c>inherits: false</c> cannot
+        /// be read any other way, since a variable is inherited otherwise.
+        /// </summary>
+        public object GetOwnStyleValue(IStyleProperty prop)
+        {
+            if (!StyleMap.TryGetValue(prop.name, out var value) && !CssTryGetValue(prop, out value))
+                return Fallback?.GetOwnStyleValue(prop);
+
+            return GetStyleValueSpecial(value, prop, this);
+        }
+
         private object GetStyleValueSpecial(object value, IStyleProperty prop, NodeStyle activeStyle)
         {
             if (value == null) return null;

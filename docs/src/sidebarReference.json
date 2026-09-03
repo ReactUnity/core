@@ -232,6 +232,10 @@
           "path": "/reference/nesting"
         },
         {
+          "title": "CSS Registered Properties",
+          "path": "/reference/registered-properties"
+        },
+        {
           "hasSectionHeader": true,
           "sectionHeader": "Material Components"
         },

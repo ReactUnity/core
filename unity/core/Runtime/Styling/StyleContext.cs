@@ -20,6 +20,7 @@ namespace ReactUnity.Styling
         internal readonly CascadeLayers Layers = new CascadeLayers();
         public readonly List<Dictionary<string, FontReference>> FontFamilies = new List<Dictionary<string, FontReference>>();
         public readonly List<Dictionary<string, KeyframeList>> Keyframes = new List<Dictionary<string, KeyframeList>>();
+        public readonly List<Dictionary<string, RegisteredProperty>> RegisteredProperties = new List<Dictionary<string, RegisteredProperty>>();
         public readonly List<StyleSheet> StyleSheets = new List<StyleSheet>();
 
         public StyleContext(ReactContext context)
@@ -77,6 +78,20 @@ namespace ReactUnity.Styling
             for (int i = Keyframes.Count - 1; i >= 0; i--)
             {
                 var list = Keyframes[i];
+                if (list.TryGetValue(name, out var found)) return found;
+            }
+            return null;
+        }
+
+        /// <summary>
+        /// The <c>@property</c> registration for a custom property, or null when it has none. The
+        /// last sheet to register a name is the one that counts, as with keyframes and fonts.
+        /// </summary>
+        public RegisteredProperty GetRegisteredProperty(string name)
+        {
+            for (int i = RegisteredProperties.Count - 1; i >= 0; i--)
+            {
+                var list = RegisteredProperties[i];
                 if (list.TryGetValue(name, out var found)) return found;
             }
             return null;

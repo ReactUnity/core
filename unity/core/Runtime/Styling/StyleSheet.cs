@@ -20,6 +20,7 @@ namespace ReactUnity.Styling
 
         public readonly Dictionary<string, FontReference> FontFamilies = new Dictionary<string, FontReference>();
         public readonly Dictionary<string, KeyframeList> Keyframes = new Dictionary<string, KeyframeList>();
+        public readonly Dictionary<string, RegisteredProperty> RegisteredProperties = new Dictionary<string, RegisteredProperty>();
         public readonly List<MediaQueryList> MediaQueries = new List<MediaQueryList>();
         public readonly List<Tuple<RuleTreeNode<StyleData>, Dictionary<IStyleProperty, object>>> Declarations = new List<Tuple<RuleTreeNode<StyleData>, Dictionary<IStyleProperty, object>>>();
 
@@ -133,6 +134,7 @@ namespace ReactUnity.Styling
                 MediaQueries.Clear();
                 Keyframes.Clear();
                 FontFamilies.Clear();
+                RegisteredProperties.Clear();
                 Declarations.Clear();
                 LayerNames.Clear();
 
@@ -209,6 +211,12 @@ namespace ReactUnity.Styling
                     // and CollectLayers has already worked that out.
                     ProcessRules(layerRule.Rules, media, mediaCondition, Layers.Qualify(layerPath, layerRule));
                 }
+                else if (child is IPropertyRule propertyRule)
+                {
+                    // An invalid @property rule is ignored, which is all Create says by returning null.
+                    var registered = RegisteredProperty.Create(propertyRule);
+                    if (registered != null) RegisteredProperties[registered.Name] = registered;
+                }
                 else if (child is IKeyframesRule kfs)
                 {
                     Keyframes[kfs.Name] = KeyframeList.Create(kfs);
@@ -270,6 +278,7 @@ namespace ReactUnity.Styling
 
             Context.FontFamilies.Add(FontFamilies);
             Context.Keyframes.Add(Keyframes);
+            Context.RegisteredProperties.Add(RegisteredProperties);
 
             foreach (var dcl in Declarations)
             {
@@ -286,6 +295,7 @@ namespace ReactUnity.Styling
 
             Context.FontFamilies.Remove(FontFamilies);
             Context.Keyframes.Remove(Keyframes);
+            Context.RegisteredProperties.Remove(RegisteredProperties);
 
             foreach (var dcl in Declarations)
             {
