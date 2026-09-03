@@ -131,6 +131,62 @@ namespace ReactUnity.Tests
             "typeof __probe_graph !== 'undefined' ? String(__probe_graph) : ''")?.ToString();
 
         [UGUITest]
+        public IEnumerator HostModuleRootsEvaluateInTheOrderTheyWereGiven()
+        {
+            yield return null;
+
+            // An entry document's script tags are a list, and a browser runs them in order. The
+            // first root here suspends on a top-level await, so evaluating the two concurrently
+            // necessarily gives B,A - the second has nothing to wait for. That is what Vite's dev
+            // document tripped over: it inlines the React Refresh preamble and then loads the app,
+            // and the app reads what the preamble installs.
+            //
+            // Deliberately no imports: this has to hold on every engine, and ClearScript's loader
+            // resolves a relative specifier against the entry source rather than the importing
+            // module, which would fail here for an unrelated reason.
+            Context.Script.Engine.Evaluate("globalThis.__probe_order = ''");
+
+            Context.Script.ExecuteScript(
+                "await Promise.resolve();\nglobalThis.__probe_order += 'A';\nexport {}",
+                "http://localhost:3100/first.js", JavascriptDocumentType.Module);
+            Context.Script.ExecuteScript(
+                "globalThis.__probe_order += 'B';\nexport {}",
+                "http://localhost:3100/second.js", JavascriptDocumentType.Module);
+
+            for (var i = 0; i < 300 && Order().Length < 2; i++) yield return null;
+
+            Assert.AreEqual("AB", Order(), $"{EngineType} let the second root overtake the first");
+        }
+
+        string Order() => Context.Script.Engine.Evaluate(
+            "typeof __probe_order !== 'undefined' ? String(__probe_order) : ''")?.ToString();
+
+        [UGUITest]
+        public IEnumerator AModuleBodyMayCallBackIntoTheHost()
+        {
+            yield return null;
+
+            // document.querySelectorAll marshals its result by evaluating a script, and evaluating
+            // pumps the job queue - so a module body that touches the tree drains jobs from inside
+            // one, which is how Vite's HMR client reached it. On QuickJS that ran a link pass into
+            // a running evaluation and killed the editor, because js_inner_module_linking would
+            // push a module already being evaluated and splice the stack both phases share through
+            // JSModuleDef.stack_prev. The engine no longer allows it, and nothing on this side
+            // guards it any more.
+            Context.Script.ExecuteScript(
+                "globalThis.__probe_reentry = document.querySelectorAll('*').length;\n" +
+                "globalThis.__probe_reentry_done = 'ok';\nexport {}",
+                "http://localhost:3100/reentry.js", JavascriptDocumentType.Module);
+
+            for (var i = 0; i < 300 && Done() == ""; i++) yield return null;
+
+            Assert.AreEqual("ok", Done(), $"{EngineType} never finished a module body that queried the tree");
+        }
+
+        string Done() => Context.Script.Engine.Evaluate(
+            "typeof __probe_reentry_done !== 'undefined' ? String(__probe_reentry_done) : ''")?.ToString();
+
+        [UGUITest]
         public IEnumerator AVitePatchChunkRunsOnEveryEngine()
         {
             yield return null;
