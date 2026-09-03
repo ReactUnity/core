@@ -9,16 +9,13 @@ import InteropPage from '#src/pages/interop/index.tsx';
 import MaterialPage from '#src/pages/material/index.tsx';
 import { QueryPage } from '#src/pages/query/QueryPage.tsx';
 import { Redux } from '#src/pages/redux/index.tsx';
-import BootstrapPage from '#src/pages/style-frameworks/bootstrap/index.tsx';
-import EmotionPage from '#src/pages/style-frameworks/emotion/index.tsx';
-import StyleFrameworksPage from '#src/pages/style-frameworks/index.tsx';
-import JSSPage from '#src/pages/style-frameworks/jss/index.tsx';
-import StyledComponentsPage from '#src/pages/style-frameworks/styled-components/index.tsx';
 import { StylePlayground } from '#src/pages/style-playground/StylePlayground.tsx';
 import SvgsPage from '#src/pages/svgs/index.tsx';
 import TodoPage from '#src/pages/todo/index.jsx';
 
-const TailwindPage = React.lazy(() => import('#src/pages/style-frameworks/tailwind/index.tsx'));
+// Lazy on purpose, so the sample exercises a dynamic `import()` -- which resolves without
+// blocking a frame on every engine now that module loading is asynchronous.
+const TailwindPage = React.lazy(() => import('#src/pages/tailwind/index.tsx'));
 
 export function AppRoutes() {
   return (
@@ -36,20 +33,14 @@ export function AppRoutes() {
       <Route path={'style-playground'} element={<StylePlayground />} />
       <Route path={'game'} element={<GamePage />} />
 
-      <Route path={'style-frameworks'} element={<StyleFrameworksPage />}>
-        <Route path={'jss'} element={<JSSPage />} />
-        <Route path={'styled-components'} element={<StyledComponentsPage />} />
-        <Route path={'emotion'} element={<EmotionPage />} />
-        <Route path={'bootstrap'} element={<BootstrapPage />} />
-        <Route
-          path={'tailwind'}
-          element={
-            <Suspense fallback={<>Loading</>}>
-              <TailwindPage />
-            </Suspense>
-          }
-        />
-      </Route>
+      <Route
+        path={'tailwind'}
+        element={
+          <Suspense fallback={<>Loading</>}>
+            <TailwindPage />
+          </Suspense>
+        }
+      />
     </Routes>
   );
 }

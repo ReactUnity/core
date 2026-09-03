@@ -1,6 +1,6 @@
 /*
   Tailwind for the whole sample, so any page can reach for a utility. Imported from index.tsx, and
-  the reason the Tailwind page has no stylesheet of its own any more.
+  the reason neither the Tailwind page nor the app shell has a stylesheet of its own.
 
   `@reactunity/renderer/vite` points this import at ReactUnity's own Tailwind entry, whose Preflight
   is written for what ReactUnity renders instead of resetting a document. That reset unpaints the
@@ -10,12 +10,16 @@
 
 @import "tailwindcss";
 
+/*
+  Everything here reaches the theme through `@apply` rather than writing literals: a theme variable
+  is only emitted where a utility that was generated needs one, and `@apply` is what counts as
+  generating it -- a hand-written `var(--color-neutral-200)` would resolve to nothing unless some
+  page happened to use that same utility.
+*/
 @layer base {
   /*
-    Through `@apply` rather than as literals: a theme variable is only emitted where a utility that
-    was generated needs one, and `@apply` is what counts as generating it -- a hand-written
-    `var(--color-neutral-200)` here would resolve to nothing unless some page happened to use that
-    same utility. The values are the user-agent stylesheet's, on Tailwind's scale.
+    The controls, back to the look ReactUnity's user-agent stylesheet gave them, on Tailwind's
+    scale.
 
     Physical `pt-2 pr-3 pb-2 pl-3` rather than `px-3 py-2`, which is the one place to be careful:
     the two-axis utilities are logical, and an inline value beats the physical property covering the
@@ -32,5 +36,36 @@
 
   toggle {
     @apply m-1.5 rounded-md bg-neutral-300;
+  }
+
+  /* The sample's own typography and the two layout elements its pages are built out of. */
+  h1 {
+    @apply mb-5 text-4xl font-bold text-slate-900;
+  }
+
+  h2 {
+    @apply mb-4 text-2xl font-semibold text-indigo-600;
+  }
+
+  * + h1,
+  * + * h1 {
+    @apply mt-6;
+  }
+
+  * + h2,
+  * + * h2 {
+    @apply mt-4;
+  }
+
+  section {
+    @apply my-2.5;
+  }
+
+  row {
+    @apply flex-row items-center;
+  }
+
+  column {
+    @apply flex-col items-center grow shrink-0;
   }
 }

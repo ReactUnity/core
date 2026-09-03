@@ -46,7 +46,9 @@ Then press **Play** in Unity. It connects to the dev server on port 3100 and hot
 | `VR` | A world-space UI driven by XR interaction |
 | `HTML` | The `<html>` component rendering raw markup |
 
-The gallery pages under `react/src/pages` are the useful part to read: `style-playground` and `style-frameworks` for the CSS subset, `animations`, `svgs`, `images`, `bg-patterns`, `material` for the component library, `redux` and `query` for state management, `interop` for calling into C#, and `game` and `todo` for something closer to a real screen.
+The gallery pages under `react/src/pages` are the useful part to read: `tailwind` and `style-playground` for the CSS subset, `animations`, `svgs`, `images`, `bg-patterns`, `material` for the component library, `redux` and `query` for state management, `interop` for calling into C#, and `game` and `todo` for something closer to a real screen.
+
+Styling is Tailwind throughout: `react/src/tailwind.css` is the one import, and it is the whole setup — `@reactunity/renderer/vite` points it at ReactUnity's own Tailwind entry, whose Preflight is written for what ReactUnity renders rather than for a document. [Using Tailwind CSS](https://reactunity.github.io/learn/howto/tailwind) covers what does and does not carry over. Sass and CSS Modules work too, and several pages here still use them.
 
 ## Packages
 

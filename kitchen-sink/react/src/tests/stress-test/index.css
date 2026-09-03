@@ -1,4 +1,7 @@
-/* See src/pages/style-frameworks/tailwind/index.css for why these are imported piecemeal. */
+/*
+  A standalone entry, not part of the app, so it takes the theme and the utilities directly
+  rather than src/tailwind.css -- no Preflight and none of the sample's own base layer.
+*/
 @import "tailwindcss/theme.css";
 @import "tailwindcss/utilities.css";
 @source "../../";
