@@ -233,19 +233,32 @@ namespace ReactUnity.Styling.Converters
 
         public static bool ParseCommaSeparatedColor(string[] vals, ColorCallback callback, bool hsl, out IComputedValue result)
         {
+            var cv = AllConverters.ColorValueConverter;
+            var pc = AllConverters.PercentageConverter;
+
+            return ParseCommaSeparatedColor(
+                vals,
+                callback,
+                hsl ? new List<StyleConverterBase> { AllConverters.AngleConverter, pc, pc, pc } : new List<StyleConverterBase> { cv, cv, cv, pc },
+                out result);
+        }
+
+        /// <summary>
+        /// Builds a color out of 3 channels plus an optional alpha, each parsed by its own converter.
+        /// Stays lazy when a channel is a var(), which is why colors are not parsed eagerly here.
+        /// </summary>
+        public static bool ParseCommaSeparatedColor(string[] vals, ColorCallback callback, List<StyleConverterBase> converters, out IComputedValue result)
+        {
             if (vals.Length != 3 && vals.Length != 4)
             {
                 result = null;
                 return false;
             }
 
-            var cv = AllConverters.ColorValueConverter;
-            var pc = AllConverters.PercentageConverter;
-
             return ComputedCompound.Create(
                 out result,
                 vals.OfType<object>().ToList(),
-                hsl ? new List<StyleConverterBase> { AllConverters.AngleConverter, pc, pc, pc } : new List<StyleConverterBase> { cv, cv, cv, pc },
+                converters,
                 (resolved) => {
                     if (resolved[0] is float r && resolved[1] is float g && resolved[2] is float b)
                     {
@@ -262,12 +275,19 @@ namespace ReactUnity.Styling.Converters
             return ParseCommaSeparatedColor(vals.ToArray(), callback, hsl, out result);
         }
 
+        public static bool ParseSpaceSeparatedColor(string val, ColorCallback callback, List<StyleConverterBase> converters, out IComputedValue result)
+        {
+            var vals = ParseSpaceSeparatedColorArguments(val);
+            return ParseCommaSeparatedColor(vals.ToArray(), callback, converters, out result);
+        }
+
 
         public static List<string> ParseSpaceSeparatedColorArguments(string val)
         {
-            var alphaSplit = val.Split(new[] { '/' }, 2);
+            // Paren-aware, so the slash in calc(180 / 2) is not mistaken for the alpha separator.
+            var alphaSplit = SplitSlash(val);
             var vals = SplitWhitespace(alphaSplit[0]);
-            if (alphaSplit.Length > 1) vals.Add(alphaSplit[1].Trim());
+            for (int i = 1; i < alphaSplit.Count; i++) vals.Add(alphaSplit[i].Trim());
             return vals;
         }
 

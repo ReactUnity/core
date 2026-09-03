@@ -220,6 +220,10 @@
           "path": "/reference/media-queries"
         },
         {
+          "title": "CSS Feature Queries",
+          "path": "/reference/feature-queries"
+        },
+        {
           "hasSectionHeader": true,
           "sectionHeader": "Material Components"
         },

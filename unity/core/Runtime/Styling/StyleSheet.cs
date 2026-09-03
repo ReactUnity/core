@@ -115,6 +115,8 @@ namespace ReactUnity.Styling
             Parsed = parsed;
         }
 
+        private static readonly Regex MediaConditionRegex = new Regex(@"@media\s*([^\{]*){.*");
+
         private void ProcessParsed(Stylesheet stylesheet)
         {
             using (ReactProfiling.ProcessStyles.Auto())
@@ -126,39 +128,50 @@ namespace ReactUnity.Styling
 
                 if (stylesheet == null) return;
 
-                foreach (var child in stylesheet.Children)
+                ProcessRules(stylesheet.Children, null, null);
+            }
+        }
+
+        private void ProcessRules(IEnumerable<IStylesheetNode> children, MediaQueryList media, string mediaCondition)
+        {
+            foreach (var child in children)
+            {
+                if (child is IMediaRule mediaRule)
                 {
-                    if (child is IMediaRule media)
-                    {
-                        var mediaRegex = new Regex(@"@media\s*([^\{]*){.*");
-                        var match = mediaRegex.Match(media.StylesheetText.Text);
+                    var match = MediaConditionRegex.Match(mediaRule.StylesheetText.Text);
 
-                        if (match.Groups.Count < 2) continue;
+                    if (match.Groups.Count < 2) continue;
 
-                        var condition = match.Groups[1];
-                        var mql = MediaQueryList.Create(Context.MediaProvider, condition.Value, Context.Context);
+                    // A nested @media matches only when both conditions do, same as joining them with "and".
+                    var condition = match.Groups[1].Value;
+                    if (!string.IsNullOrWhiteSpace(mediaCondition)) condition = mediaCondition.Trim() + " and " + condition.Trim();
 
-                        foreach (var rule in media.Children.OfType<StyleRule>())
-                        {
-                            var dcl = Context.StyleTree.AddStyle(rule, ImportanceOffset, mql, Scope);
-                            Declarations.AddRange(dcl);
-                        }
-                        MediaQueries.Add(mql);
-                    }
-                    else if (child is IKeyframesRule kfs)
-                    {
-                        Keyframes[kfs.Name] = KeyframeList.Create(kfs);
-                    }
-                    else if (child is IFontFaceRule ffr)
-                    {
-                        FontFamilies[StringConverter.Normalize(ffr.Family)] =
-                            AllConverters.FontReferenceConverter.TryGetConstantValue(ffr.Source, FontReference.None);
-                    }
-                    else if (child is StyleRule str)
-                    {
-                        var dcl = Context.StyleTree.AddStyle(str, ImportanceOffset, null, Scope);
-                        Declarations.AddRange(dcl);
-                    }
+                    var mql = MediaQueryList.Create(Context.MediaProvider, condition, Context.Context);
+
+                    ProcessRules(mediaRule.Rules, mql, condition);
+
+                    MediaQueries.Add(mql);
+                }
+                else if (child is ISupportsRule supportsRule)
+                {
+                    // The condition is evaluated here rather than through ExCSS, which only knows
+                    // which properties and values the web supports.
+                    if (SupportsCondition.Evaluate(supportsRule.ConditionText))
+                        ProcessRules(((IGroupingRule) supportsRule).Rules, media, mediaCondition);
+                }
+                else if (child is IKeyframesRule kfs)
+                {
+                    Keyframes[kfs.Name] = KeyframeList.Create(kfs);
+                }
+                else if (child is IFontFaceRule ffr)
+                {
+                    FontFamilies[StringConverter.Normalize(ffr.Family)] =
+                        AllConverters.FontReferenceConverter.TryGetConstantValue(ffr.Source, FontReference.None);
+                }
+                else if (child is StyleRule str)
+                {
+                    var dcl = Context.StyleTree.AddStyle(str, ImportanceOffset, media, Scope);
+                    Declarations.AddRange(dcl);
                 }
             }
         }

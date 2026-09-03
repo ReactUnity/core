@@ -145,6 +145,18 @@ namespace ReactUnity.Styling.Converters
         { }
     }
 
+    /// <summary>
+    /// Chroma in oklch(), and the a/b axes in oklab(), where 100% means 0.4.
+    /// </summary>
+    public class OklchChromaConverter : FloatConverter
+    {
+        public OklchChromaConverter() : base(new Dictionary<string, float>
+        {
+            { "%", ColorSpaces.OklchChromaReference / 100f },
+        })
+        { }
+    }
+
     public class LengthConverter : FloatConverter
     {
         private const float CM = 37.8f;

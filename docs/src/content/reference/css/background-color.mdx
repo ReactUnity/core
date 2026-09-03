@@ -8,8 +8,25 @@ Sets the background color of a component.
 
 - Known color name: `red`, `limegreen`, `transparent`
 - Hex color: `#a5a5a5`, `#777`, `#00ff0033`
-- RGBA color: `rgba(23, 16, 168, 0.3)`
+- RGBA color: `rgba(23, 16, 168, 0.3)`, `rgb(23 16 168 / 30%)`
+- HSL color: `hsl(152, 37%, 59%)`, `hsla(152 37% 59% / 0.75)`
+- OKLCh color: `oklch(63.7% 0.237 25.331)`, `oklch(0.5 0.2 30deg / 50%)`
+- OKLab color: `oklab(0.5 0.1 -0.1)`
+- Mixed color: `color-mix(in oklab, red 30%, blue)` — see below
 - CSS keywords: `inherit`
+
+Lightness in `oklch()` and `oklab()` is a number or a percentage. Chroma, and the `a`/`b` axes, are
+a number or a percentage of `0.4`. Hue takes any angle unit. A component written as `none` is `0`.
+
+`color-mix()` interpolates two colors in `srgb`, `srgb-linear`, `hsl`, `oklab` or `oklch`. Each
+percentage is optional and may be written on either side of its color; giving one implies the other,
+and a pair summing to under `100%` scales the result's alpha by that sum. Alpha is premultiplied, so
+mixing with `transparent` fades the color instead of darkening it. In `hsl` and `oklch` the hue may
+carry `shorter hue`, `longer hue`, `increasing hue` or `decreasing hue`, defaulting to `shorter`.
+
+The `lab` and `lch` interpolation spaces are not implemented; naming one makes the declaration
+invalid rather than silently mixing in a different space. A color outside the sRGB gamut is clamped
+per channel, which shifts the hue of a very saturated color.
 
 <Sandpack>
 

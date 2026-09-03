@@ -306,12 +306,116 @@ namespace ReactUnity.Tests.Editor
         [TestCase("hsva(240 51% 72% / 74.5%)", "5a5ab8be")]
         [TestCase("hsl(2, 57%, 40%)", "a0302cff")]
         [TestCase("rgba(112 189 153 / var(--tw-bg-opacity))", null)]
+        // Reference values come from a browser. oklch(63.7% 0.237 25.331) is Tailwind's red-500.
+        [TestCase("oklch(63.7% 0.237 25.331)", "fb2c36ff")]
+        [TestCase("oklch(0.637 0.237 25.331)", "fb2c36ff")]
+        [TestCase("oklch(0.637, 0.237, 25.331)", "fb2c36ff")]
+        [TestCase("oklch(0.637 59.25% 25.331)", "fb2c36ff")]
+        [TestCase("oklch(0 0 0)", "000000ff")]
+        [TestCase("oklch(1 0 0)", "ffffffff")]
+        [TestCase("oklch(0.7 0.1 200)", "40b1b7ff")]
+        [TestCase("oklch(0.7 0.1 200deg)", "40b1b7ff")]
+        [TestCase("oklch(0.7 0.1 0.5turn)", "4bb3a1ff")]
+        [TestCase("oklch(0.7 none 200)", "9e9e9eff")]
+        [TestCase("oklch(0.5 0.2 30 / 0.5)", "ba0d0180")]
+        [TestCase("oklch(0.5 0.2 30 / 50%)", "ba0d0180")]
+        [TestCase("oklch(0.7 0.1 var(--hue))", null)]
+        [TestCase("oklch(0.7 0.1)", null)]
+        [TestCase("oklab(0.5 0.1 -0.1)", "81459aff")]
+        // The same red-500, given in oklab instead of oklch.
+        [TestCase("oklab(0.637 0.2142 0.1014)", "fb2c36ff")]
         public void ColorConverter(object input, object expected)
         {
             var converted = AllConverters.ColorConverter.TryGetConstantValue<Color>(input, out var c);
 
             if (converted) Assert.AreEqual(expected, ColorUtility.ToHtmlStringRGBA(c).ToLowerInvariant());
             else Assert.AreEqual(expected, null);
+        }
+
+        // Reference values come from a browser, except where noted.
+        [TestCase("color-mix(in srgb, red, blue)", "800080ff")]
+        [TestCase("color-mix(in srgb, red 25%, blue)", "4000bfff")]
+        [TestCase("color-mix(in srgb, 25% red, blue)", "4000bfff")]
+        [TestCase("color-mix(in srgb, red, blue 75%)", "4000bfff")]
+        [TestCase("color-mix(in srgb-linear, red, blue)", "bc00bcff")]
+        [TestCase("color-mix(in hsl, red, blue)", "ff00ffff")]
+        [TestCase("color-mix(in oklab, red, blue)", "8c53a2ff")]
+        [TestCase("color-mix(in oklab, red 30%, blue)", "5d4bc8ff")]
+        [TestCase("color-mix(in oklab, red, white)", "ffa191ff")]
+        [TestCase("color-mix(in oklch, red, blue)", "ba00c2ff")]
+        [TestCase("color-mix(in oklch shorter hue, red, blue)", "ba00c2ff")]
+        [TestCase("color-mix(in oklch longer hue, red, blue)", "009300ff")]
+        // Mixing with a transparent color must not drag the result towards black.
+        [TestCase("color-mix(in srgb, red 50%, transparent)", "ff000080")]
+        [TestCase("color-mix(in srgb, red, rgba(0, 0, 255, 0))", "ff000080")]
+        // Percentages summing under 100% scale the alpha by that sum.
+        [TestCase("color-mix(in srgb, red 20%, blue 20%)", "80008066")]
+        [TestCase("color-mix(in srgb, rgb(255, 0, 0), rgb(0, 0, 255))", "800080ff")]
+        [TestCase("color-mix(in srgb, oklch(0 0 0), oklch(1 0 0))", "808080ff")]
+        // Invalid: unknown space, missing space, both percentages zero, wrong argument count.
+        [TestCase("color-mix(in cielab, red, blue)", null)]
+        [TestCase("color-mix(red, blue)", null)]
+        [TestCase("color-mix(in srgb, red 0%, blue 0%)", null)]
+        [TestCase("color-mix(in srgb, red)", null)]
+        [TestCase("color-mix(in srgb, red, notacolor)", null)]
+        // A hue method is only meaningful in a polar space.
+        [TestCase("color-mix(in oklab longer hue, red, blue)", null)]
+        // Tailwind v4's opacity utilities, verbatim. Its published hex for red-500 is #fb2c36 and
+        // for green-400 #05df72, so these also pin the oklch conversion to Tailwind's own palette.
+        [TestCase("color-mix(in srgb, oklch(63.7% 0.237 25.331) 50%, transparent)", "fb2c3680")]
+        [TestCase("color-mix(in srgb, oklch(79.2% 0.209 151.711) 25%, transparent)", "05df7240")]
+        [TestCase("color-mix(in oklab, oklch(63.7% 0.237 25.331) 50%, transparent)", "fb2c3680")]
+        public void ColorMixConverter(object input, object expected)
+        {
+            var converted = AllConverters.ColorConverter.TryGetConstantValue<Color>(input, out var c);
+
+            if (converted) Assert.AreEqual(expected, ColorUtility.ToHtmlStringRGBA(c).ToLowerInvariant());
+            else Assert.AreEqual(expected, null);
+        }
+
+        [Test]
+        public void ColorMixResolvesVariablesLazily()
+        {
+            var (collection, style) = TestHelpers.CreateStyle();
+
+            collection["--brand"] = "blue";
+            collection["color"] = "color-mix(in srgb, red, var(--brand))";
+
+            Assert.AreEqual("800080ff", ColorUtility.ToHtmlStringRGBA(style.color).ToLowerInvariant());
+        }
+
+        [Test]
+        public void OklchResolvesVariablesLazily()
+        {
+            var (collection, style) = TestHelpers.CreateStyle();
+
+            collection["--hue"] = "25.331";
+            collection["color"] = "oklch(0.637 0.237 var(--hue))";
+
+            Assert.AreEqual("fb2c36ff", ColorUtility.ToHtmlStringRGBA(style.color).ToLowerInvariant());
+        }
+
+        // The shape a Tailwind v4 theme uses: the palette lives in variables holding oklch().
+        [Test]
+        public void OklchWorksThroughAVariableHoldingTheWholeColor()
+        {
+            var (collection, style) = TestHelpers.CreateStyle();
+
+            collection["--color-blue-600"] = "oklch(54.6% 0.245 262.881)";
+            collection["color"] = "var(--color-blue-600)";
+
+            Assert.AreEqual("155dfcff", ColorUtility.ToHtmlStringRGBA(style.color).ToLowerInvariant());
+        }
+
+        [Test]
+        public void ColorMixTakesAVariableHoldingTheWholeColor()
+        {
+            var (collection, style) = TestHelpers.CreateStyle();
+
+            collection["--color-red-500"] = "oklch(63.7% 0.237 25.331)";
+            collection["color"] = "color-mix(in oklab, var(--color-red-500) 50%, transparent)";
+
+            Assert.AreEqual("fb2c3680", ColorUtility.ToHtmlStringRGBA(style.color).ToLowerInvariant());
         }
 
 

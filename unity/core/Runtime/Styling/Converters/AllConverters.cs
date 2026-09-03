@@ -21,6 +21,7 @@ namespace ReactUnity.Styling.Converters
         static public StyleConverterBase DurationConverter = new DurationConverter();
         static public StyleConverterBase PercentageConverter = new PercentageConverter();
         static public StyleConverterBase ColorValueConverter = new ColorValueConverter();
+        static public StyleConverterBase OklchChromaConverter = new OklchChromaConverter();
 
         static public StyleConverterBase UrlConverter = new UrlConverter();
         static public StyleConverterBase YogaValueConverter = new YogaValueConverter();

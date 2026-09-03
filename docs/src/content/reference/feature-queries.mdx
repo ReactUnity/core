@@ -1,0 +1,68 @@
+---
+title: Feature Queries
+---
+
+`@supports` blocks are evaluated in ReactUnity. A block applies only when its condition holds, which
+lets one stylesheet carry a modern declaration and a fallback for the properties and values
+ReactUnity does not have. The syntax is the CSS one, described at
+[MDN Docs](https://developer.mozilla.org/en-US/docs/Web/CSS/@supports).
+
+```css
+view {
+  background-color: rgba(251, 44, 54, 0.5);
+}
+
+@supports (background-color: color-mix(in oklab, red, transparent)) {
+  view {
+    background-color: color-mix(in oklab, #fb2c36 50%, transparent);
+  }
+}
+```
+
+### What the condition is tested against {/*what-the-condition-is-tested-against*/}
+
+A declaration such as `(background-color: red)` is supported when ReactUnity has that property
+**and** can parse that value. This is ReactUnity's own CSS dialect, not the browser's, so the answer
+differs from a browser's in both directions:
+
+- `(float: left)` is **false**. `float` is a web property that ReactUnity does not implement.
+- `(motion-duration: 1s)` is **true**. `motion-duration` is a ReactUnity property that no browser
+  has.
+
+So a feature query is the reliable way to ask what the engine in front of you actually supports,
+rather than assuming from a version number.
+
+### Supported condition syntax {/*supported-condition-syntax*/}
+
+| Form                    | Example                                       |
+| ----------------------- | --------------------------------------------- |
+| Declaration             | `@supports (color: red)`                      |
+| Negation                | `@supports not (float: left)`                 |
+| Conjunction             | `@supports (color: red) and (display: flex)`  |
+| Disjunction             | `@supports (float: left) or (color: red)`     |
+| Grouping                | `@supports ((color: red) and (opacity: 0.5))` |
+| `!important` in a value | `@supports (color: red !important)`            |
+
+Mixing `and` and `or` at the same level is invalid CSS; parenthesize instead.
+
+`@supports` and `@media` nest inside each other in either order, and the rules inside apply only
+when both conditions hold.
+
+```css
+@media (framework: ugui) {
+  @supports (background-color: color-mix(in oklch, red, blue)) {
+    view {
+      background-color: color-mix(in oklch, red, blue);
+    }
+  }
+}
+```
+
+### Limitations {/*limitations*/}
+
+Feature queries that are not declarations always evaluate to **false**, because ReactUnity does not
+implement them. This includes `selector()`, `font-tech()` and `font-format()`.
+
+`@supports` must be a top-level rule. Writing it nested inside a style rule, which CSS nesting
+allows, does not work — the bundled CSS parser drops the nested block while keeping the declarations
+around it.

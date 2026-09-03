@@ -8,7 +8,9 @@ namespace ReactUnity.Styling.Converters
 {
     public class ColorConverter : TypedStyleConverterBase<Color>
     {
-        private static HashSet<string> DefaultAllowedFunctions = new HashSet<string> { "rgb", "rgba", "hsl", "hsla", "hsv", "hsva" };
+        private static HashSet<string> DefaultAllowedFunctions = new HashSet<string>(StringComparer.InvariantCultureIgnoreCase) {
+            "rgb", "rgba", "hsl", "hsla", "hsv", "hsva", "oklch", "oklab", "color-mix",
+        };
         protected override HashSet<string> AllowedFunctions => DefaultAllowedFunctions;
 
         static Dictionary<string, string> KnownColors = new Dictionary<string, string>(StringComparer.InvariantCultureIgnoreCase) {
