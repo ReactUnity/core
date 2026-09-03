@@ -126,14 +126,17 @@ context.MediaProvider.SetValue("prefers-color-scheme", "dark");
 
 ### What does not work {/*what-does-not-work*/}
 
-| Utilities                                            | Why                                                        |
-| ---------------------------------------------------- | ---------------------------------------------------------- |
-| `grid`, `grid-cols-*`, `col-span-*`                  | Layout is flexbox only. The flex utilities are the way      |
-| `px-*`, `py-*`, `mx-*`, `my-*`, `inset-x-*`, `border-x-*` | v4 writes the two-axis utilities as `padding-inline` and friends, and no logical property is implemented. Reach for `pt-*`/`pr-*`/`pb-*`/`pl-*`, `p-*`, `gap-*` and `left-*`/`top-*` instead |
-| `ps-*`, `ms-*`, `start-*`, `space-x-*`               | Same reason — these are the `*-inline-start` half of it     |
-| `@container`, `@sm:`                                 | Container queries are not implemented                       |
-| `has-*` variants                                     | `:has()` is not implemented                                 |
-| `line-clamp-*`, `contents`, `mix-blend-*`            | The properties behind them are not implemented              |
+| Utilities                                        | Why                                                            |
+| ------------------------------------------------ | -------------------------------------------------------------- |
+| `grid`, `grid-cols-*`, `col-span-*`              | Layout is flexbox only. The flex utilities are the way         |
+| `@container`, `@sm:`                             | Container queries are not implemented                          |
+| `has-*` variants                                 | `:has()` is not implemented                                    |
+| `line-clamp-*`, `contents`, `mix-blend-*`        | The properties behind them are not implemented                 |
 
 Arbitrary values (`p-[13px]`, `leading-[1.7]`), arbitrary properties, `@theme`, `@utility`,
 `@custom-variant` and the `hover:`, `active:`, `focus:` and `disabled:` variants all work.
+
+The utilities v4 writes as logical properties work too, `px-*`, `py-*`, `mx-*`, `my-*`, `inset-x-*`,
+`border-x-*`, `ps-*`, `ms-*`, `start-*` and `space-x-*` among them. They follow `direction`, which
+is inherited — see [logical properties](/reference/css#logical-properties).
+

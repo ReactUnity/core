@@ -38,8 +38,8 @@ namespace ReactUnity.Styling
         public static readonly LayoutProperty<YogaValue> MarginRight = new LayoutProperty<YogaValue>("MarginRight", true);
         public static readonly LayoutProperty<YogaValue> MarginTop = new LayoutProperty<YogaValue>("MarginTop", true);
         public static readonly LayoutProperty<YogaValue> MarginBottom = new LayoutProperty<YogaValue>("MarginBottom", true);
-        public static readonly LayoutProperty<YogaValue> MarginStart = new LayoutProperty<YogaValue>("MarginStart", true);
-        public static readonly LayoutProperty<YogaValue> MarginEnd = new LayoutProperty<YogaValue>("MarginEnd", true);
+        public static readonly LayoutProperty<YogaValue> MarginStart = new LayoutProperty<YogaValue>("MarginStart", true, YogaValue.Undefined());
+        public static readonly LayoutProperty<YogaValue> MarginEnd = new LayoutProperty<YogaValue>("MarginEnd", true, YogaValue.Undefined());
         public static readonly LayoutProperty<YogaValue> MarginHorizontal = new LayoutProperty<YogaValue>("MarginHorizontal", true);
         public static readonly LayoutProperty<YogaValue> MarginVertical = new LayoutProperty<YogaValue>("MarginVertical", true);
         public static readonly LayoutProperty<YogaValue> Padding = new LayoutProperty<YogaValue>("Padding", true);
@@ -47,8 +47,8 @@ namespace ReactUnity.Styling
         public static readonly LayoutProperty<YogaValue> PaddingRight = new LayoutProperty<YogaValue>("PaddingRight", true);
         public static readonly LayoutProperty<YogaValue> PaddingTop = new LayoutProperty<YogaValue>("PaddingTop", true);
         public static readonly LayoutProperty<YogaValue> PaddingBottom = new LayoutProperty<YogaValue>("PaddingBottom", true);
-        public static readonly LayoutProperty<YogaValue> PaddingStart = new LayoutProperty<YogaValue>("PaddingStart", true);
-        public static readonly LayoutProperty<YogaValue> PaddingEnd = new LayoutProperty<YogaValue>("PaddingEnd", true);
+        public static readonly LayoutProperty<YogaValue> PaddingStart = new LayoutProperty<YogaValue>("PaddingStart", true, YogaValue.Undefined());
+        public static readonly LayoutProperty<YogaValue> PaddingEnd = new LayoutProperty<YogaValue>("PaddingEnd", true, YogaValue.Undefined());
         public static readonly LayoutProperty<YogaValue> PaddingHorizontal = new LayoutProperty<YogaValue>("PaddingHorizontal", true);
         public static readonly LayoutProperty<YogaValue> PaddingVertical = new LayoutProperty<YogaValue>("PaddingVertical", true);
         public static readonly LayoutProperty<float> BorderWidth = new LayoutProperty<float>("BorderWidth", true, converter: AllConverters.LengthConverter);
@@ -56,8 +56,8 @@ namespace ReactUnity.Styling
         public static readonly LayoutProperty<float> BorderRightWidth = new LayoutProperty<float>("BorderRightWidth", true, converter: AllConverters.LengthConverter);
         public static readonly LayoutProperty<float> BorderTopWidth = new LayoutProperty<float>("BorderTopWidth", true, converter: AllConverters.LengthConverter);
         public static readonly LayoutProperty<float> BorderBottomWidth = new LayoutProperty<float>("BorderBottomWidth", true, converter: AllConverters.LengthConverter);
-        public static readonly LayoutProperty<float> BorderStartWidth = new LayoutProperty<float>("BorderStartWidth", true, converter: AllConverters.LengthConverter);
-        public static readonly LayoutProperty<float> BorderEndWidth = new LayoutProperty<float>("BorderEndWidth", true, converter: AllConverters.LengthConverter);
+        public static readonly LayoutProperty<float> BorderStartWidth = new LayoutProperty<float>("BorderStartWidth", true, float.NaN, AllConverters.LengthConverter);
+        public static readonly LayoutProperty<float> BorderEndWidth = new LayoutProperty<float>("BorderEndWidth", true, float.NaN, AllConverters.LengthConverter);
         public static readonly LayoutProperty<int> Order = new LayoutProperty<int>("order", true);
 
         public static readonly LayoutProperty<YogaValue> RowGap = new LayoutProperty<YogaValue>("RowGap", true);
@@ -161,6 +161,44 @@ namespace ReactUnity.Styling
             { "direction", StyleDirection },
             { "flex-wrap", Wrap },
             { "flexWrap", Wrap },
+
+            // CSS logical properties. The inline axis lands on Yoga's Start and End edges, which
+            // Yoga resolves against the direction a node inherits -- so `direction: rtl` on any
+            // ancestor flips them, and nothing here has to track that itself. The block axis is
+            // always vertical: `writing-mode` does not exist here, so block-start is top.
+            { "padding-inline-start", PaddingStart },
+            { "padding-inline-end", PaddingEnd },
+            { "padding-block-start", PaddingTop },
+            { "padding-block-end", PaddingBottom },
+            { "margin-inline-start", MarginStart },
+            { "margin-inline-end", MarginEnd },
+            { "margin-block-start", MarginTop },
+            { "margin-block-end", MarginBottom },
+            { "inset-inline-start", Start },
+            { "inset-inline-end", End },
+            { "inset-block-start", Top },
+            { "inset-block-end", Bottom },
+            { "border-inline-start-width", BorderStartWidth },
+            { "border-inline-end-width", BorderEndWidth },
+            { "border-block-start-width", BorderTopWidth },
+            { "border-block-end-width", BorderBottomWidth },
+
+            { "paddingInlineStart", PaddingStart },
+            { "paddingInlineEnd", PaddingEnd },
+            { "paddingBlockStart", PaddingTop },
+            { "paddingBlockEnd", PaddingBottom },
+            { "marginInlineStart", MarginStart },
+            { "marginInlineEnd", MarginEnd },
+            { "marginBlockStart", MarginTop },
+            { "marginBlockEnd", MarginBottom },
+            { "insetInlineStart", Start },
+            { "insetInlineEnd", End },
+            { "insetBlockStart", Top },
+            { "insetBlockEnd", Bottom },
+            { "borderInlineStartWidth", BorderStartWidth },
+            { "borderInlineEndWidth", BorderEndWidth },
+            { "borderBlockStartWidth", BorderTopWidth },
+            { "borderBlockEndWidth", BorderBottomWidth },
         };
     }
 }

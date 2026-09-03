@@ -67,8 +67,12 @@ List of supported CSS properties in alphabetical order:
 - border-bottom-color
 - border-bottom-left-radius
 - border-bottom-right-radius
+- border-block-end-width
+- border-block-start-width
 - border-bottom-width
 - border-end-width
+- border-inline-end-width
+- border-inline-start-width
 - border-left-color
 - border-left-width
 - border-right-color
@@ -84,8 +88,13 @@ List of supported CSS properties in alphabetical order:
 - color
 - content
 - cursor
+- direction
 - display
 - end
+- inset-block-end
+- inset-block-start
+- inset-inline-end
+- inset-inline-start
 - flex-basis
 - flex-direction
 - flex-grow
@@ -102,7 +111,11 @@ List of supported CSS properties in alphabetical order:
 - margin
 - margin-bottom
 - margin-end
+- margin-block-end
+- margin-block-start
 - margin-horizontal
+- margin-inline-end
+- margin-inline-start
 - margin-left
 - margin-right
 - margin-start
@@ -131,7 +144,11 @@ List of supported CSS properties in alphabetical order:
 - padding
 - padding-bottom
 - padding-end
+- padding-block-end
+- padding-block-start
 - padding-horizontal
+- padding-inline-end
+- padding-inline-start
 - padding-left
 - padding-right
 - padding-start
@@ -179,16 +196,54 @@ List of supported CSS shorthands in alphabetical order:
 - border-radius
 - border-right
 - border-top
+- border-block-width
+- border-inline-width
 - border-width
 - flex
 - flex-flow
 - font
 - inset
+- inset-block
+- inset-inline
 - margin
+- margin-block
+- margin-inline
 - mask
 - mask-position
 - mask-repeat
 - motion
 - padding
+- padding-block
+- padding-inline
 - text-stroke
 - transition
+
+### Logical properties {/*logical-properties*/}
+
+The inline axis is the one `direction` turns around, and the block axis is always vertical --
+`writing-mode` does not exist here, so `block-start` is the top and `block-end` the bottom whatever
+else is going on.
+
+```css
+view {
+  padding-inline: 4px 12px;
+  padding-block-start: 8px;
+}
+```
+
+`direction` is inherited, so setting it once turns the inline axis around for a whole subtree:
+
+```css
+#panel {
+  direction: rtl;
+}
+```
+
+Which physical side each inline value lands on is decided during layout, by Yoga, from the direction
+the element ends up with -- an element does not need a `direction` of its own to follow one set on an
+ancestor. An inline value takes precedence over the physical property covering the same edge,
+whichever order the two are declared in; CSS would let the later declaration win, and it is the one
+place the two disagree, so do not set both on one edge.
+
+Under UIToolkit the inline axis is always the physical one: UIElements has no start and end edge to
+resolve against, and `direction` does nothing there.

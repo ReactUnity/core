@@ -69,6 +69,25 @@ export interface LayoutExtended {
   position?: Position;
   direction?: Direction;
   flexWrap?: Wrap;
+
+  // Logical properties. The inline axis follows `direction`, which is inherited; the block axis is
+  // always vertical, since `writing-mode` does not exist here.
+  paddingInlineStart?: YogaValueAux;
+  paddingInlineEnd?: YogaValueAux;
+  paddingBlockStart?: YogaValueAux;
+  paddingBlockEnd?: YogaValueAux;
+  marginInlineStart?: YogaValueAux;
+  marginInlineEnd?: YogaValueAux;
+  marginBlockStart?: YogaValueAux;
+  marginBlockEnd?: YogaValueAux;
+  insetInlineStart?: YogaValueAux;
+  insetInlineEnd?: YogaValueAux;
+  insetBlockStart?: YogaValueAux;
+  insetBlockEnd?: YogaValueAux;
+  borderInlineStartWidth?: number;
+  borderInlineEndWidth?: number;
+  borderBlockStartWidth?: number;
+  borderBlockEndWidth?: number;
 }
 
 export type LayoutCssCompatible = Omit<Layout, 'styleDirection' | 'position' | 'wrap' | 'margin' | 'padding' | 'borderWidth'> &

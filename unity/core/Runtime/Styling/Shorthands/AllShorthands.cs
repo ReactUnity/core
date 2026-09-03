@@ -38,6 +38,17 @@ namespace ReactUnity.Styling.Shorthands
         internal static readonly StyleShorthand Transform = new TransformShorthand("transform");
         internal static readonly StyleShorthand Gap = new XYShorthand<YogaValue>("gap", LayoutProperties.RowGap, LayoutProperties.ColumnGap);
 
+        // The two-value logical shorthands. `padding-inline: 4px 8px` is start then end, and Yoga
+        // decides which side each is once it knows the direction the node inherits.
+        internal static readonly StyleShorthand PaddingInline = new XYShorthand<YogaValue>("padding-inline", LayoutProperties.PaddingStart, LayoutProperties.PaddingEnd);
+        internal static readonly StyleShorthand PaddingBlock = new XYShorthand<YogaValue>("padding-block", LayoutProperties.PaddingTop, LayoutProperties.PaddingBottom);
+        internal static readonly StyleShorthand MarginInline = new XYShorthand<YogaValue>("margin-inline", LayoutProperties.MarginStart, LayoutProperties.MarginEnd);
+        internal static readonly StyleShorthand MarginBlock = new XYShorthand<YogaValue>("margin-block", LayoutProperties.MarginTop, LayoutProperties.MarginBottom);
+        internal static readonly StyleShorthand InsetInline = new XYShorthand<YogaValue>("inset-inline", LayoutProperties.Start, LayoutProperties.End);
+        internal static readonly StyleShorthand InsetBlock = new XYShorthand<YogaValue>("inset-block", LayoutProperties.Top, LayoutProperties.Bottom);
+        internal static readonly StyleShorthand BorderInlineWidth = new XYShorthand<float>("border-inline-width", LayoutProperties.BorderStartWidth, LayoutProperties.BorderEndWidth);
+        internal static readonly StyleShorthand BorderBlockWidth = new XYShorthand<float>("border-block-width", LayoutProperties.BorderTopWidth, LayoutProperties.BorderBottomWidth);
+
         internal static readonly Dictionary<string, StyleShorthand> Map = new Dictionary<string, StyleShorthand>(StringComparer.InvariantCultureIgnoreCase)
         {
             { "all", All },
@@ -71,6 +82,14 @@ namespace ReactUnity.Styling.Shorthands
             { "audio", Audio },
             { "transform", Transform },
             { "gap", Gap },
+            { "paddingInline", PaddingInline },
+            { "paddingBlock", PaddingBlock },
+            { "marginInline", MarginInline },
+            { "marginBlock", MarginBlock },
+            { "insetInline", InsetInline },
+            { "insetBlock", InsetBlock },
+            { "borderInlineWidth", BorderInlineWidth },
+            { "borderBlockWidth", BorderBlockWidth },
 
             { "border-width", BorderWidth },
             { "border-color", BorderColor },
@@ -87,6 +106,14 @@ namespace ReactUnity.Styling.Shorthands
             { "mask-position", MaskPosition },
             { "mask-repeat", MaskRepeat },
             { "text-stroke", TextStroke },
+            { "padding-inline", PaddingInline },
+            { "padding-block", PaddingBlock },
+            { "margin-inline", MarginInline },
+            { "margin-block", MarginBlock },
+            { "inset-inline", InsetInline },
+            { "inset-block", InsetBlock },
+            { "border-inline-width", BorderInlineWidth },
+            { "border-block-width", BorderBlockWidth },
         };
 
         internal static StyleShorthand GetShorthand(string name)

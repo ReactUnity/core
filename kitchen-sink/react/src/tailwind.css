@@ -17,8 +17,10 @@
     `var(--color-neutral-200)` here would resolve to nothing unless some page happened to use that
     same utility. The values are the user-agent stylesheet's, on Tailwind's scale.
 
-    `pt-2 pr-3 pb-2 pl-3` rather than `px-3 py-2`: the two-axis utilities are `padding-inline` and
-    `padding-block` in v4, and ReactUnity reads no logical property.
+    Physical `pt-2 pr-3 pb-2 pl-3` rather than `px-3 py-2`, which is the one place to be careful:
+    the two-axis utilities are logical, and an inline value beats the physical property covering the
+    same edge whatever order the two are declared in. This is the lowest-priority rule in the app,
+    so it has to lose to the `padding` a page writes -- and it would not if it were logical.
   */
   button {
     @apply rounded-lg bg-neutral-200 pt-2 pr-3 pb-2 pl-3;

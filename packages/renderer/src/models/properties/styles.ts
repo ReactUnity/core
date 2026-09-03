@@ -162,6 +162,14 @@ export interface RenderStyle {
   audio?: SafeString;
   transform?: SafeString;
   gap?: SafeString | number;
+  paddingInline?: SafeString | number;
+  paddingBlock?: SafeString | number;
+  marginInline?: SafeString | number;
+  marginBlock?: SafeString | number;
+  insetInline?: SafeString | number;
+  insetBlock?: SafeString | number;
+  borderInlineWidth?: SafeString | number;
+  borderBlockWidth?: SafeString | number;
 
   // Custom CSS variables
   [variable: `--${string}`]: any;

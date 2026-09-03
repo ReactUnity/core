@@ -75,28 +75,31 @@ namespace ReactUnity.UIToolkit
             TargetElement.style.maxWidth = StylingHelpers.GetStyleLength(computed, LayoutProperties.MaxWidth);
             TargetElement.style.maxHeight = StylingHelpers.GetStyleLength(computed, LayoutProperties.MaxHeight);
 
+            // The inline edges are folded in here rather than handed over, since UIElements has no
+            // start/end edge and no `direction` to resolve one against: inline-start is always the
+            // left. Logical beats physical, which is the order Yoga applies them in under UGUI.
             TargetElement.style.paddingBottom = StylingHelpers.GetStyleLengthDouble(computed, LayoutProperties.PaddingBottom, LayoutProperties.Padding);
             TargetElement.style.paddingTop = StylingHelpers.GetStyleLengthDouble(computed, LayoutProperties.PaddingTop, LayoutProperties.Padding);
-            TargetElement.style.paddingLeft = StylingHelpers.GetStyleLengthDouble(computed, LayoutProperties.PaddingLeft, LayoutProperties.Padding);
-            TargetElement.style.paddingRight = StylingHelpers.GetStyleLengthDouble(computed, LayoutProperties.PaddingRight, LayoutProperties.Padding);
+            TargetElement.style.paddingLeft = StylingHelpers.GetStyleLengthTriple(computed, LayoutProperties.PaddingStart, LayoutProperties.PaddingLeft, LayoutProperties.Padding);
+            TargetElement.style.paddingRight = StylingHelpers.GetStyleLengthTriple(computed, LayoutProperties.PaddingEnd, LayoutProperties.PaddingRight, LayoutProperties.Padding);
 
             TargetElement.style.marginBottom = StylingHelpers.GetStyleLengthDouble(computed, LayoutProperties.MarginBottom, LayoutProperties.Margin);
             TargetElement.style.marginTop = StylingHelpers.GetStyleLengthDouble(computed, LayoutProperties.MarginTop, LayoutProperties.Margin);
-            TargetElement.style.marginLeft = StylingHelpers.GetStyleLengthDouble(computed, LayoutProperties.MarginLeft, LayoutProperties.Margin);
-            TargetElement.style.marginRight = StylingHelpers.GetStyleLengthDouble(computed, LayoutProperties.MarginRight, LayoutProperties.Margin);
+            TargetElement.style.marginLeft = StylingHelpers.GetStyleLengthTriple(computed, LayoutProperties.MarginStart, LayoutProperties.MarginLeft, LayoutProperties.Margin);
+            TargetElement.style.marginRight = StylingHelpers.GetStyleLengthTriple(computed, LayoutProperties.MarginEnd, LayoutProperties.MarginRight, LayoutProperties.Margin);
 
-            TargetElement.style.left = StylingHelpers.GetStyleLength(computed, LayoutProperties.Left);
-            TargetElement.style.right = StylingHelpers.GetStyleLength(computed, LayoutProperties.Right);
+            TargetElement.style.left = StylingHelpers.GetStyleLengthDouble(computed, LayoutProperties.Start, LayoutProperties.Left);
+            TargetElement.style.right = StylingHelpers.GetStyleLengthDouble(computed, LayoutProperties.End, LayoutProperties.Right);
             TargetElement.style.top = StylingHelpers.GetStyleLength(computed, LayoutProperties.Top);
             TargetElement.style.bottom = StylingHelpers.GetStyleLength(computed, LayoutProperties.Bottom);
 
             TargetElement.style.borderLeftWidth =
                 computed.borderLeftStyle == BorderStyle.None ? 0 :
-                StylingHelpers.GetStyleFloatDouble(computed, LayoutProperties.BorderLeftWidth, LayoutProperties.BorderWidth);
+                StylingHelpers.GetStyleFloatTriple(computed, LayoutProperties.BorderStartWidth, LayoutProperties.BorderLeftWidth, LayoutProperties.BorderWidth);
 
             TargetElement.style.borderRightWidth =
                 computed.borderRightStyle == BorderStyle.None ? 0 :
-                StylingHelpers.GetStyleFloatDouble(computed, LayoutProperties.BorderRightWidth, LayoutProperties.BorderWidth);
+                StylingHelpers.GetStyleFloatTriple(computed, LayoutProperties.BorderEndWidth, LayoutProperties.BorderRightWidth, LayoutProperties.BorderWidth);
 
             TargetElement.style.borderTopWidth =
                 computed.borderTopStyle == BorderStyle.None ? 0 :

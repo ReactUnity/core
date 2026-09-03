@@ -217,10 +217,20 @@ namespace ReactUnity.UGUI
             Layout.MarginLeft = StylingHelpers.GetStyleLengthTriple(computed, LayoutProperties.MarginLeft, LayoutProperties.MarginHorizontal, LayoutProperties.Margin);
             Layout.MarginRight = StylingHelpers.GetStyleLengthTriple(computed, LayoutProperties.MarginRight, LayoutProperties.MarginHorizontal, LayoutProperties.Margin);
 
+            // The inline edges, which is what `padding-inline-start` and the rest set. Yoga picks
+            // the physical side from the direction the node inherits, and prefers these over the
+            // physical edge when both are set -- so a logical value always wins, cascade or not.
+            Layout.PaddingStart = StylingHelpers.GetStyleLength(computed, LayoutProperties.PaddingStart);
+            Layout.PaddingEnd = StylingHelpers.GetStyleLength(computed, LayoutProperties.PaddingEnd);
+            Layout.MarginStart = StylingHelpers.GetStyleLength(computed, LayoutProperties.MarginStart);
+            Layout.MarginEnd = StylingHelpers.GetStyleLength(computed, LayoutProperties.MarginEnd);
+
             Layout.Left = StylingHelpers.GetStyleLength(computed, LayoutProperties.Left);
             Layout.Right = StylingHelpers.GetStyleLength(computed, LayoutProperties.Right);
             Layout.Top = StylingHelpers.GetStyleLength(computed, LayoutProperties.Top);
             Layout.Bottom = StylingHelpers.GetStyleLength(computed, LayoutProperties.Bottom);
+            Layout.Start = StylingHelpers.GetStyleLength(computed, LayoutProperties.Start);
+            Layout.End = StylingHelpers.GetStyleLength(computed, LayoutProperties.End);
 
             Layout.RowGap = StylingHelpers.GetStyleLength(computed, LayoutProperties.RowGap);
             Layout.ColumnGap = StylingHelpers.GetStyleLength(computed, LayoutProperties.ColumnGap);
@@ -229,6 +239,8 @@ namespace ReactUnity.UGUI
             Layout.BorderRightWidth = StylingHelpers.GetStyleFloatDouble(computed, LayoutProperties.BorderRightWidth, LayoutProperties.BorderWidth);
             Layout.BorderTopWidth = StylingHelpers.GetStyleFloatDouble(computed, LayoutProperties.BorderTopWidth, LayoutProperties.BorderWidth);
             Layout.BorderBottomWidth = StylingHelpers.GetStyleFloatDouble(computed, LayoutProperties.BorderBottomWidth, LayoutProperties.BorderWidth);
+            Layout.BorderStartWidth = StylingHelpers.GetStyleFloat(computed, LayoutProperties.BorderStartWidth);
+            Layout.BorderEndWidth = StylingHelpers.GetStyleFloat(computed, LayoutProperties.BorderEndWidth);
 
             Layout.Display = StylingHelpers.GetStyleEnumCustom(computed, LayoutProperties.Display);
             Layout.BoxSizing = StylingHelpers.GetStyleEnumCustom(computed, LayoutProperties.BoxSizing);

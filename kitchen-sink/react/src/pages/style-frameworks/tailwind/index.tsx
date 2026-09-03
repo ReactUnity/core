@@ -2,7 +2,7 @@ export function TailwindPage() {
   return (
     <div className={'gap-4 p-2'}>
       <div className={'flex-row gap-3'}>
-        <button className={'bg-blue-400 hover:bg-red-400 p-3 transition-colors hover:translate-y-1'}>Tailwind Button</button>
+        <button className={'bg-blue-400 hover:bg-red-400 px-5 py-3 transition-colors hover:translate-y-1'}>Tailwind Button</button>
 
         <button className={'bg-yellow-500 hover:bg-green-400 shadow-md p-3 transition-colors'}>Second Button</button>
 
