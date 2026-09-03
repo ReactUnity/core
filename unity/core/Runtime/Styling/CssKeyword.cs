@@ -10,5 +10,6 @@ namespace ReactUnity.Styling
         Unset = 6,
         Default = 7,
         Revert = 8,
+        RevertLayer = 9,
     }
 }

@@ -29,7 +29,11 @@ namespace ReactUnity.Styling.Computed
                 case CssKeyword.Default:
                     return prop.defaultValue;
                 case CssKeyword.Revert:
-                    return style?.RevertCalculator.GetRevertValue(prop, style, converter);
+                // A revert-layer that reaches here had no earlier layer to roll back to, which
+                // per CSS Cascade 5 means it rolls back past this origin instead.
+                case CssKeyword.RevertLayer:
+                    // Not every framework has one -- UIToolkit has nothing to read a value back from.
+                    return style?.RevertCalculator?.GetRevertValue(prop, style, converter);
                 default:
                     return null;
             }

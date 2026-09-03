@@ -117,7 +117,14 @@ namespace ReactUnity.Styling
 
         private static readonly Regex MediaConditionRegex = new Regex(@"@media\s*([^\{]*){.*");
 
-        private CascadeLayers Layers = new CascadeLayers();
+        // Document-wide, so a layer name is the same layer in every sheet.
+        private CascadeLayers Layers => Context.Layers;
+
+        /// <summary>
+        /// Every layer name this sheet declares, in the order it declares them. The context orders
+        /// the layers of all its sheets from these lists.
+        /// </summary>
+        internal readonly List<string> LayerNames = new List<string>();
 
         private void ProcessParsed(Stylesheet stylesheet)
         {
@@ -127,15 +134,18 @@ namespace ReactUnity.Styling
                 Keyframes.Clear();
                 FontFamilies.Clear();
                 Declarations.Clear();
-
-                Layers = new CascadeLayers();
+                LayerNames.Clear();
 
                 if (stylesheet == null) return;
 
-                // Layer order has to be settled before any rule is indexed, because a layer's place
-                // can depend on a name that only appears further down the sheet.
+                // The names are collected in their own pass, because a rule can be in a layer whose
+                // place is only settled by a name further down the sheet -- or in another sheet.
                 CollectLayers(stylesheet.Children, null);
                 ProcessRules(stylesheet.Children, null, null, null);
+
+                // The names this sheet contributes have changed, so the order they take part in is
+                // worked out again.
+                Context.RebuildLayers();
             }
         }
 
@@ -151,13 +161,13 @@ namespace ReactUnity.Styling
                 if (child is ILayerRule layerRule)
                 {
                     var nested = Layers.Qualify(layerPath, layerRule);
-                    Layers.Declare(nested);
+                    LayerNames.Add(nested);
                     CollectLayers(layerRule.Rules, nested);
                 }
                 else if (child is IRule rule && rule.Type == RuleType.LayerStatement)
                 {
                     foreach (var name in CascadeLayers.ParseStatement(rule))
-                        Layers.Declare(Layers.Qualify(layerPath, name));
+                        LayerNames.Add(Layers.Qualify(layerPath, name));
                 }
                 else if (child is IGroupingRule grouping)
                 {
@@ -227,7 +237,7 @@ namespace ReactUnity.Styling
             // element. Dropping it leaves the block ignored, which is what it was before.
             if (!string.IsNullOrWhiteSpace(rule.SelectorText))
             {
-                var dcl = Context.StyleTree.AddStyle(rule, ImportanceOffset, media, Scope, Layers.Order(layerPath));
+                var dcl = Context.StyleTree.AddStyle(rule, ImportanceOffset, media, Scope, Layers.Get(layerPath));
                 Declarations.AddRange(dcl);
             }
 

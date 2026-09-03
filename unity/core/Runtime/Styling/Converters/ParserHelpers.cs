@@ -300,6 +300,13 @@ namespace ReactUnity.Styling.Converters
                 return false;
             }
 
+            // The one keyword whose name is not something the enum can spell.
+            if (value.Equals("revert-layer", StringComparison.OrdinalIgnoreCase))
+            {
+                keyword = CssKeyword.RevertLayer;
+                return true;
+            }
+
             var parsed = Enum.TryParse(value, true, out keyword);
             if (parsed && Enum.IsDefined(typeof(CssKeyword), keyword) && keyword != CssKeyword.NoKeyword)
                 return true;

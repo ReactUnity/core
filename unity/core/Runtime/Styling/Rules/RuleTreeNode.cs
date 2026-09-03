@@ -17,8 +17,15 @@ namespace ReactUnity.Styling.Rules
 
         public MediaQueryList MediaQuery { get; private set; }
         public IReactComponent Scope { get; private set; }
+
+        /// <summary>The cascade layer this rule is in, or null when it is in none.</summary>
+        public CascadeLayer Layer { get; private set; }
+
         private int RawSpecifity { get; set; } = 0;
         public int Specifity { get; private set; }
+
+        private int ImportanceOffset;
+        private bool Important;
 
         static RuleTreeNode<T> CreateChildNode(RuleTreeNode<T> parent, MediaQueryList mq, IReactComponent scope, RulePseudoType pseudo)
         {
@@ -47,8 +54,12 @@ namespace ReactUnity.Styling.Rules
             return child;
         }
 
-        private void RecalculateSpecificity(int importanceOffset, bool important, int layerOrder)
+        private void RecalculateSpecificity(int importanceOffset, bool important, CascadeLayer layer)
         {
+            ImportanceOffset = importanceOffset;
+            Important = important;
+            Layer = layer;
+
             RawSpecifity = Parent == null ? 0 : Parent.RawSpecifity;
 
             if (important && RawSpecifity < RuleHelpers.ImportantSpecifity) RawSpecifity += RuleHelpers.ImportantSpecifity;
@@ -109,14 +120,36 @@ namespace ReactUnity.Styling.Rules
                 }
             }
 
-            // The layer term is applied here rather than accumulated into RawSpecifity, because
-            // the important leaf hangs off the normal one and its rank is the reverse of its parent's.
-            Specifity = RawSpecifity
-                + RuleHelpers.LayerRank(layerOrder, important) * RuleHelpers.LayerSpecifityStep
-                + importanceOffset * (1 << 24);
+            ApplyCascadeTerms();
         }
 
-        public RuleTreeNode<T> AddChildCascading(string selector, MediaQueryList mq, IReactComponent scope, int importanceOffset = 0, int layerOrder = 0)
+        /// <summary>
+        /// The layer and importance-offset terms of the specificity. They are applied here rather
+        /// than accumulated into RawSpecifity, because the important leaf hangs off the normal one
+        /// and its layer rank is the reverse of its parent's.
+        /// </summary>
+        private void ApplyCascadeTerms()
+        {
+            var layerOrder = Layer == null ? CascadeLayers.Unlayered : Layer.Order;
+
+            Specifity = RawSpecifity
+                + RuleHelpers.LayerRank(layerOrder, Important) * RuleHelpers.LayerSpecifityStep
+                + ImportanceOffset * (1 << 24);
+        }
+
+        /// <summary>
+        /// Works the specificity out again for this node and everything under it, after the layer
+        /// order moved. Only the layer term can have changed, so the selector is not read again.
+        /// </summary>
+        internal void RefreshLayerSpecificity()
+        {
+            ApplyCascadeTerms();
+
+            if (Children == null) return;
+            foreach (var child in Children) child.RefreshLayerSpecificity();
+        }
+
+        public RuleTreeNode<T> AddChildCascading(string selector, MediaQueryList mq, IReactComponent scope, int importanceOffset = 0, CascadeLayer layer = null)
         {
             var shadowParent = selector.FastStartsWith(":deep ") || selector.FastStartsWith(">>> ");
             var directParent = selector[0] == '>';
@@ -162,7 +195,7 @@ namespace ReactUnity.Styling.Rules
                     }
                 }
             }
-            RecalculateSpecificity(importanceOffset, important, layerOrder);
+            RecalculateSpecificity(importanceOffset, important, layer);
 
             if (!hasChild)
             {
@@ -172,7 +205,7 @@ namespace ReactUnity.Styling.Rules
                     if (ParsedSelector.Count > 1)
                     {
                         var pseudoChild = CreateChildNode(this, mq, scope, pseudoType);
-                        pseudoChild.RecalculateSpecificity(importanceOffset, important, layerOrder);
+                        pseudoChild.RecalculateSpecificity(importanceOffset, important, layer);
                         return pseudoChild;
                     }
                     else
@@ -190,7 +223,7 @@ namespace ReactUnity.Styling.Rules
             {
                 if (pseudoType != RulePseudoType.None) return null;
                 var child = CreateChildNode(this, mq, scope, RulePseudoType.None);
-                return child.AddChildCascading(selectorOther, mq, scope, importanceOffset, layerOrder);
+                return child.AddChildCascading(selectorOther, mq, scope, importanceOffset, layer);
             }
         }
 

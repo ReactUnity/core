@@ -37,14 +37,14 @@ order is consulted before specificity.
 | `@layer outer { @layer inner { … } }` | A sub-layer of `outer`                                  |
 | `@layer outer.inner { … }`          | The same sub-layer, addressed by its full name            |
 
-A layer takes its position from where its name is **first seen**, so reopening it later adds rules
-to the original position rather than moving it to the end. That is what makes the leading
-`@layer a, b, c;` statement worth writing: it fixes the whole order up front, whatever order the
-blocks then arrive in.
+A layer takes its position from where its name is **first seen** in the document, so reopening it
+later adds rules to the original position rather than moving it to the end. That is what makes the
+leading `@layer a, b, c;` statement worth writing: it fixes the whole order up front, whatever
+order the blocks then arrive in.
 
 ### How layers order {/*how-layers-order*/}
 
-1. **Unlayered rules beat every layer**, wherever they appear in the sheet.
+1. **Unlayered rules beat every layer**, wherever they appear.
 2. Among layers, the **later** layer wins.
 3. Inside one layer, specificity and source order decide as usual.
 4. A sub-layer sits **inside its parent's slot**, and loses to the parent's own rules. So
@@ -72,16 +72,72 @@ the order of rules that have nothing to do with it.
 }
 ```
 
+### Layers and stylesheets {/*layers-and-stylesheets*/}
+
+The layer order belongs to the whole context rather than to one stylesheet. A name means the same
+layer in every sheet, and a layer takes its place from the first sheet that mentions it -- so a
+later sheet reopening a layer adds to it where it already is, instead of making a new one at the
+end. That is what makes a leading `@layer` statement worth putting in a sheet of its own.
+
+```css
+/* inserted first: fixes the order for everything that follows */
+@layer framework, app;
+```
+
+```css
+/* inserted later: lands in the slot above, not after `app` */
+@layer framework {
+  #title {
+    color: white;
+  }
+}
+```
+
+Removing a stylesheet gives up the layers that only it declared, so the order is always what the
+currently attached sheets say it is. Inserting or removing one can therefore move a layer -- a sheet
+declaring `framework.reset` slots that in ahead of `framework` -- and the rules already in the
+layers that moved are reranked to match.
+
+### `revert-layer` {/*revert-layer*/}
+
+`revert-layer` rolls a declaration back to the value it would have had if its own layer had never
+been declared. It is the CSS keyword described at
+[MDN Docs](https://developer.mozilla.org/en-US/docs/Web/CSS/revert-layer).
+
+```css
+@layer base {
+  text {
+    color: black;
+  }
+}
+
+@layer theme {
+  text {
+    color: white;
+  }
+
+  #title {
+    color: revert-layer;
+  }
+}
+```
+
+`#title` is black. The whole of `theme` goes, not just the declaration that reverted it, so the
+`color: white` in the same layer is passed over as well and `base` is what remains. It keeps rolling
+back as far as it has to: if the value it lands on is a `revert-layer` too, that layer goes next.
+
+`revert-layer` in an **unlayered** declaration has no earlier layer to reach, so it rolls back
+further than the layers -- past every rule of the same origin, which is what `revert` does. The same
+is true of one in the earliest layer with nothing behind it.
+
+An `!important` declaration reverts its layer at its own priority, and the layer order for those is
+reversed, so `revert-layer !important` in the earliest layer lands on the important declaration in
+the next layer along.
+
 ### Limitations {/*limitations*/}
 
-**Layers are scoped to one stylesheet.** In a browser, all sheets in a document share one set of
-layers, and a layer name reopened in a second sheet lands back in the first sheet's slot. Here each
-stylesheet keeps its own layer order, and stylesheets are ordered relative to each other the way
-they always were. So the same layer name in two sheets is two unrelated layers.
+A context has room for 30 distinct layer positions. Beyond that, every further layer shares the last
+position, so they fall back to specificity and source order against each other. Sub-layers count
+towards the same 30.
 
-A stylesheet has room for 30 distinct layer positions. Beyond that, every further layer shares the
-last position, so they fall back to specificity and source order against each other. Sub-layers
-count towards the same 30.
-
-`revert-layer` is not implemented, and neither is `@import`, so `@import url(…) layer(name)` has
-nothing to attach to.
+`@import` is not implemented, so `@import url(…) layer(name)` has nothing to attach to.

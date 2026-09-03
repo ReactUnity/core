@@ -11,15 +11,24 @@ namespace ReactUnity.Styling.Rules
         public List<Dictionary<IStyleProperty, object>> Rules = new List<Dictionary<IStyleProperty, object>>();
     }
 
+    /// <summary>
+    /// One rule's declarations, and the cascade layer they came from. <c>revert-layer</c> has to
+    /// know which declarations leave the cascade along with it, and a bare dictionary cannot say.
+    /// </summary>
+    public class StyleRecord : Dictionary<IStyleProperty, object>
+    {
+        public CascadeLayer Layer;
+    }
+
     public class StyleTree : RuleTree<StyleData>
     {
         public List<Tuple<RuleTreeNode<StyleData>, Dictionary<IStyleProperty, object>>> AddStyle
-            (StyleRule rule, int importanceOffset = 0, MediaQueryList mql = null, IReactComponent scope = null, int layerOrder = 0)
+            (StyleRule rule, int importanceOffset = 0, MediaQueryList mql = null, IReactComponent scope = null, CascadeLayer layer = null)
         {
             // A nested rule's selector was resolved by the parser rather than lifted from the
             // source, so it has no stylesheet text of its own to read back.
             var selectorText = rule.Selector.StylesheetText?.Text ?? rule.SelectorText;
-            var added = AddSelector(selectorText, importanceOffset, mql, scope, layerOrder);
+            var added = AddSelector(selectorText, importanceOffset, mql, scope, layer);
             var pairs = new List<Tuple<RuleTreeNode<StyleData>, Dictionary<IStyleProperty, object>>>();
 
             foreach (var leaf in added)
@@ -28,14 +37,16 @@ namespace ReactUnity.Styling.Rules
                 if (leaf.Data == null) leaf.Data = new StyleData();
                 var dic = RuleHelpers.ConvertStyleDeclarationToRecord(style, false);
                 var importantDic = RuleHelpers.ConvertStyleDeclarationToRecord(style, true);
+                dic.Layer = layer;
+                importantDic.Layer = layer;
 
-                if (dic.Count > 0) pairs.Add(Tuple.Create(leaf, dic));
+                if (dic.Count > 0) pairs.Add(Tuple.Create(leaf, (Dictionary<IStyleProperty, object>) dic));
 
                 if (importantDic.Count > 0)
                 {
-                    var importantLeaf = leaf.AddChildCascading("** !", mql, scope, importanceOffset, layerOrder);
+                    var importantLeaf = leaf.AddChildCascading("** !", mql, scope, importanceOffset, layer);
                     if (importantLeaf.Data == null) importantLeaf.Data = new StyleData();
-                    pairs.Add(Tuple.Create(importantLeaf, importantDic));
+                    pairs.Add(Tuple.Create(importantLeaf, (Dictionary<IStyleProperty, object>) importantDic));
 
                     var list = LeafNodes;
                     if (leaf.PseudoType == RulePseudoType.Before) list = BeforeNodes;
@@ -50,10 +61,10 @@ namespace ReactUnity.Styling.Rules
 
         public List<Tuple<RuleTreeNode<StyleData>, Dictionary<IStyleProperty, object>>> AddStyle(
             string selectorText, Dictionary<IStyleProperty, object> rules, Dictionary<IStyleProperty, object> importantRules,
-            int importanceOffset = 0, MediaQueryList mql = null, IReactComponent scope = null, int layerOrder = 0
+            int importanceOffset = 0, MediaQueryList mql = null, IReactComponent scope = null, CascadeLayer layer = null
         )
         {
-            var added = AddSelector(selectorText, importanceOffset, null, null, layerOrder);
+            var added = AddSelector(selectorText, importanceOffset, null, null, layer);
             var pairs = new List<Tuple<RuleTreeNode<StyleData>, Dictionary<IStyleProperty, object>>>();
 
             foreach (var leaf in added)
@@ -64,7 +75,7 @@ namespace ReactUnity.Styling.Rules
 
                 if (importantRules != null && importantRules.Count > 0)
                 {
-                    var importantLeaf = leaf.AddChildCascading("** !", mql, scope, importanceOffset, layerOrder);
+                    var importantLeaf = leaf.AddChildCascading("** !", mql, scope, importanceOffset, layer);
                     if (importantLeaf.Data == null) importantLeaf.Data = new StyleData();
                     pairs.Add(Tuple.Create(importantLeaf, importantRules));
 
@@ -170,7 +181,7 @@ namespace ReactUnity.Styling.Rules
             return false;
         }
 
-        public List<RuleTreeNode<T>> AddSelector(string selectorText, int importanceOffset = 0, MediaQueryList mql = null, IReactComponent scope = null, int layerOrder = 0)
+        public List<RuleTreeNode<T>> AddSelector(string selectorText, int importanceOffset = 0, MediaQueryList mql = null, IReactComponent scope = null, CascadeLayer layer = null)
         {
             var splits = RuleHelpers.SplitSelectorList(selectorText);
 
@@ -179,7 +190,7 @@ namespace ReactUnity.Styling.Rules
             foreach (var expanded in RuleHelpers.ExpandIs(split))
             {
                 var selector = RuleHelpers.NormalizeSelector(expanded);
-                var leaf = AddChildCascading("** " + selector, mql, scope, importanceOffset, layerOrder);
+                var leaf = AddChildCascading("** " + selector, mql, scope, importanceOffset, layer);
 
                 if (leaf == null) continue;
 
@@ -195,5 +206,27 @@ namespace ReactUnity.Styling.Rules
             return added;
         }
 
+        /// <summary>
+        /// Applies the layer order to every rule already in the tree and sorts the lists again.
+        /// A stylesheet inserted later can declare a sub-layer of a layer these rules point at,
+        /// which moves that layer's position and so their specificity.
+        /// </summary>
+        public void RefreshLayers()
+        {
+            RefreshLayerSpecificity();
+
+            Resort(LeafNodes);
+            Resort(BeforeNodes);
+            Resort(AfterNodes);
+        }
+
+        // OrderByDescending is stable, so rules of equal specificity keep the source order they
+        // were inserted in, which is the tie-break the cascade wants.
+        private static void Resort(List<RuleTreeNode<T>> list)
+        {
+            var sorted = list.OrderByDescending(x => x.Specifity).ToList();
+            list.Clear();
+            list.AddRange(sorted);
+        }
     }
 }

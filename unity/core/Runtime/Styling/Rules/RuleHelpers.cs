@@ -190,9 +190,9 @@ namespace ReactUnity.Styling.Rules
             return (priority.Inlines << 24) + (priority.Ids << 16) + (priority.Classes << 8) + priority.Tags;
         }
 
-        public static Dictionary<IStyleProperty, object> ConvertStyleDeclarationToRecord(StyleDeclaration rule, bool important)
+        public static StyleRecord ConvertStyleDeclarationToRecord(StyleDeclaration rule, bool important)
         {
-            var dic = new Dictionary<IStyleProperty, object>();
+            var dic = new StyleRecord();
 
             foreach (var item in rule.Where(x => important == x.IsImportant))
             {

@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using ExCSS;
 using ReactUnity.Styling.Rules;
 using ReactUnity.Types;
@@ -11,6 +12,12 @@ namespace ReactUnity.Styling
         public readonly IMediaProvider MediaProvider;
         public readonly StylesheetParser Parser;
         public readonly StyleTree StyleTree;
+
+        /// <summary>
+        /// Layer order for the whole context. Every stylesheet shares it, so a layer name means the
+        /// same layer in all of them and takes its place from the first sheet that mentions it.
+        /// </summary>
+        internal readonly CascadeLayers Layers = new CascadeLayers();
         public readonly List<Dictionary<string, FontReference>> FontFamilies = new List<Dictionary<string, FontReference>>();
         public readonly List<Dictionary<string, KeyframeList>> Keyframes = new List<Dictionary<string, KeyframeList>>();
         public readonly List<StyleSheet> StyleSheets = new List<StyleSheet>();
@@ -32,6 +39,7 @@ namespace ReactUnity.Styling
         public virtual void Insert(StyleSheet sheet)
         {
             StyleSheets.Add(sheet);
+            RebuildLayers();
             sheet.Attached = true;
             sheet.ResolveEnabled();
         }
@@ -39,8 +47,19 @@ namespace ReactUnity.Styling
         public virtual void Remove(StyleSheet sheet)
         {
             StyleSheets.Remove(sheet);
+            RebuildLayers();
             sheet.Attached = false;
             sheet.ResolveEnabled();
+        }
+
+        /// <summary>
+        /// Settles the layer order over the attached stylesheets, and works out the specificity of
+        /// every rule again if that moved a layer. Which sheets are attached is what decides the
+        /// order, so this runs whenever that changes -- including when one is reparsed.
+        /// </summary>
+        internal void RebuildLayers()
+        {
+            if (Layers.Rebuild(StyleSheets.Select(x => x.LayerNames))) StyleTree.RefreshLayers();
         }
 
         public FontReference GetFontFamily(string name)

@@ -3,6 +3,7 @@ using Yoga;
 using ReactUnity.Styling.Animations;
 using ReactUnity.Styling.Computed;
 using ReactUnity.Styling.Converters;
+using ReactUnity.Styling.Rules;
 using ReactUnity.Types;
 using TMPro;
 using UnityEngine;
@@ -193,7 +194,7 @@ namespace ReactUnity.Styling
                 }
                 else if (ck == CssKeyword.Auto || ck == CssKeyword.None || ck == CssKeyword.Initial || ck == CssKeyword.Default)
                     return prop?.defaultValue;
-                else if (ck == CssKeyword.Revert)
+                else if (ck == CssKeyword.Revert || ck == CssKeyword.RevertLayer)
                     return ComputedKeyword.Revert;
             }
             return value;
@@ -278,14 +279,45 @@ namespace ReactUnity.Styling
                 res = null;
                 return false;
             }
+
+            // The layers a `revert-layer` declaration took out of the cascade. Their declarations
+            // are all passed over, which is what rolling a layer back means: the winner becomes
+            // whatever would have won had the layer never been declared at all.
+            List<CascadeLayer> reverted = null;
+
             for (int i = 0; i < CssStyles.Count; i++)
             {
                 var dic = CssStyles[i];
-                if (dic.TryGetValue(prop, out res)) return true;
+                if (!dic.TryGetValue(prop, out var value)) continue;
+
+                var layer = (dic as StyleRecord)?.Layer;
+                if (layer != null && reverted != null && reverted.Contains(layer)) continue;
+
+                if (!IsRevertLayer(value))
+                {
+                    res = value;
+                    return true;
+                }
+
+                if (reverted == null) reverted = new List<CascadeLayer>(1);
+
+                // Unlayered, so there is no earlier layer to roll back to -- only the origin.
+                if (layer == null) break;
+
+                reverted.Add(layer);
             }
-            res = null;
-            return false;
+
+            // Nothing was left once the reverted layers were passed over, so the cascade rolls
+            // back past this origin, which is what `revert` does.
+            res = reverted == null ? null : RevertedValue;
+            return reverted != null;
         }
+
+        private static readonly object RevertedValue = ComputedKeyword.Revert;
+
+        private static bool IsRevertLayer(object value) =>
+            (value is ComputedKeyword ck && ck.Keyword == CssKeyword.RevertLayer) ||
+            (value is CssKeyword raw && raw == CssKeyword.RevertLayer);
 
         private bool CssHasValue(IStyleProperty prop)
         {
