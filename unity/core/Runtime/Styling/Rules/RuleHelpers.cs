@@ -185,6 +185,54 @@ namespace ReactUnity.Styling.Rules
             return list;
         }
 
+        /// <summary>What one selector part adds to a rule's specificity.</summary>
+        public static int SpecificityOf(RuleSelectorPart part)
+        {
+            switch (part.Type)
+            {
+                case RuleSelectorPartType.Id:
+                    return 1 << 12;
+
+                case RuleSelectorPartType.Empty:
+                case RuleSelectorPartType.Text:
+                case RuleSelectorPartType.Activatable:
+                case RuleSelectorPartType.Blank:
+                case RuleSelectorPartType.Enabled:
+                case RuleSelectorPartType.Disabled:
+                case RuleSelectorPartType.PlaceholderShown:
+                case RuleSelectorPartType.ReadOnly:
+                case RuleSelectorPartType.ReadWrite:
+                case RuleSelectorPartType.Checked:
+                case RuleSelectorPartType.Indeterminate:
+                case RuleSelectorPartType.Hover:
+                case RuleSelectorPartType.Focus:
+                case RuleSelectorPartType.FocusVisible:
+                case RuleSelectorPartType.FocusWithin:
+                case RuleSelectorPartType.Active:
+                case RuleSelectorPartType.Enter:
+                case RuleSelectorPartType.Leave:
+                case RuleSelectorPartType.Attribute:
+                case RuleSelectorPartType.ClassName:
+                    return 1 << 6;
+
+                case RuleSelectorPartType.Root:
+                case RuleSelectorPartType.Scope:
+                case RuleSelectorPartType.Before:
+                case RuleSelectorPartType.After:
+                case RuleSelectorPartType.FirstChild:
+                case RuleSelectorPartType.LastChild:
+                case RuleSelectorPartType.NthChild:
+                case RuleSelectorPartType.NthLastChild:
+                case RuleSelectorPartType.OnlyChild:
+                case RuleSelectorPartType.State:
+                case RuleSelectorPartType.Tag:
+                    return 1;
+
+                default:
+                    return 0;
+            }
+        }
+
         public static int GetSpecificity(Priority priority)
         {
             return (priority.Inlines << 24) + (priority.Ids << 16) + (priority.Classes << 8) + priority.Tags;
@@ -254,18 +302,20 @@ namespace ReactUnity.Styling.Rules
         }
 
         /// <summary>
-        /// Rewrites <c>:is()</c> away by inlining its argument, which is the form every resolved
-        /// nested selector arrives in. A list argument expands into one selector per branch, so
-        /// <c>:is(.a, .b) text</c> becomes <c>.a text</c> and <c>.b text</c>.
+        /// Rewrites <c>:is()</c> and <c>:where()</c> away by inlining the argument, which is the
+        /// form every resolved nested selector arrives in. A list argument expands into one
+        /// selector per branch, so <c>:is(.a, .b) text</c> becomes <c>.a text</c> and <c>.b text</c>.
         /// </summary>
         /// <remarks>
-        /// Inlining is only equivalent where <c>:is()</c> begins its compound selector, or where its
-        /// argument is a single compound. Anything else -- <c>.x:is(.a .b)</c>, or an <c>:is()</c>
+        /// Inlining is only equivalent where the pseudo-class begins its compound selector, or
+        /// where its argument is a single compound. Anything else -- <c>.x:is(.a .b)</c>, or one
         /// nested inside another function such as <c>:not()</c>, where a list is an intersection
         /// rather than a union -- is left alone, and then matches nothing, as before.
-        /// Specificity is the flattened selector's, not <c>:is()</c>'s "most specific argument".
+        /// An <c>:is()</c> keeps the flattened selector's specificity rather than its "most
+        /// specific argument"; a <c>:where()</c> argument is fenced off with marks instead, so
+        /// that <see cref="StripZeroSpecificity"/> can take its specificity back off again.
         /// </remarks>
-        public static List<string> ExpandIs(string selector)
+        public static List<string> ExpandMatchesAny(string selector)
         {
             var done = new List<string>();
             var pending = new List<string> { selector };
@@ -276,7 +326,8 @@ namespace ReactUnity.Styling.Rules
                 var current = pending[last];
                 pending.RemoveAt(last);
 
-                if (!TryFindIs(current, out var open, out var close) || done.Count + pending.Count >= MaxSelectorExpansion)
+                if (!TryFindMatchesAny(current, out var open, out var close, out var nameLength, out var zeroSpecificity)
+                    || done.Count + pending.Count >= MaxSelectorExpansion)
                 {
                     done.Add(current);
                     continue;
@@ -284,11 +335,15 @@ namespace ReactUnity.Styling.Rules
 
                 var prefix = current.Substring(0, open);
                 var suffix = current.Substring(close + 1);
-                var args = SplitSelectorList(current.Substring(open + IsFunction.Length, close - open - IsFunction.Length));
+                var args = SplitSelectorList(current.Substring(open + nameLength, close - open - nameLength));
 
                 // Whether this occurrence begins its compound decides whether inlining an argument
-                // that is more than one compound would change what the selector means.
-                var startsCompound = prefix.Length == 0 || " \t>+~".IndexOf(prefix[prefix.Length - 1]) >= 0;
+                // that is more than one compound would change what the selector means. Marks an
+                // outer :where() left are not part of the compound, so they do not count here.
+                var significant = prefix.Length - 1;
+                while (significant >= 0 && IsZeroSpecificityMark(prefix[significant])) significant--;
+
+                var startsCompound = significant < 0 || " \t>+~".IndexOf(prefix[significant]) >= 0;
                 var inlinable = true;
 
                 for (int i = 0; i < args.Count && inlinable; i++)
@@ -303,20 +358,86 @@ namespace ReactUnity.Styling.Rules
                     continue;
                 }
 
-                foreach (var arg in args) pending.Add(prefix + arg.Trim() + suffix);
+                foreach (var arg in args)
+                    pending.Add(zeroSpecificity
+                        ? prefix + ZeroSpecificityOpen + arg.Trim() + ZeroSpecificityClose + suffix
+                        : prefix + arg.Trim() + suffix);
             }
 
             return done;
         }
 
+        /// <summary>
+        /// Removes the marks <see cref="ExpandMatchesAny"/> left around an inlined <c>:where()</c>
+        /// argument, and reports what the parts inside them add up to -- which is what has to come
+        /// back off the rule, <c>:where()</c> contributing no specificity of its own.
+        /// </summary>
+        public static string StripZeroSpecificity(string selector, out int specificity)
+        {
+            specificity = 0;
+            if (selector.IndexOf(ZeroSpecificityOpen) < 0) return selector;
+
+            var result = new StringBuilder(selector.Length);
+            var compound = new StringBuilder();
+            var depth = 0;
+
+            // The selector is normalized by now, so a single space separates every compound and
+            // every combinator, and a mark that ended up on its own leaves an empty piece behind.
+            foreach (var piece in selector.Split(' '))
+            {
+                var zeroed = depth > 0;
+                compound.Clear();
+
+                foreach (var ch in piece)
+                {
+                    if (ch == ZeroSpecificityOpen)
+                    {
+                        depth++;
+                        zeroed = true;
+                    }
+                    else if (ch == ZeroSpecificityClose)
+                    {
+                        if (depth > 0) depth--;
+                    }
+                    else compound.Append(ch);
+                }
+
+                if (compound.Length == 0) continue;
+
+                if (result.Length > 0) result.Append(' ');
+                result.Append(compound);
+
+                // A combinator is not a compound, and ParseSelector has nothing to make of one.
+                if (!zeroed || (compound.Length == 1 && ">+~".IndexOf(compound[0]) >= 0)) continue;
+
+                foreach (var part in ParseSelector(compound.ToString())) specificity += SpecificityOf(part);
+            }
+
+            return result.ToString();
+        }
+
         private const string IsFunction = ":is(";
+        private const string WhereFunction = ":where(";
         private const int MaxSelectorExpansion = 32;
         private static readonly char[] CompoundBreaks = { ' ', '\t', '>', '+', '~' };
 
-        /// <summary>Locates the first <c>:is(</c> that is not itself inside a function.</summary>
-        private static bool TryFindIs(string selector, out int open, out int close)
+        // The marks fencing off what an inlined :where() argument contributed. Control characters,
+        // so that nothing a selector may legally contain collides with them, and inert to
+        // NormalizeSelector and to the whitespace split that follows it.
+        private const char ZeroSpecificityOpen = '\u0001';
+        private const char ZeroSpecificityClose = '\u0002';
+
+        private static bool IsZeroSpecificityMark(char ch) => ch == ZeroSpecificityOpen || ch == ZeroSpecificityClose;
+
+        /// <summary>
+        /// Locates the first <c>:is(</c> or <c>:where(</c> that is not itself inside a function,
+        /// reporting how long its name is and whether it is the one that weighs nothing.
+        /// </summary>
+        private static bool TryFindMatchesAny(string selector, out int open, out int close, out int nameLength, out bool zeroSpecificity)
         {
             open = close = -1;
+            nameLength = 0;
+            zeroSpecificity = false;
 
             var depth = 0;
             var quote = '\0';
@@ -335,14 +456,26 @@ namespace ReactUnity.Styling.Rules
 
                 if (ch == '"' || ch == '\'') { quote = ch; continue; }
 
-                if (ch == ':' && depth == 0 && i + IsFunction.Length <= selector.Length
-                    && string.Compare(selector, i, IsFunction, 0, IsFunction.Length, StringComparison.OrdinalIgnoreCase) == 0)
+                if (ch == ':' && depth == 0)
                 {
-                    open = i;
-                    close = MatchingParen(selector, i + IsFunction.Length - 1);
-                    if (close > 0) return true;
-                    open = -1;
-                    return false;
+                    if (StartsFunction(selector, i, IsFunction)) nameLength = IsFunction.Length;
+                    else if (StartsFunction(selector, i, WhereFunction))
+                    {
+                        nameLength = WhereFunction.Length;
+                        zeroSpecificity = true;
+                    }
+
+                    if (nameLength > 0)
+                    {
+                        open = i;
+                        close = MatchingParen(selector, i + nameLength - 1);
+                        if (close > 0) return true;
+
+                        open = -1;
+                        nameLength = 0;
+                        zeroSpecificity = false;
+                        return false;
+                    }
                 }
 
                 if (ch == '(' || ch == '[') depth++;
@@ -351,6 +484,10 @@ namespace ReactUnity.Styling.Rules
 
             return false;
         }
+
+        private static bool StartsFunction(string selector, int index, string name) =>
+            index + name.Length <= selector.Length
+            && string.Compare(selector, index, name, 0, name.Length, StringComparison.OrdinalIgnoreCase) == 0;
 
         private static int MatchingParen(string selector, int openIndex)
         {

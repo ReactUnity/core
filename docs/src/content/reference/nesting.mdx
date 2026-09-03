@@ -96,7 +96,23 @@ only differs when the arguments differ in specificity, as in `:is(.a, #b)`.
 Two forms are not rewritten, and match nothing: an `:is()` that is not at the start of its compound
 selector and whose argument spans a combinator, such as `.x:is(.a .b)`; and an `:is()` inside
 another functional selector, such as `:not(:is(.a, .b))`, where a list means *all of* rather than
-*any of*. `:where()` is not implemented.
+*any of*.
+
+### `:where()` {/*where*/}
+
+`:where()` matches whatever `:is()` would and adds no specificity of its own, which is what makes a
+rule written with it easy to override.
+
+```css
+:where(#panel, #sidebar) > text {
+  color: white;
+}
+```
+
+One class outranks that rule, where an `:is()` in its place would have made it an id selector.
+Everything in the parentheses is discounted, however many compounds it spans and whatever it holds
+-- an `:is()` in there counts for nothing either. The two forms `:is()` is not rewritten in are not
+rewritten here either, and match nothing.
 
 ### Escaped class names {/*escaped-class-names*/}
 

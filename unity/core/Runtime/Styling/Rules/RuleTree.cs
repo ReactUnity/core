@@ -187,12 +187,16 @@ namespace ReactUnity.Styling.Rules
 
             var added = new List<RuleTreeNode<T>>();
             foreach (var split in splits)
-            foreach (var expanded in RuleHelpers.ExpandIs(split))
+            foreach (var expanded in RuleHelpers.ExpandMatchesAny(split))
             {
-                var selector = RuleHelpers.NormalizeSelector(expanded);
+                var selector = RuleHelpers.StripZeroSpecificity(RuleHelpers.NormalizeSelector(expanded), out var zeroed);
                 var leaf = AddChildCascading("** " + selector, mql, scope, importanceOffset, layer);
 
                 if (leaf == null) continue;
+
+                // What an inlined :where() argument contributed comes back off before the leaf is
+                // sorted in, and the important leaf that hangs off it inherits the discount.
+                if (zeroed > 0) leaf.DiscountSpecificity(zeroed);
 
                 added.Add(leaf);
 

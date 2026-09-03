@@ -26,6 +26,7 @@ namespace ReactUnity.Styling.Rules
 
         private int ImportanceOffset;
         private bool Important;
+        private int SpecificityDiscount;
 
         static RuleTreeNode<T> CreateChildNode(RuleTreeNode<T> parent, MediaQueryList mq, IReactComponent scope, RulePseudoType pseudo)
         {
@@ -68,57 +69,17 @@ namespace ReactUnity.Styling.Rules
             {
                 foreach (var selector in ParsedSelector)
                 {
-                    switch (selector.Type)
+                    if (selector.Type == RuleSelectorPartType.Important)
                     {
-                        case RuleSelectorPartType.Id:
-                            RawSpecifity += 1 << 12;
-                            break;
-
-                        case RuleSelectorPartType.Empty:
-                        case RuleSelectorPartType.Text:
-                        case RuleSelectorPartType.Activatable:
-                        case RuleSelectorPartType.Blank:
-                        case RuleSelectorPartType.Enabled:
-                        case RuleSelectorPartType.Disabled:
-                        case RuleSelectorPartType.PlaceholderShown:
-                        case RuleSelectorPartType.ReadOnly:
-                        case RuleSelectorPartType.ReadWrite:
-                        case RuleSelectorPartType.Checked:
-                        case RuleSelectorPartType.Indeterminate:
-                        case RuleSelectorPartType.Hover:
-                        case RuleSelectorPartType.Focus:
-                        case RuleSelectorPartType.FocusVisible:
-                        case RuleSelectorPartType.FocusWithin:
-                        case RuleSelectorPartType.Active:
-                        case RuleSelectorPartType.Enter:
-                        case RuleSelectorPartType.Leave:
-                        case RuleSelectorPartType.Attribute:
-                        case RuleSelectorPartType.ClassName:
-                            RawSpecifity += 1 << 6;
-                            break;
-
-                        case RuleSelectorPartType.Root:
-                        case RuleSelectorPartType.Scope:
-                        case RuleSelectorPartType.Before:
-                        case RuleSelectorPartType.After:
-                        case RuleSelectorPartType.FirstChild:
-                        case RuleSelectorPartType.LastChild:
-                        case RuleSelectorPartType.NthChild:
-                        case RuleSelectorPartType.NthLastChild:
-                        case RuleSelectorPartType.OnlyChild:
-                        case RuleSelectorPartType.State:
-                        case RuleSelectorPartType.Tag:
-                            RawSpecifity += 1;
-                            break;
-
-                        case RuleSelectorPartType.Important:
-                            if (RawSpecifity < RuleHelpers.ImportantSpecifity) RawSpecifity += RuleHelpers.ImportantSpecifity;
-                            break;
-                        default:
-                            break;
+                        if (RawSpecifity < RuleHelpers.ImportantSpecifity) RawSpecifity += RuleHelpers.ImportantSpecifity;
+                        continue;
                     }
+
+                    RawSpecifity += RuleHelpers.SpecificityOf(selector);
                 }
             }
+
+            RawSpecifity -= SpecificityDiscount;
 
             ApplyCascadeTerms();
         }
@@ -147,6 +108,18 @@ namespace ReactUnity.Styling.Rules
 
             if (Children == null) return;
             foreach (var child in Children) child.RefreshLayerSpecificity();
+        }
+
+        /// <summary>
+        /// Takes a specificity contribution off for good, which is how the parts an inlined
+        /// <c>:where()</c> argument left behind end up weighing nothing. It is kept rather than
+        /// subtracted once, because adding a leaf under this node works its specificity out again
+        /// -- and it lands on RawSpecifity, which is what the important leaf is built from.
+        /// </summary>
+        internal void DiscountSpecificity(int amount)
+        {
+            SpecificityDiscount += amount;
+            RecalculateSpecificity(ImportanceOffset, Important, Layer);
         }
 
         public RuleTreeNode<T> AddChildCascading(string selector, MediaQueryList mq, IReactComponent scope, int importanceOffset = 0, CascadeLayer layer = null)

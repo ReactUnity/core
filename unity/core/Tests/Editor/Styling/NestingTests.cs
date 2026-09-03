@@ -155,6 +155,109 @@ namespace ReactUnity.Tests.Editor.Renderer
         }
 
         [EditorInjectableTest(Script = BaseScript, SkipIfExisting = true)]
+        public IEnumerator WhereMatchesAnyOfItsArguments()
+        {
+            var t1 = Text("#t1");
+            var t2 = Text("#t2");
+
+            var ss = InsertStyle(@":where(.t1class, .t2class) { color: red; }");
+            yield return null;
+            Assert.AreEqual(Color.red, t1.ComputedStyle.color);
+            Assert.AreEqual(Color.red, t2.ComputedStyle.color);
+            RemoveStyle(ss);
+
+            ss = InsertStyle(@":where(#v2) text { color: blue; }");
+            yield return null;
+            Assert.AreEqual(Color.blue, t2.ComputedStyle.color);
+            Assert.AreNotEqual(Color.blue, t1.ComputedStyle.color);
+            RemoveStyle(ss);
+
+            ss = InsertStyle(@":where(#v1, #v2) > .t2class { color: lime; }");
+            yield return null;
+            Assert.AreEqual(Color.green, t2.ComputedStyle.color);
+            RemoveStyle(ss);
+        }
+
+        [EditorInjectableTest(Script = BaseScript, SkipIfExisting = true)]
+        public IEnumerator WhereAddsNoSpecificity()
+        {
+            var t1 = Text("#t1");
+
+            // The id inside :where() weighs nothing, so one class outranks it -- and the :where()
+            // rule is second here, so source order would have gone the other way.
+            var ss = InsertStyle(@"
+                .t1class { color: blue; }
+                :where(#t1) { color: red; }
+            ");
+            yield return null;
+            Assert.AreEqual(Color.blue, t1.ComputedStyle.color);
+            RemoveStyle(ss);
+
+            // The same rule with :is() in its place wins, which is the whole difference.
+            ss = InsertStyle(@"
+                .t1class { color: blue; }
+                :is(#t1) { color: red; }
+            ");
+            yield return null;
+            Assert.AreEqual(Color.red, t1.ComputedStyle.color);
+            RemoveStyle(ss);
+
+            // Mid-compound, so what is left of the compound is all that counts: the two rules tie
+            // and the later one wins.
+            ss = InsertStyle(@"
+                text:where(#t1) { color: red; }
+                text { color: blue; }
+            ");
+            yield return null;
+            Assert.AreEqual(Color.blue, t1.ComputedStyle.color);
+            RemoveStyle(ss);
+
+            // An !important declaration is indexed as a leaf of its own hanging off this one, so
+            // the discount has to carry over to it.
+            ss = InsertStyle(@"
+                .t1class { color: blue !important; }
+                :where(#t1) { color: red !important; }
+            ");
+            yield return null;
+            Assert.AreEqual(Color.blue, t1.ComputedStyle.color);
+            RemoveStyle(ss);
+        }
+
+        [EditorInjectableTest(Script = BaseScript, SkipIfExisting = true)]
+        public IEnumerator WhereDiscountsEverythingInsideIt()
+        {
+            var t1 = Text("#t1");
+
+            // Every compound of the argument is discounted, not only the one :where() sits in.
+            var ss = InsertStyle(@"
+                :where(#v1 > .t1class) { color: red; }
+                text { color: blue; }
+            ");
+            yield return null;
+            Assert.AreEqual(Color.blue, t1.ComputedStyle.color);
+            RemoveStyle(ss);
+
+            // Including an :is() that is expanded after the :where() around it was.
+            ss = InsertStyle(@"
+                text { color: blue; }
+                :where(:is(#t1, #t2)) { color: red; }
+            ");
+            yield return null;
+            Assert.AreEqual(Color.blue, t1.ComputedStyle.color);
+            RemoveStyle(ss);
+
+            // A nested rule is resolved to `:is(#v1) :where(.t1class)`, which weighs the same as
+            // `#v1` alone -- so the descendant rule above it, with a tag as well, still wins.
+            ss = InsertStyle(@"
+                #v1 text { color: blue; }
+                #v1 { :where(.t1class) { color: red; } }
+            ");
+            yield return null;
+            Assert.AreEqual(Color.blue, t1.ComputedStyle.color);
+            RemoveStyle(ss);
+        }
+
+        [EditorInjectableTest(Script = BaseScript, SkipIfExisting = true)]
         public IEnumerator AnUnsupportedNestedAtRuleIsIgnoredRatherThanUniversal()
         {
             var t1 = Text("#t1");
