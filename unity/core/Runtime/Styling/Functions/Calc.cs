@@ -16,7 +16,11 @@ namespace ReactUnity.Styling.Functions
             return Parse(argsCombined.Trim(), converter);
         }
 
-        private object Parse(string expression, StyleConverterBase converter)
+        /// <summary>
+        /// A calc() expression to a computed value, or null. Shared with min(), max() and clamp(), whose
+        /// arguments are calc() expressions with the parentheses left off.
+        /// </summary>
+        internal static object Parse(string expression, StyleConverterBase converter)
         {
             var len = expression.Length;
 

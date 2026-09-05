@@ -22,6 +22,10 @@ namespace ReactUnity.Styling.Computed
                 ? style.GetOwnStyleValue(Property)
                 : style.GetRawStyleValue(Property, false);
 
+            // `--x: initial` (or `auto`, `unset`) is the guaranteed-invalid value, so it resolves against the
+            // variable itself and lets the fallback apply, rather than against the property reading it.
+            if (val is ComputedKeyword keyword) val = keyword.GetValue(Property, style, converter);
+
             // The registered initial value stands in ahead of this var()'s own fallback: a property
             // registered with one is never the guaranteed-invalid value that makes a fallback apply.
             if (val == null) val = registered?.InitialValue;

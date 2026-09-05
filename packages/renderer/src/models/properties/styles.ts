@@ -11,6 +11,7 @@ import {
   BorderStyle,
   CursorType,
   FontStyles,
+  FontVariant,
   FontWeight,
   NavigationMode,
   ObjectFit,
@@ -97,7 +98,10 @@ export interface RenderStyle {
   fontFamily?: AssetReference;
   fontWeight?: FontWeight;
   fontStyle?: FontStyles;
+  textDecorationLine?: FontStyles;
   textTransform?: TextTransform;
+  fontVariant?: FontVariant;
+  fontVariantCaps?: FontVariant;
   fontSize?: YogaValueAux;
   textOverflow?: TextOverflowModes;
   textAlign?: TextAlign;
@@ -105,6 +109,8 @@ export interface RenderStyle {
   whiteSpace?: WhiteSpace;
   textStrokeWidth?: NumberAux;
   textStrokeColor?: ColorAux;
+  textShadow?: SafeString;
+  caretColor?: ColorAux;
   lineHeight?: number;
   letterSpacing?: number;
   wordSpacing?: number;
@@ -162,6 +168,9 @@ export interface RenderStyle {
   audio?: SafeString;
   transform?: SafeString;
   gap?: SafeString | number;
+  scrollbarColor?: SafeString;
+  scrollbarWidth?: 'auto' | 'thin' | 'none' | YogaValueAux;
+  scrollbarSize?: 'auto' | 'thin' | 'none' | YogaValueAux;
   paddingInline?: SafeString | number;
   paddingBlock?: SafeString | number;
   marginInline?: SafeString | number;

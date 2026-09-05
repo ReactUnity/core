@@ -131,7 +131,14 @@ namespace ReactUnity.UIToolkit
 #endif
             TargetElement.style.visibility = StylingHelpers.GetStyleBoolToEnum(computed, StyleProperties.visibility, Visibility.Visible, Visibility.Hidden);
             TargetElement.style.opacity = StylingHelpers.GetStyleFloat(computed, StyleProperties.opacity);
-            TargetElement.style.whiteSpace = StylingHelpers.GetStyleBoolToEnum(computed, StyleProperties.textWrap, WhiteSpace.Normal, WhiteSpace.NoWrap);
+            var whiteSpace = computed.whiteSpace;
+#if UNITY_6000_0_OR_NEWER
+            TargetElement.style.whiteSpace = whiteSpace.PreservesWhitespace()
+                ? (whiteSpace.Wraps() ? UnityEngine.UIElements.WhiteSpace.PreWrap : UnityEngine.UIElements.WhiteSpace.Pre)
+                : (whiteSpace.Wraps() ? UnityEngine.UIElements.WhiteSpace.Normal : UnityEngine.UIElements.WhiteSpace.NoWrap);
+#else
+            TargetElement.style.whiteSpace = whiteSpace.Wraps() ? UnityEngine.UIElements.WhiteSpace.Normal : UnityEngine.UIElements.WhiteSpace.NoWrap;
+#endif
 
             if (computed.HasValue(StyleProperties.fontSize)) TargetElement.style.fontSize = computed.fontSize;
             else TargetElement.style.fontSize = StyleKeyword.Null;

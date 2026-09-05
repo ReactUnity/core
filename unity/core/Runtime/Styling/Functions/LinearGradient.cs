@@ -16,16 +16,21 @@ namespace ReactUnity.Styling.Functions
         {
             if (args.Length < 2) return null;
 
-            var first = args[0];
+            var first = ParserHelpers.StripColorInterpolationMethod(args[0], out var hasHint);
             var startIndex = 0;
 
-            IComputedValue angle;
+            IComputedValue angle = null;
             var isRepeating = name.FastStartsWith("repeating-");
 
-            if (AllConverters.AngleConverter.TryParse(first, out angle))
+            if (first.Length == 0)
+            {
+                if (hasHint) startIndex = 1;
+            }
+            else if (AllConverters.AngleConverter.TryParse(first, out angle))
             {
                 startIndex = 1;
             }
+            else if (hasHint) return null;
 
             if (args.Length - startIndex < 2) return null;
 

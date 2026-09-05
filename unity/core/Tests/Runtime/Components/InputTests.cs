@@ -125,5 +125,21 @@ namespace ReactUnity.Tests
             Assert.AreEqual("ph_test", placeholder.TextContent);
             Assert.AreEqual(Color.red, placeholder.Text.color);
         }
+
+        [UGUITest(Script = BaseScript)]
+        public IEnumerator SelectionPseudoElementColorsTheHighlight()
+        {
+            yield return null;
+            var field = InputEl.InputField;
+            Assert.AreEqual("A8CEFFBF", ColorUtility.ToHtmlStringRGBA(field.selectionColor));
+
+            InsertStyle("input::selection { background-color: red; }");
+            yield return null;
+            Assert.AreEqual(Color.red, field.selectionColor);
+
+            InsertStyle("input::selection { background-color: blue; }", 1);
+            yield return null;
+            Assert.AreEqual(Color.blue, field.selectionColor);
+        }
     }
 }

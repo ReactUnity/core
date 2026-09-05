@@ -244,7 +244,9 @@ namespace ReactUnity.UGUI
 
             Layout.Display = StylingHelpers.GetStyleEnumCustom(computed, LayoutProperties.Display);
             Layout.BoxSizing = StylingHelpers.GetStyleEnumCustom(computed, LayoutProperties.BoxSizing);
-            Layout.Overflow = StylingHelpers.GetStyleEnumCustom(computed, LayoutProperties.Overflow);
+            Layout.Overflow = LayoutProperties.CombineOverflow(
+                StylingHelpers.GetStyleEnumCustom(computed, LayoutProperties.Overflow),
+                LayoutProperties.CombineOverflow(computed.overflowX, computed.overflowY));
 
             Layout.AlignContent = StylingHelpers.GetStyleEnumCustom(computed, LayoutProperties.AlignContent);
             Layout.AlignItems = StylingHelpers.GetStyleEnumCustom(computed, LayoutProperties.AlignItems);
@@ -336,7 +338,9 @@ namespace ReactUnity.UGUI
         {
             var computed = ComputedStyle;
             var mask = OverflowMask;
-            var hasMask = StylingHelpers.GetStyleEnumCustom(computed, LayoutProperties.Overflow) == YogaOverflow.Hidden;
+            // A mask clips both axes, so hiding one axis clips the other too -- the closest a RectMask2D gets.
+            var hasMask = StylingHelpers.GetStyleEnumCustom(computed, LayoutProperties.Overflow) == YogaOverflow.Hidden
+                || computed.overflowX == YogaOverflow.Hidden || computed.overflowY == YogaOverflow.Hidden;
 
             // Mask is not defined and there is no need for it
             if (!hasMask && mask == null) return;

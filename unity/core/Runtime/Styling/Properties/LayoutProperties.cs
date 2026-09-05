@@ -16,7 +16,23 @@ namespace ReactUnity.Styling
         public static readonly LayoutProperty<YogaAlign> AlignSelf = new LayoutProperty<YogaAlign>("AlignSelf");
         public static readonly LayoutProperty<YogaAlign> AlignContent = new LayoutProperty<YogaAlign>("AlignContent");
         public static readonly LayoutProperty<YogaWrap> Wrap = new LayoutProperty<YogaWrap>("Wrap");
-        public static readonly LayoutProperty<YogaOverflow> Overflow = new LayoutProperty<YogaOverflow>("Overflow");
+        // Yoga's enum has no `auto` -- which is a scroll container that may not need to scroll -- and no `clip`.
+        public static readonly StyleConverterBase OverflowConverter = new EnumConverter(typeof(YogaOverflow), false, true, new Dictionary<string, object>
+        {
+            { "auto", YogaOverflow.Scroll },
+            { "clip", YogaOverflow.Hidden },
+        });
+        public static readonly LayoutProperty<YogaOverflow> Overflow = new LayoutProperty<YogaOverflow>("Overflow", converter: OverflowConverter);
+
+        /// <summary>
+        /// The one overflow Yoga gets from two axes: scroll on either beats hidden, which beats visible.
+        /// </summary>
+        public static YogaOverflow CombineOverflow(YogaOverflow a, YogaOverflow b)
+        {
+            if (a == YogaOverflow.Scroll || b == YogaOverflow.Scroll) return YogaOverflow.Scroll;
+            if (a == YogaOverflow.Hidden || b == YogaOverflow.Hidden) return YogaOverflow.Hidden;
+            return YogaOverflow.Visible;
+        }
         public static readonly LayoutProperty<float> AspectRatio = new LayoutProperty<float>("AspectRatio", true, float.NaN);
         public static readonly LayoutProperty<float> FlexGrow = new LayoutProperty<float>("FlexGrow", true, float.NaN);
         public static readonly LayoutProperty<float> FlexShrink = new LayoutProperty<float>("FlexShrink", true, float.NaN);

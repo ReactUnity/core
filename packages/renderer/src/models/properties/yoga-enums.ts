@@ -5,5 +5,5 @@ export type Display = 'flex' | 'none' | 'contents';
 export type BoxSizing = 'border-box' | 'content-box';
 export type Wrap = 'no-wrap' | 'wrap' | 'wrap-reverse';
 export type Position = 'relative' | 'absolute' | 'fixed' | 'static' | 'sticky' | 'inset';
-export type Overflow = 'visible' | 'hidden' | 'scroll';
+export type Overflow = 'visible' | 'hidden' | 'scroll' | 'auto' | 'clip';
 export type Direction = 'inherit' | 'ltr' | 'rtl';

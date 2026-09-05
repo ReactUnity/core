@@ -37,6 +37,9 @@ namespace ReactUnity.Styling.Shorthands
         internal static readonly StyleShorthand Audio = new AudioShorthand("audio");
         internal static readonly StyleShorthand Transform = new TransformShorthand("transform");
         internal static readonly StyleShorthand Gap = new XYShorthand<YogaValue>("gap", LayoutProperties.RowGap, LayoutProperties.ColumnGap);
+        internal static readonly StyleShorthand Overflow = new OverflowShorthand("overflow");
+        internal static readonly StyleShorthand ScrollbarColor = new ScrollbarColorShorthand("scrollbar-color");
+        internal static readonly StyleShorthand ScrollbarWidth = new ScrollbarWidthShorthand("scrollbar-width");
 
         // The two-value logical shorthands. `padding-inline: 4px 8px` is start then end, and Yoga
         // decides which side each is once it knows the direction the node inherits.
@@ -82,6 +85,13 @@ namespace ReactUnity.Styling.Shorthands
             { "audio", Audio },
             { "transform", Transform },
             { "gap", Gap },
+            { "overflow", Overflow },
+            { "scrollbarColor", ScrollbarColor },
+            { "scrollbarWidth", ScrollbarWidth },
+            { "scrollbarSize", ScrollbarWidth },
+            { "scrollbar-color", ScrollbarColor },
+            { "scrollbar-width", ScrollbarWidth },
+            { "scrollbar-size", ScrollbarWidth },
             { "paddingInline", PaddingInline },
             { "paddingBlock", PaddingBlock },
             { "marginInline", MarginInline },

@@ -69,7 +69,11 @@ namespace ReactUnity.Styling
         public TextAlignmentOptions textAlign => GetStyleValue(StyleProperties.textAlign);
         public VerticalAlignmentOptions verticalAlign => GetStyleValue(StyleProperties.verticalAlign);
         public TextOverflowModes textOverflow => GetStyleValue(StyleProperties.textOverflow);
-        public bool textWrap => GetStyleValue(StyleProperties.textWrap);
+        public WhiteSpace whiteSpace => GetStyleValue(StyleProperties.whiteSpace);
+        public ICssValueList<BoxShadow> textShadow => GetStyleValue(StyleProperties.textShadow);
+        public Color caretColor => GetStyleValue(StyleProperties.caretColor);
+        public YogaOverflow overflowX => GetStyleValue(StyleProperties.overflowX);
+        public YogaOverflow overflowY => GetStyleValue(StyleProperties.overflowY);
         public int maxLines => GetStyleValue(StyleProperties.maxLines);
         public float textStrokeWidth => GetStyleValue(StyleProperties.textStrokeWidth);
         public Color textStrokeColor => GetStyleValue(StyleProperties.textStrokeColor);

@@ -80,20 +80,25 @@ input::placeholder {
   opacity: 0.6;
 }
 
+input::selection {
+  background-color: rgba(168, 206, 255, 0.75);
+}
+
 scroll {
   overflow: scroll;
   flex-shrink: 1;
 }
 
+/* scrollbar-color and scrollbar-width on the scroll feed these; a ::scrollbar rule overrides them. */
 scroll::scrollbar {
-  background-color: rgb(210, 210, 210);
+  background-color: var(--scrollbar-track-color, rgb(210, 210, 210));
   appearance: button;
-  width: 12px;
-  height: 12px;
+  width: var(--scrollbar-width, 12px);
+  height: var(--scrollbar-width, 12px);
 }
 
 scroll::scrollbar-thumb {
-  background-color: rgba(170, 170, 170);
+  background-color: var(--scrollbar-thumb-color, rgb(170, 170, 170));
 }
 
 toggle {

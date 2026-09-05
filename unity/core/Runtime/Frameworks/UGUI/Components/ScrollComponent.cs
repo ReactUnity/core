@@ -79,6 +79,35 @@ namespace ReactUnity.UGUI
             ScrollRect.movementType = MovementType.Clamped;
         }
 
+        private bool DirectionFromProp;
+
+        protected override void ApplyStylesSelf()
+        {
+            base.ApplyStylesSelf();
+            if (!DirectionFromProp) SetDirection(DirectionFromStyle());
+        }
+
+        // `overflow-x: hidden` beside a scrolling y axis is how CSS asks for one direction. Both hidden
+        // or both scrolling stays Both, which is what an `overflow: hidden` scroll view always was.
+        private ScrollDirection DirectionFromStyle()
+        {
+            var style = ComputedStyle;
+            if (style == null) return ScrollDirection.Both;
+            var x = style.overflowX == Yoga.YogaOverflow.Hidden;
+            var y = style.overflowY == Yoga.YogaOverflow.Hidden;
+            if (x && !y) return ScrollDirection.Vertical;
+            if (y && !x) return ScrollDirection.Horizontal;
+            return ScrollDirection.Both;
+        }
+
+        private void SetDirection(ScrollDirection dir)
+        {
+            ScrollRect.horizontal = dir.HasFlag(ScrollDirection.Horizontal);
+            ScrollRect.vertical = dir.HasFlag(ScrollDirection.Vertical);
+            ContentResizer.Direction = dir;
+            ScrollRect.WheelDirectionTransposed = dir == ScrollDirection.Horizontal;
+        }
+
         private void SetupContents()
         {
             HorizontalScrollbar = CreateScrollbar(false);
@@ -109,11 +138,8 @@ namespace ReactUnity.UGUI
                     ScrollRect.Smoothness = sm;
                     break;
                 case "direction":
-                    var dir = AllConverters.Get<ScrollDirection>().TryGetConstantValue(value, ScrollDirection.Both);
-                    ScrollRect.horizontal = dir.HasFlag(ScrollDirection.Horizontal);
-                    ScrollRect.vertical = dir.HasFlag(ScrollDirection.Vertical);
-                    ContentResizer.Direction = dir;
-                    ScrollRect.WheelDirectionTransposed = dir == ScrollDirection.Horizontal;
+                    DirectionFromProp = value != null;
+                    SetDirection(DirectionFromProp ? AllConverters.Get<ScrollDirection>().TryGetConstantValue(value, ScrollDirection.Both) : DirectionFromStyle());
                     break;
                 case "alwaysShow":
                     var dir2 = AllConverters.Get<ScrollDirection>().TryGetConstantValue(value, ScrollDirection.None);

@@ -10,6 +10,8 @@ export type YogaValue4Aux = Array4Aux<YogaValueAux>;
 
 export interface Layout {
   overflow?: Overflow;
+  overflowX?: Overflow;
+  overflowY?: Overflow;
   styleDirection?: Direction;
   display?: Display;
   boxSizing?: BoxSizing;

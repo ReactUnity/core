@@ -114,10 +114,13 @@ namespace ReactUnity.UGUI
             Text.fontSize = fontSize;
             Text.color = style.color;
 
+            var whiteSpace = style.whiteSpace;
 #if REACT_TMP_X2
-            Text.textWrappingMode = style.textWrap ? TextWrappingModes.Normal : TextWrappingModes.NoWrap;
+            Text.textWrappingMode = whiteSpace.Wraps()
+                ? (whiteSpace.PreservesWhitespace() ? TextWrappingModes.PreserveWhitespace : TextWrappingModes.Normal)
+                : (whiteSpace.PreservesWhitespace() ? TextWrappingModes.PreserveWhitespaceNoWrap : TextWrappingModes.NoWrap);
 #else
-            Text.enableWordWrapping = style.textWrap;
+            Text.enableWordWrapping = whiteSpace.Wraps();
 #endif
 
             var textAlign = style.textAlign;
@@ -174,12 +177,14 @@ namespace ReactUnity.UGUI
             // Fixes garbled text after color change
             Text.UpdateFontAsset();
 
+            // Assigning fontMaterial replaces fontSharedMaterial too, so the font asset's own material is the base.
             var effect = new TextEffects
             {
-                BaseMaterial = Text.fontSharedMaterial,
+                BaseMaterial = Text.font ? Text.font.material : Text.fontSharedMaterial,
                 TextStrokeWidth = style.textStrokeWidth,
                 TextStrokeColor = style.textStrokeColor,
             };
+            effect.SetShadow(style.textShadow?.Get(0), fontSize, Text.font);
             Text.fontMaterial = effect.GetModifiedMaterial();
         }
 

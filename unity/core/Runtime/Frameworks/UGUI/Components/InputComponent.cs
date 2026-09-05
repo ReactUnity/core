@@ -61,6 +61,7 @@ namespace ReactUnity.UGUI
         public ContainerComponent TextViewport { get; set; }
         public TextComponent TextComponent { get; set; }
         public TextComponent PlaceholderComponent { get; set; }
+        public SelectionComponent SelectionComponent { get; private set; }
         public ScrollbarComponent VerticalScrollbar { get; private set; }
 
         public InputComponent(string text, UGUIContext context) : base(context, "input")
@@ -110,6 +111,8 @@ namespace ReactUnity.UGUI
             textRect.offsetMin = Vector2.zero;
             textRect.offsetMax = Vector2.zero;
 
+            SelectionComponent = Context.CreateComponentWithPool("_selection", null, (tag, text) => new SelectionComponent(Context));
+            SelectionComponent.SetParent(this);
 
             InputField.textViewport = TextViewport.RectTransform;
             InputField.textComponent = TextComponent.Text;
@@ -158,6 +161,9 @@ namespace ReactUnity.UGUI
         {
             base.ApplyStylesSelf();
             InputField.pointSize = ComputedStyle.fontSize;
+            // Defaults to currentColor, which is what TMP's own non-custom caret follows anyway.
+            InputField.customCaretColor = true;
+            InputField.caretColor = ComputedStyle.caretColor;
         }
 
         public void Focus()

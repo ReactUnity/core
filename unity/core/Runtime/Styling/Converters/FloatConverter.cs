@@ -9,7 +9,7 @@ namespace ReactUnity.Styling.Converters
 {
     public class FloatConverter : TypedStyleConverterBase<float>
     {
-        private static HashSet<string> DefaultAllowedFunctions = new HashSet<string>() { "calc" };
+        private static HashSet<string> DefaultAllowedFunctions = new HashSet<string>() { "calc", "min", "max", "clamp" };
         protected override HashSet<string> AllowedFunctions => DefaultAllowedFunctions;
 
         static CultureInfo culture = new CultureInfo("en-US");
@@ -221,22 +221,36 @@ namespace ReactUnity.Styling.Converters
 
         public LengthConverter() : base(
             UnitValueMap,
-            new Dictionary<string, Func<float, object>>
+            WithViewportUnits(new Dictionary<string, Func<float, object>>
             {
                 { "rem", x => new ComputedRootRelative(x, ComputedRootRelative.RootValueType.Rem) },
-                { "vw", x => new ComputedRootRelative(x / 100f, ComputedRootRelative.RootValueType.Width) },
-                { "vh", x => new ComputedRootRelative(x / 100f, ComputedRootRelative.RootValueType.Height) },
-                { "vmin", x => new ComputedRootRelative(x / 100f, ComputedRootRelative.RootValueType.Min) },
-                { "vmax", x => new ComputedRootRelative(x / 100f, ComputedRootRelative.RootValueType.Max) },
                 { "em", x => new ComputedFontSize(x) },
                 { "%", x => new ComputedPercentage(x) },
                 { "lh", x => new ComputedFontProperty(x, ComputedFontProperty.FontPropertyType.LineHeight) },
                 { "rlh", x => new ComputedFontProperty(x, ComputedFontProperty.FontPropertyType.RootLineHeight) },
                 { "ch", x => new ComputedFontProperty(x, ComputedFontProperty.FontPropertyType.CharacterWidth) },
                 { "ex", x => new ComputedFontProperty(x, ComputedFontProperty.FontPropertyType.XHeight) },
-            }
+            })
         )
         { }
+
+        /// <summary>
+        /// The viewport units. The small/large/dynamic variants only differ where a browser's own bars
+        /// can shrink the viewport, and the logical `vi`/`vb` assume horizontal writing, so all map to `vw`/`vh`.
+        /// </summary>
+        internal static Dictionary<string, Func<float, object>> WithViewportUnits(Dictionary<string, Func<float, object>> map)
+        {
+            foreach (var prefix in new[] { "v", "dv", "sv", "lv" })
+            {
+                map[prefix + "w"] = x => new ComputedRootRelative(x / 100f, ComputedRootRelative.RootValueType.Width);
+                map[prefix + "h"] = x => new ComputedRootRelative(x / 100f, ComputedRootRelative.RootValueType.Height);
+                map[prefix + "min"] = x => new ComputedRootRelative(x / 100f, ComputedRootRelative.RootValueType.Min);
+                map[prefix + "max"] = x => new ComputedRootRelative(x / 100f, ComputedRootRelative.RootValueType.Max);
+                map[prefix + "i"] = map[prefix + "w"];
+                map[prefix + "b"] = map[prefix + "h"];
+            }
+            return map;
+        }
 
         public override string StringifyTyped(float value) => value + "px";
     }
@@ -245,20 +259,16 @@ namespace ReactUnity.Styling.Converters
     {
         public FontSizeConverter() : base(
             LengthConverter.UnitValueMap,
-            new Dictionary<string, Func<float, object>>
+            LengthConverter.WithViewportUnits(new Dictionary<string, Func<float, object>>
             {
                 { "rem", x => new ComputedRootRelative(x, ComputedRootRelative.RootValueType.Rem) },
-                { "vw", x => new ComputedRootRelative(x / 100f, ComputedRootRelative.RootValueType.Width) },
-                { "vh", x => new ComputedRootRelative(x / 100f, ComputedRootRelative.RootValueType.Height) },
-                { "vmin", x => new ComputedRootRelative(x / 100f, ComputedRootRelative.RootValueType.Min) },
-                { "vmax", x => new ComputedRootRelative(x / 100f, ComputedRootRelative.RootValueType.Max) },
                 { "em", x => new ComputedFontSize(x) },
                 { "%", x => new ComputedFontSize(x / 100f) },
                 { "lh", x => new ComputedFontProperty(x, ComputedFontProperty.FontPropertyType.LineHeight) },
                 { "rlh", x => new ComputedFontProperty(x, ComputedFontProperty.FontPropertyType.RootLineHeight) },
                 { "ch", x => new ComputedFontProperty(x, ComputedFontProperty.FontPropertyType.CharacterWidth) },
                 { "ex", x => new ComputedFontProperty(x, ComputedFontProperty.FontPropertyType.XHeight) },
-            }
+            })
         )
         { }
 

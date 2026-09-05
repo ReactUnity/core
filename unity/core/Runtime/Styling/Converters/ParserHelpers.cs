@@ -4,6 +4,7 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Text.RegularExpressions;
+using ReactUnity.Helpers;
 using ReactUnity.Styling.Computed;
 
 namespace ReactUnity.Styling.Converters
@@ -163,6 +164,18 @@ namespace ReactUnity.Styling.Converters
 
             result = new ComputedStringTemplate(templates, variables);
             return true;
+        }
+
+        /// <summary>
+        /// Drops the `in oklab` (or `in oklch longer hue`) interpolation hint from a gradient's first
+        /// argument. Ramps interpolate in one space on the GPU, so the hint is accepted and ignored.
+        /// </summary>
+        public static string StripColorInterpolationMethod(string val, out bool found)
+        {
+            val = val.Trim();
+            var index = val.FastStartsWith("in ") ? 0 : val.IndexOf(" in ", StringComparison.Ordinal);
+            found = index >= 0;
+            return found ? val.Substring(0, index).Trim() : val;
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]

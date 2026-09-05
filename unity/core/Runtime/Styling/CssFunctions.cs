@@ -8,6 +8,7 @@ namespace ReactUnity.Styling
     public static class CssFunctions
     {
         public static ICssFunction Calc = new CalcFunction();
+        public static ICssFunction MinMax = new MinMaxFunction();
         public static ICssFunction Steps = new StepsFunction();
         public static ICssFunction CubicBezier = new CubicBezierFunction();
         public static ICssFunction Url = new UrlFunction();
@@ -25,6 +26,9 @@ namespace ReactUnity.Styling
         private static Dictionary<string, ICssFunction> Functions = new Dictionary<string, ICssFunction>(StringComparer.InvariantCultureIgnoreCase)
         {
             { "calc", Calc },
+            { "min", MinMax },
+            { "max", MinMax },
+            { "clamp", MinMax },
             { "rgb", Rgba },
             { "hsl", Hsla },
             { "hsv", Hsla },

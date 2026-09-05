@@ -35,12 +35,13 @@ export type FontStyles =
 
 export type TextTransform = 'none' | 'lowercase' | 'uppercase' | 'smallcaps' | 'capitalize';
 
-export type TextOverflowModes = 'overflow' | 'ellipsis' | 'masking' | 'truncate' | 'scroll-rect' | 'page' | 'linked';
+export type TextOverflowModes = 'overflow' | 'ellipsis' | 'masking' | 'clip' | 'truncate' | 'scroll-rect' | 'page' | 'linked';
 export type PointerEvents = 'auto' | 'visible' | 'all' | 'none';
 export type Visibility = 'visible' | 'hidden';
 export type Appearance = 'none' | 'button' | 'input' | 'toggle';
 export type NavigationMode = 'none' | 'horizontal' | 'vertical' | 'automatic' | 'explicit';
-export type WhiteSpace = 'normal' | 'nowrap';
+export type WhiteSpace = 'normal' | 'nowrap' | 'pre' | 'pre-wrap' | 'pre-line' | 'break-spaces';
+export type FontVariant = 'normal' | 'small-caps' | 'all-small-caps' | 'petite-caps' | 'all-petite-caps';
 export type ObjectFit = 'fill' | 'contain' | 'cover' | 'none' | 'scale-down';
 
 export type BorderStyle = 'solid' | 'none' | 'hidden' | 'dotted' | 'dashed' | 'double' | 'groove' | 'ridge' | 'inset' | 'outset';
@@ -102,6 +103,9 @@ export type CursorType =
   | 'grabbing';
 
 export type TextAlign =
+  | 'justify'
+  | 'start'
+  | 'end'
   | 'top-left'
   | 'top'
   | 'top-right'

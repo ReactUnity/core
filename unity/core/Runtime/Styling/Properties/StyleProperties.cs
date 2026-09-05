@@ -47,16 +47,40 @@ namespace ReactUnity.Styling
         public static readonly StyleProperty<FontReference> fontFamily = new StyleProperty<FontReference>("fontFamily", FontReference.None, false, true);
         public static readonly StyleProperty<Color> color = new StyleProperty<Color>("color", ComputedCurrentColor.Instance, true, false);
         public static readonly StyleProperty<FontWeight> fontWeight = new StyleProperty<FontWeight>("fontWeight", FontWeight.Regular, false, true);
-        public static readonly StyleProperty<FontStyles> fontStyle = new StyleProperty<FontStyles>("fontStyle", FontStyles.Normal, false, true, converter: new EnumConverter(typeof(FontStyles), true, new Dictionary<string, object> { { "linethrough", FontStyles.Strikethrough }, { "solid", FontStyles.Underline } }));
-        public static readonly StyleProperty<TextTransform> textTransform = new StyleProperty<TextTransform>("textTransform", TextTransform.None, false, true);
+        public static readonly StyleProperty<FontStyles> fontStyle = new StyleProperty<FontStyles>("fontStyle", FontStyles.Normal, false, true, converter: new EnumConverter(typeof(FontStyles), true, new Dictionary<string, object> { { "linethrough", FontStyles.Strikethrough }, { "solid", FontStyles.Underline }, { "none", FontStyles.Normal } }));
+        // `font-variant` lands here too: TextMeshPro's small caps are a case transform, which is why `text-transform: small-caps` already existed.
+        public static readonly StyleProperty<TextTransform> textTransform = new StyleProperty<TextTransform>("textTransform", TextTransform.None, false, true, converter: new EnumConverter(typeof(TextTransform), false, true, new Dictionary<string, object>
+        {
+            { "normal", TextTransform.None },
+            { "allsmallcaps", TextTransform.SmallCaps },
+            { "petitecaps", TextTransform.SmallCaps },
+            { "allpetitecaps", TextTransform.SmallCaps },
+        }));
         public static readonly StyleProperty<float> fontSize = new StyleProperty<float>("fontSize", ComputedFontSize.Default, true, false, AllConverters.FontSizeConverter);
         public static readonly StyleProperty<float> lineHeight = new StyleProperty<float>("lineHeight", new ComputedFontProperty(1, ComputedFontProperty.FontPropertyType.LineHeight), true, true, AllConverters.LineHeightConverter);
         public static readonly StyleProperty<float> letterSpacing = new StyleProperty<float>("letterSpacing", 0f, true, true, AllConverters.FontSizeConverter);
         public static readonly StyleProperty<float> wordSpacing = new StyleProperty<float>("wordSpacing", 0f, true, true, AllConverters.FontSizeConverter);
-        public static readonly StyleProperty<TextAlignmentOptions> textAlign = new StyleProperty<TextAlignmentOptions>("textAlign", TextAlignmentOptions.Converted, false, true);
+        // `start` and `end` do not follow `direction`: TextMeshPro has no direction-aware alignment.
+        public static readonly StyleProperty<TextAlignmentOptions> textAlign = new StyleProperty<TextAlignmentOptions>("textAlign", TextAlignmentOptions.Converted, false, true, converter: new EnumConverter(typeof(TextAlignmentOptions), false, true, new Dictionary<string, object>
+        {
+            { "justify", TextAlignmentOptions.Justified },
+            { "start", TextAlignmentOptions.Left },
+            { "end", TextAlignmentOptions.Right },
+            { "matchparent", TextAlignmentOptions.Left },
+        }));
         public static readonly StyleProperty<VerticalAlignmentOptions> verticalAlign = new StyleProperty<VerticalAlignmentOptions>("verticalAlign", VerticalAlignmentOptions.Top, false, true);
-        public static readonly StyleProperty<TextOverflowModes> textOverflow = new StyleProperty<TextOverflowModes>("textOverflow", TextOverflowModes.Overflow, false, true);
-        public static readonly StyleProperty<bool> textWrap = new StyleProperty<bool>("textWrap", true, inherited: true, converter: new BoolConverter(new string[] { "wrap", "normal" }, new string[] { "nowrap" }));
+        public static readonly StyleProperty<TextOverflowModes> textOverflow = new StyleProperty<TextOverflowModes>("textOverflow", TextOverflowModes.Overflow, false, true, converter: new EnumConverter(typeof(TextOverflowModes), false, true, new Dictionary<string, object>
+        {
+            { "clip", TextOverflowModes.Masking },
+        }));
+        // `white-space` and `text-wrap` share this: `balance`, `pretty` and `stable` are all a wrap TextMeshPro cannot refine.
+        public static readonly StyleProperty<WhiteSpace> whiteSpace = new StyleProperty<WhiteSpace>("whiteSpace", WhiteSpace.Normal, false, true, converter: new EnumConverter(typeof(WhiteSpace), false, true, new Dictionary<string, object>
+        {
+            { "wrap", WhiteSpace.Normal },
+            { "balance", WhiteSpace.Normal },
+            { "pretty", WhiteSpace.Normal },
+            { "stable", WhiteSpace.Normal },
+        }));
         public static readonly StyleProperty<int> maxLines = new StyleProperty<int>("maxLines", (int) short.MaxValue, true, true);
         public static readonly StyleProperty<float> textStrokeWidth = new StyleProperty<float>("textStrokeWidth", 0f, true, true);
         public static readonly StyleProperty<Color> textStrokeColor = new StyleProperty<Color>("textStrokeColor", ComputedCurrentColor.Instance, true, true);
@@ -68,6 +92,14 @@ namespace ReactUnity.Styling
         public static readonly StyleProperty<YogaValue2> objectPosition = new StyleProperty<YogaValue2>("objectPosition", YogaValue2.Center, true);
 
         public static readonly ValueListStyleProperty<BoxShadow> boxShadow = new ValueListStyleProperty<BoxShadow>("boxShadow", BoxShadow.Default, true);
+        // Same grammar minus spread and inset; only the first shadow is drawn, since TextMeshPro has one underlay per material.
+        public static readonly ValueListStyleProperty<BoxShadow> textShadow = new ValueListStyleProperty<BoxShadow>("textShadow", BoxShadow.Default, true, true);
+        public static readonly StyleProperty<Color> caretColor = new StyleProperty<Color>("caretColor", ComputedCurrentColor.Instance, true, false);
+
+        // Yoga has one overflow for both axes. These are what `overflow-x`/`overflow-y` set; the layout
+        // value and the mask are derived from all three, and a scroll view reads them for its direction.
+        public static readonly StyleProperty<YogaOverflow> overflowX = new StyleProperty<YogaOverflow>("overflowX", YogaOverflow.Visible, false, false, LayoutProperties.OverflowConverter);
+        public static readonly StyleProperty<YogaOverflow> overflowY = new StyleProperty<YogaOverflow>("overflowY", YogaOverflow.Visible, false, false, LayoutProperties.OverflowConverter);
 
         public static readonly StyleProperty<ImageDefinition> borderImageSource = new StyleProperty<ImageDefinition>("borderImageSource");
         public static readonly StyleProperty<BorderImageSlice> borderImageSlice = new StyleProperty<BorderImageSlice>("borderImageSlice", BorderImageSlice.Auto, true);
@@ -162,8 +194,15 @@ namespace ReactUnity.Styling
             { "textAlign", textAlign },
             { "verticalAlign", verticalAlign },
             { "textOverflow", textOverflow },
-            { "textWrap", textWrap },
-            { "whiteSpace", textWrap },
+            { "textWrap", whiteSpace },
+            { "whiteSpace", whiteSpace },
+            { "textDecorationLine", fontStyle },
+            { "fontVariant", textTransform },
+            { "fontVariantCaps", textTransform },
+            { "textShadow", textShadow },
+            { "caretColor", caretColor },
+            { "overflowX", overflowX },
+            { "overflowY", overflowY },
             { "maxLines", maxLines },
             { "lineClamp", maxLines },
             { "textStrokeWidth", textStrokeWidth },
@@ -305,12 +344,19 @@ namespace ReactUnity.Styling
             { "text-align", textAlign },
             { "vertical-align", verticalAlign },
             { "text-overflow", textOverflow },
-            { "text-wrap", textWrap },
+            { "text-wrap", whiteSpace },
+            { "text-decoration-line", fontStyle },
+            { "font-variant", textTransform },
+            { "font-variant-caps", textTransform },
+            { "text-shadow", textShadow },
+            { "caret-color", caretColor },
+            { "overflow-x", overflowX },
+            { "overflow-y", overflowY },
             { "max-lines", maxLines },
             { "line-clamp", maxLines },
             { "text-stroke-color", textStrokeColor },
             { "text-stroke-width", textStrokeWidth },
-            { "white-space", textWrap },
+            { "white-space", whiteSpace },
             { "object-fit", objectFit },
             { "object-position", objectPosition },
             { "state-duration", stateDuration },

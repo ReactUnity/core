@@ -358,13 +358,22 @@ namespace ReactUnity.Styling.Rules
 
         public static DefaultMediaProvider CreateMediaProvider(string type, string framework, bool isEditor)
         {
-            return new DefaultMediaProvider(type, null,
-                new Dictionary<string, string>(StringComparer.InvariantCultureIgnoreCase) {
-                    { "framework", framework },
+            string skin = null;
 #if UNITY_EDITOR
-                    { "skin", UnityEditor.EditorGUIUtility.isProSkin ? "dark" : "light" },
+            skin = UnityEditor.EditorGUIUtility.isProSkin ? "dark" : "light";
 #endif
-                },
+
+            var values = new Dictionary<string, string>(StringComparer.InvariantCultureIgnoreCase) {
+                { "framework", framework },
+                // What `(prefers-color-scheme: dark)` and `(prefers-reduced-motion: reduce)` read. Unity
+                // has no OS-level signal for either, so outside the Editor these are defaults an app
+                // changes with SetValue.
+                { "prefers-color-scheme", skin ?? "light" },
+                { "prefers-reduced-motion", "no-preference" },
+            };
+            if (skin != null) values["skin"] = skin;
+
+            return new DefaultMediaProvider(type, null, values,
                 new HashSet<string>(StringComparer.InvariantCultureIgnoreCase)
                 {
                     type,
