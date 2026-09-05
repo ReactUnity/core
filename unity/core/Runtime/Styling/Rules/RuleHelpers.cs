@@ -40,12 +40,33 @@ namespace ReactUnity.Styling.Rules
         }
 
         public static Regex SplitSelectorRegex = new Regex("\\s+");
-        public static Regex NthChildRegex = new Regex(@"\((\-?\d*n)\s*\+\s*(\d+)\)");
+
+        // Whitespace inside an An+B argument, or around a comma, would otherwise split the compound
+        // once the normalized selector is broken on spaces. `:nth-child(2n + 1 of .x)` keeps its
+        // spaces, because the `of` form is not read and rewriting it would only hide that.
+        public static Regex NthChildRegex = new Regex(@":(nth-(?:last-)?(?:child|of-type))\(([^)]*)\)", RegexOptions.IgnoreCase);
+        private static readonly Regex CommaSpaceRegex = new Regex(@"\s*,\s*");
+
+        // Stands in for a space inside `[...]` while the selector is split on whitespace, so
+        // `[data-x="a b"]` and the `i` flag in `[data-x=a i]` survive to ParseSelector.
+        private const char AttributeSpace = '\u0003';
+
+        private static readonly Dictionary<string, RuleSelectorPartType> NthPartTypes = new Dictionary<string, RuleSelectorPartType>(StringComparer.InvariantCultureIgnoreCase)
+        {
+            { "nth-child", RuleSelectorPartType.NthChild },
+            { "nth-last-child", RuleSelectorPartType.NthLastChild },
+            { "nth-of-type", RuleSelectorPartType.NthOfType },
+            { "nth-last-of-type", RuleSelectorPartType.NthLastOfType },
+        };
 
         private static Dictionary<string, RuleSelectorPartType> BasicPartTypes = new Dictionary<string, RuleSelectorPartType>(StringComparer.InvariantCultureIgnoreCase)
         {
             { "first-child", RuleSelectorPartType.FirstChild },
             { "last-child", RuleSelectorPartType.LastChild },
+            { "only-child", RuleSelectorPartType.OnlyChild },
+            { "first-of-type", RuleSelectorPartType.FirstOfType },
+            { "last-of-type", RuleSelectorPartType.LastOfType },
+            { "only-of-type", RuleSelectorPartType.OnlyOfType },
             { "before", RuleSelectorPartType.Before },
             { "after", RuleSelectorPartType.After },
             { "empty", RuleSelectorPartType.Empty },
@@ -81,7 +102,8 @@ namespace ReactUnity.Styling.Rules
 
             void end(RuleSelectorPartType nextType)
             {
-                var nm = acc.ToString().Trim('"');
+                var raw = acc.ToString();
+                var nm = raw.Trim('"');
                 var ignore = type == RuleSelectorPartType.None || string.IsNullOrWhiteSpace(nm)
                     || nm == "*" || nm == ">" || nm == "~" || nm == "+" || nm == "!";
                 if (!ignore)
@@ -89,17 +111,19 @@ namespace ReactUnity.Styling.Rules
                     if (type == RuleSelectorPartType.Special)
                     {
                         var paran = paranContent.ToString();
-                        if (nm == "not") list.AddRange(ParseSelector(paran, !negated));
+                        if (nm == "not")
+                        {
+                            // :not(A, B) matches what is neither, so every branch lands negated in this compound.
+                            foreach (var arg in SplitSelectorList(paran))
+                            {
+                                var parsed = ParseSelector(arg.Trim(), !negated);
+                                if (parsed != null) list.AddRange(parsed);
+                            }
+                        }
                         else if (BasicPartTypes.TryGetValue(nm, out var partType)) list.Add(new RuleSelectorPart() { Type = partType, Negated = negated });
-                        else if (nm == "nth-child") list.Add(new RuleSelectorPart()
+                        else if (NthPartTypes.TryGetValue(nm, out var nthType)) list.Add(new RuleSelectorPart()
                         {
-                            Type = RuleSelectorPartType.NthChild,
-                            Negated = negated,
-                            Parameter = new NthChildParameter(paran),
-                        });
-                        else if (nm == "nth-last-child") list.Add(new RuleSelectorPart()
-                        {
-                            Type = RuleSelectorPartType.NthLastChild,
+                            Type = nthType,
                             Negated = negated,
                             Parameter = new NthChildParameter(paran),
                         });
@@ -113,14 +137,11 @@ namespace ReactUnity.Styling.Rules
                     }
                     else
                     {
-                        string parameter = null;
+                        object parameter = null;
                         if (type == RuleSelectorPartType.Attribute)
                         {
-                            var splits = nm.Split(new char[] { '=' }, 2);
-                            nm = splits[0].Trim();
+                            parameter = AttributeParameter.Parse(raw.Replace(AttributeSpace, ' '), out nm);
                             if (nm.FastStartsWith("data-")) nm = nm.Substring(5);
-
-                            parameter = splits.Length > 1 ? splits[1].Trim().Trim('"').Trim('\'') : null;
                         }
                         list.Add(new RuleSelectorPart() { Name = nm, Type = type, Negated = negated, Parameter = parameter });
                     }
@@ -142,6 +163,7 @@ namespace ReactUnity.Styling.Rules
             }
 
             var prevIsEscape = false;
+            var quote = '\0';
             for (int i = 0; i < length; i++)
             {
                 var ch = selector[i];
@@ -152,6 +174,19 @@ namespace ReactUnity.Styling.Rules
                 }
 
                 if (prevIsEscape) acc.Append(ch);
+                else if (type == RuleSelectorPartType.Attribute && paranCount == 0)
+                {
+                    // Everything up to the closing bracket is the attribute's own syntax, quotes included.
+                    if (quote != '\0') { if (ch == quote) quote = '\0'; }
+                    else if (ch == '"' || ch == '\'') quote = ch;
+                    else if (ch == ']')
+                    {
+                        end(RuleSelectorPartType.Tag);
+                        prevIsEscape = false;
+                        continue;
+                    }
+                    acc.Append(ch);
+                }
                 else if (ch == '(')
                 {
                     paranCount++;
@@ -224,6 +259,11 @@ namespace ReactUnity.Styling.Rules
                 case RuleSelectorPartType.NthChild:
                 case RuleSelectorPartType.NthLastChild:
                 case RuleSelectorPartType.OnlyChild:
+                case RuleSelectorPartType.FirstOfType:
+                case RuleSelectorPartType.LastOfType:
+                case RuleSelectorPartType.NthOfType:
+                case RuleSelectorPartType.NthLastOfType:
+                case RuleSelectorPartType.OnlyOfType:
                 case RuleSelectorPartType.State:
                 case RuleSelectorPartType.Tag:
                     return 1;
@@ -567,11 +607,32 @@ namespace ReactUnity.Styling.Rules
             var count = selector.Length;
 
             var prev = ' ';
+            var inAttribute = false;
+            var quote = '\0';
             for (int i = 0; i < count; i++)
             {
                 var ch = selector[i];
 
-                if (ch == '\\')
+                if (inAttribute)
+                {
+                    // An attribute's value may hold a combinator character or a space; neither is one here.
+                    if (quote != '\0') { if (ch == quote) quote = '\0'; }
+                    else if (ch == '"' || ch == '\'') quote = ch;
+                    else if (ch == ']') inAttribute = false;
+
+                    spaced.Append(char.IsWhiteSpace(ch) ? AttributeSpace : ch);
+                    prev = ch;
+                    continue;
+                }
+                else if (ch == '[')
+                {
+                    inAttribute = true;
+                    if (prev == ':') spaced.Append(prev);
+                    spaced.Append(ch);
+                    prev = ch;
+                    continue;
+                }
+                else if (ch == '\\')
                 {
                     // Re-emitted one backslash per character, which is the form ParseSelector
                     // reads as a literal. The hexadecimal form is resolved here rather than
@@ -613,7 +674,12 @@ namespace ReactUnity.Styling.Rules
                 }
             }
 
-            return NthChildRegex.Replace(SplitSelectorRegex.Replace(spaced.ToString().Trim(), " "), "($1+$2)");
+            var collapsed = CommaSpaceRegex.Replace(SplitSelectorRegex.Replace(spaced.ToString().Trim(), " "), ",");
+
+            return NthChildRegex.Replace(collapsed, m =>
+                m.Groups[2].Value.IndexOf(" of ", StringComparison.OrdinalIgnoreCase) >= 0
+                    ? m.Value
+                    : ":" + m.Groups[1].Value + "(" + m.Groups[2].Value.Replace(" ", "") + ")");
         }
     }
 }

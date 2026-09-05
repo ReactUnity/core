@@ -30,7 +30,19 @@ namespace ReactUnity.Styling
                 else Debug.LogError($"The class {handlerClass.Name} does not implement IStateHandler");
                 return handler;
             }
+
+            WarnUnknownState(state);
             return null;
+        }
+
+        private static readonly HashSet<string> Warned = new HashSet<string>();
+
+        // A pseudo-class this engine does not have parses as a custom state and then never matches,
+        // which is indistinguishable from a rule that is simply wrong. Once per name is enough.
+        private static void WarnUnknownState(string state)
+        {
+            if (state == "enter" || state == "leave" || !Warned.Add(state)) return;
+            Debug.LogWarning($"':{state}' is not a pseudo-class ReactUnity knows. It matches only while a state named '{state}' is started on the element.");
         }
 
         public bool StartState(string state)

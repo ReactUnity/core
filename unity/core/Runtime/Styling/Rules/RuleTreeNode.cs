@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Text.RegularExpressions;
 using ReactUnity.Helpers;
 
 namespace ReactUnity.Styling.Rules
@@ -317,6 +318,11 @@ namespace ReactUnity.Styling.Rules
         Empty = 26,
         Root = 27,
         Scope = 28,
+        FirstOfType = 40,
+        LastOfType = 41,
+        NthOfType = 42,
+        NthLastOfType = 43,
+        OnlyOfType = 44,
 
         // Input related pseudo classes
         Blank = 30,
@@ -387,8 +393,8 @@ namespace ReactUnity.Styling.Rules
                 case RuleSelectorPartType.ClassName:
                     return component.ClassList != null && component.ClassList.Contains(Name);
                 case RuleSelectorPartType.Attribute:
-                    return component.Data.TryGetValue(Name, out var val) &&
-                        (Parameter == null ? IsTruthy(val) : Equals(val, Parameter));
+                    if (!component.Data.TryGetValue(Name, out var val)) return false;
+                    return Parameter is AttributeParameter attribute ? attribute.Matches(val) : IsTruthy(val);
                 case RuleSelectorPartType.DirectDescendant:
                 case RuleSelectorPartType.AdjacentSibling:
                 case RuleSelectorPartType.Sibling:
@@ -398,13 +404,32 @@ namespace ReactUnity.Styling.Rules
                 case RuleSelectorPartType.Not:
                     break;
                 case RuleSelectorPartType.FirstChild:
-                    return !component.IsPseudoElement && component.Parent != null && component.Parent.Children[0] == component;
+                case RuleSelectorPartType.FirstOfType:
+                    return SiblingPosition(component, Type == RuleSelectorPartType.FirstOfType, out _) == 1;
                 case RuleSelectorPartType.LastChild:
-                    return !component.IsPseudoElement && component.Parent != null && component.Parent.Children[component.Parent.Children.Count - 1] == component;
+                case RuleSelectorPartType.LastOfType:
+                {
+                    var position = SiblingPosition(component, Type == RuleSelectorPartType.LastOfType, out var count);
+                    return position > 0 && position == count;
+                }
+                case RuleSelectorPartType.OnlyChild:
+                case RuleSelectorPartType.OnlyOfType:
+                {
+                    var position = SiblingPosition(component, Type == RuleSelectorPartType.OnlyOfType, out var count);
+                    return position > 0 && count == 1;
+                }
                 case RuleSelectorPartType.NthChild:
-                    return !component.IsPseudoElement && component.Parent != null && ((NthChildParameter) Parameter).Matches(component.Parent.Children.IndexOf(component) + 1);
+                case RuleSelectorPartType.NthOfType:
+                {
+                    var position = SiblingPosition(component, Type == RuleSelectorPartType.NthOfType, out _);
+                    return position > 0 && ((NthChildParameter) Parameter).Matches(position);
+                }
                 case RuleSelectorPartType.NthLastChild:
-                    return !component.IsPseudoElement && component.Parent != null && ((NthChildParameter) Parameter).Matches(component.Parent.Children.Count - component.Parent.Children.IndexOf(component));
+                case RuleSelectorPartType.NthLastOfType:
+                {
+                    var position = SiblingPosition(component, Type == RuleSelectorPartType.NthLastOfType, out var count);
+                    return position > 0 && ((NthChildParameter) Parameter).Matches(count - position + 1);
+                }
                 case RuleSelectorPartType.Empty:
                     if (component is ITextComponent tc)
                         return string.IsNullOrEmpty(tc.Content);
@@ -427,8 +452,6 @@ namespace ReactUnity.Styling.Rules
                     return component is IToggleComponent tgc && tgc.Checked;
                 case RuleSelectorPartType.Indeterminate:
                     return component is IToggleComponent tgi && tgi.Indeterminate;
-                case RuleSelectorPartType.OnlyChild:
-                    return !component.IsPseudoElement && component.Parent != null && component.Parent.Children.Count == 1;
                 case RuleSelectorPartType.Root:
                     return component is IHostComponent;
                 case RuleSelectorPartType.Scope:
@@ -460,6 +483,27 @@ namespace ReactUnity.Styling.Rules
             return false;
         }
 
+        /// <summary>
+        /// One-based position among the parent's children, counting only real elements -- a
+        /// <c>::before</c> is in the list but is nobody's sibling -- and, for the of-type family,
+        /// only those sharing the tag. Zero when the component has no siblings to be counted among.
+        /// </summary>
+        private static int SiblingPosition(IReactComponent component, bool ofType, out int count)
+        {
+            count = 0;
+            if (component.IsPseudoElement || component.Parent == null || component.Parent.Children == null) return 0;
+
+            var position = 0;
+            foreach (var sibling in component.Parent.Children)
+            {
+                if (sibling.IsPseudoElement) continue;
+                if (ofType && sibling.Tag != component.Tag) continue;
+                count++;
+                if (sibling == component) position = count;
+            }
+            return position;
+        }
+
         private static bool IsTruthy(object obj)
         {
             if (obj == null || obj is DBNull)
@@ -481,6 +525,77 @@ namespace ReactUnity.Styling.Rules
         }
     }
 
+    /// <summary>
+    /// The value of an attribute selector and how to compare it. Absent when the selector only
+    /// tests that the attribute is there.
+    /// </summary>
+    public class AttributeParameter
+    {
+        private static readonly Regex ValueRegex = new Regex(@"^(?:""([^""]*)""|'([^']*)'|([^\s""']*))(?:\s+([iIsS]))?$");
+
+        public string Value;
+        public char Operator;
+        public bool IgnoreCase;
+
+        /// <summary>Splits <c>name^="value" i</c> into its attribute name and the rest, or returns null for a bare <c>name</c>.</summary>
+        public static AttributeParameter Parse(string text, out string name)
+        {
+            var eq = text.IndexOf('=');
+            if (eq < 0)
+            {
+                name = text.Trim();
+                return null;
+            }
+
+            var op = eq > 0 && "^$*~|".IndexOf(text[eq - 1]) >= 0 ? text[eq - 1] : '=';
+            name = text.Substring(0, op == '=' ? eq : eq - 1).Trim();
+
+            var rest = text.Substring(eq + 1).Trim();
+            var match = ValueRegex.Match(rest);
+            if (!match.Success) return new AttributeParameter { Value = rest.Trim('"', '\''), Operator = op };
+
+            var value = match.Groups[1].Success ? match.Groups[1].Value : match.Groups[2].Success ? match.Groups[2].Value : match.Groups[3].Value;
+            return new AttributeParameter
+            {
+                Value = value,
+                Operator = op,
+                IgnoreCase = match.Groups[4].Success && char.ToLowerInvariant(match.Groups[4].Value[0]) == 'i',
+            };
+        }
+
+        public bool Matches(object attribute)
+        {
+            var actual = Stringify(attribute);
+            if (actual == null) return false;
+
+            var comparison = IgnoreCase ? StringComparison.OrdinalIgnoreCase : StringComparison.Ordinal;
+
+            switch (Operator)
+            {
+                case '^': return Value.Length > 0 && actual.StartsWith(Value, comparison);
+                case '$': return Value.Length > 0 && actual.EndsWith(Value, comparison);
+                case '*': return Value.Length > 0 && actual.IndexOf(Value, comparison) >= 0;
+                case '|': return string.Equals(actual, Value, comparison) || actual.StartsWith(Value + "-", comparison);
+                case '~':
+                    if (Value.Length == 0 || Value.IndexOfAny(new[] { ' ', '\t', '\n' }) >= 0) return false;
+                    foreach (var word in actual.Split((char[]) null, StringSplitOptions.RemoveEmptyEntries))
+                        if (string.Equals(word, Value, comparison)) return true;
+                    return false;
+                default: return string.Equals(actual, Value, comparison);
+            }
+        }
+
+        // A data prop set from JS is whatever was passed, so a number or a bool is compared the
+        // way CSS would see it serialized, not by object equality.
+        private static string Stringify(object value)
+        {
+            if (value == null || value is DBNull) return null;
+            if (value is bool b) return b ? "true" : "false";
+            if (value is IFormattable f) return f.ToString(null, System.Globalization.CultureInfo.InvariantCulture);
+            return value.ToString();
+        }
+    }
+
     public struct NthChildParameter
     {
         // An + B
@@ -490,28 +605,39 @@ namespace ReactUnity.Styling.Rules
 
         public NthChildParameter(string value)
         {
-            if (value == "odd")
+            value = value.Replace(" ", "");
+            A = 0;
+            B = 0;
+
+            if (value.Equals("odd", StringComparison.OrdinalIgnoreCase))
             {
                 A = 2;
                 B = 1;
+                return;
             }
-            else if (value == "even")
+
+            if (value.Equals("even", StringComparison.OrdinalIgnoreCase))
             {
                 A = 2;
                 B = 0;
+                return;
             }
-            else
-            {
-                var splits = value.Replace(" ", "").Split(new char[] { '+' }, StringSplitOptions.RemoveEmptyEntries);
 
-                A = 0;
-                B = 0;
-                foreach (var split in splits)
-                {
-                    if (split.Contains("n")) int.TryParse(split.Replace("n", ""), out A);
-                    else int.TryParse(split, out B);
-                }
+            var n = value.IndexOf('n');
+            if (n < 0)
+            {
+                int.TryParse(value, out B);
+                return;
             }
+
+            // The coefficient may be implied (`n`, `-n`), and the offset carries its own sign (`2n-1`).
+            var coefficient = value.Substring(0, n);
+            if (coefficient == "" || coefficient == "+") A = 1;
+            else if (coefficient == "-") A = -1;
+            else int.TryParse(coefficient, out A);
+
+            var offset = value.Substring(n + 1);
+            if (offset.Length > 0) int.TryParse(offset, out B);
         }
 
         public bool Matches(int index)

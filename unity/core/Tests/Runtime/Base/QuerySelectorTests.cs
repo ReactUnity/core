@@ -27,6 +27,7 @@ namespace ReactUnity.Tests
     </view>
     <view id='v1v5' className='vv4class'>
     </view>
+    <text id='v1t6' className='t6class' data-kind='alpha beta' data-index='6'>t6content</text>
 </view>
 <view id='v2' className='v2class'>
     <view id='v2v1' className='vv1class'>
@@ -117,6 +118,10 @@ namespace ReactUnity.Tests
         [TestCase("v1v1t4", "text:empty", ExpectedResult = typeof(IEnumerator))]
         [TestCase("v1v4", "view:nth-child(4)", ExpectedResult = typeof(IEnumerator))]
         [TestCase("v1v1t4", "*:nth-child(4)", ExpectedResult = typeof(IEnumerator))]
+        [TestCase("v1t6", "#v1 > text:first-of-type", ExpectedResult = typeof(IEnumerator))]
+        [TestCase("v1v3t1", "text:only-child", ExpectedResult = typeof(IEnumerator))]
+        [TestCase("v1v1t2", "#v1v1 > :not(.t1class, .t3class)", ExpectedResult = typeof(IEnumerator))]
+        [TestCase("v1t6", "[data-kind~=beta]", ExpectedResult = typeof(IEnumerator))]
         public IEnumerator QuerySelector(string id, string query)
         {
             yield return null;
@@ -193,6 +198,55 @@ namespace ReactUnity.Tests
         [TestCase("v1v1t3", "text:empty", false, ExpectedResult = typeof(IEnumerator))]
         [TestCase("v1v4", "view:nth-child(5)", false, ExpectedResult = typeof(IEnumerator))]
         [TestCase("v1v1t4", "*:nth-child(5)", false, ExpectedResult = typeof(IEnumerator))]
+        [TestCase("v1v3t1", "text:only-child", true, ExpectedResult = typeof(IEnumerator))]
+        [TestCase("v1v3t1", ":only-child", true, ExpectedResult = typeof(IEnumerator))]
+        [TestCase("v1v1t4", "text:only-child", false, ExpectedResult = typeof(IEnumerator))]
+        [TestCase("v1v1t3", "text:nth-child(2n-1)", true, ExpectedResult = typeof(IEnumerator))]
+        [TestCase("v1v1t2", "text:nth-child(2n-1)", false, ExpectedResult = typeof(IEnumerator))]
+        [TestCase("v1v1t3", "text:nth-child(2n - 1)", true, ExpectedResult = typeof(IEnumerator))]
+        [TestCase("v1v1t2", "text:nth-child(-n+2)", true, ExpectedResult = typeof(IEnumerator))]
+        [TestCase("v1v1t3", "text:nth-child(-n+2)", false, ExpectedResult = typeof(IEnumerator))]
+        [TestCase("v1v1t3", "text:nth-child(odd)", true, ExpectedResult = typeof(IEnumerator))]
+        [TestCase("v1v1t3", "text:nth-child(even)", false, ExpectedResult = typeof(IEnumerator))]
+        [TestCase("v1v1t3", "text:nth-child(n+3)", true, ExpectedResult = typeof(IEnumerator))]
+        [TestCase("v1v1t2", "text:nth-child(n+3)", false, ExpectedResult = typeof(IEnumerator))]
+        [TestCase("v1v1t3", "text:nth-last-child(2)", true, ExpectedResult = typeof(IEnumerator))]
+        [TestCase("v1v1t2", ":not(.t1class, .t3class)", true, ExpectedResult = typeof(IEnumerator))]
+        [TestCase("v1v1t3", ":not(.t1class, .t3class)", false, ExpectedResult = typeof(IEnumerator))]
+        [TestCase("v1v1t1", ":not(.t1class,.t3class)", false, ExpectedResult = typeof(IEnumerator))]
+        [TestCase("v1t6", "text:first-of-type", true, ExpectedResult = typeof(IEnumerator))]
+        [TestCase("v1t6", ":first-child", false, ExpectedResult = typeof(IEnumerator))]
+        [TestCase("v1t6", ":last-of-type", true, ExpectedResult = typeof(IEnumerator))]
+        [TestCase("v1t6", ":only-of-type", true, ExpectedResult = typeof(IEnumerator))]
+        [TestCase("v1t6", ":only-child", false, ExpectedResult = typeof(IEnumerator))]
+        [TestCase("v1v5", "view:last-of-type", true, ExpectedResult = typeof(IEnumerator))]
+        [TestCase("v1v5", "view:last-child", false, ExpectedResult = typeof(IEnumerator))]
+        [TestCase("v1v1", "view:only-of-type", false, ExpectedResult = typeof(IEnumerator))]
+        [TestCase("v1v3", "view:nth-of-type(3)", true, ExpectedResult = typeof(IEnumerator))]
+        [TestCase("v1v3", ":nth-last-of-type(3)", true, ExpectedResult = typeof(IEnumerator))]
+        [TestCase("v1v4", ":nth-last-of-type(3)", false, ExpectedResult = typeof(IEnumerator))]
+        [TestCase("v1t6", "[data-kind]", true, ExpectedResult = typeof(IEnumerator))]
+        [TestCase("v1v1", "[data-kind]", false, ExpectedResult = typeof(IEnumerator))]
+        [TestCase("v1t6", "[data-kind=\"alpha beta\"]", true, ExpectedResult = typeof(IEnumerator))]
+        [TestCase("v1t6", "[data-kind='alpha beta']", true, ExpectedResult = typeof(IEnumerator))]
+        [TestCase("v1t6", "[data-kind=alpha]", false, ExpectedResult = typeof(IEnumerator))]
+        [TestCase("v1t6", "[data-kind~=alpha]", true, ExpectedResult = typeof(IEnumerator))]
+        [TestCase("v1t6", "[data-kind~=beta]", true, ExpectedResult = typeof(IEnumerator))]
+        [TestCase("v1t6", "[data-kind~=alph]", false, ExpectedResult = typeof(IEnumerator))]
+        [TestCase("v1t6", "[data-kind^=alp]", true, ExpectedResult = typeof(IEnumerator))]
+        [TestCase("v1t6", "[data-kind^=beta]", false, ExpectedResult = typeof(IEnumerator))]
+        [TestCase("v1t6", "[data-kind$=beta]", true, ExpectedResult = typeof(IEnumerator))]
+        [TestCase("v1t6", "[data-kind*=\"a b\"]", true, ExpectedResult = typeof(IEnumerator))]
+        [TestCase("v1t6", "[data-kind*=gamma]", false, ExpectedResult = typeof(IEnumerator))]
+        [TestCase("v1t6", "[data-kind|=alpha]", false, ExpectedResult = typeof(IEnumerator))]
+        [TestCase("v1t6", "[data-index|=6]", true, ExpectedResult = typeof(IEnumerator))]
+        [TestCase("v1t6", "[data-kind^=ALPHA]", false, ExpectedResult = typeof(IEnumerator))]
+        [TestCase("v1t6", "[data-kind^=ALPHA i]", true, ExpectedResult = typeof(IEnumerator))]
+        [TestCase("v1t6", "[data-kind=\"ALPHA BETA\" i]", true, ExpectedResult = typeof(IEnumerator))]
+        [TestCase("v1t6", "[data-kind=\"ALPHA BETA\" s]", false, ExpectedResult = typeof(IEnumerator))]
+        [TestCase("v1t6", "[data-index=6]", true, ExpectedResult = typeof(IEnumerator))]
+        [TestCase("v1t6", "text[data-index=6]:first-of-type", true, ExpectedResult = typeof(IEnumerator))]
+        [TestCase("v1t6", "#v1 > [data-index=6]", true, ExpectedResult = typeof(IEnumerator))]
         public IEnumerator Matches(string id, string query, bool result)
         {
             yield return null;
