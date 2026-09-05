@@ -122,6 +122,12 @@ namespace ReactUnity.Tests
         [TestCase("v1v3t1", "text:only-child", ExpectedResult = typeof(IEnumerator))]
         [TestCase("v1v1t2", "#v1v1 > :not(.t1class, .t3class)", ExpectedResult = typeof(IEnumerator))]
         [TestCase("v1t6", "[data-kind~=beta]", ExpectedResult = typeof(IEnumerator))]
+        [TestCase("v1v1", "view:has(> .t2class)", ExpectedResult = typeof(IEnumerator))]
+        [TestCase("v1", "view:has(.t2class)", ExpectedResult = typeof(IEnumerator))]
+        [TestCase("v1v2", "view:has(+ #v1v3)", ExpectedResult = typeof(IEnumerator))]
+        [TestCase("v1v1t3", "text:has(+ text:empty)", ExpectedResult = typeof(IEnumerator))]
+        [TestCase("v1v3", ":scope > view > view:has(> .t1class):not(.vv1class)", ExpectedResult = typeof(IEnumerator))]
+        [TestCase("v1v5", "#v1 > :has(+ text)", ExpectedResult = typeof(IEnumerator))]
         public IEnumerator QuerySelector(string id, string query)
         {
             yield return null;
@@ -247,6 +253,39 @@ namespace ReactUnity.Tests
         [TestCase("v1t6", "[data-index=6]", true, ExpectedResult = typeof(IEnumerator))]
         [TestCase("v1t6", "text[data-index=6]:first-of-type", true, ExpectedResult = typeof(IEnumerator))]
         [TestCase("v1t6", "#v1 > [data-index=6]", true, ExpectedResult = typeof(IEnumerator))]
+        [TestCase("v1", ":has(.t1class)", true, ExpectedResult = typeof(IEnumerator))]
+        [TestCase("v2", ":has(.t1class)", false, ExpectedResult = typeof(IEnumerator))]
+        [TestCase("v1", ":has(> .t1class)", false, ExpectedResult = typeof(IEnumerator))]
+        [TestCase("v1v1", ":has(> .t1class)", true, ExpectedResult = typeof(IEnumerator))]
+        [TestCase("v1", ":has(> text)", true, ExpectedResult = typeof(IEnumerator))]
+        [TestCase("v1", ":has(>text)", true, ExpectedResult = typeof(IEnumerator))]
+        [TestCase("v1", "view:has(.vv1class .t3class)", true, ExpectedResult = typeof(IEnumerator))]
+        [TestCase("v1", ":has(> .vv1class > .t3class)", true, ExpectedResult = typeof(IEnumerator))]
+        [TestCase("v1", ":has(> .vv1class > .t3class + .t4class)", true, ExpectedResult = typeof(IEnumerator))]
+        [TestCase("v1", ":has(> .vv1class .t9class)", false, ExpectedResult = typeof(IEnumerator))]
+        [TestCase("v1", ":has(.zzz, .t1class)", true, ExpectedResult = typeof(IEnumerator))]
+        [TestCase("v1", ":has(.zzz , .yyy)", false, ExpectedResult = typeof(IEnumerator))]
+        [TestCase("v1", ":not(:has(.t1class))", false, ExpectedResult = typeof(IEnumerator))]
+        [TestCase("v2", ":not(:has(.t1class))", true, ExpectedResult = typeof(IEnumerator))]
+        [TestCase("v1", ":has(:is(.zzz, .t2class))", true, ExpectedResult = typeof(IEnumerator))]
+        [TestCase("v1", ":has(text:empty)", true, ExpectedResult = typeof(IEnumerator))]
+        [TestCase("v2", ":has(text:empty)", false, ExpectedResult = typeof(IEnumerator))]
+        [TestCase("v1v1", ":has(:nth-child(4))", true, ExpectedResult = typeof(IEnumerator))]
+        [TestCase("v1v1", ":has(:nth-child(5))", false, ExpectedResult = typeof(IEnumerator))]
+        [TestCase("v1v1", ":has(:nth-child(2n + 1))", true, ExpectedResult = typeof(IEnumerator))]
+        [TestCase("v1", ":has([data-kind~=beta])", true, ExpectedResult = typeof(IEnumerator))]
+        [TestCase("v1", ":has([data-kind~=\"beta gamma\"])", false, ExpectedResult = typeof(IEnumerator))]
+        [TestCase("v1v1t1", ":has(+ .t2class)", true, ExpectedResult = typeof(IEnumerator))]
+        [TestCase("v1v1t1", ":has(+ .t3class)", false, ExpectedResult = typeof(IEnumerator))]
+        [TestCase("v1v1t1", ":has(~ .t4class)", true, ExpectedResult = typeof(IEnumerator))]
+        [TestCase("v1v1t1", ":has(~ .t1class)", false, ExpectedResult = typeof(IEnumerator))]
+        [TestCase("v1v1t4", ":has(~ *)", false, ExpectedResult = typeof(IEnumerator))]
+        [TestCase("v1v1", ":has(~ .vv4class .t2class)", true, ExpectedResult = typeof(IEnumerator))]
+        [TestCase("v1v1", "view:has(> .t1class).vv1class", true, ExpectedResult = typeof(IEnumerator))]
+        [TestCase("v1", ":root > view:has(.t2class):not(:has(.t9class))", true, ExpectedResult = typeof(IEnumerator))]
+        [TestCase("v1v1t1", "text:has(+ text)", true, ExpectedResult = typeof(IEnumerator))]
+        [TestCase("v1t6", "text:has(+ text)", false, ExpectedResult = typeof(IEnumerator))]
+        [TestCase("v1", ":has()", false, ExpectedResult = typeof(IEnumerator))]
         public IEnumerator Matches(string id, string query, bool result)
         {
             yield return null;
@@ -278,6 +317,9 @@ namespace ReactUnity.Tests
         [TestCase("v1v1t4", "*:nth-child(1)", "v1v1", ExpectedResult = typeof(IEnumerator))]
         [TestCase("v1v1t4", ":scope > *:nth-child(1)", "v1", ExpectedResult = typeof(IEnumerator))]
         [TestCase("v1v1t4", ":scope > *:nth-child(2)", null, ExpectedResult = typeof(IEnumerator))]
+        [TestCase("v1v1t4", ":has(> .t4class)", "v1v1", ExpectedResult = typeof(IEnumerator))]
+        [TestCase("v1v1t1", "view:has(.vv3class)", "v1", ExpectedResult = typeof(IEnumerator))]
+        [TestCase("v1v1t1", ":has(~ .v2class)", "v1", ExpectedResult = typeof(IEnumerator))]
         public IEnumerator Closest(string id, string query, string resultId)
         {
             yield return null;

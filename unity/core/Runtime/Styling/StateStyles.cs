@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using ReactUnity.Styling.Rules;
 using UnityEngine;
 
 namespace ReactUnity.Styling
@@ -8,6 +9,17 @@ namespace ReactUnity.Styling
         public HashSet<string> Subscribed { get; } = new HashSet<string>();
         private readonly HashSet<string> States = new HashSet<string>();
         private readonly IReactComponent Component;
+
+        /// <summary>
+        /// Set once a <c>:has()</c> has been evaluated on the element, after which a change below it
+        /// or after it re-resolves it and everything that follows it. It stays set for the element's
+        /// life: the rule that evaluated it may belong to some other element, which a resolve of this
+        /// one would not run again, so clearing it here could miss a dependency.
+        /// </summary>
+        public bool HasAnchor { get; set; }
+
+        /// <summary>Set once a @container rule or a container unit has read this element as its container.</summary>
+        public QueryContainerState QueryContainer { get; set; }
 
         public StateStyles(IReactComponent cmp)
         {
@@ -79,6 +91,8 @@ namespace ReactUnity.Styling
         {
             Subscribed.Clear();
             States.Clear();
+            HasAnchor = false;
+            QueryContainer = null;
         }
     }
 }

@@ -22,6 +22,9 @@ namespace ReactUnity.Styling.Rules
         /// <summary>The cascade layer this rule is in, or null when it is in none.</summary>
         public CascadeLayer Layer { get; private set; }
 
+        /// <summary>The @container this rule is in, set on the leaf alone; the important leaf below it matches through it.</summary>
+        public ContainerQuery ContainerQuery { get; internal set; }
+
         private int RawSpecifity { get; set; } = 0;
         public int Specifity { get; private set; }
 
@@ -243,7 +246,8 @@ namespace ReactUnity.Styling.Rules
                     }
                 }
 
-                if (Parent.Matches(relative, scope)) return true;
+                // A pseudo-element's rules are matched against the originating element, which may be their container.
+                if (Parent.Matches(relative, scope)) return ContainerQuery == null || ContainerQuery.Matches(component, PseudoType != RulePseudoType.None);
                 if (runOnce) return false;
             }
 
@@ -357,6 +361,8 @@ namespace ReactUnity.Styling.Rules
         // Special
         Important = 1000,
         Special = 1001,
+        // Costs a walk of the subtree, so it goes after everything that can rule the element out cheaply.
+        Has = 1900,
         State = 2000,
     }
 
@@ -476,6 +482,10 @@ namespace ReactUnity.Styling.Rules
                     return true;
                 case RuleSelectorPartType.State:
                     return component.StateStyles.GetStateOrSubscribe(Parameter as string);
+                case RuleSelectorPartType.Has:
+                    // A change below or after this element can now change its style, so it is remembered as one to re-resolve then.
+                    component.StateStyles.HasAnchor = true;
+                    return ((HasParameter) Parameter).Matches(component, scope);
                 default:
                     break;
             }
@@ -593,6 +603,132 @@ namespace ReactUnity.Styling.Rules
             if (value is bool b) return b ? "true" : "false";
             if (value is IFormattable f) return f.ToString(null, System.Globalization.CultureInfo.InvariantCulture);
             return value.ToString();
+        }
+    }
+
+    /// <summary>
+    /// The relative selectors of a <c>:has()</c>, compiled to be walked forwards from the element
+    /// being matched: each step names a combinator and the compound the elements it reaches must
+    /// satisfy. The walk stops at the first element that satisfies the last step.
+    /// </summary>
+    public class HasParameter
+    {
+        private struct Step
+        {
+            public char Combinator;
+            public List<RuleSelectorPart> Parts;
+        }
+
+        private readonly List<Step[]> Branches = new List<Step[]>();
+
+        /// <summary>That of the most specific branch, which is what <c>:has()</c> weighs.</summary>
+        public int Specificity { get; private set; }
+
+        /// <summary>
+        /// Reads a relative selector list. A branch that cannot be read is dropped, and an argument
+        /// with nothing left in it matches nothing, which is how an invalid <c>:has()</c> behaves.
+        /// </summary>
+        public static HasParameter Parse(string text)
+        {
+            var result = new HasParameter();
+
+            foreach (var branch in RuleHelpers.SplitSelectorList(text))
+            foreach (var expanded in RuleHelpers.ExpandMatchesAny(branch.Trim()))
+            {
+                var normalized = RuleHelpers.StripZeroSpecificityMarks(RuleHelpers.NormalizeSelector(expanded));
+                if (normalized.Length == 0) continue;
+
+                var steps = new List<Step>();
+                var specificity = 0;
+                var combinator = ' ';
+                var valid = true;
+
+                foreach (var token in normalized.Split(' '))
+                {
+                    if (token.Length == 1 && ">+~".IndexOf(token[0]) >= 0)
+                    {
+                        combinator = token[0];
+                        continue;
+                    }
+
+                    var parts = RuleHelpers.ParseSelector(token);
+                    if (parts == null)
+                    {
+                        valid = false;
+                        break;
+                    }
+
+                    foreach (var part in parts) specificity += RuleHelpers.SpecificityOf(part);
+                    steps.Add(new Step { Combinator = combinator, Parts = parts });
+                    combinator = ' ';
+                }
+
+                if (!valid || steps.Count == 0) continue;
+                result.Branches.Add(steps.ToArray());
+                if (specificity > result.Specificity) result.Specificity = specificity;
+            }
+
+            return result;
+        }
+
+        public bool Matches(IReactComponent anchor, IReactComponent scope)
+        {
+            for (int i = 0; i < Branches.Count; i++)
+                if (MatchStep(Branches[i], 0, anchor, scope)) return true;
+            return false;
+        }
+
+        private static bool MatchStep(Step[] steps, int index, IReactComponent from, IReactComponent scope)
+        {
+            var combinator = steps[index].Combinator;
+            if (combinator == '+' || combinator == '~') return MatchSiblings(steps, index, from, scope, combinator == '~');
+            return MatchDescendants(steps, index, from, scope, combinator == ' ');
+        }
+
+        private static bool MatchDescendants(Step[] steps, int index, IReactComponent from, IReactComponent scope, bool deep)
+        {
+            if (!(from is IContainerComponent container) || container.Children == null) return false;
+
+            var children = container.Children;
+            for (int i = 0; i < children.Count; i++)
+            {
+                var child = children[i];
+                if (child.IsPseudoElement) continue;
+                if (Accepts(steps, index, child, scope)) return true;
+                if (deep && MatchDescendants(steps, index, child, scope, true)) return true;
+            }
+            return false;
+        }
+
+        private static bool MatchSiblings(Step[] steps, int index, IReactComponent from, IReactComponent scope, bool all)
+        {
+            var siblings = from.Parent?.Children;
+            if (siblings == null) return false;
+
+            var start = siblings.IndexOf(from);
+            if (start < 0) return false;
+
+            for (int i = start + 1; i < siblings.Count; i++)
+            {
+                var sibling = siblings[i];
+                if (sibling.IsPseudoElement) continue;
+                if (Accepts(steps, index, sibling, scope)) return true;
+                if (!all) return false;
+            }
+            return false;
+        }
+
+        // Whether the element satisfies this step's compound and, when steps remain, leads on to the rest.
+        private static bool Accepts(Step[] steps, int index, IReactComponent candidate, IReactComponent scope)
+        {
+            var parts = steps[index].Parts;
+            for (int i = 0; i < parts.Count; i++)
+            {
+                var part = parts[i];
+                if (part.Matches(candidate, scope) == part.Negated) return false;
+            }
+
+            return index == steps.Length - 1 || MatchStep(steps, index + 1, candidate, scope);
         }
     }
 

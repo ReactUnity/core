@@ -107,6 +107,8 @@ namespace ReactUnity
             Dispatcher.OnEveryUpdate(UpdateElementsRecursively);
             Dispatcher.OnEveryLateUpdate(LateUpdateElementsRecursively);
             if (CalculatesLayout) Dispatcher.OnEveryLateUpdate(CalculateLayoutRecursively);
+            // Without a layout pass of its own, a container resized by the framework is seen a frame later.
+            else Dispatcher.OnEveryLateUpdate(() => Style.RestyleResizedContainers());
 
 #if UNITY_EDITOR
             // Runtime contexts are disposed on reload (by OnDisable), but this is required for editor contexts
@@ -118,9 +120,18 @@ namespace ReactUnity
         {
             using (ReactProfiling.Layout.Auto())
             {
-                Host?.Layout.CalculateLayout();
-                foreach (var dr in DetachedRoots) dr.Layout.CalculateLayout();
+                CalculateLayout();
+
+                // A container query answered by this layout may change the layout. Two rounds settle
+                // the ordinary case; one whose size depends on its own contents can oscillate, and is left where it lands.
+                for (var pass = 0; pass < 2 && Style.RestyleResizedContainers(); pass++) CalculateLayout();
             }
+        }
+
+        private void CalculateLayout()
+        {
+            Host?.Layout.CalculateLayout();
+            foreach (var dr in DetachedRoots) dr.Layout.CalculateLayout();
         }
 
         public void UpdateElementsRecursively()

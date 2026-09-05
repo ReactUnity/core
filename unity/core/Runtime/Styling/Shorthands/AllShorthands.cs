@@ -23,6 +23,7 @@ namespace ReactUnity.Styling.Shorthands
         internal static readonly StyleShorthand BorderLeft = new BorderShorthand("border-left", BorderShorthand.BorderSide.Left);
         internal static readonly StyleShorthand Flex = new FlexShorthand("flex");
         internal static readonly StyleShorthand FlexFlow = new FlexFlowShorthand("flex-flow");
+        internal static readonly StyleShorthand Container = new ContainerShorthand("container");
         internal static readonly StyleShorthand Font = new FontShorthand("font");
         internal static readonly StyleShorthand Background = new BackgroundShorthand("background");
         internal static readonly StyleShorthand BackgroundPosition = new BackgroundPositionShorthand("background-position", StyleProperties.backgroundPositionX, StyleProperties.backgroundPositionY);
@@ -71,6 +72,7 @@ namespace ReactUnity.Styling.Shorthands
             { "borderImage", BorderImage },
             { "flex", Flex },
             { "flexFlow", FlexFlow },
+            { "container", Container },
             { "font", Font },
             { "background", Background },
             { "backgroundPosition", BackgroundPosition },

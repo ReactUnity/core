@@ -221,7 +221,7 @@ namespace ReactUnity.Styling.Converters
 
         public LengthConverter() : base(
             UnitValueMap,
-            WithViewportUnits(new Dictionary<string, Func<float, object>>
+            WithContainerUnits(WithViewportUnits(new Dictionary<string, Func<float, object>>
             {
                 { "rem", x => new ComputedRootRelative(x, ComputedRootRelative.RootValueType.Rem) },
                 { "em", x => new ComputedFontSize(x) },
@@ -230,7 +230,7 @@ namespace ReactUnity.Styling.Converters
                 { "rlh", x => new ComputedFontProperty(x, ComputedFontProperty.FontPropertyType.RootLineHeight) },
                 { "ch", x => new ComputedFontProperty(x, ComputedFontProperty.FontPropertyType.CharacterWidth) },
                 { "ex", x => new ComputedFontProperty(x, ComputedFontProperty.FontPropertyType.XHeight) },
-            })
+            }))
         )
         { }
 
@@ -252,6 +252,16 @@ namespace ReactUnity.Styling.Converters
             return map;
         }
 
+        /// <summary>The container units. `cqi`/`cqb` assume horizontal writing, like `vi`/`vb`.</summary>
+        internal static Dictionary<string, Func<float, object>> WithContainerUnits(Dictionary<string, Func<float, object>> map)
+        {
+            map["cqw"] = map["cqi"] = x => new ComputedContainerRelative(x / 100f, ComputedContainerRelative.Axis.Inline);
+            map["cqh"] = map["cqb"] = x => new ComputedContainerRelative(x / 100f, ComputedContainerRelative.Axis.Block);
+            map["cqmin"] = x => new ComputedContainerRelative(x / 100f, ComputedContainerRelative.Axis.Min);
+            map["cqmax"] = x => new ComputedContainerRelative(x / 100f, ComputedContainerRelative.Axis.Max);
+            return map;
+        }
+
         public override string StringifyTyped(float value) => value + "px";
     }
 
@@ -259,7 +269,7 @@ namespace ReactUnity.Styling.Converters
     {
         public FontSizeConverter() : base(
             LengthConverter.UnitValueMap,
-            LengthConverter.WithViewportUnits(new Dictionary<string, Func<float, object>>
+            LengthConverter.WithContainerUnits(LengthConverter.WithViewportUnits(new Dictionary<string, Func<float, object>>
             {
                 { "rem", x => new ComputedRootRelative(x, ComputedRootRelative.RootValueType.Rem) },
                 { "em", x => new ComputedFontSize(x) },
@@ -268,7 +278,7 @@ namespace ReactUnity.Styling.Converters
                 { "rlh", x => new ComputedFontProperty(x, ComputedFontProperty.FontPropertyType.RootLineHeight) },
                 { "ch", x => new ComputedFontProperty(x, ComputedFontProperty.FontPropertyType.CharacterWidth) },
                 { "ex", x => new ComputedFontProperty(x, ComputedFontProperty.FontPropertyType.XHeight) },
-            })
+            }))
         )
         { }
 

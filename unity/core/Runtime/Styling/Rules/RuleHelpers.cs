@@ -41,15 +41,9 @@ namespace ReactUnity.Styling.Rules
 
         public static Regex SplitSelectorRegex = new Regex("\\s+");
 
-        // Whitespace inside an An+B argument, or around a comma, would otherwise split the compound
-        // once the normalized selector is broken on spaces. `:nth-child(2n + 1 of .x)` keeps its
-        // spaces, because the `of` form is not read and rewriting it would only hide that.
-        public static Regex NthChildRegex = new Regex(@":(nth-(?:last-)?(?:child|of-type))\(([^)]*)\)", RegexOptions.IgnoreCase);
-        private static readonly Regex CommaSpaceRegex = new Regex(@"\s*,\s*");
-
-        // Stands in for a space inside `[...]` while the selector is split on whitespace, so
-        // `[data-x="a b"]` and the `i` flag in `[data-x=a i]` survive to ParseSelector.
-        private const char AttributeSpace = '\u0003';
+        // Stands in for a space inside `[...]` or `(...)` while the selector is split on whitespace,
+        // so `[data-x="a b"]`, `:not(.a, .b)` and `:has(> .a .b)` reach ParseSelector in one piece.
+        private const char InnerSpace = '\u0003';
 
         private static readonly Dictionary<string, RuleSelectorPartType> NthPartTypes = new Dictionary<string, RuleSelectorPartType>(StringComparer.InvariantCultureIgnoreCase)
         {
@@ -94,6 +88,7 @@ namespace ReactUnity.Styling.Rules
 
 
             var paranCount = 0;
+            var parenOpened = false;
             var type = RuleSelectorPartType.Tag;
             var acc = new StringBuilder();
             var paranContent = new StringBuilder();
@@ -104,14 +99,19 @@ namespace ReactUnity.Styling.Rules
             {
                 var raw = acc.ToString();
                 var nm = raw.Trim('"');
-                var ignore = type == RuleSelectorPartType.None || string.IsNullOrWhiteSpace(nm)
+                // A parenthesis after no pseudo-class name -- a nested at-rule's condition, say -- is not a
+                // selector. Left as an empty compound it would match everything, so it matches nothing.
+                var invalid = parenOpened && type != RuleSelectorPartType.Special;
+                var ignore = invalid || type == RuleSelectorPartType.None || string.IsNullOrWhiteSpace(nm)
                     || nm == "*" || nm == ">" || nm == "~" || nm == "+" || nm == "!";
-                if (!ignore)
+                if (invalid) list.Add(new RuleSelectorPart() { Type = RuleSelectorPartType.None });
+                else if (!ignore)
                 {
                     if (type == RuleSelectorPartType.Special)
                     {
-                        var paran = paranContent.ToString();
-                        if (nm == "not")
+                        var paran = paranContent.ToString().Replace(InnerSpace, ' ');
+                        if (nm == "has") list.Add(new RuleSelectorPart() { Type = RuleSelectorPartType.Has, Negated = negated, Parameter = HasParameter.Parse(paran) });
+                        else if (nm == "not")
                         {
                             // :not(A, B) matches what is neither, so every branch lands negated in this compound.
                             foreach (var arg in SplitSelectorList(paran))
@@ -140,7 +140,7 @@ namespace ReactUnity.Styling.Rules
                         object parameter = null;
                         if (type == RuleSelectorPartType.Attribute)
                         {
-                            parameter = AttributeParameter.Parse(raw.Replace(AttributeSpace, ' '), out nm);
+                            parameter = AttributeParameter.Parse(raw.Replace(InnerSpace, ' '), out nm);
                             if (nm.FastStartsWith("data-")) nm = nm.Substring(5);
                         }
                         list.Add(new RuleSelectorPart() { Name = nm, Type = type, Negated = negated, Parameter = parameter });
@@ -159,6 +159,7 @@ namespace ReactUnity.Styling.Rules
 
                 acc.Clear();
                 paranContent.Clear();
+                parenOpened = false;
                 type = nextType;
             }
 
@@ -190,6 +191,7 @@ namespace ReactUnity.Styling.Rules
                 else if (ch == '(')
                 {
                     paranCount++;
+                    parenOpened = true;
                     if (paranCount > 1) paranContent.Append(ch);
                 }
                 else if (ch == ')')
@@ -227,6 +229,9 @@ namespace ReactUnity.Styling.Rules
             {
                 case RuleSelectorPartType.Id:
                     return 1 << 12;
+
+                case RuleSelectorPartType.Has:
+                    return part.Parameter is HasParameter has ? has.Specificity : 0;
 
                 case RuleSelectorPartType.Empty:
                 case RuleSelectorPartType.Text:
@@ -608,31 +613,13 @@ namespace ReactUnity.Styling.Rules
 
             var prev = ' ';
             var inAttribute = false;
+            var depth = 0;
             var quote = '\0';
             for (int i = 0; i < count; i++)
             {
                 var ch = selector[i];
 
-                if (inAttribute)
-                {
-                    // An attribute's value may hold a combinator character or a space; neither is one here.
-                    if (quote != '\0') { if (ch == quote) quote = '\0'; }
-                    else if (ch == '"' || ch == '\'') quote = ch;
-                    else if (ch == ']') inAttribute = false;
-
-                    spaced.Append(char.IsWhiteSpace(ch) ? AttributeSpace : ch);
-                    prev = ch;
-                    continue;
-                }
-                else if (ch == '[')
-                {
-                    inAttribute = true;
-                    if (prev == ':') spaced.Append(prev);
-                    spaced.Append(ch);
-                    prev = ch;
-                    continue;
-                }
-                else if (ch == '\\')
+                if (ch == '\\')
                 {
                     // Re-emitted one backslash per character, which is the form ParseSelector
                     // reads as a literal. The hexadecimal form is resolved here rather than
@@ -647,6 +634,30 @@ namespace ReactUnity.Styling.Rules
                     }
 
                     prev = '\0';
+                    continue;
+                }
+                else if (inAttribute || depth > 0)
+                {
+                    // Inside brackets a combinator character or a space belongs to the argument, which
+                    // is read again on its own by whoever takes it.
+                    if (quote != '\0') { if (ch == quote) quote = '\0'; }
+                    else if (ch == '"' || ch == '\'') quote = ch;
+                    else if (inAttribute) { if (ch == ']') inAttribute = false; }
+                    else if (ch == '[') inAttribute = true;
+                    else if (ch == '(') depth++;
+                    else if (ch == ')') depth--;
+
+                    spaced.Append(char.IsWhiteSpace(ch) ? InnerSpace : ch);
+                    prev = ch;
+                    continue;
+                }
+                else if (ch == '[' || ch == '(')
+                {
+                    if (ch == '[') inAttribute = true;
+                    else depth++;
+                    if (prev == ':') spaced.Append(prev);
+                    spaced.Append(ch);
+                    prev = ch;
                     continue;
                 }
                 else if (ch == '>' || ch == '+' || ch == '~')
@@ -674,12 +685,14 @@ namespace ReactUnity.Styling.Rules
                 }
             }
 
-            var collapsed = CommaSpaceRegex.Replace(SplitSelectorRegex.Replace(spaced.ToString().Trim(), " "), ",");
+            return SplitSelectorRegex.Replace(spaced.ToString().Trim(), " ");
+        }
 
-            return NthChildRegex.Replace(collapsed, m =>
-                m.Groups[2].Value.IndexOf(" of ", StringComparison.OrdinalIgnoreCase) >= 0
-                    ? m.Value
-                    : ":" + m.Groups[1].Value + "(" + m.Groups[2].Value.Replace(" ", "") + ")");
+        /// <summary>The marks <see cref="ExpandMatchesAny"/> leaves around an inlined <c>:where()</c>, taken out.</summary>
+        public static string StripZeroSpecificityMarks(string selector)
+        {
+            if (selector.IndexOf(ZeroSpecificityOpen) < 0) return selector;
+            return selector.Replace(ZeroSpecificityOpen.ToString(), "").Replace(ZeroSpecificityClose.ToString(), "");
         }
     }
 }

@@ -110,7 +110,7 @@ namespace ReactUnity.Styling
             Stylesheet parsed;
             using (ReactProfiling.ParseStyles.Auto())
             {
-                parsed = Context.Parser.Parse(style ?? "");
+                parsed = Context.Parser.Parse(ContainerQuery.PrepareForParser(style ?? ""));
             }
 
             Parsed = parsed;
@@ -178,7 +178,7 @@ namespace ReactUnity.Styling
             }
         }
 
-        private void ProcessRules(IEnumerable<IStylesheetNode> children, MediaQueryList media, string mediaCondition, string layerPath)
+        private void ProcessRules(IEnumerable<IStylesheetNode> children, MediaQueryList media, string mediaCondition, string layerPath, ContainerQuery container = null)
         {
             foreach (var child in children)
             {
@@ -190,11 +190,19 @@ namespace ReactUnity.Styling
 
                     // A nested @media matches only when both conditions do, same as joining them with "and".
                     var condition = match.Groups[1].Value;
+
+                    // A @container block, dressed as @media so the parser keeps it wherever it is nested.
+                    if (ContainerQuery.TryDecodePrelude(condition, out var prelude))
+                    {
+                        ProcessRules(mediaRule.Rules, media, mediaCondition, layerPath, ContainerQuery.Parse(prelude, container));
+                        continue;
+                    }
+
                     if (!string.IsNullOrWhiteSpace(mediaCondition)) condition = mediaCondition.Trim() + " and " + condition.Trim();
 
                     var mql = MediaQueryList.Create(Context.MediaProvider, condition, Context.Context);
 
-                    ProcessRules(mediaRule.Rules, mql, condition, layerPath);
+                    ProcessRules(mediaRule.Rules, mql, condition, layerPath, container);
 
                     MediaQueries.Add(mql);
                 }
@@ -203,13 +211,13 @@ namespace ReactUnity.Styling
                     // The condition is evaluated here rather than through ExCSS, which only knows
                     // which properties and values the web supports.
                     if (SupportsCondition.Evaluate(supportsRule.ConditionText))
-                        ProcessRules(((IGroupingRule) supportsRule).Rules, media, mediaCondition, layerPath);
+                        ProcessRules(((IGroupingRule) supportsRule).Rules, media, mediaCondition, layerPath, container);
                 }
                 else if (child is ILayerRule layerRule)
                 {
                     // The block's rules are ordinary rules; only their place in the cascade differs,
                     // and CollectLayers has already worked that out.
-                    ProcessRules(layerRule.Rules, media, mediaCondition, Layers.Qualify(layerPath, layerRule));
+                    ProcessRules(layerRule.Rules, media, mediaCondition, Layers.Qualify(layerPath, layerRule), container);
                 }
                 else if (child is IPropertyRule propertyRule)
                 {
@@ -228,7 +236,7 @@ namespace ReactUnity.Styling
                 }
                 else if (child is StyleRule str)
                 {
-                    AddStyleRule(str, media, mediaCondition, layerPath);
+                    AddStyleRule(str, media, mediaCondition, layerPath, container);
                 }
             }
         }
@@ -238,14 +246,14 @@ namespace ReactUnity.Styling
         /// resolved against their parent's. They come after the parent's own declarations, as in
         /// CSS, and share its layer and media context.
         /// </summary>
-        private void AddStyleRule(StyleRule rule, MediaQueryList media, string mediaCondition, string layerPath)
+        private void AddStyleRule(StyleRule rule, MediaQueryList media, string mediaCondition, string layerPath, ContainerQuery container)
         {
-            // An at-rule that cannot nest inside a style rule -- @container, for one -- is parsed as
+            // An at-rule that cannot nest inside a style rule -- @scope, for one -- is parsed as
             // a style rule with no selector at all, and a selectorless rule would match every
             // element. Dropping it leaves the block ignored, which is what it was before.
             if (!string.IsNullOrWhiteSpace(rule.SelectorText))
             {
-                var dcl = Context.StyleTree.AddStyle(rule, ImportanceOffset, media, Scope, Layers.Get(layerPath));
+                var dcl = Context.StyleTree.AddStyle(rule, ImportanceOffset, media, Scope, Layers.Get(layerPath), container);
                 Declarations.AddRange(dcl);
             }
 
@@ -253,8 +261,8 @@ namespace ReactUnity.Styling
             // implicit rule with this one's selector, so the ordinary path handles it.
             foreach (var nested in rule.NestedRules)
             {
-                if (nested is StyleRule nestedRule) AddStyleRule(nestedRule, media, mediaCondition, layerPath);
-                else ProcessRules(new IStylesheetNode[] { nested }, media, mediaCondition, layerPath);
+                if (nested is StyleRule nestedRule) AddStyleRule(nestedRule, media, mediaCondition, layerPath, container);
+                else ProcessRules(new IStylesheetNode[] { nested }, media, mediaCondition, layerPath, container);
             }
         }
 

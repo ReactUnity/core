@@ -1,0 +1,100 @@
+---
+title: Container Queries
+---
+
+CSS container queries let a rule depend on the size or the style of an ancestor rather than of the whole screen. How to use them can be learned at [MDN Docs](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_containment/Container_queries).
+
+An element becomes a query container with `container-type`, and can be given a name with `container-name`, or both at once with the `container` shorthand. A `@container` rule then applies its declarations to elements that have such an ancestor, when the condition holds for it.
+
+```css
+.card {
+  container: card / inline-size;
+}
+
+@container card (min-width: 400px) {
+  .card .title {
+    font-size: 24px;
+  }
+}
+```
+
+### Container types {/*container-types*/}
+
+| Value         | Description                                                        |
+| ------------- | ------------------------------------------------------------------ |
+| `normal`      | The default. The element is not a size container, but can still answer style queries. |
+| `inline-size` | Queries on the width can read this element.                        |
+| `size`        | Queries on the width, the height, the aspect ratio and the orientation can read this element. |
+
+The size read is the content box, without padding and border. Unlike a browser, ReactUnity does not apply size containment: a container's own size may still depend on its contents. That is what lets `container-type: size` be applied freely, and it also means a layout in which a container's size depends on what its query changes may not settle; such a layout is left where the second pass lands.
+
+A query is answered by the nearest ancestor that is a container of a kind able to answer it. A `(height ...)` query skips an `inline-size` container and keeps looking upwards. A query with a name only considers ancestors whose `container-name` includes it. An element with no eligible ancestor never matches.
+
+### Size queries {/*size-queries*/}
+
+Features: `width`, `height`, `inline-size`, `block-size`, `aspect-ratio` and `orientation`. Both the `min-`/`max-` prefixed form and the range form are accepted, and conditions combine with `and`, `or`, `not` and parentheses.
+
+```css
+@container (min-width: 400px) { ... }
+@container (width > 400px) { ... }
+@container (400px <= width < 800px) { ... }
+@container sidebar (orientation: portrait) { ... }
+@container (aspect-ratio > 16/9) and (height >= 200px) { ... }
+@container not (width < 300px) { ... }
+```
+
+A length in a condition is resolved against the container, so `20em` is twenty times the container's font size.
+
+### Style queries {/*style-queries*/}
+
+`style()` compares a property of the container. A custom property compares as the text it was declared with, and `style(--theme)` alone holds when the property is set to anything. A regular property compares its computed value with the given one.
+
+```css
+.panel {
+  --theme: dark;
+}
+
+@container style(--theme: dark) {
+  .panel .title {
+    color: white;
+  }
+}
+
+@container style(--theme) and (width > 300px) { ... }
+```
+
+Every element can answer a style query, whatever its `container-type`, so an unnamed style query reads the parent. Shorthand properties such as `border` cannot be queried; query one of the properties they set instead.
+
+### Container units {/*container-units*/}
+
+`cqw`, `cqh`, `cqi`, `cqb`, `cqmin` and `cqmax` are a percentage of the nearest size container's content box on that axis. `cqi` and `cqb` mean the same as `cqw` and `cqh`. Each axis looks for its own container: an `inline-size` container answers `cqw`, while `cqh` comes from the nearest `size` container above. Without any container, the units fall back to the viewport, the way `vw` and `vh` behave.
+
+```css
+.card {
+  container-type: inline-size;
+}
+
+.card .title {
+  font-size: 5cqw;
+  padding: 2cqmin;
+}
+```
+
+### Nesting {/*nesting*/}
+
+A `@container` rule can be nested in a style rule, in a `@media` or `@supports` block, in a `@layer`, and in another `@container`. Nested container queries must all hold.
+
+```css
+.title {
+  font-size: 16px;
+
+  @container card (min-width: 400px) {
+    font-size: 24px;
+  }
+}
+```
+
+### Notes {/*notes*/}
+
+- In UGUI, a container that changes size is re-queried in the same frame, right after layout. In UIToolkit, where layout belongs to the framework, the change is seen a frame later.
+- A style query compares a custom property's declared text after collapsing whitespace, so `style(--gap: 4px)` does not match a value written as `calc(2px * 2)`.

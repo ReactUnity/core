@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using ExCSS;
+using ReactUnity.Helpers.Visitors;
 using ReactUnity.Styling.Rules;
 using ReactUnity.Types;
 
@@ -23,12 +24,63 @@ namespace ReactUnity.Styling
         public readonly List<Dictionary<string, RegisteredProperty>> RegisteredProperties = new List<Dictionary<string, RegisteredProperty>>();
         public readonly List<StyleSheet> StyleSheets = new List<StyleSheet>();
 
+        /// <summary>Every element a size query or a container unit has measured, checked after each layout.</summary>
+        internal readonly List<IReactComponent> SizeContainers = new List<IReactComponent>();
+
         public StyleContext(ReactContext context)
         {
             Context = context;
             Parser = Context.StyleParser;
             MediaProvider = Context.MediaProvider;
             StyleTree = new StyleTree();
+        }
+
+        /// <summary>
+        /// Restyles the subtree of every tracked container whose content box changed since it was
+        /// last read, and applies the result at once so that the layout can be run again on it.
+        /// Returns whether any did.
+        /// </summary>
+        internal bool RestyleResizedContainers()
+        {
+            List<IReactComponent> changed = null;
+
+            for (int i = SizeContainers.Count - 1; i >= 0; i--)
+            {
+                var container = SizeContainers[i];
+                var state = container.StateStyles?.QueryContainer;
+
+                if (container.Destroyed || state == null || !state.TracksSize)
+                {
+                    SizeContainers.RemoveAt(i);
+                    continue;
+                }
+
+                ContainerQuery.GetContentSize(container, out var width, out var height);
+                if (width == state.Width && height == state.Height) continue;
+
+                state.Width = width;
+                state.Height = height;
+                (changed ?? (changed = new List<IReactComponent>())).Add(container);
+            }
+
+            if (changed == null) return false;
+
+            // A changed container inside another is restyled along with it.
+            foreach (var container in changed)
+            {
+                if (HasAncestorIn(container, changed)) continue;
+                container.MarkForStyleResolving(true);
+                container.Accept(UpdateVisitor.Instance);
+            }
+
+            return true;
+        }
+
+        private static bool HasAncestorIn(IReactComponent component, List<IReactComponent> set)
+        {
+            for (var parent = component.Parent; parent != null; parent = parent.Parent)
+                if (set.Contains(parent)) return true;
+            return false;
         }
 
         public void ResolveStyle(IReactComponent scope = null)

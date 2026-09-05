@@ -9,6 +9,7 @@ import {
   BackgroundSize,
   BorderImageRepeat,
   BorderStyle,
+  ContainerType,
   CursorType,
   FontStyles,
   FontVariant,
@@ -35,6 +36,8 @@ export interface RenderStyle {
   visibility?: Visibility | boolean;
   cursor?: CursorType;
   pointerEvents?: PointerEvents;
+  containerType?: ContainerType;
+  containerName?: string;
   content?: SafeString;
   appearance?: Appearance;
   navigation?: NavigationMode;

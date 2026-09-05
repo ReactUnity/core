@@ -335,6 +335,8 @@ namespace Yoga
         public float LayoutBottom => Native.YGNodeLayoutGetBottom(_ygNode);
         public float LayoutWidth => Native.YGNodeLayoutGetWidth(_ygNode);
         public float LayoutHeight => Native.YGNodeLayoutGetHeight(_ygNode);
+        public float LayoutGetPadding(YogaEdge edge) => Native.YGNodeLayoutGetPadding(_ygNode, edge);
+        public float LayoutGetBorder(YogaEdge edge) => Native.YGNodeLayoutGetBorder(_ygNode, edge);
         public YogaDirection LayoutDirection => Native.YGNodeLayoutGetDirection(_ygNode);
         public bool LayoutHadOverflow => Native.YGNodeLayoutGetHadOverflow(_ygNode);
 

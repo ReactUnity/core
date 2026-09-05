@@ -24,6 +24,9 @@ namespace ReactUnity.Styling
         public NodeStyle Parent { get; private set; }
         public IRevertCalculator RevertCalculator { get; }
 
+        /// <summary>The element this is the style of, when it is one's resolved style rather than a bare style bag.</summary>
+        public IReactComponent Component { get; }
+
         #region Getters
 
         public int order => GetStyleValue(LayoutProperties.Order);
@@ -35,6 +38,8 @@ namespace ReactUnity.Styling
         public ICssValueList<Types.Cursor> cursor => GetStyleValue(StyleProperties.cursor);
         public Isolation isolation => GetStyleValue(StyleProperties.isolation);
         public PointerEvents pointerEvents => GetStyleValue(StyleProperties.pointerEvents);
+        public ContainerType containerType => GetStyleValue(StyleProperties.containerType);
+        public string containerName => GetStyleValue(StyleProperties.containerName);
         public YogaValue2 borderTopLeftRadius => GetStyleValue(StyleProperties.borderTopLeftRadius);
         public YogaValue2 borderTopRightRadius => GetStyleValue(StyleProperties.borderTopRightRadius);
         public YogaValue2 borderBottomLeftRadius => GetStyleValue(StyleProperties.borderBottomLeftRadius);
@@ -139,10 +144,12 @@ namespace ReactUnity.Styling
             ReactContext context,
             NodeStyle fallback = null,
             List<IDictionary<IStyleProperty, object>> cssStyles = null,
-            IRevertCalculator revertCalculator = null
+            IRevertCalculator revertCalculator = null,
+            IReactComponent component = null
         )
         {
             Context = context;
+            Component = component;
             StyleMap = new Dictionary<string, object>();
             Fallback = fallback;
             CssStyles = cssStyles;

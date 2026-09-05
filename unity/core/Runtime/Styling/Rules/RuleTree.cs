@@ -23,12 +23,12 @@ namespace ReactUnity.Styling.Rules
     public class StyleTree : RuleTree<StyleData>
     {
         public List<Tuple<RuleTreeNode<StyleData>, Dictionary<IStyleProperty, object>>> AddStyle
-            (StyleRule rule, int importanceOffset = 0, MediaQueryList mql = null, IReactComponent scope = null, CascadeLayer layer = null)
+            (StyleRule rule, int importanceOffset = 0, MediaQueryList mql = null, IReactComponent scope = null, CascadeLayer layer = null, ContainerQuery container = null)
         {
             // A nested rule's selector was resolved by the parser rather than lifted from the
             // source, so it has no stylesheet text of its own to read back.
             var selectorText = rule.Selector.StylesheetText?.Text ?? rule.SelectorText;
-            var added = AddSelector(selectorText, importanceOffset, mql, scope, layer);
+            var added = AddSelector(selectorText, importanceOffset, mql, scope, layer, container);
             var pairs = new List<Tuple<RuleTreeNode<StyleData>, Dictionary<IStyleProperty, object>>>();
 
             foreach (var leaf in added)
@@ -98,6 +98,12 @@ namespace ReactUnity.Styling.Rules
         public List<RuleTreeNode<T>> LeafNodes = new List<RuleTreeNode<T>>();
         public List<RuleTreeNode<T>> BeforeNodes = new List<RuleTreeNode<T>>();
         public List<RuleTreeNode<T>> AfterNodes = new List<RuleTreeNode<T>>();
+
+        /// <summary>
+        /// Whether any rule here uses <c>:has()</c>. Until one does, a change to an element cannot
+        /// restyle anything before or above it, and the components skip looking.
+        /// </summary>
+        public bool ContainsHasSelector { get; private set; }
 
         public IEnumerable<RuleTreeNode<T>> GetMatchingRules(IReactComponent component)
         {
@@ -181,7 +187,7 @@ namespace ReactUnity.Styling.Rules
             return false;
         }
 
-        public List<RuleTreeNode<T>> AddSelector(string selectorText, int importanceOffset = 0, MediaQueryList mql = null, IReactComponent scope = null, CascadeLayer layer = null)
+        public List<RuleTreeNode<T>> AddSelector(string selectorText, int importanceOffset = 0, MediaQueryList mql = null, IReactComponent scope = null, CascadeLayer layer = null, ContainerQuery container = null)
         {
             var splits = RuleHelpers.SplitSelectorList(selectorText);
 
@@ -193,6 +199,8 @@ namespace ReactUnity.Styling.Rules
                 var leaf = AddChildCascading("** " + selector, mql, scope, importanceOffset, layer);
 
                 if (leaf == null) continue;
+                leaf.ContainerQuery = container;
+                if (selector.IndexOf(":has(", StringComparison.OrdinalIgnoreCase) >= 0) ContainsHasSelector = true;
 
                 // What an inlined :where() argument contributed comes back off before the leaf is
                 // sorted in, and the important leaf that hangs off it inherits the discount.

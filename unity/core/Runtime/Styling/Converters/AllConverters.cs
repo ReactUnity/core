@@ -28,6 +28,7 @@ namespace ReactUnity.Styling.Converters
         static public StyleConverterBase LchChromaConverter = new LchChromaConverter();
 
         static public StyleConverterBase UrlConverter = new UrlConverter();
+        static public StyleConverterBase ContainerNameConverter = new ContainerNameConverter();
         static public StyleConverterBase YogaValueConverter = new YogaValueConverter();
         static public StyleConverterBase YogaValue2Converter = new YogaValue2.Converter();
         static public StyleConverterBase BorderRadiusConverter = new YogaValue2.Converter(false, ' ', true);

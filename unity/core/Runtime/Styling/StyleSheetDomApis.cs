@@ -1,6 +1,7 @@
 using System;
 using System.Linq;
 using ExCSS;
+using ReactUnity.Styling.Rules;
 
 namespace ReactUnity.Styling
 {
@@ -105,6 +106,8 @@ namespace ReactUnity.Styling
 
         public void insertRule(string text, int index = 0)
         {
+            text = ContainerQuery.PrepareForParser(text);
+
             if (Original is Stylesheet ss)
             {
                 ss.Insert(text, index);
@@ -124,6 +127,8 @@ namespace ReactUnity.Styling
 
         public void appendRule(string text)
         {
+            text = ContainerQuery.PrepareForParser(text);
+
             if (Original is Stylesheet ss)
             {
                 var len = ss.Children.Count();

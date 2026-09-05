@@ -213,7 +213,8 @@ namespace ReactUnity
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         protected void StyleChanged(IStyleProperty key, object value, ReactiveDictionary<IStyleProperty, object> style)
         {
-            MarkForStyleResolving(key == null || key.inherited);
+            // Container type and name are not inherited, but every descendant's @container reads them.
+            MarkForStyleResolving(key == null || key.inherited || key == StyleProperties.containerType || key == StyleProperties.containerName);
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -487,7 +488,7 @@ namespace ReactUnity
             cssStyles.Add(Style);
             for (int i = importantIndex; i < matchingRules.Count; i++) cssStyles.AddRange(matchingRules[i].Data?.Rules);
 
-            var resolvedStyle = new NodeStyle(Context, null, cssStyles, RevertCalculator);
+            var resolvedStyle = new NodeStyle(Context, null, cssStyles, RevertCalculator, this);
             resolvedStyle.UpdateParent(Parent?.ComputedStyle);
 
             StyleState.SetCurrent(resolvedStyle);
@@ -497,7 +498,8 @@ namespace ReactUnity
             {
                 var inheritedChanges = ComputedStyle.HasInheritedChanges;
 
-                if (inheritedChanges || recursive)
+                // A style() query below reads this element's style, so any change to it is theirs too.
+                if (inheritedChanges || recursive || StateStyles.QueryContainer?.HasStyleDependents == true)
                 {
                     BeforeRules = Context.Style.StyleTree.GetMatchingBefore(this).ToList();
                     if (BeforeRules.Count > 0 &&
@@ -539,6 +541,44 @@ namespace ReactUnity
                 resolve = resolve || child == this;
                 if (resolve) child.MarkForStyleResolving(recursive);
             }
+
+            if (Context.Style.StyleTree.ContainsHasSelector) MarkHasAnchors();
+        }
+
+        /// <summary>
+        /// A <c>:has()</c> anchor is styled by what is under it and after it, so a change here has
+        /// to reach every flagged ancestor and every flagged earlier sibling on the way up. Each
+        /// one is marked along with what follows it, as its own change would be, since a rule may
+        /// go on from the anchor to a descendant or a later sibling.
+        /// </summary>
+        private void MarkHasAnchors()
+        {
+            IReactComponent node = this;
+            while (node.Parent != null)
+            {
+                var siblings = node.Parent.Children;
+                if (siblings == null)
+                {
+                    if (node.StateStyles?.HasAnchor == true) node.MarkForStyleResolving(true);
+                }
+                else
+                {
+                    var first = -1;
+                    for (int i = 0; i < siblings.Count; i++)
+                    {
+                        var sibling = siblings[i];
+                        if (first < 0 && sibling.StateStyles?.HasAnchor == true) first = i;
+                        if (sibling == node) break;
+                    }
+
+                    if (first >= 0)
+                        for (int i = first; i < siblings.Count; i++) siblings[i].MarkForStyleResolving(true);
+                }
+
+                node = node.Parent;
+            }
+
+            if (node.StateStyles?.HasAnchor == true) node.MarkForStyleResolving(true);
         }
 
         protected abstract void ApplyStylesSelf();

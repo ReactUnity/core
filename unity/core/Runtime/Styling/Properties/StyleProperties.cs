@@ -23,6 +23,8 @@ namespace ReactUnity.Styling
         public static readonly ValueListStyleProperty<Cursor> cursor = new ValueListStyleProperty<Cursor>("cursor");
         public static readonly StyleProperty<Isolation> isolation = new StyleProperty<Isolation>("isolation", Isolation.Auto);
         public static readonly StyleProperty<PointerEvents> pointerEvents = new StyleProperty<PointerEvents>("pointerEvents", PointerEvents.Auto);
+        public static readonly StyleProperty<ContainerType> containerType = new StyleProperty<ContainerType>("containerType", ContainerType.Normal);
+        public static readonly StyleProperty<string> containerName = new StyleProperty<string>("containerName", null, false, false, AllConverters.ContainerNameConverter);
         public static readonly StyleProperty<YogaValue2> borderTopLeftRadius = new StyleProperty<YogaValue2>("borderTopLeftRadius", YogaValue2.Zero, true, converter: AllConverters.BorderRadiusConverter);
         public static readonly StyleProperty<YogaValue2> borderTopRightRadius = new StyleProperty<YogaValue2>("borderTopRightRadius", YogaValue2.Zero, true, converter: AllConverters.BorderRadiusConverter);
         public static readonly StyleProperty<YogaValue2> borderBottomLeftRadius = new StyleProperty<YogaValue2>("borderBottomLeftRadius", YogaValue2.Zero, true, converter: AllConverters.BorderRadiusConverter);
@@ -161,6 +163,8 @@ namespace ReactUnity.Styling
             { "cursor", cursor },
             { "isolation", isolation },
             { "pointerEvents", pointerEvents },
+            { "containerType", containerType },
+            { "containerName", containerName },
             { "borderTopLeftRadius", borderTopLeftRadius },
             { "borderTopRightRadius", borderTopRightRadius },
             { "borderBottomLeftRadius", borderBottomLeftRadius },
@@ -298,6 +302,8 @@ namespace ReactUnity.Styling
             { "z-index", zIndex },
             { "sorting-layer", sortingLayer },
             { "pointer-events", pointerEvents },
+            { "container-type", containerType },
+            { "container-name", containerName },
             { "background-color", backgroundColor },
             { "background-image", backgroundImage },
             { "background-position-x", backgroundPositionX },

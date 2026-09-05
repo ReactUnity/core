@@ -263,9 +263,25 @@ namespace ReactUnity.Tests.Editor.Renderer
             var t1 = Text("#t1");
             var v1 = Q("#v1");
 
-            // An at-rule that cannot nest here, @container among them, is handed over as a rule with
+            // An at-rule that cannot nest here, @scope among them, is handed over as a rule with
             // no selector -- which would match every element if it were taken at face value. It is
             // dropped instead, and the declarations around it still apply.
+            var ss = InsertStyle(@"
+                #v1 { background-color: red; @scope (.x) { background-color: lime; } }
+            ");
+            yield return null;
+            Assert.AreEqual(Color.red, v1.ComputedStyle.backgroundColor);
+            Assert.AreNotEqual(Color.green, t1.ComputedStyle.backgroundColor);
+            RemoveStyle(ss);
+        }
+
+        [EditorInjectableTest(Script = BaseScript, SkipIfExisting = true)]
+        public IEnumerator ANestedContainerQueryWithNoContainerMatchesNothing()
+        {
+            var t1 = Text("#t1");
+            var v1 = Q("#v1");
+
+            // No ancestor is a size container, so the block applies to nothing -- and to nothing else either.
             var ss = InsertStyle(@"
                 #v1 { background-color: red; @container (width > 1px) { background-color: lime; } }
             ");
