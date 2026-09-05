@@ -9,12 +9,35 @@ namespace ReactUnity.Styling
     {
         public static readonly LayoutProperty<YogaDirection> StyleDirection = new LayoutProperty<YogaDirection>("StyleDirection");
         public static readonly LayoutProperty<YogaFlexDirection> FlexDirection = new LayoutProperty<YogaFlexDirection>("FlexDirection");
-        public static readonly LayoutProperty<YogaJustify> JustifyContent = new LayoutProperty<YogaJustify>("JustifyContent");
+        // The web's spellings of what Yoga calls flex-start and flex-end, and the fallback positions
+        // it has no value for. `normal` behaves as stretch on the align axis and as start on justify.
+        public static readonly StyleConverterBase AlignConverter = new EnumConverter(typeof(YogaAlign), false, true, new Dictionary<string, object>
+        {
+            { "start", YogaAlign.FlexStart },
+            { "end", YogaAlign.FlexEnd },
+            { "selfstart", YogaAlign.FlexStart },
+            { "selfend", YogaAlign.FlexEnd },
+            { "left", YogaAlign.FlexStart },
+            { "right", YogaAlign.FlexEnd },
+            { "normal", YogaAlign.Stretch },
+            { "firstbaseline", YogaAlign.Baseline },
+            { "lastbaseline", YogaAlign.Baseline },
+        });
+        public static readonly StyleConverterBase JustifyConverter = new EnumConverter(typeof(YogaJustify), false, true, new Dictionary<string, object>
+        {
+            { "start", YogaJustify.FlexStart },
+            { "end", YogaJustify.FlexEnd },
+            { "left", YogaJustify.FlexStart },
+            { "right", YogaJustify.FlexEnd },
+            { "normal", YogaJustify.FlexStart },
+            { "stretch", YogaJustify.FlexStart },
+        });
+        public static readonly LayoutProperty<YogaJustify> JustifyContent = new LayoutProperty<YogaJustify>("JustifyContent", converter: JustifyConverter);
         public static readonly LayoutProperty<YogaDisplay> Display = new LayoutProperty<YogaDisplay>("Display");
         public static readonly LayoutProperty<YogaBoxSizing> BoxSizing = new LayoutProperty<YogaBoxSizing>("BoxSizing");
-        public static readonly LayoutProperty<YogaAlign> AlignItems = new LayoutProperty<YogaAlign>("AlignItems");
-        public static readonly LayoutProperty<YogaAlign> AlignSelf = new LayoutProperty<YogaAlign>("AlignSelf");
-        public static readonly LayoutProperty<YogaAlign> AlignContent = new LayoutProperty<YogaAlign>("AlignContent");
+        public static readonly LayoutProperty<YogaAlign> AlignItems = new LayoutProperty<YogaAlign>("AlignItems", converter: AlignConverter);
+        public static readonly LayoutProperty<YogaAlign> AlignSelf = new LayoutProperty<YogaAlign>("AlignSelf", converter: AlignConverter);
+        public static readonly LayoutProperty<YogaAlign> AlignContent = new LayoutProperty<YogaAlign>("AlignContent", converter: AlignConverter);
         public static readonly LayoutProperty<YogaWrap> Wrap = new LayoutProperty<YogaWrap>("Wrap");
         // Yoga's enum has no `auto` -- which is a scroll container that may not need to scroll -- and no `clip`.
         public static readonly StyleConverterBase OverflowConverter = new EnumConverter(typeof(YogaOverflow), false, true, new Dictionary<string, object>

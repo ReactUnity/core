@@ -9,8 +9,23 @@ namespace ReactUnity.Styling.Converters
 {
     public class FloatConverter : TypedStyleConverterBase<float>
     {
-        private static HashSet<string> DefaultAllowedFunctions = new HashSet<string>() { "calc", "min", "max", "clamp" };
+        private static HashSet<string> DefaultAllowedFunctions = new HashSet<string>(StringComparer.InvariantCultureIgnoreCase) {
+            "calc", "min", "max", "clamp",
+            "round", "mod", "rem", "abs", "sign",
+            "sin", "cos", "tan", "asin", "acos", "atan", "atan2",
+            "pow", "sqrt", "hypot", "log", "exp",
+        };
         protected override HashSet<string> AllowedFunctions => DefaultAllowedFunctions;
+
+        // The numeric constants calc() knows. Only where a bare number is allowed at all, since they are one.
+        private static readonly Dictionary<string, float> MathConstants = new Dictionary<string, float>(StringComparer.InvariantCultureIgnoreCase)
+        {
+            { "pi", Mathf.PI },
+            { "e", (float) Math.E },
+            { "infinity", float.PositiveInfinity },
+            { "-infinity", float.NegativeInfinity },
+            { "nan", float.NaN },
+        };
 
         static CultureInfo culture = new CultureInfo("en-US");
 
@@ -41,6 +56,11 @@ namespace ReactUnity.Styling.Converters
             if (SpecialValues != null && SpecialValues.TryGetValue(value, out var val))
             {
                 result = new ComputedConstant(val);
+                return true;
+            }
+            if (AllowSuffixless && MathConstants.TryGetValue(value.Trim(), out var constant))
+            {
+                result = new ComputedConstant(constant);
                 return true;
             }
             return ParseVal(value, out result);

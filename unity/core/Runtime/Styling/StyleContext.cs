@@ -33,6 +33,42 @@ namespace ReactUnity.Styling
             Parser = Context.StyleParser;
             MediaProvider = Context.MediaProvider;
             StyleTree = new StyleTree();
+
+            // light-dark() reads the preferred scheme while resolving, so a change to it is a restyle.
+            if (MediaProvider != null)
+            {
+                preferredScheme = MediaProvider.GetValue("prefers-color-scheme");
+                MediaProvider.OnUpdate += OnMediaUpdate;
+
+                // The provider may outlive this context, and a seed from a host that is gone should not.
+                Context.Disposables.Add(() => {
+                    MediaProvider.OnUpdate -= OnMediaUpdate;
+                    SeedColorScheme(ColorScheme.Normal);
+                });
+            }
+        }
+
+        private string preferredScheme;
+
+        private void OnMediaUpdate(IMediaProvider provider)
+        {
+            // A reload replaces the style context; the one it replaced has nothing left to restyle.
+            if (Context.Style != this) return;
+
+            var scheme = provider.GetValue("prefers-color-scheme");
+            if (scheme == preferredScheme) return;
+            preferredScheme = scheme;
+            ResolveStyle();
+        }
+
+        /// <summary>
+        /// The host's <c>color-scheme</c>, made the default <c>prefers-color-scheme</c>. A single
+        /// scheme seeds it, and anything else hands the feature back to whatever set it before.
+        /// </summary>
+        public void SeedColorScheme(ColorScheme scheme)
+        {
+            if (!(MediaProvider is DefaultMediaProvider provider)) return;
+            provider.SeedValue("prefers-color-scheme", scheme == ColorScheme.Light ? "light" : scheme == ColorScheme.Dark ? "dark" : null);
         }
 
         /// <summary>

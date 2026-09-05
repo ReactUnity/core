@@ -6,6 +6,8 @@ Allows gradually changing a CSS value when it changes.
 
 This property is completely compatible with [CSS transition](https://developer.mozilla.org/en-US/docs/Web/CSS/transition).
 
+The timing function is a keyword (`ease`, `linear`, `ease-in-out`, ...), `cubic-bezier()`, `steps()` or `linear()`. `linear(0, 0.25 40%, 1)` joins its stops with straight lines; a stop takes up to two positions to hold its value between them, and stops without one are spread evenly between their neighbours.
+
 <Sandpack>
 
 ```js

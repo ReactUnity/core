@@ -427,14 +427,16 @@ namespace ReactUnity.Styling.Rules
                 case RuleSelectorPartType.NthChild:
                 case RuleSelectorPartType.NthOfType:
                 {
-                    var position = SiblingPosition(component, Type == RuleSelectorPartType.NthOfType, out _);
-                    return position > 0 && ((NthChildParameter) Parameter).Matches(position);
+                    var nth = (NthChildParameter) Parameter;
+                    var position = SiblingPosition(component, Type == RuleSelectorPartType.NthOfType, nth.Of, scope, out _);
+                    return position > 0 && nth.Matches(position);
                 }
                 case RuleSelectorPartType.NthLastChild:
                 case RuleSelectorPartType.NthLastOfType:
                 {
-                    var position = SiblingPosition(component, Type == RuleSelectorPartType.NthLastOfType, out var count);
-                    return position > 0 && ((NthChildParameter) Parameter).Matches(count - position + 1);
+                    var nth = (NthChildParameter) Parameter;
+                    var position = SiblingPosition(component, Type == RuleSelectorPartType.NthLastOfType, nth.Of, scope, out var count);
+                    return position > 0 && nth.Matches(count - position + 1);
                 }
                 case RuleSelectorPartType.Empty:
                     if (component is ITextComponent tc)
@@ -498,7 +500,13 @@ namespace ReactUnity.Styling.Rules
         /// <c>::before</c> is in the list but is nobody's sibling -- and, for the of-type family,
         /// only those sharing the tag. Zero when the component has no siblings to be counted among.
         /// </summary>
-        private static int SiblingPosition(IReactComponent component, bool ofType, out int count)
+        private static int SiblingPosition(IReactComponent component, bool ofType, out int count) => SiblingPosition(component, ofType, null, null, out count);
+
+        /// <summary>
+        /// The same count, over the siblings that match the <c>of S</c> selector list when there is
+        /// one. An element that does not match it itself has no position, and so never matches.
+        /// </summary>
+        private static int SiblingPosition(IReactComponent component, bool ofType, List<List<RuleSelectorPart>> of, IReactComponent scope, out int count)
         {
             count = 0;
             if (component.IsPseudoElement || component.Parent == null || component.Parent.Children == null) return 0;
@@ -508,10 +516,24 @@ namespace ReactUnity.Styling.Rules
             {
                 if (sibling.IsPseudoElement) continue;
                 if (ofType && sibling.Tag != component.Tag) continue;
+                if (of != null && !MatchesAny(sibling, of, scope)) continue;
                 count++;
                 if (sibling == component) position = count;
             }
             return position;
+        }
+
+        /// <summary>Whether the element satisfies any of the compound selectors.</summary>
+        internal static bool MatchesAny(IReactComponent component, List<List<RuleSelectorPart>> compounds, IReactComponent scope)
+        {
+            for (int i = 0; i < compounds.Count; i++)
+            {
+                var parts = compounds[i];
+                var all = true;
+                for (int j = 0; j < parts.Count && all; j++) all = parts[j].Matches(component, scope) != parts[j].Negated;
+                if (all) return true;
+            }
+            return false;
         }
 
         private static bool IsTruthy(object obj)
@@ -734,16 +756,37 @@ namespace ReactUnity.Styling.Rules
 
     public struct NthChildParameter
     {
-        // An + B
+        // An + B [of S]
+
+        private static readonly Regex OfRegex = new Regex(@"^\s*(.*?)\s+of\s+(.+)$", RegexOptions.IgnoreCase | RegexOptions.Singleline);
 
         public int A;
         public int B;
 
+        /// <summary>
+        /// The compound selectors of an <c>of S</c> clause, or null when there is none. Only the
+        /// siblings matching one of them are counted. An empty list is a clause nothing satisfied.
+        /// </summary>
+        public List<List<RuleSelectorPart>> Of;
+
+        /// <summary>That of the most specific <c>of S</c> branch, which is what the clause adds to the rule.</summary>
+        public int OfSpecificity;
+
         public NthChildParameter(string value)
         {
-            value = value.Replace(" ", "");
             A = 0;
             B = 0;
+            Of = null;
+            OfSpecificity = 0;
+
+            var of = OfRegex.Match(value);
+            if (of.Success)
+            {
+                value = of.Groups[1].Value;
+                ParseOf(of.Groups[2].Value);
+            }
+
+            value = value.Replace(" ", "");
 
             if (value.Equals("odd", StringComparison.OrdinalIgnoreCase))
             {
@@ -774,6 +817,29 @@ namespace ReactUnity.Styling.Rules
 
             var offset = value.Substring(n + 1);
             if (offset.Length > 0) int.TryParse(offset, out B);
+        }
+
+        // A branch with a combinator in it is dropped: the clause takes a complex selector on the
+        // web, but siblings are what is counted here, and a compound is what a sibling can be tested with.
+        private void ParseOf(string selectorList)
+        {
+            Of = new List<List<RuleSelectorPart>>();
+
+            foreach (var branch in RuleHelpers.SplitSelectorList(selectorList))
+            foreach (var expanded in RuleHelpers.ExpandMatchesAny(branch.Trim()))
+            {
+                var normalized = RuleHelpers.StripZeroSpecificityMarks(RuleHelpers.NormalizeSelector(expanded));
+                if (normalized.Length == 0 || normalized.IndexOf(' ') >= 0) continue;
+
+                var parts = RuleHelpers.ParseSelector(normalized);
+                if (parts == null) continue;
+
+                var specificity = 0;
+                foreach (var part in parts) specificity += RuleHelpers.SpecificityOf(part);
+                if (specificity > OfSpecificity) OfSpecificity = specificity;
+
+                Of.Add(parts);
+            }
         }
 
         public bool Matches(int index)

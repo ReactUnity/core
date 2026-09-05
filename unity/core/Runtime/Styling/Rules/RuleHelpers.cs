@@ -255,14 +255,17 @@ namespace ReactUnity.Styling.Rules
                 case RuleSelectorPartType.ClassName:
                     return 1 << 6;
 
+                case RuleSelectorPartType.NthChild:
+                case RuleSelectorPartType.NthLastChild:
+                    // An `of S` clause weighs what its most specific branch weighs, on top of the pseudo-class.
+                    return 1 + (part.Parameter is NthChildParameter nth ? nth.OfSpecificity : 0);
+
                 case RuleSelectorPartType.Root:
                 case RuleSelectorPartType.Scope:
                 case RuleSelectorPartType.Before:
                 case RuleSelectorPartType.After:
                 case RuleSelectorPartType.FirstChild:
                 case RuleSelectorPartType.LastChild:
-                case RuleSelectorPartType.NthChild:
-                case RuleSelectorPartType.NthLastChild:
                 case RuleSelectorPartType.OnlyChild:
                 case RuleSelectorPartType.FirstOfType:
                 case RuleSelectorPartType.LastOfType:

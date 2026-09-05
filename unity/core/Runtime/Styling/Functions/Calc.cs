@@ -55,7 +55,8 @@ namespace ReactUnity.Styling.Functions
                 else if (parenStack > 0) continue;
                 else if (c == '+' || c == '-')
                 {
-                    if (i < 2 || i > len - 2) return null;
+                    // A sign at either end is part of a number (`-1 * 10px`, `-infinity`), not an operator.
+                    if (i < 1 || i > len - 2) continue;
                     var prev = expression[i - 1];
                     var next = expression[i + 1];
 

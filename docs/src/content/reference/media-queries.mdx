@@ -59,6 +59,7 @@ String typed media properties has a current value to compare with.
 | `full-screen-mode` | `exclusive`, `borderless`, `maximised` or `windowed`                                                                | Current full screen mode (via `Screen.fullScreenMode`)                                             |
 | `display-mode`     | `fullscreen`, `editor`, or `standalone`                                                                             | Whether the app is in fullscreen, editor or neither of them. Added for browser compatibility.      |
 | `skin`             | `light` or `dark`                                                                                                   | (Editor Only) Currently used editor theme                                                          |
+| `prefers-color-scheme` | `light` or `dark`                                                                                               | The preferred color scheme. Defaults to the editor theme in the editor and `light` elsewhere; the root element's `color-scheme` property seeds it, and `MediaProvider.SetValue` sets it outright. |
 | `pointer`          | `fine`, `coarse` or `none`                                                                                          | The pointing accuracy of current pointer device. `coarse` for touch, and `fine` for mouse devices. |
 | `any-pointer`      | `fine`, `coarse` or `none`                                                                                          | The list of pointing accuracy of available pointer devices                                         |
 | `hover`            | `hover` or `none`                                                                                                   | Is the current pointer device capable of hovering (e.g. mouse)                                     |
@@ -71,6 +72,16 @@ String typed media properties has a current value to compare with.
 ```css
 @media (system: windows) or (platform: iphoneplayer) {
   ...
+}
+```
+
+`hover`, `any-hover`, `pointer` and `any-pointer` also take the boolean form, which is true for any value but `none`. They are always defined, so `(hover)` is the standard way to gate hover-only styling and matches nothing on a touch-only device.
+
+```css
+@media (hover) and (pointer: fine) {
+  view:hover {
+    background-color: cornflowerblue;
+  }
 }
 ```
 

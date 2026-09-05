@@ -1,10 +1,31 @@
 ---
-title: Animation
+title: Content
 ---
 
 Adds content to `text` elements and pseudo elements `:before` and `:after`.
 
-The value must be a string enclosed in quotes, like `"Hello world!"`.
+The value is a string enclosed in quotes, like `"Hello world!"`, or an `attr()` reading one of the element's `data-*` props.
+
+### attr() {/*attr*/}
+
+`attr(data-label)` reads the `data-label` prop of the element, or of the element a pseudo element belongs to. The `data-` prefix is optional, a number or boolean prop reads as its text, and a second argument is the fallback for a prop that is not set: `attr(data-label, "Untitled")`.
+
+The function works in any property. A unit after the name turns the prop into a value in that unit, so `font-size: attr(data-size px)` reads `data-size={12}` as `12px`, and `attr(data-color)` inside `color` reads a color. A prop the property cannot read falls back to the fallback, then to the property's initial value.
+
+```js
+<view data-label="Settings" data-badge={3}>...</view>
+```
+
+```css
+view::before {
+  content: attr(data-label);
+}
+
+view::after {
+  content: attr(data-badge, "0");
+  font-size: attr(data-size px, 12px);
+}
+```
 
 <Sandpack>
 

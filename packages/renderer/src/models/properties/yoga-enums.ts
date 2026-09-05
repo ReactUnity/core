@@ -1,6 +1,32 @@
 export type FlexDirection = 'column' | 'column-reverse' | 'row' | 'row-reverse';
-export type YogaAlign = 'auto' | 'flex-start' | 'center' | 'flex-end' | 'stretch' | 'baseline' | 'space-between' | 'space-around';
-export type YogaJustify = 'flex-start' | 'center' | 'flex-end' | 'space-between' | 'space-around';
+export type YogaAlign =
+  | 'auto'
+  | 'flex-start'
+  | 'center'
+  | 'flex-end'
+  | 'stretch'
+  | 'baseline'
+  | 'space-between'
+  | 'space-around'
+  | 'space-evenly'
+  | 'start'
+  | 'end'
+  | 'self-start'
+  | 'self-end'
+  | 'normal';
+export type YogaJustify =
+  | 'flex-start'
+  | 'center'
+  | 'flex-end'
+  | 'space-between'
+  | 'space-around'
+  | 'space-evenly'
+  | 'start'
+  | 'end'
+  | 'left'
+  | 'right'
+  | 'normal'
+  | 'stretch';
 export type Display = 'flex' | 'none' | 'contents';
 export type BoxSizing = 'border-box' | 'content-box';
 export type Wrap = 'no-wrap' | 'wrap' | 'wrap-reverse';

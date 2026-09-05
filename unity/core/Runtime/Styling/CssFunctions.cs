@@ -9,6 +9,10 @@ namespace ReactUnity.Styling
     {
         public static ICssFunction Calc = new CalcFunction();
         public static ICssFunction MinMax = new MinMaxFunction();
+        public static ICssFunction Math = new MathFunction();
+        public static ICssFunction Linear = new LinearFunction();
+        public static ICssFunction Attr = new AttrFunction();
+        public static ICssFunction LightDark = new LightDarkFunction();
         public static ICssFunction Steps = new StepsFunction();
         public static ICssFunction CubicBezier = new CubicBezierFunction();
         public static ICssFunction Url = new UrlFunction();
@@ -29,6 +33,26 @@ namespace ReactUnity.Styling
             { "min", MinMax },
             { "max", MinMax },
             { "clamp", MinMax },
+            { "round", Math },
+            { "mod", Math },
+            { "rem", Math },
+            { "abs", Math },
+            { "sign", Math },
+            { "sin", Math },
+            { "cos", Math },
+            { "tan", Math },
+            { "asin", Math },
+            { "acos", Math },
+            { "atan", Math },
+            { "atan2", Math },
+            { "pow", Math },
+            { "sqrt", Math },
+            { "hypot", Math },
+            { "log", Math },
+            { "exp", Math },
+            { "linear", Linear },
+            { "attr", Attr },
+            { "light-dark", LightDark },
             { "rgb", Rgba },
             { "hsl", Hsla },
             { "hsv", Hsla },
@@ -71,7 +95,8 @@ namespace ReactUnity.Styling
                 return false;
             }
 
-            if ((allowed == null || allowed.Contains(name) || name == "var")
+            // var() and attr() substitute text, so every property takes them.
+            if ((allowed == null || allowed.Contains(name) || name == "var" || name == "attr")
                 && Functions.TryGetValue(name, out var fun)
                 && fun.CanHandleArguments(splits.Length, name, splits))
             {

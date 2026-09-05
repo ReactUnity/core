@@ -286,6 +286,17 @@ namespace ReactUnity.Tests
         [TestCase("v1v1t1", "text:has(+ text)", true, ExpectedResult = typeof(IEnumerator))]
         [TestCase("v1t6", "text:has(+ text)", false, ExpectedResult = typeof(IEnumerator))]
         [TestCase("v1", ":has()", false, ExpectedResult = typeof(IEnumerator))]
+        [TestCase("v1v5", ":nth-child(2 of .vv4class)", true, ExpectedResult = typeof(IEnumerator))]
+        [TestCase("v1v4", ":nth-child(2 of .vv4class)", false, ExpectedResult = typeof(IEnumerator))]
+        [TestCase("v1v4", ":nth-child(1 of .vv4class)", true, ExpectedResult = typeof(IEnumerator))]
+        [TestCase("v1v3", ":nth-child(1 of .vv4class)", false, ExpectedResult = typeof(IEnumerator))]
+        [TestCase("v1t6", "text:nth-child(1 of text)", true, ExpectedResult = typeof(IEnumerator))]
+        [TestCase("v1v5", ":nth-last-child(1 of view)", true, ExpectedResult = typeof(IEnumerator))]
+        [TestCase("v1t6", ":nth-last-child(1 of view)", false, ExpectedResult = typeof(IEnumerator))]
+        [TestCase("v1v1t3", ":nth-child(2 of .t1class, .t3class)", true, ExpectedResult = typeof(IEnumerator))]
+        [TestCase("v1v1t2", ":nth-child(odd of :not(.t1class))", true, ExpectedResult = typeof(IEnumerator))]
+        [TestCase("v1v1t3", ":nth-child(odd of :not(.t1class))", false, ExpectedResult = typeof(IEnumerator))]
+        [TestCase("v1v1t3", ":nth-child(2n of .t1class .t3class)", false, ExpectedResult = typeof(IEnumerator))]
         public IEnumerator Matches(string id, string query, bool result)
         {
             yield return null;

@@ -178,7 +178,7 @@ namespace ReactUnity.Styling
             }
         }
 
-        private void ProcessRules(IEnumerable<IStylesheetNode> children, MediaQueryList media, string mediaCondition, string layerPath, ContainerQuery container = null)
+        private void ProcessRules(IEnumerable<IStylesheetNode> children, MediaQueryList media, string mediaCondition, string layerPath, ContainerQuery container = null, bool startingStyle = false)
         {
             foreach (var child in children)
             {
@@ -191,10 +191,17 @@ namespace ReactUnity.Styling
                     // A nested @media matches only when both conditions do, same as joining them with "and".
                     var condition = match.Groups[1].Value;
 
+                    // A @starting-style block, dressed the same way. Its rules apply through :enter.
+                    if (condition.Trim() == ContainerQuery.StartingStyleMarker)
+                    {
+                        ProcessRules(mediaRule.Rules, media, mediaCondition, layerPath, container, true);
+                        continue;
+                    }
+
                     // A @container block, dressed as @media so the parser keeps it wherever it is nested.
                     if (ContainerQuery.TryDecodePrelude(condition, out var prelude))
                     {
-                        ProcessRules(mediaRule.Rules, media, mediaCondition, layerPath, ContainerQuery.Parse(prelude, container));
+                        ProcessRules(mediaRule.Rules, media, mediaCondition, layerPath, ContainerQuery.Parse(prelude, container), startingStyle);
                         continue;
                     }
 
@@ -202,7 +209,7 @@ namespace ReactUnity.Styling
 
                     var mql = MediaQueryList.Create(Context.MediaProvider, condition, Context.Context);
 
-                    ProcessRules(mediaRule.Rules, mql, condition, layerPath, container);
+                    ProcessRules(mediaRule.Rules, mql, condition, layerPath, container, startingStyle);
 
                     MediaQueries.Add(mql);
                 }
@@ -211,13 +218,13 @@ namespace ReactUnity.Styling
                     // The condition is evaluated here rather than through ExCSS, which only knows
                     // which properties and values the web supports.
                     if (SupportsCondition.Evaluate(supportsRule.ConditionText))
-                        ProcessRules(((IGroupingRule) supportsRule).Rules, media, mediaCondition, layerPath, container);
+                        ProcessRules(((IGroupingRule) supportsRule).Rules, media, mediaCondition, layerPath, container, startingStyle);
                 }
                 else if (child is ILayerRule layerRule)
                 {
                     // The block's rules are ordinary rules; only their place in the cascade differs,
                     // and CollectLayers has already worked that out.
-                    ProcessRules(layerRule.Rules, media, mediaCondition, Layers.Qualify(layerPath, layerRule), container);
+                    ProcessRules(layerRule.Rules, media, mediaCondition, Layers.Qualify(layerPath, layerRule), container, startingStyle);
                 }
                 else if (child is IPropertyRule propertyRule)
                 {
@@ -236,24 +243,46 @@ namespace ReactUnity.Styling
                 }
                 else if (child is StyleRule str)
                 {
-                    AddStyleRule(str, media, mediaCondition, layerPath, container);
+                    AddStyleRule(str, media, mediaCondition, layerPath, container, startingStyle);
                 }
             }
         }
+
+        /// <summary>
+        /// The selector with <c>:enter</c> on each of its branches, which is how a starting style
+        /// applies: for the element's first frame, and as the state a transition starts from.
+        /// </summary>
+        private static string ToStartingStyleSelector(string selectorText)
+        {
+            var branches = RuleHelpers.SplitSelectorList(selectorText);
+            for (int i = 0; i < branches.Count; i++)
+            {
+                var branch = branches[i].Trim();
+                // A pseudo-element stays last, so the state goes on the element that owns it.
+                var pseudo = PseudoElementSuffix.Match(branch);
+                branches[i] = pseudo.Success ? branch.Substring(0, pseudo.Index) + ":enter" + pseudo.Value : branch + ":enter";
+            }
+            return string.Join(", ", branches);
+        }
+
+        private static readonly Regex PseudoElementSuffix = new Regex(@"::?(before|after)$", RegexOptions.IgnoreCase);
 
         /// <summary>
         /// A style rule and the rules nested inside it, whose selectors the parser has already
         /// resolved against their parent's. They come after the parent's own declarations, as in
         /// CSS, and share its layer and media context.
         /// </summary>
-        private void AddStyleRule(StyleRule rule, MediaQueryList media, string mediaCondition, string layerPath, ContainerQuery container)
+        private void AddStyleRule(StyleRule rule, MediaQueryList media, string mediaCondition, string layerPath, ContainerQuery container, bool startingStyle = false)
         {
             // An at-rule that cannot nest inside a style rule -- @scope, for one -- is parsed as
             // a style rule with no selector at all, and a selectorless rule would match every
             // element. Dropping it leaves the block ignored, which is what it was before.
             if (!string.IsNullOrWhiteSpace(rule.SelectorText))
             {
-                var dcl = Context.StyleTree.AddStyle(rule, ImportanceOffset, media, Scope, Layers.Get(layerPath), container);
+                var selectorText = rule.Selector.StylesheetText?.Text ?? rule.SelectorText;
+                if (startingStyle) selectorText = ToStartingStyleSelector(selectorText);
+
+                var dcl = Context.StyleTree.AddStyle(rule, ImportanceOffset, media, Scope, Layers.Get(layerPath), container, selectorText);
                 Declarations.AddRange(dcl);
             }
 
@@ -261,8 +290,8 @@ namespace ReactUnity.Styling
             // implicit rule with this one's selector, so the ordinary path handles it.
             foreach (var nested in rule.NestedRules)
             {
-                if (nested is StyleRule nestedRule) AddStyleRule(nestedRule, media, mediaCondition, layerPath, container);
-                else ProcessRules(new IStylesheetNode[] { nested }, media, mediaCondition, layerPath, container);
+                if (nested is StyleRule nestedRule) AddStyleRule(nestedRule, media, mediaCondition, layerPath, container, startingStyle);
+                else ProcessRules(new IStylesheetNode[] { nested }, media, mediaCondition, layerPath, container, startingStyle);
             }
         }
 

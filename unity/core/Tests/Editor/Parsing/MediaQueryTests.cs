@@ -460,5 +460,71 @@ namespace ReactUnity.Tests.Editor
             provider.SetValue("e", "true");
             Assert.False(mq.matches);
         }
+
+        [Test]
+        public void HoverAndPointerAreAlwaysDefined()
+        {
+            var provider = new DefaultMediaProvider("runtime");
+
+            foreach (var feature in new[] { "hover", "any-hover", "pointer", "any-pointer" })
+                Assert.NotNull(provider.GetValue(feature), feature);
+
+            // Whatever the machine has, the boolean form agrees with the keyword forms.
+            var hover = MediaQueryList.Create(provider, "(hover)");
+            Assert.AreEqual(MediaQueryList.Create(provider, "(hover: hover)").matches, hover.matches);
+            Assert.AreNotEqual(MediaQueryList.Create(provider, "(hover: none)").matches, hover.matches);
+
+            var pointer = MediaQueryList.Create(provider, "(pointer)");
+            Assert.AreNotEqual(MediaQueryList.Create(provider, "(pointer: none)").matches, pointer.matches);
+
+            provider.SetValue("hover", "none");
+            Assert.False(hover.matches);
+            provider.SetValue("hover", "hover");
+            Assert.True(hover.matches);
+
+            provider.SetValue("pointer", "coarse");
+            Assert.True(pointer.matches);
+            Assert.True(MediaQueryList.Create(provider, "(pointer: coarse)").matches);
+            provider.SetValue("pointer", "none");
+            Assert.False(pointer.matches);
+        }
+
+        [Test]
+        public void SeedValueDefersToExplicitValues()
+        {
+            var provider = new DefaultMediaProvider("runtime");
+            var dark = MediaQueryList.Create(provider, "(prefers-color-scheme: dark)");
+            Assert.False(dark.matches);
+
+            provider.SeedValue("prefers-color-scheme", "dark");
+            Assert.True(dark.matches);
+            Assert.AreEqual("dark", provider.GetValue("prefers-color-scheme"));
+
+            // Withdrawing the seed hands the feature back: here, to being unset.
+            provider.SeedValue("prefers-color-scheme", null);
+            Assert.IsNull(provider.GetValue("prefers-color-scheme"));
+            Assert.False(dark.matches);
+
+            provider.SetValue("prefers-color-scheme", "light");
+            provider.SeedValue("prefers-color-scheme", "dark");
+            Assert.AreEqual("light", provider.GetValue("prefers-color-scheme"));
+            Assert.False(dark.matches);
+        }
+
+        [Test]
+        public void SeedValueRestoresTheValueItReplaced()
+        {
+            var provider = new DefaultMediaProvider("runtime", null, new System.Collections.Generic.Dictionary<string, string> { { "prefers-color-scheme", "light" } });
+
+            provider.SeedValue("prefers-color-scheme", "dark");
+            Assert.AreEqual("dark", provider.GetValue("prefers-color-scheme"));
+
+            provider.SeedValue("prefers-color-scheme", "light");
+            Assert.AreEqual("light", provider.GetValue("prefers-color-scheme"));
+
+            provider.SeedValue("prefers-color-scheme", "dark");
+            provider.SeedValue("prefers-color-scheme", null);
+            Assert.AreEqual("light", provider.GetValue("prefers-color-scheme"));
+        }
     }
 }

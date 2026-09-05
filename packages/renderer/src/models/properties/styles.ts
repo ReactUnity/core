@@ -9,6 +9,7 @@ import {
   BackgroundSize,
   BorderImageRepeat,
   BorderStyle,
+  ColorScheme,
   ContainerType,
   CursorType,
   FontStyles,
@@ -38,6 +39,7 @@ export interface RenderStyle {
   pointerEvents?: PointerEvents;
   containerType?: ContainerType;
   containerName?: string;
+  colorScheme?: ColorScheme;
   content?: SafeString;
   appearance?: Appearance;
   navigation?: NavigationMode;
@@ -182,6 +184,9 @@ export interface RenderStyle {
   insetBlock?: SafeString | number;
   borderInlineWidth?: SafeString | number;
   borderBlockWidth?: SafeString | number;
+  placeContent?: SafeString;
+  placeItems?: SafeString;
+  placeSelf?: SafeString;
 
   // Custom CSS variables
   [variable: `--${string}`]: any;

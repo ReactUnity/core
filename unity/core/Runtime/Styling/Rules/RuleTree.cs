@@ -23,11 +23,11 @@ namespace ReactUnity.Styling.Rules
     public class StyleTree : RuleTree<StyleData>
     {
         public List<Tuple<RuleTreeNode<StyleData>, Dictionary<IStyleProperty, object>>> AddStyle
-            (StyleRule rule, int importanceOffset = 0, MediaQueryList mql = null, IReactComponent scope = null, CascadeLayer layer = null, ContainerQuery container = null)
+            (StyleRule rule, int importanceOffset = 0, MediaQueryList mql = null, IReactComponent scope = null, CascadeLayer layer = null, ContainerQuery container = null, string selectorText = null)
         {
             // A nested rule's selector was resolved by the parser rather than lifted from the
             // source, so it has no stylesheet text of its own to read back.
-            var selectorText = rule.Selector.StylesheetText?.Text ?? rule.SelectorText;
+            selectorText = selectorText ?? rule.Selector.StylesheetText?.Text ?? rule.SelectorText;
             var added = AddSelector(selectorText, importanceOffset, mql, scope, layer, container);
             var pairs = new List<Tuple<RuleTreeNode<StyleData>, Dictionary<IStyleProperty, object>>>();
 

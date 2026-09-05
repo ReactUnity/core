@@ -86,6 +86,7 @@ List of supported CSS properties in alphabetical order:
 - bottom
 - box-shadow
 - color
+- color-scheme
 - content
 - cursor
 - direction
@@ -215,8 +216,25 @@ List of supported CSS shorthands in alphabetical order:
 - padding
 - padding-block
 - padding-inline
+- place-content
+- place-items
+- place-self
 - text-stroke
 - transition
+
+### Math functions {/*math-functions*/}
+
+`calc()`, `min()`, `max()` and `clamp()` are joined by `round()` with its `nearest`, `up`, `down` and `to-zero` strategies, `mod()`, `rem()`, `abs()`, `sign()`, `sin()`, `cos()`, `tan()`, `asin()`, `acos()`, `atan()`, `atan2()`, `pow()`, `sqrt()`, `hypot()`, `log()` and `exp()`. They nest freely inside one another and inside `calc()`, and take `var()` operands. The constants `pi`, `e`, `infinity`, `-infinity` and `NaN` are known.
+
+```css
+view {
+  animation-duration: round(up, 1250ms, 1s);
+  opacity: calc(0.5 + 0.5 * sin(var(--phase)));
+  flex-grow: calc(pow(2, var(--level)) - 1);
+}
+```
+
+`place-content`, `place-items` and `place-self` set the align and justify pair in one declaration. Yoga has no `justify-items` or `justify-self`, so the last two set their align property and only check that the second value is a keyword. The web spellings `start`, `end`, `self-start`, `self-end`, `left`, `right` and `normal` work on the align and justify longhands too.
 
 ### Logical properties {/*logical-properties*/}
 

@@ -199,15 +199,23 @@ namespace ReactUnity.Styling.Rules
         private const string AtKeyword = "@container";
         private const string Marker = "--rx-container-";
 
+        private const string StartingStyleKeyword = "@starting-style";
+
+        /// <summary>The media condition a <c>@starting-style</c> block is rewritten to.</summary>
+        public const string StartingStyleMarker = "--rx-starting-style";
+
         /// <summary>
         /// Dresses every <c>@container</c> block as a <c>@media</c> whose only feature is the prelude,
         /// encoded as one identifier. ExCSS has a container rule, but drops one nested in a style rule,
         /// and keeps a nested media rule only when its prelude reads as a media query; an identifier
         /// always does. <see cref="TryDecodePrelude"/> reads it back when the sheet is processed.
+        /// <c>@starting-style</c> gets the same treatment with a fixed marker, for the same reason.
         /// </summary>
         public static string PrepareForParser(string css)
         {
-            if (css == null || css.IndexOf(AtKeyword, StringComparison.OrdinalIgnoreCase) < 0) return css;
+            if (css == null) return css;
+            if (css.IndexOf(AtKeyword, StringComparison.OrdinalIgnoreCase) < 0
+                && css.IndexOf(StartingStyleKeyword, StringComparison.OrdinalIgnoreCase) < 0) return css;
 
             var sb = new StringBuilder(css.Length + 64);
             var i = 0;
@@ -246,6 +254,21 @@ namespace ReactUnity.Styling.Rules
                     if (brace >= 0 && (semicolon < 0 || brace < semicolon))
                     {
                         sb.Append("@media ").Append(Marker).Append(Encode(css.Substring(start, brace - start).Trim())).Append(' ');
+                        i = brace;
+                        continue;
+                    }
+                }
+
+                if (c == '@' && string.Compare(css, i, StartingStyleKeyword, 0, StartingStyleKeyword.Length, StringComparison.OrdinalIgnoreCase) == 0
+                    && (i + StartingStyleKeyword.Length >= css.Length || !IsIdentChar(css[i + StartingStyleKeyword.Length])))
+                {
+                    var start = i + StartingStyleKeyword.Length;
+                    var brace = css.IndexOf('{', start);
+                    var semicolon = css.IndexOf(';', start);
+
+                    if (brace >= 0 && (semicolon < 0 || brace < semicolon))
+                    {
+                        sb.Append("@media ").Append(StartingStyleMarker).Append(' ');
                         i = brace;
                         continue;
                     }

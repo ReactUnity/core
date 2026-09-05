@@ -1,0 +1,41 @@
+---
+title: Color Scheme
+---
+
+Declares which color schemes an element is designed for, and decides which arm of `light-dark()` applies below it.
+
+Valid values are `normal`, `light`, `dark` and `light dark`. `only` is accepted and ignored.
+
+`light-dark(<light>, <dark>)` picks one of two values. An ancestor with a single scheme, `light` or `dark`, decides for its whole subtree. `normal` and `light dark` leave the choice to the `prefers-color-scheme` media feature. The function works wherever a color does, including inside `var()` and other color functions.
+
+`color-scheme` on the root element also seeds `prefers-color-scheme`: a single scheme becomes the feature's default, so `@media (prefers-color-scheme: dark)` rules follow the page's declared scheme. A value set through `MediaProvider.SetValue` is never overridden by the seed.
+
+<Sandpack>
+
+```js
+export default function App() {
+  const [scheme, setScheme] = React.useState('light');
+
+  return <>
+    <button onClick={() => setScheme(x => x === 'light' ? 'dark' : 'light')}>
+      Switch to {scheme === 'light' ? 'dark' : 'light'}
+    </button>
+
+    <view className="panel" style={{ colorScheme: scheme }}>
+      <text>This panel is {scheme}</text>
+    </view>
+  </>;
+}
+```
+
+```css active
+.panel {
+  padding: 20px;
+  margin-top: 10px;
+  background-color: light-dark(white, #222);
+  color: light-dark(#222, white);
+  border: 1px solid light-dark(#ccc, #555);
+}
+```
+
+</Sandpack>

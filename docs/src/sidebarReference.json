@@ -144,6 +144,10 @@
               "path": "/reference/css/color"
             },
             {
+              "title": "Color Scheme",
+              "path": "/reference/css/color-scheme"
+            },
+            {
               "title": "Content",
               "path": "/reference/css/content"
             },

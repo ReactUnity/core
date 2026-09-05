@@ -53,6 +53,63 @@ namespace ReactUnity.Styling.Animations
             };
         }
 
+        public struct LinearStop
+        {
+            public float Output;
+            /// <summary>Input progress in 0..1, or NaN for a stop whose position is worked out from its neighbours.</summary>
+            public float Input;
+        }
+
+        /// <summary>
+        /// The linear() easing over its stops. Missing inputs are spread evenly between the nearest
+        /// given ones, inputs never go backwards, and the curve extrapolates past its ends.
+        /// </summary>
+        public static TimingFunction Linear(List<LinearStop> stops)
+        {
+            if (stops == null || stops.Count == 0) return null;
+            if (stops.Count == 1) return Linear;
+
+            var points = stops.ToArray();
+            if (float.IsNaN(points[0].Input)) points[0].Input = 0;
+            if (float.IsNaN(points[points.Length - 1].Input)) points[points.Length - 1].Input = 1;
+
+            for (int i = 1; i < points.Length; i++)
+            {
+                if (!float.IsNaN(points[i].Input))
+                {
+                    points[i].Input = Mathf.Max(points[i].Input, points[i - 1].Input);
+                    continue;
+                }
+
+                var next = i + 1;
+                while (float.IsNaN(points[next].Input)) next++;
+                var step = (Mathf.Max(points[next].Input, points[i - 1].Input) - points[i - 1].Input) / (next - i + 1);
+                for (int j = i; j < next; j++) points[j].Input = points[i - 1].Input + step * (j - i + 1);
+            }
+
+            float Interpolate(float t, LinearStop a, LinearStop b)
+            {
+                if (b.Input == a.Input) return b.Output;
+                return a.Output + (b.Output - a.Output) * (t - a.Input) / (b.Input - a.Input);
+            }
+
+            return delegate (float value, float start, float end) {
+                var last = points.Length - 1;
+                float output;
+
+                if (value <= points[0].Input) output = Interpolate(value, points[0], points[1]);
+                else if (value >= points[last].Input) output = Interpolate(value, points[last - 1], points[last]);
+                else
+                {
+                    var i = 1;
+                    while (i < last && points[i].Input <= value) i++;
+                    output = Interpolate(value, points[i - 1], points[i]);
+                }
+
+                return output * (end - start) + start;
+            };
+        }
+
         public static TimingFunction Get(TimingFunctionType easeType)
         {
             return timingFunctions[(int) easeType];
@@ -183,7 +240,7 @@ namespace ReactUnity.Styling.Animations
 
         public class Converter : TypedStyleConverterBase<TimingFunction>
         {
-            static private HashSet<string> DefaultAllowedFunctions = new HashSet<string> { "steps", "cubic-bezier" };
+            static private HashSet<string> DefaultAllowedFunctions = new HashSet<string> { "steps", "cubic-bezier", "linear" };
             static private StyleConverterBase TypeConverter = new EnumConverter<TimingFunctionType>(true);
 
             protected override HashSet<string> AllowedFunctions => DefaultAllowedFunctions;

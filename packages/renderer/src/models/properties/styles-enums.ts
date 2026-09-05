@@ -39,6 +39,7 @@ export type TextOverflowModes = 'overflow' | 'ellipsis' | 'masking' | 'clip' | '
 export type PointerEvents = 'auto' | 'visible' | 'all' | 'none';
 
 export type ContainerType = 'normal' | 'size' | 'inline-size';
+export type ColorScheme = 'normal' | 'light' | 'dark' | 'light dark' | 'dark light';
 export type Visibility = 'visible' | 'hidden';
 export type Appearance = 'none' | 'button' | 'input' | 'toggle';
 export type NavigationMode = 'none' | 'horizontal' | 'vertical' | 'automatic' | 'explicit';

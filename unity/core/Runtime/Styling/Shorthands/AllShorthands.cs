@@ -53,6 +53,11 @@ namespace ReactUnity.Styling.Shorthands
         internal static readonly StyleShorthand BorderInlineWidth = new XYShorthand<float>("border-inline-width", LayoutProperties.BorderStartWidth, LayoutProperties.BorderEndWidth);
         internal static readonly StyleShorthand BorderBlockWidth = new XYShorthand<float>("border-block-width", LayoutProperties.BorderTopWidth, LayoutProperties.BorderBottomWidth);
 
+        // Yoga has no justify-items or justify-self, so two of these set their align property alone.
+        internal static readonly StyleShorthand PlaceContent = new PlaceShorthand("place-content", LayoutProperties.AlignContent, LayoutProperties.JustifyContent);
+        internal static readonly StyleShorthand PlaceItems = new PlaceShorthand("place-items", LayoutProperties.AlignItems);
+        internal static readonly StyleShorthand PlaceSelf = new PlaceShorthand("place-self", LayoutProperties.AlignSelf);
+
         internal static readonly Dictionary<string, StyleShorthand> Map = new Dictionary<string, StyleShorthand>(StringComparer.InvariantCultureIgnoreCase)
         {
             { "all", All },
@@ -102,6 +107,9 @@ namespace ReactUnity.Styling.Shorthands
             { "insetBlock", InsetBlock },
             { "borderInlineWidth", BorderInlineWidth },
             { "borderBlockWidth", BorderBlockWidth },
+            { "placeContent", PlaceContent },
+            { "placeItems", PlaceItems },
+            { "placeSelf", PlaceSelf },
 
             { "border-width", BorderWidth },
             { "border-color", BorderColor },
@@ -126,6 +134,9 @@ namespace ReactUnity.Styling.Shorthands
             { "inset-block", InsetBlock },
             { "border-inline-width", BorderInlineWidth },
             { "border-block-width", BorderBlockWidth },
+            { "place-content", PlaceContent },
+            { "place-items", PlaceItems },
+            { "place-self", PlaceSelf },
         };
 
         internal static StyleShorthand GetShorthand(string name)

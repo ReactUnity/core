@@ -491,6 +491,9 @@ namespace ReactUnity
             var resolvedStyle = new NodeStyle(Context, null, cssStyles, RevertCalculator, this);
             resolvedStyle.UpdateParent(Parent?.ComputedStyle);
 
+            // The root's color-scheme is the page's, and so is what prefers-color-scheme defaults to.
+            if (this is IHostComponent) Context.Style.SeedColorScheme(resolvedStyle.colorScheme);
+
             StyleState.SetCurrent(resolvedStyle);
             MarkForStyleApply(true);
 
