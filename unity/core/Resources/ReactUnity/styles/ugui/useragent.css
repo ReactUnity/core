@@ -86,7 +86,6 @@ input::selection {
 
 scroll {
   overflow: scroll;
-  flex-shrink: 1;
 }
 
 /* scrollbar-color and scrollbar-width on the scroll feed these; a ::scrollbar rule overrides them. */

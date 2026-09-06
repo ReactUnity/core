@@ -495,7 +495,7 @@ namespace ReactUnity.Tests.Editor
             collection["object-fit"] = "none";
             collection["cursor"] = "none";
 
-            Assert.AreEqual(YogaDisplay.None, style.GetStyleValue(LayoutProperties.Display));
+            Assert.AreEqual(DisplayType.None, style.GetStyleValue(LayoutProperties.Display));
             Assert.AreEqual(PointerEvents.None, style.pointerEvents);
             Assert.AreEqual(Appearance.None, style.appearance);
             Assert.AreEqual(ObjectFit.None, style.objectFit);

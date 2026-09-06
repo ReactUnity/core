@@ -190,7 +190,7 @@ node --test unity/quickjs/Plugins/QuickJS/WebGL/.source/jsbplugin.test.mjs
 
 ### Styling
 
-`unity/core/Runtime/Styling/` implements a CSS subset over Yoga flexbox. Note for anything UI-facing: **flex direction defaults to `column`**, not `row`; CSS cannot style SVG icons from libraries like `react-icons` (use their `color`/`size` props); emoji are not reliably supported.
+`unity/core/Runtime/Styling/` implements a CSS subset over Yoga flexbox. Note for anything UI-facing: **an element with no `display` stacks its children, and `display: flex` lays them out in a row**, as on the web (there is no block layout, so both are flex containers); `flex-shrink` defaults to 1; CSS cannot style SVG icons from libraries like `react-icons` (use their `color`/`size` props); emoji are not reliably supported.
 
 ## Toolchain traps
 

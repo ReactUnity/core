@@ -109,7 +109,7 @@ namespace ReactUnity.UIToolkit
                 computed.borderBottomStyle == BorderStyle.None ? 0 :
                 StylingHelpers.GetStyleFloatDouble(computed, LayoutProperties.BorderBottomWidth, LayoutProperties.BorderWidth);
 
-            TargetElement.style.display = StylingHelpers.GetStyleEnumCustom<DisplayStyle>(computed, LayoutProperties.Display);
+            TargetElement.style.display = computed.GetStyleValue(LayoutProperties.Display, true) == DisplayType.None ? DisplayStyle.None : DisplayStyle.Flex;
 
             var pos = computed.position;
             TargetElement.style.position = pos == PositionType.Relative ? Position.Relative : Position.Absolute;

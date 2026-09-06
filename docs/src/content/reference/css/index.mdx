@@ -239,6 +239,18 @@ view {
 
 `place-content`, `place-items` and `place-self` set the align and justify pair in one declaration. Yoga has no `justify-items` or `justify-self`, so the last two set their align property and only check that the second value is a keyword. The web spellings `start`, `end`, `self-start`, `self-end`, `left`, `right` and `normal` work on the align and justify longhands too.
 
+### Display and the flex defaults {/*display-and-the-flex-defaults*/}
+
+Every element lays out with flexbox, and `display` picks the defaults a browser would give it. An
+element with no `display`, or with `display: block`, stacks its children the way a block does, and
+`display: flex` lays them out in a row. Either way `flex-direction`, `gap`, `align-items` and the rest
+work on it. `inline-block` and `flow-root` read as `block`, `inline-flex` as `flex`, and `none` and
+`contents` do what they do on the web.
+
+`flex-shrink` defaults to 1 as on the web, so an item gives up space before it overflows, and the
+`flex` shorthand fills in the web's values: `flex: 1` is `1 1 0%`, `flex: auto` is `1 1 auto` and
+`flex: none` is `0 0 auto`.
+
 ### Logical properties {/*logical-properties*/}
 
 The inline axis is the one `direction` turns around, and the block axis is always vertical --

@@ -30,6 +30,9 @@ namespace ReactUnity.Tests
                 height: 200px;
                 width: 200px;
             }
+            scroll > view {
+                flex-shrink: 0;
+            }
         ";
 
         public ScrollComponent Scroll => Q("scroll") as ScrollComponent;

@@ -1,3 +1,4 @@
+using ReactUnity.Styling.Computed;
 using ReactUnity.Styling.Converters;
 
 namespace ReactUnity.Styling
@@ -10,6 +11,10 @@ namespace ReactUnity.Styling
 
         public LayoutProperty(string name, bool transitionable = false, T defaultValue = default, StyleConverterBase converter = null) :
             base(name, defaultValue, transitionable, false, converter)
+        { }
+
+        public LayoutProperty(string name, IComputedValue defaultValue, StyleConverterBase converter = null) :
+            base(name, defaultValue, false, false, converter)
         { }
     }
 }

@@ -102,11 +102,12 @@ name them in a `@theme` block of your own after the import.
 `--font-serif` is left as it is. ReactUnity ships no serif font, and naming one it has not got would
 be worse than a `font-serif` utility that does nothing.
 
-### `flex` does not mean a row {/*flex-does-not-mean-a-row*/}
+### `flex` means a row, and `block` stacks {/*flex-means-a-row-and-block-stacks*/}
 
-Every element in ReactUnity is a flex container already, and the default direction is `column`, not
-`row` — which is closer to how a document stacks its blocks than to how CSS flexbox starts out. So
-`flex` on its own changes nothing, and `flex-row` is the utility that turns the axis around.
+An element with no `display` stacks its children the way a block does on the web, and `display: flex`
+lays them out in a row, so `block`, `flex`, `flex-row` and `flex-col` do what they do in a browser.
+The one difference is that a block is still a flex container here: `items-center` or `gap-2` work on
+it without `flex`.
 
 ### Dark mode {/*dark-mode*/}
 

@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
+using ReactUnity.Styling.Computed;
 using ReactUnity.Styling.Converters;
+using ReactUnity.Types;
 using Yoga;
 
 namespace ReactUnity.Styling
@@ -8,7 +10,7 @@ namespace ReactUnity.Styling
     public static class LayoutProperties
     {
         public static readonly LayoutProperty<YogaDirection> StyleDirection = new LayoutProperty<YogaDirection>("StyleDirection");
-        public static readonly LayoutProperty<YogaFlexDirection> FlexDirection = new LayoutProperty<YogaFlexDirection>("FlexDirection");
+        public static readonly LayoutProperty<YogaFlexDirection> FlexDirection = new LayoutProperty<YogaFlexDirection>("FlexDirection", new DisplayFlexDirection());
         // The web's spellings of what Yoga calls flex-start and flex-end, and the fallback positions
         // it has no value for. `normal` behaves as stretch on the align axis and as start on justify.
         public static readonly StyleConverterBase AlignConverter = new EnumConverter(typeof(YogaAlign), false, true, new Dictionary<string, object>
@@ -33,7 +35,21 @@ namespace ReactUnity.Styling
             { "stretch", YogaJustify.FlexStart },
         });
         public static readonly LayoutProperty<YogaJustify> JustifyContent = new LayoutProperty<YogaJustify>("JustifyContent", converter: JustifyConverter);
-        public static readonly LayoutProperty<YogaDisplay> Display = new LayoutProperty<YogaDisplay>("Display");
+        // The web's other spellings of the two layouts that exist here: a block stacks, a flex box is a row.
+        public static readonly StyleConverterBase DisplayConverter = new EnumConverter(typeof(DisplayType), false, true, new Dictionary<string, object>
+        {
+            { "inlineblock", DisplayType.Block },
+            { "flowroot", DisplayType.Block },
+            { "inlineflex", DisplayType.Flex },
+        });
+        public static readonly LayoutProperty<DisplayType> Display = new LayoutProperty<DisplayType>("Display", converter: DisplayConverter);
+
+        // Unset, flex-direction follows display as on the web: a flex box is a row and a block stacks.
+        private class DisplayFlexDirection : IComputedValue
+        {
+            public object GetValue(IStyleProperty prop, NodeStyle style, IStyleConverter converter) =>
+                style.GetStyleValue(Display, true) == DisplayType.Flex ? YogaFlexDirection.Row : YogaFlexDirection.Column;
+        }
         public static readonly LayoutProperty<YogaBoxSizing> BoxSizing = new LayoutProperty<YogaBoxSizing>("BoxSizing");
         public static readonly LayoutProperty<YogaAlign> AlignItems = new LayoutProperty<YogaAlign>("AlignItems", converter: AlignConverter);
         public static readonly LayoutProperty<YogaAlign> AlignSelf = new LayoutProperty<YogaAlign>("AlignSelf", converter: AlignConverter);
@@ -58,7 +74,7 @@ namespace ReactUnity.Styling
         }
         public static readonly LayoutProperty<float> AspectRatio = new LayoutProperty<float>("AspectRatio", true, float.NaN);
         public static readonly LayoutProperty<float> FlexGrow = new LayoutProperty<float>("FlexGrow", true, float.NaN);
-        public static readonly LayoutProperty<float> FlexShrink = new LayoutProperty<float>("FlexShrink", true, float.NaN);
+        public static readonly LayoutProperty<float> FlexShrink = new LayoutProperty<float>("FlexShrink", true, 1f);
         public static readonly LayoutProperty<YogaValue> FlexBasis = new LayoutProperty<YogaValue>("FlexBasis", true);
         public static readonly LayoutProperty<YogaValue> Width = new LayoutProperty<YogaValue>("Width", true);
         public static readonly LayoutProperty<YogaValue> Height = new LayoutProperty<YogaValue>("Height", true);

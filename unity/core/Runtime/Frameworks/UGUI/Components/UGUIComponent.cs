@@ -242,7 +242,7 @@ namespace ReactUnity.UGUI
             Layout.BorderStartWidth = StylingHelpers.GetStyleFloat(computed, LayoutProperties.BorderStartWidth);
             Layout.BorderEndWidth = StylingHelpers.GetStyleFloat(computed, LayoutProperties.BorderEndWidth);
 
-            Layout.Display = StylingHelpers.GetStyleEnumCustom(computed, LayoutProperties.Display);
+            Layout.Display = StylingHelpers.DisplayOf(StylingHelpers.GetStyleEnumCustom(computed, LayoutProperties.Display));
             Layout.BoxSizing = StylingHelpers.GetStyleEnumCustom(computed, LayoutProperties.BoxSizing);
             Layout.Overflow = LayoutProperties.CombineOverflow(
                 StylingHelpers.GetStyleEnumCustom(computed, LayoutProperties.Overflow),

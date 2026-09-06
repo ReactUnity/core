@@ -27,7 +27,7 @@ export type YogaJustify =
   | 'right'
   | 'normal'
   | 'stretch';
-export type Display = 'flex' | 'none' | 'contents';
+export type Display = 'block' | 'inline-block' | 'flow-root' | 'flex' | 'inline-flex' | 'none' | 'contents';
 export type BoxSizing = 'border-box' | 'content-box';
 export type Wrap = 'no-wrap' | 'wrap' | 'wrap-reverse';
 export type Position = 'relative' | 'absolute' | 'fixed' | 'static' | 'sticky' | 'inset';
