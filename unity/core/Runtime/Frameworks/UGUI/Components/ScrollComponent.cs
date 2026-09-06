@@ -1,12 +1,14 @@
 using System;
 
 using ReactUnity.Helpers;
+using ReactUnity.Styling;
 using ReactUnity.Styling.Converters;
 using ReactUnity.Types;
 using ReactUnity.UGUI.Behaviours;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
+using Yoga;
 using MovementType = UnityEngine.UI.ScrollRect.MovementType;
 using ScrollbarVisibility = UnityEngine.UI.ScrollRect.ScrollbarVisibility;
 
@@ -81,10 +83,70 @@ namespace ReactUnity.UGUI
 
         private bool DirectionFromProp;
 
+        /// <summary>The space <c>scrollbar-gutter</c> reserves on each edge, as left, top, right, bottom.</summary>
+        public Vector4 Gutter { get; private set; }
+
         protected override void ApplyStylesSelf()
         {
             base.ApplyStylesSelf();
             if (!DirectionFromProp) SetDirection(DirectionFromStyle());
+        }
+
+        protected override void ApplyLayoutStylesSelf()
+        {
+            base.ApplyLayoutStylesSelf();
+            RefreshScrollbarGutter();
+        }
+
+        // `scrollbar-gutter: stable` keeps content out from under the overlaid scrollbars: the viewport shrinks by the
+        // bar's thickness on its edge, and Yoga loses the same width. A start-edge gutter is a viewport offset, so the
+        // whole reduction goes to the end padding, and the content resizer ignores it so the extents still match.
+        internal void RefreshScrollbarGutter()
+        {
+            var style = ComputedStyle;
+            if (style == null) return;
+
+            var mode = style.scrollbarGutter;
+            float left = 0, top = 0, right = 0, bottom = 0;
+
+            if (mode != ScrollbarGutter.Auto)
+            {
+                var both = mode == ScrollbarGutter.StableBothEdges;
+
+                if (ScrollRect.vertical && VerticalScrollbar != null)
+                {
+                    var t = VerticalScrollbar.Thickness;
+                    if (both) left = right = t;
+                    else if (VerticalScrollbar.AtStart) left = t;
+                    else right = t;
+                }
+
+                if (ScrollRect.horizontal && HorizontalScrollbar != null)
+                {
+                    var t = HorizontalScrollbar.Thickness;
+                    if (both) top = bottom = t;
+                    else if (HorizontalScrollbar.AtStart) top = t;
+                    else bottom = t;
+                }
+            }
+
+            Gutter = new Vector4(left, top, right, bottom);
+
+            var viewport = ScrollRect.viewport;
+            viewport.offsetMin = new Vector2(left, -1 + bottom);
+            viewport.offsetMax = new Vector2(1 - right, -top);
+            ContentResizer.Gutter = new Vector2(left + right, top + bottom);
+
+            Layout.PaddingRight = AddGutter(StylingHelpers.GetStyleLengthTriple(style, LayoutProperties.PaddingRight, LayoutProperties.PaddingHorizontal, LayoutProperties.Padding), left + right);
+            Layout.PaddingBottom = AddGutter(StylingHelpers.GetStyleLengthTriple(style, LayoutProperties.PaddingBottom, LayoutProperties.PaddingVertical, LayoutProperties.Padding), top + bottom);
+        }
+
+        // A percent padding cannot take points, so the gutter is skipped there.
+        private static YogaValue AddGutter(YogaValue padding, float gutter)
+        {
+            if (gutter <= 0 || padding.Unit == YogaUnit.Percent) return padding;
+            if (padding.Unit == YogaUnit.Point) return YogaValue.Point(padding.Value + gutter);
+            return YogaValue.Point(gutter);
         }
 
         // `overflow-x: hidden` beside a scrolling y axis is how CSS asks for one direction. Both hidden
@@ -106,6 +168,7 @@ namespace ReactUnity.UGUI
             ScrollRect.vertical = dir.HasFlag(ScrollDirection.Vertical);
             ContentResizer.Direction = dir;
             ScrollRect.WheelDirectionTransposed = dir == ScrollDirection.Horizontal;
+            RefreshScrollbarGutter();
         }
 
         private void SetupContents()

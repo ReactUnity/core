@@ -47,6 +47,12 @@ namespace ReactUnity.UGUI
         public Scrollbar Scrollbar { get; }
         public ScrollbarThumbComponent Thumb { get; private set; }
 
+        /// <summary>Thickness in points as last laid out; what a <c>scrollbar-gutter</c> reserves.</summary>
+        public float Thickness { get; private set; } = 10f;
+
+        /// <summary>True when the bar sits on the left or top edge rather than the right or bottom.</summary>
+        public bool AtStart { get; private set; }
+
         public ScrollbarComponent(UGUIContext context, string tag = "_scrollbar") : base(context, tag)
         {
             IsPseudoElement = true;
@@ -132,6 +138,8 @@ namespace ReactUnity.UGUI
             var left = ComputedStyle.GetStyleValue<YogaValue>(LayoutProperties.Left);
 
             rt.anchoredPosition3D = Vector3.zero;
+            Thickness = sizeValue;
+            AtStart = Horizontal ? top.Unit == YogaUnit.Point : left.Unit == YogaUnit.Point;
             if (Horizontal)
             {
                 if (top.Unit == YogaUnit.Point)
@@ -168,6 +176,8 @@ namespace ReactUnity.UGUI
                 rt.offsetMin = new Vector2(RectTransform.offsetMin.x, StylingHelpers.GetPointValue(bottom, 0));
                 rt.offsetMax = new Vector2(RectTransform.offsetMax.x, -StylingHelpers.GetPointValue(top, 0));
             }
+
+            if (Parent is ScrollComponent scroll) scroll.RefreshScrollbarGutter();
         }
 
         public override bool Revive()

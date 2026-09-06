@@ -12,6 +12,8 @@
       "**",
       "!**/docs",
       "!**/unity/**/*/Plugins",
+      // The ExCSS fork: another project's C# tree, with its own formatting.
+      "!**/vendor",
       "!**/.node-version",
       "!**/node_modules",
       "!**/package-lock.json",

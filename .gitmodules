@@ -1,0 +1,4 @@
+[submodule "vendor/excss"]
+	path = vendor/excss
+	url = https://github.com/ReactUnity/ExCSS.git
+	branch = reactunity

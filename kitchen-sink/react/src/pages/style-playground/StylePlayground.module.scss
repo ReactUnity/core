@@ -37,3 +37,230 @@
     background-color: crimson;
   }
 }
+
+.buttonRow {
+  flex-direction: row;
+  gap: 8px;
+}
+
+.startingStyleList {
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 8px;
+  min-height: 40px;
+}
+
+.startingStyleItem {
+  padding: 8px 12px;
+  background-color: teal;
+  color: white;
+  border-radius: 6px;
+  opacity: 1;
+  translate: 0 0;
+  transition: opacity 0.6s, translate 0.6s;
+
+  @starting-style {
+    opacity: 0;
+    translate: -40px 0;
+  }
+}
+
+.schemePanel {
+  padding: 16px;
+  gap: 8px;
+  border-radius: 8px;
+  background-color: light-dark(white, #1e293b);
+  color: light-dark(#1e293b, white);
+  border: 1px solid light-dark(#cbd5e1, #475569);
+
+  .schemeNested {
+    padding: 8px;
+    background-color: light-dark(#e2e8f0, #334155);
+    border-radius: 4px;
+  }
+}
+
+.placeExample {
+  width: 320px;
+  height: 140px;
+  background-color: lightblue;
+  border: 2px solid black;
+  place-items: center;
+  place-content: center;
+  gap: 8px;
+}
+
+.placeBox {
+  padding: 6px 10px;
+  background-color: white;
+  border: 1px solid black;
+}
+
+.mathDemo {
+  gap: 4px;
+
+  @for $i from 1 through 6 {
+    .mathRow:nth-child(#{$i}) {
+      --i: #{$i};
+    }
+  }
+}
+
+.mathRow {
+  flex-direction: row;
+  align-items: center;
+  gap: 8px;
+}
+
+.mathLabel {
+  width: 50px;
+}
+
+.mathBar {
+  height: 16px;
+  background-color: crimson;
+  width: calc(24px * pow(1.4, var(--i)));
+  opacity: calc(0.35 + 0.65 * abs(sin(var(--i) * 30deg)));
+}
+
+.mathBarRound {
+  height: 16px;
+  background-color: royalblue;
+  width: round(up, calc(var(--i) * 37px), 50px);
+  margin-left: calc(mod(var(--i), 3) * 20px);
+}
+
+.nthRow {
+  flex-direction: row;
+  gap: 6px;
+}
+
+.nthCell {
+  width: 40px;
+  height: 40px;
+  align-items: center;
+  justify-content: center;
+  background-color: #e2e8f0;
+  border: 2px solid transparent;
+
+  &[data-featured] {
+    border-color: #4f46e5;
+  }
+
+  &:nth-child(even of [data-featured]) {
+    background-color: #4f46e5;
+    color: white;
+  }
+}
+
+.hoverDemo {
+  gap: 6px;
+}
+
+.hoverYes,
+.hoverNo,
+.pointerFine,
+.pointerCoarse {
+  display: none;
+  padding: 8px;
+  background-color: #e2e8f0;
+}
+
+@media (hover) {
+  .hoverYes {
+    display: flex;
+
+    &:hover {
+      background-color: cornflowerblue;
+      color: white;
+    }
+  }
+}
+
+@media (hover: none) {
+  .hoverNo {
+    display: flex;
+  }
+}
+
+@media (pointer: fine) {
+  .pointerFine {
+    display: flex;
+  }
+}
+
+@media (pointer: coarse) {
+  .pointerCoarse {
+    display: flex;
+  }
+}
+
+.attrRow {
+  flex-direction: row;
+  gap: 12px;
+}
+
+.attrItem {
+  flex-direction: row;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 10px;
+  background-color: white;
+  border: 1px solid black;
+  font-size: attr(data-size px, 14px);
+
+  &::before {
+    content: attr(data-label);
+  }
+
+  &::after {
+    content: attr(data-badge, "0");
+    padding: 2px 6px;
+    border-radius: 10px;
+    background-color: crimson;
+    color: white;
+    font-size: 11px;
+  }
+}
+
+.easingDemo {
+  gap: 8px;
+  width: 320px;
+}
+
+.easingBall {
+  align-self: flex-start;
+  padding: 6px 10px;
+  background-color: darkorange;
+  border-radius: 6px;
+  animation: slide 2s infinite alternate;
+}
+
+@keyframes slide {
+  from {
+    translate: 0 0;
+  }
+
+  to {
+    translate: 200px 0;
+  }
+}
+
+.gutterRow {
+  flex-direction: row;
+  gap: 16px;
+}
+
+.gutterScroll {
+  width: 200px;
+  height: 120px;
+  background-color: white;
+  border: 1px solid black;
+}
+
+.gutterContent {
+  width: 100%;
+  height: 300px;
+  padding: 6px;
+  border: 3px solid crimson;
+}

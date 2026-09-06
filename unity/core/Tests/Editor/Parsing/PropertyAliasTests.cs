@@ -305,10 +305,6 @@ namespace ReactUnity.Tests.Editor
             style.UpdateParent(null);
             Assert.AreEqual(0, style.fontSize);
 
-            collection["scrollbar-size"] = "8px";
-            style.UpdateParent(null);
-            Assert.AreEqual(8, style.fontSize);
-
             collection["scrollbar-width"] = "auto";
             collection["scrollbar-color"] = "auto";
             style.UpdateParent(null);

@@ -110,7 +110,7 @@ namespace ReactUnity.Styling
             Stylesheet parsed;
             using (ReactProfiling.ParseStyles.Auto())
             {
-                parsed = Context.Parser.Parse(ContainerQuery.PrepareForParser(style ?? ""));
+                parsed = Context.Parser.Parse(style ?? "");
             }
 
             Parsed = parsed;
@@ -190,21 +190,6 @@ namespace ReactUnity.Styling
 
                     // A nested @media matches only when both conditions do, same as joining them with "and".
                     var condition = match.Groups[1].Value;
-
-                    // A @starting-style block, dressed the same way. Its rules apply through :enter.
-                    if (condition.Trim() == ContainerQuery.StartingStyleMarker)
-                    {
-                        ProcessRules(mediaRule.Rules, media, mediaCondition, layerPath, container, true);
-                        continue;
-                    }
-
-                    // A @container block, dressed as @media so the parser keeps it wherever it is nested.
-                    if (ContainerQuery.TryDecodePrelude(condition, out var prelude))
-                    {
-                        ProcessRules(mediaRule.Rules, media, mediaCondition, layerPath, ContainerQuery.Parse(prelude, container), startingStyle);
-                        continue;
-                    }
-
                     if (!string.IsNullOrWhiteSpace(mediaCondition)) condition = mediaCondition.Trim() + " and " + condition.Trim();
 
                     var mql = MediaQueryList.Create(Context.MediaProvider, condition, Context.Context);
@@ -212,6 +197,17 @@ namespace ReactUnity.Styling
                     ProcessRules(mediaRule.Rules, mql, condition, layerPath, container, startingStyle);
 
                     MediaQueries.Add(mql);
+                }
+                else if (child is IContainerRule containerRule)
+                {
+                    // The parser keeps the prelude as written; the query grammar is this side's.
+                    var prelude = string.IsNullOrEmpty(containerRule.Name) ? containerRule.ConditionText : containerRule.Name + " " + containerRule.ConditionText;
+                    ProcessRules(containerRule.Rules, media, mediaCondition, layerPath, ContainerQuery.Parse(prelude, container), startingStyle);
+                }
+                else if (child is IStartingStyleRule startingStyleRule)
+                {
+                    // Its rules apply through :enter.
+                    ProcessRules(startingStyleRule.Rules, media, mediaCondition, layerPath, container, true);
                 }
                 else if (child is ISupportsRule supportsRule)
                 {
@@ -286,8 +282,8 @@ namespace ReactUnity.Styling
                 Declarations.AddRange(dcl);
             }
 
-            // A nested @media or @supports arrives as the conditional rule it is, holding an
-            // implicit rule with this one's selector, so the ordinary path handles it.
+            // A nested @media, @supports, @container or @starting-style arrives as the group rule
+            // it is, holding an implicit rule with this one's selector, so the ordinary path handles it.
             foreach (var nested in rule.NestedRules)
             {
                 if (nested is StyleRule nestedRule) AddStyleRule(nestedRule, media, mediaCondition, layerPath, container, startingStyle);

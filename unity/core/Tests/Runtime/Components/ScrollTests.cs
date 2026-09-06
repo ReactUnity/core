@@ -84,6 +84,74 @@ namespace ReactUnity.Tests
 
         }
 
+        [UGUITest(Script = BaseScript, Style = BaseStyle)]
+        public IEnumerator ScrollbarGutterReservesTheScrollbarThickness()
+        {
+            View.Style.Set("width", "100%");
+            View.Style.Set("height", 300);
+            yield return null;
+            yield return null;
+
+            var viewport = Scroll.ScrollRect.viewport;
+            Assert.AreEqual(Vector4.zero, Scroll.Gutter);
+            Assert.AreEqual(201, viewport.rect.width, 0.01f);
+            Assert.AreEqual(200, View.RectTransform.rect.width, 0.01f);
+            Assert.IsFalse(Scroll.ScrollRect.horizontalScrollbar.isActiveAndEnabled);
+            Assert.IsTrue(Scroll.ScrollRect.verticalScrollbar.isActiveAndEnabled);
+
+            // Both axes can scroll, so the user-agent's 12px bar is reserved on the right and the bottom.
+            Context.InsertStyle("scroll { scrollbar-gutter: stable; }");
+            yield return null;
+            yield return null;
+            Assert.AreEqual(new Vector4(0, 0, 12, 12), Scroll.Gutter);
+            Assert.AreEqual(189, viewport.rect.width, 0.01f);
+            Assert.AreEqual(189, viewport.rect.height, 0.01f);
+            Assert.AreEqual(188, View.RectTransform.rect.width, 0.01f);
+            Assert.AreEqual(0, LeftEdge(View.RectTransform), 0.01f);
+            Assert.IsFalse(Scroll.ScrollRect.horizontalScrollbar.isActiveAndEnabled);
+            Assert.IsTrue(Scroll.ScrollRect.verticalScrollbar.isActiveAndEnabled);
+
+            // A vertical-only view gives the horizontal gutter back.
+            Globals.Set("direction", "vertical");
+            yield return null;
+            yield return null;
+            Assert.AreEqual(new Vector4(0, 0, 12, 0), Scroll.Gutter);
+            Assert.AreEqual(201, viewport.rect.height, 0.01f);
+            Assert.AreEqual(188, View.RectTransform.rect.width, 0.01f);
+
+            // The start edge is a viewport offset; Yoga still loses both gutters from the right.
+            Context.InsertStyle("scroll { scrollbar-gutter: stable both-edges; }", 1);
+            yield return null;
+            yield return null;
+            Assert.AreEqual(new Vector4(12, 0, 12, 0), Scroll.Gutter);
+            Assert.AreEqual(12, viewport.offsetMin.x, 0.01f);
+            Assert.AreEqual(177, viewport.rect.width, 0.01f);
+            Assert.AreEqual(176, View.RectTransform.rect.width, 0.01f);
+            Assert.AreEqual(0, LeftEdge(View.RectTransform), 0.01f);
+
+            // A thinner bar reserves less, and no bar reserves nothing.
+            Context.InsertStyle("scroll { scrollbar-gutter: stable; scrollbar-width: thin; }", 2);
+            yield return null;
+            yield return null;
+            Assert.AreEqual(new Vector4(0, 0, 6, 0), Scroll.Gutter);
+            Assert.AreEqual(194, View.RectTransform.rect.width, 0.01f);
+
+            Context.InsertStyle("scroll { scrollbar-width: none; }", 3);
+            yield return null;
+            yield return null;
+            Assert.AreEqual(Vector4.zero, Scroll.Gutter);
+            Assert.AreEqual(200, View.RectTransform.rect.width, 0.01f);
+
+            Context.InsertStyle("scroll { scrollbar-gutter: auto; scrollbar-width: auto; }", 4);
+            yield return null;
+            yield return null;
+            Assert.AreEqual(Vector4.zero, Scroll.Gutter);
+            Assert.AreEqual(201, viewport.rect.width, 0.01f);
+            Assert.AreEqual(200, View.RectTransform.rect.width, 0.01f);
+        }
+
+        static float LeftEdge(RectTransform rt) => rt.anchoredPosition.x - rt.pivot.x * rt.rect.width;
+
         private IEnumerator RunWithRandomCoords(System.Func<IEnumerator> cb)
         {
             var cube = GameObject.Find("Cube");

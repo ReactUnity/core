@@ -20,3 +20,23 @@ export default function App() {
 ```
 
 </Sandpack>
+
+## Scrollbars {/*scrollbars*/}
+
+The scrollbars are the `::scrollbar` and `::scrollbar-thumb` pseudo elements, and `[horizontal]` or `[vertical]` picks one of them. They can be styled like any element: `width`, `height`, `background-color`, `border-radius`, and `left` or `top` to move a bar to the opposite edge.
+
+The web properties are shortcuts for the common cases. `scrollbar-color: <thumb> <track>` colors both parts, and `scrollbar-width: auto | thin | none | <length>` sets the thickness (`thin` is 6px, `none` hides the bars). A `::scrollbar` rule of your own still wins over them.
+
+Scrollbars are drawn over the content, so nothing moves when one appears. `scrollbar-gutter: stable` reserves the bar's thickness along its edge instead, for every direction the view can scroll in, so content is never covered; `stable both-edges` reserves the same amount on the opposite edge too, which keeps the content centered. The gutter follows `scrollbar-width`, so `none` reserves nothing.
+
+```css
+scroll {
+  scrollbar-color: #888 transparent;
+  scrollbar-width: thin;
+  scrollbar-gutter: stable;
+}
+
+scroll::scrollbar-thumb {
+  border-radius: 3px;
+}
+```

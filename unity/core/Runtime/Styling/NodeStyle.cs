@@ -41,6 +41,7 @@ namespace ReactUnity.Styling
         public ContainerType containerType => GetStyleValue(StyleProperties.containerType);
         public string containerName => GetStyleValue(StyleProperties.containerName);
         public ColorScheme colorScheme => GetStyleValue(StyleProperties.colorScheme);
+        public ScrollbarGutter scrollbarGutter => GetStyleValue(StyleProperties.scrollbarGutter);
         public YogaValue2 borderTopLeftRadius => GetStyleValue(StyleProperties.borderTopLeftRadius);
         public YogaValue2 borderTopRightRadius => GetStyleValue(StyleProperties.borderTopRightRadius);
         public YogaValue2 borderBottomLeftRadius => GetStyleValue(StyleProperties.borderBottomLeftRadius);

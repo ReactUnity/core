@@ -59,6 +59,10 @@ export function reactUnity(options: ReactUnityOptions = {}): PluginOption[] {
   return [reactOptions === false ? null : react(reactOptions), reactUnityConfig(options), reactUnityClean(options)];
 }
 
+// Lightning CSS's `Features.LightDark`. The package is Vite's dependency rather than ours, so the
+// flag is spelled out; it has held this value since the feature was added.
+const LIGHTNINGCSS_LIGHT_DARK = 1 << 20;
+
 function reactUnityConfig(options: ReactUnityOptions): Plugin {
   const assetPath = options.assetPath ?? DEFAULT_ASSET_PATH;
   let message: { level: 'info' | 'warn'; text: string } | undefined;
@@ -110,6 +114,12 @@ function reactUnityConfig(options: ReactUnityOptions): Plugin {
       // ReactUnity's CSS subset is roughly a 2020 browser: no oklch, color-mix or nesting.
       // Naming an old target is what makes Lightning CSS lower them on the way out.
       if (config.build?.cssTarget === undefined) build.cssTarget = ['chrome87'];
+
+      // light-dark() is the one thing that target lowers which ReactUnity reads itself, and the
+      // lowered form only works next to a color-scheme declaration in the same sheet.
+      if (config.css?.lightningcss?.exclude === undefined) {
+        patch.css = { lightningcss: { exclude: LIGHTNINGCSS_LIGHT_DARK } };
+      }
 
       // Vite's own emptying would take the .meta files with it, and warns about an outDir
       // outside the root besides. The clean plugin below does the job instead.

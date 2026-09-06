@@ -175,7 +175,7 @@ export interface RenderStyle {
   gap?: SafeString | number;
   scrollbarColor?: SafeString;
   scrollbarWidth?: 'auto' | 'thin' | 'none' | YogaValueAux;
-  scrollbarSize?: 'auto' | 'thin' | 'none' | YogaValueAux;
+  scrollbarGutter?: 'auto' | 'stable' | 'stable both-edges';
   paddingInline?: SafeString | number;
   paddingBlock?: SafeString | number;
   marginInline?: SafeString | number;

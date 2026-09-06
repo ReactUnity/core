@@ -103,6 +103,20 @@ test('output names stay distinct once Unity drops the last extension', () => {
   assert.notEqual(resource(named(chunkFileNames, '.js')), resource(named(assetFileNames, '.png')));
 });
 
+test('light-dark() survives the CSS lowering, unless the app decides otherwise', () => {
+  const configOf = (config: UserConfig) => {
+    const plugin = reactUnity({ react: false }).find((p) => p && 'name' in p && p.name === 'reactunity') as Plugin;
+    return (plugin.config as (c: UserConfig, e: ConfigEnv) => UserConfig)(config, { command: 'build', mode: 'production' });
+  };
+
+  // The old cssTarget is what lowers oklch and nesting, and would take light-dark() with it.
+  const patch = configOf({});
+  assert.deepEqual(patch?.build?.cssTarget, ['chrome87']);
+  assert.equal((patch?.css?.lightningcss?.exclude ?? 0) & (1 << 20), 1 << 20);
+
+  assert.equal(configOf({ css: { lightningcss: { exclude: 0 } } })?.css, undefined);
+});
+
 test('a bare tailwindcss import is aliased, and only the bare one', () => {
   const configOf = (options: Parameters<typeof reactUnity>[0]) => {
     const plugin = reactUnity({ ...options, react: false }).find((p) => p && 'name' in p && p.name === 'reactunity') as Plugin;
