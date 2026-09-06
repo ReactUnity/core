@@ -108,12 +108,28 @@ namespace ReactUnity.Styling.Shorthands
 
                         break;
                     case "rotate3d":
-                        if (argCount != 3) continue;
-                        xArg = AllConverters.AngleConverter.TryGetConstantValue(args[0], 0f);
-                        yArg = AllConverters.AngleConverter.TryGetConstantValue(args[1], 0f);
-                        zArg = AllConverters.AngleConverter.TryGetConstantValue(args[2], 0f);
-                        if (xArg is float rx3 && yArg is float ry3 && zArg is float rz3)
-                            rotate *= Quaternion.Euler(rx3, ry3, rz3);
+                        if (argCount == 4)
+                        {
+                            xArg = AllConverters.FloatConverter.TryGetConstantValue(args[0], 0f);
+                            yArg = AllConverters.FloatConverter.TryGetConstantValue(args[1], 0f);
+                            zArg = AllConverters.FloatConverter.TryGetConstantValue(args[2], 0f);
+                            var aArg = AllConverters.AngleConverter.TryGetConstantValue(args[3], 0f);
+                            if (xArg is float ax && yArg is float ay && zArg is float az && aArg is float a)
+                            {
+                                var axis = new Vector3(ax, ay, az);
+                                if (axis != Vector3.zero) rotate *= Quaternion.AngleAxis(a, axis.normalized);
+                            }
+                        }
+                        else if (argCount == 3)
+                        {
+                            // ReactUnity's older spelling: three Euler angles.
+                            xArg = AllConverters.AngleConverter.TryGetConstantValue(args[0], 0f);
+                            yArg = AllConverters.AngleConverter.TryGetConstantValue(args[1], 0f);
+                            zArg = AllConverters.AngleConverter.TryGetConstantValue(args[2], 0f);
+                            if (xArg is float rx3 && yArg is float ry3 && zArg is float rz3)
+                                rotate *= Quaternion.Euler(rx3, ry3, rz3);
+                        }
+                        else continue;
 
                         break;
                     case "rotateX":

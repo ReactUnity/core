@@ -300,7 +300,7 @@ namespace ReactUnity.UGUI
 
             // Restore rotation and scale
             RectTransform.localScale = style.scale;
-            RectTransform.localRotation = Quaternion.Euler(style.rotate);
+            RectTransform.localRotation = StylingHelpers.RotationOf(style.rotate);
         }
 
         protected void ResolveOpacityAndInteractable()

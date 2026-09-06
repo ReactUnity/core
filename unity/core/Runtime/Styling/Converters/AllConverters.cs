@@ -49,7 +49,7 @@ namespace ReactUnity.Styling.Converters
         static public StyleConverterBase AudioReferenceConverter = new AudioReference.Converter();
         static public StyleConverterBase VideoReferenceConverter = new VideoReference.Converter();
         static public StyleConverterBase FontReferenceConverter = new FontReference.Converter();
-        static public StyleConverterBase RotateConverter = new Vector3Converter((v) => new Vector3(0, 0, v), AngleConverter);
+        static public StyleConverterBase RotateConverter = new RotateConverter();
         static public StyleConverterBase ScaleConverter = new Vector3Converter(null, null, 1);
         static public StyleConverterBase TransitionPropertyConverter = new TransitionProperty.Converter();
         static public StyleConverterBase CursorConverter = new Types.Cursor.Converter();

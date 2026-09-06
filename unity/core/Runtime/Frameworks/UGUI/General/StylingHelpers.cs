@@ -73,6 +73,17 @@ namespace ReactUnity.UGUI
             return new Rect(pos, size);
         }
 
+        /// <summary>
+        /// The rotation a CSS <c>rotate</c> value means on a canvas. CSS has y down and z toward the
+        /// viewer, a canvas y up and z away, so the y and z terms of the rotation flip and a positive
+        /// angle turns clockwise, as on the web.
+        /// </summary>
+        public static Quaternion RotationOf(Vector3 cssEuler)
+        {
+            var q = Quaternion.Euler(cssEuler);
+            return new Quaternion(q.x, -q.y, -q.z, q.w);
+        }
+
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void Swap<T>(ref T lhs, ref T rhs)
         {

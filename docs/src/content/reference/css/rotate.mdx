@@ -2,12 +2,17 @@
 title: Rotate
 ---
 
-Rotates the element around its `transform-origin`.
+Rotates the element around its `transform-origin`. A positive angle turns clockwise, as on the web.
 
 Valid values are:
 
-- Single angle value to rotate around Z-axis: `45deg`, `1.2rad`, `0.5turn` etc.
-- 3-dimensional angles in the form `eulerX eulerY eulerZ`: `45deg 60deg 360deg` etc.
+- `none`
+- A single angle, which turns around the Z-axis: `45deg`, `1.2rad`, `0.5turn` etc.
+- An axis keyword and an angle: `x 45deg`, `y 0.25turn`, `z 90deg`
+- An axis vector and an angle: `1 1 0 45deg`
+- Three angles in the form `eulerX eulerY eulerZ`, which is ReactUnity's own older spelling: `45deg 60deg 360deg`
+
+`rotate3d()` in `transform` takes an axis and an angle the same way: `rotate3d(1, 1, 0, 45deg)`.
 
 <Sandpack>
 
@@ -53,7 +58,7 @@ export default function App() {
   }
 
   80% {
-    rotate: 45deg 45deg 0.625turn;
+    rotate: 1 1 0 0.625turn;
   }
 
   100% {

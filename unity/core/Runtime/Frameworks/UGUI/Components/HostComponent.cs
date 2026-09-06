@@ -78,7 +78,7 @@ namespace ReactUnity.UGUI
 
             if (style.HasValue(StyleProperties.rotate))
             {
-                RectTransform.localRotation = Quaternion.Euler(style.rotate);
+                RectTransform.localRotation = StylingHelpers.RotationOf(style.rotate);
             }
 
             // TODO: handle translate

@@ -79,6 +79,44 @@ namespace ReactUnity.Tests
 
 
         [UGUITest(Script = BaseScript, Style = BaseStyle)]
+        public IEnumerator PositiveRotationIsClockwise()
+        {
+            yield return null;
+
+            var rt = View.RectTransform;
+
+            // The web turns a positive angle clockwise, so the right edge ends up at the bottom.
+            View.Style.Set("rotate", "90deg");
+            yield return null;
+            AssertDirection(Vector3.down, rt.TransformDirection(Vector3.right));
+
+            View.Style.Set("rotate", "-90deg");
+            yield return null;
+            AssertDirection(Vector3.up, rt.TransformDirection(Vector3.right));
+
+            View.Style.Set("transform", "rotate(45deg) rotate(45deg)");
+            yield return null;
+            AssertDirection(Vector3.down, rt.TransformDirection(Vector3.right));
+
+            // rotateX tilts the top edge away from the viewer, which on a canvas is +z.
+            View.Style.Set("transform", "rotateX(90deg)");
+            yield return null;
+            AssertDirection(Vector3.forward, rt.TransformDirection(Vector3.up));
+
+            // rotateY sends the right edge away from the viewer too.
+            View.Style.Set("transform", "rotateY(90deg)");
+            yield return null;
+            AssertDirection(Vector3.forward, rt.TransformDirection(Vector3.right));
+        }
+
+        static void AssertDirection(Vector3 expected, Vector3 actual)
+        {
+            Assert.AreEqual(expected.x, actual.x, 0.001f);
+            Assert.AreEqual(expected.y, actual.y, 0.001f);
+            Assert.AreEqual(expected.z, actual.z, 0.001f);
+        }
+
+        [UGUITest(Script = BaseScript, Style = BaseStyle)]
         public IEnumerator DefaultScaleZIsIdentity()
         {
             yield return null;

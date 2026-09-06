@@ -38,7 +38,7 @@
   transition:
     rotate var(--item-animation-duration),
     margin-bottom var(--item-animation-duration);
-  rotate: 0 0 0;
+  rotate: x 0deg;
   width: 360px;
   padding: 4px 0 4px 8px;
   margin-bottom: 0px;
@@ -54,12 +54,12 @@
 }
 
 .todo-item:enter {
-  rotate: 90deg 0 0;
+  rotate: x 90deg;
   margin-bottom: -66px;
 }
 
 .todo-item:leave {
-  rotate: 90deg 0 0;
+  rotate: x 90deg;
   margin-bottom: -66px;
   pointer-events: none;
   state-duration: var(--item-animation-duration);
