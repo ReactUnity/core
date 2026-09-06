@@ -88,8 +88,11 @@ def nm_readers():
 def nm_exports(path, fmt):
     """Defined external symbols, via whichever nm is present."""
     for tool in nm_readers():
-        # -g external only, -U defined only; --defined-only is the GNU spelling
-        for flags in (["-gU"], ["-g", "--defined-only"]):
+        # -g external only, -U defined only; --defined-only is the GNU spelling. The -D
+        # pair reads the *dynamic* table, which is the only one a stripped .so still
+        # has -- and the shared legs are stripped, because what a caller can link
+        # against is exactly what is in there.
+        for flags in (["-gU"], ["-g", "--defined-only"], ["-gUD"], ["-gD", "--defined-only"]):
             out = run([tool] + flags + [path])
             if out is None:
                 continue

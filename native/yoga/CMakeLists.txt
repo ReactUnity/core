@@ -84,6 +84,19 @@ else()
         $<$<CONFIG:Release>:-O2 -ffunction-sections -fdata-sections>)
 endif()
 
+# Only the shared legs link, so only they can drop anything: iOS and WebGL are archives
+# whose consumer links them. Without the strip the Android .so ship their debug info --
+# 7.7 MB across the three ABIs, against 690 KB for the .aar they replace -- and without
+# --gc-sections the -ffunction-sections above buys nothing.
+if(NOT MSVC AND NOT IOS AND NOT EMSCRIPTEN)
+    if(APPLE)
+        # Apple's ld spells both differently; -x drops local symbols, keeping exports.
+        target_link_options(yoga PRIVATE $<$<CONFIG:Release>:-Wl,-dead_strip -Wl,-x>)
+    else()
+        target_link_options(yoga PRIVATE $<$<CONFIG:Release>:-Wl,--gc-sections -Wl,--strip-all>)
+    endif()
+endif()
+
 # Yoga logs through <android/log> when building for Android.
 if(ANDROID)
     target_link_libraries(yoga PRIVATE log)
