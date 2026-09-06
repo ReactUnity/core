@@ -25,10 +25,10 @@ on:
         default: Release
         options: [Release, Debug]
   pull_request:
-    paths: ['native/yoga/**', '.github/workflows/native-yoga.yml', 'unity/core/Runtime/Yoga/**']
+    paths: ['native/yoga/**', 'native/exports.py', '.github/workflows/native-yoga.yml', 'unity/core/Runtime/Yoga/**']
   push:
     branches: [main]
-    paths: ['native/yoga/**']
+    paths: ['native/yoga/**', 'native/exports.py']
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}

@@ -12,6 +12,7 @@ rather than in either because the awkward parts below were each learned once and
 should not have to be learned again in a copy.
 """
 import glob
+import os
 import re
 import shutil
 import subprocess
@@ -70,9 +71,23 @@ def pe_exports(path):
     return exports
 
 
+def nm_readers():
+    """Every nm worth trying, best first.
+
+    Emscripten's own llvm-nm is the only one that reads a wasm archive, and emsdk puts
+    it in `upstream/bin`, which is not on the PATH `emsdk_env` sets -- only
+    `upstream/emscripten` is. GNU nm is on every runner and cannot read wasm at all, so
+    without this the WebGL leg finds a tool, gets nothing out of it, and reports no
+    reader.
+    """
+    emsdk = os.environ.get("EMSDK")
+    tools = [os.path.join(emsdk, "upstream", "bin", "llvm-nm")] if emsdk else []
+    return tools + ["llvm-nm", "nm"]
+
+
 def nm_exports(path, fmt):
     """Defined external symbols, via whichever nm is present."""
-    for tool in ("llvm-nm", "nm"):
+    for tool in nm_readers():
         # -g external only, -U defined only; --defined-only is the GNU spelling
         for flags in (["-gU"], ["-g", "--defined-only"]):
             out = run([tool] + flags + [path])

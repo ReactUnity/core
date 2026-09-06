@@ -24,10 +24,10 @@ on:
         default: Release
         options: [Release, Debug]
   pull_request:
-    paths: ['native/quickjs/**', '.github/workflows/native-quickjs.yml']
+    paths: ['native/quickjs/**', 'native/exports.py', '.github/workflows/native-quickjs.yml']
   push:
     branches: [main]
-    paths: ['native/quickjs/**']
+    paths: ['native/quickjs/**', 'native/exports.py']
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
