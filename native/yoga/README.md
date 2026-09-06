@@ -117,11 +117,11 @@ Download all nine artifacts, drop them into
 [unity/core/Plugins/yoga](../../unity/core/Plugins/yoga), regenerate `PROVENANCE.md`, and
 commit the lot together.
 
-**Android changes shape on the first install.** Today it is a single `android/yoga.aar`;
-this produces `android/<abi>/libyoga.so` for the three ABIs Unity 6 targets, which is the
-layout [com.reactunity.quickjs already uses](../../unity/quickjs/Plugins/QuickJS/Android/libs).
-The `.aar`'s `.meta` does not carry over -- copy the shape from quickjs's per-ABI `.meta`
-files instead. This has not been run on a device yet; do that before the swap.
+**Android changed shape on the first install.** It used to be a single
+`android/yoga.aar`; it is now `android/<abi>/libyoga.so` for the three ABIs Unity 6
+targets, the layout [com.reactunity.quickjs already uses](../../unity/quickjs/Plugins/QuickJS/Android/libs).
+The `.aar`'s `.meta` did not carry over -- the per-ABI ones are copies of quickjs's, each
+with its own guid and `CPU`. **This has not been run on an Android device yet.**
 
 ## Things that will bite
 
