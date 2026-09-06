@@ -253,17 +253,8 @@ namespace ReactUnity.Styling.Rules
                 case RuleSelectorPartType.Leave:
                 case RuleSelectorPartType.Attribute:
                 case RuleSelectorPartType.ClassName:
-                    return 1 << 6;
-
-                case RuleSelectorPartType.NthChild:
-                case RuleSelectorPartType.NthLastChild:
-                    // An `of S` clause weighs what its most specific branch weighs, on top of the pseudo-class.
-                    return 1 + (part.Parameter is NthChildParameter nth ? nth.OfSpecificity : 0);
-
                 case RuleSelectorPartType.Root:
                 case RuleSelectorPartType.Scope:
-                case RuleSelectorPartType.Before:
-                case RuleSelectorPartType.After:
                 case RuleSelectorPartType.FirstChild:
                 case RuleSelectorPartType.LastChild:
                 case RuleSelectorPartType.OnlyChild:
@@ -273,17 +264,22 @@ namespace ReactUnity.Styling.Rules
                 case RuleSelectorPartType.NthLastOfType:
                 case RuleSelectorPartType.OnlyOfType:
                 case RuleSelectorPartType.State:
+                    return 1 << 6;
+
+                case RuleSelectorPartType.NthChild:
+                case RuleSelectorPartType.NthLastChild:
+                    // An `of S` clause weighs what its most specific branch weighs, on top of the pseudo-class.
+                    return (1 << 6) + (part.Parameter is NthChildParameter nth ? nth.OfSpecificity : 0);
+
+                // Pseudo-elements weigh as a type selector does.
+                case RuleSelectorPartType.Before:
+                case RuleSelectorPartType.After:
                 case RuleSelectorPartType.Tag:
                     return 1;
 
                 default:
                     return 0;
             }
-        }
-
-        public static int GetSpecificity(Priority priority)
-        {
-            return (priority.Inlines << 24) + (priority.Ids << 16) + (priority.Classes << 8) + priority.Tags;
         }
 
         public static StyleRecord ConvertStyleDeclarationToRecord(StyleDeclaration rule, bool important)

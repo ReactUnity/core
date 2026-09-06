@@ -186,6 +186,29 @@ namespace ReactUnity.Tests.Editor.Renderer
         }
 
         [EditorInjectableTest(Script = BaseScript, Style = BaseStyle, SkipIfExisting = true)]
+        public IEnumerator StructuralPseudoClassesWeighAsClasses()
+        {
+            var text = Text("#v1v1t1");
+
+            // (0,2,1) against (0,2,0): the pseudo-class counts as a class, so the tag decides.
+            var ss = InsertStyle(@"
+                text.t1class:first-child { color: blue; }
+                .vv1class .t1class { color: red; }
+            ");
+            yield return null;
+            Assert.AreEqual(Color.blue, text.ComputedStyle.color);
+            RemoveStyle(ss);
+
+            ss = InsertStyle(@"
+                text.t1class:nth-child(1) { color: blue; }
+                .vv1class .t1class { color: red; }
+            ");
+            yield return null;
+            Assert.AreEqual(Color.blue, text.ComputedStyle.color);
+            RemoveStyle(ss);
+        }
+
+        [EditorInjectableTest(Script = BaseScript, Style = BaseStyle, SkipIfExisting = true)]
         public IEnumerator ImportanceOfInlineStyles()
         {
             var text = Text("#v1v1t2");
