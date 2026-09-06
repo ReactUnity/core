@@ -121,7 +121,21 @@ commit the lot together.
 `android/yoga.aar`; it is now `android/<abi>/libyoga.so` for the three ABIs Unity 6
 targets, the layout [com.reactunity.quickjs already uses](../../unity/quickjs/Plugins/QuickJS/Android/libs).
 The `.aar`'s `.meta` did not carry over -- the per-ABI ones are copies of quickjs's, each
-with its own guid and `CPU`. **This has not been run on an Android device yet.**
+with its own guid and `CPU`.
+
+It is the simpler shape as well as the flatter one. The `.aar` shipped *two* libraries per
+ABI and `libyoga.so` linked against the other; each `.so` here needs only `liblog`, `libm`,
+`libdl` and `libc`, so there is no second file to keep in step.
+
+Verified on an x86_64 API 34 emulator running the arm64 build under NDK translation: the
+`.so` is packaged at `lib/<abi>/libyoga.so`, and a repro cross-compiled against the shipped
+library gives layout identical to the Windows build. **Not verified on real hardware.**
+Unity's own player would not launch on that emulator -- it installs with
+`primaryCpuAbi=arm64-v8a` and then `am start` returns `START_CLASS_NOT_FOUND` -- so the
+on-device evidence is the native probe, not a player run.
+
+`android/x86_64` is dead weight: Unity 6 dropped x86_64 for Android, and silently resets
+the architecture mask to `None` if you ask for it.
 
 ## Things that will bite
 
