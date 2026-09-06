@@ -1,0 +1,2 @@
+# exports.py is imported by the per-library checkers, which run from their own directory.
+__pycache__/

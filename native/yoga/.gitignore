@@ -1,0 +1,8 @@
+# CMake build trees, including the fetched yoga checkout under _deps.
+build/
+build32/
+build-wasm/
+staged/
+
+# check-exports.py and check-enums.py get imported by ad-hoc analysis scripts
+__pycache__/

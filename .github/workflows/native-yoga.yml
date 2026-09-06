@@ -1,0 +1,213 @@
+# Builds the native `yoga` artifacts com.reactunity.core P/Invokes into for layout.
+#
+# Why this exists: the binaries in unity/core/Plugins/yoga were built by a workflow
+# living in the ReactUnity/yoga fork, so the recipe was never reviewed next to the C#
+# that consumes it and nothing recorded which commit any binary came from. See
+# native/yoga/README.md.
+#
+# It deliberately does NOT commit what it builds. Every artifact is uploaded and
+# installing them is a separate, manual step -- the same shape as native-quickjs.yml
+# and release-upm.yml, and for the same reason: these are tracked binaries in a Unity
+# package, and a half-updated set is worse than a stale one. Nothing here needs Unity.
+#
+# One CMakeLists drives all of it (native/yoga/CMakeLists.txt); the per-target
+# differences are the toolchain arguments below, which is why there is no build script
+# per platform.
+
+name: native-yoga
+
+on:
+  workflow_dispatch:
+    inputs:
+      build-type:
+        description: CMake build type
+        type: choice
+        default: Release
+        options: [Release, Debug]
+  pull_request:
+    paths: ['native/yoga/**', '.github/workflows/native-yoga.yml', 'unity/core/Runtime/Yoga/**']
+  push:
+    branches: [main]
+    paths: ['native/yoga/**']
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  BUILD_TYPE: ${{ inputs.build-type || 'Release' }}
+
+jobs:
+  build:
+    name: ${{ matrix.name }}
+    runs-on: ${{ matrix.os }}
+    # Empty for every leg but linux-x64, which runs the job inside the image named there.
+    container: ${{ matrix.container || '' }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          # ---- desktop
+          - name: windows-x64
+            os: windows-latest
+            artifact: win-x64/yoga.dll
+            built: build/${{ github.event.inputs.build-type || 'Release' }}/yoga.dll
+            configure: -A x64
+          - name: windows-x86
+            os: windows-latest
+            artifact: win-x86/yoga.dll
+            built: build/${{ github.event.inputs.build-type || 'Release' }}/yoga.dll
+            configure: -A Win32
+          - name: linux-x64
+            os: ubuntu-latest
+            # Built in an old container on purpose: glibc is backward compatible, never
+            # forward, so the floor a binary records is the oldest system it will load on.
+            # ubuntu-latest is 24.04 (2.39) and the Unity test container is older, so a
+            # runner-native build produces a .so Unity cannot load at all --
+            # DllNotFoundException, which reads like a missing file rather than a too-new
+            # one. 22.04 gives 2.35. Learned the hard way on native-quickjs.yml.
+            container: ubuntu:22.04
+            artifact: linux/libyoga.so
+            built: build/libyoga.so
+            configure: -DCMAKE_BUILD_TYPE=${{ github.event.inputs.build-type || 'Release' }}
+          - name: macos-universal
+            os: macos-latest
+            artifact: osx/libyoga.dylib
+            built: build/libyoga.dylib
+            # One dylib for both Macs; Unity ships OSXUniversal, not per-arch.
+            configure: >-
+              -DCMAKE_BUILD_TYPE=${{ github.event.inputs.build-type || 'Release' }}
+              "-DCMAKE_OSX_ARCHITECTURES=arm64;x86_64"
+
+          # ---- iOS. A static archive, per the IOS branch in the CMakeLists: Unity links
+          # it into the generated Xcode project, and Native.cs binds "__Internal" there.
+          - name: ios-arm64
+            os: macos-latest
+            artifact: iOS/libyoga.a
+            built: build/${{ github.event.inputs.build-type || 'Release' }}-iphoneos/libyoga.a
+            configure: >-
+              -G Xcode -DCMAKE_SYSTEM_NAME=iOS
+              -DCMAKE_XCODE_ATTRIBUTE_CODE_SIGNING_ALLOWED=NO
+              -DCMAKE_OSX_ARCHITECTURES=arm64
+              -DCMAKE_OSX_DEPLOYMENT_TARGET=12.0
+
+          # ---- Android. android-24 matches Unity 6's minimum API level. These three are
+          # Unity 6's ABIs; the shipped .aar also carries 32-bit x86, which Unity 6 does
+          # not target, so it is not rebuilt here.
+          - name: android-arm64-v8a
+            os: ubuntu-latest
+            artifact: android/arm64-v8a/libyoga.so
+            built: build/libyoga.so
+            android-abi: arm64-v8a
+          - name: android-armeabi-v7a
+            os: ubuntu-latest
+            artifact: android/armeabi-v7a/libyoga.so
+            built: build/libyoga.so
+            android-abi: armeabi-v7a
+          - name: android-x86_64
+            os: ubuntu-latest
+            artifact: android/x86_64/libyoga.so
+            built: build/libyoga.so
+            android-abi: x86_64
+
+          # ---- WebGL. A static archive Emscripten links into the module, so Native.cs
+          # binds "__Internal" here too.
+          - name: webgl
+            os: ubuntu-latest
+            artifact: webgl/libyoga.a
+            built: build/libyoga.a
+            emscripten: true
+            configure: -G Ninja -DCMAKE_BUILD_TYPE=${{ github.event.inputs.build-type || 'Release' }}
+
+    steps:
+      # A bare distro image has none of this. GitHub mounts its own node in, so the
+      # actions themselves run, but git and a toolchain are ours -- and this has to
+      # precede checkout, which shells out to git.
+      - name: Container prerequisites
+        if: matrix.container
+        run: |
+          apt-get update
+          apt-get install -y --no-install-recommends \
+            git cmake build-essential ca-certificates python3 llvm
+
+      - uses: actions/checkout@v7
+
+      - uses: mymindstorm/setup-emsdk@v14
+        if: matrix.emscripten
+        with:
+          version: latest
+          actions-cache-folder: emsdk-cache
+
+      - name: Install Ninja
+        if: matrix.emscripten
+        run: sudo apt-get install -y ninja-build
+
+      - name: Configure
+        working-directory: native/yoga
+        shell: bash
+        run: |
+          if [ -n "${{ matrix.android-abi }}" ]; then
+            cmake -B build \
+              -DCMAKE_TOOLCHAIN_FILE="$ANDROID_NDK_ROOT/build/cmake/android.toolchain.cmake" \
+              -DANDROID_ABI=${{ matrix.android-abi }} \
+              -DANDROID_PLATFORM=android-24 \
+              -DCMAKE_BUILD_TYPE=$BUILD_TYPE
+          elif [ -n "${{ matrix.emscripten }}" ]; then
+            emcmake cmake -B build ${{ matrix.configure }}
+          else
+            cmake -B build ${{ matrix.configure }}
+          fi
+
+      - name: Build
+        working-directory: native/yoga
+        run: cmake --build build --config ${{ env.BUILD_TYPE }} --target yoga
+
+      # Reads PE, ELF, Mach-O and archives, and takes the wanted set straight from the
+      # committed Native.cs -- so every leg is checkable from whichever runner built it.
+      - name: Check exports
+        working-directory: native/yoga
+        shell: bash
+        run: |
+          # ubuntu images ship python3 without a `python` alias
+          PY=python3; command -v python3 >/dev/null || PY=python
+          "$PY" check-exports.py "${{ matrix.built }}"
+
+      - name: Stage artifact
+        working-directory: native/yoga
+        shell: bash
+        run: |
+          mkdir -p "staged/$(dirname '${{ matrix.artifact }}')"
+          cp "${{ matrix.built }}" "staged/${{ matrix.artifact }}"
+
+      - uses: actions/upload-artifact@v7
+        with:
+          name: yoga-${{ matrix.name }}
+          path: native/yoga/staged/
+          if-no-files-found: error
+
+  # Needs no compiler beyond what configuring costs -- the point is the fetched
+  # YGEnums.h, not a binary. Separate because it gates a Yoga bump, not a platform.
+  enums:
+    name: enum ordinals
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - name: Fetch the pinned Yoga and check the C# enums against it
+        working-directory: native/yoga
+        run: |
+          cmake -B build -S .
+          python3 check-enums.py
+
+  # One place to see whether the set is complete, and the only job worth making
+  # a required check.
+  collect:
+    name: all artifacts
+    needs: [build, enums]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/download-artifact@v8
+        with:
+          path: artifacts
+          merge-multiple: true
+      - name: List what was built
+        run: find artifacts -type f | sort

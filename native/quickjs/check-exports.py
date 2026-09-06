@@ -8,26 +8,24 @@ both directions -- names C# calls that we do not export, and shim functions we e
 that nothing calls. The second direction is not cosmetic: 26 dead functions sat in
 the vendored shim precisely because nothing looked.
 
-Reads PE (`.dll`), ELF (`.so`) and Mach-O (`.bundle`/`.dylib`) and static archives
-(`.a`), so it covers all twelve shipped artifacts rather than only the Windows ones.
-The format is sniffed from the file's magic, not from the host OS: a cross-compiled
-Android or iOS artifact is checkable from whichever runner built it.
+Reads every artifact shape we ship -- PE, ELF, Mach-O and static archives -- via
+`native/exports.py`, so it covers all twelve rather than only the Windows ones.
 
 See `check-signatures.py` for the other half -- whether the declarations that *are*
 satisfied actually match the header.
 
 Exits non-zero if anything is missing or stale, so it can gate CI.
 """
-import glob
 import os
 import re
-import shutil
-import subprocess
 import sys
 
 import pinvoke
 
 HERE = os.path.dirname(os.path.abspath(__file__))
+sys.path.insert(0, os.path.dirname(HERE))
+from exports import read_exports  # noqa: E402  (needs the path above)
+
 DEFAULT_DLL = os.path.join(HERE, "build", "Release", "quickjs.dll")
 
 DECL = re.compile(
@@ -37,96 +35,6 @@ DECL = re.compile(
     r"[^;(]*?\b(?P<name>[A-Za-z_][A-Za-z_0-9]*)\s*\(",
     re.S,
 )
-
-
-def find_dumpbin():
-    exe = shutil.which("dumpbin")
-    if exe:
-        return exe
-    pattern = r"C:\Program Files*\Microsoft Visual Studio\*\*\VC\Tools\MSVC\*\bin\Hostx64\x64\dumpbin.exe"
-    hits = sorted(glob.glob(pattern))
-    return hits[-1] if hits else None
-
-
-def object_format(path):
-    """PE, ELF, MACHO or ARCHIVE, from the file's magic rather than the host OS."""
-    with open(path, "rb") as fp:
-        head = fp.read(8)
-    if head[:2] == b"MZ":
-        return "PE"
-    if head[:4] == b"\x7fELF":
-        return "ELF"
-    if head[:8] == b"!<arch>\n":
-        return "ARCHIVE"
-    # thin and fat Mach-O, both endiannesses
-    if head[:4] in (b"\xcf\xfa\xed\xfe", b"\xce\xfa\xed\xfe", b"\xfe\xed\xfa\xcf",
-                    b"\xfe\xed\xfa\xce", b"\xca\xfe\xba\xbe", b"\xbe\xba\xfe\xca"):
-        return "MACHO"
-    return None
-
-
-def run(argv):
-    try:
-        p = subprocess.run(argv, capture_output=True, text=True)
-    except OSError:
-        return None
-    return p.stdout if p.returncode == 0 or p.stdout else None
-
-
-def pe_exports(path):
-    dumpbin = find_dumpbin()
-    if not dumpbin:
-        # llvm-readobj ships with clang and reads PE anywhere, which is what a
-        # non-Windows runner checking a cross-built DLL has to fall back on.
-        out = run(["llvm-readobj", "--coff-exports", path])
-        if out is None:
-            sys.exit("no PE reader: install Visual Studio (dumpbin) or LLVM (llvm-readobj)")
-        return {m.group(1) for m in re.finditer(r"Name:\s*(\S+)", out)}
-    out = run([dumpbin, "-exports", path]) or ""
-    exports = set()
-    for line in out.splitlines():
-        parts = line.split()
-        if len(parts) == 4 and parts[0].isdigit() and parts[2].isalnum():
-            exports.add(parts[3])
-    return exports
-
-
-def nm_exports(path, fmt):
-    """Defined external symbols, via whichever nm is present."""
-    for tool in ("llvm-nm", "nm"):
-        # -g external only, -U defined only; --defined-only is the GNU spelling
-        for flags in (["-gU"], ["-g", "--defined-only"]):
-            out = run([tool] + flags + [path])
-            if out is None:
-                continue
-            names = set()
-            for line in out.splitlines():
-                parts = line.split()
-                if len(parts) < 2:
-                    continue
-                kind, name = parts[-2], parts[-1]
-                # T/t text, D/B/R data -- lower case is local, which -g should
-                # already have dropped; W is a weak definition, still exported.
-                if kind.upper() in ("T", "D", "B", "R", "W", "S"):
-                    names.add(name)
-                    # Mach-O prefixes every C symbol with an underscore -- and a Mach-O
-                    # static archive is detected as ARCHIVE, so the format cannot be what
-                    # decides. The iOS leg read 591 symbols and matched none of the 104
-                    # while that was keyed on MACHO. Recording both spellings costs nothing.
-                    if name.startswith("_"):
-                        names.add(name[1:])
-            if names:
-                return names
-    sys.exit("no symbol reader for %s: install LLVM (llvm-nm) or binutils (nm)" % fmt)
-
-
-def read_exports(path):
-    fmt = object_format(path)
-    if fmt is None:
-        sys.exit("%s is not a PE, ELF, Mach-O or archive" % path)
-    if fmt == "PE":
-        return fmt, pe_exports(path)
-    return fmt, nm_exports(path, fmt)
 
 
 SURFACE = "pinvoke-native.txt"

@@ -34,7 +34,8 @@ namespace ReactUnity.Styling
             { "normal", YogaJustify.FlexStart },
             { "stretch", YogaJustify.FlexStart },
         });
-        public static readonly LayoutProperty<YogaJustify> JustifyContent = new LayoutProperty<YogaJustify>("JustifyContent", converter: JustifyConverter);
+        // Spelled out because Yoga's zero is `Auto` now, not `FlexStart`.
+        public static readonly LayoutProperty<YogaJustify> JustifyContent = new LayoutProperty<YogaJustify>("JustifyContent", defaultValue: YogaJustify.FlexStart, converter: JustifyConverter);
         // The web's other spellings of the two layouts that exist here: a block stacks, a flex box is a row.
         public static readonly StyleConverterBase DisplayConverter = new EnumConverter(typeof(DisplayType), false, true, new Dictionary<string, object>
         {
