@@ -37,6 +37,9 @@ namespace ReactUnity.UGUI.Shapes
             get => backgroundSize;
             set
             {
+                // Applying a style re-assigns this whether or not it moved, and every frame while
+                // an animation runs -- so without the guard a rebuild is queued for nothing.
+                if (backgroundSize == value) return;
                 backgroundSize = value;
                 RefreshSize();
             }

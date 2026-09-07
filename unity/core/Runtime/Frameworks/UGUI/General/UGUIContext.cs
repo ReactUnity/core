@@ -68,6 +68,31 @@ namespace ReactUnity.UGUI
         public RectTransform PoolRoot { get; }
         public RectTransform OffscreenRoot { get; }
 
+        private Transform filterRoot;
+
+        /// <summary>
+        /// Where <see cref="Internal.ElementFilter"/> parks the canvas it renders a filtered subtree
+        /// on. Created on first use, and empty in a scene with no filter in it.
+        /// </summary>
+        /// <remarks>
+        /// A scene root, which is the one place it can be: each surface carries a `WorldSpace`
+        /// canvas, and a canvas nested under another inherits that one's render mode instead --
+        /// so putting these under the host would turn the offscreen pass back into an onscreen one.
+        /// Collecting them under a single object is as close as that constraint allows.
+        /// </remarks>
+        public Transform FilterRoot
+        {
+            get
+            {
+                if (!filterRoot)
+                {
+                    filterRoot = CreateNativeObject("[Filters]").transform;
+                    Disposables.Add(() => { if (filterRoot) UnityEngine.Object.Destroy(filterRoot.gameObject); });
+                }
+                return filterRoot;
+            }
+        }
+
         public static Func<string, string, UGUIContext, UGUIComponent> defaultCreator =
             (tag, text, context) => new ContainerComponent(context, tag);
 

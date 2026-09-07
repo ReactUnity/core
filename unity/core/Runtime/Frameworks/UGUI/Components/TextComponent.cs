@@ -30,6 +30,9 @@ namespace ReactUnity.UGUI
         private bool TextSetByStyle = false;
         private bool TextCapitalized = false;
 
+        private Color lastAppliedColor;
+        private TMP_FontAsset lastAppliedFontAsset;
+
         private FontReference font;
         public FontReference Font
         {
@@ -174,8 +177,15 @@ namespace ReactUnity.UGUI
                 LinkedTextWatcher = null;
             }
 
-            // Fixes garbled text after color change
-            Text.UpdateFontAsset();
+            // Fixes garbled text after a color change. It reloads the font asset and dirties the
+            // material, so it is gated on something having actually changed -- a style is re-applied
+            // every frame while an animation runs.
+            if (Text.color != lastAppliedColor || Text.font != lastAppliedFontAsset)
+            {
+                lastAppliedColor = Text.color;
+                lastAppliedFontAsset = Text.font;
+                Text.UpdateFontAsset();
+            }
 
             // Assigning fontMaterial replaces fontSharedMaterial too, so the font asset's own material is the base.
             var effect = new TextEffects
@@ -198,28 +208,29 @@ namespace ReactUnity.UGUI
         private void RecalculateFontStyleAndWeight(FontStyles styles = FontStyles.Normal, FontWeight weight = FontWeight.Regular, TextTransform transform = TextTransform.None)
         {
             styles = styles & ResetTextTransform;
-            Text.fontStyle = styles;
-            Text.fontWeight = weight;
-
-            if (!Text.font) return;
-
             var finalStyle = styles;
 
-            var weightIndex = ((int) weight / 100) - 1;
-            var isItalic = styles.HasFlag(FontStyles.Italic);
-            var assignedWeight = Text.font.fontWeightTable[weightIndex];
-            var wg = isItalic ? assignedWeight.italicTypeface : assignedWeight.regularTypeface;
-
-            if (!wg && weightIndex >= 6)
+            if (Text.font)
             {
-                finalStyle = finalStyle | FontStyles.Bold;
+                var weightIndex = ((int) weight / 100) - 1;
+                var isItalic = styles.HasFlag(FontStyles.Italic);
+                var assignedWeight = Text.font.fontWeightTable[weightIndex];
+                var wg = isItalic ? assignedWeight.italicTypeface : assignedWeight.regularTypeface;
+
+                if (!wg && weightIndex >= 6)
+                {
+                    finalStyle = finalStyle | FontStyles.Bold;
+                }
+
+                if (transform == TextTransform.UpperCase) finalStyle = finalStyle | FontStyles.UpperCase;
+                else if (transform == TextTransform.LowerCase) finalStyle = finalStyle | FontStyles.LowerCase;
+                else if (transform == TextTransform.SmallCaps) finalStyle = finalStyle | FontStyles.SmallCaps;
             }
 
-            if (transform == TextTransform.UpperCase) finalStyle = finalStyle | FontStyles.UpperCase;
-            else if (transform == TextTransform.LowerCase) finalStyle = finalStyle | FontStyles.LowerCase;
-            else if (transform == TextTransform.SmallCaps) finalStyle = finalStyle | FontStyles.SmallCaps;
-
-            Text.fontStyle = finalStyle;
+            // Assigned once, and only on a change: TMP rebuilds the mesh on every assignment, and
+            // this runs on each style application -- every frame while an animation is going.
+            if (Text.fontStyle != finalStyle) Text.fontStyle = finalStyle;
+            if (Text.fontWeight != weight) Text.fontWeight = weight;
         }
 
         private void RecalculateLineHeight()

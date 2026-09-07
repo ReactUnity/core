@@ -29,6 +29,17 @@ namespace ReactUnity.UGUI.Shapes
             ResolutionMaxDistance = resolutionMaxDistance;
         }
 
+        /// <summary>
+        /// Compares the settings, not the resolved output -- so a style re-applied unchanged can be
+        /// recognised as the same rounding and skip the rebuild.
+        /// </summary>
+        public bool ValueEquals(WebRoundingResolutionProperties other)
+        {
+            if (other == null) return false;
+            return Resolution == other.Resolution && FixedResolution == other.FixedResolution &&
+                ResolutionMaxDistance == other.ResolutionMaxDistance;
+        }
+
         public int AdjustedResolution { private set; get; }
         public bool MakeSharpCorner { private set; get; }
 

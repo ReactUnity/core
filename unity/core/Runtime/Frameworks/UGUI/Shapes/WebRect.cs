@@ -14,6 +14,9 @@ namespace ReactUnity.UGUI.Shapes
             get => rounding;
             set
             {
+                // A style is re-applied whether or not it moved, every frame while an animation
+                // runs -- so without the guard a rebuild is queued for nothing.
+                if (rounding != null && rounding.ValueEquals(value)) return;
                 rounding = value;
                 SetVerticesDirty();
             }

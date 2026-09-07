@@ -253,13 +253,21 @@ namespace ReactUnity.Tests
             Debug.Log($"[FILTER blur(24px)] {samples}");
         }
 
+        // A gradient, a rounding and a text child, all load-bearing: applying a style re-assigns
+        // each of those, and each used to dirty a graphic the filter watches whether or not it moved.
+        const string AnimatedScript = @"
+            function App() {
+                return <view id='test'>hello</view>;
+            }
+";
+
         // Declared in the stylesheet: an animation added afterwards does not start.
         const string AnimatedStyle = BaseStyle + @"
             @keyframes spin { from { filter: hue-rotate(0deg); } to { filter: hue-rotate(360deg); } }
-            #test { animation: spin 4s linear infinite; }
+            #test { animation: spin 4s linear infinite; background-image: linear-gradient(red, blue); border-radius: 12px; }
         ";
 
-        [UGUITest(Script = BaseScript, Style = AnimatedStyle)]
+        [UGUITest(Script = AnimatedScript, Style = AnimatedStyle)]
         public IEnumerator AnimatingAColourOpDoesNotRerender()
         {
             // The context drives its own clock in tests, so frames alone leave the animation at zero.

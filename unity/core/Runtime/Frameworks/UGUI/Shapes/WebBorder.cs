@@ -15,6 +15,7 @@ namespace ReactUnity.UGUI.Shapes
             get => rounding;
             set
             {
+                if (rounding != null && rounding.ValueEquals(value)) return;
                 rounding = value;
                 RefreshInnerRounding();
                 SetVerticesDirty();
@@ -44,6 +45,7 @@ namespace ReactUnity.UGUI.Shapes
             get => innerRounding;
             set
             {
+                if (innerRounding != null && innerRounding.ValueEquals(value)) return;
                 innerRounding = value;
                 if (InsetBorder) InsetBorder.Rounding = innerRounding;
             }
