@@ -156,6 +156,10 @@
               "path": "/reference/css/cursor"
             },
             {
+              "title": "Filter",
+              "path": "/reference/css/filter"
+            },
+            {
               "title": "Mask Image",
               "path": "/reference/css/mask-image"
             },

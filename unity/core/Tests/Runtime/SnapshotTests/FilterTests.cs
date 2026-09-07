@@ -150,6 +150,88 @@ namespace ReactUnity.Tests
             Assert.Less(centre.g, 0.1f, "and should not be tinted by its own blur");
         }
 
+        const string ChildScript = @"
+            function App() {
+                const globals = ReactUnity.useGlobals();
+                return <view id='test'>
+                    <view id='child' style={{ width: globals.w || 50, height: 50 }} />
+                </view>;
+            }
+";
+
+        const string ChildStyle = BaseStyle + @"
+            #child { background-color: blue; }
+        ";
+
+        [UGUITest(Script = ChildScript, Style = ChildStyle)]
+        public IEnumerator StaticFilterStopsRendering()
+        {
+            View.Style["filter"] = "grayscale(1)";
+            yield return null;
+            yield return null;
+            yield return null;
+            yield return null;
+
+            var settled = View.ElementFilter.RenderCount;
+            Assert.Greater(settled, 0, "it should have rendered at least once");
+
+            for (int i = 0; i < 5; i++) yield return null;
+
+            Debug.Log($"[FILTER dirty] settled={settled} after 5 idle frames={View.ElementFilter.RenderCount}");
+            Assert.AreEqual(settled, View.ElementFilter.RenderCount, "a static filtered element should not re-render");
+        }
+
+        [UGUITest(Script = ChildScript, Style = ChildStyle)]
+        public IEnumerator MovingAChildRerenders()
+        {
+            View.Style["filter"] = "grayscale(1)";
+            for (int i = 0; i < 4; i++) yield return null;
+            var before = View.ElementFilter.RenderCount;
+
+            // A child resizing only moves its transform -- no graphic goes dirty, which is the
+            // case naive invalidation misses and shows a stale frame for.
+            Globals["w"] = 120;
+            for (int i = 0; i < 3; i++) yield return null;
+
+            Debug.Log($"[FILTER dirty] before={before} after child resize={View.ElementFilter.RenderCount}");
+            Assert.Greater(View.ElementFilter.RenderCount, before, "moving a child must re-render");
+        }
+
+        [UGUITest(Script = ChildScript, Style = ChildStyle)]
+        public IEnumerator ChangingTheFilterRerenders()
+        {
+            View.Style["filter"] = "grayscale(1)";
+            for (int i = 0; i < 4; i++) yield return null;
+            var before = View.ElementFilter.RenderCount;
+
+            View.Style["filter"] = "grayscale(0.5)";
+            for (int i = 0; i < 3; i++) yield return null;
+
+            Debug.Log($"[FILTER dirty] before={before} after filter change={View.ElementFilter.RenderCount}");
+            Assert.Greater(View.ElementFilter.RenderCount, before, "a new filter value must re-render");
+        }
+
+        [UGUITest(Script = BaseScript, Style = BaseStyle)]
+        public IEnumerator WideBlurStaysSmooth()
+        {
+            View.Style["filter"] = "blur(24px)";
+            for (int i = 0; i < 4; i++) yield return null;
+
+            // Across the soft edge of a wide blur, coverage should fall monotonically. A kernel
+            // that undersamples gives back ripples instead.
+            var prev = 1.1f;
+            var samples = "";
+            for (int x = 170; x <= 230; x += 6)
+            {
+                var a = SampleAt(x, 100).a;
+                samples += $"{x}:{a:F2} ";
+                Assert.LessOrEqual(a, prev + 0.06f, $"coverage rose again at x={x} -- the blur is banding");
+                prev = a;
+            }
+
+            Debug.Log($"[FILTER blur(24px)] {samples}");
+        }
+
         [UGUITest(Script = BaseScript, Style = BaseStyle)]
         public IEnumerator FilterIsRemovedWhenUnset()
         {

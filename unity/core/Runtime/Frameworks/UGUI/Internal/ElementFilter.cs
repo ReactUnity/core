@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using ReactUnity.Types;
 using UnityEngine;
 using UnityEngine.UI;
@@ -56,6 +57,16 @@ namespace ReactUnity.UGUI.Internal
             set => definition = value;
         }
 
+        private readonly List<Graphic> graphics = new List<Graphic>();
+        private readonly List<Graphic> registered = new List<Graphic>();
+        private UnityEngine.Events.UnityAction markDirty;
+        private FilterDefinition lastRendered;
+        private Rect lastRect;
+        private bool dirty = true;
+
+        /// <summary>How many offscreen renders this filter has done. For tests.</summary>
+        public int RenderCount { get; private set; }
+
         public static ElementFilter Create(UGUIComponent cmp, FilterDefinition definition)
         {
             var filter = cmp.GameObject.AddComponent<ElementFilter>();
@@ -67,6 +78,7 @@ namespace ReactUnity.UGUI.Internal
 
         void Attach()
         {
+            markDirty = Invalidate;
             self = transform as RectTransform;
             originalParent = self.parent;
             originalIndex = self.GetSiblingIndex();
@@ -124,6 +136,9 @@ namespace ReactUnity.UGUI.Internal
 
         void OnDestroy()
         {
+            graphics.Clear();
+            Reregister();
+
             if (composite) Destroy(composite.gameObject);
             if (offscreenCanvas) Destroy(offscreenCanvas.gameObject);
             if (compositeMaterial) Destroy(compositeMaterial);
@@ -149,9 +164,83 @@ namespace ReactUnity.UGUI.Internal
             }
         }
 
+        /// <summary>
+        /// Renders on the next frame even if nothing looks like it changed.
+        /// </summary>
+        public void Invalidate() => dirty = true;
+
+        /// <summary>
+        /// True when anything that could alter the captured pixels has moved since the last render.
+        /// Missing a change here shows a stale frame, so this errs towards re-rendering: a graphic
+        /// rebuild, any descendant transform moving, the element resizing, or a new filter value.
+        /// </summary>
+        bool PollDirty()
+        {
+            if (!Equals(lastRendered, definition))
+            {
+                lastRendered = definition;
+                dirty = true;
+            }
+
+            if (self.rect != lastRect)
+            {
+                lastRect = self.rect;
+                dirty = true;
+            }
+
+            // A rebuild raises the callbacks below, but moving a child only sets its transform --
+            // the canvas re-batches without any graphic going dirty.
+            graphics.Clear();
+            self.GetComponentsInChildren(true, graphics);
+
+            if (graphics.Count != registered.Count) Reregister();
+            else
+            {
+                for (int i = 0; i < graphics.Count; i++)
+                {
+                    if (graphics[i] == registered[i]) continue;
+                    Reregister();
+                    break;
+                }
+            }
+
+            for (int i = 0; i < graphics.Count; i++)
+            {
+                var t = graphics[i].transform;
+                if (!t.hasChanged) continue;
+                t.hasChanged = false;
+                dirty = true;
+            }
+
+            return dirty;
+        }
+
+        void Reregister()
+        {
+            for (int i = 0; i < registered.Count; i++)
+            {
+                if (!registered[i]) continue;
+                registered[i].UnregisterDirtyVerticesCallback(markDirty);
+                registered[i].UnregisterDirtyMaterialCallback(markDirty);
+            }
+
+            registered.Clear();
+            registered.AddRange(graphics);
+            dirty = true;
+
+            for (int i = 0; i < registered.Count; i++)
+            {
+                registered[i].RegisterDirtyVerticesCallback(markDirty);
+                registered[i].RegisterDirtyMaterialCallback(markDirty);
+            }
+        }
+
         void LateUpdate()
         {
             if (definition == null || !composite) return;
+            if (!PollDirty()) return;
+            dirty = false;
+            RenderCount++;
 
             var rect = self.rect;
             var scale = ScaleFactor;
@@ -182,16 +271,22 @@ namespace ReactUnity.UGUI.Internal
             offscreenCamera.targetTexture = target;
             offscreenCamera.Render();
 
-            var source = target;
             if (definition.Blur > 0)
             {
-                blurMaterial.SetFloat(BlurId, definition.Blur * scale);
-                Graphics.Blit(target, scratch, blurMaterial, 0);
-                Graphics.Blit(scratch, target, blurMaterial, 1);
-                source = target;
+                // Nine taps whose spacing grows with the radius sample too sparsely for a wide
+                // blur and band. Convolving the same kernel n times widens it by sqrt(n) instead,
+                // which keeps the taps close together however large the radius gets.
+                var passes = Mathf.Clamp(Mathf.CeilToInt(definition.Blur / 6f), 1, 4);
+                blurMaterial.SetFloat(BlurId, definition.Blur / Mathf.Sqrt(passes) * scale);
+
+                for (int i = 0; i < passes; i++)
+                {
+                    Graphics.Blit(target, scratch, blurMaterial, 0);
+                    Graphics.Blit(scratch, target, blurMaterial, 1);
+                }
             }
 
-            ApplyToComposite(source, bleed);
+            ApplyToComposite(target, bleed);
         }
 
         void EnsureTarget(int w, int h)

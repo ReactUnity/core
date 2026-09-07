@@ -1,0 +1,104 @@
+---
+title: Filter
+---
+
+Applies a graphical effect to an element and everything inside it. Check out the [MDN](https://developer.mozilla.org/en-US/docs/Web/CSS/filter) for how to use.
+
+The element is rendered off screen and the effect is applied to the result, so a filter affects the element's background, borders, text and children as one image rather than each of them separately -- as on the web.
+
+<Sandpack>
+
+```js
+const filters = ['none', 'grayscale(1)', 'invert(1)', 'blur(3px)', 'sepia(0.8)', 'hue-rotate(90deg)'];
+
+export default function App() {
+  const [index, setIndex] = React.useState(1);
+  const filter = filters[index];
+
+  return <>
+    <button onClick={() => setIndex(x => (x + 1) % filters.length)}>
+      filter: {filter}
+    </button>
+
+    <view className="card" style={{ filter }}>
+      <text className="title">Filtered as one image</text>
+      <view className="swatches">
+        <view style={{ backgroundColor: 'crimson' }} />
+        <view style={{ backgroundColor: 'seagreen' }} />
+        <view style={{ backgroundColor: 'steelblue' }} />
+      </view>
+    </view>
+  </>;
+}
+```
+
+```css active
+.card {
+  filter: grayscale(1);
+  width: 260px;
+  padding: 16px;
+  margin-top: 16px;
+  background-color: white;
+  border: 2px solid black;
+  border-radius: 8px;
+}
+
+.title {
+  font-size: 20px;
+  margin-bottom: 12px;
+  color: #222;
+}
+
+.swatches {
+  display: flex;
+  gap: 8px;
+}
+
+.swatches > view {
+  flex: 1;
+  height: 48px;
+  border-radius: 4px;
+}
+```
+
+</Sandpack>
+
+The button sits outside the filtered card on purpose -- a filtered element does not receive pointer events, as noted below.
+
+### Functions {/*functions*/}
+
+| Function              | Range                | Notes                                                          |
+| --------------------- | -------------------- | -------------------------------------------------------------- |
+| `blur(<length>)`      | `0` and up           | Reaches about three times the radius past the element's box     |
+| `brightness(<n>)`     | `0`–`2`, `1` is none |                                                                |
+| `contrast(<n>)`       | `0`–`2`, `1` is none |                                                                |
+| `grayscale(<n>)`      | `0`–`1`              |                                                                |
+| `hue-rotate(<angle>)` | `-180deg`–`180deg`   |                                                                |
+| `invert(<n>)`         | `0`–`1`              |                                                                |
+| `opacity(<n>)`        | `0`–`1`              | Applies to the element as a group, unlike the `opacity` property |
+| `saturate(<n>)`       | `0`–`2`, `1` is none |                                                                |
+| `sepia(<n>)`          | `0`–`1`              |                                                                |
+| `grain(<n>)`          | `0`–`1`              | Not a web function. Adds noise                                 |
+| `pixelate(<length>)`  | `0` and up           | Not a web function. Quantises to blocks of this size            |
+
+Functions combine in one declaration, and are applied in the order listed above rather than the order they are written:
+
+```css
+.el {
+  filter: blur(2px) saturate(1.4) hue-rotate(20deg);
+}
+```
+
+`drop-shadow()` is not implemented. Use [box-shadow](/reference/css/box-shadow) instead, which is not equivalent -- it follows the border box rather than the element's alpha -- but covers most of the same ground.
+
+`filter` is animatable, so it works in `transition` and `@keyframes`.
+
+### What to know {/*what-to-know*/}
+
+`filter` is implemented for the UGUI renderer only. It does nothing under UIToolkit, which has no equivalent.
+
+**A filtered element does not receive pointer events.** Isolating one subtree for the offscreen pass means moving it out of the main canvas, which takes it out of hit testing too. Keep `filter` on presentational elements, or put the interactive element outside the filtered one.
+
+An ancestor's `overflow: hidden` clips the filtered result, as it does on the web -- so a blur that spills past a scroll container's edge is cut off there rather than escaping it. An `overflow: hidden` on or inside the filtered element still clips normally.
+
+Very large blur radii cost more than small ones: the radius decides how many blur passes run, up to four.
