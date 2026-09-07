@@ -17,6 +17,9 @@ Shader "ReactUnity/Filter"
     _Grain ("Grain", Range(0.0, 1.0)) = 0.0
     _Pixelate ("Pixelate", Range(0.0, 100.0)) = 0.0
     _Sepia ("Sepia", Range(0.0, 1.0)) = 0.0
+    _ShadowTex ("Drop Shadow Silhouette", 2D) = "black" {}
+    _ShadowColor ("Drop Shadow Color", Color) = (0,0,0,0)
+    _ShadowOffset ("Drop Shadow Offset (UV)", Vector) = (0,0,0,0)
 
     [Enum(UnityEngine.Rendering.CompareFunction)] _StencilComp("Stencil Comparison", Float) = 8
     _Stencil("Stencil ID", Float) = 0
@@ -103,6 +106,9 @@ Shader "ReactUnity/Filter"
       float _Grain;
       float _Pixelate;
       float _Sepia;
+      sampler2D _ShadowTex;
+      float4 _ShadowColor;
+      float4 _ShadowOffset;
 
       v2f vert(appdata v)
       {
@@ -181,18 +187,40 @@ Shader "ReactUnity/Filter"
         if (_Grain > 0)
           color += (0.5 - rand(i.uv)) * _Grain;
 
-        a *= _Opacity * i.color.a;
         color = saturate(color) * i.color.rgb;
 
+        // Back to premultiplied, which is what this pass blends with.
+        float3 rgb = color * a;
+
+        // The shadow goes on after the colour ops so they do not tint it, and it is drawn under the
+        // element rather than blended into the capture -- an element's own translucency shows it.
+        if (_ShadowColor.a > 0)
+        {
+          // Nothing outside the capture casts a shadow. Without this the sampler's clamp would
+          // smear the edge row of the silhouette across the strip the offset uncovers, which
+          // shows through wherever the element is translucent.
+          float2 suv = i.uv - _ShadowOffset.xy;
+          float2 within = step(0.0, suv) * step(suv, 1.0);
+
+          float sa = tex2D(_ShadowTex, suv).a * _ShadowColor.a * within.x * within.y;
+          rgb += _ShadowColor.rgb * sa * (1.0 - a);
+          a += sa * (1.0 - a);
+        }
+
+        float fade = _Opacity * i.color.a;
+
         #ifdef UNITY_UI_CLIP_RECT
-          a *= UnityGet2DClipping(i.worldPosition.xy, _ClipRect);
+          fade *= UnityGet2DClipping(i.worldPosition.xy, _ClipRect);
         #endif
+
+        rgb *= fade;
+        a *= fade;
 
         #ifdef UNITY_UI_ALPHACLIP
           clip(a - 0.001);
         #endif
 
-        return float4(color * a, a);
+        return float4(rgb, a);
       }
       ENDCG
     }

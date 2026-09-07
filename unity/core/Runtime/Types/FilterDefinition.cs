@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using ReactUnity.Styling.Animations;
 using ReactUnity.Styling.Computed;
 using ReactUnity.Styling.Converters;
+using UnityEngine;
 
 namespace ReactUnity.Types
 {
@@ -31,7 +32,11 @@ namespace ReactUnity.Types
         public float Grain { get; } = 0;
         public float Pixelate { get; } = 0;
         public float Sepia { get; } = 0;
-        // public BoxShadow DropShadow;
+
+        /// <summary>`drop-shadow`. A clear colour is the identity: no shadow is drawn.</summary>
+        public Color DropShadowColor { get; } = Color.clear;
+        public Vector2 DropShadowOffset { get; } = Vector2.zero;
+        public float DropShadowBlur { get; } = 0;
 
         public FilterDefinition(
             float blur = 0,
@@ -44,8 +49,10 @@ namespace ReactUnity.Types
             float saturate = 1,
             float grain = 0,
             float pixelate = 0,
-            float sepia = 0
-
+            float sepia = 0,
+            Color? dropShadowColor = null,
+            Vector2? dropShadowOffset = null,
+            float dropShadowBlur = 0
         )
         {
             Blur = blur;
@@ -59,6 +66,9 @@ namespace ReactUnity.Types
             Grain = grain;
             Pixelate = pixelate;
             Sepia = sepia;
+            DropShadowColor = dropShadowColor ?? Color.clear;
+            DropShadowOffset = dropShadowOffset ?? Vector2.zero;
+            DropShadowBlur = dropShadowBlur;
         }
 
         public object Interpolate(object to, float t)
@@ -77,7 +87,10 @@ namespace ReactUnity.Types
                 saturate: Interpolater.Interpolate(Saturate, tto.Saturate, t),
                 grain: Interpolater.Interpolate(Grain, tto.Grain, t),
                 pixelate: Interpolater.Interpolate(Pixelate, tto.Pixelate, t),
-                sepia: Interpolater.Interpolate(Sepia, tto.Sepia, t)
+                sepia: Interpolater.Interpolate(Sepia, tto.Sepia, t),
+                dropShadowColor: Interpolater.Interpolate(DropShadowColor, tto.DropShadowColor, t),
+                dropShadowOffset: Interpolater.Interpolate(DropShadowOffset, tto.DropShadowOffset, t),
+                dropShadowBlur: Interpolater.Interpolate(DropShadowBlur, tto.DropShadowBlur, t)
             );
         }
 
@@ -94,6 +107,7 @@ namespace ReactUnity.Types
             static IComputedValue grainDefault = new ComputedConstant(0);
             static IComputedValue pixelateDefault = new ComputedConstant(0);
             static IComputedValue sepiaDefault = new ComputedConstant(0);
+            static IComputedValue dropShadowDefault = new ComputedConstant(BoxShadow.Default);
 
             protected override System.Type TargetType => typeof(FilterDefinition);
 
@@ -111,6 +125,7 @@ namespace ReactUnity.Types
                 IComputedValue grain = grainDefault;
                 IComputedValue pixelate = pixelateDefault;
                 IComputedValue sepia = sepiaDefault;
+                IComputedValue dropShadow = dropShadowDefault;
 
                 var calls = ParserHelpers.SplitWhitespace(value?.ToString());
                 var count = calls.Count;
@@ -139,6 +154,9 @@ namespace ReactUnity.Types
                     else if (name == "grain") { if (!AllConverters.PercentageConverter.TryConvert(ac, out grain)) return false; }
                     else if (name == "pixelate") { if (!AllConverters.LengthConverter.TryConvert(ac, out pixelate)) return false; }
                     else if (name == "sepia") { if (!AllConverters.PercentageConverter.TryConvert(ac, out sepia)) return false; }
+                    // `drop-shadow(<x> <y> [blur] [color])`. BoxShadow's parser reads it as written
+                    // and accepts a spread and `inset` besides, which CSS does not -- both ignored.
+                    else if (name == "drop-shadow") { if (!AllConverters.BoxShadowConverter.TryConvert(ac, out dropShadow)) return false; }
                 }
 
                 result = new ComputedCompound(new List<IComputedValue> {
@@ -153,6 +171,7 @@ namespace ReactUnity.Types
                     grain,
                     pixelate,
                     sepia,
+                    dropShadow,
                 }, new List<StyleConverterBase> {
                     AllConverters.LengthConverter,
                     AllConverters.PercentageConverter,
@@ -165,6 +184,7 @@ namespace ReactUnity.Types
                     AllConverters.PercentageConverter,
                     AllConverters.LengthConverter,
                     AllConverters.PercentageConverter,
+                    AllConverters.BoxShadowConverter,
                 }, values => new FilterDefinition(
                     blur: System.Convert.ToSingle(values[0]),
                     brightness: System.Convert.ToSingle(values[1]),
@@ -176,7 +196,11 @@ namespace ReactUnity.Types
                     saturate: System.Convert.ToSingle(values[7]),
                     grain: System.Convert.ToSingle(values[8]),
                     pixelate: System.Convert.ToSingle(values[9]),
-                    sepia: System.Convert.ToSingle(values[10])
+                    sepia: System.Convert.ToSingle(values[10]),
+                    dropShadowColor: (values[11] as BoxShadow)?.color,
+                    dropShadowOffset: (values[11] as BoxShadow)?.offset,
+                    // A single radius, since a filter's shadow has no axis of its own.
+                    dropShadowBlur: (values[11] as BoxShadow)?.blur.x ?? 0
                 ));
                 return true;
             }
@@ -197,12 +221,18 @@ namespace ReactUnity.Types
                    Saturate == definition.Saturate &&
                    Grain == definition.Grain &&
                    Pixelate == definition.Pixelate &&
-                   Sepia == definition.Sepia;
+                   Sepia == definition.Sepia &&
+                   DropShadowColor == definition.DropShadowColor &&
+                   DropShadowOffset == definition.DropShadowOffset &&
+                   DropShadowBlur == definition.DropShadowBlur;
         }
 
         public override int GetHashCode()
         {
-            return HashCode.Combine(Blur + Pixelate, Brightness, Contrast, Grayscale, HueRotate, Invert + Grain, Opacity, Saturate + Sepia);
+            // Combine takes eight, and the drop shadow needs three of its own, so the last slot
+            // carries a nested hash rather than another packed sum.
+            return HashCode.Combine(Blur + Pixelate, Brightness, Contrast, Grayscale, HueRotate, Invert + Grain, Opacity,
+                HashCode.Combine(Saturate + Sepia, DropShadowColor, DropShadowOffset, DropShadowBlur));
         }
 
         #endregion

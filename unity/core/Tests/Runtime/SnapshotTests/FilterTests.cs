@@ -397,6 +397,131 @@ namespace ReactUnity.Tests
             Assert.Greater(outerAfter, 0.9f, "the filtered element should reach just as far");
         }
 
+        // A margin so the element sits away from the screen corner and a shadow has room to fall
+        // on any side of it. The element spans 60..260 on both axes.
+        const string ShadowStyle = @"
+            #test {
+                background-color: red;
+                width: 200px;
+                height: 200px;
+                margin: 60px;
+            }
+        ";
+
+        [UGUITest(Script = BaseScript, Style = ShadowStyle)]
+        public IEnumerator DropShadowFallsOnTheOffsetSide()
+        {
+            yield return null;
+            yield return null;
+            Assert.Greater(SampleAt(160, 160).r, 0.5f, "sanity: the element should be red at its centre");
+            Assert.Less(SampleAt(270, 270).a, 0.1f, "sanity: nothing past its bottom-right yet");
+
+            // Offset 20px right and down, so the shadow spans 80..280.
+            View.Style["filter"] = "drop-shadow(20px 20px 0px blue)";
+            for (int i = 0; i < 4; i++) yield return null;
+
+            var onShadow = SampleAt(270, 270);
+            var offShadow = SampleAt(70, 70);
+            var overElement = SampleAt(160, 160);
+            Debug.Log($"[FILTER drop-shadow] shadow {Describe(onShadow)} corner {Describe(offShadow)} centre {Describe(overElement)}");
+
+            Assert.Greater(onShadow.b, 0.5f, "the shadow should fall past the element's bottom-right");
+            Assert.Less(onShadow.r, 0.3f, "and should be the shadow's blue, not the element's red");
+            Assert.Greater(offShadow.r, 0.5f, "the top-left corner is the element, which the shadow has left");
+            Assert.Less(offShadow.b, 0.3f, "the shadow must not fall on the side it moved away from");
+            Assert.Greater(overElement.r, 0.5f, "the shadow belongs behind the element, not over it");
+            Assert.Less(overElement.b, 0.3f);
+        }
+
+        [UGUITest(Script = BaseScript, Style = ShadowStyle)]
+        public IEnumerator DropShadowTakesAFunctionalColour()
+        {
+            // A colour with its own parens and commas inside a filter function inside a filter
+            // list: three levels for the splitter to keep straight, and what the docs recommend.
+            View.Style["filter"] = "drop-shadow(20px 20px 0px rgba(0, 0, 255, 0.5))";
+            for (int i = 0; i < 4; i++) yield return null;
+
+            var onShadow = SampleAt(270, 270);
+            Debug.Log($"[FILTER drop-shadow rgba] {Describe(onShadow)}");
+
+            Assert.Greater(onShadow.b, 0.5f, "the shadow should be blue");
+            Assert.AreEqual(0.5f, onShadow.a, 0.1f, "and half transparent, as its alpha asked");
+        }
+
+        [UGUITest(Script = BaseScript, Style = ShadowStyle)]
+        public IEnumerator DropShadowDoesNotSmearOutOfTheCapture()
+        {
+            // Half-transparent, so anything wrongly drawn behind the element shows through it.
+            View.Style["backgroundColor"] = "rgba(255, 0, 0, 0.5)";
+            View.Style["filter"] = "drop-shadow(20px 20px 0px blue)";
+            for (int i = 0; i < 4; i++) yield return null;
+
+            // The shadow moved 20px off this strip, and the capture has no room to its left -- so
+            // the sampler lands outside it here, where a clamp would repeat the element's own edge.
+            var strip = SampleAt(70, 160);
+            var onShadow = SampleAt(270, 270);
+            Debug.Log($"[FILTER drop-shadow smear] strip {Describe(strip)} shadow {Describe(onShadow)}");
+
+            Assert.Greater(onShadow.b, 0.5f, "sanity: the shadow should still fall where it belongs");
+            Assert.Greater(strip.r, 0.8f, "the strip the shadow left should show the pale backdrop, not a smeared shadow");
+        }
+
+        [UGUITest(Script = BaseScript, Style = ShadowStyle)]
+        public IEnumerator DropShadowFallsOnNegativeOffsetsToo()
+        {
+            yield return null;
+            yield return null;
+            Assert.Less(SampleAt(50, 50).a, 0.1f, "sanity: nothing past its top-left yet");
+
+            // Offset up and left, so the shadow spans 40..240 and the region grows the other way.
+            View.Style["filter"] = "drop-shadow(-20px -20px 0px blue)";
+            for (int i = 0; i < 4; i++) yield return null;
+
+            var onShadow = SampleAt(50, 50);
+            var offShadow = SampleAt(270, 270);
+            Debug.Log($"[FILTER drop-shadow -] shadow {Describe(onShadow)} opposite {Describe(offShadow)}");
+
+            Assert.Greater(onShadow.b, 0.5f, "the shadow should fall past the element's top-left");
+            Assert.Less(offShadow.a, 0.1f, "and the region should not have grown the other way");
+        }
+
+        [UGUITest(Script = BaseScript, Style = ShadowStyle)]
+        public IEnumerator DropShadowKeepsItsOwnColourThroughTheOps()
+        {
+            View.Style["filter"] = "grayscale(1) drop-shadow(20px 20px 0px blue)";
+            for (int i = 0; i < 4; i++) yield return null;
+
+            var onShadow = SampleAt(270, 270);
+            var element = SampleAt(160, 160);
+            Debug.Log($"[FILTER drop-shadow grey] shadow {Describe(onShadow)} element {Describe(element)}");
+
+            // The shadow is composited after the colour ops, so `grayscale` reaches the element only.
+            Assert.AreEqual(element.r, element.g, 0.05f, "the element itself should be grey");
+            Assert.Greater(onShadow.b - onShadow.r, 0.3f, "the shadow should still be blue");
+        }
+
+        [UGUITest(Script = BaseScript, Style = ShadowStyle)]
+        public IEnumerator DropShadowBlurSoftensOutward()
+        {
+            View.Style["filter"] = "drop-shadow(0px 0px 12px black)";
+            for (int i = 0; i < 4; i++) yield return null;
+
+            // No offset, so the shadow rings the element and fades outward from its edge at 260.
+            var prev = 1.1f;
+            var samples = "";
+            for (int x = 252; x <= 300; x += 4)
+            {
+                var a = SampleAt(x, 160).a;
+                samples += $"{x}:{a:F2} ";
+                Assert.LessOrEqual(a, prev + 0.06f, $"coverage rose again at x={x} -- the shadow is banding");
+                prev = a;
+            }
+            Debug.Log($"[FILTER drop-shadow blur] {samples}");
+
+            Assert.Greater(SampleAt(264, 160).a, 0.2f, "the shadow should reach past the element's edge");
+            Assert.Less(SampleAt(300, 160).a, 0.05f, "and should have faded out well inside its 36px region");
+        }
+
         [UGUITest(Script = BaseScript, Style = BaseStyle)]
         public IEnumerator FilterIsRemovedWhenUnset()
         {

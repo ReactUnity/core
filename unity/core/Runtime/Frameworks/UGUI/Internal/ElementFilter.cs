@@ -30,9 +30,14 @@ namespace ReactUnity.UGUI.Internal
         static readonly int GrainId = Shader.PropertyToID("_Grain");
         static readonly int PixelateId = Shader.PropertyToID("_Pixelate");
         static readonly int SepiaId = Shader.PropertyToID("_Sepia");
+        static readonly int ShadowTexId = Shader.PropertyToID("_ShadowTex");
+        static readonly int ShadowColorId = Shader.PropertyToID("_ShadowColor");
+        static readonly int ShadowOffsetId = Shader.PropertyToID("_ShadowOffset");
 
-        // A blur of radius r reaches about 3r; the kernel here spans 4 taps at quarter spacing.
-        const float BleedPerBlurUnit = 3f;
+        // The exact support of the iterated kernel, so no blur can ever be clipped and none is
+        // over-allocated for: one pass reaches 4 taps at quarter spacing, so +/- its own radius,
+        // and n passes of r/sqrt(n) reach sqrt(n)*r -- at most 2r, since n is capped at 4.
+        const float BleedPerBlurUnit = 2f;
         const int MaxDimension = 4096;
 
         private UGUIComponent component;
@@ -45,6 +50,7 @@ namespace ReactUnity.UGUI.Internal
         private Camera offscreenCamera;
         private RenderTexture target;
         private RenderTexture scratch;
+        private RenderTexture shadow;
 
         private RawImage composite;
         private Material compositeMaterial;
@@ -153,6 +159,7 @@ namespace ReactUnity.UGUI.Internal
             if (blurMaterial) Destroy(blurMaterial);
             Release(ref target);
             Release(ref scratch);
+            Release(ref shadow);
         }
 
         static void Release(ref RenderTexture rt)
@@ -260,11 +267,27 @@ namespace ReactUnity.UGUI.Internal
 
             var rect = self.rect;
             var scale = ScaleFactor;
+            var hasShadow = definition.DropShadowColor.a > 0;
 
-            // Bleed lets blur reach past the element's box, as the CSS filter region does.
-            var bleed = Mathf.Ceil(definition.Blur * BleedPerBlurUnit);
-            var width = rect.width + bleed * 2f;
-            var height = rect.height + bleed * 2f;
+            // The filter region, as CSS has one: how far past each edge of the element the capture
+            // has to reach. A blur grows it evenly, a drop-shadow only on the side it falls.
+            var blurBleed = Mathf.Ceil(definition.Blur * BleedPerBlurUnit);
+            var shadowBleed = hasShadow ? Mathf.Ceil(definition.DropShadowBlur * BleedPerBlurUnit) : 0f;
+            var offset = hasShadow ? definition.DropShadowOffset : Vector2.zero;
+
+            // The rect's y grows upwards where the shadow's offset grows down.
+            var mLeft = Mathf.Ceil(Mathf.Max(blurBleed, shadowBleed - offset.x));
+            var mRight = Mathf.Ceil(Mathf.Max(blurBleed, shadowBleed + offset.x));
+            var mBottom = Mathf.Ceil(Mathf.Max(blurBleed, shadowBleed + offset.y));
+            var mTop = Mathf.Ceil(Mathf.Max(blurBleed, shadowBleed - offset.y));
+
+            // An odd difference would put the frame's centre on a half pixel, and half a pixel of
+            // offset moves 2.75% of text pixels -- which reads as shimmer on anything animating.
+            if (Mathf.Abs(mRight - mLeft) % 2f != 0f) mRight += 1f;
+            if (Mathf.Abs(mTop - mBottom) % 2f != 0f) mTop += 1f;
+
+            var width = rect.width + mLeft + mRight;
+            var height = rect.height + mBottom + mTop;
             if (width <= 0 || height <= 0) return;
 
             // The element's own rotate and scale are kept out of the capture and put on the
@@ -279,13 +302,13 @@ namespace ReactUnity.UGUI.Internal
             var pxWidth = Mathf.Clamp(Mathf.CeilToInt(width * sx * scale), 1, MaxDimension);
             var pxHeight = Mathf.Clamp(Mathf.CeilToInt(height * sy * scale), 1, MaxDimension);
 
-            EnsureTarget(pxWidth, pxHeight);
+            EnsureTarget(pxWidth, pxHeight, hasShadow);
 
             // Aim in world space: the camera hangs off the surface canvas, not off the element, so
             // the element's own anchoredPosition would otherwise be left out and the capture would
             // be taken from somewhere inside the element instead of around it. Taking the element's
             // rotation frames it square-on, which is what leaves the capture transform-free.
-            var worldCentre = self.TransformPoint(rect.center);
+            var worldCentre = self.TransformPoint(rect.center + new Vector2((mRight - mLeft) * 0.5f, (mTop - mBottom) * 0.5f));
             offscreenCamera.transform.SetPositionAndRotation(worldCentre - self.forward * 100f, self.rotation);
             // Both of these are already in RT terms, so they follow the element's scale through
             // pxWidth/pxHeight and keep the frame exactly as square as the texture is.
@@ -297,65 +320,92 @@ namespace ReactUnity.UGUI.Internal
             offscreenCamera.targetTexture = target;
             offscreenCamera.Render();
 
-            if (definition.Blur > 0)
+            if (definition.Blur > 0) Blur(target, target, definition.Blur, width, height);
+
+            if (hasShadow)
             {
-                // Nine taps whose spacing grows with the radius sample too sparsely for a wide
-                // blur and band. Convolving the same kernel n times widens it by sqrt(n) instead,
-                // which keeps the taps close together however large the radius gets.
-                var passes = Mathf.Clamp(Mathf.CeilToInt(definition.Blur / 6f), 1, 4);
-                var radius = definition.Blur / Mathf.Sqrt(passes);
-
-                // Texels per local unit, read off the target that was actually allocated -- so this
-                // carries the element's own scale, and a clamped dimension narrows the blur with it.
-                var hRadius = radius * pxWidth / width;
-                var vRadius = radius * pxHeight / height;
-
-                for (int i = 0; i < passes; i++)
-                {
-                    blurMaterial.SetFloat(BlurId, hRadius);
-                    Graphics.Blit(target, scratch, blurMaterial, 0);
-                    blurMaterial.SetFloat(BlurId, vRadius);
-                    Graphics.Blit(scratch, target, blurMaterial, 1);
-                }
+                // Cast from the element after its own blur, so a blurred element throws a blurred
+                // shadow -- the order `blur() drop-shadow()` gives on the web. Only alpha is read
+                // back out, so the colour the silhouette carries does not matter.
+                if (definition.DropShadowBlur > 0) Blur(target, shadow, definition.DropShadowBlur, width, height);
+                else Graphics.Blit(target, shadow);
             }
 
-            ApplyToComposite(target, bleed);
+            ApplyToComposite(target, new Vector4(mLeft, mRight, mBottom, mTop), width, height);
         }
 
-        void EnsureTarget(int w, int h)
+        /// <summary>
+        /// Separable Gaussian of `radius` local units, from one texture into another through the
+        /// scratch buffer. Blurring in place is fine -- the horizontal half always lands elsewhere.
+        /// </summary>
+        void Blur(RenderTexture from, RenderTexture to, float radius, float width, float height)
         {
-            if (target && target.width == w && target.height == h) return;
+            // Nine taps whose spacing grows with the radius sample too sparsely for a wide blur and
+            // band. Convolving the same kernel n times widens it by sqrt(n) instead, which keeps
+            // the taps close together however large the radius gets.
+            var passes = Mathf.Clamp(Mathf.CeilToInt(radius / 6f), 1, 4);
+            var each = radius / Mathf.Sqrt(passes);
 
-            Release(ref target);
-            Release(ref scratch);
+            // Texels per local unit, read off the target that was actually allocated -- so this
+            // carries the element's own scale, and a clamped dimension narrows the blur with it.
+            var hRadius = each * to.width / width;
+            var vRadius = each * to.height / height;
 
-            target = new RenderTexture(w, h, 24, RenderTextureFormat.ARGB32);
-            target.filterMode = FilterMode.Bilinear;
-            target.wrapMode = TextureWrapMode.Clamp;
-            target.Create();
-
-            scratch = new RenderTexture(w, h, 0, RenderTextureFormat.ARGB32);
-            scratch.filterMode = FilterMode.Bilinear;
-            scratch.wrapMode = TextureWrapMode.Clamp;
-            scratch.Create();
+            var src = from;
+            for (int i = 0; i < passes; i++)
+            {
+                blurMaterial.SetFloat(BlurId, hRadius);
+                Graphics.Blit(src, scratch, blurMaterial, 0);
+                blurMaterial.SetFloat(BlurId, vRadius);
+                Graphics.Blit(scratch, to, blurMaterial, 1);
+                src = to;
+            }
         }
 
-        void ApplyToComposite(RenderTexture source, float bleed)
+        void EnsureTarget(int w, int h, bool needShadow)
+        {
+            if (!target || target.width != w || target.height != h)
+            {
+                Release(ref target);
+                Release(ref scratch);
+                target = Allocate(w, h, 24);
+                scratch = Allocate(w, h, 0);
+            }
+
+            if (!needShadow) Release(ref shadow);
+            else if (!shadow || shadow.width != w || shadow.height != h)
+            {
+                Release(ref shadow);
+                shadow = Allocate(w, h, 0);
+            }
+        }
+
+        static RenderTexture Allocate(int w, int h, int depth)
+        {
+            var rt = new RenderTexture(w, h, depth, RenderTextureFormat.ARGB32);
+            rt.filterMode = FilterMode.Bilinear;
+            rt.wrapMode = TextureWrapMode.Clamp;
+            rt.Create();
+            return rt;
+        }
+
+        void ApplyToComposite(RenderTexture source, Vector4 margins, float width, float height)
         {
             var rect = self.rect;
             var compRect = composite.transform as RectTransform;
+            float mLeft = margins.x, mRight = margins.y, mBottom = margins.z, mTop = margins.w;
 
-            // Match the element's slot, grown by the bleed so blur is not cut off at the edge.
+            // Match the element's slot, grown by the filter region so nothing is cut off at the edge.
             compRect.anchorMin = self.anchorMin;
             compRect.anchorMax = self.anchorMax;
-            compRect.sizeDelta = self.sizeDelta + new Vector2(bleed * 2f, bleed * 2f);
+            compRect.sizeDelta = self.sizeDelta + new Vector2(mLeft + mRight, mBottom + mTop);
 
             // Keep the pivot on the same point despite the wider rect: it is the origin the rotation
             // and scale below turn about, and `transform-origin` has already moved it off centre.
-            var grown = rect.size + new Vector2(bleed * 2f, bleed * 2f);
+            var grown = rect.size + new Vector2(mLeft + mRight, mBottom + mTop);
             compRect.pivot = new Vector2(
-                grown.x > 0 ? (self.pivot.x * rect.width + bleed) / grown.x : 0.5f,
-                grown.y > 0 ? (self.pivot.y * rect.height + bleed) / grown.y : 0.5f);
+                grown.x > 0 ? (self.pivot.x * rect.width + mLeft) / grown.x : 0.5f,
+                grown.y > 0 ? (self.pivot.y * rect.height + mBottom) / grown.y : 0.5f);
             compRect.anchoredPosition = self.anchoredPosition;
 
             // The capture left these out, so they apply to the filtered image here.
@@ -374,6 +424,16 @@ namespace ReactUnity.UGUI.Internal
             compositeMaterial.SetFloat(GrainId, definition.Grain);
             compositeMaterial.SetFloat(PixelateId, definition.Pixelate);
             compositeMaterial.SetFloat(SepiaId, definition.Sepia);
+
+            if (definition.DropShadowColor.a > 0 && shadow)
+            {
+                compositeMaterial.SetTexture(ShadowTexId, shadow);
+                compositeMaterial.SetColor(ShadowColorId, definition.DropShadowColor);
+                // The shader subtracts this from its uv, and the rect's y grows the other way.
+                compositeMaterial.SetVector(ShadowOffsetId,
+                    new Vector4(definition.DropShadowOffset.x / width, -definition.DropShadowOffset.y / height, 0, 0));
+            }
+            else compositeMaterial.SetColor(ShadowColorId, Color.clear);
         }
     }
 }

@@ -9,7 +9,15 @@ The element is rendered off screen and the effect is applied to the result, so a
 <Sandpack>
 
 ```js
-const filters = ['none', 'grayscale(1)', 'invert(1)', 'blur(3px)', 'sepia(0.8)', 'hue-rotate(90deg)'];
+const filters = [
+  'none',
+  'grayscale(1)',
+  'invert(1)',
+  'blur(3px)',
+  'sepia(0.8)',
+  'hue-rotate(90deg)',
+  'drop-shadow(6px 8px 6px rgba(0, 0, 0, 0.5))',
+];
 
 export default function App() {
   const [index, setIndex] = React.useState(1);
@@ -76,6 +84,7 @@ The button inside the card is filtered along with the rest of it and still takes
 | Function              | Range                | Notes                                                          |
 | --------------------- | -------------------- | -------------------------------------------------------------- |
 | `blur(<length>)`      | `0` and up           | Reaches about three times the radius past the element's box     |
+| `drop-shadow(<x> <y> [blur] [color])` | | Casts from the element's alpha, not its box |
 | `brightness(<n>)`     | `0`–`2`, `1` is none |                                                                |
 | `contrast(<n>)`       | `0`–`2`, `1` is none |                                                                |
 | `grayscale(<n>)`      | `0`–`1`              |                                                                |
@@ -95,7 +104,17 @@ Functions combine in one declaration, and are applied in the order listed above 
 }
 ```
 
-`drop-shadow()` is not implemented. Use [box-shadow](/reference/css/box-shadow) instead, which is not equivalent -- it follows the border box rather than the element's alpha -- but covers most of the same ground.
+`drop-shadow()` follows the element's alpha, so it traces text and transparent images rather than the border box that [box-shadow](/reference/css/box-shadow) follows. It takes an x and y offset, an optional blur radius and an optional colour, in that order:
+
+```css
+.el {
+  filter: drop-shadow(4px 6px 8px rgba(0, 0, 0, 0.4));
+}
+```
+
+The colour ops are applied to the element only, so the shadow keeps the colour you gave it under a `grayscale()` or `hue-rotate()`. A shadow cast from a blurred element is blurred with it.
+
+Unlike `box-shadow` this takes no spread and no `inset`. Both parse -- the same parser reads them -- and both are ignored.
 
 `filter` is animatable, so it works in `transition` and `@keyframes`.
 
