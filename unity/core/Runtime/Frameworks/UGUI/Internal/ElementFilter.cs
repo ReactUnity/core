@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using ReactUnity.Types;
 using UnityEngine;
@@ -49,6 +50,7 @@ namespace ReactUnity.UGUI.Internal
         static readonly Stack<int> freeSlots = new Stack<int>();
         static int nextSlot;
         private int slot = -1;
+        private Action disposeSurface;
 
         private UGUIComponent component;
         private RectTransform self;
@@ -141,6 +143,16 @@ namespace ReactUnity.UGUI.Internal
             raycaster.HostCanvas = ctx.RootCanvas;
             raycaster.Composite = composite;
 
+            // The top of the subtree is where the event system's walk up the hierarchy stops, so
+            // anything nothing inside handled carries on from the composite instead.
+            canvasGo.AddComponent<FilterEventBubble>().Composite = composite;
+
+            // The surface is a scene root -- a nested canvas would inherit the render mode -- so
+            // tearing the context down does not reach it, and it would outlive the app with a live
+            // raycaster on it.
+            disposeSurface = () => { disposeSurface = null; if (canvasGo) Destroy(canvasGo); };
+            ctx.Disposables.Add(disposeSurface);
+
             self.SetParent(canvasGo.transform, false);
         }
 
@@ -170,6 +182,12 @@ namespace ReactUnity.UGUI.Internal
             {
                 freeSlots.Push(slot);
                 slot = -1;
+            }
+
+            if (disposeSurface != null)
+            {
+                component?.Context?.Disposables.Remove(disposeSurface);
+                disposeSurface = null;
             }
 
             if (composite) Destroy(composite.gameObject);

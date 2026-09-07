@@ -122,7 +122,7 @@ Unlike `box-shadow` this takes no spread and no `inset`. Both parse -- the same 
 
 `filter` is implemented for the UGUI renderer only. It does nothing under UIToolkit, which has no equivalent.
 
-A filtered element stays interactive: pointer events are mapped back through the image that stands in for it, so buttons and inputs inside one keep working. What is not resolved is depth *between* a filtered subtree and unfiltered content drawn over it -- if the two overlap, which one receives the pointer is not guaranteed. Overlapping a filtered element with something interactive is the case to avoid.
+A filtered element stays interactive: pointer events are mapped back through the image that stands in for it, so buttons and inputs inside one keep working, and an event nothing inside handles -- a wheel, a drag -- carries on to the ancestors the element still belongs to. The one thing it does not get is real depth against unfiltered content drawn *over* it: a filtered subtree is placed a hair in front of the image standing in for it, so it wins that overlap whichever way the two are actually stacked.
 
 An ancestor's `overflow: hidden` clips the filtered result, as it does on the web -- so a blur that spills past a scroll container's edge is cut off there rather than escaping it, and a point past that edge does not reach the element either. An `overflow: hidden` on or inside the filtered element still clips normally.
 

@@ -322,6 +322,125 @@ namespace ReactUnity.Tests
             #test, #btn { flex-shrink: 0; }
         ";
 
+        // A scroll around it, which is where a real page puts a filtered element -- and the shape
+        // the hit-testing missed: the scroll's viewport is a raycast target of its own, and the
+        // event system does not compare depth across two root raycasters, so the viewport was
+        // taking every click by being fractionally nearer the camera.
+        const string ScrolledScript = @"
+            function App() {
+                return <scroll id='wrap'>
+                    <view id='test'>
+                        <button id='btn'>Click</button>
+                    </view>
+                </scroll>;
+            }
+";
+
+        const string ScrolledStyle = ButtonStyle + @"
+            #wrap { width: 400px; height: 400px; }
+            #test { height: 900px; }
+            #test, #btn { flex-shrink: 0; }
+        ";
+
+        [UGUITest(Script = ScrolledScript, Style = ScrolledStyle)]
+        public IEnumerator AFilteredSubtreeInAScrollIsStillOnTop()
+        {
+            yield return null;
+            yield return null;
+
+            var ownEventSystem = !EventSystem.current;
+            var es = EventSystem.current ?? new GameObject("[FilterTestEventSystem]").AddComponent<EventSystem>();
+            var results = new List<RaycastResult>();
+
+            var btn = Q("#btn");
+            var point = RectTransformUtility.WorldToScreenPoint(
+                CanvasCmp.worldCamera, btn.RectTransform.TransformPoint(btn.RectTransform.rect.center));
+
+            RaycastResult Top()
+            {
+                results.Clear();
+                es.RaycastAll(new PointerEventData(es) { position = point }, results);
+                return results.Count > 0 ? results[0] : default;
+            }
+
+            var before = Top();
+            Assert.IsTrue(before.gameObject && before.gameObject.transform.IsChildOf(btn.RectTransform),
+                $"sanity: expected the button through the scroll, hit {before.gameObject?.name}");
+
+            Q("#test").Style["filter"] = "grayscale(1)";
+            for (int i = 0; i < 4; i++) yield return null;
+
+            var after = Top();
+            Debug.Log($"[FILTER scroll raycast] before={before.gameObject?.name} after={after.gameObject?.name}" +
+                $"/{after.module?.GetType().Name} dist={after.distance}");
+
+            Assert.IsTrue(after.gameObject && after.gameObject.transform.IsChildOf(btn.RectTransform),
+                $"the filtered button should still be the first hit, but {after.gameObject?.name} was");
+
+            if (ownEventSystem) Object.DestroyImmediate(es.gameObject);
+        }
+
+        [UGUITest(Script = ScrolledScript, Style = ScrolledStyle)]
+        public IEnumerator ScrollingOverAFilteredSubtreeStillScrolls()
+        {
+            yield return null;
+            yield return null;
+
+            var ownEventSystem = !EventSystem.current;
+            var es = EventSystem.current ?? new GameObject("[FilterTestEventSystem]").AddComponent<EventSystem>();
+            var btn = Q("#btn");
+            var scroll = Q("#wrap").GameObject.GetComponentInChildren<UnityEngine.UI.ScrollRect>();
+            Assert.NotNull(scroll, "sanity: the wrapper should be a scroll");
+
+            // Taken while the button is still in place: once filtered it hangs off a canvas parked
+            // a hundred thousand units away, where its world position says nothing about the screen.
+            var point = RectTransformUtility.WorldToScreenPoint(
+                CanvasCmp.worldCamera, btn.RectTransform.TransformPoint(btn.RectTransform.rect.center));
+
+            Q("#test").Style["filter"] = "grayscale(1)";
+            for (int i = 0; i < 4; i++) yield return null;
+
+            var results = new List<RaycastResult>();
+            es.RaycastAll(new PointerEventData(es) { position = point }, results);
+            var hit = results.Find(r => r.gameObject && r.gameObject.transform.IsChildOf(btn.RectTransform)).gameObject;
+            Assert.NotNull(hit, "sanity: the wheel has to land inside the filtered subtree");
+
+            // The subtree hangs off its own canvas, so the walk up the hierarchy that finds a
+            // scroll handler ends inside the filter unless the top of it carries the event on.
+            var handler = ExecuteEvents.GetEventHandler<IScrollHandler>(hit);
+            Debug.Log($"[FILTER scroll] hit={hit.name} handler={handler?.name}");
+            Assert.NotNull(handler, "a wheel over a filtered element should still find a scroll handler");
+
+            var before = scroll.verticalNormalizedPosition;
+            ExecuteEvents.ExecuteHierarchy(hit,
+                new PointerEventData(es) { position = point, scrollDelta = new Vector2(0, -3) },
+                ExecuteEvents.scrollHandler);
+            for (int i = 0; i < 2; i++) yield return null;
+
+            Debug.Log($"[FILTER scroll] {before} -> {scroll.verticalNormalizedPosition}");
+            Assert.AreNotEqual(before, scroll.verticalNormalizedPosition, "the page under the filter should have scrolled");
+
+            if (ownEventSystem) Object.DestroyImmediate(es.gameObject);
+        }
+
+        [UGUITest(Script = BaseScript, Style = BaseStyle)]
+        public IEnumerator DisposingTheContextTakesTheOffscreenSurfaceWithIt()
+        {
+            View.Style["filter"] = "blur(4px)";
+            yield return null;
+            yield return null;
+
+            var surface = View.ElementFilter.transform.parent.gameObject;
+            Assert.AreEqual("[FilterSurface]", surface.name, "sanity: the subtree should hang off a surface");
+
+            // The surface is a scene root -- a nested canvas would inherit the render mode -- so
+            // destroying the context's own hierarchy never reaches it.
+            Object.DestroyImmediate(Component);
+            yield return null;
+
+            Assert.IsTrue(!surface, "disposing the context must take the offscreen surface with it");
+        }
+
         // A masking ancestor that does not clip the element, so only the substituted material is
         // under test. `overflow: hidden` is a stencil Mask, and UGUI draws a copy of the material
         // when one is above -- so anything written to the composite's own material is dropped.
