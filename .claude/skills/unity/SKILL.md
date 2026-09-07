@@ -129,6 +129,8 @@ unity command capture_game_view --project-path S:/Work/Unity/reactunity/kitchen-
 
 That produces a real PNG of the running app — read it back to check a visual change. Unity connects to the dev server, so JS changes hot-reload without touching the Editor.
 
+`save_path` is resolved under `Assets/` whatever you pass — a relative path lands in `Assets/Logs/…`, an absolute path outside the project is refused, and one inside is redirected there too — and Unity imports the PNG, so delete `Assets/Logs` and `Assets/Logs.meta` afterwards or they show up in `git status`. The app's router takes its first route from the URL hash, so to land on one page temporarily set `initialEntries={['/<page>']}` in `kitchen-sink/react/src/app/index.tsx`, let HMR reload, capture, and put the line back.
+
 Both Unity projects consume the C# packages as `file:../../unity/*`, so both exercise the working tree. **`kitchen-sink` used to point at `https://github.com/ReactUnity/core.git#latest`** — while it did, it compiled the *published* package and local C# changes were invisible there, silently. If a change to `unity/**` seems to have no effect in kitchen-sink, check its manifest first.
 
 Those `file:` refs are also why `kitchen-sink` cannot be cloned on its own, and why publishing it is a transform rather than a copy — see [prepare.mts](../../../scripts/kitchen-sink/prepare.mts). Anything added here that only resolves inside this checkout has to be handled there too.

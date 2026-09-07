@@ -24,7 +24,7 @@ namespace ReactUnity.UIToolkit
         VisualElement TargetElement { get; }
     }
 
-    public class UIToolkitComponent<T> : BaseReactComponent<UIToolkitContext>, IActivatableComponent, IUIToolkitComponent, IUIToolkitComponent<T> where T : VisualElement, new()
+    public class UIToolkitComponent<T> : BaseReactComponent<UIToolkitContext>, IActivatableComponent, IUIToolkitComponent, IUIToolkitComponent<T>, IContentBoxComponent where T : VisualElement, new()
     {
         public T Element { get; protected set; }
         VisualElement IUIToolkitComponent.Element => Element;
@@ -32,6 +32,14 @@ namespace ReactUnity.UIToolkit
 
         public override float ClientWidth => Element.layout.width;
         public override float ClientHeight => Element.layout.height;
+
+        // `layout` is the border box; a container query measures inside the padding.
+        void IContentBoxComponent.GetContentBox(out float width, out float height)
+        {
+            var rect = Element.contentRect;
+            width = rect.width;
+            height = rect.height;
+        }
 
         public bool Disabled
         {

@@ -2,6 +2,7 @@ import React, { Suspense } from 'react';
 import { Route, Routes } from 'react-router';
 import AnimationsPage from '#src/pages/animations/index.tsx';
 import BgPatternsPage from '#src/pages/bg-patterns/index.tsx';
+import ContainerQueriesPage from '#src/pages/container-queries/index.tsx';
 import FilterPage from '#src/pages/filter/index.tsx';
 import { GamePage } from '#src/pages/game/index.tsx';
 import HomePage from '#src/pages/home/index.tsx';
@@ -26,6 +27,7 @@ export function AppRoutes() {
       <Route path={'bg-patterns'} element={<BgPatternsPage />} />
       <Route path={'svgs'} element={<SvgsPage />} />
       <Route path={'filter'} element={<FilterPage />} />
+      <Route path={'container-queries'} element={<ContainerQueriesPage />} />
       <Route path={'interop'} element={<InteropPage />} />
       <Route path={'todo'} element={<TodoPage />} />
       <Route path={'query'} element={<QueryPage />} />

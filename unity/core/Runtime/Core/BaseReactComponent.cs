@@ -481,7 +481,9 @@ namespace ReactUnity
             else if (Tag == "_after") matchingRules = Parent.AfterRules;
             else matchingRules = Context.Style.StyleTree.GetMatchingRules(this).ToList();
 
-            var importantIndex = Math.Max(0, matchingRules.FindIndex(x => x.Specifity <= RuleHelpers.ImportantSpecifity));
+            // Inline styles sit below every !important rule and above the rest; with no rest, that is the end.
+            var importantIndex = matchingRules.FindIndex(x => x.Specifity <= RuleHelpers.ImportantSpecifity);
+            if (importantIndex < 0) importantIndex = matchingRules.Count;
             var cssStyles = new List<IDictionary<IStyleProperty, object>> { };
 
             for (int i = 0; i < importantIndex; i++) cssStyles.AddRange(matchingRules[i].Data?.Rules);
@@ -500,10 +502,14 @@ namespace ReactUnity
             if (IsContainer)
             {
                 var inheritedChanges = ComputedStyle.HasInheritedChanges;
+                var query = StateStyles.QueryContainer;
 
                 // A style() query below reads this element's style, so any change to it is theirs too.
-                if (inheritedChanges || recursive || StateStyles.QueryContainer?.HasStyleDependents == true)
+                if (inheritedChanges || recursive || query?.HasStyleDependents == true)
                 {
+                    // The subtree matches its rules again now, and whatever still reads this element as its container says so.
+                    if (query != null) query.TracksSize = query.HasStyleDependents = false;
+
                     BeforeRules = Context.Style.StyleTree.GetMatchingBefore(this).ToList();
                     if (BeforeRules.Count > 0 &&
                         BeforeRules.Any(x => x.Data.Rules.Any(y => y.ContainsKey(StyleProperties.content))))

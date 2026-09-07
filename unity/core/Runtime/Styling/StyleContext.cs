@@ -85,8 +85,10 @@ namespace ReactUnity.Styling
                 var container = SizeContainers[i];
                 var state = container.StateStyles?.QueryContainer;
 
+                // Nothing read it since its subtree was last restyled, so it is no longer a container anyone measures.
                 if (container.Destroyed || state == null || !state.TracksSize)
                 {
+                    if (state != null) state.Listed = false;
                     SizeContainers.RemoveAt(i);
                     continue;
                 }

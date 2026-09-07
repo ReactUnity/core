@@ -23,7 +23,7 @@ namespace ReactUnity.Styling
         public static readonly ValueListStyleProperty<Cursor> cursor = new ValueListStyleProperty<Cursor>("cursor");
         public static readonly StyleProperty<Isolation> isolation = new StyleProperty<Isolation>("isolation", Isolation.Auto);
         public static readonly StyleProperty<PointerEvents> pointerEvents = new StyleProperty<PointerEvents>("pointerEvents", PointerEvents.Auto);
-        public static readonly StyleProperty<ContainerType> containerType = new StyleProperty<ContainerType>("containerType", ContainerType.Normal);
+        public static readonly StyleProperty<ContainerType> containerType = new StyleProperty<ContainerType>("containerType", ContainerType.Normal, false, false, AllConverters.ContainerTypeConverter);
         public static readonly StyleProperty<string> containerName = new StyleProperty<string>("containerName", null, false, false, AllConverters.ContainerNameConverter);
         public static readonly StyleProperty<ColorScheme> colorScheme = new StyleProperty<ColorScheme>("colorScheme", ColorScheme.Normal, false, true, AllConverters.ColorSchemeConverter);
         public static readonly StyleProperty<ScrollbarGutter> scrollbarGutter = new StyleProperty<ScrollbarGutter>("scrollbarGutter", ScrollbarGutter.Auto, false, false, AllConverters.ScrollbarGutterConverter);

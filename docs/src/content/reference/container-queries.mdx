@@ -26,6 +26,8 @@ An element becomes a query container with `container-type`, and can be given a n
 | `inline-size` | Queries on the width can read this element.                        |
 | `size`        | Queries on the width, the height, the aspect ratio and the orientation can read this element. |
 
+`scroll-state` is accepted alongside any of these, as in `container-type: inline-size scroll-state`, so a stylesheet written for the web still parses; there are no scroll-state queries, so it decides nothing.
+
 The size read is the content box, without padding and border. Unlike a browser, ReactUnity does not apply size containment: a container's own size may still depend on its contents. That is what lets `container-type: size` be applied freely, and it also means a layout in which a container's size depends on what its query changes may not settle; such a layout is left where the second pass lands.
 
 A query is answered by the nearest ancestor that is a container of a kind able to answer it. A `(height ...)` query skips an `inline-size` container and keeps looking upwards. A query with a name only considers ancestors whose `container-name` includes it. An element with no eligible ancestor never matches.
@@ -47,7 +49,7 @@ A length in a condition is resolved against the container, so `20em` is twenty t
 
 ### Style queries {/*style-queries*/}
 
-`style()` compares a property of the container. A custom property compares as the text it was declared with, and `style(--theme)` alone holds when the property is set to anything. A regular property compares its computed value with the given one.
+`style()` compares a property of the container. A custom property compares as the text it was declared with, and `style(--theme)` alone holds when the property is set to anything. A regular property compares its computed value with the given one, and so does a custom property registered with `@property` under a typed syntax such as `<length>` or `<color>`: with `--gap` registered as a length, `style(--gap: 20px)` holds for a container that declared `--gap: 1em` at a 20px font size.
 
 ```css
 .panel {
@@ -97,4 +99,5 @@ A `@container` rule can be nested in a style rule, in a `@media` or `@supports` 
 ### Notes {/*notes*/}
 
 - In UGUI, a container that changes size is re-queried in the same frame, right after layout. In UIToolkit, where layout belongs to the framework, the change is seen a frame later.
-- A style query compares a custom property's declared text after collapsing whitespace, so `style(--gap: 4px)` does not match a value written as `calc(2px * 2)`.
+- A style query compares an unregistered custom property's declared text after collapsing whitespace, so `style(--gap: 4px)` does not match a value written as `calc(2px * 2)`. Registering the property with a typed `@property` syntax makes the comparison one of computed values.
+- A container is measured only while some rule or unit reads it. Once nothing does, it stops being checked after layout.

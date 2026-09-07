@@ -178,6 +178,7 @@ export interface RenderStyle {
   scrollbarColor?: SafeString;
   scrollbarWidth?: 'auto' | 'thin' | 'none' | YogaValueAux;
   scrollbarGutter?: 'auto' | 'stable' | 'stable both-edges';
+  container?: SafeString;
   paddingInline?: SafeString | number;
   paddingBlock?: SafeString | number;
   marginInline?: SafeString | number;

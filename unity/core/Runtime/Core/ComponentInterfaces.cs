@@ -136,4 +136,13 @@ namespace ReactUnity
         bool Pool();
         bool Revive();
     }
+
+    /// <summary>
+    /// A component whose layout is not Yoga's, so the content box a container query measures has to
+    /// come from the framework. Internal so that it stays out of the generated TypeScript models.
+    /// </summary>
+    internal interface IContentBoxComponent : IReactComponent
+    {
+        void GetContentBox(out float width, out float height);
+    }
 }

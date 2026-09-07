@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Linq;
 using NUnit.Framework;
 using ReactUnity.Scripting;
 using ReactUnity.Types;
@@ -188,6 +189,84 @@ namespace ReactUnity.Tests
             theme.Style.Set("opacity", 1f);
             yield return null;
             Assert.AreEqual(Color.black, Q("#s7").ComputedStyle.color);
+        }
+
+        const string RegisteredScript = @"
+            function App() {
+                return <view id='theme'>
+                    <view id='r1' className='q' />
+                    <view id='r2' className='q' />
+                    <view id='r3' className='q' />
+                </view>;
+            }
+        ";
+
+        const string RegisteredStyle = @"
+            @property --gap { syntax: '<length>'; inherits: true; initial-value: 0px; }
+            #theme { font-size: 20px; --gap: 1em; --pad: 1em; container-type: size scroll-state; }
+            .q { color: black; }
+
+            @container style(--gap: 20px) { #r1 { color: blue; } }
+            @container style(--pad: 20px) { #r2 { color: blue; } }
+            @container (width > 0px) { #r3 { color: blue; } }
+        ";
+
+        [UGUITest(Script = RegisteredScript, Style = RegisteredStyle)]
+        public IEnumerator ARegisteredPropertyComparesByValueAndScrollStateIsAccepted()
+        {
+            yield return null;
+            yield return null;
+
+            // `size scroll-state` is a size container; the second keyword has nothing here to decide.
+            Assert.AreEqual(ContainerType.Size, Q("#theme").ComputedStyle.containerType);
+
+            // Registered as a length, so 1em at 20px is 20px; unregistered, the text is what compares.
+            Assert.AreEqual(Color.blue, Q("#r1").ComputedStyle.color);
+            Assert.AreEqual(Color.black, Q("#r2").ComputedStyle.color);
+            Assert.AreEqual(Color.blue, Q("#r3").ComputedStyle.color);
+
+            Q("#theme").Style.Set("--gap", "30px");
+            yield return null;
+            Assert.AreEqual(Color.black, Q("#r1").ComputedStyle.color);
+
+            Q("#theme").Style.Set("containerType", "scroll-state");
+            yield return null;
+            Assert.AreEqual(ContainerType.Normal, Q("#theme").ComputedStyle.containerType);
+        }
+
+        const string TrackingScript = @"
+            function App() {
+                return <view id='outer' style={{ width: 300, height: 100 }}>
+                    <view id='a' />
+                </view>;
+            }
+        ";
+
+        [UGUITest(Script = TrackingScript, Style = "#outer { container-type: size; }")]
+        public IEnumerator AContainerNothingReadsAnyMoreStopsBeingMeasured()
+        {
+            yield return null;
+            var outer = Q("#outer");
+            Assert.IsFalse(Context.Style.SizeContainers.Contains(outer));
+
+            var sheet = InsertStyle("@container (min-width: 200px) { #a { color: red; } }");
+            yield return null;
+            yield return null;
+            Assert.AreEqual(Color.red, Q("#a").ComputedStyle.color);
+            Assert.IsTrue(Context.Style.SizeContainers.Contains(outer));
+
+            // Removing the sheet restyles the tree, nothing measures the container again, and the next layout drops it.
+            Context.RemoveStyle(sheet);
+            yield return null;
+            yield return null;
+            Assert.IsFalse(Context.Style.SizeContainers.Contains(outer));
+
+            // Reading it again lists it once, not twice.
+            var again = InsertStyle("@container (min-width: 200px) { #a { color: red; } }");
+            yield return null;
+            yield return null;
+            Assert.AreEqual(1, Context.Style.SizeContainers.Count(x => x == outer));
+            Context.RemoveStyle(again);
         }
 
         const string UnitScript = @"

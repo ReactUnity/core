@@ -1,0 +1,181 @@
+.host {
+  align-items: stretch;
+}
+
+.note {
+  margin-bottom: 12px;
+  font-size: 14px;
+  color: #475569;
+  white-space: normal;
+}
+
+.caption {
+  font-size: 12px;
+  color: #64748b;
+}
+
+/* The query container. Its width is set inline, and everything inside reads it. */
+.container {
+  container: card / inline-size;
+  padding: 12px;
+  border-radius: 14px;
+  background-color: #e2e8f0;
+}
+
+.animated {
+  transition: width 400ms ease;
+}
+
+.card {
+  gap: 10px;
+  padding: 12px;
+  border-radius: 10px;
+  background-color: white;
+}
+
+.thumb {
+  width: 64px;
+  height: 64px;
+  align-self: center;
+}
+
+.body {
+  flex: 1;
+  gap: 4px;
+}
+
+.title {
+  font-size: 16px;
+  font-weight: bold;
+  color: #0f172a;
+}
+
+.text {
+  font-size: 13px;
+  color: #475569;
+  white-space: normal;
+}
+
+.badge {
+  align-self: flex-start;
+  margin-top: 4px;
+  padding: 2px 8px;
+  border-radius: 999px;
+  background-color: #e0e7ff;
+
+  text {
+    font-size: 11px;
+    color: #3730a3;
+  }
+}
+
+@container card (width >= 300px) {
+  .card {
+    flex-direction: row;
+    align-items: center;
+  }
+
+  .badge {
+    background-color: #d1fae5;
+
+    text {
+      color: #065f46;
+    }
+  }
+}
+
+@container card (width >= 480px) {
+  .title {
+    font-size: 22px;
+  }
+
+  .thumb {
+    width: 96px;
+    height: 96px;
+  }
+
+  .badge {
+    background-color: #ffedd5;
+
+    text {
+      color: #9a3412;
+    }
+  }
+}
+
+/* Container units: half the container's content width, and text scaled to it. */
+.ruler {
+  margin-top: 10px;
+  width: 50cqw;
+  padding: 6px 10px;
+  border-radius: 6px;
+  background-color: #6366f1;
+}
+
+.rulerText {
+  font-size: 5cqw;
+  color: white;
+}
+
+.step {
+  padding: 6px 14px;
+  border-radius: 8px;
+  font-size: 13px;
+  color: #334155;
+  background-color: #e2e8f0;
+}
+
+.stepActive {
+  color: white;
+  background-color: #6366f1;
+}
+
+/* Style queries: the element above the panel declares --theme, and the panel and its children read it. */
+.panel {
+  align-items: flex-start;
+  gap: 8px;
+  padding: 16px;
+  border-radius: 14px;
+  background-color: #f8fafc;
+  transition: background-color 300ms;
+}
+
+.panelTitle {
+  font-size: 18px;
+  font-weight: bold;
+  color: #0f172a;
+}
+
+.panelText {
+  font-size: 13px;
+  color: #475569;
+  white-space: normal;
+}
+
+.panelButton {
+  margin-top: 4px;
+  padding: 6px 14px;
+  border-radius: 8px;
+  font-size: 13px;
+  color: white;
+  background-color: #6366f1;
+}
+
+@container style(--theme: dark) {
+  .panel {
+    background-color: #0f172a;
+  }
+
+  .panelTitle {
+    color: #f8fafc;
+  }
+
+  .panelText {
+    color: #cbd5e1;
+  }
+
+  .panelButton {
+    color: #0f172a;
+    background-color: #fbbf24;
+  }
+}

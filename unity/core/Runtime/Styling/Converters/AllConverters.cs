@@ -29,6 +29,7 @@ namespace ReactUnity.Styling.Converters
 
         static public StyleConverterBase UrlConverter = new UrlConverter();
         static public StyleConverterBase ContainerNameConverter = new ContainerNameConverter();
+        static public StyleConverterBase ContainerTypeConverter = new ContainerTypeConverter();
         static public StyleConverterBase ColorSchemeConverter = new ColorSchemeConverter();
         static public StyleConverterBase ScrollbarGutterConverter = new ScrollbarGutterConverter();
         static public StyleConverterBase YogaValueConverter = new YogaValueConverter();
@@ -88,7 +89,8 @@ namespace ReactUnity.Styling.Converters
             { typeof(BackgroundSize), BackgroundSizeConverter },
             { typeof(SortingLayer), SortingLayerConverter },
             { typeof(BorderImageSlice), BorderImageSliceConverter },
-            { typeof(FilterDefinition), FilterDefinitionConverter }
+            { typeof(FilterDefinition), FilterDefinitionConverter },
+            { typeof(ContainerType), ContainerTypeConverter },
         };
 
         public static StyleConverterBase Get<T>() => Get(typeof(T));

@@ -166,6 +166,7 @@ namespace ReactUnity.Styling.Rules
                     - layout.LayoutGetPadding(YogaEdge.Top) - layout.LayoutGetPadding(YogaEdge.Bottom)
                     - layout.LayoutGetBorder(YogaEdge.Top) - layout.LayoutGetBorder(YogaEdge.Bottom);
             }
+            else if (component is IContentBoxComponent box) box.GetContentBox(out width, out height);
             else
             {
                 width = component.ClientWidth;
@@ -184,6 +185,10 @@ namespace ReactUnity.Styling.Rules
 
             state.TracksSize = true;
             GetContentSize(container, out state.Width, out state.Height);
+
+            // A restyle clears TracksSize and lets the subtree set it again; the list entry outlives that.
+            if (state.Listed) return;
+            state.Listed = true;
             container.Context.Style.SizeContainers.Add(container);
         }
 
@@ -332,8 +337,19 @@ namespace ReactUnity.Styling.Rules
 
                 if (Property is VariableProperty)
                 {
-                    var actual = Normalize(VariableText(Property, style));
-                    return Expected == null ? actual != null : actual == Expected;
+                    var text = VariableText(Property, style);
+
+                    // A registered property with a typed syntax compares by computed value, so `1em` is `16px`.
+                    var converter = SyntaxConverter(style.Context?.Style?.GetRegisteredProperty(Property.name)?.Syntax);
+                    if (converter != null)
+                    {
+                        var actual = ResolveWith(converter, text, style);
+                        if (Expected == null || actual == null) return actual != null;
+                        return actual.Equals(ResolveWith(converter, Expected, style));
+                    }
+
+                    var normalized = Normalize(text);
+                    return Expected == null ? normalized != null : normalized == Expected;
                 }
 
                 var value = style.GetStyleValue<object>(Property);
@@ -371,6 +387,29 @@ namespace ReactUnity.Styling.Rules
 
             var resolved = computed.ResolveValue(LayoutProperties.Width, subject.Style, AllConverters.LengthConverter);
             return resolved is float r ? r : float.NaN;
+        }
+
+        // The converter for a single-component `@property` syntax, or null where the text is what compares.
+        private static StyleConverterBase SyntaxConverter(string syntax)
+        {
+            switch (syntax?.Trim())
+            {
+                case "<length>": return AllConverters.LengthConverter;
+                case "<length-percentage>": return AllConverters.YogaValueConverter;
+                case "<percentage>": return AllConverters.PercentageConverter;
+                case "<number>": return AllConverters.FloatConverter;
+                case "<integer>": return AllConverters.IntConverter;
+                case "<angle>": return AllConverters.AngleConverter;
+                case "<time>": return AllConverters.DurationConverter;
+                case "<color>": return AllConverters.ColorConverter;
+                default: return null;
+            }
+        }
+
+        private static object ResolveWith(StyleConverterBase converter, string text, NodeStyle style)
+        {
+            if (text == null || !converter.TryParse(text, out var computed)) return null;
+            return computed.ResolveValue(LayoutProperties.Width, style, converter);
         }
 
         private static string VariableText(IStyleProperty property, NodeStyle style)
@@ -769,6 +808,7 @@ namespace ReactUnity.Styling.Rules
     {
         public bool TracksSize;
         public bool HasStyleDependents;
+        public bool Listed;
         public float Width;
         public float Height;
     }

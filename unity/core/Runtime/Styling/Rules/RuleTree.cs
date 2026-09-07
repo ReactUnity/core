@@ -22,6 +22,17 @@ namespace ReactUnity.Styling.Rules
 
     public class StyleTree : RuleTree<StyleData>
     {
+        // A disabled sheet leaves its leaves in place with no declarations. Matching one would
+        // decide nothing, and would still register its @container as reading the container.
+        public override IEnumerable<RuleTreeNode<StyleData>> GetMatchingRules(IReactComponent component) =>
+            LeafNodes.Where(x => HasRules(x) && x.Matches(component));
+        public override IEnumerable<RuleTreeNode<StyleData>> GetMatchingBefore(IReactComponent component) =>
+            BeforeNodes.Where(x => HasRules(x) && x.Matches(component));
+        public override IEnumerable<RuleTreeNode<StyleData>> GetMatchingAfter(IReactComponent component) =>
+            AfterNodes.Where(x => HasRules(x) && x.Matches(component));
+
+        private static bool HasRules(RuleTreeNode<StyleData> leaf) => leaf.Data != null && leaf.Data.Rules.Count > 0;
+
         public List<Tuple<RuleTreeNode<StyleData>, Dictionary<IStyleProperty, object>>> AddStyle
             (StyleRule rule, int importanceOffset = 0, MediaQueryList mql = null, IReactComponent scope = null, CascadeLayer layer = null, ContainerQuery container = null, string selectorText = null)
         {
@@ -105,15 +116,15 @@ namespace ReactUnity.Styling.Rules
         /// </summary>
         public bool ContainsHasSelector { get; private set; }
 
-        public IEnumerable<RuleTreeNode<T>> GetMatchingRules(IReactComponent component)
+        public virtual IEnumerable<RuleTreeNode<T>> GetMatchingRules(IReactComponent component)
         {
             return LeafNodes.Where(x => x.Matches(component));
         }
-        public IEnumerable<RuleTreeNode<T>> GetMatchingBefore(IReactComponent component)
+        public virtual IEnumerable<RuleTreeNode<T>> GetMatchingBefore(IReactComponent component)
         {
             return BeforeNodes.Where(x => x.Matches(component));
         }
-        public IEnumerable<RuleTreeNode<T>> GetMatchingAfter(IReactComponent component)
+        public virtual IEnumerable<RuleTreeNode<T>> GetMatchingAfter(IReactComponent component)
         {
             return AfterNodes.Where(x => x.Matches(component));
         }
