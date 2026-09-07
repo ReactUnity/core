@@ -14,7 +14,7 @@ namespace ReactUnity.UGUI.Internal
     /// one subtree in isolation -- a camera cullingMask cannot, because a ScreenSpaceOverlay canvas
     /// has no camera. Losing the ancestor stencil that way is what CSS wants: an ancestor's
     /// `overflow` clips the filtered result, and the composite (a MaskableGraphic left in place) is
-    /// clipped normally. Hit testing does not survive the reparent yet.
+    /// clipped normally. Pointer events are routed back in by <see cref="FilterRaycaster"/>.
     /// </remarks>
     public class ElementFilter : MonoBehaviour
     {
@@ -114,6 +114,14 @@ namespace ReactUnity.UGUI.Internal
             // Park the surface far from anything else so no other camera can pick it up.
             canvasGo.transform.position = new Vector3(0, 0, 100000);
 
+            // Events reach the subtree through the composite: the pointer lands on the composite's
+            // rect, which is remapped into the offscreen camera's screen space and cast there.
+            offscreenCanvas.worldCamera = offscreenCamera;
+            var raycaster = canvasGo.AddComponent<FilterRaycaster>();
+            raycaster.EventViewport = compRect;
+            raycaster.HostCanvas = ctx.RootCanvas;
+            raycaster.Composite = composite;
+
             self.SetParent(canvasGo.transform, false);
         }
 
@@ -188,6 +196,14 @@ namespace ReactUnity.UGUI.Internal
                 dirty = true;
             }
 
+            // Also the element itself: a `rotate` or `scale` on an element with no background of
+            // its own touches no graphic in the list below.
+            if (self.hasChanged)
+            {
+                self.hasChanged = false;
+                dirty = true;
+            }
+
             // A rebuild raises the callbacks below, but moving a child only sets its transform --
             // the canvas re-batches without any graphic going dirty.
             graphics.Clear();
@@ -251,18 +267,28 @@ namespace ReactUnity.UGUI.Internal
             var height = rect.height + bleed * 2f;
             if (width <= 0 || height <= 0) return;
 
+            // The element's own rotate and scale are kept out of the capture and put on the
+            // composite instead, so the chain runs in the element's local space: a rotation does not
+            // tilt `pixelate` blocks, and a blur widens with the element as CSS says it should.
+            var sx = Mathf.Abs(self.localScale.x);
+            var sy = Mathf.Abs(self.localScale.y);
+            if (sx < 0.0001f || sy < 0.0001f) return;
+
             // Whole device pixels: a fractional RT shifts glyph edges sub-pixel (measured: a half
             // pixel moves 2.75% of pixels), while an aligned one is bit-identical to drawing in place.
-            var pxWidth = Mathf.Clamp(Mathf.CeilToInt(width * scale), 1, MaxDimension);
-            var pxHeight = Mathf.Clamp(Mathf.CeilToInt(height * scale), 1, MaxDimension);
+            var pxWidth = Mathf.Clamp(Mathf.CeilToInt(width * sx * scale), 1, MaxDimension);
+            var pxHeight = Mathf.Clamp(Mathf.CeilToInt(height * sy * scale), 1, MaxDimension);
 
             EnsureTarget(pxWidth, pxHeight);
 
             // Aim in world space: the camera hangs off the surface canvas, not off the element, so
             // the element's own anchoredPosition would otherwise be left out and the capture would
-            // be taken from somewhere inside the element instead of around it.
+            // be taken from somewhere inside the element instead of around it. Taking the element's
+            // rotation frames it square-on, which is what leaves the capture transform-free.
             var worldCentre = self.TransformPoint(rect.center);
             offscreenCamera.transform.SetPositionAndRotation(worldCentre - self.forward * 100f, self.rotation);
+            // Both of these are already in RT terms, so they follow the element's scale through
+            // pxWidth/pxHeight and keep the frame exactly as square as the texture is.
             offscreenCamera.orthographicSize = pxHeight / scale / 2f;
             offscreenCamera.aspect = (float) pxWidth / pxHeight;
             offscreenCamera.nearClipPlane = 0.01f;
@@ -277,11 +303,18 @@ namespace ReactUnity.UGUI.Internal
                 // blur and band. Convolving the same kernel n times widens it by sqrt(n) instead,
                 // which keeps the taps close together however large the radius gets.
                 var passes = Mathf.Clamp(Mathf.CeilToInt(definition.Blur / 6f), 1, 4);
-                blurMaterial.SetFloat(BlurId, definition.Blur / Mathf.Sqrt(passes) * scale);
+                var radius = definition.Blur / Mathf.Sqrt(passes);
+
+                // Texels per local unit, read off the target that was actually allocated -- so this
+                // carries the element's own scale, and a clamped dimension narrows the blur with it.
+                var hRadius = radius * pxWidth / width;
+                var vRadius = radius * pxHeight / height;
 
                 for (int i = 0; i < passes; i++)
                 {
+                    blurMaterial.SetFloat(BlurId, hRadius);
                     Graphics.Blit(target, scratch, blurMaterial, 0);
+                    blurMaterial.SetFloat(BlurId, vRadius);
                     Graphics.Blit(scratch, target, blurMaterial, 1);
                 }
             }
@@ -315,9 +348,19 @@ namespace ReactUnity.UGUI.Internal
             // Match the element's slot, grown by the bleed so blur is not cut off at the edge.
             compRect.anchorMin = self.anchorMin;
             compRect.anchorMax = self.anchorMax;
-            compRect.pivot = self.pivot;
-            compRect.anchoredPosition = self.anchoredPosition;
             compRect.sizeDelta = self.sizeDelta + new Vector2(bleed * 2f, bleed * 2f);
+
+            // Keep the pivot on the same point despite the wider rect: it is the origin the rotation
+            // and scale below turn about, and `transform-origin` has already moved it off centre.
+            var grown = rect.size + new Vector2(bleed * 2f, bleed * 2f);
+            compRect.pivot = new Vector2(
+                grown.x > 0 ? (self.pivot.x * rect.width + bleed) / grown.x : 0.5f,
+                grown.y > 0 ? (self.pivot.y * rect.height + bleed) / grown.y : 0.5f);
+            compRect.anchoredPosition = self.anchoredPosition;
+
+            // The capture left these out, so they apply to the filtered image here.
+            compRect.localRotation = self.localRotation;
+            compRect.localScale = self.localScale;
 
             composite.texture = source;
             compositeMaterial.SetTexture(MainTexId, source);

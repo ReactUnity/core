@@ -1,8 +1,11 @@
 using System.Collections;
+using System.Collections.Generic;
 using NUnit.Framework;
 using ReactUnity.Scripting;
 using ReactUnity.UGUI;
+using ReactUnity.UGUI.Internal;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 namespace ReactUnity.Tests
 {
@@ -230,6 +233,168 @@ namespace ReactUnity.Tests
             }
 
             Debug.Log($"[FILTER blur(24px)] {samples}");
+        }
+
+        const string ButtonScript = @"
+            function App() {
+                return <view id='test'>
+                    <button id='btn'>Click</button>
+                </view>;
+            }
+";
+
+        const string ButtonStyle = BaseStyle + @"
+            #btn { width: 200px; height: 200px; }
+        ";
+
+        [UGUITest(Script = ButtonScript, Style = ButtonStyle)]
+        public IEnumerator FilteredSubtreeStillReceivesPointerEvents()
+        {
+            yield return null;
+            yield return null;
+
+            var ownEventSystem = !EventSystem.current;
+            var es = EventSystem.current ?? new GameObject("[FilterTestEventSystem]").AddComponent<EventSystem>();
+            var results = new List<RaycastResult>();
+
+            var btn = Q("#btn");
+            var point = RectTransformUtility.WorldToScreenPoint(
+                CanvasCmp.worldCamera, btn.RectTransform.TransformPoint(btn.RectTransform.rect.center));
+
+            RaycastResult Top()
+            {
+                results.Clear();
+                es.RaycastAll(new PointerEventData(es) { position = point }, results);
+                return results.Count > 0 ? results[0] : default;
+            }
+
+            var before = Top();
+            Assert.NotNull(before.gameObject, "sanity: something should be hit with no filter at all");
+            Assert.IsTrue(before.gameObject.transform.IsChildOf(btn.RectTransform),
+                $"sanity: expected the button, hit {before.gameObject.name}");
+            Assert.IsNotInstanceOf<FilterRaycaster>(before.module, "sanity: no filter is set yet");
+
+            View.Style["filter"] = "grayscale(1)";
+            for (int i = 0; i < 4; i++) yield return null;
+
+            var after = Top();
+            Debug.Log($"[FILTER raycast] before={before.gameObject?.name}/{before.module?.GetType().Name}" +
+                $" after={after.gameObject?.name}/{after.module?.GetType().Name}");
+
+            // The subtree now lives on an offscreen canvas, so the hit has to arrive through the
+            // composite -- and land on the same graphic it did in place.
+            Assert.IsInstanceOf<FilterRaycaster>(after.module, "the hit must be routed through the filter's raycaster");
+            Assert.AreEqual(before.gameObject, after.gameObject, "the same screen point must hit the same graphic");
+
+            if (ownEventSystem) Object.DestroyImmediate(es.gameObject);
+        }
+
+        const string ClippedScript = @"
+            function App() {
+                return <view id='wrap'>
+                    <view id='test'>
+                        <button id='btn'>Click</button>
+                    </view>
+                </view>;
+            }
+";
+
+        const string ClippedStyle = ButtonStyle + @"
+            #wrap { overflow: hidden; width: 100px; height: 100px; }
+            #test, #btn { flex-shrink: 0; }
+        ";
+
+        [UGUITest(Script = ClippedScript, Style = ClippedStyle)]
+        public IEnumerator AncestorOverflowClipsHitsTooNotJustPixels()
+        {
+            yield return null;
+            yield return null;
+
+            var ownEventSystem = !EventSystem.current;
+            var es = EventSystem.current ?? new GameObject("[FilterTestEventSystem]").AddComponent<EventSystem>();
+            var results = new List<RaycastResult>();
+            var btn = Q("#btn");
+            var rect = btn.RectTransform.rect;
+
+            // Screen points have to be taken while the button is still in place -- once it is
+            // reparented onto the offscreen canvas its world position says nothing about the screen.
+            Vector2 ScreenPointAt(float fromLeft, float fromTop) =>
+                RectTransformUtility.WorldToScreenPoint(CanvasCmp.worldCamera,
+                    btn.RectTransform.TransformPoint(new Vector3(rect.xMin + fromLeft, rect.yMax - fromTop, 0)));
+
+            // The button spans 200px but its wrapper clips at 100px. A point in the visible corner
+            // must hit; one past the clip must not, even though the button's rect covers it.
+            var insidePoint = ScreenPointAt(50, 50);
+            var clippedPoint = ScreenPointAt(150, 150);
+
+            bool Hits(Vector2 point)
+            {
+                results.Clear();
+                es.RaycastAll(new PointerEventData(es) { position = point }, results);
+                return results.Count > 0 && results[0].gameObject.transform.IsChildOf(btn.RectTransform);
+            }
+
+            Assert.AreEqual(new Vector2(200, 200), rect.size, "sanity: the button should overflow its wrapper");
+            Assert.IsTrue(Hits(insidePoint), "sanity: the unfiltered button should be hit inside the clip");
+            Assert.IsFalse(Hits(clippedPoint), "sanity: overflow should already clip hits without a filter");
+
+            View.Style["filter"] = "grayscale(1)";
+            for (int i = 0; i < 4; i++) yield return null;
+
+            var inside = Hits(insidePoint);
+            var clipped = Hits(clippedPoint);
+            Debug.Log($"[FILTER clip] inside={inside} clipped={clipped}");
+
+            Assert.IsTrue(inside, "a point inside the clip should still reach the filtered button");
+            Assert.IsFalse(clipped, "a point past the ancestor's overflow should not reach it");
+
+            if (ownEventSystem) Object.DestroyImmediate(es.gameObject);
+        }
+
+        [UGUITest(Script = BaseScript, Style = BaseStyle)]
+        public IEnumerator RotationTurnsTheFilteredResultToo()
+        {
+            // The element spans 0..200. Rotated 45deg about its centre it becomes a diamond whose
+            // edge runs |dx| + |dy| = 141, so its old corner region falls outside it.
+            View.Style["rotate"] = "45deg";
+            for (int i = 0; i < 3; i++) yield return null;
+
+            var cornerBefore = SampleAt(20, 20).a;
+            var centreBefore = SampleCentre().a;
+
+            View.Style["filter"] = "grayscale(1)";
+            for (int i = 0; i < 4; i++) yield return null;
+
+            var cornerAfter = SampleAt(20, 20).a;
+            var centreAfter = SampleCentre().a;
+            Debug.Log($"[FILTER rotate] corner {cornerBefore:F2} -> {cornerAfter:F2}  centre {centreBefore:F2} -> {centreAfter:F2}");
+
+            // Capturing with the element's rotation and compositing without it would hand back an
+            // upright square, filling the corner the rotation had emptied.
+            Assert.Less(cornerBefore, 0.1f, "sanity: the rotated element should not cover its old corner");
+            Assert.Less(cornerAfter, 0.1f, "the filter must not undo the rotation");
+            Assert.Greater(centreBefore, 0.9f, "sanity: the centre stays covered under a rotation");
+            Assert.Greater(centreAfter, 0.9f, "the filtered centre should still be covered");
+        }
+
+        [UGUITest(Script = BaseScript, Style = BaseStyle)]
+        public IEnumerator ScaleGrowsTheFilteredResultToo()
+        {
+            // Scaled 2x about its centre the element spans -100..300, so 250 lands inside it.
+            View.Style["scale"] = "2";
+            for (int i = 0; i < 3; i++) yield return null;
+
+            var outerBefore = SampleAt(250, 100).a;
+
+            View.Style["filter"] = "grayscale(1)";
+            for (int i = 0; i < 4; i++) yield return null;
+
+            var outerAfter = SampleAt(250, 100).a;
+            Debug.Log($"[FILTER scale] outer {outerBefore:F2} -> {outerAfter:F2}");
+
+            // A composite left at the unscaled box would cut the element back to 0..200 here.
+            Assert.Greater(outerBefore, 0.9f, "sanity: the scaled element should reach 250px");
+            Assert.Greater(outerAfter, 0.9f, "the filtered element should reach just as far");
         }
 
         [UGUITest(Script = BaseScript, Style = BaseStyle)]
