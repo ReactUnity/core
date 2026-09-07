@@ -33,6 +33,27 @@ namespace ReactUnity.Types
         public float Pixelate { get; } = 0;
         public float Sepia { get; } = 0;
 
+        /// <summary>How far the grain's noise field is shifted. The hash amplifies any change, so
+        /// animating this resamples the field rather than sliding it.</summary>
+        public float GrainPhase { get; } = 0;
+
+        /// <summary>Colour levels per channel. 0 is the identity: no quantisation.</summary>
+        public float Posterize { get; } = 0;
+
+        /// <summary>`scanlines`. Zero intensity is the identity: nothing is drawn.</summary>
+        public float ScanlineIntensity { get; } = 0;
+        public float ScanlinePeriod { get; } = DefaultScanlinePeriod;
+        public float ScanlinePhase { get; } = 0;
+
+        /// <summary>`tint`, multiplied into the result. White is the identity.</summary>
+        public Color Tint { get; } = Color.white;
+
+        /// <summary>How far the red and blue channels are pulled apart, in opposite directions.</summary>
+        public float ChromaticAberration { get; } = 0;
+
+        /// <summary>Two rows on, two off -- the period a CRT line pair reads as.</summary>
+        public const float DefaultScanlinePeriod = 4f;
+
         /// <summary>`drop-shadow`. A clear colour is the identity: no shadow is drawn.</summary>
         public Color DropShadowColor { get; } = Color.clear;
         public Vector2 DropShadowOffset { get; } = Vector2.zero;
@@ -50,6 +71,13 @@ namespace ReactUnity.Types
             float grain = 0,
             float pixelate = 0,
             float sepia = 0,
+            float grainPhase = 0,
+            float posterize = 0,
+            float scanlineIntensity = 0,
+            float scanlinePeriod = DefaultScanlinePeriod,
+            float scanlinePhase = 0,
+            Color? tint = null,
+            float chromaticAberration = 0,
             Color? dropShadowColor = null,
             Vector2? dropShadowOffset = null,
             float dropShadowBlur = 0
@@ -66,6 +94,13 @@ namespace ReactUnity.Types
             Grain = grain;
             Pixelate = pixelate;
             Sepia = sepia;
+            GrainPhase = grainPhase;
+            Posterize = posterize;
+            ScanlineIntensity = scanlineIntensity;
+            ScanlinePeriod = scanlinePeriod;
+            ScanlinePhase = scanlinePhase;
+            Tint = tint ?? Color.white;
+            ChromaticAberration = chromaticAberration;
             DropShadowColor = dropShadowColor ?? Color.clear;
             DropShadowOffset = dropShadowOffset ?? Vector2.zero;
             DropShadowBlur = dropShadowBlur;
@@ -88,6 +123,13 @@ namespace ReactUnity.Types
                 grain: Interpolater.Interpolate(Grain, tto.Grain, t),
                 pixelate: Interpolater.Interpolate(Pixelate, tto.Pixelate, t),
                 sepia: Interpolater.Interpolate(Sepia, tto.Sepia, t),
+                grainPhase: Interpolater.Interpolate(GrainPhase, tto.GrainPhase, t),
+                posterize: Interpolater.Interpolate(Posterize, tto.Posterize, t),
+                scanlineIntensity: Interpolater.Interpolate(ScanlineIntensity, tto.ScanlineIntensity, t),
+                scanlinePeriod: Interpolater.Interpolate(ScanlinePeriod, tto.ScanlinePeriod, t),
+                scanlinePhase: Interpolater.Interpolate(ScanlinePhase, tto.ScanlinePhase, t),
+                tint: Interpolater.Interpolate(Tint, tto.Tint, t),
+                chromaticAberration: Interpolater.Interpolate(ChromaticAberration, tto.ChromaticAberration, t),
                 dropShadowColor: Interpolater.Interpolate(DropShadowColor, tto.DropShadowColor, t),
                 dropShadowOffset: Interpolater.Interpolate(DropShadowOffset, tto.DropShadowOffset, t),
                 dropShadowBlur: Interpolater.Interpolate(DropShadowBlur, tto.DropShadowBlur, t)
@@ -107,6 +149,13 @@ namespace ReactUnity.Types
             static IComputedValue grainDefault = new ComputedConstant(0);
             static IComputedValue pixelateDefault = new ComputedConstant(0);
             static IComputedValue sepiaDefault = new ComputedConstant(0);
+            static IComputedValue grainPhaseDefault = new ComputedConstant(0);
+            static IComputedValue posterizeDefault = new ComputedConstant(0);
+            static IComputedValue scanlineIntensityDefault = new ComputedConstant(0);
+            static IComputedValue scanlinePeriodDefault = new ComputedConstant(DefaultScanlinePeriod);
+            static IComputedValue scanlinePhaseDefault = new ComputedConstant(0);
+            static IComputedValue tintDefault = new ComputedConstant(Color.white);
+            static IComputedValue chromaticAberrationDefault = new ComputedConstant(0);
             static IComputedValue dropShadowDefault = new ComputedConstant(BoxShadow.Default);
 
             protected override System.Type TargetType => typeof(FilterDefinition);
@@ -125,6 +174,13 @@ namespace ReactUnity.Types
                 IComputedValue grain = grainDefault;
                 IComputedValue pixelate = pixelateDefault;
                 IComputedValue sepia = sepiaDefault;
+                IComputedValue grainPhase = grainPhaseDefault;
+                IComputedValue posterize = posterizeDefault;
+                IComputedValue scanlineIntensity = scanlineIntensityDefault;
+                IComputedValue scanlinePeriod = scanlinePeriodDefault;
+                IComputedValue scanlinePhase = scanlinePhaseDefault;
+                IComputedValue tint = tintDefault;
+                IComputedValue chromaticAberration = chromaticAberrationDefault;
                 IComputedValue dropShadow = dropShadowDefault;
 
                 var calls = ParserHelpers.SplitWhitespace(value?.ToString());
@@ -151,9 +207,28 @@ namespace ReactUnity.Types
                     else if (name == "invert") { if (!AllConverters.PercentageConverter.TryConvert(ac, out invert)) return false; }
                     else if (name == "opacity") { if (!AllConverters.PercentageConverter.TryConvert(ac, out opacity)) return false; }
                     else if (name == "saturate") { if (!AllConverters.PercentageConverter.TryConvert(ac, out saturate)) return false; }
-                    else if (name == "grain") { if (!AllConverters.PercentageConverter.TryConvert(ac, out grain)) return false; }
                     else if (name == "pixelate") { if (!AllConverters.LengthConverter.TryConvert(ac, out pixelate)) return false; }
                     else if (name == "sepia") { if (!AllConverters.PercentageConverter.TryConvert(ac, out sepia)) return false; }
+                    else if (name == "posterize") { if (!AllConverters.FloatConverter.TryConvert(ac, out posterize)) return false; }
+                    else if (name == "tint") { if (!AllConverters.ColorConverter.TryConvert(ac, out tint)) return false; }
+                    else if (name == "chromatic-aberration") { if (!AllConverters.LengthConverter.TryConvert(ac, out chromaticAberration)) return false; }
+                    // A trailing phase is what a keyframe animation drives: grain resamples its
+                    // field, scanlines roll. Neither has one to interpolate otherwise.
+                    else if (name == "grain")
+                    {
+                        var parts = ParserHelpers.SplitWhitespace(ac);
+                        if (parts.Count == 0) continue;
+                        if (!AllConverters.PercentageConverter.TryConvert(parts[0], out grain)) return false;
+                        if (parts.Count > 1 && !AllConverters.FloatConverter.TryConvert(parts[1], out grainPhase)) return false;
+                    }
+                    else if (name == "scanlines")
+                    {
+                        var parts = ParserHelpers.SplitWhitespace(ac);
+                        if (parts.Count == 0) continue;
+                        if (!AllConverters.PercentageConverter.TryConvert(parts[0], out scanlineIntensity)) return false;
+                        if (parts.Count > 1 && !AllConverters.LengthConverter.TryConvert(parts[1], out scanlinePeriod)) return false;
+                        if (parts.Count > 2 && !AllConverters.LengthConverter.TryConvert(parts[2], out scanlinePhase)) return false;
+                    }
                     // `drop-shadow(<x> <y> [blur] [color])`. BoxShadow's parser reads it as written
                     // and accepts a spread and `inset` besides, which CSS does not -- both ignored.
                     else if (name == "drop-shadow") { if (!AllConverters.BoxShadowConverter.TryConvert(ac, out dropShadow)) return false; }
@@ -171,6 +246,13 @@ namespace ReactUnity.Types
                     grain,
                     pixelate,
                     sepia,
+                    grainPhase,
+                    posterize,
+                    scanlineIntensity,
+                    scanlinePeriod,
+                    scanlinePhase,
+                    tint,
+                    chromaticAberration,
                     dropShadow,
                 }, new List<StyleConverterBase> {
                     AllConverters.LengthConverter,
@@ -184,6 +266,13 @@ namespace ReactUnity.Types
                     AllConverters.PercentageConverter,
                     AllConverters.LengthConverter,
                     AllConverters.PercentageConverter,
+                    AllConverters.FloatConverter,
+                    AllConverters.FloatConverter,
+                    AllConverters.PercentageConverter,
+                    AllConverters.LengthConverter,
+                    AllConverters.LengthConverter,
+                    AllConverters.ColorConverter,
+                    AllConverters.LengthConverter,
                     AllConverters.BoxShadowConverter,
                 }, values => new FilterDefinition(
                     blur: System.Convert.ToSingle(values[0]),
@@ -197,10 +286,17 @@ namespace ReactUnity.Types
                     grain: System.Convert.ToSingle(values[8]),
                     pixelate: System.Convert.ToSingle(values[9]),
                     sepia: System.Convert.ToSingle(values[10]),
-                    dropShadowColor: (values[11] as BoxShadow)?.color,
-                    dropShadowOffset: (values[11] as BoxShadow)?.offset,
+                    grainPhase: System.Convert.ToSingle(values[11]),
+                    posterize: System.Convert.ToSingle(values[12]),
+                    scanlineIntensity: System.Convert.ToSingle(values[13]),
+                    scanlinePeriod: System.Convert.ToSingle(values[14]),
+                    scanlinePhase: System.Convert.ToSingle(values[15]),
+                    tint: values[16] is Color tintColor ? tintColor : Color.white,
+                    chromaticAberration: System.Convert.ToSingle(values[17]),
+                    dropShadowColor: (values[18] as BoxShadow)?.color,
+                    dropShadowOffset: (values[18] as BoxShadow)?.offset,
                     // A single radius, since a filter's shadow has no axis of its own.
-                    dropShadowBlur: (values[11] as BoxShadow)?.blur.x ?? 0
+                    dropShadowBlur: (values[18] as BoxShadow)?.blur.x ?? 0
                 ));
                 return true;
             }
@@ -222,6 +318,13 @@ namespace ReactUnity.Types
                    Grain == definition.Grain &&
                    Pixelate == definition.Pixelate &&
                    Sepia == definition.Sepia &&
+                   GrainPhase == definition.GrainPhase &&
+                   Posterize == definition.Posterize &&
+                   ScanlineIntensity == definition.ScanlineIntensity &&
+                   ScanlinePeriod == definition.ScanlinePeriod &&
+                   ScanlinePhase == definition.ScanlinePhase &&
+                   Tint == definition.Tint &&
+                   ChromaticAberration == definition.ChromaticAberration &&
                    DropShadowColor == definition.DropShadowColor &&
                    DropShadowOffset == definition.DropShadowOffset &&
                    DropShadowBlur == definition.DropShadowBlur;
@@ -229,10 +332,13 @@ namespace ReactUnity.Types
 
         public override int GetHashCode()
         {
-            // Combine takes eight, and the drop shadow needs three of its own, so the last slot
-            // carries a nested hash rather than another packed sum.
-            return HashCode.Combine(Blur + Pixelate, Brightness, Contrast, Grayscale, HueRotate, Invert + Grain, Opacity,
-                HashCode.Combine(Saturate + Sepia, DropShadowColor, DropShadowOffset, DropShadowBlur));
+            // Combine takes eight, so the chain is grouped rather than packed into sums -- two
+            // values whose sum collides are not the same filter.
+            return HashCode.Combine(
+                HashCode.Combine(Blur, Brightness, Contrast, Grayscale, HueRotate, Invert, Opacity, Saturate),
+                HashCode.Combine(Grain, GrainPhase, Pixelate, Sepia, Posterize, Tint, ChromaticAberration),
+                HashCode.Combine(ScanlineIntensity, ScanlinePeriod, ScanlinePhase),
+                DropShadowColor, DropShadowOffset, DropShadowBlur);
         }
 
         #endregion

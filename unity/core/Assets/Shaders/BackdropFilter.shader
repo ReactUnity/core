@@ -15,6 +15,13 @@ Shader "ReactUnity/BackdropFilter"
     _Grain ("Grain", Range(0.0, 1.0)) = 0.0
     _Pixelate ("Pixelate", Range(0.0, 100.0)) = 0.0
     _Sepia ("Sepia", Range(0.0, 1.0)) = 0.0
+    _GrainPhase ("Grain Phase", Float) = 0.0
+    _Posterize ("Posterize Levels", Float) = 0.0
+    _ScanlineIntensity ("Scanline Intensity", Range(0.0, 1.0)) = 0.0
+    _ScanlinePeriod ("Scanline Period (texels)", Float) = 4.0
+    _ScanlinePhase ("Scanline Phase (texels)", Float) = 0.0
+    _Tint ("Tint", Color) = (1,1,1,1)
+    _Aberration ("Chromatic Aberration (texels)", Float) = 0.0
 
 
     [Enum(UnityEngine.Rendering.CompareFunction)] _StencilComp("Stencil Comparison", Float) = 8
@@ -165,6 +172,13 @@ Shader "ReactUnity/BackdropFilter"
         float _Sepia;
         float _Pixelate;
         float _Grain;
+        float _GrainPhase;
+        float _Posterize;
+        float _ScanlineIntensity;
+        float _ScanlinePeriod;
+        float _ScanlinePhase;
+        float4 _Tint;
+        float _Aberration;
 
         float4 _ClipRect;
 
@@ -216,7 +230,17 @@ Shader "ReactUnity/BackdropFilter"
           }
 
           // Grab the texture from behind the current object
-          float3 color = tex2D(BACKDROP_TEX, uvgrab).rgb;
+          float3 color;
+          if (_Aberration != 0)
+          {
+            // One channel from each of three copies, pulled apart along x.
+            float2 off = float2(BACKDROP_TEXELSIZE.x * _Aberration, 0);
+            color = float3(
+              tex2D(BACKDROP_TEX, uvgrab + off).r,
+              tex2D(BACKDROP_TEX, uvgrab).g,
+              tex2D(BACKDROP_TEX, uvgrab - off).b);
+          }
+          else color = tex2D(BACKDROP_TEX, uvgrab).rgb;
 
           // Convert to grayscale if needed
           if (_Grayscale > 0)
@@ -243,9 +267,23 @@ Shader "ReactUnity/BackdropFilter"
           if (_Invert > 0)
             color = lerp(color, 1 - color, _Invert);
 
-          // Apply grain
+          color *= _Tint.rgb;
+
+          // Quantising lands on the final colour, and before the two artifacts below --
+          // posterizing grain would flatten it away.
+          if (_Posterize >= 2)
+            color = floor(saturate(color) * (_Posterize - 1) + 0.5) / (_Posterize - 1);
+
+          // Apply grain. The hash turns any change in phase into an unrelated field, so animating
+          // it resamples the grain rather than sliding it.
           if (_Grain > 0)
-            color += (0.5 - rand(i.uv)) * _Grain;
+            color += (0.5 - rand(i.uv + _GrainPhase)) * _Grain;
+
+          if (_ScanlineIntensity > 0 && _ScanlinePeriod > 0)
+          {
+            float row = i.uvgrab.y / max(BACKDROP_TEXELSIZE.y, 1e-8) + _ScanlinePhase;
+            color *= 1.0 - _ScanlineIntensity * step(0.5, frac(row / _ScanlinePeriod));
+          }
 
           float4 res = float4(color, _Opacity);
 
@@ -381,6 +419,13 @@ Shader "ReactUnity/BackdropFilter"
         float _Sepia;
         float _Pixelate;
         float _Grain;
+        float _GrainPhase;
+        float _Posterize;
+        float _ScanlineIntensity;
+        float _ScanlinePeriod;
+        float _ScanlinePhase;
+        float4 _Tint;
+        float _Aberration;
 
         float4 _ClipRect;
 
@@ -432,7 +477,17 @@ Shader "ReactUnity/BackdropFilter"
           }
 
           // Grab the texture from behind the current object
-          float3 color = tex2D(BACKDROP_TEX, uvgrab).rgb;
+          float3 color;
+          if (_Aberration != 0)
+          {
+            // One channel from each of three copies, pulled apart along x.
+            float2 off = float2(BACKDROP_TEXELSIZE.x * _Aberration, 0);
+            color = float3(
+              tex2D(BACKDROP_TEX, uvgrab + off).r,
+              tex2D(BACKDROP_TEX, uvgrab).g,
+              tex2D(BACKDROP_TEX, uvgrab - off).b);
+          }
+          else color = tex2D(BACKDROP_TEX, uvgrab).rgb;
 
           // Convert to grayscale if needed
           if (_Grayscale > 0)
@@ -459,9 +514,23 @@ Shader "ReactUnity/BackdropFilter"
           if (_Invert > 0)
             color = lerp(color, 1 - color, _Invert);
 
-          // Apply grain
+          color *= _Tint.rgb;
+
+          // Quantising lands on the final colour, and before the two artifacts below --
+          // posterizing grain would flatten it away.
+          if (_Posterize >= 2)
+            color = floor(saturate(color) * (_Posterize - 1) + 0.5) / (_Posterize - 1);
+
+          // Apply grain. The hash turns any change in phase into an unrelated field, so animating
+          // it resamples the grain rather than sliding it.
           if (_Grain > 0)
-            color += (0.5 - rand(i.uv)) * _Grain;
+            color += (0.5 - rand(i.uv + _GrainPhase)) * _Grain;
+
+          if (_ScanlineIntensity > 0 && _ScanlinePeriod > 0)
+          {
+            float row = i.uvgrab.y / max(BACKDROP_TEXELSIZE.y, 1e-8) + _ScanlinePhase;
+            color *= 1.0 - _ScanlineIntensity * step(0.5, frac(row / _ScanlinePeriod));
+          }
 
           float4 res = float4(color, _Opacity);
 

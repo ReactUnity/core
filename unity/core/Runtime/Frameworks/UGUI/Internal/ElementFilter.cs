@@ -31,6 +31,13 @@ namespace ReactUnity.UGUI.Internal
         static readonly int GrainId = Shader.PropertyToID("_Grain");
         static readonly int PixelateId = Shader.PropertyToID("_Pixelate");
         static readonly int SepiaId = Shader.PropertyToID("_Sepia");
+        static readonly int GrainPhaseId = Shader.PropertyToID("_GrainPhase");
+        static readonly int PosterizeId = Shader.PropertyToID("_Posterize");
+        static readonly int ScanlineIntensityId = Shader.PropertyToID("_ScanlineIntensity");
+        static readonly int ScanlinePeriodId = Shader.PropertyToID("_ScanlinePeriod");
+        static readonly int ScanlinePhaseId = Shader.PropertyToID("_ScanlinePhase");
+        static readonly int TintId = Shader.PropertyToID("_Tint");
+        static readonly int AberrationId = Shader.PropertyToID("_Aberration");
         static readonly int ShadowTexId = Shader.PropertyToID("_ShadowTex");
         static readonly int ShadowColorId = Shader.PropertyToID("_ShadowColor");
         static readonly int ShadowOffsetId = Shader.PropertyToID("_ShadowOffset");
@@ -83,6 +90,8 @@ namespace ReactUnity.UGUI.Internal
         private bool dirty = true;
         private bool uniformsDirty = true;
         private Vector4 shadowOffsetUv;
+        private float texelsPerUnitY = 1f;
+        private float uvPerUnitX;
 
         /// <summary>How many offscreen renders this filter has done. For tests.</summary>
         public int RenderCount { get; private set; }
@@ -303,8 +312,13 @@ namespace ReactUnity.UGUI.Internal
         static bool CaptureDiffers(FilterDefinition a, FilterDefinition b)
         {
             return a.Blur != b.Blur || a.DropShadowBlur != b.DropShadowBlur ||
-                   a.DropShadowOffset != b.DropShadowOffset || (a.DropShadowColor.a > 0) != (b.DropShadowColor.a > 0);
+                   a.DropShadowOffset != b.DropShadowOffset || (a.DropShadowColor.a > 0) != (b.DropShadowColor.a > 0) ||
+                   AberrationBleed(a) != AberrationBleed(b);
         }
+
+        /// <summary>The margin an aberration needs, whole pixels -- so animating one through a
+        /// couple of pixels re-captures a couple of times rather than on every frame.</summary>
+        static float AberrationBleed(FilterDefinition d) => Mathf.Ceil(Mathf.Abs(d.ChromaticAberration));
 
         void LateUpdate()
         {
@@ -342,9 +356,13 @@ namespace ReactUnity.UGUI.Internal
             var shadowBleed = hasShadow ? Mathf.Ceil(definition.DropShadowBlur * BleedPerBlurUnit) : 0f;
             var offset = hasShadow ? definition.DropShadowOffset : Vector2.zero;
 
+            // Chromatic aberration reads one offset either side, and needs transparent margin to
+            // read there -- against the sampler's clamp the outer edge would have no fringe at all.
+            var sideBleed = Mathf.Max(blurBleed, AberrationBleed(definition));
+
             // The rect's y grows upwards where the shadow's offset grows down.
-            var mLeft = Mathf.Ceil(Mathf.Max(blurBleed, shadowBleed - offset.x));
-            var mRight = Mathf.Ceil(Mathf.Max(blurBleed, shadowBleed + offset.x));
+            var mLeft = Mathf.Ceil(Mathf.Max(sideBleed, shadowBleed - offset.x));
+            var mRight = Mathf.Ceil(Mathf.Max(sideBleed, shadowBleed + offset.x));
             var mBottom = Mathf.Ceil(Mathf.Max(blurBleed, shadowBleed + offset.y));
             var mTop = Mathf.Ceil(Mathf.Max(blurBleed, shadowBleed - offset.y));
 
@@ -483,6 +501,11 @@ namespace ReactUnity.UGUI.Internal
 
             // The shader subtracts this from its uv, and the rect's y grows the other way.
             shadowOffsetUv = new Vector4(definition.DropShadowOffset.x / width, -definition.DropShadowOffset.y / height, 0, 0);
+
+            // Kept rather than the values themselves, so a scanline period or an aberration that
+            // moves without changing the capture still converts against the frame it is drawn in.
+            texelsPerUnitY = height > 0 ? source.height / height : 1f;
+            uvPerUnitX = width > 0 ? 1f / width : 0f;
         }
 
         /// <summary>Writes the whole filter chain onto one material. Called for the composite's own
@@ -500,6 +523,13 @@ namespace ReactUnity.UGUI.Internal
             m.SetFloat(GrainId, definition.Grain);
             m.SetFloat(PixelateId, definition.Pixelate);
             m.SetFloat(SepiaId, definition.Sepia);
+            m.SetFloat(GrainPhaseId, definition.GrainPhase);
+            m.SetFloat(PosterizeId, definition.Posterize);
+            m.SetFloat(ScanlineIntensityId, definition.ScanlineIntensity);
+            m.SetFloat(ScanlinePeriodId, definition.ScanlinePeriod * texelsPerUnitY);
+            m.SetFloat(ScanlinePhaseId, definition.ScanlinePhase * texelsPerUnitY);
+            m.SetColor(TintId, definition.Tint);
+            m.SetFloat(AberrationId, definition.ChromaticAberration * uvPerUnitX);
 
             if (definition.DropShadowColor.a > 0 && shadow)
             {

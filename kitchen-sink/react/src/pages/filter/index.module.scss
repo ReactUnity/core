@@ -135,6 +135,37 @@
   }
 }
 
+/* A CRT's scanlines do not move; its hum bar drifts. One full period of phase is one roll. */
+.rolling {
+  animation: scanline-roll 2s linear infinite;
+
+  @keyframes scanline-roll {
+    from {
+      filter: scanlines(0.45 4px 0px);
+    }
+
+    to {
+      filter: scanlines(0.45 4px 4px);
+    }
+  }
+}
+
+/* `steps` is the point: the phase feeds a hash, so each step is an unrelated noise field rather
+   than the same one slid across -- which is grain at 12fps instead of at the frame rate. */
+.flickering {
+  animation: grain-flicker 1s steps(12) infinite;
+
+  @keyframes grain-flicker {
+    from {
+      filter: grain(0.5 0);
+    }
+
+    to {
+      filter: grain(0.5 12);
+    }
+  }
+}
+
 /* `rotate` and `scale` are applied to the filtered result rather than captured with it, so a
    rotation does not tilt the pixelate blocks and the blur widens with the element. */
 .transformed {

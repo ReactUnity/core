@@ -21,6 +21,10 @@ const functions = [
   'sepia(0.9)',
   'grain(0.6)',
   'pixelate(7px)',
+  'posterize(3)',
+  'scanlines(0.55 4px)',
+  'tint(rgb(120, 200, 255))',
+  'chromatic-aberration(4px)',
   'drop-shadow(6px 8px 5px rgba(15, 23, 42, 0.6))',
   'grayscale(1) blur(2px) brightness(1.3)',
 ];
@@ -139,7 +143,22 @@ export function FilterPage() {
             <Card className={styles.pulsing} />
             <text className={styles.caption}>animated blur</text>
           </view>
+
+          <view className={'items-center'}>
+            <Card className={styles.rolling} />
+            <text className={styles.caption}>scanlines, phase rolled</text>
+          </view>
+
+          <view className={'items-center'}>
+            <Card className={styles.flickering} />
+            <text className={styles.caption}>grain, phase in steps(12)</text>
+          </view>
         </row>
+
+        <text className={styles.note}>
+          Neither grain nor scanlines takes a time input -- both take a phase, and animating that is what moves them. The timing function
+          picks the rate, so `steps()` gives grain a frame rate instead of resampling it every frame.
+        </text>
       </section>
 
       <section>

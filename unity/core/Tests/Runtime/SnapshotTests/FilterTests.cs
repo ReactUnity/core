@@ -253,6 +253,149 @@ namespace ReactUnity.Tests
             Debug.Log($"[FILTER blur(24px)] {samples}");
         }
 
+        // Declared in the stylesheet: an animation added afterwards does not start.
+        const string AnimatedStyle = BaseStyle + @"
+            @keyframes spin { from { filter: hue-rotate(0deg); } to { filter: hue-rotate(360deg); } }
+            #test { animation: spin 4s linear infinite; }
+        ";
+
+        [UGUITest(Script = BaseScript, Style = AnimatedStyle)]
+        public IEnumerator AnimatingAColourOpDoesNotRerender()
+        {
+            // The context drives its own clock in tests, so frames alone leave the animation at zero.
+            yield return AdvanceTime(0.5f);
+            for (int i = 0; i < 3; i++) yield return null;
+            Assert.NotNull(View.ElementFilter, "sanity: the animation should have brought a filter into being");
+
+            var before = View.ElementFilter.RenderCount;
+            for (int i = 0; i < 4; i++) { yield return AdvanceTime(0.1f); yield return null; }
+
+            Debug.Log($"[FILTER animated] {before} -> {View.ElementFilter.RenderCount} over 10 frames");
+            Assert.AreEqual(before, View.ElementFilter.RenderCount, "an animated colour op must not re-capture every frame");
+        }
+
+        // A white subject, so a channel that a shifted tap loses is visible as its complement --
+        // on red, pulling blue off a pixel that has none changes nothing.
+        const string WhiteStyle = @"
+            #test { background-color: white; width: 200px; height: 200px; }
+        ";
+
+        // Mid-grey, so noise shows in both directions instead of clipping at each end.
+        const string GreyStyle = @"
+            #test { background-color: rgb(128, 128, 128); width: 200px; height: 200px; }
+        ";
+
+        [UGUITest(Script = BaseScript, Style = BaseStyle)]
+        public IEnumerator TintMultipliesTheResult()
+        {
+            View.Style["filter"] = "tint(rgb(0, 255, 255))";
+            for (int i = 0; i < 3; i++) yield return null;
+
+            var c = SampleCentre();
+            Debug.Log($"[FILTER tint] {Describe(c)}");
+            Assert.Less(c.r, 0.1f, "a tint with no red must take the red out");
+        }
+
+        [UGUITest(Script = BaseScript, Style = BaseStyle)]
+        public IEnumerator PosterizeRoundsToWholeLevels()
+        {
+            // Two levels are black and white, so 0.4 falls to one and 0.6 rises to the other --
+            // which pins the level maths rather than just showing that something was quantised.
+            View.Style["filter"] = "brightness(0.4) posterize(2)";
+            for (int i = 0; i < 3; i++) yield return null;
+            var low = SampleCentre();
+
+            View.Style["filter"] = "brightness(0.6) posterize(2)";
+            for (int i = 0; i < 3; i++) yield return null;
+            var high = SampleCentre();
+
+            Debug.Log($"[FILTER posterize(2)] 0.4 -> {Describe(low)}  0.6 -> {Describe(high)}");
+            Assert.Less(low.r, 0.2f, "below the midpoint should land on the lower level");
+            Assert.Greater(high.r, 0.8f, "above it should land on the upper level");
+        }
+
+        static List<float> RedDown(int x, int fromTop, int rows)
+        {
+            var samples = new List<float>();
+            for (int i = 0; i < rows; i++) samples.Add(SampleAt(x, fromTop + i).r);
+            return samples;
+        }
+
+        [UGUITest(Script = BaseScript, Style = BaseStyle)]
+        public IEnumerator ScanlinesDarkenAlternatingRows()
+        {
+            View.Style["filter"] = "scanlines(1 4px)";
+            for (int i = 0; i < 3; i++) yield return null;
+
+            var rows = RedDown(100, 90, 12);
+            Debug.Log($"[FILTER scanlines] {string.Join(", ", rows.ConvertAll(r => r.ToString("F2")))}");
+            Assert.Less(Mathf.Min(rows.ToArray()), 0.2f, "a full-intensity scanline should black its rows out");
+            Assert.Greater(Mathf.Max(rows.ToArray()), 0.8f, "and leave the rows between it alone");
+        }
+
+        [UGUITest(Script = BaseScript, Style = BaseStyle)]
+        public IEnumerator ScanlinePhaseRollsThemWithoutRecapturing()
+        {
+            View.Style["filter"] = "scanlines(1 4px 0px)";
+            for (int i = 0; i < 4; i++) yield return null;
+            var before = RedDown(100, 90, 8);
+            var renders = View.ElementFilter.RenderCount;
+
+            // Half a period, so every row swaps -- and the phase is only a uniform, which is what
+            // makes rolling them affordable to animate.
+            View.Style["filter"] = "scanlines(1 4px 2px)";
+            for (int i = 0; i < 3; i++) yield return null;
+            var after = RedDown(100, 90, 8);
+
+            Debug.Log($"[FILTER scanline phase] {string.Join(",", before.ConvertAll(r => r > 0.5f ? "1" : "0"))}" +
+                $" -> {string.Join(",", after.ConvertAll(r => r > 0.5f ? "1" : "0"))}");
+
+            var moved = 0;
+            for (int i = 0; i < before.Count; i++) if ((before[i] > 0.5f) != (after[i] > 0.5f)) moved++;
+            Assert.Greater(moved, before.Count / 2, "half a period out of phase should swap the rows over");
+            Assert.AreEqual(renders, View.ElementFilter.RenderCount, "a phase change must not re-capture the subtree");
+        }
+
+        [UGUITest(Script = BaseScript, Style = GreyStyle)]
+        public IEnumerator GrainPhaseResamplesWithoutRecapturing()
+        {
+            View.Style["filter"] = "grain(1 0)";
+            for (int i = 0; i < 4; i++) yield return null;
+            var before = RedDown(100, 90, 8);
+            var renders = View.ElementFilter.RenderCount;
+
+            // The noise is a hash of the coordinate, so any shift of it is a new field rather than
+            // the same one moved -- which is what lets a keyframe animation flicker it.
+            View.Style["filter"] = "grain(1 1)";
+            for (int i = 0; i < 3; i++) yield return null;
+            var after = RedDown(100, 90, 8);
+
+            var changed = 0;
+            for (int i = 0; i < before.Count; i++) if (Mathf.Abs(before[i] - after[i]) > 0.05f) changed++;
+            Debug.Log($"[FILTER grain phase] changed {changed}/{before.Count} renders {renders} -> {View.ElementFilter.RenderCount}");
+            Assert.Greater(changed, before.Count / 2, "a new phase should give a new noise field");
+            Assert.AreEqual(renders, View.ElementFilter.RenderCount, "a phase change must not re-capture the subtree");
+        }
+
+        [UGUITest(Script = BaseScript, Style = WhiteStyle)]
+        public IEnumerator ChromaticAberrationFringesTheEdges()
+        {
+            View.Style["filter"] = "chromatic-aberration(8px)";
+            for (int i = 0; i < 4; i++) yield return null;
+
+            // Red is read from 8px to the right and blue from 8px to the left, so near the left
+            // edge the blue tap has fallen off the element and near the right edge the red one has.
+            var left = SampleAt(4, 100);
+            var right = SampleAt(196, 100);
+            var centre = SampleCentre();
+
+            Debug.Log($"[FILTER aberration] left {Describe(left)} centre {Describe(centre)} right {Describe(right)}");
+            Assert.Less(left.b, left.r - 0.3f, "the left edge should lose blue");
+            Assert.Less(right.r, right.b - 0.3f, "the right edge should lose red");
+            Assert.Greater(centre.r, 0.8f, "and the middle, where every tap lands on the element, should be untouched");
+            Assert.Greater(centre.b, 0.8f);
+        }
+
         const string ButtonScript = @"
             function App() {
                 return <view id='test'>

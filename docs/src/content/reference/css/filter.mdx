@@ -93,8 +93,12 @@ The button inside the card is filtered along with the rest of it and still takes
 | `opacity(<n>)`        | `0`–`1`              | Applies to the element as a group, unlike the `opacity` property |
 | `saturate(<n>)`       | `0`–`2`, `1` is none |                                                                |
 | `sepia(<n>)`          | `0`–`1`              |                                                                |
-| `grain(<n>)`          | `0`–`1`              | Not a web function. Adds noise                                 |
+| `grain(<n> [phase])`  | `0`–`1`              | Not a web function. Adds noise. See [phase](#phase)             |
 | `pixelate(<length>)`  | `0` and up           | Not a web function. Quantises to blocks of this size            |
+| `posterize(<n>)`      | `2` and up, `0` is none | Not a web function. Rounds each channel to `n` evenly spaced levels |
+| `scanlines(<n> [period] [phase])` | `0`–`1`  | Not a web function. Darkens every other band of rows. See [phase](#phase) |
+| `tint(<color>)`       | white is none        | Not a web function. Multiplies the result by a colour           |
+| `chromatic-aberration(<length>)` | `0` and up | Not a web function. Pulls red and blue apart along x           |
 
 Functions combine in one declaration, and are applied in the order listed above rather than the order they are written:
 
@@ -116,6 +120,29 @@ The colour ops are applied to the element only, so the shadow keeps the colour y
 
 Unlike `box-shadow` this takes no spread and no `inset`. Both parse -- the same parser reads them -- and both are ignored.
 
+`tint()` multiplies, so it can only darken -- pair it with `brightness()` to go the other way. `grayscale(1) tint(...)` recolours an element wholesale, which is the usual way to grey out a disabled panel or flash one on damage:
+
+```css
+.damaged {
+  filter: brightness(1.4) tint(#f66);
+}
+```
+
+### Animating grain and scanlines {/*phase*/}
+
+Neither takes a time input. Both take a trailing phase instead, and a `@keyframes` animation on it is what makes them move -- which keeps a static filter free and puts the per-frame cost only where you asked for it.
+
+```css
+@keyframes roll {
+  from { filter: scanlines(0.3 4px 0px); }
+  to   { filter: scanlines(0.3 4px 4px); }
+}
+```
+
+For `scanlines` the phase is a length, and one full period of it rolls the bands once -- the drift a CRT's hum bar has. For `grain` it is a plain number fed to the noise hash, so any change gives an unrelated field rather than the same one slid across: that is what makes it flicker rather than crawl.
+
+The timing function decides the rate. `linear` resamples every frame; `steps(12)` gives you grain at twelve frames a second, which is closer to how film grain actually reads.
+
 `filter` is animatable, so it works in `transition` and `@keyframes`.
 
 ### What to know {/*what-to-know*/}
@@ -129,3 +156,7 @@ An ancestor's `overflow: hidden` clips the filtered result, as it does on the we
 `rotate` and `scale` apply to the filtered result, so a rotated card's blur is rotated with it and a scaled one's blur grows with it, as on the web.
 
 Very large blur radii cost more than small ones: the radius decides how many blur passes run, up to four.
+
+Most functions are a value the composited image is drawn with, so changing one only redraws that image. `blur()`, `drop-shadow()` and `chromatic-aberration()` are the exceptions -- each widens the area that has to be captured, so changing one re-renders the element's subtree. Aberration only re-renders when its *whole-pixel* margin changes, so moving one through a few pixels re-renders a few times rather than on every frame.
+
+That is the filter's own accounting, and it is not the whole cost of an animation today: re-applying a style each frame can mark the element's background dirty, which the filter watches, and that re-captures the subtree whatever the animated value was. Measured on a page of animated cards, three of them re-rendered every frame for that reason rather than because of the filter.

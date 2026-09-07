@@ -17,6 +17,13 @@ Shader "ReactUnity/Filter"
     _Grain ("Grain", Range(0.0, 1.0)) = 0.0
     _Pixelate ("Pixelate", Range(0.0, 100.0)) = 0.0
     _Sepia ("Sepia", Range(0.0, 1.0)) = 0.0
+    _GrainPhase ("Grain Phase", Float) = 0.0
+    _Posterize ("Posterize Levels", Float) = 0.0
+    _ScanlineIntensity ("Scanline Intensity", Range(0.0, 1.0)) = 0.0
+    _ScanlinePeriod ("Scanline Period (texels)", Float) = 4.0
+    _ScanlinePhase ("Scanline Phase (texels)", Float) = 0.0
+    _Tint ("Tint", Color) = (1,1,1,1)
+    _Aberration ("Chromatic Aberration (UV)", Float) = 0.0
     _ShadowTex ("Drop Shadow Silhouette", 2D) = "black" {}
     _ShadowColor ("Drop Shadow Color", Color) = (0,0,0,0)
     _ShadowOffset ("Drop Shadow Offset (UV)", Vector) = (0,0,0,0)
@@ -106,6 +113,13 @@ Shader "ReactUnity/Filter"
       float _Grain;
       float _Pixelate;
       float _Sepia;
+      float _GrainPhase;
+      float _Posterize;
+      float _ScanlineIntensity;
+      float _ScanlinePeriod;
+      float _ScanlinePhase;
+      float4 _Tint;
+      float _Aberration;
       sampler2D _ShadowTex;
       float4 _ShadowColor;
       float4 _ShadowOffset;
@@ -145,6 +159,12 @@ Shader "ReactUnity/Filter"
         return frac(sin(dot(co.xy, float2(12.9898, 78.233))) * 43758.5453);
       }
 
+      // Straight alpha. Every colour op below is defined on it, and the capture is premultiplied.
+      float3 unpremultiply(float4 c)
+      {
+        return c.a > 0.0001 ? c.rgb / c.a : c.rgb;
+      }
+
       float4 frag(v2f i) : SV_Target
       {
         float2 uv = i.uv;
@@ -155,11 +175,28 @@ Shader "ReactUnity/Filter"
           uv = (floor(uv / ts) + 0.5) * ts;
         }
 
-        float4 src = tex2D(_MainTex, uv);
+        float3 color;
+        float a;
 
-        // Every op below is defined on straight alpha, so undo the premultiply first.
-        float a = src.a;
-        float3 color = a > 0.0001 ? src.rgb / a : src.rgb;
+        if (_Aberration != 0)
+        {
+          // Three copies of the image, one channel taken from each. A tap that lands on the
+          // transparent margin contributes nothing to its channel, which is what leaves the
+          // complementary fringes -- cyan on the edge red was pulled off, yellow on the other.
+          float2 off = float2(_Aberration, 0);
+          float4 tr = tex2D(_MainTex, uv + off);
+          float4 tg = tex2D(_MainTex, uv);
+          float4 tb = tex2D(_MainTex, uv - off);
+          color = float3(unpremultiply(tr).r, unpremultiply(tg).g, unpremultiply(tb).b);
+          // The fringes only show if coverage reaches them, so the widest tap decides it.
+          a = max(tr.a, max(tg.a, tb.a));
+        }
+        else
+        {
+          float4 src = tex2D(_MainTex, uv);
+          a = src.a;
+          color = unpremultiply(src);
+        }
 
         if (_Grayscale > 0)
         {
@@ -184,8 +221,27 @@ Shader "ReactUnity/Filter"
         if (_Invert > 0)
           color = lerp(color, 1 - color, _Invert);
 
+        color *= _Tint.rgb;
+
+        // Quantising comes after the colour ops so it lands on the final value, and before the
+        // two display artifacts below -- posterizing grain would flatten it away.
+        // n evenly spaced levels including both ends, so posterize(2) is black and white rather
+        // than black and mid-grey.
+        if (_Posterize >= 2)
+          color = floor(saturate(color) * (_Posterize - 1) + 0.5) / (_Posterize - 1);
+
+        // The hash turns any change in phase into an unrelated field, so animating it resamples
+        // the grain rather than sliding it.
         if (_Grain > 0)
-          color += (0.5 - rand(i.uv)) * _Grain;
+          color += (0.5 - rand(i.uv + _GrainPhase)) * _Grain;
+
+        // Measured in texels down the capture, so the lines stay put as the element moves and a
+        // phase animation rolls them the way a CRT's hum bar drifts.
+        if (_ScanlineIntensity > 0 && _ScanlinePeriod > 0)
+        {
+          float row = i.uv.y * _MainTex_TexelSize.w + _ScanlinePhase;
+          color *= 1.0 - _ScanlineIntensity * step(0.5, frac(row / _ScanlinePeriod));
+        }
 
         color = saturate(color) * i.color.rgb;
 

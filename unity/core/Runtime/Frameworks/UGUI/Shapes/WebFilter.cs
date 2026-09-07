@@ -62,6 +62,13 @@ namespace ReactUnity.UGUI.Shapes
                     mat.SetFloat("_Grain", Definition.Grain);
                     mat.SetFloat("_Pixelate", Definition.Pixelate);
                     mat.SetFloat("_Sepia", Definition.Sepia);
+                    mat.SetFloat("_GrainPhase", Definition.GrainPhase);
+                    mat.SetFloat("_Posterize", Definition.Posterize);
+                    mat.SetFloat("_ScanlineIntensity", Definition.ScanlineIntensity);
+                    mat.SetFloat("_ScanlinePeriod", Definition.ScanlinePeriod);
+                    mat.SetFloat("_ScanlinePhase", Definition.ScanlinePhase);
+                    mat.SetColor("_Tint", Definition.Tint);
+                    mat.SetFloat("_Aberration", Definition.ChromaticAberration);
                 }
             }
         }
