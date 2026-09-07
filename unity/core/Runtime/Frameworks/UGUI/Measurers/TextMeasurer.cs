@@ -10,7 +10,12 @@ namespace ReactUnity.UGUI.Measurers
     public class TextMeasurer : MonoBehaviour
     {
         private TextMeshProUGUI tmpro;
-        private TextMeshProUGUI Text => tmpro = tmpro ?? GetComponent<TextMeshProUGUI>();
+        // The glyphs live on a child of the element, not on the object this measurer is on.
+        public TextMeshProUGUI Text
+        {
+            get => tmpro ? tmpro : (tmpro = GetComponentInChildren<TextMeshProUGUI>());
+            set => tmpro = value;
+        }
 
         public YogaNode Layout;
         public UGUIContext Context;

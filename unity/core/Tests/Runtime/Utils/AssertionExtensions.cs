@@ -135,7 +135,7 @@ namespace ReactUnity.Tests
             }
         }
 
-        private static Texture2D CaptureScreenshot()
+        public static Texture2D CaptureScreenshot()
         {
             var cam = Camera.main;
             var render = new RenderTexture(Screen.width, Screen.height, 24);

@@ -572,6 +572,24 @@ namespace ReactUnity.UGUI
 
         #endregion
 
+        /// <summary>
+        /// Hosts a graphic on a full-stretch child of the element instead of on its own object. UGUI paints
+        /// an object before its children, so a graphic on the element itself would sit under the background
+        /// and border objects; a child added first stays last, since those are inserted at the front.
+        /// </summary>
+        protected T CreateGraphicChild<T>(string name) where T : Component
+        {
+            var go = Context.CreateNativeObject(name, typeof(RectTransform), typeof(T));
+            var rt = go.transform as RectTransform;
+            rt.SetParent(RectTransform, false);
+            rt.anchorMin = Vector2.zero;
+            rt.anchorMax = Vector2.one;
+            rt.pivot = new Vector2(0.5f, 0.5f);
+            rt.offsetMin = Vector2.zero;
+            rt.offsetMax = Vector2.zero;
+            return go.GetComponent<T>();
+        }
+
         #region Container Functions
 
         protected override bool InsertChild(IReactComponent child, int index)
