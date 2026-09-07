@@ -20,13 +20,12 @@ An element becomes a query container with `container-type`, and can be given a n
 
 ### Container types {/*container-types*/}
 
-| Value         | Description                                                        |
-| ------------- | ------------------------------------------------------------------ |
-| `normal`      | The default. The element is not a size container, but can still answer style queries. |
-| `inline-size` | Queries on the width can read this element.                        |
-| `size`        | Queries on the width, the height, the aspect ratio and the orientation can read this element. |
-
-`scroll-state` is accepted alongside any of these, as in `container-type: inline-size scroll-state`, so a stylesheet written for the web still parses; there are no scroll-state queries, so it decides nothing.
+| Value          | Description                                                        |
+| -------------- | ------------------------------------------------------------------ |
+| `normal`       | The default. The element is not a size container, but can still answer style queries. |
+| `inline-size`  | Queries on the width can read this element.                        |
+| `size`         | Queries on the width, the height, the aspect ratio and the orientation can read this element. |
+| `scroll-state` | `scroll-state()` queries can read this element. Combines with any of the above, as in `container-type: inline-size scroll-state`. |
 
 The size read is the content box, without padding and border. Unlike a browser, ReactUnity does not apply size containment: a container's own size may still depend on its contents. That is what lets `container-type: size` be applied freely, and it also means a layout in which a container's size depends on what its query changes may not settle; such a layout is left where the second pass lands.
 
@@ -66,6 +65,31 @@ A length in a condition is resolved against the container, so `20em` is twenty t
 ```
 
 Every element can answer a style query, whatever its `container-type`, so an unnamed style query reads the parent. Shorthand properties such as `border` cannot be queried; query one of the properties they set instead.
+
+### Scroll-state queries {/*scroll-state-queries*/}
+
+`scroll-state()` reads a `container-type: scroll-state` ancestor, a `<scroll>` as a rule, and
+`scrollable` asks which edges it can still scroll towards. A value names an edge (`top`, `right`,
+`bottom`, `left`, or the logical `block-start`, `block-end`, `inline-start`, `inline-end`), an
+axis (`x`, `y`, `inline`, `block`), or `none` for a container with nothing left to scroll; with no
+value at all it holds for any edge. Features combine with `and`, `or` and `not` inside the
+parentheses, and the rule is evaluated again as the container scrolls or its content resizes.
+
+```css
+scroll {
+  container-type: scroll-state;
+}
+
+@container scroll-state(scrollable: bottom) {
+  scroll .more-below { opacity: 1; }
+}
+
+@container scroll-state(not (scrollable: top)) {
+  scroll .header { box-shadow: none; }
+}
+```
+
+`stuck` and `snapped` parse and never hold: nothing here is `position: sticky` and nothing snaps.
 
 ### Container units {/*container-units*/}
 

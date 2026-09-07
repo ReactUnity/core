@@ -89,14 +89,16 @@ nested selector is built from, so it works wherever a selector does.
 }
 ```
 
-It is rewritten to one plain selector per argument, which is why the specificity is that of the
-argument that matched rather than `:is()`'s own rule of taking its most specific argument. That
-only differs when the arguments differ in specificity, as in `:is(.a, #b)`.
+Where it can be, it is rewritten to one plain selector per argument, which is why the specificity
+is then that of the argument that matched rather than `:is()`'s own rule of taking its most specific
+argument. That only differs when the arguments differ in specificity, as in `:is(.a, #b)`.
 
-Two forms are not rewritten, and match nothing: an `:is()` that is not at the start of its compound
-selector and whose argument spans a combinator, such as `.x:is(.a .b)`; and an `:is()` inside
-another functional selector, such as `:not(:is(.a, .b))`, where a list means *all of* rather than
-*any of*.
+Two forms cannot be rewritten and are matched as they stand: an `:is()` that is not at the start of
+its compound selector and whose argument spans a combinator, such as `.x:is(.a .b)` or the
+`.dark\:x:where(.dark, .dark *)` a Tailwind dark variant produces; and an `:is()` inside another
+functional selector, such as `:not(:is(.a, .b))`. Those take the specificity of their most specific
+argument, as the specification says. `:not()` takes a complex selector the same way, so
+`:not(.a .b)` is everything that is not a `.b` under an `.a`.
 
 ### `:where()` {/*where*/}
 
@@ -111,8 +113,8 @@ rule written with it easy to override.
 
 One class outranks that rule, where an `:is()` in its place would have made it an id selector.
 Everything in the parentheses is discounted, however many compounds it spans and whatever it holds
--- an `:is()` in there counts for nothing either. The two forms `:is()` is not rewritten in are not
-rewritten here either, and match nothing.
+-- an `:is()` in there counts for nothing either. The two forms `:is()` is not rewritten in are
+matched as they stand here too, still at no specificity.
 
 ### Escaped class names {/*escaped-class-names*/}
 

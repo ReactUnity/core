@@ -5,17 +5,19 @@ using ReactUnity.Styling.Converters;
 
 namespace ReactUnity.Types
 {
+    [Flags]
     public enum ContainerType
     {
         Normal = 0,
         Size = 1,
         InlineSize = 2,
+        /// <summary>Answers <c>scroll-state()</c> queries. Combines with a size type, as in <c>inline-size scroll-state</c>.</summary>
+        ScrollState = 4,
     }
 
     /// <summary>
     /// <c>container-type</c>: <c>normal</c>, <c>size</c> or <c>inline-size</c>, optionally alongside
-    /// <c>scroll-state</c>. That keyword is accepted so a stylesheet written for the web still parses;
-    /// there is no scroll-state query to answer, so it decides nothing.
+    /// <c>scroll-state</c>, which lets <c>@container scroll-state(...)</c> read the element.
     /// </summary>
     public class ContainerTypeConverter : TypedStyleConverterBase<ContainerType>
     {
@@ -43,16 +45,19 @@ namespace ReactUnity.Types
             }
 
             if (!sized && !scrollState) return Fail(out result);
+            if (scrollState) type |= ContainerType.ScrollState;
             return Constant(type, out result);
         }
 
         public override string StringifyTyped(ContainerType value)
         {
-            switch (value)
+            var scrollState = (value & ContainerType.ScrollState) != 0;
+
+            switch (value & ~ContainerType.ScrollState)
             {
-                case ContainerType.Size: return "size";
-                case ContainerType.InlineSize: return "inline-size";
-                default: return "normal";
+                case ContainerType.Size: return scrollState ? "size scroll-state" : "size";
+                case ContainerType.InlineSize: return scrollState ? "inline-size scroll-state" : "inline-size";
+                default: return scrollState ? "scroll-state" : "normal";
             }
         }
     }

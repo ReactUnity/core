@@ -40,10 +40,23 @@ namespace ReactUnity.Tests.Editor
         [TestCase("((color: red) and (float: left)) or (display: flex)", true)]
         [TestCase("(not (float: left)) and (color: red)", true)]
         [TestCase("(color: red) and (display: flex) and (opacity: 0.5)", true)]
-        // Feature queries other than declarations are not supported, so they are false.
-        [TestCase("selector(:hover)", false)]
+        // selector() answers for the selectors this engine matches. Without a context every
+        // pseudo-class is a state; which ones a framework handles is checked in PlayMode.
+        [TestCase("selector(:hover)", true)]
+        [TestCase("selector(#root:has(> .a ~ .b))", true)]
+        [TestCase("selector(.a:is(.b .c, #d))", true)]
+        [TestCase("selector(view::before:nth-child(2n of .a))", true)]
+        [TestCase("selector(::-webkit-scrollbar)", true)]
+        [TestCase("selector(:state(busy))", true)]
+        [TestCase("selector(::marker)", false)]
+        [TestCase("selector(.a, .b)", false)]
+        [TestCase("selector(> .a)", false)]
+        [TestCase("selector(.a >)", false)]
+        [TestCase("selector()", false)]
+        [TestCase("not selector(::marker)", true)]
+        [TestCase("selector(::marker) or (color: red)", true)]
+        // font-tech() and font-format() are not answered, so they are false.
         [TestCase("font-tech(color-COLRv1)", false)]
-        [TestCase("selector(:hover) or (color: red)", true)]
         // Malformed input must not be treated as supported.
         [TestCase("", false)]
         [TestCase(null, false)]

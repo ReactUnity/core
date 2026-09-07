@@ -22,6 +22,9 @@ namespace ReactUnity.Styling
         public readonly Dictionary<string, KeyframeList> Keyframes = new Dictionary<string, KeyframeList>();
         public readonly Dictionary<string, RegisteredProperty> RegisteredProperties = new Dictionary<string, RegisteredProperty>();
         public readonly List<MediaQueryList> MediaQueries = new List<MediaQueryList>();
+
+        /// <summary>The <c>@custom-media</c> definitions of this sheet, by name. The context resolves a name over every attached sheet.</summary>
+        internal readonly Dictionary<string, MediaNode> CustomMedia = new Dictionary<string, MediaNode>();
         public readonly List<Tuple<RuleTreeNode<StyleData>, Dictionary<IStyleProperty, object>>> Declarations = new List<Tuple<RuleTreeNode<StyleData>, Dictionary<IStyleProperty, object>>>();
 
         internal Stylesheet parsed;
@@ -137,8 +140,14 @@ namespace ReactUnity.Styling
                 RegisteredProperties.Clear();
                 Declarations.Clear();
                 LayerNames.Clear();
+                var hadCustomMedia = CustomMedia.Count > 0;
+                CustomMedia.Clear();
 
-                if (stylesheet == null) return;
+                if (stylesheet == null)
+                {
+                    if (hadCustomMedia) Context.RefreshCustomMedia();
+                    return;
+                }
 
                 // The names are collected in their own pass, because a rule can be in a layer whose
                 // place is only settled by a name further down the sheet -- or in another sheet.
@@ -148,7 +157,26 @@ namespace ReactUnity.Styling
                 // The names this sheet contributes have changed, so the order they take part in is
                 // worked out again.
                 Context.RebuildLayers();
+                if (hadCustomMedia || CustomMedia.Count > 0) Context.RefreshCustomMedia();
             }
+        }
+
+        private static readonly Regex CustomMediaRegex = new Regex(@"^@custom-media\s+(--[^\s;]+)\s*([^;]*?)\s*;?\s*$", RegexOptions.IgnoreCase | RegexOptions.Singleline);
+
+        /// <summary>
+        /// A <c>@custom-media --name query;</c> statement. The parser knows no such rule and keeps it
+        /// as an unknown one with its text, which is all that is needed to read it.
+        /// </summary>
+        private void AddCustomMedia(IRule rule)
+        {
+            var match = CustomMediaRegex.Match(rule.StylesheetText?.Text?.Trim() ?? "");
+            if (!match.Success) return;
+
+            // The name is case-sensitive, as every dashed ident is. Without a query it is an invalid rule, and is dropped.
+            var query = match.Groups[2].Value;
+            if (query.Length == 0) return;
+
+            CustomMedia[match.Groups[1].Value] = MediaQueryList.ParseNode(query, Context.Context);
         }
 
         /// <summary>
@@ -219,8 +247,12 @@ namespace ReactUnity.Styling
                 {
                     // The condition is evaluated here rather than through ExCSS, which only knows
                     // which properties and values the web supports.
-                    if (SupportsCondition.Evaluate(supportsRule.ConditionText))
+                    if (SupportsCondition.Evaluate(supportsRule.ConditionText, Context.Context))
                         ProcessRules(((IGroupingRule) supportsRule).Rules, media, mediaCondition, layerPath, container, startingStyle, scope);
+                }
+                else if (child is IRule unknown && unknown.Type == RuleType.Unknown)
+                {
+                    AddCustomMedia(unknown);
                 }
                 else if (child is ILayerRule layerRule)
                 {

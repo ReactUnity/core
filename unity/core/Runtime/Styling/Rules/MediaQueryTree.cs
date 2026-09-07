@@ -183,6 +183,36 @@ namespace ReactUnity.Styling.Rules
         }
     }
 
+    /// <summary>
+    /// A <c>--name</c> from a <c>@custom-media</c> rule. The definition is read from the context's
+    /// stylesheets each time, so a sheet declaring it can come and go after the query was parsed.
+    /// </summary>
+    internal class CustomMediaNode : MediaNode
+    {
+        public string Name { get; }
+        private readonly ReactContext Context;
+
+        // Definitions may name each other; a cycle is invalid CSS and matches nothing rather than recursing forever.
+        [ThreadStatic] private static int Depth;
+        private const int MaxDepth = 32;
+
+        public CustomMediaNode(string name, ReactContext context)
+        {
+            Name = name;
+            Context = context;
+        }
+
+        public override bool Matches(IMediaProvider provider)
+        {
+            var definition = Context?.Style?.GetCustomMedia(Name);
+            if (definition == null || Depth >= MaxDepth) return false;
+
+            Depth++;
+            try { return definition.Matches(provider); }
+            finally { Depth--; }
+        }
+    }
+
     internal class ConstantMediaNode : MediaNode
     {
         private bool Value;

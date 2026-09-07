@@ -23,7 +23,7 @@ export default function App() {
 
 ## Scrollbars {/*scrollbars*/}
 
-The scrollbars are the `::scrollbar` and `::scrollbar-thumb` pseudo elements, and `[horizontal]` or `[vertical]` picks one of them. They can be styled like any element: `width`, `height`, `background-color`, `border-radius`, and `left` or `top` to move a bar to the opposite edge.
+The scrollbars are the `::scrollbar` and `::scrollbar-thumb` pseudo elements, and `[horizontal]` or `[vertical]` picks one of them. They can be styled like any element: `width`, `height`, `background-color`, `border-radius`, and `left` or `top` to move a bar to the opposite edge. The web's `::-webkit-scrollbar`, `::-webkit-scrollbar-track` and `::-webkit-scrollbar-thumb` name the same two elements, so a stylesheet written for a browser applies as it is.
 
 The web properties are shortcuts for the common cases. `scrollbar-color: <thumb> <track>` colors both parts, and `scrollbar-width: auto | thin | none | <length>` sets the thickness (`thin` is 6px, `none` hides the bars). A `::scrollbar` rule of your own still wins over them.
 

@@ -24,7 +24,7 @@ namespace ReactUnity.Styling
         public readonly List<Dictionary<string, RegisteredProperty>> RegisteredProperties = new List<Dictionary<string, RegisteredProperty>>();
         public readonly List<StyleSheet> StyleSheets = new List<StyleSheet>();
 
-        /// <summary>Every element a size query or a container unit has measured, checked after each layout.</summary>
+        /// <summary>Every element a size query, a container unit or a scroll-state query has read, checked after each layout.</summary>
         internal readonly List<IReactComponent> SizeContainers = new List<IReactComponent>();
 
         public StyleContext(ReactContext context)
@@ -72,9 +72,9 @@ namespace ReactUnity.Styling
         }
 
         /// <summary>
-        /// Restyles the subtree of every tracked container whose content box changed since it was
-        /// last read, and applies the result at once so that the layout can be run again on it.
-        /// Returns whether any did.
+        /// Restyles the subtree of every tracked container whose content box, or whose scrollable
+        /// edges, changed since they were last read, and applies the result at once so that the
+        /// layout can be run again on it. Returns whether any did.
         /// </summary>
         internal bool RestyleResizedContainers()
         {
@@ -86,19 +86,37 @@ namespace ReactUnity.Styling
                 var state = container.StateStyles?.QueryContainer;
 
                 // Nothing read it since its subtree was last restyled, so it is no longer a container anyone measures.
-                if (container.Destroyed || state == null || !state.TracksSize)
+                if (container.Destroyed || state == null || (!state.TracksSize && !state.TracksScroll))
                 {
                     if (state != null) state.Listed = false;
                     SizeContainers.RemoveAt(i);
                     continue;
                 }
 
-                ContainerQuery.GetContentSize(container, out var width, out var height);
-                if (width == state.Width && height == state.Height) continue;
+                var moved = false;
 
-                state.Width = width;
-                state.Height = height;
-                (changed ?? (changed = new List<IReactComponent>())).Add(container);
+                if (state.TracksSize)
+                {
+                    ContainerQuery.GetContentSize(container, out var width, out var height);
+                    if (width != state.Width || height != state.Height)
+                    {
+                        state.Width = width;
+                        state.Height = height;
+                        moved = true;
+                    }
+                }
+
+                if (state.TracksScroll)
+                {
+                    var scrollable = ContainerQuery.GetScrollable(container);
+                    if (scrollable != state.Scrollable)
+                    {
+                        state.Scrollable = scrollable;
+                        moved = true;
+                    }
+                }
+
+                if (moved) (changed ?? (changed = new List<IReactComponent>())).Add(container);
             }
 
             if (changed == null) return false;
@@ -133,6 +151,7 @@ namespace ReactUnity.Styling
             RebuildLayers();
             sheet.Attached = true;
             sheet.ResolveEnabled();
+            if (sheet.CustomMedia.Count > 0) RefreshCustomMedia();
         }
 
         public virtual void Remove(StyleSheet sheet)
@@ -141,6 +160,33 @@ namespace ReactUnity.Styling
             RebuildLayers();
             sheet.Attached = false;
             sheet.ResolveEnabled();
+            if (sheet.CustomMedia.Count > 0) RefreshCustomMedia();
+        }
+
+        /// <summary>
+        /// The definition of a <c>@custom-media</c> name over the attached sheets, or null when
+        /// none declares it. The last sheet to declare a name is the one that counts, as in CSS.
+        /// </summary>
+        internal MediaNode GetCustomMedia(string name)
+        {
+            for (int i = StyleSheets.Count - 1; i >= 0; i--)
+            {
+                if (StyleSheets[i].CustomMedia.TryGetValue(name, out var found)) return found;
+            }
+            return null;
+        }
+
+        /// <summary>
+        /// A media query caches its match while it is listened to and only revisits it when the
+        /// provider changes, so a definition coming or going has to ask every query to look again.
+        /// </summary>
+        internal void RefreshCustomMedia()
+        {
+            foreach (var sheet in StyleSheets)
+            {
+                sheet.Media?.Refresh();
+                foreach (var query in sheet.MediaQueries) query.Refresh();
+            }
         }
 
         /// <summary>

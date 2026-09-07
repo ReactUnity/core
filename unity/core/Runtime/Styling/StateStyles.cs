@@ -26,7 +26,7 @@ namespace ReactUnity.Styling
             Component = cmp;
         }
 
-        public IStateHandler SubscribeToState(string state)
+        public IStateHandler SubscribeToState(string state, bool declared = false)
         {
             if (Component.Context.StateHandlers.TryGetValue(state, out var handlerClass))
             {
@@ -43,7 +43,7 @@ namespace ReactUnity.Styling
                 return handler;
             }
 
-            WarnUnknownState(state);
+            if (!declared) WarnUnknownState(state);
             return null;
         }
 
@@ -81,9 +81,13 @@ namespace ReactUnity.Styling
 
         public bool GetState(string state) => States.Contains(state);
 
-        public bool GetStateOrSubscribe(string state)
+        /// <summary>
+        /// Whether the state is on, subscribing to it on first use. <paramref name="declared"/> is a
+        /// name written as <c>:state(name)</c>, which is a custom state on purpose and not warned about.
+        /// </summary>
+        public bool GetStateOrSubscribe(string state, bool declared = false)
         {
-            if (Subscribed.Add(state)) SubscribeToState(state);
+            if (Subscribed.Add(state)) SubscribeToState(state, declared);
             return States.Contains(state);
         }
 

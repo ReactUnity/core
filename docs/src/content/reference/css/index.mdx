@@ -280,3 +280,17 @@ place the two disagree, so do not set both on one edge.
 
 Under UIToolkit the inline axis is always the physical one: UIElements has no start and end edge to
 resolve against, and `direction` does nothing there.
+
+### Custom states {/*custom-states*/}
+
+Any pseudo-class ReactUnity does not know is a custom state: `view:busy` matches while a state named
+`busy` is started on the element, from C# through `component.StateStyles.StartState("busy")` and
+`EndState`. `:state(busy)` is the standard spelling of the same thing, and the one to prefer, since a
+bare unknown name is warned about once in case it was a typo. Both take the specificity of a
+pseudo-class.
+
+```css
+.slot:state(busy) {
+  opacity: 0.5;
+}
+```

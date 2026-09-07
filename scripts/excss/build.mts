@@ -3,7 +3,7 @@
  *
  * Why a build instead of a NuGet package: `@layer` and CSS nesting landed upstream in August
  * 2026, after the 4.3.2 release, and `@layer` is what Tailwind v4 wraps its whole output in.
- * Why a fork on top of that: six parser changes ReactUnity needs, each an ordinary commit on
+ * Why a fork on top of that: seven parser changes ReactUnity needs, each an ordinary commit on
  * the `reactunity` branch with its own reasoning and its own tests, meant to go upstream:
  *
  *   1  a parser option that keeps declarations raw. ReactUnity's property set is not the
@@ -22,10 +22,12 @@
  *   6  `@scope`, with both preludes kept as written, scoped rules in its block (`&` as
  *      `:where(:scope)`, a relative selector anchored to `:scope`, a bare declaration as a
  *      rule on the root) and nesting inside a style rule, where only the start selector nests.
+ *   7  a `@supports` prelude the condition grammar cannot hold in full -- `selector()`, or any
+ *      other function -- is kept as written, where it used to take the whole rule down with it.
  *
  * Why a submodule rather than a ref in this file: the pin then lives in one place git already
  * tracks, and the source is at hand when a parser bug needs reading. Point the submodule back
- * at upstream once it carries all six.
+ * at upstream once it carries all seven.
  *
  * netstandard2.0 is the only target Unity can load. The source is C# 9 and builds on any
  * modern SDK; the artifact does not depend on which one.
@@ -74,7 +76,7 @@ writeFileSync(
     `Built from [${repo}](${repo}) at \`${ref}\` (branch \`${branch}\`), the commit the`,
     `\`${SUBMODULE}\` submodule records, targeting \`netstandard2.0\`.`,
     '',
-    `This is a fork of [${UPSTREAM}](${UPSTREAM}), six commits ahead of it, each with its own`,
+    `This is a fork of [${UPSTREAM}](${UPSTREAM}), seven commits ahead of it, each with its own`,
     'tests and meant to go upstream. Read their commit messages for why they exist; the short',
     'version is in [scripts/excss/build.mts](../../../../scripts/excss/build.mts), which is also',
     'where the reason for pinning a commit rather than a release is written down.',

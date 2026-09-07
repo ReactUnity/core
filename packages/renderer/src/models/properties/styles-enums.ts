@@ -38,7 +38,7 @@ export type TextTransform = 'none' | 'lowercase' | 'uppercase' | 'smallcaps' | '
 export type TextOverflowModes = 'overflow' | 'ellipsis' | 'masking' | 'clip' | 'truncate' | 'scroll-rect' | 'page' | 'linked';
 export type PointerEvents = 'auto' | 'visible' | 'all' | 'none';
 
-export type ContainerType = 'normal' | 'size' | 'inline-size';
+export type ContainerType = 'normal' | 'size' | 'inline-size' | 'scroll-state' | 'size scroll-state' | 'inline-size scroll-state';
 export type ColorScheme = 'normal' | 'light' | 'dark' | 'light dark' | 'dark light';
 export type Visibility = 'visible' | 'hidden';
 export type Appearance = 'none' | 'button' | 'input' | 'toggle';

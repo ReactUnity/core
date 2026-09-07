@@ -217,8 +217,8 @@ namespace ReactUnity.Tests
             yield return null;
             yield return null;
 
-            // `size scroll-state` is a size container; the second keyword has nothing here to decide.
-            Assert.AreEqual(ContainerType.Size, Q("#theme").ComputedStyle.containerType);
+            // Both keywords are kept; the second is what a scroll-state() query reads.
+            Assert.AreEqual(ContainerType.Size | ContainerType.ScrollState, Q("#theme").ComputedStyle.containerType);
 
             // Registered as a length, so 1em at 20px is 20px; unregistered, the text is what compares.
             Assert.AreEqual(Color.blue, Q("#r1").ComputedStyle.color);
@@ -229,9 +229,10 @@ namespace ReactUnity.Tests
             yield return null;
             Assert.AreEqual(Color.black, Q("#r1").ComputedStyle.color);
 
+            // Alone, it is a scroll-state container and no longer a size one.
             Q("#theme").Style.Set("containerType", "scroll-state");
             yield return null;
-            Assert.AreEqual(ContainerType.Normal, Q("#theme").ComputedStyle.containerType);
+            Assert.AreEqual(ContainerType.ScrollState, Q("#theme").ComputedStyle.containerType);
         }
 
         const string TrackingScript = @"
@@ -316,6 +317,82 @@ namespace ReactUnity.Tests
             Assert.AreEqual(75, layout.LayoutHeight, 0.01f);
             Assert.AreEqual(30, layout.LayoutLeft, 0.01f);
             Assert.AreEqual(40, layout.LayoutGetPadding(YogaEdge.Top), 0.01f);
+        }
+
+        const string ScrollScript = @"
+            function App() {
+                return <scroll id='sc' style={{ width: 200, height: 200 }}>
+                    <view id='content' style={{ height: 600, flexShrink: 0 }}>
+                        <view id='a' className='q' />
+                        <view id='b' className='q' />
+                        <view id='c' className='q' />
+                        <view id='d' className='q' />
+                        <view id='e' className='q' />
+                        <view id='f' className='q' />
+                        <view id='g' className='q' />
+                    </view>
+                </scroll>;
+            }
+        ";
+
+        const string ScrollStyle = @"
+            #sc { container-type: scroll-state; }
+            .q { color: black; }
+
+            @container scroll-state(scrollable: bottom) { #a { color: red; } }
+            @container scroll-state(scrollable: top) { #b { color: red; } }
+            @container scroll-state(scrollable: none) { #c { color: red; } }
+            @container scroll-state((scrollable: top) and (scrollable: bottom)) { #d { color: red; } }
+            @container scroll-state(scrollable) { #e { color: red; } }
+            #f { @container scroll-state(not (scrollable: block-end)) { color: red; } }
+            @container scroll-state(stuck: top) { #g { color: red; } }
+        ";
+
+        [UGUITest(Script = ScrollScript, Style = ScrollStyle)]
+        public IEnumerator ScrollStateQueriesFollowTheContainersScrollPosition()
+        {
+            yield return null;
+            yield return null;
+
+            var scroll = Q("#sc");
+            Assert.AreEqual(ContainerType.ScrollState, scroll.ComputedStyle.containerType);
+
+            // At the top of 600px of content in a 200px view, only the bottom is left to scroll towards.
+            Assert.AreEqual(Color.red, Q("#a").ComputedStyle.color);
+            Assert.AreEqual(Color.black, Q("#b").ComputedStyle.color);
+            Assert.AreEqual(Color.black, Q("#c").ComputedStyle.color);
+            Assert.AreEqual(Color.black, Q("#d").ComputedStyle.color);
+            Assert.AreEqual(Color.red, Q("#e").ComputedStyle.color);
+            Assert.AreEqual(Color.black, Q("#f").ComputedStyle.color);
+            // Nothing is sticky, so stuck never holds.
+            Assert.AreEqual(Color.black, Q("#g").ComputedStyle.color);
+
+            scroll.ScrollTop = 200;
+            yield return null;
+            yield return null;
+
+            Assert.AreEqual(Color.red, Q("#a").ComputedStyle.color);
+            Assert.AreEqual(Color.red, Q("#b").ComputedStyle.color);
+            Assert.AreEqual(Color.red, Q("#d").ComputedStyle.color);
+            Assert.AreEqual(Color.black, Q("#f").ComputedStyle.color);
+
+            scroll.ScrollTop = 400;
+            yield return null;
+            yield return null;
+
+            Assert.AreEqual(Color.black, Q("#a").ComputedStyle.color);
+            Assert.AreEqual(Color.red, Q("#b").ComputedStyle.color);
+            Assert.AreEqual(Color.black, Q("#d").ComputedStyle.color);
+            Assert.AreEqual(Color.red, Q("#e").ComputedStyle.color);
+            Assert.AreEqual(Color.red, Q("#f").ComputedStyle.color);
+
+            // A container that does not declare scroll-state answers no scroll-state query.
+            scroll.Style["container-type"] = "normal";
+            yield return null;
+            yield return null;
+
+            Assert.AreEqual(Color.black, Q("#b").ComputedStyle.color);
+            Assert.AreEqual(Color.black, Q("#e").ComputedStyle.color);
         }
     }
 }

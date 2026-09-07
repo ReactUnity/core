@@ -79,6 +79,26 @@ namespace ReactUnity.Styling.Rules
             { "graphic", RuleSelectorPartType.Graphic },
         };
 
+        // A `::name` pseudo-element is the `_name` tag of the part an element exposes: an input's
+        // `_placeholder`, `_value` and `_selection`, a scroll view's `_scrollbar` and `_scrollbar-thumb`.
+        // These are the web's spellings of the same parts.
+        private static readonly Dictionary<string, string> PseudoElementAliases = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase)
+        {
+            { "_-webkit-scrollbar", "_scrollbar" },
+            { "_-webkit-scrollbar-track", "_scrollbar" },
+            { "_-webkit-scrollbar-thumb", "_scrollbar-thumb" },
+            { "_-webkit-input-placeholder", "_placeholder" },
+            { "_-moz-placeholder", "_placeholder" },
+            { "_-ms-input-placeholder", "_placeholder" },
+            { "_-moz-selection", "_selection" },
+        };
+
+        /// <summary>The pseudo-elements some element has, by tag, which is what <c>@supports selector()</c> checks a <c>::name</c> against.</summary>
+        public static readonly HashSet<string> KnownPseudoElements = new HashSet<string>(StringComparer.OrdinalIgnoreCase)
+        {
+            "_before", "_after", "_placeholder", "_value", "_viewport", "_selection", "_scrollbar", "_scrollbar-thumb",
+        };
+
         public static List<RuleSelectorPart> ParseSelector(string selector, bool negated = false)
         {
             // Special selector for the root element, skip parsing in this case
@@ -113,13 +133,28 @@ namespace ReactUnity.Styling.Rules
                         if (nm == "has") list.Add(new RuleSelectorPart() { Type = RuleSelectorPartType.Has, Negated = negated, Parameter = HasParameter.Parse(paran) });
                         else if (nm == "not")
                         {
-                            // :not(A, B) matches what is neither, so every branch lands negated in this compound.
+                            // :not(A, B) matches what is neither, so every branch lands negated in this compound. A
+                            // branch spanning a combinator cannot be split into parts of it, and is matched whole.
                             foreach (var arg in SplitSelectorList(paran))
                             {
-                                var parsed = ParseSelector(arg.Trim(), !negated);
+                                var branch = arg.Trim();
+                                if (branch.Length == 0) continue;
+
+                                if (NormalizeSelector(branch).IndexOf(' ') >= 0)
+                                {
+                                    list.Add(new RuleSelectorPart() { Type = RuleSelectorPartType.MatchesAny, Negated = !negated, Parameter = SelectorListParameter.Parse(branch, false) });
+                                    continue;
+                                }
+
+                                var parsed = ParseSelector(branch, !negated);
                                 if (parsed != null) list.AddRange(parsed);
                             }
                         }
+                        // The forms ExpandMatchesAny could not inline: not at the start of the compound with an argument
+                        // spanning a combinator, or inside another functional pseudo-class.
+                        else if (nm == "is" || nm == "where") list.Add(new RuleSelectorPart() { Type = RuleSelectorPartType.MatchesAny, Negated = negated, Parameter = SelectorListParameter.Parse(paran, nm == "where") });
+                        // The standard spelling of a custom state, which a bare unknown pseudo-class also is here.
+                        else if (nm == "state") list.Add(new RuleSelectorPart() { Type = RuleSelectorPartType.State, Name = "state", Negated = negated, Parameter = paran.Trim() });
                         else if (BasicPartTypes.TryGetValue(nm, out var partType)) list.Add(new RuleSelectorPart() { Type = partType, Negated = negated });
                         else if (NthPartTypes.TryGetValue(nm, out var nthType)) list.Add(new RuleSelectorPart()
                         {
@@ -133,7 +168,11 @@ namespace ReactUnity.Styling.Rules
                     {
                         if (nm == "_after") list.Add(RuleSelectorPart.After);
                         else if (nm == "_before") list.Add(RuleSelectorPart.Before);
-                        else list.Add(new RuleSelectorPart() { Name = nm, Type = type, Negated = negated });
+                        else
+                        {
+                            if (PseudoElementAliases.TryGetValue(nm, out var alias)) nm = alias;
+                            list.Add(new RuleSelectorPart() { Name = nm, Type = type, Negated = negated });
+                        }
                     }
                     else
                     {
@@ -232,6 +271,9 @@ namespace ReactUnity.Styling.Rules
 
                 case RuleSelectorPartType.Has:
                     return part.Parameter is HasParameter has ? has.Specificity : 0;
+
+                case RuleSelectorPartType.MatchesAny:
+                    return part.Parameter is SelectorListParameter list ? list.Specificity : 0;
 
                 case RuleSelectorPartType.Empty:
                 case RuleSelectorPartType.Text:
@@ -711,6 +753,8 @@ namespace ReactUnity.Styling.Rules
                 case RuleSelectorPartType.NthOfType:
                 case RuleSelectorPartType.NthLastOfType:
                     return true;
+                case RuleSelectorPartType.MatchesAny:
+                    return part.Parameter is SelectorListParameter list && list.ReadsScope;
                 default:
                     return false;
             }

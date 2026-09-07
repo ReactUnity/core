@@ -11,12 +11,16 @@ namespace ReactUnity.Styling.Rules
     /// </summary>
     public static class SupportsCondition
     {
-        public static bool Evaluate(string condition)
+        /// <summary>
+        /// Whether the condition holds. The context decides which pseudo-classes a
+        /// <c>selector()</c> query counts as supported; without one, every state is.
+        /// </summary>
+        public static bool Evaluate(string condition, ReactContext context = null)
         {
             if (string.IsNullOrWhiteSpace(condition)) return false;
 
             var cursor = 0;
-            if (!TryParseCondition(condition, ref cursor, out var result)) return false;
+            if (!TryParseCondition(condition, ref cursor, context, out var result)) return false;
 
             SkipWhitespace(condition, ref cursor);
             if (cursor != condition.Length) return false;
@@ -26,9 +30,9 @@ namespace ReactUnity.Styling.Rules
 
         // Condition := Unary (('and' | 'or') Unary)*
         // Mixing and/or without parentheses is invalid CSS; it is evaluated left to right here.
-        private static bool TryParseCondition(string s, ref int i, out bool value)
+        private static bool TryParseCondition(string s, ref int i, ReactContext context, out bool value)
         {
-            if (!TryParseUnary(s, ref i, out value)) return false;
+            if (!TryParseUnary(s, ref i, context, out value)) return false;
 
             while (true)
             {
@@ -47,14 +51,14 @@ namespace ReactUnity.Styling.Rules
                 i += word.Length;
 
                 // Both operands are always parsed, so that the cursor ends up past the whole condition.
-                if (!TryParseUnary(s, ref i, out var operand)) return false;
+                if (!TryParseUnary(s, ref i, context, out var operand)) return false;
 
                 value = isAnd ? value && operand : value || operand;
             }
         }
 
         // Unary := 'not' Unary | Primary
-        private static bool TryParseUnary(string s, ref int i, out bool value)
+        private static bool TryParseUnary(string s, ref int i, ReactContext context, out bool value)
         {
             SkipWhitespace(s, ref i);
 
@@ -62,16 +66,16 @@ namespace ReactUnity.Styling.Rules
             if (word.Equals("not", StringComparison.OrdinalIgnoreCase))
             {
                 i += word.Length;
-                if (!TryParseUnary(s, ref i, out value)) return false;
+                if (!TryParseUnary(s, ref i, context, out value)) return false;
                 value = !value;
                 return true;
             }
 
-            return TryParsePrimary(s, ref i, out value);
+            return TryParsePrimary(s, ref i, context, out value);
         }
 
         // Primary := '(' Inner ')' | <ident> '(' ... ')'
-        private static bool TryParsePrimary(string s, ref int i, out bool value)
+        private static bool TryParsePrimary(string s, ref int i, ReactContext context, out bool value)
         {
             value = false;
 
@@ -81,23 +85,23 @@ namespace ReactUnity.Styling.Rules
             if (s[i] == '(')
             {
                 if (!TryReadBalanced(s, ref i, out var inner)) return false;
-                return TryEvaluateInner(inner, out value);
+                return TryEvaluateInner(inner, context, out value);
             }
 
-            // A functional query such as selector(...) or font-tech(...). None are supported,
-            // but the cursor still has to move past it for the enclosing condition to parse.
+            // A functional query. selector() is answered; font-tech() and font-format() are not
+            // supported, but the cursor still has to move past them for the enclosing condition to parse.
             var name = ReadWord(s, i);
             if (name.Length == 0) return false;
 
             i += name.Length;
             if (i >= s.Length || s[i] != '(') return false;
-            if (!TryReadBalanced(s, ref i, out _)) return false;
+            if (!TryReadBalanced(s, ref i, out var argument)) return false;
 
-            value = false;
+            value = name.Equals("selector", StringComparison.OrdinalIgnoreCase) && IsSelectorSupported(argument, context);
             return true;
         }
 
-        private static bool TryEvaluateInner(string inner, out bool value)
+        private static bool TryEvaluateInner(string inner, ReactContext context, out bool value)
         {
             value = false;
             inner = inner.Trim();
@@ -108,13 +112,80 @@ namespace ReactUnity.Styling.Rules
             if (inner[0] == '(' || IsWordAt(inner, 0, "not"))
             {
                 var cursor = 0;
-                if (!TryParseCondition(inner, ref cursor, out value)) return false;
+                if (!TryParseCondition(inner, ref cursor, context, out value)) return false;
                 SkipWhitespace(inner, ref cursor);
                 return cursor == inner.Length;
             }
 
             value = IsDeclarationSupported(inner);
             return true;
+        }
+
+        /// <summary>
+        /// Whether one complex selector parses into parts this engine can match: every pseudo-class
+        /// is one it knows or a state the context has a handler for, and every pseudo-element is
+        /// one some element has. <c>:state()</c> and <c>:enter</c>/<c>:leave</c> always count.
+        /// </summary>
+        public static bool IsSelectorSupported(string selector, ReactContext context = null)
+        {
+            // selector() takes one complex selector; a list is not one.
+            var branches = RuleHelpers.SplitSelectorList(selector);
+            if (branches.Count != 1 || string.IsNullOrWhiteSpace(branches[0])) return false;
+
+            foreach (var expanded in RuleHelpers.ExpandMatchesAny(branches[0].Trim()))
+            {
+                var normalized = RuleHelpers.StripZeroSpecificityMarks(RuleHelpers.NormalizeSelector(expanded));
+                if (normalized.Length == 0) return false;
+
+                var pendingCombinator = true;
+
+                foreach (var token in normalized.Split(' '))
+                {
+                    if (token.Length == 1 && ">+~".IndexOf(token[0]) >= 0)
+                    {
+                        // A combinator with no compound before it is a relative selector, which selector() does not take.
+                        if (pendingCombinator) return false;
+                        pendingCombinator = true;
+                        continue;
+                    }
+
+                    var parts = RuleHelpers.ParseSelector(token);
+                    if (parts == null || parts.Count == 0) return false;
+
+                    foreach (var part in parts)
+                    {
+                        if (!IsPartSupported(part, context)) return false;
+                    }
+
+                    pendingCombinator = false;
+                }
+
+                if (pendingCombinator) return false;
+            }
+
+            return true;
+        }
+
+        private static bool IsPartSupported(RuleSelectorPart part, ReactContext context)
+        {
+            switch (part.Type)
+            {
+                case RuleSelectorPartType.None:
+                    return false;
+                case RuleSelectorPartType.Tag:
+                    // A `::name` parses as the `_name` tag, so an unknown one is a pseudo-element nothing has.
+                    return part.Name == null || part.Name.Length == 0 || part.Name[0] != '_' || RuleHelpers.KnownPseudoElements.Contains(part.Name);
+                case RuleSelectorPartType.State:
+                {
+                    var name = part.Parameter as string;
+                    if (part.Name == "state" || name == "enter" || name == "leave" || context == null) return true;
+                    return context.StateHandlers != null && context.StateHandlers.ContainsKey(name);
+                }
+                case RuleSelectorPartType.MatchesAny:
+                    return part.Parameter is SelectorListParameter list && list.Valid;
+                default:
+                    return true;
+            }
         }
 
         private static bool IsDeclarationSupported(string declaration)

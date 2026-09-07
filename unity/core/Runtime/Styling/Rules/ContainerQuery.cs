@@ -23,6 +23,7 @@ namespace ReactUnity.Styling.Rules
         private readonly bool NeedsInline;
         private readonly bool NeedsBlock;
         private readonly bool QueriesStyle;
+        private readonly bool QueriesScroll;
 
         private ContainerQuery(string name, ContainerQuery parent, Condition root)
         {
@@ -30,13 +31,12 @@ namespace ReactUnity.Styling.Rules
             Parent = parent;
             Root = root;
 
-            var inline = false;
-            var block = false;
-            var style = false;
-            root.Collect(ref inline, ref block, ref style);
-            NeedsInline = inline;
-            NeedsBlock = block;
-            QueriesStyle = style;
+            var needs = new Needs();
+            root.Collect(ref needs);
+            NeedsInline = needs.Inline;
+            NeedsBlock = needs.Block;
+            QueriesStyle = needs.Style;
+            QueriesScroll = needs.Scroll;
         }
 
         /// <summary>Parses a prelude. One that is not valid produces a query that never holds.</summary>
@@ -77,7 +77,7 @@ namespace ReactUnity.Styling.Rules
             var container = FindContainer(element, includeSelf);
             if (container == null) return false;
 
-            var subject = new Subject { Style = container.ComputedStyle };
+            var subject = new Subject { Style = container.ComputedStyle, Container = container };
 
             if (NeedsInline || NeedsBlock)
             {
@@ -90,6 +90,8 @@ namespace ReactUnity.Styling.Rules
                 var state = State(container);
                 if (state != null) state.HasStyleDependents = true;
             }
+
+            if (QueriesScroll) TrackScroll(container);
 
             return Root.Matches(ref subject);
         }
@@ -104,10 +106,13 @@ namespace ReactUnity.Styling.Rules
                 if (style == null) continue;
                 if (Name != null && !HasName(style.containerName, Name)) continue;
 
+                var type = style.containerType;
+                if (QueriesScroll && (type & ContainerType.ScrollState) == 0) continue;
+
                 if (NeedsInline || NeedsBlock)
                 {
-                    var type = style.containerType;
-                    if (type == ContainerType.Normal || (NeedsBlock && type != ContainerType.Size)) continue;
+                    var size = SizeType(type);
+                    if (size == ContainerType.Normal || (NeedsBlock && size != ContainerType.Size)) continue;
                 }
 
                 return candidate;
@@ -115,6 +120,9 @@ namespace ReactUnity.Styling.Rules
 
             return null;
         }
+
+        /// <summary>The size half of a <c>container-type</c>, with <c>scroll-state</c> taken off.</summary>
+        public static ContainerType SizeType(ContainerType type) => type & ~ContainerType.ScrollState;
 
         /// <summary>
         /// The nearest ancestor that is a size container for the axis, or null. This is what a
@@ -124,7 +132,7 @@ namespace ReactUnity.Styling.Rules
         {
             for (var candidate = element?.Parent; candidate != null; candidate = candidate.Parent)
             {
-                var type = candidate.ComputedStyle?.containerType ?? ContainerType.Normal;
+                var type = SizeType(candidate.ComputedStyle?.containerType ?? ContainerType.Normal);
                 if (type == ContainerType.Size || (!block && type == ContainerType.InlineSize))
                 {
                     TrackSize(candidate);
@@ -133,6 +141,37 @@ namespace ReactUnity.Styling.Rules
             }
 
             return null;
+        }
+
+        /// <summary>Which edges the element can still scroll towards, as <see cref="ScrollEdge"/> flags.</summary>
+        public static ScrollEdge GetScrollable(IReactComponent component)
+        {
+            // Half a pixel, so a position that rounds to the end reads as the end.
+            const float epsilon = 0.5f;
+
+            var edges = ScrollEdge.None;
+            var top = component.ScrollTop;
+            var left = component.ScrollLeft;
+
+            if (top > epsilon) edges |= ScrollEdge.Top;
+            if (top + component.ClientHeight < component.ScrollHeight - epsilon) edges |= ScrollEdge.Bottom;
+            if (left > epsilon) edges |= ScrollEdge.Left;
+            if (left + component.ClientWidth < component.ScrollWidth - epsilon) edges |= ScrollEdge.Right;
+
+            return edges;
+        }
+
+        private static void TrackScroll(IReactComponent container)
+        {
+            var state = State(container);
+            if (state == null || state.TracksScroll) return;
+
+            state.TracksScroll = true;
+            state.Scrollable = GetScrollable(container);
+
+            if (state.Listed) return;
+            state.Listed = true;
+            container.Context.Style.SizeContainers.Add(container);
         }
 
         /// <summary>Whether a space-separated <c>container-name</c> value includes the name.</summary>
@@ -204,8 +243,18 @@ namespace ReactUnity.Styling.Rules
         private struct Subject
         {
             public NodeStyle Style;
+            public IReactComponent Container;
             public float Width;
             public float Height;
+        }
+
+        // What a condition reads of its container, which decides which ancestors can answer it and what is tracked.
+        private struct Needs
+        {
+            public bool Inline;
+            public bool Block;
+            public bool Style;
+            public bool Scroll;
         }
 
         private enum Feature
@@ -219,7 +268,7 @@ namespace ReactUnity.Styling.Rules
         private abstract class Condition
         {
             public abstract bool Matches(ref Subject subject);
-            public virtual void Collect(ref bool inline, ref bool block, ref bool style) { }
+            public virtual void Collect(ref Needs needs) { }
         }
 
         private sealed class Constant : Condition
@@ -237,7 +286,7 @@ namespace ReactUnity.Styling.Rules
             private readonly Condition Inner;
             public Not(Condition inner) { Inner = inner; }
             public override bool Matches(ref Subject subject) => !Inner.Matches(ref subject);
-            public override void Collect(ref bool inline, ref bool block, ref bool style) => Inner.Collect(ref inline, ref block, ref style);
+            public override void Collect(ref Needs needs) => Inner.Collect(ref needs);
         }
 
         private sealed class Junction : Condition
@@ -262,9 +311,9 @@ namespace ReactUnity.Styling.Rules
                 return And;
             }
 
-            public override void Collect(ref bool inline, ref bool block, ref bool style)
+            public override void Collect(ref Needs needs)
             {
-                for (int i = 0; i < Terms.Count; i++) Terms[i].Collect(ref inline, ref block, ref style);
+                for (int i = 0; i < Terms.Count; i++) Terms[i].Collect(ref needs);
             }
         }
 
@@ -306,7 +355,7 @@ namespace ReactUnity.Styling.Rules
                 return true;
             }
 
-            public override void Collect(ref bool inline, ref bool block, ref bool style) => CollectAxes(Feature, ref inline, ref block);
+            public override void Collect(ref Needs needs) => CollectAxes(Feature, ref needs);
         }
 
         private sealed class OrientationIs : Condition
@@ -314,7 +363,24 @@ namespace ReactUnity.Styling.Rules
             private readonly bool Portrait;
             public OrientationIs(bool portrait) { Portrait = portrait; }
             public override bool Matches(ref Subject subject) => (subject.Height >= subject.Width) == Portrait;
-            public override void Collect(ref bool inline, ref bool block, ref bool style) => CollectAxes(Feature.Orientation, ref inline, ref block);
+            public override void Collect(ref Needs needs) => CollectAxes(Feature.Orientation, ref needs);
+        }
+
+        // scroll-state(scrollable: edge): whether the container can scroll towards the edge, read off
+        // the container itself. stuck and snapped parse but never hold: nothing here is sticky or snaps.
+        private sealed class ScrollableTowards : Condition
+        {
+            private readonly ScrollEdge Edges;
+            public ScrollableTowards(ScrollEdge edges) { Edges = edges; }
+
+            public override bool Matches(ref Subject subject)
+            {
+                if (subject.Container == null) return false;
+                var scrollable = GetScrollable(subject.Container);
+                return Edges == ScrollEdge.None ? scrollable == ScrollEdge.None : (scrollable & Edges) != 0;
+            }
+
+            public override void Collect(ref Needs needs) => needs.Scroll = true;
         }
 
         // style(): a custom property compares as declared text, with whitespace collapsed; any other
@@ -360,13 +426,13 @@ namespace ReactUnity.Styling.Rules
                 return resolved != null && resolved.Equals(value);
             }
 
-            public override void Collect(ref bool inline, ref bool block, ref bool style) => style = true;
+            public override void Collect(ref Needs needs) => needs.Style = true;
         }
 
-        private static void CollectAxes(Feature feature, ref bool inline, ref bool block)
+        private static void CollectAxes(Feature feature, ref Needs needs)
         {
-            if (feature != Feature.Height) inline = true;
-            if (feature != Feature.Width) block = true;
+            if (feature != Feature.Height) needs.Inline = true;
+            if (feature != Feature.Width) needs.Block = true;
         }
 
         private static float Measure(Feature feature, ref Subject subject)
@@ -534,9 +600,132 @@ namespace ReactUnity.Styling.Rules
             if (i >= s.Length || s[i] != '(') return false;
             if (!TryReadBalanced(s, ref i, out var argument)) return false;
 
-            // style() is the one functional query here; another, scroll-state() say, parses but never holds.
-            result = name.Equals("style", StringComparison.OrdinalIgnoreCase) ? ParseStyle(argument) : Constant.Never;
+            // style() and scroll-state() are the functional queries here; any other parses but never holds.
+            if (name.Equals("style", StringComparison.OrdinalIgnoreCase)) result = ParseStyle(argument);
+            else if (name.Equals("scroll-state", StringComparison.OrdinalIgnoreCase)) result = ParseScrollState(argument);
+            else result = Constant.Never;
             return true;
+        }
+
+        // The inside of scroll-state(): features joined with and/or/not, the way the size features are outside it.
+        private static Condition ParseScrollState(string text)
+        {
+            var cursor = 0;
+            if (!TryParseScrollCondition(text, ref cursor, out var result)) return Constant.Never;
+            SkipWhitespace(text, ref cursor);
+            return cursor == text.Length ? result : Constant.Never;
+        }
+
+        private static bool TryParseScrollCondition(string s, ref int i, out Condition result)
+        {
+            result = null;
+            if (!TryParseScrollUnary(s, ref i, out var first)) return false;
+
+            List<Condition> terms = null;
+            var and = false;
+
+            while (true)
+            {
+                var mark = i;
+                SkipWhitespace(s, ref i);
+
+                var word = ReadIdent(s, i);
+                var isAnd = word.Equals("and", StringComparison.OrdinalIgnoreCase);
+
+                if (!isAnd && !word.Equals("or", StringComparison.OrdinalIgnoreCase))
+                {
+                    i = mark;
+                    break;
+                }
+
+                i += word.Length;
+                if (!TryParseScrollUnary(s, ref i, out var operand)) return false;
+
+                if (terms == null)
+                {
+                    terms = new List<Condition> { first };
+                    and = isAnd;
+                }
+                else if (and != isAnd) return false;
+
+                terms.Add(operand);
+            }
+
+            result = terms == null ? first : new Junction(terms, and);
+            return true;
+        }
+
+        private static bool TryParseScrollUnary(string s, ref int i, out Condition result)
+        {
+            result = null;
+            SkipWhitespace(s, ref i);
+
+            var word = ReadIdent(s, i);
+            if (word.Equals("not", StringComparison.OrdinalIgnoreCase))
+            {
+                i += word.Length;
+                if (!TryParseScrollUnary(s, ref i, out var inner)) return false;
+                result = new Not(inner);
+                return true;
+            }
+
+            // A bare feature is allowed at the top of scroll-state(); a nested one has to be parenthesized.
+            if (i < s.Length && s[i] == '(')
+            {
+                if (!TryReadBalanced(s, ref i, out var inner)) return false;
+                var trimmed = inner.Trim();
+                if (trimmed.Length == 0) return false;
+
+                if (trimmed[0] == '(' || ReadIdent(trimmed, 0).Equals("not", StringComparison.OrdinalIgnoreCase))
+                {
+                    var cursor = 0;
+                    if (!TryParseScrollCondition(trimmed, ref cursor, out result)) return false;
+                    SkipWhitespace(trimmed, ref cursor);
+                    return cursor == trimmed.Length;
+                }
+
+                result = ParseScrollFeature(trimmed);
+                return true;
+            }
+
+            var end = s.IndexOfAny(new[] { '(', ')' }, i);
+            var feature = (end < 0 ? s.Substring(i) : s.Substring(i, end - i)).Trim();
+            if (feature.Length == 0) return false;
+
+            i += end < 0 ? s.Length - i : end - i;
+            result = ParseScrollFeature(feature);
+            return true;
+        }
+
+        // `scrollable: top`, or `scrollable` alone for any edge. stuck and snapped are read and never hold.
+        private static Condition ParseScrollFeature(string text)
+        {
+            var colon = text.IndexOf(':');
+            var name = (colon < 0 ? text : text.Substring(0, colon)).Trim().ToLowerInvariant();
+            var value = colon < 0 ? null : text.Substring(colon + 1).Trim().ToLowerInvariant();
+
+            if (name == "stuck" || name == "snapped") return Constant.Never;
+            if (name != "scrollable") return Constant.Never;
+
+            if (value == null) return new ScrollableTowards(ScrollEdge.Top | ScrollEdge.Right | ScrollEdge.Bottom | ScrollEdge.Left);
+
+            switch (value)
+            {
+                case "none": return new ScrollableTowards(ScrollEdge.None);
+                case "top":
+                case "block-start": return new ScrollableTowards(ScrollEdge.Top);
+                case "bottom":
+                case "block-end": return new ScrollableTowards(ScrollEdge.Bottom);
+                case "left":
+                case "inline-start": return new ScrollableTowards(ScrollEdge.Left);
+                case "right":
+                case "inline-end": return new ScrollableTowards(ScrollEdge.Right);
+                case "x":
+                case "inline": return new ScrollableTowards(ScrollEdge.Left | ScrollEdge.Right);
+                case "y":
+                case "block": return new ScrollableTowards(ScrollEdge.Top | ScrollEdge.Bottom);
+                default: return Constant.Never;
+            }
         }
 
         // Inside parentheses: a nested condition, or a single size feature.
@@ -804,11 +993,24 @@ namespace ReactUnity.Styling.Rules
     /// What an element knows about being a query container: whether anything has measured it, and
     /// the content box those measurements saw, so that a change to it after layout restyles them.
     /// </summary>
+    /// <summary>The edges a scroll container can still scroll towards.</summary>
+    [Flags]
+    public enum ScrollEdge
+    {
+        None = 0,
+        Top = 1,
+        Right = 2,
+        Bottom = 4,
+        Left = 8,
+    }
+
     public class QueryContainerState
     {
         public bool TracksSize;
+        public bool TracksScroll;
         public bool HasStyleDependents;
         public bool Listed;
+        public ScrollEdge Scrollable;
         public float Width;
         public float Height;
     }

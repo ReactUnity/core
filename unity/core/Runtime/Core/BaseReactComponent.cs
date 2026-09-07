@@ -508,7 +508,7 @@ namespace ReactUnity
                 if (inheritedChanges || recursive || query?.HasStyleDependents == true)
                 {
                     // The subtree matches its rules again now, and whatever still reads this element as its container says so.
-                    if (query != null) query.TracksSize = query.HasStyleDependents = false;
+                    if (query != null) query.TracksSize = query.TracksScroll = query.HasStyleDependents = false;
 
                     BeforeRules = Context.Style.StyleTree.GetMatchingBefore(this).ToList();
                     if (BeforeRules.Count > 0 &&

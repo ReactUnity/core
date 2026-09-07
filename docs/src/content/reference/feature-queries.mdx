@@ -42,8 +42,28 @@ rather than assuming from a version number.
 | Disjunction             | `@supports (float: left) or (color: red)`     |
 | Grouping                | `@supports ((color: red) and (opacity: 0.5))` |
 | `!important` in a value | `@supports (color: red !important)`            |
+| Selector                | `@supports selector(:has(> .a))`              |
 
 Mixing `and` and `or` at the same level is invalid CSS; parenthesize instead.
+
+### Selector queries {/*selector-queries*/}
+
+`selector()` holds when its argument is one complex selector that ReactUnity can match: every
+pseudo-class is one it knows, or a state the current framework has a handler for, and every
+pseudo-element is one some element has. `:state(name)`, `:enter` and `:leave` always count, since a
+custom state is whatever the app starts. A selector list, a relative selector such as `> .a`, a
+pseudo-class of the web that has no meaning here (`:popover-open`) or a pseudo-element nothing
+exposes (`::marker`) is unsupported.
+
+```css
+@supports selector(:has(.badge)) {
+  .card:has(.badge) { border-color: gold; }
+}
+
+@supports not selector(::-webkit-scrollbar) {
+  scroll { scrollbar-width: thin; }
+}
+```
 
 `@supports` and `@media` nest inside each other in either order, and the rules inside apply only
 when both conditions hold.
@@ -60,8 +80,8 @@ when both conditions hold.
 
 ### Limitations {/*limitations*/}
 
-Feature queries that are not declarations always evaluate to **false**, because ReactUnity does not
-implement them. This includes `selector()`, `font-tech()` and `font-format()`.
+`font-tech()` and `font-format()` always evaluate to **false**, because ReactUnity does not implement
+them.
 
 `@supports` also nests inside a style rule, where the declarations it holds belong to the enclosing
 selector — see [Nesting](/reference/nesting).

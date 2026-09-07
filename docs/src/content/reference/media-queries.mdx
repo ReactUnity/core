@@ -113,3 +113,19 @@ Numeric media properties has a current value that can be compared with numerical
   ...
 }
 ```
+
+### Custom media queries {/*custom-media-queries*/}
+
+`@custom-media --name query;` gives a query a name to use in place of a feature, so a condition
+that recurs throughout a stylesheet is written once. The query is any media query list, or `true`
+or `false`. A name is resolved when the query it is in is evaluated, so it may be declared in any
+stylesheet, before or after its use, and the last declaration counts.
+
+```css
+@custom-media --gamepad (input: gamepad) or (any-input: joystick);
+@custom-media --small (max-width: 600px);
+
+@media (--gamepad) and (--small) {
+  .hint { font-size: 18px; }
+}
+```

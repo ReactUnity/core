@@ -390,6 +390,9 @@ namespace ReactUnity.Styling.Rules
         // Special
         Important = 1000,
         Special = 1001,
+        // An :is(), :where() or complex :not() that could not be inlined; it walks up the tree, so it
+        // goes after the parts that test the element alone.
+        MatchesAny = 1800,
         // Costs a walk of the subtree, so it goes after everything that can rule the element out cheaply.
         Has = 1900,
         State = 2000,
@@ -513,7 +516,10 @@ namespace ReactUnity.Styling.Rules
                 case RuleSelectorPartType.Special:
                     return true;
                 case RuleSelectorPartType.State:
-                    return component.StateStyles.GetStateOrSubscribe(Parameter as string);
+                    // Written as :state(name), the name is a custom state by declaration and is not warned about.
+                    return component.StateStyles.GetStateOrSubscribe(Parameter as string, Name == "state");
+                case RuleSelectorPartType.MatchesAny:
+                    return ((SelectorListParameter) Parameter).Matches(component, scope);
                 case RuleSelectorPartType.Has:
                     // A change below or after this element can now change its style, so it is remembered as one to re-resolve then.
                     component.StateStyles.HasAnchor = true;
@@ -781,6 +787,145 @@ namespace ReactUnity.Styling.Rules
             }
 
             return index == steps.Length - 1 || MatchStep(steps, index + 1, candidate, scope);
+        }
+    }
+
+    /// <summary>
+    /// The selector list of an <c>:is()</c> or <c>:where()</c> that could not be inlined, or of a
+    /// <c>:not()</c> whose argument spans a combinator. Each branch is compiled as compounds joined
+    /// by combinators and matched right to left from the element, the way a rule's own chain is.
+    /// </summary>
+    public class SelectorListParameter
+    {
+        private struct Step
+        {
+            /// <summary>The combinator between this compound and the one to its left; a space for a descendant.</summary>
+            public char Combinator;
+            public List<RuleSelectorPart> Parts;
+        }
+
+        private readonly List<Step[]> Branches = new List<Step[]>();
+
+        /// <summary>That of the most specific branch, or zero for a <c>:where()</c>.</summary>
+        public int Specificity { get; private set; }
+
+        /// <summary>Whether any branch names <c>:scope</c>, and so cannot be tested before the scoping root is known.</summary>
+        public bool ReadsScope { get; private set; }
+
+        /// <summary>Whether any branch parsed. One with none matches nothing, as a forgiving selector list does.</summary>
+        public bool Valid => Branches.Count > 0;
+
+        /// <summary>
+        /// Reads a selector list. A branch that cannot be read is dropped, as a forgiving list
+        /// drops it, and one nested <c>:is()</c> is inlined into its branch where that is equivalent.
+        /// </summary>
+        public static SelectorListParameter Parse(string text, bool zeroSpecificity)
+        {
+            var result = new SelectorListParameter();
+
+            foreach (var branch in RuleHelpers.SplitSelectorList(text))
+            foreach (var expanded in RuleHelpers.ExpandMatchesAny(branch.Trim()))
+            {
+                var normalized = RuleHelpers.StripZeroSpecificity(RuleHelpers.NormalizeSelector(expanded), out var zeroed);
+                if (normalized.Length == 0) continue;
+
+                var steps = new List<Step>();
+                var specificity = -zeroed;
+                var combinator = ' ';
+                var pendingCombinator = false;
+                var valid = true;
+
+                foreach (var token in normalized.Split(' '))
+                {
+                    if (token.Length == 1 && ">+~".IndexOf(token[0]) >= 0)
+                    {
+                        // Two combinators in a row, or one before the first compound, is not a selector.
+                        if (pendingCombinator || steps.Count == 0)
+                        {
+                            valid = false;
+                            break;
+                        }
+                        combinator = token[0];
+                        pendingCombinator = true;
+                        continue;
+                    }
+
+                    var parts = RuleHelpers.ParseSelector(token);
+                    if (parts == null || parts.Exists(x => x.Type == RuleSelectorPartType.None))
+                    {
+                        valid = false;
+                        break;
+                    }
+
+                    foreach (var part in parts)
+                    {
+                        specificity += RuleHelpers.SpecificityOf(part);
+                        if (RuleHelpers.ReadsScope(part)) result.ReadsScope = true;
+                    }
+
+                    steps.Add(new Step { Combinator = combinator, Parts = parts });
+                    combinator = ' ';
+                    pendingCombinator = false;
+                }
+
+                if (!valid || pendingCombinator || steps.Count == 0) continue;
+                result.Branches.Add(steps.ToArray());
+                if (!zeroSpecificity && specificity > result.Specificity) result.Specificity = specificity;
+            }
+
+            return result;
+        }
+
+        public bool Matches(IReactComponent component, IReactComponent scope)
+        {
+            for (int i = 0; i < Branches.Count; i++)
+            {
+                var steps = Branches[i];
+                if (MatchFrom(steps, steps.Length - 1, component, scope)) return true;
+            }
+            return false;
+        }
+
+        // Whether the element satisfies this step's compound, and something to its left satisfies the rest.
+        private static bool MatchFrom(Step[] steps, int index, IReactComponent element, IReactComponent scope)
+        {
+            var parts = steps[index].Parts;
+            for (int i = 0; i < parts.Count; i++)
+            {
+                var part = parts[i];
+                if (part.Matches(element, scope) == part.Negated) return false;
+            }
+
+            if (index == 0) return true;
+
+            switch (steps[index].Combinator)
+            {
+                case '>':
+                    return element.Parent != null && MatchFrom(steps, index - 1, element.Parent, scope);
+                case '+':
+                {
+                    var previous = PreviousSibling(element);
+                    return previous != null && MatchFrom(steps, index - 1, previous, scope);
+                }
+                case '~':
+                    for (var sibling = PreviousSibling(element); sibling != null; sibling = PreviousSibling(sibling))
+                        if (MatchFrom(steps, index - 1, sibling, scope)) return true;
+                    return false;
+                default:
+                    for (var ancestor = element.Parent; ancestor != null; ancestor = ancestor.Parent)
+                        if (MatchFrom(steps, index - 1, ancestor, scope)) return true;
+                    return false;
+            }
+        }
+
+        private static IReactComponent PreviousSibling(IReactComponent element)
+        {
+            var siblings = element.Parent?.Children;
+            if (siblings == null) return null;
+
+            for (var i = siblings.IndexOf(element) - 1; i >= 0; i--)
+                if (!siblings[i].IsPseudoElement) return siblings[i];
+            return null;
         }
     }
 
