@@ -1,0 +1,172 @@
+.host {
+  align-items: stretch;
+}
+
+.note {
+  margin-bottom: 12px;
+  font-size: 14px;
+  color: #475569;
+  white-space: normal;
+}
+
+/* The subject every function in the gallery is applied to. Deliberately busy: a gradient shows
+   the colour ops, the star's alpha shows what a drop-shadow traces, and a glyph shows text. */
+.card {
+  width: 150px;
+  height: 100px;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+  background: linear-gradient(135deg, #f97316, #6366f1 55%, #22d3ee);
+
+  image {
+    width: 44px;
+    height: 44px;
+  }
+
+  text {
+    margin-left: 6px;
+    font-size: 30px;
+    font-weight: bold;
+    color: white;
+  }
+}
+
+.caption {
+  align-self: stretch;
+  margin-top: 6px;
+  font-size: 12px;
+  color: #64748b;
+  text-align: center;
+  white-space: normal;
+  word-wrap: normal;
+}
+
+/* A filter is a property of the element, so it applies to the whole subtree at once and the
+   children keep their own layout, states and hit testing. */
+.subtree {
+  padding: 16px;
+  border-radius: 12px;
+  background-color: #c7d2fe;
+  align-items: center;
+  filter: hue-rotate(140deg) saturate(1.4) drop-shadow(0 8px 10px rgba(15, 23, 42, 0.35));
+
+  input {
+    width: 220px;
+  }
+
+  button {
+    background-color: #6366f1;
+    color: white;
+
+    &:hover {
+      background-color: #4f46e5;
+    }
+
+    &:active {
+      background-color: #4338ca;
+    }
+  }
+}
+
+/* `drop-shadow` traces what was painted -- the star's alpha and the glyph outlines. */
+.dropShadow {
+  filter: drop-shadow(8px 10px 4px rgba(15, 23, 42, 0.55));
+}
+
+/* `box-shadow` follows the border box, so the transparent corners of the star cast too. */
+.boxShadow {
+  box-shadow: 8px 10px 4px rgba(15, 23, 42, 0.55);
+}
+
+.shadowSubject {
+  padding: 10px;
+  align-items: center;
+
+  image {
+    width: 90px;
+    height: 90px;
+  }
+
+  text {
+    margin-top: 4px;
+    font-size: 34px;
+    font-weight: bold;
+    color: #1e293b;
+  }
+}
+
+/* Filters interpolate, so they transition and animate like any other property. */
+.hoverable {
+  filter: grayscale(1) brightness(0.85);
+  transition: filter 400ms ease-out;
+
+  &:hover {
+    filter: grayscale(0) brightness(1.15) drop-shadow(0 10px 12px rgba(99, 102, 241, 0.7));
+  }
+}
+
+.animated {
+  animation: hue-spin 4s linear infinite;
+
+  @keyframes hue-spin {
+    from {
+      filter: hue-rotate(0deg);
+    }
+
+    to {
+      filter: hue-rotate(360deg);
+    }
+  }
+}
+
+.pulsing {
+  animation: blur-pulse 2.5s ease-in-out infinite alternate;
+
+  @keyframes blur-pulse {
+    from {
+      filter: blur(0);
+    }
+
+    to {
+      filter: blur(6px);
+    }
+  }
+}
+
+/* `rotate` and `scale` are applied to the filtered result rather than captured with it, so a
+   rotation does not tilt the pixelate blocks and the blur widens with the element. */
+.transformed {
+  rotate: -10deg;
+  scale: 1.15;
+  filter: pixelate(6px) drop-shadow(0 12px 10px rgba(15, 23, 42, 0.45));
+}
+
+/* Something with detail behind the panel, so the backdrop blur has anything to show. */
+.backdropHost {
+  height: 200px;
+  justify-content: center;
+  border-radius: 12px;
+  overflow: hidden;
+  background-color: white;
+  background-image: linear-gradient(45deg, #6366f1 25%, transparent 25%, transparent 75%, #6366f1 75%, #6366f1),
+    linear-gradient(45deg, #6366f1 25%, transparent 25%, transparent 75%, #6366f1 75%, #6366f1);
+  background-size: 80px 80px;
+  background-position: 0 0, 40px 40px;
+}
+
+.backdropPanel {
+  margin: 0 40px;
+  padding: 20px;
+  border-radius: 10px;
+  align-items: center;
+  background-color: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(5px) saturate(1.6);
+
+  text {
+    font-size: 20px;
+    font-weight: bold;
+    color: #0f172a;
+  }
+}

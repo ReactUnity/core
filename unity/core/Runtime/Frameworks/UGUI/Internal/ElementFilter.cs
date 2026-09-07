@@ -40,6 +40,16 @@ namespace ReactUnity.UGUI.Internal
         const float BleedPerBlurUnit = 2f;
         const int MaxDimension = 4096;
 
+        // Where the offscreen surfaces are parked, and how far apart. Every camera has the same
+        // culling mask, so two surfaces sharing a spot would each capture the other's subtree --
+        // the gap has to be wider than a camera's far plane. Slots are reused as filters go away,
+        // which keeps the coordinates small enough to stay exact.
+        const float SlotBase = 100000f;
+        const float SlotStride = 5000f;
+        static readonly Stack<int> freeSlots = new Stack<int>();
+        static int nextSlot;
+        private int slot = -1;
+
         private UGUIComponent component;
         private RectTransform self;
 
@@ -69,6 +79,8 @@ namespace ReactUnity.UGUI.Internal
         private FilterDefinition lastRendered;
         private Rect lastRect;
         private bool dirty = true;
+        private bool uniformsDirty = true;
+        private Vector4 shadowOffsetUv;
 
         /// <summary>How many offscreen renders this filter has done. For tests.</summary>
         public int RenderCount { get; private set; }
@@ -117,8 +129,9 @@ namespace ReactUnity.UGUI.Internal
             offscreenCamera.enabled = false;
             camGo.transform.SetParent(canvasGo.transform, false);
 
-            // Park the surface far from anything else so no other camera can pick it up.
-            canvasGo.transform.position = new Vector3(0, 0, 100000);
+            // Park the surface far from the scene, and in a slot of its own.
+            slot = freeSlots.Count > 0 ? freeSlots.Pop() : nextSlot++;
+            canvasGo.transform.position = new Vector3(0, 0, SlotBase + slot * SlotStride);
 
             // Events reach the subtree through the composite: the pointer lands on the composite's
             // rect, which is remapped into the offscreen camera's screen space and cast there.
@@ -152,6 +165,12 @@ namespace ReactUnity.UGUI.Internal
         {
             graphics.Clear();
             Reregister();
+
+            if (slot >= 0)
+            {
+                freeSlots.Push(slot);
+                slot = -1;
+            }
 
             if (composite) Destroy(composite.gameObject);
             if (offscreenCanvas) Destroy(offscreenCanvas.gameObject);
@@ -193,8 +212,11 @@ namespace ReactUnity.UGUI.Internal
         {
             if (!Equals(lastRendered, definition))
             {
+                // A colour op is a uniform the composite reads at draw time, so animating one only
+                // has to push the uniforms again -- re-capturing the subtree would change nothing.
+                if (lastRendered == null || CaptureDiffers(lastRendered, definition)) dirty = true;
                 lastRendered = definition;
-                dirty = true;
+                uniformsDirty = true;
             }
 
             if (self.rect != lastRect)
@@ -258,13 +280,40 @@ namespace ReactUnity.UGUI.Internal
             }
         }
 
+        /// <summary>Whether the offscreen capture would come out different, as opposed to only the
+        /// uniforms the composite is drawn with. Everything here feeds the filter region or a blur.</summary>
+        static bool CaptureDiffers(FilterDefinition a, FilterDefinition b)
+        {
+            return a.Blur != b.Blur || a.DropShadowBlur != b.DropShadowBlur ||
+                   a.DropShadowOffset != b.DropShadowOffset || (a.DropShadowColor.a > 0) != (b.DropShadowColor.a > 0);
+        }
+
         void LateUpdate()
         {
             if (definition == null || !composite) return;
-            if (!PollDirty()) return;
-            dirty = false;
-            RenderCount++;
 
+            var recapture = PollDirty();
+            if (recapture)
+            {
+                dirty = false;
+                RenderCount++;
+                Render();
+            }
+
+            // UGUI substitutes a stencil copy of the material under an ancestor mask, and that copy
+            // is not what the values below were written to -- so they are pushed again to whatever
+            // is actually being drawn, every time UGUI rebuilds it.
+            if (recapture || uniformsDirty)
+            {
+                uniformsDirty = false;
+                SetUniforms(compositeMaterial);
+                var drawn = composite.materialForRendering;
+                if (drawn && drawn != compositeMaterial) SetUniforms(drawn);
+            }
+        }
+
+        void Render()
+        {
             var rect = self.rect;
             var scale = ScaleFactor;
             var hasShadow = definition.DropShadowColor.a > 0;
@@ -413,27 +462,34 @@ namespace ReactUnity.UGUI.Internal
             compRect.localScale = self.localScale;
 
             composite.texture = source;
-            compositeMaterial.SetTexture(MainTexId, source);
-            compositeMaterial.SetFloat(BrightnessId, definition.Brightness);
-            compositeMaterial.SetFloat(ContrastId, definition.Contrast);
-            compositeMaterial.SetFloat(GrayscaleId, definition.Grayscale);
-            compositeMaterial.SetFloat(HueRotateId, definition.HueRotate);
-            compositeMaterial.SetFloat(InvertId, definition.Invert);
-            compositeMaterial.SetFloat(OpacityId, definition.Opacity);
-            compositeMaterial.SetFloat(SaturateId, definition.Saturate);
-            compositeMaterial.SetFloat(GrainId, definition.Grain);
-            compositeMaterial.SetFloat(PixelateId, definition.Pixelate);
-            compositeMaterial.SetFloat(SepiaId, definition.Sepia);
+
+            // The shader subtracts this from its uv, and the rect's y grows the other way.
+            shadowOffsetUv = new Vector4(definition.DropShadowOffset.x / width, -definition.DropShadowOffset.y / height, 0, 0);
+        }
+
+        /// <summary>Writes the whole filter chain onto one material. Called for the composite's own
+        /// material and again for the stencil copy UGUI draws in its place under a mask.</summary>
+        void SetUniforms(Material m)
+        {
+            m.SetTexture(MainTexId, target);
+            m.SetFloat(BrightnessId, definition.Brightness);
+            m.SetFloat(ContrastId, definition.Contrast);
+            m.SetFloat(GrayscaleId, definition.Grayscale);
+            m.SetFloat(HueRotateId, definition.HueRotate);
+            m.SetFloat(InvertId, definition.Invert);
+            m.SetFloat(OpacityId, definition.Opacity);
+            m.SetFloat(SaturateId, definition.Saturate);
+            m.SetFloat(GrainId, definition.Grain);
+            m.SetFloat(PixelateId, definition.Pixelate);
+            m.SetFloat(SepiaId, definition.Sepia);
 
             if (definition.DropShadowColor.a > 0 && shadow)
             {
-                compositeMaterial.SetTexture(ShadowTexId, shadow);
-                compositeMaterial.SetColor(ShadowColorId, definition.DropShadowColor);
-                // The shader subtracts this from its uv, and the rect's y grows the other way.
-                compositeMaterial.SetVector(ShadowOffsetId,
-                    new Vector4(definition.DropShadowOffset.x / width, -definition.DropShadowOffset.y / height, 0, 0));
+                m.SetTexture(ShadowTexId, shadow);
+                m.SetColor(ShadowColorId, definition.DropShadowColor);
+                m.SetVector(ShadowOffsetId, shadowOffsetUv);
             }
-            else compositeMaterial.SetColor(ShadowColorId, Color.clear);
+            else m.SetColor(ShadowColorId, Color.clear);
         }
     }
 }

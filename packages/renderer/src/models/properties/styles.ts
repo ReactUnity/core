@@ -87,6 +87,8 @@ export interface RenderStyle {
   borderImageWidth?: YogaValueAux;
 
   boxShadow?: SafeString;
+  filter?: SafeString;
+  backdropFilter?: SafeString;
   objectFit?: ObjectFit;
   objectPosition?: YogaValue2Aux;
 

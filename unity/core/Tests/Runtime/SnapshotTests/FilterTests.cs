@@ -201,17 +201,35 @@ namespace ReactUnity.Tests
         }
 
         [UGUITest(Script = ChildScript, Style = ChildStyle)]
-        public IEnumerator ChangingTheFilterRerenders()
+        public IEnumerator ChangingTheBlurRerenders()
+        {
+            View.Style["filter"] = "blur(2px)";
+            for (int i = 0; i < 4; i++) yield return null;
+            var before = View.ElementFilter.RenderCount;
+
+            View.Style["filter"] = "blur(6px)";
+            for (int i = 0; i < 3; i++) yield return null;
+
+            Debug.Log($"[FILTER dirty] before={before} after blur change={View.ElementFilter.RenderCount}");
+            Assert.Greater(View.ElementFilter.RenderCount, before, "a new blur radius must re-render");
+        }
+
+        [UGUITest(Script = ChildScript, Style = ChildStyle)]
+        public IEnumerator ChangingAColourOpDoesNotRerender()
         {
             View.Style["filter"] = "grayscale(1)";
             for (int i = 0; i < 4; i++) yield return null;
             var before = View.ElementFilter.RenderCount;
 
-            View.Style["filter"] = "grayscale(0.5)";
+            // A colour op is a uniform the composite reads at draw time, so the capture it reads
+            // from is still good -- but the picture has to change all the same.
+            View.Style["filter"] = "invert(1)";
             for (int i = 0; i < 3; i++) yield return null;
 
-            Debug.Log($"[FILTER dirty] before={before} after filter change={View.ElementFilter.RenderCount}");
-            Assert.Greater(View.ElementFilter.RenderCount, before, "a new filter value must re-render");
+            var c = SampleCentre();
+            Debug.Log($"[FILTER dirty] before={before} after colour op={View.ElementFilter.RenderCount} {Describe(c)}");
+            Assert.AreEqual(before, View.ElementFilter.RenderCount, "a colour op must not re-capture the subtree");
+            Assert.Greater(c.g, 0.7f, "the composite must still be redrawn with the new value");
         }
 
         [UGUITest(Script = BaseScript, Style = BaseStyle)]
@@ -303,6 +321,35 @@ namespace ReactUnity.Tests
             #wrap { overflow: hidden; width: 100px; height: 100px; }
             #test, #btn { flex-shrink: 0; }
         ";
+
+        // A masking ancestor that does not clip the element, so only the substituted material is
+        // under test. `overflow: hidden` is a stencil Mask, and UGUI draws a copy of the material
+        // when one is above -- so anything written to the composite's own material is dropped.
+        const string MaskedScript = @"
+            function App() {
+                return <view id='wrap'>
+                    <view id='test'></view>
+                </view>;
+            }
+";
+
+        // Declared in the stylesheet rather than set afterwards, so the composite is masked from
+        // the frame it appears -- which is when UGUI makes the copy it then caches forever.
+        const string MaskedStyle = BaseStyle + @"
+            #wrap { overflow: hidden; width: 400px; height: 400px; }
+            #test { filter: grayscale(1); }
+        ";
+
+        [UGUITest(Script = MaskedScript, Style = MaskedStyle)]
+        public IEnumerator ColourOpsSurviveAMaskingAncestor()
+        {
+            for (int i = 0; i < 4; i++) yield return null;
+
+            var c = SampleCentre();
+            Debug.Log($"[FILTER masked grayscale(1)] {Describe(c)}");
+            Assert.AreEqual(c.r, c.g, 0.05f, "grayscale should equalise channels under a mask too");
+            Assert.AreEqual(0.299f, c.r, 0.08f, "grayscale of red should land near its luma");
+        }
 
         [UGUITest(Script = ClippedScript, Style = ClippedStyle)]
         public IEnumerator AncestorOverflowClipsHitsTooNotJustPixels()
