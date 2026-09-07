@@ -143,8 +143,11 @@ export function parseTestResults(xmlFile: string): TestReport | undefined {
     return undefined;
   }
 
+  // No test-run element means the file is not results at all (empty, truncated, half-written),
+  // and reporting zeros for it would read as a pass rather than as a run that never happened.
   const run = /<test-run\b([^>]*)>/.exec(xml);
-  const attrs = run ? readAttributes(run[1]) : {};
+  if (!run) return undefined;
+  const attrs = readAttributes(run[1]);
 
   const report: TestReport = {
     total: Number(attrs.total ?? 0),

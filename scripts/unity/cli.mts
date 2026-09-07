@@ -105,7 +105,7 @@ function openEditor(project: Project) {
 async function compile(project: Project) {
   // No custom C# involved: batchmode compiles every assembly on startup, so the log
   // is the report. An -executeMethod hook would be in the assembly that failed.
-  const { log, code } = await runUnity(project, {
+  const { log, code, logFile } = await runUnity(project, {
     label: 'compile',
     args: ['-quit', '-nographics'],
     timeoutSeconds: Number(flags.timeout ?? 600),
@@ -121,7 +121,7 @@ async function compile(project: Project) {
   // compiles anything for reasons that produce no error line at all -- a project already open
   // being the common one -- and reporting that as "no errors" is a false green.
   if (code !== 0) {
-    console.error(`\nUnity exited ${code} without reporting an error. See ${rel(path.join(outDir, `${project.name}-compile.log`))}.`);
+    console.error(`\nUnity exited ${code} without reporting an error. See ${rel(logFile)}.`);
     process.exitCode = 1;
     return;
   }
@@ -136,8 +136,7 @@ async function test(project: Project) {
   let anyFailed = false;
 
   for (const platform of platforms) {
-    const resultsFile = path.join(outDir, `${project.name}-${platform}.xml`);
-    fs.rmSync(resultsFile, { force: true });
+    const resultsFile = freshFile(path.join(outDir, `${project.name}-${platform}.xml`));
 
     const args = ['-runTests', '-testPlatform', platform, '-testResults', resultsFile];
     const assemblies = flags.assemblies ?? project.assemblies;
@@ -202,14 +201,12 @@ async function player(project: Project) {
 
     // An IL2CPP build compiles the whole managed surface to C++ and then builds it, so it is
     // minutes rather than the seconds `compile` takes.
-    const { log, code } = await runUnity(project, { label, args, timeoutSeconds: Number(flags.timeout ?? 3600) });
+    const { log, code, logFile } = await runUnity(project, { label, args, timeoutSeconds: Number(flags.timeout ?? 3600) });
     reportLog(log);
 
-    executable = builtPath(path.join(outDir, `${project.name}-${label}.log`)) ?? findPlayer(outputDir);
+    executable = builtPath(logFile) ?? findPlayer(outputDir);
     if (code !== 0 || !executable) {
-      console.error(
-        `\nThe ${backend} player did not build (Unity exited ${code}). See ${rel(path.join(outDir, `${project.name}-${label}.log`))}.`,
-      );
+      console.error(`\nThe ${backend} player did not build (Unity exited ${code}). See ${rel(logFile)}.`);
       process.exitCode = 1;
       return;
     }
@@ -221,8 +218,7 @@ async function player(project: Project) {
     return;
   }
 
-  const playerLog = path.join(outDir, `${project.name}-player-${backend}.log`);
-  fs.rmSync(playerLog, { force: true });
+  const playerLog = freshFile(path.join(outDir, `${project.name}-player-${backend}.log`));
 
   // The probe quits the player itself, so the timeout is a backstop rather than the plan.
   const args = ['-logFile', playerLog, '-reactProbe'];
@@ -305,9 +301,41 @@ function findPlayer(outputDir: string): string | undefined {
   }
 }
 
+/**
+ * Clears a file this run is about to write and returns the path to actually use. `rmSync`'s
+ * `force` only swallows ENOENT, so anything still holding the file open throws EPERM here --
+ * fall back to truncating in place, then to a sibling path, then to a message.
+ */
+function freshFile(file: string): string {
+  try {
+    fs.rmSync(file, { force: true });
+    return file;
+  } catch (error) {
+    try {
+      fs.writeFileSync(file, '');
+      return file;
+    } catch {
+      // Not even truncatable; try a path nothing can be holding.
+    }
+
+    const { dir, name, ext } = path.parse(file);
+    const alternate = path.join(dir, `${name}-${process.pid}${ext}`);
+    try {
+      fs.writeFileSync(alternate, '');
+      console.warn(`${rel(file)} is held open by another process; writing ${rel(alternate)} instead.`);
+      return alternate;
+    } catch {
+      console.error(`Cannot clear ${rel(file)} (${(error as NodeJS.ErrnoException).code}) -- another process is holding it open,`);
+      console.error('and no alternate path could be written either. Close whatever has the file open and retry.');
+      process.exitCode = 1;
+      process.exit();
+    }
+  }
+}
+
 type RunOptions = { label: string; args: string[]; timeoutSeconds: number };
 
-async function runUnity(project: Project, options: RunOptions): Promise<{ log: LogReport; code: number | null }> {
+async function runUnity(project: Project, options: RunOptions): Promise<{ log: LogReport; code: number | null; logFile: string }> {
   const held = lockHolder(project);
   if (held) {
     console.error(`${project.name} is open in ${held}. Batch mode needs the project lock -- close that Editor, or drive`);
@@ -318,8 +346,7 @@ async function runUnity(project: Project, options: RunOptions): Promise<{ log: L
 
   const editor = resolveEditor(project.version);
   fs.mkdirSync(outDir, { recursive: true });
-  const logFile = path.join(outDir, `${project.name}-${options.label}.log`);
-  fs.rmSync(logFile, { force: true });
+  const logFile = freshFile(path.join(outDir, `${project.name}-${options.label}.log`));
 
   const args = ['-batchmode', '-projectPath', project.path, '-logFile', logFile, ...options.args];
   console.log(`Unity ${editor.version} ${options.label} on ${project.name} -> ${rel(logFile)}`);
@@ -355,7 +382,7 @@ async function runUnity(project: Project, options: RunOptions): Promise<{ log: L
     if (created.length) console.log(`Unity created (left in place, check git status): ${created.join(', ')}`);
   }
 
-  return { log: parseLog(logFile), code };
+  return { log: parseLog(logFile), code, logFile };
 }
 
 // Live feedback without the firehose: poll the growing log and echo only the lines
