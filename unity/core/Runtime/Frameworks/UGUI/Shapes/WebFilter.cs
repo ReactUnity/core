@@ -28,7 +28,7 @@ namespace ReactUnity.UGUI.Shapes
             {
                 return obj is ShaderProps props &&
                        EqualityComparer<Material>.Default.Equals(BaseMaterial, props.BaseMaterial) &&
-                       Definition == props.Definition &&
+                       Equals(Definition, props.Definition) &&
                        StencilId == props.StencilId;
             }
 
@@ -66,9 +66,14 @@ namespace ReactUnity.UGUI.Shapes
             }
         }
 
-        static Dictionary<ShaderProps, Material> CachedMaterials = new Dictionary<ShaderProps, Material>();
-
         public Transform MaskRoot;
+
+        // One material per component, mutated in place. Keying a shared cache on the props instead
+        // leaked a Material per frame for every animated filter, because FilterDefinition is
+        // interpolatable and so each frame of a transition minted a distinct key.
+        private Material instanceMaterial;
+        private ShaderProps appliedProps;
+        private bool hasAppliedProps;
 
         public override Material materialForRendering
         {
@@ -93,15 +98,31 @@ namespace ReactUnity.UGUI.Shapes
                     Definition = Definition
                 };
 
-                if (!CachedMaterials.TryGetValue(props, out var result) || !result)
+                // A new base material (a mask above us changed) means ours has to be rebuilt on it.
+                if (!instanceMaterial || !hasAppliedProps || appliedProps.BaseMaterial != props.BaseMaterial)
                 {
-                    result = new Material(props.BaseMaterial);
-                    props.SetToMaterial(result);
-                    CachedMaterials[props] = result;
+                    if (instanceMaterial) DestroyImmediate(instanceMaterial);
+                    instanceMaterial = new Material(props.BaseMaterial);
+                    hasAppliedProps = false;
                 }
 
-                return result;
+                if (!hasAppliedProps || !appliedProps.Equals(props))
+                {
+                    props.SetToMaterial(instanceMaterial);
+                    appliedProps = props;
+                    hasAppliedProps = true;
+                }
+
+                return instanceMaterial;
             }
+        }
+
+        protected override void OnDestroy()
+        {
+            base.OnDestroy();
+            if (instanceMaterial) DestroyImmediate(instanceMaterial);
+            instanceMaterial = null;
+            hasAppliedProps = false;
         }
 
         #endregion

@@ -19,6 +19,7 @@ namespace ReactUnity.UGUI
         public ReactElement Component { get; private set; }
         public BorderAndBackground BorderAndBackground { get; protected set; }
         public MaskAndImage OverflowMask { get; protected set; }
+        public ElementFilter ElementFilter { get; protected set; }
 
         private Selectable selectable;
         public Selectable Selectable
@@ -262,6 +263,22 @@ namespace ReactUnity.UGUI
             SetOverflow();
             SetCursor();
             UpdateBackgroundGraphic(false, true);
+            SetFilter();
+        }
+
+        protected void SetFilter()
+        {
+            var filter = ComputedStyle.filter;
+
+            if (filter == null || filter.Equals(FilterDefinition.Default))
+            {
+                if (ElementFilter) ElementFilter.Detach();
+                ElementFilter = null;
+                return;
+            }
+
+            if (!ElementFilter) ElementFilter = ElementFilter.Create(this, filter);
+            else ElementFilter.Definition = filter;
         }
 
         #endregion
