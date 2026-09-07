@@ -130,12 +130,15 @@ context.MediaProvider.SetValue("prefers-color-scheme", "dark");
 | Utilities                                        | Why                                                            |
 | ------------------------------------------------ | -------------------------------------------------------------- |
 | `grid`, `grid-cols-*`, `col-span-*`              | Layout is flexbox only. The flex utilities are the way         |
-| `@container`, `@sm:`                             | Container queries are not implemented                          |
-| `has-*` variants                                 | `:has()` is not implemented                                    |
-| `line-clamp-*`, `contents`, `mix-blend-*`        | The properties behind them are not implemented                 |
+| `mix-blend-*`                                    | Only `background-blend-mode` is implemented                    |
 
 Arbitrary values (`p-[13px]`, `leading-[1.7]`), arbitrary properties, `@theme`, `@utility`,
 `@custom-variant` and the `hover:`, `active:`, `focus:` and `disabled:` variants all work.
+
+So do the `has-*` variants, `line-clamp-*`, `contents`, and the container query utilities —
+`@container`, the `@sm:`/`@min-*:`/`@max-*:` variants and named `@container/name` containers. The
+one difference from a browser is that ReactUnity does not apply size containment, so a container's
+own size may still depend on its contents; see [container queries](/reference/container-queries).
 
 The utilities v4 writes as logical properties work too, `px-*`, `py-*`, `mx-*`, `my-*`, `inset-x-*`,
 `border-x-*`, `ps-*`, `ms-*`, `start-*` and `space-x-*` among them. They follow `direction`, which
