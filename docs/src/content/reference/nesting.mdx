@@ -128,6 +128,8 @@ selector.
 
 ### Limitations {/*limitations*/}
 
-Only `@media`, `@supports`, `@container` and `@starting-style` can be nested inside a style rule.
+Only `@media`, `@supports`, `@container`, `@starting-style` and `@scope` can be nested inside a style rule.
 Any other at-rule there, `@layer` say, is ignored, and the declarations around it are unaffected.
 A nested `@container` works the way a nested `@media` does; see [container queries](/reference/container-queries#nesting).
+A nested `@scope` is different: only its start selector resolves against the enclosing rule, and the
+rules inside it are relative to the scoping root; see [scoped styles](/reference/scoped-styles#nesting).

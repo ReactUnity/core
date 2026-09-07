@@ -1,0 +1,123 @@
+.host {
+  align-items: stretch;
+}
+
+.note {
+  margin-bottom: 12px;
+  font-size: 14px;
+  color: #475569;
+  white-space: normal;
+}
+
+.toggle {
+  align-self: flex-start;
+  margin-bottom: 12px;
+  padding: 6px 12px;
+  border-radius: 8px;
+  background-color: #e2e8f0;
+  color: #0f172a;
+  font-size: 13px;
+}
+
+.toggleOn {
+  background-color: #c7d2fe;
+  color: #3730a3;
+}
+
+/* Every .q is grey until a scope says otherwise. */
+.q {
+  padding: 6px 10px;
+  border-radius: 8px;
+  border-width: 2px;
+  border-color: #cbd5e1;
+  background-color: #f8fafc;
+  color: #475569;
+  font-size: 13px;
+}
+
+.card {
+  gap: 8px;
+  padding: 12px;
+  border-radius: 12px;
+  background-color: #e2e8f0;
+}
+
+.content {
+  gap: 8px;
+  padding: 10px;
+  border-radius: 10px;
+  border-width: 2px;
+  border-color: #94a3b8;
+  border-style: dashed;
+}
+
+/* The donut: every .q under a .card, except those inside its .content. A card inside the content
+   opens a scope of its own, so its .q are styled again. */
+@scope (.card) to (.content) {
+  .q {
+    border-color: #f97316;
+    background-color: #ffedd5;
+    color: #9a3412;
+  }
+}
+
+/* Two scopes that disagree. Whichever root is nearer wins, whatever the order of the rules. */
+.light,
+.dark {
+  gap: 8px;
+  padding: 12px;
+  border-radius: 12px;
+}
+
+.light {
+  background-color: #f1f5f9;
+}
+
+.dark {
+  background-color: #1e293b;
+}
+
+.panel {
+  padding: 8px 12px;
+  border-radius: 8px;
+  font-size: 13px;
+}
+
+@scope (.light) {
+  .panel {
+    background-color: white;
+    color: #0f172a;
+  }
+}
+
+@scope (.dark) {
+  .panel {
+    background-color: #334155;
+    color: #f8fafc;
+  }
+}
+
+/* Selectors that name the root: :scope is the card itself, `> .title` its direct child only. */
+.titled {
+  gap: 6px;
+  padding: 12px;
+  border-radius: 12px;
+  background-color: #e2e8f0;
+}
+
+.title {
+  font-size: 14px;
+  color: #475569;
+}
+
+@scope (.titled) {
+  :scope {
+    border-width: 2px;
+    border-color: #6366f1;
+  }
+
+  > .title {
+    font-weight: bold;
+    color: #3730a3;
+  }
+}

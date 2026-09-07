@@ -178,7 +178,7 @@ namespace ReactUnity.Styling
             }
         }
 
-        private void ProcessRules(IEnumerable<IStylesheetNode> children, MediaQueryList media, string mediaCondition, string layerPath, ContainerQuery container = null, bool startingStyle = false)
+        private void ProcessRules(IEnumerable<IStylesheetNode> children, MediaQueryList media, string mediaCondition, string layerPath, ContainerQuery container = null, bool startingStyle = false, RuleScope scope = null)
         {
             foreach (var child in children)
             {
@@ -194,7 +194,7 @@ namespace ReactUnity.Styling
 
                     var mql = MediaQueryList.Create(Context.MediaProvider, condition, Context.Context);
 
-                    ProcessRules(mediaRule.Rules, mql, condition, layerPath, container, startingStyle);
+                    ProcessRules(mediaRule.Rules, mql, condition, layerPath, container, startingStyle, scope);
 
                     MediaQueries.Add(mql);
                 }
@@ -202,25 +202,31 @@ namespace ReactUnity.Styling
                 {
                     // The parser keeps the prelude as written; the query grammar is this side's.
                     var prelude = string.IsNullOrEmpty(containerRule.Name) ? containerRule.ConditionText : containerRule.Name + " " + containerRule.ConditionText;
-                    ProcessRules(containerRule.Rules, media, mediaCondition, layerPath, ContainerQuery.Parse(prelude, container), startingStyle);
+                    ProcessRules(containerRule.Rules, media, mediaCondition, layerPath, ContainerQuery.Parse(prelude, container), startingStyle, scope);
+                }
+                else if (child is IScopeRule scopeRule)
+                {
+                    // Both preludes arrive as written; a nested @scope has had its start resolved against
+                    // the enclosing rule by the parser, and chains to the @scope it is in here.
+                    ProcessRules(scopeRule.Rules, media, mediaCondition, layerPath, container, startingStyle, new RuleScope(scopeRule.StartText, scopeRule.EndText, scope));
                 }
                 else if (child is IStartingStyleRule startingStyleRule)
                 {
                     // Its rules apply through :enter.
-                    ProcessRules(startingStyleRule.Rules, media, mediaCondition, layerPath, container, true);
+                    ProcessRules(startingStyleRule.Rules, media, mediaCondition, layerPath, container, true, scope);
                 }
                 else if (child is ISupportsRule supportsRule)
                 {
                     // The condition is evaluated here rather than through ExCSS, which only knows
                     // which properties and values the web supports.
                     if (SupportsCondition.Evaluate(supportsRule.ConditionText))
-                        ProcessRules(((IGroupingRule) supportsRule).Rules, media, mediaCondition, layerPath, container, startingStyle);
+                        ProcessRules(((IGroupingRule) supportsRule).Rules, media, mediaCondition, layerPath, container, startingStyle, scope);
                 }
                 else if (child is ILayerRule layerRule)
                 {
                     // The block's rules are ordinary rules; only their place in the cascade differs,
                     // and CollectLayers has already worked that out.
-                    ProcessRules(layerRule.Rules, media, mediaCondition, Layers.Qualify(layerPath, layerRule), container, startingStyle);
+                    ProcessRules(layerRule.Rules, media, mediaCondition, Layers.Qualify(layerPath, layerRule), container, startingStyle, scope);
                 }
                 else if (child is IPropertyRule propertyRule)
                 {
@@ -239,7 +245,7 @@ namespace ReactUnity.Styling
                 }
                 else if (child is StyleRule str)
                 {
-                    AddStyleRule(str, media, mediaCondition, layerPath, container, startingStyle);
+                    AddStyleRule(str, media, mediaCondition, layerPath, container, startingStyle, scope);
                 }
             }
         }
@@ -268,26 +274,26 @@ namespace ReactUnity.Styling
         /// resolved against their parent's. They come after the parent's own declarations, as in
         /// CSS, and share its layer and media context.
         /// </summary>
-        private void AddStyleRule(StyleRule rule, MediaQueryList media, string mediaCondition, string layerPath, ContainerQuery container, bool startingStyle = false)
+        private void AddStyleRule(StyleRule rule, MediaQueryList media, string mediaCondition, string layerPath, ContainerQuery container, bool startingStyle = false, RuleScope scope = null)
         {
-            // An at-rule that cannot nest inside a style rule -- @scope, for one -- is parsed as
-            // a style rule with no selector at all, and a selectorless rule would match every
-            // element. Dropping it leaves the block ignored, which is what it was before.
+            // An at-rule the parser does not know is parsed as a style rule with no selector at
+            // all, and a selectorless rule would match every element. Dropping it leaves the block ignored.
             if (!string.IsNullOrWhiteSpace(rule.SelectorText))
             {
                 var selectorText = rule.Selector.StylesheetText?.Text ?? rule.SelectorText;
                 if (startingStyle) selectorText = ToStartingStyleSelector(selectorText);
 
-                var dcl = Context.StyleTree.AddStyle(rule, ImportanceOffset, media, Scope, Layers.Get(layerPath), container, selectorText);
+                var dcl = Context.StyleTree.AddStyle(rule, ImportanceOffset, media, Scope, Layers.Get(layerPath), container, selectorText, scope);
                 Declarations.AddRange(dcl);
             }
 
             // A nested @media, @supports, @container or @starting-style arrives as the group rule
-            // it is, holding an implicit rule with this one's selector, so the ordinary path handles it.
+            // it is, holding an implicit rule with this one's selector, so the ordinary path handles
+            // it; so does a nested @scope, whose rules are its own.
             foreach (var nested in rule.NestedRules)
             {
-                if (nested is StyleRule nestedRule) AddStyleRule(nestedRule, media, mediaCondition, layerPath, container, startingStyle);
-                else ProcessRules(new IStylesheetNode[] { nested }, media, mediaCondition, layerPath, container, startingStyle);
+                if (nested is StyleRule nestedRule) AddStyleRule(nestedRule, media, mediaCondition, layerPath, container, startingStyle, scope);
+                else ProcessRules(new IStylesheetNode[] { nested }, media, mediaCondition, layerPath, container, startingStyle, scope);
             }
         }
 

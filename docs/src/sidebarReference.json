@@ -240,6 +240,10 @@
           "path": "/reference/cascade-layers"
         },
         {
+          "title": "CSS Scoped Styles",
+          "path": "/reference/scoped-styles"
+        },
+        {
           "title": "CSS Nesting",
           "path": "/reference/nesting"
         },

@@ -1,0 +1,94 @@
+---
+title: Scoped Styles
+---
+
+The `@scope` rule limits a set of style rules to part of the tree: the subtree of a *scoping root*, less any subtrees a *scoping limit* cuts out. How to use it can be learned at [MDN Docs](https://developer.mozilla.org/en-US/docs/Web/CSS/@scope); it works here as it does in a browser.
+
+```css
+@scope (.card) to (.card-content) {
+  image {
+    border-radius: 8px;
+  }
+}
+```
+
+Every `.card` is a scoping root, and the `image` rule applies to images under a card, but not to those inside its `.card-content`, nor to anything below that. What is between the root and the limit is often called a donut scope.
+
+### Roots and limits {/*roots-and-limits*/}
+
+The first selector list names the roots. Each element it matches opens a scope of its own, which is the root and everything under it. The second, after `to`, names the limits: an element matching it, anywhere below the root, is left out of the scope along with its subtree. The root itself is never a limit. Both are ordinary selector lists, and either may be left out.
+
+```css
+@scope (.card) { ... }              /* a whole card */
+@scope (.card) to (.card-content) { ... }  /* a card, minus its content */
+@scope to (.island) { ... }         /* everything, minus the islands */
+@scope { ... }                      /* see below */
+```
+
+An element inside a limit may still be in the scope of another root further in. A card nested inside the content of an outer card opens its own scope, so its images are styled again.
+
+Without a start selector, the root is the scope element of the stylesheet: the element a `<style>` component's `scope` prop names, or the whole document for a stylesheet that has none.
+
+### Selectors in a scoped rule {/*selectors-in-a-scoped-rule*/}
+
+A rule inside the block only matches elements that are in scope. That restriction is on the element the rule styles; the rest of the selector may reach anywhere, so `#app image` inside `@scope (.card)` still matches when `#app` is above the card. The root is in scope, so `@scope (.card) { .card { … } }` styles the card itself.
+
+Three things refer to the root:
+
+| Written           | Means                                                                      |
+| ----------------- | -------------------------------------------------------------------------- |
+| `:scope`          | The scoping root, with the specificity of a pseudo-class.                  |
+| `&`               | The scoping root too, but adding no specificity, like `:where(:scope)`.    |
+| `> image`         | A relative selector, relative to the root: `:scope > image`.               |
+
+```css
+@scope (.card) {
+  :scope { padding: 16px; }
+  &:hover { background-color: #eee; }
+  > .title { font-size: 20px; }
+  image { border-radius: 8px; }
+}
+```
+
+Declarations written directly in the block, outside any rule, style the root at zero specificity, as `& { … }` would.
+
+```css
+@scope (.card) {
+  padding: 16px;
+  image { border-radius: 8px; }
+}
+```
+
+Outside any `@scope`, `:scope` is the stylesheet's scope element, or the root element when it has none.
+
+### The cascade {/*the-cascade*/}
+
+When two declarations from different scopes apply to one element with the same specificity, the one whose root is nearer wins. This is settled after specificity and before source order, so a more specific selector from a farther root still wins, and an equally specific rule from a nearer root wins wherever it is in the sheet. A rule in no scope counts as infinitely far, so a scoped rule beats an unscoped one of equal specificity.
+
+```css
+@scope (.light) { text { color: black; } }
+@scope (.dark) { text { color: white; } }
+```
+
+A text inside a `.dark` inside a `.light` is white, and one inside a `.light` inside a `.dark` is black, whichever rule is written first.
+
+The start selector adds nothing to the specificity of the rules in the block. `@scope (#panel) { text { … } }` is as specific as `text`, where `#panel text` would not be.
+
+### Nesting {/*nesting*/}
+
+`@scope` can be written inside a style rule. Its start selector is then resolved against the enclosing rule the way a nested selector is, and `&` in it stands for the enclosing selector. The rules inside the block are relative to the scoping root, not to the enclosing rule.
+
+```css
+.theme {
+  @scope (.card) to (.card-content) {
+    image { border-radius: 8px; }   /* images in a .card inside a .theme */
+  }
+}
+```
+
+A `@scope` nests in `@media`, `@supports`, `@container` and `@layer`, and those nest in it. A `@scope` inside another `@scope` opens its scopes at roots that are themselves in the outer scope, and the inner root is the one proximity is measured from.
+
+### Notes {/*notes*/}
+
+- A pseudo-element cannot be a root or a limit; a start or end selector naming one matches nothing.
+- Roots and limits are found when an element is styled, so a class toggled on a root or a limit restyles what is under it, as any change to an ancestor does.

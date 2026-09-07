@@ -25,6 +25,13 @@ namespace ReactUnity.Styling.Rules
         /// <summary>The @container this rule is in, set on the leaf alone; the important leaf below it matches through it.</summary>
         public ContainerQuery ContainerQuery { get; internal set; }
 
+        /// <summary>The @scope this rule is in, set on the leaf and on the important leaf below it.</summary>
+        public RuleScope RuleScope { get; internal set; }
+
+        // Whether the rightmost compound can be tested before the scoping root is known: nothing in it
+        // reads :scope. Lets a scoped rule be ruled out cheaply before the walk up to its root.
+        private bool ScopeIndependent = true;
+
         private int RawSpecifity { get; set; } = 0;
         public int Specifity { get; private set; }
 
@@ -170,6 +177,8 @@ namespace ReactUnity.Styling.Rules
                             break;
                         }
                     }
+
+                    ScopeIndependent = !ParsedSelector.Exists(RuleHelpers.ReadsScope);
                 }
             }
             RecalculateSpecificity(importanceOffset, important, layer);
@@ -204,12 +213,32 @@ namespace ReactUnity.Styling.Rules
             }
         }
 
-        public bool Matches(IReactComponent component)
+        public bool Matches(IReactComponent component) => Matches(component, Scope, out _);
+
+        public bool Matches(IReactComponent component, IReactComponent scope) => Matches(component, scope, out _);
+
+        /// <summary>
+        /// Whether the rule matches the component. For a rule in a <c>@scope</c>, the component has to
+        /// be in the scope first, and the root that takes it in is what <c>:scope</c> then means for
+        /// the rest of the selector; <paramref name="proximity"/> is how far up that root is, or
+        /// <see cref="RuleScope.NoProximity"/> for a rule in no scope.
+        /// </summary>
+        public bool Matches(IReactComponent component, IReactComponent scope, out int proximity)
         {
-            return Matches(component, Scope);
+            proximity = RuleScope.NoProximity;
+
+            if (RuleScope != null)
+            {
+                if (ScopeIndependent && !ThisMatches(component, scope)) return false;
+                if (!RuleScope.Matches(component, scope, out var root, out proximity)) return false;
+                scope = root;
+            }
+
+            return MatchesChain(component, scope);
         }
 
-        public bool Matches(IReactComponent component, IReactComponent scope)
+        // The selector proper, matched right to left up the tree.
+        private bool MatchesChain(IReactComponent component, IReactComponent scope)
         {
             if (!ThisMatches(component, scope)) return false;
 
@@ -247,7 +276,7 @@ namespace ReactUnity.Styling.Rules
                 }
 
                 // A pseudo-element's rules are matched against the originating element, which may be their container.
-                if (Parent.Matches(relative, scope)) return ContainerQuery == null || ContainerQuery.Matches(component, PseudoType != RulePseudoType.None);
+                if (Parent.MatchesChain(relative, scope)) return ContainerQuery == null || ContainerQuery.Matches(component, PseudoType != RulePseudoType.None);
                 if (runOnce) return false;
             }
 
@@ -463,7 +492,8 @@ namespace ReactUnity.Styling.Rules
                 case RuleSelectorPartType.Root:
                     return component is IHostComponent;
                 case RuleSelectorPartType.Scope:
-                    return scope != null && component == scope;
+                    // With nothing to be scoped to, :scope is the root, as it is in a document's stylesheet.
+                    return scope != null ? component == scope : component is IHostComponent;
                 case RuleSelectorPartType.Activatable:
                     return component is IActivatableComponent;
                 case RuleSelectorPartType.Text:

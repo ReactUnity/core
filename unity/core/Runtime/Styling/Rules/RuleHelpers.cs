@@ -423,27 +423,28 @@ namespace ReactUnity.Styling.Rules
 
             var result = new StringBuilder(selector.Length);
             var compound = new StringBuilder();
+            var zeroed = new StringBuilder();
             var depth = 0;
 
             // The selector is normalized by now, so a single space separates every compound and
             // every combinator, and a mark that ended up on its own leaves an empty piece behind.
             foreach (var piece in selector.Split(' '))
             {
-                var zeroed = depth > 0;
                 compound.Clear();
+                zeroed.Clear();
 
                 foreach (var ch in piece)
                 {
-                    if (ch == ZeroSpecificityOpen)
-                    {
-                        depth++;
-                        zeroed = true;
-                    }
+                    if (ch == ZeroSpecificityOpen) depth++;
                     else if (ch == ZeroSpecificityClose)
                     {
                         if (depth > 0) depth--;
                     }
-                    else compound.Append(ch);
+                    else
+                    {
+                        compound.Append(ch);
+                        if (depth > 0) zeroed.Append(ch);
+                    }
                 }
 
                 if (compound.Length == 0) continue;
@@ -451,10 +452,11 @@ namespace ReactUnity.Styling.Rules
                 if (result.Length > 0) result.Append(' ');
                 result.Append(compound);
 
-                // A combinator is not a compound, and ParseSelector has nothing to make of one.
-                if (!zeroed || (compound.Length == 1 && ">+~".IndexOf(compound[0]) >= 0)) continue;
+                // A combinator is not a compound, and ParseSelector has nothing to make of one. Only
+                // what was inside the marks weighs nothing: `:where(:scope):hover` still counts the :hover.
+                if (zeroed.Length == 0 || (zeroed.Length == 1 && ">+~".IndexOf(zeroed[0]) >= 0)) continue;
 
-                foreach (var part in ParseSelector(compound.ToString())) specificity += SpecificityOf(part);
+                foreach (var part in ParseSelector(zeroed.ToString())) specificity += SpecificityOf(part);
             }
 
             return result.ToString();
@@ -692,6 +694,75 @@ namespace ReactUnity.Styling.Rules
         {
             if (selector.IndexOf(ZeroSpecificityOpen) < 0) return selector;
             return selector.Replace(ZeroSpecificityOpen.ToString(), "").Replace(ZeroSpecificityClose.ToString(), "");
+        }
+
+        /// <summary>
+        /// Whether matching this part depends on which element <c>:scope</c> is: the part itself, or
+        /// a selector list inside it that may name it.
+        /// </summary>
+        public static bool ReadsScope(RuleSelectorPart part)
+        {
+            switch (part.Type)
+            {
+                case RuleSelectorPartType.Scope:
+                case RuleSelectorPartType.Has:
+                case RuleSelectorPartType.NthChild:
+                case RuleSelectorPartType.NthLastChild:
+                case RuleSelectorPartType.NthOfType:
+                case RuleSelectorPartType.NthLastOfType:
+                    return true;
+                default:
+                    return false;
+            }
+        }
+
+        /// <summary>
+        /// A <c>@scope</c> prelude's selector list, made matchable: <c>&amp;</c> stands for the
+        /// scoping root at zero specificity, <c>:where(:scope)</c>, and a branch that is a relative
+        /// selector (<c>&gt; .content</c>) is relative to it. Every other branch is left as written.
+        /// </summary>
+        public static string ResolveScopedSelector(string selectorList)
+        {
+            var branches = SplitSelectorList(selectorList);
+
+            for (int i = 0; i < branches.Count; i++)
+            {
+                var branch = ReplaceNestingSelector(branches[i].Trim(), ":where(:scope)");
+                if (branch.Length > 0 && ">+~".IndexOf(branch[0]) >= 0) branch = ":scope " + branch;
+                branches[i] = branch;
+            }
+
+            return string.Join(", ", branches);
+        }
+
+        /// <summary>Replaces every <c>&amp;</c> outside a string with <paramref name="replacement"/>.</summary>
+        public static string ReplaceNestingSelector(string selector, string replacement)
+        {
+            if (selector.IndexOf('&') < 0) return selector;
+
+            var sb = new StringBuilder(selector.Length + replacement.Length);
+            var quote = '\0';
+
+            for (int i = 0; i < selector.Length; i++)
+            {
+                var ch = selector[i];
+
+                if (quote != '\0')
+                {
+                    sb.Append(ch);
+                    if (ch == '\\' && i + 1 < selector.Length) sb.Append(selector[++i]);
+                    else if (ch == quote) quote = '\0';
+                }
+                else if (ch == '"' || ch == '\'')
+                {
+                    quote = ch;
+                    sb.Append(ch);
+                }
+                else if (ch == '&') sb.Append(replacement);
+                else sb.Append(ch);
+            }
+
+            return sb.ToString();
         }
     }
 }

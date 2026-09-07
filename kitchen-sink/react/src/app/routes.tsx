@@ -11,6 +11,7 @@ import InteropPage from '#src/pages/interop/index.tsx';
 import MaterialPage from '#src/pages/material/index.tsx';
 import { QueryPage } from '#src/pages/query/QueryPage.tsx';
 import { Redux } from '#src/pages/redux/index.tsx';
+import ScopePage from '#src/pages/scope/index.tsx';
 import { StylePlayground } from '#src/pages/style-playground/StylePlayground.tsx';
 import SvgsPage from '#src/pages/svgs/index.tsx';
 import TodoPage from '#src/pages/todo/index.jsx';
@@ -28,6 +29,7 @@ export function AppRoutes() {
       <Route path={'svgs'} element={<SvgsPage />} />
       <Route path={'filter'} element={<FilterPage />} />
       <Route path={'container-queries'} element={<ContainerQueriesPage />} />
+      <Route path={'scope'} element={<ScopePage />} />
       <Route path={'interop'} element={<InteropPage />} />
       <Route path={'todo'} element={<TodoPage />} />
       <Route path={'query'} element={<QueryPage />} />

@@ -21,6 +21,7 @@ const pages = [
   { path: 'svgs', label: 'SVGs', Icon: icon.gesture },
   { path: 'filter', label: 'Filter', Icon: icon.blur_on },
   { path: 'container-queries', label: 'Container Queries', Icon: icon.aspect_ratio },
+  { path: 'scope', label: 'Scoped Styles', Icon: icon.donut_large },
   { path: 'tailwind', label: 'Tailwind', Icon: icon.style },
   { path: 'interop', label: 'Interop', Icon: icon.settings_ethernet },
   { path: 'todo', label: 'Todo App Example', Icon: icon.checklist },
