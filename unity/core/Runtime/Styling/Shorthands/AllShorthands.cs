@@ -41,7 +41,9 @@ namespace ReactUnity.Styling.Shorthands
         internal static readonly StyleShorthand Overflow = new OverflowShorthand("overflow");
         internal static readonly StyleShorthand ScrollbarColor = new ScrollbarColorShorthand("scrollbar-color");
         internal static readonly StyleShorthand ScrollbarWidth = new ScrollbarWidthShorthand("scrollbar-width");
-        internal static readonly StyleShorthand ScrollTimeline = new ScrollTimelineShorthand("scroll-timeline");
+        internal static readonly StyleShorthand ScrollTimeline = new TimelineShorthand("scroll-timeline", StyleProperties.scrollTimelineName, StyleProperties.scrollTimelineAxis);
+        internal static readonly StyleShorthand ViewTimeline = new TimelineShorthand("view-timeline", StyleProperties.viewTimelineName, StyleProperties.viewTimelineAxis);
+        internal static readonly StyleShorthand AnimationRange = new AnimationRangeShorthand("animation-range");
 
         // The two-value logical shorthands. `padding-inline: 4px 8px` is start then end, and Yoga
         // decides which side each is once it knows the direction the node inherits.
@@ -100,6 +102,10 @@ namespace ReactUnity.Styling.Shorthands
             { "scrollbar-width", ScrollbarWidth },
             { "scrollTimeline", ScrollTimeline },
             { "scroll-timeline", ScrollTimeline },
+            { "viewTimeline", ViewTimeline },
+            { "view-timeline", ViewTimeline },
+            { "animationRange", AnimationRange },
+            { "animation-range", AnimationRange },
             { "paddingInline", PaddingInline },
             { "paddingBlock", PaddingBlock },
             { "marginInline", MarginInline },

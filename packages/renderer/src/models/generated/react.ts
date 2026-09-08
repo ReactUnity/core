@@ -1,6 +1,6 @@
 //
 // Types in assemblies: ReactUnity, ReactUnity.Editor, ReactUnity.UGUI, ReactUnity.UIToolkit
-// Generated 08/09/2026 03:23:15
+// Generated 08/09/2026 03:57:52
 //
 /* eslint-disable */
 
@@ -4439,8 +4439,13 @@ export declare namespace ReactUnity {
       animationPlayState: ReactUnity.Types.ICssValueList<ReactUnity.Styling.Animations.AnimationPlayState>;
       animationTimingFunction: ReactUnity.Types.ICssValueList<((value: number, start?: number, end?: number) => number)>;
       animationTimeline: ReactUnity.Types.ICssValueList<ReactUnity.Styling.Animations.AnimationTimeline>;
+      animationRangeStart: ReactUnity.Types.ICssValueList<ReactUnity.Styling.Animations.AnimationRangeBoundary>;
+      animationRangeEnd: ReactUnity.Types.ICssValueList<ReactUnity.Styling.Animations.AnimationRangeBoundary>;
       scrollTimelineName: string;
       scrollTimelineAxis: ReactUnity.Styling.Animations.TimelineAxis;
+      viewTimelineName: string;
+      viewTimelineAxis: ReactUnity.Styling.Animations.TimelineAxis;
+      viewTimelineInset: ReactUnity.Types.YogaValue2;
       audioClip: ReactUnity.Types.ICssValueList<ReactUnity.Types.AudioReference>;
       audioIterationCount: ReactUnity.Types.ICssValueList<number>;
       audioDelay: ReactUnity.Types.ICssValueList<number>;
@@ -4686,8 +4691,13 @@ export declare namespace ReactUnity {
       static animationPlayState: ReactUnity.Styling.ValueListStyleProperty;
       static animationTimingFunction: ReactUnity.Styling.ValueListStyleProperty;
       static animationTimeline: ReactUnity.Styling.ValueListStyleProperty;
+      static animationRangeStart: ReactUnity.Styling.ValueListStyleProperty;
+      static animationRangeEnd: ReactUnity.Styling.ValueListStyleProperty;
       static scrollTimelineName: ReactUnity.Styling.StyleProperty;
       static scrollTimelineAxis: ReactUnity.Styling.StyleProperty;
+      static viewTimelineName: ReactUnity.Styling.StyleProperty;
+      static viewTimelineAxis: ReactUnity.Styling.StyleProperty;
+      static viewTimelineInset: ReactUnity.Styling.StyleProperty;
       static audioClip: ReactUnity.Styling.ValueListStyleProperty;
       static audioIterationCount: ReactUnity.Styling.ValueListStyleProperty;
       static audioDelay: ReactUnity.Styling.ValueListStyleProperty;
@@ -4971,11 +4981,30 @@ export declare namespace ReactUnity {
         GetType(): System.Type;
         ToString(): string;
       }
+      export enum TimelineRangeName {
+        Normal = 0,
+        Cover = 1,
+        Contain = 2,
+        Entry = 3,
+        Exit = 4,
+        EntryCrossing = 5,
+        ExitCrossing = 6,
+      }
+      export class AnimationRangeBoundary {
+        constructor(name: ReactUnity.Styling.Animations.TimelineRangeName, offset: Yoga.YogaValue);
+        Name: ReactUnity.Styling.Animations.TimelineRangeName;
+        Offset: Yoga.YogaValue;
+        Equals(obj: any): boolean;
+        GetHashCode(): number;
+        ToString(): string;
+        GetType(): System.Type;
+      }
       export enum AnimationTimelineKind {
         Auto = 0,
         None = 1,
         Scroll = 2,
         Named = 3,
+        View = 4,
       }
       export enum TimelineAxis {
         Block = 0,
@@ -4996,8 +5025,28 @@ export declare namespace ReactUnity {
         Scroller: ReactUnity.Styling.Animations.TimelineScroller;
         Axis: ReactUnity.Styling.Animations.TimelineAxis;
         Name: string;
+        Inset: ReactUnity.Types.YogaValue2;
         static Scroll(scroller: ReactUnity.Styling.Animations.TimelineScroller, axis: ReactUnity.Styling.Animations.TimelineAxis): ReactUnity.Styling.Animations.AnimationTimeline;
+        static View(axis: ReactUnity.Styling.Animations.TimelineAxis, inset: ReactUnity.Types.YogaValue2): ReactUnity.Styling.Animations.AnimationTimeline;
         static Named(name: string): ReactUnity.Styling.Animations.AnimationTimeline;
+        Equals(obj: any): boolean;
+        GetHashCode(): number;
+        ToString(): string;
+        GetType(): System.Type;
+      }
+      export class TimelineAttachment {
+        Source: ReactUnity.IReactComponent;
+        Vertical: boolean;
+        IsView: boolean;
+        Offset: number;
+        ScrollRange: number;
+        PortSize: number;
+        SubjectStart: number;
+        SubjectSize: number;
+        InsetStart: number;
+        InsetEnd: number;
+        ResolveBoundary(boundary: ReactUnity.Styling.Animations.AnimationRangeBoundary, isEnd: boolean): number;
+        GetProgress(start: number, end: number): number;
         Equals(obj: any): boolean;
         GetHashCode(): number;
         ToString(): string;
@@ -5540,12 +5589,14 @@ export declare namespace ReactUnity {
         static ContainerNameConverter: ReactUnity.Styling.Converters.StyleConverterBase;
         static AnimationTimelineConverter: ReactUnity.Styling.Converters.StyleConverterBase;
         static TimelineNameConverter: ReactUnity.Styling.Converters.StyleConverterBase;
+        static AnimationRangeConverter: ReactUnity.Styling.Converters.StyleConverterBase;
         static ContainerTypeConverter: ReactUnity.Styling.Converters.StyleConverterBase;
         static ColorSchemeConverter: ReactUnity.Styling.Converters.StyleConverterBase;
         static ScrollbarGutterConverter: ReactUnity.Styling.Converters.StyleConverterBase;
         static YogaValueConverter: ReactUnity.Styling.Converters.StyleConverterBase;
         static YogaValue2Converter: ReactUnity.Styling.Converters.StyleConverterBase;
         static BorderRadiusConverter: ReactUnity.Styling.Converters.StyleConverterBase;
+        static TimelineInsetConverter: ReactUnity.Styling.Converters.StyleConverterBase;
         static Vector2Converter: ReactUnity.Styling.Converters.StyleConverterBase;
         static Vector3Converter: ReactUnity.Styling.Converters.StyleConverterBase;
         static IntConverter: ReactUnity.Styling.Converters.StyleConverterBase;
@@ -5594,6 +5645,18 @@ export declare namespace ReactUnity {
         constructor();
         StringifyInternal(value: any): string;
         StringifyTyped(value: string): string;
+        CanHandleKeyword(keyword: ReactUnity.Styling.CssKeyword): boolean;
+        Convert(value: any): ReactUnity.Styling.Computed.IComputedValue;
+        Stringify(value: any): string;
+        Equals(obj: any): boolean;
+        GetHashCode(): number;
+        GetType(): System.Type;
+        ToString(): string;
+      }
+      export class AnimationRangeConverter {
+        constructor();
+        StringifyTyped(value: ReactUnity.Styling.Animations.AnimationRangeBoundary): string;
+        StringifyInternal(value: any): string;
         CanHandleKeyword(keyword: ReactUnity.Styling.CssKeyword): boolean;
         Convert(value: any): ReactUnity.Styling.Computed.IComputedValue;
         Stringify(value: any): string;

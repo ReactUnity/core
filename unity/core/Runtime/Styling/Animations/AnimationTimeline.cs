@@ -1,3 +1,5 @@
+using ReactUnity.Types;
+using Yoga;
 using Mathf = UnityEngine.Mathf;
 
 namespace ReactUnity.Styling.Animations
@@ -11,6 +13,7 @@ namespace ReactUnity.Styling.Animations
         None = 1,
         Scroll = 2,
         Named = 3,
+        View = 4,
     }
 
     /// <summary>
@@ -34,8 +37,9 @@ namespace ReactUnity.Styling.Animations
     }
 
     /// <summary>
-    /// An <c>animation-timeline</c> value: the clock, nothing, an anonymous <c>scroll()</c> progress
-    /// timeline, or the name of one a scroll container declared with <c>scroll-timeline-name</c>.
+    /// An <c>animation-timeline</c> value: the clock, nothing, an anonymous <c>scroll()</c> or
+    /// <c>view()</c> progress timeline, or the name of one declared with <c>scroll-timeline-name</c>
+    /// or <c>view-timeline-name</c>.
     /// </summary>
     public struct AnimationTimeline
     {
@@ -46,6 +50,7 @@ namespace ReactUnity.Styling.Animations
         public TimelineScroller Scroller;
         public TimelineAxis Axis;
         public string Name;
+        public YogaValue2 Inset;
 
         /// <summary>Whether progress comes from a scroll container rather than from the clock.</summary>
         public bool IsScrollDriven => Kind != AnimationTimelineKind.Auto;
@@ -53,82 +58,253 @@ namespace ReactUnity.Styling.Animations
         public static AnimationTimeline Scroll(TimelineScroller scroller, TimelineAxis axis) =>
             new AnimationTimeline { Kind = AnimationTimelineKind.Scroll, Scroller = scroller, Axis = axis };
 
+        public static AnimationTimeline View(TimelineAxis axis, YogaValue2 inset) =>
+            new AnimationTimeline { Kind = AnimationTimelineKind.View, Axis = axis, Inset = inset };
+
         public static AnimationTimeline Named(string name) =>
             new AnimationTimeline { Kind = AnimationTimelineKind.Named, Name = name };
 
         /// <summary>
-        /// The scroll container this timeline reads for <paramref name="element"/>, and the axis to
-        /// read it on, which a named timeline takes from the container rather than from here. Null
-        /// when there is none, which makes the timeline inactive.
+        /// The container this timeline reads for <paramref name="element"/>, the subject a view
+        /// timeline follows through it, and the geometry both are measured in. False when there is
+        /// none, which makes the timeline inactive.
         /// </summary>
-        public IReactComponent ResolveSource(IReactComponent element, out TimelineAxis axis)
+        public bool TryGetAttachment(IReactComponent element, out TimelineAttachment attachment)
         {
-            axis = Axis;
+            attachment = default;
+            if (element == null) return false;
+
+            IReactComponent subject = null;
+            IReactComponent source = null;
+            var axis = Axis;
+            var inset = Inset;
 
             switch (Kind)
             {
                 case AnimationTimelineKind.Scroll:
-                    switch (Scroller)
-                    {
-                        case TimelineScroller.Self:
-                            return element.IsScrollContainer ? element : null;
-                        case TimelineScroller.Root:
-                            var host = element.Context?.Host;
-                            return host != null && host.IsScrollContainer ? host : null;
-                        default:
-                            // `nearest` is the nearest ancestor, so an element that scrolls itself
-                            // needs `self` to read its own progress.
-                            for (var candidate = element.Parent; candidate != null; candidate = candidate.Parent)
-                                if (candidate.IsScrollContainer) return candidate;
-                            return null;
-                    }
+                    source = ResolveScroller(element);
+                    break;
+
+                case AnimationTimelineKind.View:
+                    subject = element;
+                    source = NearestScrollContainer(element.Parent);
+                    break;
 
                 case AnimationTimelineKind.Named:
-                    if (Name == null) return null;
+                    if (Name == null) return false;
 
                     for (IReactComponent candidate = element; candidate != null; candidate = candidate.Parent)
                     {
                         var style = candidate.ComputedStyle;
-                        if (style == null || style.scrollTimelineName != Name) continue;
+                        if (style == null) continue;
 
-                        // A name declared on something that does not scroll names no timeline.
-                        if (!candidate.IsScrollContainer) return null;
+                        if (style.scrollTimelineName == Name)
+                        {
+                            // A name declared on something that does not scroll names no timeline.
+                            if (!candidate.IsScrollContainer) return false;
+                            source = candidate;
+                            axis = style.scrollTimelineAxis;
+                            break;
+                        }
 
-                        axis = style.scrollTimelineAxis;
-                        return candidate;
+                        if (style.viewTimelineName == Name)
+                        {
+                            subject = candidate;
+                            source = NearestScrollContainer(candidate.Parent);
+                            axis = style.viewTimelineAxis;
+                            inset = style.viewTimelineInset;
+                            break;
+                        }
                     }
+                    break;
+            }
 
-                    return null;
+            if (source == null) return false;
 
+            var vertical = axis == TimelineAxis.Block || axis == TimelineAxis.Y;
+            var portSize = vertical ? source.ClientHeight : source.ClientWidth;
+            var content = vertical ? source.ScrollHeight : source.ScrollWidth;
+
+            attachment = new TimelineAttachment
+            {
+                Source = source,
+                Vertical = vertical,
+                Offset = vertical ? source.ScrollTop : source.ScrollLeft,
+                ScrollRange = Mathf.Max(0, content - portSize),
+                PortSize = portSize,
+            };
+
+            if (subject == null) return true;
+
+            if (!TryMeasureSubject(subject, source, vertical, out var start, out var size)) return false;
+
+            attachment.IsView = true;
+            attachment.SubjectStart = start;
+            attachment.SubjectSize = size;
+            attachment.InsetStart = ResolveInset(inset.X, portSize);
+            attachment.InsetEnd = ResolveInset(inset.Y, portSize);
+            return true;
+        }
+
+        /// <summary>
+        /// How far through the given range the timeline stands, from 0 to 1. False when the timeline
+        /// is inactive, which is an animation that has no effect at all.
+        /// </summary>
+        public bool TryGetProgress(IReactComponent element, AnimationRangeBoundary rangeStart, AnimationRangeBoundary rangeEnd, out float progress)
+        {
+            progress = 0;
+            if (!TryGetAttachment(element, out var attachment)) return false;
+
+            progress = attachment.GetProgress(
+                attachment.ResolveBoundary(rangeStart, false),
+                attachment.ResolveBoundary(rangeEnd, true));
+            return true;
+        }
+
+        private IReactComponent ResolveScroller(IReactComponent element)
+        {
+            switch (Scroller)
+            {
+                case TimelineScroller.Self:
+                    return element.IsScrollContainer ? element : null;
+                case TimelineScroller.Root:
+                    var host = element.Context?.Host;
+                    return host != null && host.IsScrollContainer ? host : null;
                 default:
-                    return null;
+                    // `nearest` is the nearest ancestor, so an element that scrolls itself needs
+                    // `self` to read its own progress.
+                    return NearestScrollContainer(element.Parent);
+            }
+        }
+
+        private static IReactComponent NearestScrollContainer(IReactComponent from)
+        {
+            for (var candidate = from; candidate != null; candidate = candidate.Parent)
+                if (candidate.IsScrollContainer) return candidate;
+            return null;
+        }
+
+        // Yoga lays a subtree out in the container's own coordinates, so the offsets on the way up
+        // add to the subject's place in the scrolled content.
+        private static bool TryMeasureSubject(IReactComponent subject, IReactComponent source, bool vertical, out float start, out float size)
+        {
+            start = 0;
+            size = 0;
+
+            var layout = subject.Layout;
+            if (layout == null) return false;
+            size = vertical ? layout.LayoutHeight : layout.LayoutWidth;
+
+            IReactComponent current = subject;
+            while (current != null && current != source)
+            {
+                var node = current.Layout;
+                if (node == null) return false;
+                start += vertical ? node.LayoutTop : node.LayoutLeft;
+                current = current.Parent;
+            }
+
+            return current == source;
+        }
+
+        private static float ResolveInset(YogaValue value, float portSize)
+        {
+            if (value.Unit == YogaUnit.Percent) return portSize * value.Value / 100;
+            if (value.Unit == YogaUnit.Point) return value.Value;
+            return 0;
+        }
+    }
+
+    /// <summary>
+    /// A resolved timeline: the container that carries the progress, and for a view timeline the
+    /// subject whose passage through it the named ranges are measured against. Every offset here is
+    /// a scroll position of the container, which is the one space the ranges share.
+    /// </summary>
+    public struct TimelineAttachment
+    {
+        public IReactComponent Source;
+        public bool Vertical;
+        public bool IsView;
+
+        public float Offset;
+        public float ScrollRange;
+        public float PortSize;
+
+        public float SubjectStart;
+        public float SubjectSize;
+        public float InsetStart;
+        public float InsetEnd;
+
+        /// <summary>The scroll positions a named range starts and ends at.</summary>
+        public void GetRange(TimelineRangeName name, out float start, out float end)
+        {
+            if (!IsView)
+            {
+                // A scroll progress timeline has the one range, so every name is the whole of it.
+                start = 0;
+                end = ScrollRange;
+                return;
+            }
+
+            // The scrollport, less its insets, is where the subject is watched: cover runs from the
+            // subject's leading edge touching the far side to its trailing edge leaving the near one.
+            var coverStart = SubjectStart - PortSize + InsetEnd;
+            var coverEnd = SubjectStart + SubjectSize - InsetStart;
+            var filled = SubjectStart + SubjectSize - PortSize + InsetEnd;
+            var cleared = SubjectStart - InsetStart;
+            var containStart = Mathf.Min(filled, cleared);
+            var containEnd = Mathf.Max(filled, cleared);
+
+            switch (name)
+            {
+                case TimelineRangeName.Contain:
+                    start = containStart;
+                    end = containEnd;
+                    break;
+                case TimelineRangeName.Entry:
+                    start = coverStart;
+                    end = containStart;
+                    break;
+                case TimelineRangeName.Exit:
+                    start = containEnd;
+                    end = coverEnd;
+                    break;
+                case TimelineRangeName.EntryCrossing:
+                    start = coverStart;
+                    end = filled;
+                    break;
+                case TimelineRangeName.ExitCrossing:
+                    start = cleared;
+                    end = coverEnd;
+                    break;
+                default:
+                    start = coverStart;
+                    end = coverEnd;
+                    break;
             }
         }
 
         /// <summary>
-        /// How far through its scrollable range the timeline's container is, from 0 to 1. False when
-        /// the timeline is inactive, which is an animation that has no effect at all.
+        /// The scroll position one end of <c>animation-range</c> names. An offset measures from the
+        /// start of its range, so both ends read it the same way.
         /// </summary>
-        public bool TryGetProgress(IReactComponent element, out float progress)
+        public float ResolveBoundary(AnimationRangeBoundary boundary, bool isEnd)
         {
-            progress = 0;
-            if (element == null) return false;
+            GetRange(boundary.Name, out var start, out var end);
 
-            var source = ResolveSource(element, out var axis);
-            if (source == null) return false;
+            var offset = boundary.Offset;
+            if (offset.Unit == YogaUnit.Percent) return start + (end - start) * offset.Value / 100;
+            if (offset.Unit == YogaUnit.Point) return start + offset.Value;
+            return isEnd ? end : start;
+        }
 
-            var vertical = axis == TimelineAxis.Block || axis == TimelineAxis.Y;
-            var range = vertical
-                ? source.ScrollHeight - source.ClientHeight
-                : source.ScrollWidth - source.ClientWidth;
-
-            // A container with nothing to scroll sits at the start of its range rather than being
-            // inactive, so an animation on it holds its first keyframe.
-            if (range <= 0) return true;
-
-            var offset = vertical ? source.ScrollTop : source.ScrollLeft;
-            progress = Mathf.Clamp01(offset / range);
-            return true;
+        public float GetProgress(float start, float end)
+        {
+            var span = end - start;
+            // A range with nothing in it sits at its own beginning, so the animation holds its first
+            // keyframe rather than jumping to the last.
+            if (span <= 0) return 0;
+            return Mathf.Clamp01((Offset - start) / span);
         }
     }
 }

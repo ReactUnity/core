@@ -441,6 +441,8 @@ namespace ReactUnity.Styling
             var playState = Current.animationPlayState;
             var timingFunction = Current.animationTimingFunction;
             var timeline = Current.animationTimeline;
+            var rangeStart = Current.animationRangeStart;
+            var rangeEnd = Current.animationRangeEnd;
 
             var length = name.Count;
 
@@ -493,7 +495,7 @@ namespace ReactUnity.Styling
                     // a range that is finite, so it counts as one.
                     var cycles = it > 0 ? it : 1;
 
-                    if (tl.TryGetProgress(Current.Component, out var progress))
+                    if (tl.TryGetProgress(Current.Component, rangeStart.Get(ind), rangeEnd.Get(ind), out var progress))
                     {
                         ratio = Mathf.Clamp01(progress) * cycles;
                         delayPassed = true;

@@ -1,12 +1,15 @@
 using System;
+using System.Collections.Generic;
 using ReactUnity.Styling.Animations;
 using ReactUnity.Styling.Computed;
+using ReactUnity.Types;
+using Yoga;
 
 namespace ReactUnity.Styling.Converters
 {
     /// <summary>
-    /// <c>animation-timeline</c>: <c>auto</c>, <c>none</c>, <c>scroll(&lt;scroller&gt; &lt;axis&gt;)</c>
-    /// or the name of a timeline a scroll container declared. <c>view()</c> is not read here yet.
+    /// <c>animation-timeline</c>: <c>auto</c>, <c>none</c>, <c>scroll(&lt;scroller&gt; &lt;axis&gt;)</c>,
+    /// <c>view(&lt;axis&gt; &lt;inset&gt;)</c>, or the name of a timeline an element declared.
     /// </summary>
     public class AnimationTimelineConverter : TypedStyleConverterBase<AnimationTimeline>
     {
@@ -25,9 +28,12 @@ namespace ReactUnity.Styling.Converters
             if (IsTimelineName(text)) return Constant(AnimationTimeline.Named(text), out result);
 
             var (name, _, args) = ParserHelpers.ParseFunction(text);
-            if (name == null || !name.Equals("scroll", StringComparison.OrdinalIgnoreCase)) return Fail(out result);
+            if (name == null) return Fail(out result);
 
-            return ParseScroll(args, out result);
+            if (name.Equals("scroll", StringComparison.OrdinalIgnoreCase)) return ParseScroll(args, out result);
+            if (name.Equals("view", StringComparison.OrdinalIgnoreCase)) return ParseView(args, out result);
+
+            return Fail(out result);
         }
 
         // scroll( <scroller> || <axis> ), either or both, in any order.
@@ -61,6 +67,36 @@ namespace ReactUnity.Styling.Converters
             }
 
             return Constant(AnimationTimeline.Scroll(scroller, axis), out result);
+        }
+
+        // view( <axis> || <inset> ), where the inset is one or two lengths, percentages or `auto`
+        // that shrink the scrollport the subject is watched in.
+        private bool ParseView(string args, out IComputedValue result)
+        {
+            var axis = TimelineAxis.Block;
+            var axisSet = false;
+            var insets = new List<string>();
+
+            foreach (var part in ParserHelpers.SplitWhitespace(args ?? ""))
+            {
+                var token = part.Trim();
+                if (token.Length == 0) continue;
+
+                if (!axisSet && TryParseAxis(token, out var ax))
+                {
+                    axis = ax;
+                    axisSet = true;
+                    continue;
+                }
+
+                insets.Add(token);
+            }
+
+            if (insets.Count == 0) return Constant(AnimationTimeline.View(axis, YogaValue2.Zero), out result);
+            if (insets.Count > 2) return Fail(out result);
+
+            return ComputedMapper.Create(out result, string.Join(" ", insets), AllConverters.TimelineInsetConverter,
+                resolved => resolved is YogaValue2 inset ? (object) AnimationTimeline.View(axis, inset) : null);
         }
 
         private static bool TryParseScroller(string token, out TimelineScroller scroller)
@@ -116,6 +152,8 @@ namespace ReactUnity.Styling.Converters
                     return value.Name;
                 case AnimationTimelineKind.Scroll:
                     return "scroll(" + value.Scroller.ToString().ToLowerInvariant() + " " + value.Axis.ToString().ToLowerInvariant() + ")";
+                case AnimationTimelineKind.View:
+                    return "view(" + value.Axis.ToString().ToLowerInvariant() + " " + value.Inset.ToCSS() + ")";
                 default:
                     return "auto";
             }
@@ -123,7 +161,8 @@ namespace ReactUnity.Styling.Converters
     }
 
     /// <summary>
-    /// <c>scroll-timeline-name</c>: a dashed identifier, or <c>none</c> for no timeline of its own.
+    /// <c>scroll-timeline-name</c> and <c>view-timeline-name</c>: a dashed identifier, or
+    /// <c>none</c> for no timeline of its own.
     /// </summary>
     public class TimelineNameConverter : TypedStyleConverterBase<string>
     {
@@ -138,6 +177,67 @@ namespace ReactUnity.Styling.Converters
             var text = value.Trim();
             if (!AnimationTimelineConverter.IsTimelineName(text)) return Fail(out result);
             return Constant(text, out result);
+        }
+    }
+
+    /// <summary>
+    /// One end of <c>animation-range</c>: <c>normal</c>, a length or percentage into the whole
+    /// timeline, or a named range with an optional offset into it.
+    /// </summary>
+    public class AnimationRangeConverter : TypedStyleConverterBase<AnimationRangeBoundary>
+    {
+        protected override bool ParseInternal(string value, out IComputedValue result)
+        {
+            var splits = ParserHelpers.SplitWhitespace(value.Trim());
+            if (splits.Count == 0 || splits.Count > 2) return Fail(out result);
+
+            if (TryParseRangeName(splits[0], out var name))
+            {
+                if (splits.Count == 1) return Constant(new AnimationRangeBoundary(name, YogaValue.Undefined()), out result);
+                return ParseOffset(name, splits[1], out result);
+            }
+
+            if (splits.Count > 1) return Fail(out result);
+            return ParseOffset(TimelineRangeName.Normal, splits[0], out result);
+        }
+
+        private bool ParseOffset(TimelineRangeName name, string token, out IComputedValue result)
+        {
+            return ComputedMapper.Create(out result, token, AllConverters.YogaValueConverter, resolved => {
+                if (!(resolved is YogaValue offset)) return null;
+                // Only a real distance places a boundary; `auto` has nothing to measure from here.
+                if (offset.Unit != YogaUnit.Point && offset.Unit != YogaUnit.Percent) return null;
+                return new AnimationRangeBoundary(name, offset);
+            });
+        }
+
+        internal static bool TryParseRangeName(string token, out TimelineRangeName name)
+        {
+            if (token.Equals("normal", StringComparison.OrdinalIgnoreCase)) name = TimelineRangeName.Normal;
+            else if (token.Equals("cover", StringComparison.OrdinalIgnoreCase)) name = TimelineRangeName.Cover;
+            else if (token.Equals("contain", StringComparison.OrdinalIgnoreCase)) name = TimelineRangeName.Contain;
+            else if (token.Equals("entry", StringComparison.OrdinalIgnoreCase)) name = TimelineRangeName.Entry;
+            else if (token.Equals("exit", StringComparison.OrdinalIgnoreCase)) name = TimelineRangeName.Exit;
+            else if (token.Equals("entry-crossing", StringComparison.OrdinalIgnoreCase)) name = TimelineRangeName.EntryCrossing;
+            else if (token.Equals("exit-crossing", StringComparison.OrdinalIgnoreCase)) name = TimelineRangeName.ExitCrossing;
+            else
+            {
+                name = TimelineRangeName.Normal;
+                return false;
+            }
+
+            return true;
+        }
+
+        public override string StringifyTyped(AnimationRangeBoundary value)
+        {
+            var name = value.Name == TimelineRangeName.EntryCrossing ? "entry-crossing"
+                : value.Name == TimelineRangeName.ExitCrossing ? "exit-crossing"
+                : value.Name.ToString().ToLowerInvariant();
+
+            if (value.Offset.Unit == YogaUnit.Percent) return name + " " + value.Offset.Value + "%";
+            if (value.Offset.Unit == YogaUnit.Point) return name + " " + value.Offset.Value + "px";
+            return name;
         }
     }
 }

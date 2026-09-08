@@ -5,20 +5,19 @@ using ReactUnity.Styling.Converters;
 
 namespace ReactUnity.Styling.Shorthands
 {
-    /// <summary><c>scroll-timeline: name axis</c>. The axis is optional and resets to <c>block</c> when left out.</summary>
-    internal class ScrollTimelineShorthand : StyleShorthand
+    /// <summary>
+    /// <c>scroll-timeline</c> and <c>view-timeline</c>: a name and an optional axis, which resets to
+    /// <c>block</c> when it is left out. Neither shorthand takes the inset.
+    /// </summary>
+    internal class TimelineShorthand : StyleShorthand
     {
         private static StyleConverterBase AxisConverter = AllConverters.Get<TimelineAxis>();
 
         public override List<IStyleProperty> ModifiedProperties { get; }
 
-        public ScrollTimelineShorthand(string name) : base(name)
+        public TimelineShorthand(string name, IStyleProperty nameProperty, IStyleProperty axisProperty) : base(name)
         {
-            ModifiedProperties = new List<IStyleProperty>
-            {
-                StyleProperties.scrollTimelineName,
-                StyleProperties.scrollTimelineAxis,
-            };
+            ModifiedProperties = new List<IStyleProperty> { nameProperty, axisProperty };
         }
 
         protected override List<IStyleProperty> ModifyInternal(IDictionary<IStyleProperty, object> collection, object value)

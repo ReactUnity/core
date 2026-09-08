@@ -149,9 +149,14 @@ namespace ReactUnity.Styling
         public static readonly ValueListStyleProperty<AnimationPlayState> animationPlayState = new ValueListStyleProperty<AnimationPlayState>("animationPlayState");
         public static readonly ValueListStyleProperty<TimingFunction> animationTimingFunction = new ValueListStyleProperty<TimingFunction>("animationTimingFunction", TimingFunctions.Default);
         public static readonly ValueListStyleProperty<AnimationTimeline> animationTimeline = new ValueListStyleProperty<AnimationTimeline>("animationTimeline", AnimationTimeline.Auto, baseConverter: AllConverters.AnimationTimelineConverter);
+        public static readonly ValueListStyleProperty<AnimationRangeBoundary> animationRangeStart = new ValueListStyleProperty<AnimationRangeBoundary>("animationRangeStart", new AnimationRangeBoundary(), baseConverter: AllConverters.AnimationRangeConverter);
+        public static readonly ValueListStyleProperty<AnimationRangeBoundary> animationRangeEnd = new ValueListStyleProperty<AnimationRangeBoundary>("animationRangeEnd", new AnimationRangeBoundary(), baseConverter: AllConverters.AnimationRangeConverter);
 
         public static readonly StyleProperty<string> scrollTimelineName = new StyleProperty<string>("scrollTimelineName", null, false, false, AllConverters.TimelineNameConverter);
         public static readonly StyleProperty<TimelineAxis> scrollTimelineAxis = new StyleProperty<TimelineAxis>("scrollTimelineAxis", TimelineAxis.Block, false, false);
+        public static readonly StyleProperty<string> viewTimelineName = new StyleProperty<string>("viewTimelineName", null, false, false, AllConverters.TimelineNameConverter);
+        public static readonly StyleProperty<TimelineAxis> viewTimelineAxis = new StyleProperty<TimelineAxis>("viewTimelineAxis", TimelineAxis.Block, false, false);
+        public static readonly StyleProperty<YogaValue2> viewTimelineInset = new StyleProperty<YogaValue2>("viewTimelineInset", YogaValue2.Zero, false, false, AllConverters.TimelineInsetConverter);
 
         public static readonly ValueListStyleProperty<AudioReference> audioClip = new ValueListStyleProperty<AudioReference>("audioClip");
         public static readonly ValueListStyleProperty<int> audioIterationCount = new ValueListStyleProperty<int>("audioIterationCount", 1);
@@ -280,8 +285,13 @@ namespace ReactUnity.Styling
             { "animationPlayState", animationPlayState },
             { "animationTimingFunction", animationTimingFunction },
             { "animationTimeline", animationTimeline },
+            { "animationRangeStart", animationRangeStart },
+            { "animationRangeEnd", animationRangeEnd },
             { "scrollTimelineName", scrollTimelineName },
             { "scrollTimelineAxis", scrollTimelineAxis },
+            { "viewTimelineName", viewTimelineName },
+            { "viewTimelineAxis", viewTimelineAxis },
+            { "viewTimelineInset", viewTimelineInset },
 
             { "animation-delay", animationDelay },
             { "animation-direction", animationDirection },
@@ -292,8 +302,13 @@ namespace ReactUnity.Styling
             { "animation-play-state", animationPlayState },
             { "animation-timing-function", animationTimingFunction },
             { "animation-timeline", animationTimeline },
+            { "animation-range-start", animationRangeStart },
+            { "animation-range-end", animationRangeEnd },
             { "scroll-timeline-name", scrollTimelineName },
             { "scroll-timeline-axis", scrollTimelineAxis },
+            { "view-timeline-name", viewTimelineName },
+            { "view-timeline-axis", viewTimelineAxis },
+            { "view-timeline-inset", viewTimelineInset },
 
             { "audioClip", audioClip },
             { "audioDelay", audioDelay },

@@ -31,12 +31,14 @@ namespace ReactUnity.Styling.Converters
         static public StyleConverterBase ContainerNameConverter = new ContainerNameConverter();
         static public StyleConverterBase AnimationTimelineConverter = new AnimationTimelineConverter();
         static public StyleConverterBase TimelineNameConverter = new TimelineNameConverter();
+        static public StyleConverterBase AnimationRangeConverter = new AnimationRangeConverter();
         static public StyleConverterBase ContainerTypeConverter = new ContainerTypeConverter();
         static public StyleConverterBase ColorSchemeConverter = new ColorSchemeConverter();
         static public StyleConverterBase ScrollbarGutterConverter = new ScrollbarGutterConverter();
         static public StyleConverterBase YogaValueConverter = new YogaValueConverter();
         static public StyleConverterBase YogaValue2Converter = new YogaValue2.Converter();
         static public StyleConverterBase BorderRadiusConverter = new YogaValue2.Converter(false, ' ', true);
+        static public StyleConverterBase TimelineInsetConverter = new YogaValue2.Converter(false, ' ', true);
         static public StyleConverterBase Vector2Converter = new Vector2Converter();
         static public StyleConverterBase Vector3Converter = new Vector3Converter();
         static public StyleConverterBase IntConverter = new IntConverter();

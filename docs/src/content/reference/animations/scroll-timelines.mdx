@@ -1,5 +1,5 @@
 ---
-title: Scroll Timelines
+title: Scroll-driven Animations
 ---
 
 An animation normally reads its progress from the clock. `animation-timeline` points it at a scroll
@@ -42,11 +42,42 @@ scroll { animation-name: fade; animation-timeline: scroll(self); }
 There are no writing modes here, so `block` is always the vertical axis and `inline` always the
 horizontal one.
 
+### View timelines {/*view-timelines*/}
+
+`view()` measures the animated element itself rather than the scroll position: progress runs from
+the moment the element is about to appear at one edge of the scroll view to the moment it has
+disappeared past the other. That whole passage is the `cover` range, and it is what `view()` uses
+unless [`animation-range`](#animation-range) narrows it.
+
+```css
+.card {
+  animation-name: rise;
+  animation-timeline: view();
+  animation-range: entry;
+}
+```
+
+`view()` takes an axis and an inset, in either order. The inset is one or two lengths, percentages
+or `auto`, and shrinks the scroll view the element is watched in — one value applies to both edges,
+two are the start and the end, and a percentage is of the scroll view along that axis. A positive
+inset delays the start and brings the end forward, which is how an animation is made to finish
+before the element reaches the very edge.
+
+```css
+.card { animation-timeline: view(block 20% 10px); }
+```
+
+The container is always the nearest ancestor that scrolls; `view()` has no scroller keyword, since
+the element it follows already says which scroll view it is in.
+
 ### Named timelines {/*named-timelines*/}
 
-`scroll-timeline-name` gives a scroll container a name, and `animation-timeline` takes that name in
-place of `scroll()`. The name is a dashed identifier, and `scroll-timeline-axis` picks the axis on
-the container rather than at the point of use. The `scroll-timeline` shorthand sets both.
+`scroll-timeline-name` gives a scroll container a name, and `view-timeline-name` gives an element
+one for its own passage through its scroll view. `animation-timeline` takes that name in place of
+`scroll()` or `view()`. The name is a dashed identifier, and `scroll-timeline-axis` /
+`view-timeline-axis` pick the axis where the name is declared rather than at the point of use. The
+`scroll-timeline` and `view-timeline` shorthands set the name and the axis together; the inset is
+set on its own with `view-timeline-inset`.
 
 ```css
 scroll#feed {
@@ -59,9 +90,45 @@ scroll#feed {
 }
 ```
 
-A name is visible to the container that declares it and to its descendants. It is the way to read a
-container that is not an ancestor of the animated element's nearest scroller, and the way to read
-one of several scrollers by name.
+A name is visible to the element that declares it and to its descendants. It is the way to read a
+container that is not an ancestor of the animated element's nearest scroller, one of several
+scrollers by name, or — for a view timeline — to animate a child while the parent is the element
+being followed.
+
+```css
+.card { view-timeline: --card; }
+.card .badge {
+  animation-name: pop;
+  animation-timeline: --card;
+}
+```
+
+### Choosing part of the timeline {/*animation-range*/}
+
+`animation-range-start` and `animation-range-end`, or the `animation-range` shorthand, say which
+part of the timeline the animation runs over. Each end is a named range, an offset, or a named
+range with an offset into it.
+
+| Value              | Description                                                             |
+| ------------------ | ----------------------------------------------------------------------- |
+| `normal`           | The default: the start or the end of the whole timeline.                |
+| `<length>`, `<percentage>` | An offset from the start of the range, the whole timeline if no range is named. |
+| `cover`            | The element's whole passage through the scroll view.                    |
+| `contain`          | While the element is entirely inside the scroll view, or entirely covers it. |
+| `entry`, `exit`    | Coming in at one edge, and leaving past the other.                      |
+| `entry-crossing`, `exit-crossing` | Crossing an edge, which differs from `entry` and `exit` only for an element taller than the scroll view. |
+
+```css
+.card {
+  animation-timeline: view();
+  animation-range: entry 25% cover 75%;
+}
+```
+
+A range name written on its own covers the whole of that range, so `animation-range: entry` is
+`entry` to `entry`; anything else leaves the end at `normal`. The named ranges describe where the
+element is, so they only mean something on a view timeline — on a scroll timeline every one of them
+is the whole scroll range, while offsets still narrow it.
 
 ### What the other animation properties mean {/*what-the-other-animation-properties-mean*/}
 
@@ -72,14 +139,15 @@ working:
 - `animation-timing-function` shapes progress just as it shapes time, so the default `ease` makes
   the middle of the scroll range land past the middle of the animation. Use `linear` to follow the
   scroll exactly.
-- `animation-iteration-count` divides the scroll range into that many cycles. An infinite count
-  divides a range that is finite, so it counts as one.
+- `animation-iteration-count` divides the range into that many cycles. An infinite count divides a
+  range that is finite, so it counts as one.
 - `animation-direction` applies per cycle, so `alternate` with two iterations plays forwards over
   the first half of the range and backwards over the second.
-- `animation-fill-mode` has nothing to fill, since the animation covers the whole range.
+- `animation-fill-mode` has nothing to fill: outside its range the animation holds its first or its
+  last keyframe rather than stepping aside.
 
-The `animation` shorthand takes no timeline, so like every other sub-property it leaves out, it
-resets one. Set `animation-timeline` after the shorthand, or in a later rule.
+The `animation` shorthand takes neither a timeline nor a range, so like every other sub-property it
+leaves out, it resets both. Set them after the shorthand, or in a later rule.
 
 ```css
 .bar {
@@ -92,9 +160,9 @@ resets one. Set `animation-timeline` after the shorthand, or in a later rule.
 
 A timeline with no container to read is inactive, and an animation on an inactive timeline has no
 effect at all, not even the fill it would otherwise leave behind. That covers
-`animation-timeline: none`, a `scroll()` that finds no scroll container, and a name that no ancestor
-declares. The element simply shows its unanimated style, which makes an animation that only applies
-inside a scroll view safe to declare everywhere.
+`animation-timeline: none`, a `scroll()` or `view()` that finds no scroll container, and a name that
+no ancestor declares. The element simply shows its unanimated style, which makes an animation that
+only applies inside a scroll view safe to declare everywhere.
 
 A container with nothing to scroll yet sits at the start of its range, so its animation holds the
 first keyframe until there is enough content to scroll.
@@ -103,6 +171,4 @@ first keyframe until there is enough content to scroll.
 
 - An animation reads the container's scroll offset after layout, so a container whose content
   resizes in the same frame is read on the next one.
-- `view()` timelines, which follow an element's own passage through the scrollport, and
-  `animation-range`, are not implemented yet.
 - `timeline-scope`, which widens where a name is visible, is not implemented yet.

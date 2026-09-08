@@ -141,8 +141,13 @@ export interface RenderStyle {
   animationPlayState?: AnimationPlayState;
   animationTimingFunction?: TimingFunctionType;
   animationTimeline?: SafeString;
+  animationRangeStart?: SafeString;
+  animationRangeEnd?: SafeString;
   scrollTimelineName?: SafeString;
   scrollTimelineAxis?: TimelineAxis;
+  viewTimelineName?: SafeString;
+  viewTimelineAxis?: TimelineAxis;
+  viewTimelineInset?: SafeString | number;
   audioClip?: AssetReferenceOrHttp;
   audioIterationCount?: number;
   audioDelay?: number;
@@ -182,6 +187,8 @@ export interface RenderStyle {
   scrollbarColor?: SafeString;
   scrollbarWidth?: 'auto' | 'thin' | 'none' | YogaValueAux;
   scrollTimeline?: SafeString;
+  viewTimeline?: SafeString;
+  animationRange?: SafeString;
   scrollbarGutter?: 'auto' | 'stable' | 'stable both-edges';
   container?: SafeString;
   paddingInline?: SafeString | number;
