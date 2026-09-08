@@ -3,6 +3,7 @@ using Yoga;
 using ReactUnity.Helpers;
 using ReactUnity.Styling.Animations;
 using ReactUnity.Types;
+using ReactUnity.UGUI.Internal;
 using UnityEngine;
 
 namespace ReactUnity.UGUI.Behaviours
@@ -96,7 +97,9 @@ namespace ReactUnity.UGUI.Behaviours
             }
 
             var translate = this.translate;
-            if (!Layout.HasNewLayout && !hasPositionUpdate) return;
+            // A sticky box moves with the scroll rather than with the layout, so it cannot wait for one.
+            var sticky = Component != null && Component.IsSticky;
+            if (!Layout.HasNewLayout && !hasPositionUpdate && !sticky) return;
             if (float.IsNaN(Layout.LayoutWidth)) return;
 
             if (Text) Text.isRightToLeftText = Layout.LayoutDirection == YogaDirection.RTL;
@@ -202,18 +205,33 @@ namespace ReactUnity.UGUI.Behaviours
                 var posX = Layout.LayoutLeft + pivotDiff.x * Layout.LayoutWidth;
                 var posY = -Layout.LayoutTop + pivotDiff.y * Layout.LayoutHeight;
 
-                SetPositionAndSize(new Vector2(posX, posY) + tran, new Vector2(Layout.LayoutWidth, Layout.LayoutHeight), z, visible);
+                // Sticky is the only offset resolved here rather than by layout, and it has to land the
+                // same frame the scroll moves -- so it never goes through `motion-duration`, which would
+                // chase it a frame behind.
+                var stickyOffset = Vector2.zero;
+                if (sticky && StickyPosition.TryResolve(Component, out var resolved, out _))
+                    stickyOffset = new Vector2(resolved.x, -resolved.y);
+
+                SetPositionAndSize(new Vector2(posX, posY) + tran + stickyOffset,
+                    new Vector2(Layout.LayoutWidth, Layout.LayoutHeight), z, visible, sticky);
             }
             hasPositionUpdate = false;
             Layout.MarkLayoutSeen();
         }
 
-        private void SetPositionAndSize(Vector2 pos, Vector2 size, float z, bool visible)
+        private void SetPositionAndSize(Vector2 pos, Vector2 size, float z, bool visible, bool forceImmediate = false)
         {
-            var immediate = !IsVisible || (visible != IsVisible);
+            var immediate = forceImmediate || !IsVisible || (visible != IsVisible);
             IsVisible = visible;
             if (immediate || firstTime || Component?.ComputedStyle == null)
             {
+                // A motion still running would keep overwriting a position that is being tracked, not eased.
+                if (forceImmediate && currentMotion != null)
+                {
+                    StopCoroutine(currentMotion);
+                    currentMotion = null;
+                }
+
                 SetPositionAndSizeImmediate(pos, size, z);
             }
             else

@@ -1,4 +1,5 @@
 using System;
+using ReactUnity.Helpers;
 using ReactUnity.Types;
 using Yoga;
 using Mathf = UnityEngine.Mathf;
@@ -88,7 +89,7 @@ namespace ReactUnity.Styling.Animations
 
                 case AnimationTimelineKind.View:
                     subject = element;
-                    source = NearestScrollContainer(element.Parent);
+                    source = ComponentHelpers.NearestScrollContainer(element.Parent);
                     break;
 
                 case AnimationTimelineKind.Named:
@@ -123,7 +124,7 @@ namespace ReactUnity.Styling.Animations
                         else
                         {
                             subject = declaring;
-                            source = NearestScrollContainer(declaring.Parent);
+                            source = ComponentHelpers.NearestScrollContainer(declaring.Parent);
                             axis = declaringStyle.viewTimelineAxis;
                             inset = declaringStyle.viewTimelineInset;
                         }
@@ -187,15 +188,8 @@ namespace ReactUnity.Styling.Animations
                 default:
                     // `nearest` is the nearest ancestor, so an element that scrolls itself needs
                     // `self` to read its own progress.
-                    return NearestScrollContainer(element.Parent);
+                    return ComponentHelpers.NearestScrollContainer(element.Parent);
             }
-        }
-
-        private static IReactComponent NearestScrollContainer(IReactComponent from)
-        {
-            for (var candidate = from; candidate != null; candidate = candidate.Parent)
-                if (candidate.IsScrollContainer) return candidate;
-            return null;
         }
 
         /// <summary><c>timeline-scope</c> keeps its names space-separated, so a match sits on both boundaries.</summary>

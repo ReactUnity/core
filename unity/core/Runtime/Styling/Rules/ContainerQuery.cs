@@ -168,6 +168,7 @@ namespace ReactUnity.Styling.Rules
 
             state.TracksScroll = true;
             state.Scrollable = GetScrollable(container);
+            state.Stuck = container.StuckEdges;
 
             if (state.Listed) return;
             state.Listed = true;
@@ -367,7 +368,7 @@ namespace ReactUnity.Styling.Rules
         }
 
         // scroll-state(scrollable: edge): whether the container can scroll towards the edge, read off
-        // the container itself. stuck and snapped parse but never hold: nothing here is sticky or snaps.
+        // the container itself.
         private sealed class ScrollableTowards : Condition
         {
             private readonly ScrollEdge Edges;
@@ -376,12 +377,32 @@ namespace ReactUnity.Styling.Rules
             public override bool Matches(ref Subject subject)
             {
                 if (subject.Container == null) return false;
-                var scrollable = GetScrollable(subject.Container);
-                return Edges == ScrollEdge.None ? scrollable == ScrollEdge.None : (scrollable & Edges) != 0;
+                return Holds(GetScrollable(subject.Container), Edges);
             }
 
             public override void Collect(ref Needs needs) => needs.Scroll = true;
         }
+
+        // scroll-state(stuck: edge): whether a `position: sticky` container is currently held against
+        // that edge of its scrollport. Read off the container itself, the way `scrollable` is -- so the
+        // sticky element is the container and the rules inside apply to what it contains.
+        private sealed class StuckAt : Condition
+        {
+            private readonly ScrollEdge Edges;
+            public StuckAt(ScrollEdge edges) { Edges = edges; }
+
+            public override bool Matches(ref Subject subject)
+            {
+                if (subject.Container == null) return false;
+                return Holds(subject.Container.StuckEdges, Edges);
+            }
+
+            public override void Collect(ref Needs needs) => needs.Scroll = true;
+        }
+
+        /// <summary>Whether a set of edges answers the query, where asking for none means asking for empty.</summary>
+        private static bool Holds(ScrollEdge actual, ScrollEdge asked)
+            => asked == ScrollEdge.None ? actual == ScrollEdge.None : (actual & asked) != 0;
 
         // style(): a custom property compares as declared text, with whitespace collapsed; any other
         // property compares its computed value with the argument converted the way the property would.
@@ -697,34 +718,41 @@ namespace ReactUnity.Styling.Rules
             return true;
         }
 
-        // `scrollable: top`, or `scrollable` alone for any edge. stuck and snapped are read and never hold.
+        // `scrollable: top` or `stuck: top`, either one alone for any edge. snapped is read and never holds.
         private static Condition ParseScrollFeature(string text)
         {
             var colon = text.IndexOf(':');
             var name = (colon < 0 ? text : text.Substring(0, colon)).Trim().ToLowerInvariant();
             var value = colon < 0 ? null : text.Substring(colon + 1).Trim().ToLowerInvariant();
 
-            if (name == "stuck" || name == "snapped") return Constant.Never;
-            if (name != "scrollable") return Constant.Never;
+            if (name != "scrollable" && name != "stuck") return Constant.Never;
+            if (!TryParseScrollEdges(value, out var edges)) return Constant.Never;
 
-            if (value == null) return new ScrollableTowards(ScrollEdge.Top | ScrollEdge.Right | ScrollEdge.Bottom | ScrollEdge.Left);
+            return name == "stuck" ? (Condition) new StuckAt(edges) : new ScrollableTowards(edges);
+        }
+
+        /// <summary>An edge, a logical edge, an axis, `none`, or nothing at all for any edge.</summary>
+        private static bool TryParseScrollEdges(string value, out ScrollEdge edges)
+        {
+            edges = ScrollEdge.Top | ScrollEdge.Right | ScrollEdge.Bottom | ScrollEdge.Left;
+            if (value == null) return true;
 
             switch (value)
             {
-                case "none": return new ScrollableTowards(ScrollEdge.None);
+                case "none": edges = ScrollEdge.None; return true;
                 case "top":
-                case "block-start": return new ScrollableTowards(ScrollEdge.Top);
+                case "block-start": edges = ScrollEdge.Top; return true;
                 case "bottom":
-                case "block-end": return new ScrollableTowards(ScrollEdge.Bottom);
+                case "block-end": edges = ScrollEdge.Bottom; return true;
                 case "left":
-                case "inline-start": return new ScrollableTowards(ScrollEdge.Left);
+                case "inline-start": edges = ScrollEdge.Left; return true;
                 case "right":
-                case "inline-end": return new ScrollableTowards(ScrollEdge.Right);
+                case "inline-end": edges = ScrollEdge.Right; return true;
                 case "x":
-                case "inline": return new ScrollableTowards(ScrollEdge.Left | ScrollEdge.Right);
+                case "inline": edges = ScrollEdge.Left | ScrollEdge.Right; return true;
                 case "y":
-                case "block": return new ScrollableTowards(ScrollEdge.Top | ScrollEdge.Bottom);
-                default: return Constant.Never;
+                case "block": edges = ScrollEdge.Top | ScrollEdge.Bottom; return true;
+                default: return false;
             }
         }
 
@@ -1011,6 +1039,7 @@ namespace ReactUnity.Styling.Rules
         public bool HasStyleDependents;
         public bool Listed;
         public ScrollEdge Scrollable;
+        public ScrollEdge Stuck;
         public float Width;
         public float Height;
     }

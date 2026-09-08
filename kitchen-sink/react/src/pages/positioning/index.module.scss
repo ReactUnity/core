@@ -1,0 +1,158 @@
+.host {
+  align-items: stretch;
+}
+
+.note {
+  margin-bottom: 12px;
+  font-size: 14px;
+  color: #475569;
+  white-space: normal;
+}
+
+.code {
+  margin-bottom: 12px;
+  padding: 8px 10px;
+  border-radius: 8px;
+  background-color: #0f172a;
+  color: #a5b4fc;
+  font-size: 12px;
+  white-space: normal;
+}
+
+/* --- Sticky headers -------------------------------------------------------------------------
+   The header is the scroll-state container, so `stuck` is read off the element being held and
+   the rules inside it style its own children. */
+
+.list {
+  height: 260px;
+  border-radius: 12px;
+  background-color: #f8fafc;
+  border-width: 2px;
+  border-color: #e2e8f0;
+}
+
+.section {
+  flex-shrink: 0;
+}
+
+.header {
+  position: sticky;
+  top: 0;
+  container-type: scroll-state;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 12px;
+  background-color: #334155;
+}
+
+.headerTitle {
+  color: white;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.headerHint {
+  opacity: 0;
+  color: #a5b4fc;
+  font-size: 11px;
+  transition: opacity 150ms;
+}
+
+/* A container query styles what the container contains, never the container itself -- so the
+   header being held shows on its children rather than on its own background. */
+@container scroll-state(stuck: top) {
+  .headerTitle {
+    color: #a5b4fc;
+  }
+
+  .headerHint {
+    opacity: 1;
+  }
+}
+
+.row {
+  flex-shrink: 0;
+  padding: 8px 12px;
+  font-size: 13px;
+  color: #475569;
+  white-space: normal;
+}
+
+/* --- A footer held against the bottom ------------------------------------------------------- */
+
+.footerList {
+  height: 200px;
+  border-radius: 12px;
+  background-color: #f8fafc;
+  border-width: 2px;
+  border-color: #e2e8f0;
+}
+
+.footer {
+  position: sticky;
+  bottom: 0;
+  flex-shrink: 0;
+  padding: 8px 12px;
+  background-color: #0f172a;
+  color: #e2e8f0;
+  font-size: 13px;
+}
+
+/* --- Fixed leaves its parent -----------------------------------------------------------------
+   Both badges ask for the same insets. The absolute one is clipped by the box it answers to;
+   the fixed one is lifted to the host, so nothing above it clips it any more. */
+
+.clipper {
+  height: 120px;
+  overflow: hidden;
+  border-radius: 12px;
+  background-color: #f1f5f9;
+  border-width: 2px;
+  border-color: #e2e8f0;
+}
+
+.clipperLabel {
+  padding: 8px 12px;
+  color: #94a3b8;
+  font-size: 12px;
+}
+
+.absoluteBadge {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  padding: 4px 10px;
+  border-radius: 8px;
+  background-color: #64748b;
+  color: white;
+  font-size: 12px;
+}
+
+.fixedBadge {
+  position: fixed;
+  top: 8px;
+  right: 8px;
+  padding: 4px 10px;
+  border-radius: 8px;
+  background-color: #f97316;
+  color: white;
+  font-size: 12px;
+}
+
+.toggle {
+  padding: 6px 12px;
+  border-radius: 8px;
+  background-color: #e2e8f0;
+  color: #0f172a;
+  font-size: 13px;
+}
+
+.toggleOn {
+  background-color: #c7d2fe;
+  color: #3730a3;
+}
+
+.toggles {
+  margin-bottom: 12px;
+}

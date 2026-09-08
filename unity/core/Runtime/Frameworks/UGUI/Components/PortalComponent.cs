@@ -15,6 +15,9 @@ namespace ReactUnity.UGUI
         public bool Detached { get; private set; }
         public YogaNode ReplacedLayout { get; } = new YogaNode();
 
+        internal override YogaNode LayoutInParent => ReplacedLayout;
+        internal override bool TransformDetached => true;
+
         public PortalComponent(UGUIContext context, string tag = "portal") : base(context, tag)
         {
             ShadowParent = Context.Host;

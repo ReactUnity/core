@@ -1,0 +1,92 @@
+---
+title: Position
+---
+
+Decides how an element is placed, and what `top`, `right`, `bottom`, `left`, `start` and `end` mean on it.
+
+Valid values are:
+- `relative` — in flow, and the insets offset it from where flow put it without moving anything else. **This is the default**, unlike on the web.
+- `static` — in flow, and the insets are ignored.
+- `absolute` — out of flow, positioned against the padding box of the nearest positioned ancestor.
+- `fixed` — out of flow, positioned against the viewport, so it does not scroll with an ancestor.
+- `sticky` — in flow, then held inside the nearest scroll container as it scrolls past.
+- `inset` — out of flow, and the insets become anchors, so a pair on one axis stretches the element between them.
+
+`inset` is ReactUnity's own, and it is what makes `top: 0; bottom: 0` fill an axis; the CSS values
+size the element from its own `width` and `height` instead.
+
+### Sticky {/*sticky*/}
+
+A sticky element keeps its place in flow — its siblings never move for it — and is then shifted as
+little as it can be to stay inside the nearest scroll container, shrunk by whatever insets it
+declares. It never leaves its parent's content box, so it is pushed back out at the end of a
+section the way a heading is. An element with no scrollable ancestor is not shifted at all.
+
+`scroll-state(stuck: top)` styles it while it is being held; see
+[container queries](/reference/container-queries#scroll-state-queries).
+
+### Fixed {/*fixed*/}
+
+A fixed element is positioned against the host — the same box `vw` and `vh` measure — and is
+lifted out of its parent, so an ancestor's `overflow: hidden` no longer clips it. Two consequences
+of that lift differ from a browser:
+
+- It no longer inherits an ancestor's `opacity`, `transform` or `filter`.
+- With no insets it lands at the viewport origin rather than at its static position.
+
+`position` is UGUI-only for these two values. Under UIToolkit, `fixed` behaves as `absolute` and
+`sticky` as `relative`, because UIElements has neither.
+
+<Sandpack>
+
+```js
+export default function App() {
+  return <>
+    <scroll className="list">
+      <view className="section">
+        <view className="header">Section A</view>
+        {Array.from({ length: 6 }, (_, i) => <view key={i} className="row">Item {i + 1}</view>)}
+      </view>
+      <view className="section">
+        <view className="header">Section B</view>
+        {Array.from({ length: 6 }, (_, i) => <view key={i} className="row">Item {i + 1}</view>)}
+      </view>
+    </scroll>
+
+    <view className="badge">fixed</view>
+  </>;
+}
+```
+
+```css active
+.list {
+  width: 240px;
+  height: 200px;
+  align-self: center;
+  background-color: white;
+}
+
+.header {
+  position: sticky;
+  top: 0;
+  padding: 6px 10px;
+  background-color: slategray;
+  color: white;
+}
+
+.row {
+  flex-shrink: 0;
+  padding: 6px 10px;
+}
+
+.badge {
+  position: fixed;
+  top: 10px;
+  right: 10px;
+  padding: 4px 8px;
+  background-color: coral;
+  color: white;
+}
+```
+
+</Sandpack>

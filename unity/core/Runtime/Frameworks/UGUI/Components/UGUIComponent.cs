@@ -1,6 +1,7 @@
 using System;
 using ReactUnity.Helpers;
 using ReactUnity.Styling;
+using ReactUnity.Styling.Rules;
 using ReactUnity.Types;
 using ReactUnity.UGUI.Behaviours;
 using ReactUnity.UGUI.Internal;
@@ -186,11 +187,18 @@ namespace ReactUnity.UGUI
             var computed = ComputedStyle;
 
             var pos = StylingHelpers.GetStyleEnumCustom(computed, StyleProperties.position);
+
+            // Yoga has neither fixed nor sticky, and each is missing for a different reason. A fixed box
+            // is absolute against a containing block Yoga cannot reach, so it is lifted to the host and
+            // laid out there. A sticky box stays in flow, so it is relative and the scroll-time offset is
+            // applied after layout -- which is why its insets are the one set Yoga is not given.
+            IsSticky = pos == PositionType.Sticky;
+            SetLiftedToViewport(pos == PositionType.Fixed);
+
             Layout.PositionType =
                 pos == PositionType.Static ? YogaPositionType.Static :
-                pos == PositionType.Relative ? YogaPositionType.Relative :
                 pos == PositionType.Absolute || pos == PositionType.Fixed || pos == PositionType.Inset ? YogaPositionType.Absolute :
-                YogaPositionType.Default;
+                YogaPositionType.Relative;
 
             Layout.StyleDirection = StylingHelpers.GetStyleEnumCustom(computed, LayoutProperties.StyleDirection);
             Layout.FlexDirection = StylingHelpers.GetStyleEnumCustom(computed, LayoutProperties.FlexDirection);
@@ -226,12 +234,15 @@ namespace ReactUnity.UGUI
             Layout.MarginStart = StylingHelpers.GetStyleLength(computed, LayoutProperties.MarginStart);
             Layout.MarginEnd = StylingHelpers.GetStyleLength(computed, LayoutProperties.MarginEnd);
 
-            Layout.Left = StylingHelpers.GetStyleLength(computed, LayoutProperties.Left);
-            Layout.Right = StylingHelpers.GetStyleLength(computed, LayoutProperties.Right);
-            Layout.Top = StylingHelpers.GetStyleLength(computed, LayoutProperties.Top);
-            Layout.Bottom = StylingHelpers.GetStyleLength(computed, LayoutProperties.Bottom);
-            Layout.Start = StylingHelpers.GetStyleLength(computed, LayoutProperties.Start);
-            Layout.End = StylingHelpers.GetStyleLength(computed, LayoutProperties.End);
+            // Sticky insets are read back off the computed style at scroll time; handing them over here
+            // would shift the box in flow, which is the one thing sticky must never do.
+            var undefined = YogaValue.Undefined();
+            Layout.Left = IsSticky ? undefined : StylingHelpers.GetStyleLength(computed, LayoutProperties.Left);
+            Layout.Right = IsSticky ? undefined : StylingHelpers.GetStyleLength(computed, LayoutProperties.Right);
+            Layout.Top = IsSticky ? undefined : StylingHelpers.GetStyleLength(computed, LayoutProperties.Top);
+            Layout.Bottom = IsSticky ? undefined : StylingHelpers.GetStyleLength(computed, LayoutProperties.Bottom);
+            Layout.Start = IsSticky ? undefined : StylingHelpers.GetStyleLength(computed, LayoutProperties.Start);
+            Layout.End = IsSticky ? undefined : StylingHelpers.GetStyleLength(computed, LayoutProperties.End);
 
             Layout.RowGap = StylingHelpers.GetStyleLength(computed, LayoutProperties.RowGap);
             Layout.ColumnGap = StylingHelpers.GetStyleLength(computed, LayoutProperties.ColumnGap);
@@ -279,6 +290,116 @@ namespace ReactUnity.UGUI
 
             if (!ElementFilter) ElementFilter = ElementFilter.Create(this, filter);
             else ElementFilter.Definition = filter;
+        }
+
+        #endregion
+
+
+        #region Positioning
+
+        /// <summary>Whether <c>position: sticky</c> holds this box, which <see cref="ReactElement"/> acts on.</summary>
+        internal bool IsSticky { get; private set; }
+
+        public override ScrollEdge StuckEdges =>
+            IsSticky && StickyPosition.TryResolve(this, out _, out var stuck) ? stuck : ScrollEdge.None;
+
+        private YogaNode viewportPlaceholder;
+
+        /// <summary>
+        /// The node holding this element's slot among its parent's layout children. Normally its own, but a
+        /// <c>position: fixed</c> element -- like a portal -- leaves a hidden stand-in behind while its real
+        /// node hangs off the host.
+        /// </summary>
+        internal virtual YogaNode LayoutInParent => viewportPlaceholder ?? Layout;
+
+        /// <summary>Whether this element's transform lives somewhere other than under its parent's container.</summary>
+        internal virtual bool TransformDetached => viewportPlaceholder != null;
+
+        /// <summary>
+        /// Moves the element to the host and back, which is what makes <c>position: fixed</c> fixed: the
+        /// viewport becomes its containing block, and it stops being scrolled or clipped by anything in
+        /// between. The React tree is untouched, so inherited style, states and events all still follow it.
+        /// </summary>
+        /// <remarks>
+        /// The same trick <see cref="PortalComponent"/> plays, and with the same two consequences. A lifted
+        /// element no longer inherits an ancestor's <c>opacity</c>, <c>transform</c> or <c>filter</c> -- for
+        /// the first two that is closer to CSS than staying put, since a transformed ancestor is not its
+        /// containing block here. And with no insets it lands at the viewport's origin rather than at the
+        /// static position it left behind, which layout does not keep.
+        /// </remarks>
+        private void SetLiftedToViewport(bool lifted)
+        {
+            if (lifted == (viewportPlaceholder != null)) return;
+            // The host is the viewport, so it has nowhere to lift to; nor does a detached element.
+            if (this is IHostComponent || Layout == null) return;
+            if (!(Parent is UGUIComponent parent) || parent.Layout == null) return;
+
+            var host = Context.Host as UGUIComponent;
+            if (host?.Layout == null || host == this) return;
+
+            if (lifted)
+            {
+                var placeholder = viewportPlaceholder = new YogaNode { Display = YogaDisplay.None, Data = this };
+                Swap(parent.Layout, Layout, placeholder);
+
+                host.Layout.AddChild(Layout);
+                RectTransform.SetParent(host.Container, false);
+            }
+            else
+            {
+                var placeholder = viewportPlaceholder;
+                viewportPlaceholder = null;
+
+                Layout.Parent?.RemoveChild(Layout);
+                Swap(parent.Layout, placeholder, Layout);
+
+                parent.RestoreChildTransform(this);
+            }
+        }
+
+        /// <summary>Puts <paramref name="replacement"/> where <paramref name="node"/> stands, or appends it.</summary>
+        private static void Swap(YogaNode parent, YogaNode node, YogaNode replacement)
+        {
+            if (parent == null) return;
+
+            var index = parent.IndexOf(node);
+            if (index < 0)
+            {
+                parent.AddChild(replacement);
+                return;
+            }
+
+            parent.RemoveAt(index);
+            parent.Insert(index, replacement);
+        }
+
+        /// <summary>
+        /// Puts a child's transform back under this container at the sibling position its order asks for.
+        /// </summary>
+        internal void RestoreChildTransform(UGUIComponent child)
+        {
+            if (!child.RectTransform) return;
+            child.RectTransform.SetParent(Container, false);
+
+            var index = Children == null ? -1 : Children.IndexOf(child);
+            if (index < 0) return;
+
+            // SetParent appended it, so it only has to move if a later sibling is standing in front of it.
+            for (int i = index + 1; i < Children.Count; i++)
+            {
+                if (!(Children[i] is UGUIComponent next) || !next.RectTransform) continue;
+                if (next.RectTransform.parent != Container) continue;
+                child.RectTransform.SetSiblingIndex(next.RectTransform.GetSiblingIndex());
+                return;
+            }
+        }
+
+        public override void SetParent(IContainerComponent newParent, IReactComponent relativeTo = null, bool insertAfter = false)
+        {
+            // Put the element back before the tree moves under it, or the stand-in is left in a parent that
+            // will never hear of it again. The next layout pass lifts it out of the new parent instead.
+            SetLiftedToViewport(false);
+            base.SetParent(newParent, relativeTo, insertAfter);
         }
 
         #endregion
@@ -629,7 +750,8 @@ namespace ReactUnity.UGUI
             var siblings = Parent.Layout;
             var count = siblings.Count;
             var currentIndex = -1;
-            var layout = Layout;
+            // A lifted element keeps its slot here through a stand-in, so that is the node to move.
+            var layout = LayoutInParent;
 
             for (int i = 0; i < count; i++)
             {
@@ -672,10 +794,14 @@ namespace ReactUnity.UGUI
                 hasUpdate = true;
             }
 
-            if (siblings.Count > expectedIndex + 1)
+            // Nothing below reorders anything: this element's transform is not among the parent's.
+            if (TransformDetached) return hasUpdate;
+
+            var next = NextAttachedSibling(siblings, expectedIndex + 1);
+
+            if (next != null)
             {
-                var item = siblings[expectedIndex + 1];
-                var newInd = (item.Data as UGUIComponent).RectTransform.GetSiblingIndex();
+                var newInd = next.RectTransform.GetSiblingIndex();
                 var oldInd = RectTransform.GetSiblingIndex();
                 if (newInd > oldInd) newInd--;
 
@@ -710,6 +836,25 @@ namespace ReactUnity.UGUI
             }
 
             return hasUpdate;
+        }
+
+        /// <summary>
+        /// The first sibling from <paramref name="index"/> on whose transform is actually under the shared
+        /// container, so a lifted one is stepped over rather than measured where it no longer is.
+        /// </summary>
+        private UGUIComponent NextAttachedSibling(YogaNode siblings, int index)
+        {
+            var parentContainer = RectTransform.parent;
+
+            for (int i = index; i < siblings.Count; i++)
+            {
+                if (!(siblings[i].Data is UGUIComponent sibling)) continue;
+                if (sibling.TransformDetached || !sibling.RectTransform) continue;
+                if (sibling.RectTransform.parent != parentContainer) continue;
+                return sibling;
+            }
+
+            return null;
         }
 
         protected void PropagateEventViewportChange(UGUIComponent cmp, RectTransform vp, bool skipSelf)

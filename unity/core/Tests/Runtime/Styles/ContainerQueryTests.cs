@@ -364,7 +364,7 @@ namespace ReactUnity.Tests
             Assert.AreEqual(Color.black, Q("#d").ComputedStyle.color);
             Assert.AreEqual(Color.red, Q("#e").ComputedStyle.color);
             Assert.AreEqual(Color.black, Q("#f").ComputedStyle.color);
-            // Nothing is sticky, so stuck never holds.
+            // The container answering it is the scroll, which is not itself sticky.
             Assert.AreEqual(Color.black, Q("#g").ComputedStyle.color);
 
             scroll.ScrollTop = 200;
@@ -393,6 +393,45 @@ namespace ReactUnity.Tests
 
             Assert.AreEqual(Color.black, Q("#b").ComputedStyle.color);
             Assert.AreEqual(Color.black, Q("#e").ComputedStyle.color);
+        }
+
+        const string StuckScript = @"
+            function App() {
+                return <scroll id='sc' style={{ width: 200, height: 200 }}>
+                    <view id='before' style={{ height: 100, flexShrink: 0 }} />
+                    <view id='header' style={{ height: 40, flexShrink: 0 }}>
+                        <view id='title' />
+                    </view>
+                    <view id='after' style={{ height: 400, flexShrink: 0 }} />
+                </scroll>;
+            }
+        ";
+
+        const string StuckStyle = @"
+            #header { position: sticky; top: 0; container-type: scroll-state; }
+            #title { color: black; }
+
+            @container scroll-state(stuck: top) { #title { color: red; } }
+        ";
+
+        [UGUITest(Script = StuckScript, Style = StuckStyle)]
+        public IEnumerator StuckFollowsWhetherTheStickyContainerIsHeldAtTheEdge()
+        {
+            yield return null;
+            yield return null;
+
+            var scroll = Q("#sc");
+            Assert.AreEqual(Color.black, Q("#title").ComputedStyle.color);
+
+            scroll.ScrollTop = 150;
+            yield return null;
+            yield return null;
+            Assert.AreEqual(Color.red, Q("#title").ComputedStyle.color);
+
+            scroll.ScrollTop = 0;
+            yield return null;
+            yield return null;
+            Assert.AreEqual(Color.black, Q("#title").ComputedStyle.color);
         }
     }
 }

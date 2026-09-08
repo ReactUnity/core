@@ -96,10 +96,16 @@ namespace ReactUnity.UIToolkit
             TargetElement.style.marginLeft = StylingHelpers.GetStyleLengthTriple(computed, LayoutProperties.MarginStart, LayoutProperties.MarginLeft, LayoutProperties.Margin);
             TargetElement.style.marginRight = StylingHelpers.GetStyleLengthTriple(computed, LayoutProperties.MarginEnd, LayoutProperties.MarginRight, LayoutProperties.Margin);
 
-            TargetElement.style.left = StylingHelpers.GetStyleLengthDouble(computed, LayoutProperties.Start, LayoutProperties.Left);
-            TargetElement.style.right = StylingHelpers.GetStyleLengthDouble(computed, LayoutProperties.End, LayoutProperties.Right);
-            TargetElement.style.top = StylingHelpers.GetStyleLength(computed, LayoutProperties.Top);
-            TargetElement.style.bottom = StylingHelpers.GetStyleLength(computed, LayoutProperties.Bottom);
+            var pos = computed.position;
+
+            // Sticky insets are a scroll-time offset, not a layout one, and UIElements has no way to
+            // apply them as one -- so a sticky box degrades to its in-flow position rather than being
+            // shifted by insets it should never honour in flow.
+            var sticky = pos == PositionType.Sticky;
+            TargetElement.style.left = sticky ? StyleKeyword.Null : StylingHelpers.GetStyleLengthDouble(computed, LayoutProperties.Start, LayoutProperties.Left);
+            TargetElement.style.right = sticky ? StyleKeyword.Null : StylingHelpers.GetStyleLengthDouble(computed, LayoutProperties.End, LayoutProperties.Right);
+            TargetElement.style.top = sticky ? StyleKeyword.Null : StylingHelpers.GetStyleLength(computed, LayoutProperties.Top);
+            TargetElement.style.bottom = sticky ? StyleKeyword.Null : StylingHelpers.GetStyleLength(computed, LayoutProperties.Bottom);
 
             TargetElement.style.borderLeftWidth =
                 computed.borderLeftStyle == BorderStyle.None ? 0 :
@@ -119,8 +125,12 @@ namespace ReactUnity.UIToolkit
 
             TargetElement.style.display = computed.GetStyleValue(LayoutProperties.Display, true) == DisplayType.None ? DisplayStyle.None : DisplayStyle.Flex;
 
-            var pos = computed.position;
-            TargetElement.style.position = pos == PositionType.Relative ? Position.Relative : Position.Absolute;
+            // UIElements has only these two. `static` and `sticky` are in flow, so both are relative
+            // -- reading them as absolute took an unpositioned box out of flow entirely. `fixed` has
+            // no viewport containing block here, so it lands on absolute like the other two off-flow values.
+            TargetElement.style.position =
+                pos == PositionType.Absolute || pos == PositionType.Fixed || pos == PositionType.Inset
+                ? Position.Absolute : Position.Relative;
             TargetElement.style.overflow = StylingHelpers.GetStyleEnumCustom<Overflow>(computed, LayoutProperties.Overflow);
 
             TargetElement.style.alignContent = StylingHelpers.GetStyleEnumCustom<Align>(computed, LayoutProperties.AlignContent);

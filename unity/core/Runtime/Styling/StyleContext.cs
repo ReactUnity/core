@@ -72,9 +72,9 @@ namespace ReactUnity.Styling
         }
 
         /// <summary>
-        /// Restyles the subtree of every tracked container whose content box, or whose scrollable
-        /// edges, changed since they were last read, and applies the result at once so that the
-        /// layout can be run again on it. Returns whether any did.
+        /// Restyles the subtree of every tracked container whose content box, scrollable edges or stuck
+        /// edges changed since they were last read, and applies the result at once so that the layout
+        /// can be run again on it. Returns whether any did.
         /// </summary>
         internal bool RestyleResizedContainers()
         {
@@ -112,6 +112,13 @@ namespace ReactUnity.Styling
                     if (scrollable != state.Scrollable)
                     {
                         state.Scrollable = scrollable;
+                        moved = true;
+                    }
+
+                    var stuck = container.StuckEdges;
+                    if (stuck != state.Stuck)
+                    {
+                        state.Stuck = stuck;
                         moved = true;
                     }
                 }

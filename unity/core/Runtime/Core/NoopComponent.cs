@@ -51,6 +51,7 @@ namespace ReactUnity
         public float ClientWidth { get; }
         public float ClientHeight { get; }
         public bool IsScrollContainer => false;
+        public ScrollEdge StuckEdges => ScrollEdge.None;
         public float Width { get; }
         public float Height { get; }
         public List<IReactComponent> Children { get; }

@@ -105,6 +105,8 @@ namespace ReactUnity
 
         public bool IsScrollContainer => Proxy.IsScrollContainer;
 
+        public ScrollEdge StuckEdges => Proxy.StuckEdges;
+
         public List<IReactComponent> Children => Proxy.Children;
 
         public IReactComponent BeforePseudo => Proxy.BeforePseudo;

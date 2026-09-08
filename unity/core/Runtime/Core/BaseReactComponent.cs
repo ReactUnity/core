@@ -150,6 +150,7 @@ namespace ReactUnity
         public abstract float ClientHeight { get; }
 
         public virtual bool IsScrollContainer => false;
+        public virtual ScrollEdge StuckEdges => ScrollEdge.None;
         #endregion
 
 

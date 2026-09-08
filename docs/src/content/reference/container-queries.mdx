@@ -89,7 +89,25 @@ scroll {
 }
 ```
 
-`stuck` and `snapped` parse and never hold: nothing here is `position: sticky` and nothing snaps.
+`stuck` takes the same values and asks which edges of its scrollport are currently holding a
+`position: sticky` box. It is read off the container itself rather than an ancestor, so the sticky
+element is the one that carries `container-type: scroll-state`. As always, the rules inside style
+what the container contains and never the container itself, so the visible change belongs on a
+child.
+
+```css
+.header {
+  position: sticky;
+  top: 0;
+  container-type: scroll-state;
+}
+
+@container scroll-state(stuck: top) {
+  .header .title { font-size: 14px; }
+}
+```
+
+`snapped` parses and never holds -- nothing snaps yet.
 
 ### Container units {/*container-units*/}
 

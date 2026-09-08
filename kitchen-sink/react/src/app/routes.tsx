@@ -9,6 +9,7 @@ import HomePage from '#src/pages/home/index.tsx';
 import ImagesPage from '#src/pages/images/index.tsx';
 import InteropPage from '#src/pages/interop/index.tsx';
 import MaterialPage from '#src/pages/material/index.tsx';
+import PositioningPage from '#src/pages/positioning/index.tsx';
 import { QueryPage } from '#src/pages/query/QueryPage.tsx';
 import { Redux } from '#src/pages/redux/index.tsx';
 import ScopePage from '#src/pages/scope/index.tsx';
@@ -30,6 +31,7 @@ export function AppRoutes() {
       <Route path={'svgs'} element={<SvgsPage />} />
       <Route path={'filter'} element={<FilterPage />} />
       <Route path={'container-queries'} element={<ContainerQueriesPage />} />
+      <Route path={'positioning'} element={<PositioningPage />} />
       <Route path={'scope'} element={<ScopePage />} />
       <Route path={'scroll-animations'} element={<ScrollAnimationsPage />} />
       <Route path={'interop'} element={<InteropPage />} />
