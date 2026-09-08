@@ -67,11 +67,6 @@ namespace ReactUnity.Styling.Converters
         static public StyleConverterBase BorderImageSliceConverter = new BorderImageSlice.Converter();
         static public StyleConverterBase FilterDefinitionConverter = new FilterDefinition.Converter();
 
-        // `position: inset` was ReactUnity's own value, for the insets Yoga 1.19 measured from the border
-        // box rather than the padding box. Yoga 3 gets those right, so it is an alias for `absolute`,
-        // kept only so an existing stylesheet is not silently dropped back to `relative`.
-        static public StyleConverterBase PositionConverter = new EnumConverter(typeof(PositionType), true,
-            new Dictionary<string, object> { { "inset", PositionType.Absolute } });
 
         private static Dictionary<Type, StyleConverterBase> Map = new Dictionary<Type, StyleConverterBase>()
         {
@@ -101,7 +96,6 @@ namespace ReactUnity.Styling.Converters
             { typeof(BorderImageSlice), BorderImageSliceConverter },
             { typeof(FilterDefinition), FilterDefinitionConverter },
             { typeof(ContainerType), ContainerTypeConverter },
-            { typeof(PositionType), PositionConverter },
             { typeof(AnimationTimeline), AnimationTimelineConverter },
         };
 

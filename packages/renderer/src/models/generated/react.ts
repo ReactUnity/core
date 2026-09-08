@@ -1,6 +1,6 @@
 //
 // Types in assemblies: ReactUnity, ReactUnity.Editor, ReactUnity.UGUI, ReactUnity.UIToolkit
-// Generated 08/09/2026 15:32:50
+// Generated 08/09/2026 17:32:35
 //
 /* eslint-disable */
 
@@ -5643,7 +5643,6 @@ export declare namespace ReactUnity {
         static SortingLayerConverter: ReactUnity.Styling.Converters.StyleConverterBase;
         static BorderImageSliceConverter: ReactUnity.Styling.Converters.StyleConverterBase;
         static FilterDefinitionConverter: ReactUnity.Styling.Converters.StyleConverterBase;
-        static PositionConverter: ReactUnity.Styling.Converters.StyleConverterBase;
         static Get(type: System.Type): ReactUnity.Styling.Converters.StyleConverterBase;
         Equals(obj: any): boolean;
         GetHashCode(): number;

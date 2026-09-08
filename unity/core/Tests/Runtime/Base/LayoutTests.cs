@@ -1,7 +1,6 @@
 using System.Collections;
 using NUnit.Framework;
 using ReactUnity.Scripting;
-using ReactUnity.Types;
 using UnityEngine;
 
 namespace ReactUnity.Tests
@@ -231,25 +230,6 @@ namespace ReactUnity.Tests
 
             yield return Set("left", "10%", "right", "10%");
             Assert.AreEqual(new Rect(24, 5, 152, 32), GetRect(cmp));
-        }
-
-        [UGUITest(Script = @"
-            function App() {
-                return <view id='parent'>
-                    <view id='test' />
-                </view>;
-            }",
-            Style = @"
-                #parent { width: 200px; height: 160px; border: 5px solid black; padding: 20px; }
-                #test { width: 20px; height: 32px; position: inset; top: 0; left: 0; }
-            ")]
-        public IEnumerator InsetIsADeprecatedAliasForAbsolute()
-        {
-            // Kept so an existing stylesheet keeps parsing rather than dropping back to `relative`.
-            var cmp = Q("#test") as UGUI.ContainerComponent;
-            Assert.AreEqual(PositionType.Absolute, cmp.ComputedStyle.position);
-            Assert.AreEqual(new Rect(5, 5, 20, 32), GetRect(cmp));
-            yield return null;
         }
 
         private Rect GetRect(UGUI.ContainerComponent cmp)
