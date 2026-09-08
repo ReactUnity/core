@@ -84,6 +84,7 @@ namespace ReactUnity.Styling
         public int maxLines => GetStyleValue(StyleProperties.maxLines);
         public float textStrokeWidth => GetStyleValue(StyleProperties.textStrokeWidth);
         public Color textStrokeColor => GetStyleValue(StyleProperties.textStrokeColor);
+        public Color textDecorationColor => GetStyleValue(StyleProperties.textDecorationColor);
         public string content => GetStyleValue(StyleProperties.content);
         public Appearance appearance => GetStyleValue(StyleProperties.appearance);
         public NavigationMode navigation => GetStyleValue(StyleProperties.navigation);

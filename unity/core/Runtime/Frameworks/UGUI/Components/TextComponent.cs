@@ -24,9 +24,12 @@ namespace ReactUnity.UGUI
         public TextMeasurer Measurer { get; }
         public LinkedTextWatcher LinkedTextWatcher { get; private set; }
 
-        public string Content => Text.text;
+        public string Content => ContentText;
 
         private string TextInside;
+        private string ContentText;
+        private string DecorationOpen = "";
+        private string DecorationClose = "";
         private bool TextSetByStyle = false;
         private bool TextCapitalized = false;
 
@@ -93,10 +96,28 @@ namespace ReactUnity.UGUI
         {
             if (!TextSetByStyle)
             {
-                Text.text = TextCapitalized ? TextInfo.ToTitleCase(text) : text;
+                SetRenderedText(TextCapitalized ? TextInfo.ToTitleCase(text) : text);
                 Layout.MarkDirty();
             }
             TextInside = text;
+        }
+
+        /// <summary>
+        /// Assigns the content wrapped in whatever decoration tags are active. <see cref="Content"/>
+        /// stays the content itself, which is what <c>textContent</c> and <c>:empty</c> read.
+        /// </summary>
+        /// <returns>Whether the string TMP holds changed, and so whether layout has to be redone.</returns>
+        private bool SetRenderedText(string content)
+        {
+            ContentText = content;
+
+            var rendered = DecorationOpen.Length == 0 || string.IsNullOrEmpty(content)
+                ? content
+                : DecorationOpen + content + DecorationClose;
+
+            if (Text.text == rendered) return false;
+            Text.text = rendered;
+            return true;
         }
 
         public override void SetProperty(string property, object value)
@@ -104,6 +125,15 @@ namespace ReactUnity.UGUI
             if (property == "richText")
             {
                 Text.richText = Convert.ToBoolean(value);
+
+                // The decoration tags are only emitted while rich text is on, and no style pass
+                // follows a property change, so the wrap is redone here.
+                if (ContentText != null)
+                {
+                    var style = ComputedStyle;
+                    RecalculateDecorationColor(style.fontStyle, style.color, style.textDecorationColor);
+                    if (SetRenderedText(ContentText)) Layout.MarkDirty();
+                }
             }
             else base.SetProperty(property, value);
         }
@@ -157,11 +187,9 @@ namespace ReactUnity.UGUI
             TextCapitalized = style.textTransform == TextTransform.Capitalize;
             if (TextCapitalized) finalText = TextInfo.ToTitleCase(finalText);
 
-            if (Text.text != finalText)
-            {
-                Text.text = finalText;
-                Layout.MarkDirty();
-            }
+            RecalculateDecorationColor(style.fontStyle, style.color, style.textDecorationColor);
+
+            if (SetRenderedText(finalText)) Layout.MarkDirty();
 
 
             var isLinked = style.textOverflow == TextOverflowModes.Linked;
@@ -232,6 +260,41 @@ namespace ReactUnity.UGUI
             // this runs on each style application -- every frame while an animation is going.
             if (Text.fontStyle != finalStyle) Text.fontStyle = finalStyle;
             if (Text.fontWeight != weight) Text.fontWeight = weight;
+        }
+
+        /// <summary>
+        /// TMP has no per-element underline or strikethrough colour. The rich text tags are the only
+        /// way in: their <c>color</c> attribute seeds the per-character decoration colour that the
+        /// mesh builder reads, where the element-level <c>fontStyle</c> flag leaves it as the text
+        /// colour. So a differing colour is applied by wrapping the content.
+        /// </summary>
+        private void RecalculateDecorationColor(FontStyles styles, Color color, Color decorationColor)
+        {
+            var open = "";
+            var close = "";
+
+            // Skipped when rich text is off, where the tags would render as literal characters.
+            if (Text.richText && decorationColor != color)
+            {
+                // TMP clamps the decoration's alpha to the text's, so a translucent `color` shows
+                // through to the line. That is close enough to the web to leave alone.
+                var hex = "#" + ColorUtility.ToHtmlStringRGBA(decorationColor);
+
+                if ((styles & FontStyles.Underline) != 0)
+                {
+                    open += "<u color=" + hex + ">";
+                    close = "</u>" + close;
+                }
+
+                if ((styles & FontStyles.Strikethrough) != 0)
+                {
+                    open += "<s color=" + hex + ">";
+                    close = "</s>" + close;
+                }
+            }
+
+            DecorationOpen = open;
+            DecorationClose = close;
         }
 
         private void RecalculateLineHeight()

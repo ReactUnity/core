@@ -51,7 +51,7 @@ namespace ReactUnity.Styling
         public static readonly StyleProperty<FontReference> fontFamily = new StyleProperty<FontReference>("fontFamily", FontReference.None, false, true);
         public static readonly StyleProperty<Color> color = new StyleProperty<Color>("color", ComputedCurrentColor.Instance, true, false);
         public static readonly StyleProperty<FontWeight> fontWeight = new StyleProperty<FontWeight>("fontWeight", FontWeight.Regular, false, true);
-        public static readonly StyleProperty<FontStyles> fontStyle = new StyleProperty<FontStyles>("fontStyle", FontStyles.Normal, false, true, converter: new EnumConverter(typeof(FontStyles), true, new Dictionary<string, object> { { "linethrough", FontStyles.Strikethrough }, { "solid", FontStyles.Underline }, { "none", FontStyles.Normal } }));
+        public static readonly StyleProperty<FontStyles> fontStyle = new StyleProperty<FontStyles>("fontStyle", FontStyles.Normal, false, true, converter: new EnumConverter(typeof(FontStyles), true, new Dictionary<string, object> { { "linethrough", FontStyles.Strikethrough }, { "none", FontStyles.Normal } }));
         // `font-variant` lands here too: TextMeshPro's small caps are a case transform, which is why `text-transform: small-caps` already existed.
         public static readonly StyleProperty<TextTransform> textTransform = new StyleProperty<TextTransform>("textTransform", TextTransform.None, false, true, converter: new EnumConverter(typeof(TextTransform), false, true, new Dictionary<string, object>
         {
@@ -88,6 +88,9 @@ namespace ReactUnity.Styling
         public static readonly StyleProperty<int> maxLines = new StyleProperty<int>("maxLines", (int) short.MaxValue, true, true);
         public static readonly StyleProperty<float> textStrokeWidth = new StyleProperty<float>("textStrokeWidth", 0f, true, true);
         public static readonly StyleProperty<Color> textStrokeColor = new StyleProperty<Color>("textStrokeColor", ComputedCurrentColor.Instance, true, true);
+        // Inherited, where the web's is not: the line itself rides on `fontStyle`, which is
+        // inherited, so a non-inherited colour would draw nested text's underline in the wrong one.
+        public static readonly StyleProperty<Color> textDecorationColor = new StyleProperty<Color>("textDecorationColor", ComputedCurrentColor.Instance, true, true);
         public static readonly StyleProperty<string> content = new StyleProperty<string>("content", null, false);
         public static readonly StyleProperty<Appearance> appearance = new StyleProperty<Appearance>("appearance", Appearance.None);
         public static readonly StyleProperty<NavigationMode> navigation = new StyleProperty<NavigationMode>("navigation", NavigationMode.Automatic);
@@ -225,6 +228,7 @@ namespace ReactUnity.Styling
             { "lineClamp", maxLines },
             { "textStrokeWidth", textStrokeWidth },
             { "textStrokeColor", textStrokeColor },
+            { "textDecorationColor", textDecorationColor },
             { "content", content },
             { "appearance", appearance },
             { "navigation", navigation },
@@ -375,7 +379,6 @@ namespace ReactUnity.Styling
             { "font-family", fontFamily },
             { "font-weight", fontWeight },
             { "font-style", fontStyle },
-            { "text-decoration", fontStyle },
             { "text-transform", textTransform },
             { "font-size", fontSize },
             { "line-height", lineHeight },
@@ -386,6 +389,7 @@ namespace ReactUnity.Styling
             { "text-overflow", textOverflow },
             { "text-wrap", whiteSpace },
             { "text-decoration-line", fontStyle },
+            { "text-decoration-color", textDecorationColor },
             { "font-variant", textTransform },
             { "font-variant-caps", textTransform },
             { "text-shadow", textShadow },

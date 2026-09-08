@@ -166,6 +166,8 @@ List of supported CSS properties in alphabetical order:
 - start
 - state-duration
 - text-align
+- text-decoration-color
+- text-decoration-line
 - text-overflow
 - text-stroke-color
 - text-stroke-width
@@ -222,6 +224,7 @@ List of supported CSS shorthands in alphabetical order:
 - place-content
 - place-items
 - place-self
+- text-decoration
 - text-stroke
 - transition
 
@@ -280,6 +283,33 @@ place the two disagree, so do not set both on one edge.
 
 Under UIToolkit the inline axis is always the physical one: UIElements has no start and end edge to
 resolve against, and `direction` does nothing there.
+
+### Text decoration {/*text-decoration*/}
+
+`text-decoration` is a shorthand for the line and its colour. TextMeshPro draws the line from the
+font asset's own metrics and has only a solid form, so the style and thickness components are read
+and then dropped -- the point being that they do not take the line down with them:
+
+```css
+a { text-decoration: underline red; }
+a:hover { text-decoration: underline dotted 2px currentcolor; }
+del { text-decoration: line-through #888; }
+```
+
+`underline`, `line-through` and `none` are the lines, and they combine. `overline` and `blink` are
+not accepted at all, because nothing can draw them, so a declaration asking for one is dropped.
+`text-decoration-style` and `text-decoration-thickness` do not exist as longhands for the same
+reason -- there is nothing for them to set.
+
+`text-decoration-color` defaults to `currentcolor` and, unlike on the web, is inherited: the line
+itself rides on `font-style`, which inherits, so a non-inherited colour would draw nested text's
+underline in the wrong one. A colour that differs from `color` is applied through TextMeshPro's rich
+text tags, which means it needs `richText` on -- the default for a `<text>` -- and is skipped when it
+is off.
+
+`font-style` is one property carrying italic, bold and the letter casing as well as the two lines, so
+the shorthand sets only the components you name: `text-decoration: red` leaves the line as it is,
+where CSS would reset it to `none`.
 
 ### Custom states {/*custom-states*/}
 

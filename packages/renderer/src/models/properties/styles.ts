@@ -107,6 +107,7 @@ export interface RenderStyle {
   fontWeight?: FontWeight;
   fontStyle?: FontStyles;
   textDecorationLine?: FontStyles;
+  textDecorationColor?: ColorAux;
   textTransform?: TextTransform;
   fontVariant?: FontVariant;
   fontVariantCaps?: FontVariant;
@@ -178,6 +179,7 @@ export interface RenderStyle {
   flex?: SafeString;
   flexFlow?: SafeString;
   font?: SafeString;
+  textDecoration?: SafeString;
   textStroke?: SafeString;
   animation?: SafeString;
   transition?: SafeString;

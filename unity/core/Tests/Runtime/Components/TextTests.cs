@@ -68,6 +68,45 @@ namespace ReactUnity.Tests
         }
 
         [UGUITest(Script = BaseScript, Style = BaseStyle)]
+        public IEnumerator TextDecorationColorWrapsTheContent()
+        {
+            Component.Globals.Set("richText", true);
+            Component.Globals.Set("textContent", "abc");
+            InsertStyle(@"text { color: white; text-decoration: underline red; }");
+            yield return null;
+
+            // TMP has no per-element underline colour, so a differing one arrives as a tag.
+            Assert.AreEqual("<u color=#FF0000FF>abc</u>", Text.Text.text);
+            // The tags are TMP's business: `textContent` and `:empty` keep seeing the content.
+            Assert.AreEqual("abc", Text.Content);
+            Assert.AreEqual("abc", Text.TextContent);
+
+            // A colour matching `color` needs no tag -- that is what TMP draws the line in already.
+            InsertStyle(@"text { text-decoration-color: white; }");
+            yield return null;
+            Assert.AreEqual("abc", Text.Text.text);
+
+            // Each line gets its own tag, and the pair nests.
+            InsertStyle(@"text { text-decoration: underline line-through blue; }");
+            yield return null;
+            Assert.AreEqual("<u color=#0000FFFF><s color=#0000FFFF>abc</s></u>", Text.Text.text);
+
+            // Without a line there is nothing to colour.
+            InsertStyle(@"text { text-decoration-line: none; }");
+            yield return null;
+            Assert.AreEqual("abc", Text.Text.text);
+
+            InsertStyle(@"text { text-decoration-line: underline; }");
+            yield return null;
+            Assert.AreEqual("<u color=#0000FFFF>abc</u>", Text.Text.text);
+
+            // With rich text off the tags would draw as characters, so none are emitted.
+            Component.Globals.Set("richText", false);
+            yield return null;
+            Assert.AreEqual("abc", Text.Text.text);
+        }
+
+        [UGUITest(Script = BaseScript, Style = BaseStyle)]
         public IEnumerator OverflowAndMaskDoesNotBreakText()
         {
             InsertStyle(@"text {

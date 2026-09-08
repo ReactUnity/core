@@ -32,6 +32,7 @@ namespace ReactUnity.Styling.Shorthands
         internal static readonly StyleShorthand MaskPosition = new BackgroundPositionShorthand("mask-position", StyleProperties.maskPositionX, StyleProperties.maskPositionY);
         internal static readonly StyleShorthand MaskRepeat = new BackgroundRepeatShorthand("mask-repeat");
         internal static readonly StyleShorthand TextStroke = new TextStrokeShorthand("text-stroke");
+        internal static readonly StyleShorthand TextDecoration = new TextDecorationShorthand("text-decoration");
         internal static readonly StyleShorthand Transition = new TransitionShorthand("transition");
         internal static readonly StyleShorthand Motion = new MotionShorthand("motion");
         internal static readonly StyleShorthand Animation = new AnimationShorthand("animation");
@@ -133,6 +134,7 @@ namespace ReactUnity.Styling.Shorthands
             { "mask-position", MaskPosition },
             { "mask-repeat", MaskRepeat },
             { "text-stroke", TextStroke },
+            { "text-decoration", TextDecoration },
             { "padding-inline", PaddingInline },
             { "padding-block", PaddingBlock },
             { "margin-inline", MarginInline },

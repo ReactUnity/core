@@ -129,8 +129,12 @@ context.MediaProvider.SetValue("prefers-color-scheme", "dark");
 
 | Utilities                                        | Why                                                            |
 | ------------------------------------------------ | -------------------------------------------------------------- |
+| `decoration-dotted`, `decoration-2`              | TMP has one solid line, sized by the font asset                |
 | `grid`, `grid-cols-*`, `col-span-*`              | Layout is flexbox only. The flex utilities are the way         |
 | `mix-blend-*`                                    | Only `background-blend-mode` is implemented                    |
+
+The rest of the decoration utilities work: `underline`, `line-through`, `no-underline` and
+`decoration-<color>` — see [text decoration](/reference/css#text-decoration).
 
 Arbitrary values (`p-[13px]`, `leading-[1.7]`), arbitrary properties, `@theme`, `@utility`,
 `@custom-variant` and the `hover:`, `active:`, `focus:` and `disabled:` variants all work.
