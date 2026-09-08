@@ -1,6 +1,6 @@
 //
 // Types in assemblies: ReactUnity, ReactUnity.Editor, ReactUnity.UGUI, ReactUnity.UIToolkit
-// Generated 08/09/2026 04:22:28
+// Generated 08/09/2026 15:32:50
 //
 /* eslint-disable */
 
@@ -54,6 +54,7 @@ export declare namespace ReactUnity {
     ClientWidth: number;
     ClientHeight: number;
     IsScrollContainer: boolean;
+    StuckEdges: ReactUnity.Styling.Rules.ScrollEdge;
     Update(): void;
     MarkForStyleResolving(recursive: boolean): void;
     Remove(): void;
@@ -124,6 +125,7 @@ export declare namespace ReactUnity {
     ClientWidth: number;
     ClientHeight: number;
     IsScrollContainer: boolean;
+    StuckEdges: ReactUnity.Styling.Rules.ScrollEdge;
     ApplyLayoutStyles(): void;
     ResolveStyle(recursive?: boolean): void;
     Update(): void;
@@ -230,6 +232,7 @@ export declare namespace ReactUnity {
     ClientWidth: number;
     ClientHeight: number;
     IsScrollContainer: boolean;
+    StuckEdges: ReactUnity.Styling.Rules.ScrollEdge;
     Width: number;
     Height: number;
     Children: ReactUnity.IReactComponent[];
@@ -306,6 +309,7 @@ export declare namespace ReactUnity {
     ClientWidth: number;
     ClientHeight: number;
     IsScrollContainer: boolean;
+    StuckEdges: ReactUnity.Styling.Rules.ScrollEdge;
     Children: ReactUnity.IReactComponent[];
     BeforePseudo: ReactUnity.IReactComponent;
     AfterPseudo: ReactUnity.IReactComponent;
@@ -564,6 +568,7 @@ export declare namespace ReactUnity {
     ClientWidth: number;
     ClientHeight: number;
     IsScrollContainer: boolean;
+    StuckEdges: ReactUnity.Styling.Rules.ScrollEdge;
     Children: ReactUnity.IReactComponent[];
     BeforePseudo: ReactUnity.IReactComponent;
     AfterPseudo: ReactUnity.IReactComponent;
@@ -1556,6 +1561,7 @@ export declare namespace ReactUnity {
         ScrollWidth: number;
         ScrollHeight: number;
         IsScrollContainer: boolean;
+        StuckEdges: ReactUnity.Styling.Rules.ScrollEdge;
         Open(): void;
         Close(): void;
         SetProperty(property: string, value: any): void;
@@ -1844,6 +1850,7 @@ export declare namespace ReactUnity {
         ScrollWidth: number;
         ScrollHeight: number;
         IsScrollContainer: boolean;
+        StuckEdges: ReactUnity.Styling.Rules.ScrollEdge;
         ResolveStyle(recursive?: boolean): void;
         Pool(): boolean;
         AddEventListener(eventName: string, fun: ReactUnity.Helpers.Callback): (() => void);
@@ -1934,6 +1941,7 @@ export declare namespace ReactUnity {
         ScrollWidth: number;
         ScrollHeight: number;
         IsScrollContainer: boolean;
+        StuckEdges: ReactUnity.Styling.Rules.ScrollEdge;
         SetProperty(property: string, value: any): void;
         AddEventListener(eventName: string, callback: ReactUnity.Helpers.Callback): (() => void);
         ConvertValue(value: any): System.Enum;
@@ -2027,6 +2035,7 @@ export declare namespace ReactUnity {
         ScrollWidth: number;
         ScrollHeight: number;
         IsScrollContainer: boolean;
+        StuckEdges: ReactUnity.Styling.Rules.ScrollEdge;
         SetProperty(property: string, value: any): void;
         AddEventListener(eventName: string, callback: ReactUnity.Helpers.Callback): (() => void);
         ConvertValue(value: any): UnityEngine.Object;
@@ -2272,6 +2281,13 @@ export declare namespace ReactUnity {
       GetHashCode(): number;
       GetType(): System.Type;
     }
+    export class ComponentHelpers {
+      static NearestScrollContainer(from: ReactUnity.IReactComponent): ReactUnity.IReactComponent;
+      Equals(obj: any): boolean;
+      GetHashCode(): number;
+      GetType(): System.Type;
+      ToString(): string;
+    }
     export class CursorAPI {
       constructor(context: ReactUnity.ReactContext);
       Push(cmp: ReactUnity.IReactComponent): void;
@@ -2452,8 +2468,6 @@ export declare namespace ReactUnity {
     }
     export class YogaHelpers {
       static HasValue(val: Yoga.YogaValue): boolean;
-      static IfPoint(val: Yoga.YogaValue, elseValue?: number): number;
-      static IfPercent(val: Yoga.YogaValue, elseValue?: number): number;
       static GetPointValue(val: Yoga.YogaValue, fullSize: number, defaultValue?: number): number;
       static GetRatioValue(val: Yoga.YogaValue, fullSize: number, defaultValue?: number): number;
       static GetPointValue(val: ReactUnity.Types.YogaValue2, fullSize: UnityEngine.Vector2, defaultValue?: number, yInverted?: boolean): UnityEngine.Vector2;
@@ -2532,6 +2546,7 @@ export declare namespace ReactUnity {
       ClientWidth: number;
       ClientHeight: number;
       IsScrollContainer: boolean;
+      StuckEdges: ReactUnity.Styling.Rules.ScrollEdge;
       Children: ReactUnity.IReactComponent[];
       BeforePseudo: ReactUnity.IReactComponent;
       AfterPseudo: ReactUnity.IReactComponent;
@@ -3383,6 +3398,7 @@ export declare namespace ReactUnity {
       ClientWidth: number;
       ClientHeight: number;
       IsScrollContainer: boolean;
+      StuckEdges: ReactUnity.Styling.Rules.ScrollEdge;
       Children: ReactUnity.IReactComponent[];
       BeforePseudo: ReactUnity.IReactComponent;
       AfterPseudo: ReactUnity.IReactComponent;
@@ -4830,6 +4846,7 @@ export declare namespace ReactUnity {
       ClientWidth: number;
       ClientHeight: number;
       IsScrollContainer: boolean;
+      StuckEdges: ReactUnity.Styling.Rules.ScrollEdge;
       Children: ReactUnity.IReactComponent[];
       BeforePseudo: ReactUnity.IReactComponent;
       AfterPseudo: ReactUnity.IReactComponent;
@@ -5626,6 +5643,7 @@ export declare namespace ReactUnity {
         static SortingLayerConverter: ReactUnity.Styling.Converters.StyleConverterBase;
         static BorderImageSliceConverter: ReactUnity.Styling.Converters.StyleConverterBase;
         static FilterDefinitionConverter: ReactUnity.Styling.Converters.StyleConverterBase;
+        static PositionConverter: ReactUnity.Styling.Converters.StyleConverterBase;
         static Get(type: System.Type): ReactUnity.Styling.Converters.StyleConverterBase;
         Equals(obj: any): boolean;
         GetHashCode(): number;
@@ -6154,6 +6172,7 @@ export declare namespace ReactUnity {
         HasStyleDependents: boolean;
         Listed: boolean;
         Scrollable: ReactUnity.Styling.Rules.ScrollEdge;
+        Stuck: ReactUnity.Styling.Rules.ScrollEdge;
         Width: number;
         Height: number;
         Equals(obj: any): boolean;
@@ -7077,7 +7096,6 @@ export declare namespace ReactUnity {
       Absolute = 2,
       Fixed = 3,
       Sticky = 4,
-      Inset = 10,
     }
     export enum ScrollDirection {
       None = 0,
@@ -7468,6 +7486,7 @@ export declare namespace ReactUnity {
       ClientHeight: number;
       EventViewport: UnityEngine.RectTransform;
       ResolvedEventViewport: UnityEngine.RectTransform;
+      StuckEdges: ReactUnity.Styling.Rules.ScrollEdge;
       Context: ReactUnity.UGUI.UGUIContext;
       Parent: ReactUnity.IContainerComponent;
       Data: ReactUnity.Reactive.ReactiveObjectRecord;
@@ -7513,6 +7532,7 @@ export declare namespace ReactUnity {
       Revive(): boolean;
       Pool(): boolean;
       AddEventListener(eventName: string, fun: ReactUnity.Helpers.Callback): (() => void);
+      SetParent(newParent: ReactUnity.IContainerComponent, relativeTo?: ReactUnity.IReactComponent, insertAfter?: boolean): void;
       UpdateBackgroundGraphic(updateLayout: boolean, updateStyle: boolean): ReactUnity.UGUI.Internal.BorderAndBackground;
       GetRelativePosition(x: number, y: number): UnityEngine.Vector2;
       GetBoundingClientRect(): UnityEngine.Rect;
@@ -7524,7 +7544,6 @@ export declare namespace ReactUnity {
       Remove(): void;
       Destroy(recursive?: boolean): void;
       OnClassChange(): void;
-      SetParent(newParent: ReactUnity.IContainerComponent, relativeTo?: ReactUnity.IReactComponent, insertAfter?: boolean): void;
       SetEventListener(eventName: string, fun: ReactUnity.Helpers.Callback): void;
       FireEvent(eventName: string, arg: any): void;
       SetData(propertyName: string, value: any): void;
@@ -7568,6 +7587,7 @@ export declare namespace ReactUnity {
       ClientHeight: number;
       EventViewport: UnityEngine.RectTransform;
       ResolvedEventViewport: UnityEngine.RectTransform;
+      StuckEdges: ReactUnity.Styling.Rules.ScrollEdge;
       Context: ReactUnity.UGUI.UGUIContext;
       Parent: ReactUnity.IContainerComponent;
       Data: ReactUnity.Reactive.ReactiveObjectRecord;
@@ -7611,6 +7631,7 @@ export declare namespace ReactUnity {
       Pool(): boolean;
       Revive(): boolean;
       AddEventListener(eventName: string, fun: ReactUnity.Helpers.Callback): (() => void);
+      SetParent(newParent: ReactUnity.IContainerComponent, relativeTo?: ReactUnity.IReactComponent, insertAfter?: boolean): void;
       UpdateBackgroundGraphic(updateLayout: boolean, updateStyle: boolean): ReactUnity.UGUI.Internal.BorderAndBackground;
       GetRelativePosition(x: number, y: number): UnityEngine.Vector2;
       GetBoundingClientRect(): UnityEngine.Rect;
@@ -7622,7 +7643,6 @@ export declare namespace ReactUnity {
       Remove(): void;
       Destroy(recursive?: boolean): void;
       OnClassChange(): void;
-      SetParent(newParent: ReactUnity.IContainerComponent, relativeTo?: ReactUnity.IReactComponent, insertAfter?: boolean): void;
       SetEventListener(eventName: string, fun: ReactUnity.Helpers.Callback): void;
       FireEvent(eventName: string, arg: any): void;
       SetData(propertyName: string, value: any): void;
@@ -7670,6 +7690,7 @@ export declare namespace ReactUnity {
       ClientHeight: number;
       EventViewport: UnityEngine.RectTransform;
       ResolvedEventViewport: UnityEngine.RectTransform;
+      StuckEdges: ReactUnity.Styling.Rules.ScrollEdge;
       Context: ReactUnity.UGUI.UGUIContext;
       Parent: ReactUnity.IContainerComponent;
       Data: ReactUnity.Reactive.ReactiveObjectRecord;
@@ -7714,6 +7735,7 @@ export declare namespace ReactUnity {
       Pool(): boolean;
       Revive(): boolean;
       AddEventListener(eventName: string, fun: ReactUnity.Helpers.Callback): (() => void);
+      SetParent(newParent: ReactUnity.IContainerComponent, relativeTo?: ReactUnity.IReactComponent, insertAfter?: boolean): void;
       UpdateBackgroundGraphic(updateLayout: boolean, updateStyle: boolean): ReactUnity.UGUI.Internal.BorderAndBackground;
       GetRelativePosition(x: number, y: number): UnityEngine.Vector2;
       GetBoundingClientRect(): UnityEngine.Rect;
@@ -7725,7 +7747,6 @@ export declare namespace ReactUnity {
       Remove(): void;
       Destroy(recursive?: boolean): void;
       OnClassChange(): void;
-      SetParent(newParent: ReactUnity.IContainerComponent, relativeTo?: ReactUnity.IReactComponent, insertAfter?: boolean): void;
       SetEventListener(eventName: string, fun: ReactUnity.Helpers.Callback): void;
       FireEvent(eventName: string, arg: any): void;
       SetData(propertyName: string, value: any): void;
@@ -7774,6 +7795,7 @@ export declare namespace ReactUnity {
       ClientHeight: number;
       EventViewport: UnityEngine.RectTransform;
       ResolvedEventViewport: UnityEngine.RectTransform;
+      StuckEdges: ReactUnity.Styling.Rules.ScrollEdge;
       Context: ReactUnity.UGUI.UGUIContext;
       Parent: ReactUnity.IContainerComponent;
       Data: ReactUnity.Reactive.ReactiveObjectRecord;
@@ -7819,6 +7841,7 @@ export declare namespace ReactUnity {
       Revive(): boolean;
       Pool(): boolean;
       AddEventListener(eventName: string, fun: ReactUnity.Helpers.Callback): (() => void);
+      SetParent(newParent: ReactUnity.IContainerComponent, relativeTo?: ReactUnity.IReactComponent, insertAfter?: boolean): void;
       UpdateBackgroundGraphic(updateLayout: boolean, updateStyle: boolean): ReactUnity.UGUI.Internal.BorderAndBackground;
       GetRelativePosition(x: number, y: number): UnityEngine.Vector2;
       GetBoundingClientRect(): UnityEngine.Rect;
@@ -7830,7 +7853,6 @@ export declare namespace ReactUnity {
       Remove(): void;
       Destroy(recursive?: boolean): void;
       OnClassChange(): void;
-      SetParent(newParent: ReactUnity.IContainerComponent, relativeTo?: ReactUnity.IReactComponent, insertAfter?: boolean): void;
       SetEventListener(eventName: string, fun: ReactUnity.Helpers.Callback): void;
       FireEvent(eventName: string, arg: any): void;
       SetData(propertyName: string, value: any): void;
@@ -7874,6 +7896,7 @@ export declare namespace ReactUnity {
       ClientHeight: number;
       EventViewport: UnityEngine.RectTransform;
       ResolvedEventViewport: UnityEngine.RectTransform;
+      StuckEdges: ReactUnity.Styling.Rules.ScrollEdge;
       Context: ReactUnity.UGUI.UGUIContext;
       Parent: ReactUnity.IContainerComponent;
       Data: ReactUnity.Reactive.ReactiveObjectRecord;
@@ -7918,6 +7941,7 @@ export declare namespace ReactUnity {
       Activate(): void;
       Revive(): boolean;
       Pool(): boolean;
+      SetParent(newParent: ReactUnity.IContainerComponent, relativeTo?: ReactUnity.IReactComponent, insertAfter?: boolean): void;
       UpdateBackgroundGraphic(updateLayout: boolean, updateStyle: boolean): ReactUnity.UGUI.Internal.BorderAndBackground;
       GetRelativePosition(x: number, y: number): UnityEngine.Vector2;
       GetBoundingClientRect(): UnityEngine.Rect;
@@ -7929,7 +7953,6 @@ export declare namespace ReactUnity {
       Remove(): void;
       Destroy(recursive?: boolean): void;
       OnClassChange(): void;
-      SetParent(newParent: ReactUnity.IContainerComponent, relativeTo?: ReactUnity.IReactComponent, insertAfter?: boolean): void;
       SetEventListener(eventName: string, fun: ReactUnity.Helpers.Callback): void;
       FireEvent(eventName: string, arg: any): void;
       SetData(propertyName: string, value: any): void;
@@ -7971,6 +7994,7 @@ export declare namespace ReactUnity {
       ClientHeight: number;
       EventViewport: UnityEngine.RectTransform;
       ResolvedEventViewport: UnityEngine.RectTransform;
+      StuckEdges: ReactUnity.Styling.Rules.ScrollEdge;
       Context: ReactUnity.UGUI.UGUIContext;
       Parent: ReactUnity.IContainerComponent;
       Data: ReactUnity.Reactive.ReactiveObjectRecord;
@@ -8014,6 +8038,7 @@ export declare namespace ReactUnity {
       Pool(): boolean;
       AddEventListener(eventName: string, fun: ReactUnity.Helpers.Callback): (() => void);
       SetProperty(propertyName: string, value: any): void;
+      SetParent(newParent: ReactUnity.IContainerComponent, relativeTo?: ReactUnity.IReactComponent, insertAfter?: boolean): void;
       UpdateBackgroundGraphic(updateLayout: boolean, updateStyle: boolean): ReactUnity.UGUI.Internal.BorderAndBackground;
       GetRelativePosition(x: number, y: number): UnityEngine.Vector2;
       GetBoundingClientRect(): UnityEngine.Rect;
@@ -8025,7 +8050,6 @@ export declare namespace ReactUnity {
       Remove(): void;
       Destroy(recursive?: boolean): void;
       OnClassChange(): void;
-      SetParent(newParent: ReactUnity.IContainerComponent, relativeTo?: ReactUnity.IReactComponent, insertAfter?: boolean): void;
       SetEventListener(eventName: string, fun: ReactUnity.Helpers.Callback): void;
       FireEvent(eventName: string, arg: any): void;
       SetData(propertyName: string, value: any): void;
@@ -8070,6 +8094,7 @@ export declare namespace ReactUnity {
       ClientHeight: number;
       EventViewport: UnityEngine.RectTransform;
       ResolvedEventViewport: UnityEngine.RectTransform;
+      StuckEdges: ReactUnity.Styling.Rules.ScrollEdge;
       Context: ReactUnity.UGUI.UGUIContext;
       Parent: ReactUnity.IContainerComponent;
       Data: ReactUnity.Reactive.ReactiveObjectRecord;
@@ -8113,6 +8138,7 @@ export declare namespace ReactUnity {
       Revive(): boolean;
       AddEventListener(eventName: string, fun: ReactUnity.Helpers.Callback): (() => void);
       SetProperty(propertyName: string, value: any): void;
+      SetParent(newParent: ReactUnity.IContainerComponent, relativeTo?: ReactUnity.IReactComponent, insertAfter?: boolean): void;
       UpdateBackgroundGraphic(updateLayout: boolean, updateStyle: boolean): ReactUnity.UGUI.Internal.BorderAndBackground;
       GetRelativePosition(x: number, y: number): UnityEngine.Vector2;
       GetBoundingClientRect(): UnityEngine.Rect;
@@ -8124,7 +8150,6 @@ export declare namespace ReactUnity {
       Remove(): void;
       Destroy(recursive?: boolean): void;
       OnClassChange(): void;
-      SetParent(newParent: ReactUnity.IContainerComponent, relativeTo?: ReactUnity.IReactComponent, insertAfter?: boolean): void;
       SetEventListener(eventName: string, fun: ReactUnity.Helpers.Callback): void;
       FireEvent(eventName: string, arg: any): void;
       SetData(propertyName: string, value: any): void;
@@ -8172,6 +8197,7 @@ export declare namespace ReactUnity {
       ClientHeight: number;
       EventViewport: UnityEngine.RectTransform;
       ResolvedEventViewport: UnityEngine.RectTransform;
+      StuckEdges: ReactUnity.Styling.Rules.ScrollEdge;
       Context: ReactUnity.UGUI.UGUIContext;
       Parent: ReactUnity.IContainerComponent;
       Data: ReactUnity.Reactive.ReactiveObjectRecord;
@@ -8218,6 +8244,7 @@ export declare namespace ReactUnity {
       Revive(): boolean;
       Pool(): boolean;
       AddEventListener(eventName: string, fun: ReactUnity.Helpers.Callback): (() => void);
+      SetParent(newParent: ReactUnity.IContainerComponent, relativeTo?: ReactUnity.IReactComponent, insertAfter?: boolean): void;
       UpdateBackgroundGraphic(updateLayout: boolean, updateStyle: boolean): ReactUnity.UGUI.Internal.BorderAndBackground;
       GetRelativePosition(x: number, y: number): UnityEngine.Vector2;
       GetBoundingClientRect(): UnityEngine.Rect;
@@ -8229,7 +8256,6 @@ export declare namespace ReactUnity {
       Remove(): void;
       Destroy(recursive?: boolean): void;
       OnClassChange(): void;
-      SetParent(newParent: ReactUnity.IContainerComponent, relativeTo?: ReactUnity.IReactComponent, insertAfter?: boolean): void;
       SetEventListener(eventName: string, fun: ReactUnity.Helpers.Callback): void;
       FireEvent(eventName: string, arg: any): void;
       SetData(propertyName: string, value: any): void;
@@ -8274,6 +8300,7 @@ export declare namespace ReactUnity {
       ClientHeight: number;
       EventViewport: UnityEngine.RectTransform;
       ResolvedEventViewport: UnityEngine.RectTransform;
+      StuckEdges: ReactUnity.Styling.Rules.ScrollEdge;
       Context: ReactUnity.UGUI.UGUIContext;
       Parent: ReactUnity.IContainerComponent;
       Data: ReactUnity.Reactive.ReactiveObjectRecord;
@@ -8317,6 +8344,7 @@ export declare namespace ReactUnity {
       Pool(): boolean;
       Revive(): boolean;
       AddEventListener(eventName: string, fun: ReactUnity.Helpers.Callback): (() => void);
+      SetParent(newParent: ReactUnity.IContainerComponent, relativeTo?: ReactUnity.IReactComponent, insertAfter?: boolean): void;
       UpdateBackgroundGraphic(updateLayout: boolean, updateStyle: boolean): ReactUnity.UGUI.Internal.BorderAndBackground;
       GetRelativePosition(x: number, y: number): UnityEngine.Vector2;
       GetBoundingClientRect(): UnityEngine.Rect;
@@ -8328,7 +8356,6 @@ export declare namespace ReactUnity {
       Remove(): void;
       Destroy(recursive?: boolean): void;
       OnClassChange(): void;
-      SetParent(newParent: ReactUnity.IContainerComponent, relativeTo?: ReactUnity.IReactComponent, insertAfter?: boolean): void;
       SetEventListener(eventName: string, fun: ReactUnity.Helpers.Callback): void;
       FireEvent(eventName: string, arg: any): void;
       SetData(propertyName: string, value: any): void;
@@ -8381,6 +8408,7 @@ export declare namespace ReactUnity {
       ClientHeight: number;
       EventViewport: UnityEngine.RectTransform;
       ResolvedEventViewport: UnityEngine.RectTransform;
+      StuckEdges: ReactUnity.Styling.Rules.ScrollEdge;
       Context: ReactUnity.UGUI.UGUIContext;
       Parent: ReactUnity.IContainerComponent;
       Data: ReactUnity.Reactive.ReactiveObjectRecord;
@@ -8427,6 +8455,7 @@ export declare namespace ReactUnity {
       SetProperty(propertyName: string, value: any): void;
       Pool(): boolean;
       Revive(): boolean;
+      SetParent(newParent: ReactUnity.IContainerComponent, relativeTo?: ReactUnity.IReactComponent, insertAfter?: boolean): void;
       UpdateBackgroundGraphic(updateLayout: boolean, updateStyle: boolean): ReactUnity.UGUI.Internal.BorderAndBackground;
       GetRelativePosition(x: number, y: number): UnityEngine.Vector2;
       GetBoundingClientRect(): UnityEngine.Rect;
@@ -8438,7 +8467,6 @@ export declare namespace ReactUnity {
       Remove(): void;
       Destroy(recursive?: boolean): void;
       OnClassChange(): void;
-      SetParent(newParent: ReactUnity.IContainerComponent, relativeTo?: ReactUnity.IReactComponent, insertAfter?: boolean): void;
       SetEventListener(eventName: string, fun: ReactUnity.Helpers.Callback): void;
       FireEvent(eventName: string, arg: any): void;
       SetData(propertyName: string, value: any): void;
@@ -8480,6 +8508,7 @@ export declare namespace ReactUnity {
       ClientHeight: number;
       EventViewport: UnityEngine.RectTransform;
       ResolvedEventViewport: UnityEngine.RectTransform;
+      StuckEdges: ReactUnity.Styling.Rules.ScrollEdge;
       Context: ReactUnity.UGUI.UGUIContext;
       Parent: ReactUnity.IContainerComponent;
       Data: ReactUnity.Reactive.ReactiveObjectRecord;
@@ -8524,6 +8553,7 @@ export declare namespace ReactUnity {
       Revive(): boolean;
       Pool(): boolean;
       AddEventListener(eventName: string, fun: ReactUnity.Helpers.Callback): (() => void);
+      SetParent(newParent: ReactUnity.IContainerComponent, relativeTo?: ReactUnity.IReactComponent, insertAfter?: boolean): void;
       UpdateBackgroundGraphic(updateLayout: boolean, updateStyle: boolean): ReactUnity.UGUI.Internal.BorderAndBackground;
       GetRelativePosition(x: number, y: number): UnityEngine.Vector2;
       GetBoundingClientRect(): UnityEngine.Rect;
@@ -8535,7 +8565,6 @@ export declare namespace ReactUnity {
       Remove(): void;
       Destroy(recursive?: boolean): void;
       OnClassChange(): void;
-      SetParent(newParent: ReactUnity.IContainerComponent, relativeTo?: ReactUnity.IReactComponent, insertAfter?: boolean): void;
       SetEventListener(eventName: string, fun: ReactUnity.Helpers.Callback): void;
       FireEvent(eventName: string, arg: any): void;
       SetData(propertyName: string, value: any): void;
@@ -8583,6 +8612,7 @@ export declare namespace ReactUnity {
       ClientHeight: number;
       EventViewport: UnityEngine.RectTransform;
       ResolvedEventViewport: UnityEngine.RectTransform;
+      StuckEdges: ReactUnity.Styling.Rules.ScrollEdge;
       Context: ReactUnity.UGUI.UGUIContext;
       Parent: ReactUnity.IContainerComponent;
       Data: ReactUnity.Reactive.ReactiveObjectRecord;
@@ -8628,6 +8658,7 @@ export declare namespace ReactUnity {
       Pool(): boolean;
       Revive(): boolean;
       AddEventListener(eventName: string, fun: ReactUnity.Helpers.Callback): (() => void);
+      SetParent(newParent: ReactUnity.IContainerComponent, relativeTo?: ReactUnity.IReactComponent, insertAfter?: boolean): void;
       UpdateBackgroundGraphic(updateLayout: boolean, updateStyle: boolean): ReactUnity.UGUI.Internal.BorderAndBackground;
       GetRelativePosition(x: number, y: number): UnityEngine.Vector2;
       GetBoundingClientRect(): UnityEngine.Rect;
@@ -8638,7 +8669,6 @@ export declare namespace ReactUnity {
       Remove(): void;
       Destroy(recursive?: boolean): void;
       OnClassChange(): void;
-      SetParent(newParent: ReactUnity.IContainerComponent, relativeTo?: ReactUnity.IReactComponent, insertAfter?: boolean): void;
       SetEventListener(eventName: string, fun: ReactUnity.Helpers.Callback): void;
       FireEvent(eventName: string, arg: any): void;
       SetData(propertyName: string, value: any): void;
@@ -8683,6 +8713,7 @@ export declare namespace ReactUnity {
       ClientHeight: number;
       EventViewport: UnityEngine.RectTransform;
       ResolvedEventViewport: UnityEngine.RectTransform;
+      StuckEdges: ReactUnity.Styling.Rules.ScrollEdge;
       Context: ReactUnity.UGUI.UGUIContext;
       Parent: ReactUnity.IContainerComponent;
       Data: ReactUnity.Reactive.ReactiveObjectRecord;
@@ -8782,6 +8813,7 @@ export declare namespace ReactUnity {
       ClientHeight: number;
       EventViewport: UnityEngine.RectTransform;
       ResolvedEventViewport: UnityEngine.RectTransform;
+      StuckEdges: ReactUnity.Styling.Rules.ScrollEdge;
       Context: ReactUnity.UGUI.UGUIContext;
       Parent: ReactUnity.IContainerComponent;
       Data: ReactUnity.Reactive.ReactiveObjectRecord;
@@ -8826,6 +8858,7 @@ export declare namespace ReactUnity {
       AddEventListener(eventName: string, callback: ReactUnity.Helpers.Callback): (() => void);
       Revive(): boolean;
       Pool(): boolean;
+      SetParent(newParent: ReactUnity.IContainerComponent, relativeTo?: ReactUnity.IReactComponent, insertAfter?: boolean): void;
       UpdateBackgroundGraphic(updateLayout: boolean, updateStyle: boolean): ReactUnity.UGUI.Internal.BorderAndBackground;
       GetRelativePosition(x: number, y: number): UnityEngine.Vector2;
       GetBoundingClientRect(): UnityEngine.Rect;
@@ -8837,7 +8870,6 @@ export declare namespace ReactUnity {
       Remove(): void;
       Destroy(recursive?: boolean): void;
       OnClassChange(): void;
-      SetParent(newParent: ReactUnity.IContainerComponent, relativeTo?: ReactUnity.IReactComponent, insertAfter?: boolean): void;
       SetEventListener(eventName: string, fun: ReactUnity.Helpers.Callback): void;
       FireEvent(eventName: string, arg: any): void;
       SetData(propertyName: string, value: any): void;
@@ -8881,6 +8913,7 @@ export declare namespace ReactUnity {
       ClientHeight: number;
       EventViewport: UnityEngine.RectTransform;
       ResolvedEventViewport: UnityEngine.RectTransform;
+      StuckEdges: ReactUnity.Styling.Rules.ScrollEdge;
       Context: ReactUnity.UGUI.UGUIContext;
       Parent: ReactUnity.IContainerComponent;
       Data: ReactUnity.Reactive.ReactiveObjectRecord;
@@ -8924,6 +8957,7 @@ export declare namespace ReactUnity {
       Pool(): boolean;
       Revive(): boolean;
       AddEventListener(eventName: string, fun: ReactUnity.Helpers.Callback): (() => void);
+      SetParent(newParent: ReactUnity.IContainerComponent, relativeTo?: ReactUnity.IReactComponent, insertAfter?: boolean): void;
       UpdateBackgroundGraphic(updateLayout: boolean, updateStyle: boolean): ReactUnity.UGUI.Internal.BorderAndBackground;
       GetRelativePosition(x: number, y: number): UnityEngine.Vector2;
       GetBoundingClientRect(): UnityEngine.Rect;
@@ -8935,7 +8969,6 @@ export declare namespace ReactUnity {
       Remove(): void;
       Destroy(recursive?: boolean): void;
       OnClassChange(): void;
-      SetParent(newParent: ReactUnity.IContainerComponent, relativeTo?: ReactUnity.IReactComponent, insertAfter?: boolean): void;
       SetEventListener(eventName: string, fun: ReactUnity.Helpers.Callback): void;
       FireEvent(eventName: string, arg: any): void;
       SetData(propertyName: string, value: any): void;
@@ -8983,6 +9016,7 @@ export declare namespace ReactUnity {
       ClientHeight: number;
       EventViewport: UnityEngine.RectTransform;
       ResolvedEventViewport: UnityEngine.RectTransform;
+      StuckEdges: ReactUnity.Styling.Rules.ScrollEdge;
       Context: ReactUnity.UGUI.UGUIContext;
       Parent: ReactUnity.IContainerComponent;
       Data: ReactUnity.Reactive.ReactiveObjectRecord;
@@ -9027,6 +9061,7 @@ export declare namespace ReactUnity {
       Pool(): boolean;
       Revive(): boolean;
       AddEventListener(eventName: string, fun: ReactUnity.Helpers.Callback): (() => void);
+      SetParent(newParent: ReactUnity.IContainerComponent, relativeTo?: ReactUnity.IReactComponent, insertAfter?: boolean): void;
       UpdateBackgroundGraphic(updateLayout: boolean, updateStyle: boolean): ReactUnity.UGUI.Internal.BorderAndBackground;
       GetRelativePosition(x: number, y: number): UnityEngine.Vector2;
       GetBoundingClientRect(): UnityEngine.Rect;
@@ -9038,7 +9073,6 @@ export declare namespace ReactUnity {
       Remove(): void;
       Destroy(recursive?: boolean): void;
       OnClassChange(): void;
-      SetParent(newParent: ReactUnity.IContainerComponent, relativeTo?: ReactUnity.IReactComponent, insertAfter?: boolean): void;
       SetEventListener(eventName: string, fun: ReactUnity.Helpers.Callback): void;
       FireEvent(eventName: string, arg: any): void;
       SetData(propertyName: string, value: any): void;
@@ -9090,6 +9124,7 @@ export declare namespace ReactUnity {
       ClientHeight: number;
       EventViewport: UnityEngine.RectTransform;
       ResolvedEventViewport: UnityEngine.RectTransform;
+      StuckEdges: ReactUnity.Styling.Rules.ScrollEdge;
       Context: ReactUnity.UGUI.UGUIContext;
       Parent: ReactUnity.IContainerComponent;
       Data: ReactUnity.Reactive.ReactiveObjectRecord;
@@ -9130,6 +9165,7 @@ export declare namespace ReactUnity {
       ScrollBy(left?: number | undefined, top?: number | undefined, smoothness?: number | undefined): void;
       Revive(): boolean;
       Pool(): boolean;
+      SetParent(newParent: ReactUnity.IContainerComponent, relativeTo?: ReactUnity.IReactComponent, insertAfter?: boolean): void;
       UpdateBackgroundGraphic(updateLayout: boolean, updateStyle: boolean): ReactUnity.UGUI.Internal.BorderAndBackground;
       GetRelativePosition(x: number, y: number): UnityEngine.Vector2;
       GetBoundingClientRect(): UnityEngine.Rect;
@@ -9141,7 +9177,6 @@ export declare namespace ReactUnity {
       Remove(): void;
       Destroy(recursive?: boolean): void;
       OnClassChange(): void;
-      SetParent(newParent: ReactUnity.IContainerComponent, relativeTo?: ReactUnity.IReactComponent, insertAfter?: boolean): void;
       SetEventListener(eventName: string, fun: ReactUnity.Helpers.Callback): void;
       FireEvent(eventName: string, arg: any): void;
       SetData(propertyName: string, value: any): void;
@@ -9189,6 +9224,7 @@ export declare namespace ReactUnity {
       ClientHeight: number;
       EventViewport: UnityEngine.RectTransform;
       ResolvedEventViewport: UnityEngine.RectTransform;
+      StuckEdges: ReactUnity.Styling.Rules.ScrollEdge;
       Context: ReactUnity.UGUI.UGUIContext;
       Parent: ReactUnity.IContainerComponent;
       Data: ReactUnity.Reactive.ReactiveObjectRecord;
@@ -9285,6 +9321,7 @@ export declare namespace ReactUnity {
       ClientHeight: number;
       EventViewport: UnityEngine.RectTransform;
       ResolvedEventViewport: UnityEngine.RectTransform;
+      StuckEdges: ReactUnity.Styling.Rules.ScrollEdge;
       Context: ReactUnity.UGUI.UGUIContext;
       Parent: ReactUnity.IContainerComponent;
       Data: ReactUnity.Reactive.ReactiveObjectRecord;
@@ -9381,6 +9418,7 @@ export declare namespace ReactUnity {
       ClientHeight: number;
       EventViewport: UnityEngine.RectTransform;
       ResolvedEventViewport: UnityEngine.RectTransform;
+      StuckEdges: ReactUnity.Styling.Rules.ScrollEdge;
       Context: ReactUnity.UGUI.UGUIContext;
       Parent: ReactUnity.IContainerComponent;
       Data: ReactUnity.Reactive.ReactiveObjectRecord;
@@ -9425,6 +9463,7 @@ export declare namespace ReactUnity {
       Pool(): boolean;
       AddEventListener(eventName: string, fun: ReactUnity.Helpers.Callback): (() => void);
       SetProperty(propertyName: string, value: any): void;
+      SetParent(newParent: ReactUnity.IContainerComponent, relativeTo?: ReactUnity.IReactComponent, insertAfter?: boolean): void;
       GetRelativePosition(x: number, y: number): UnityEngine.Vector2;
       GetBoundingClientRect(): UnityEngine.Rect;
       GetComponent(type: System.Type): any;
@@ -9435,7 +9474,6 @@ export declare namespace ReactUnity {
       Remove(): void;
       Destroy(recursive?: boolean): void;
       OnClassChange(): void;
-      SetParent(newParent: ReactUnity.IContainerComponent, relativeTo?: ReactUnity.IReactComponent, insertAfter?: boolean): void;
       SetEventListener(eventName: string, fun: ReactUnity.Helpers.Callback): void;
       FireEvent(eventName: string, arg: any): void;
       SetData(propertyName: string, value: any): void;
@@ -9483,6 +9521,7 @@ export declare namespace ReactUnity {
       ClientHeight: number;
       EventViewport: UnityEngine.RectTransform;
       ResolvedEventViewport: UnityEngine.RectTransform;
+      StuckEdges: ReactUnity.Styling.Rules.ScrollEdge;
       Context: ReactUnity.UGUI.UGUIContext;
       Parent: ReactUnity.IContainerComponent;
       Data: ReactUnity.Reactive.ReactiveObjectRecord;
@@ -9527,6 +9566,7 @@ export declare namespace ReactUnity {
       Pool(): boolean;
       Revive(): boolean;
       AddEventListener(eventName: string, fun: ReactUnity.Helpers.Callback): (() => void);
+      SetParent(newParent: ReactUnity.IContainerComponent, relativeTo?: ReactUnity.IReactComponent, insertAfter?: boolean): void;
       UpdateBackgroundGraphic(updateLayout: boolean, updateStyle: boolean): ReactUnity.UGUI.Internal.BorderAndBackground;
       GetRelativePosition(x: number, y: number): UnityEngine.Vector2;
       GetBoundingClientRect(): UnityEngine.Rect;
@@ -9537,7 +9577,6 @@ export declare namespace ReactUnity {
       Remove(): void;
       Destroy(recursive?: boolean): void;
       OnClassChange(): void;
-      SetParent(newParent: ReactUnity.IContainerComponent, relativeTo?: ReactUnity.IReactComponent, insertAfter?: boolean): void;
       SetEventListener(eventName: string, fun: ReactUnity.Helpers.Callback): void;
       FireEvent(eventName: string, arg: any): void;
       SetData(propertyName: string, value: any): void;
@@ -9582,6 +9621,7 @@ export declare namespace ReactUnity {
       ClientHeight: number;
       EventViewport: UnityEngine.RectTransform;
       ResolvedEventViewport: UnityEngine.RectTransform;
+      StuckEdges: ReactUnity.Styling.Rules.ScrollEdge;
       Context: ReactUnity.UGUI.UGUIContext;
       Parent: ReactUnity.IContainerComponent;
       Data: ReactUnity.Reactive.ReactiveObjectRecord;
@@ -9625,6 +9665,7 @@ export declare namespace ReactUnity {
       Pool(): boolean;
       Revive(): boolean;
       AddEventListener(eventName: string, fun: ReactUnity.Helpers.Callback): (() => void);
+      SetParent(newParent: ReactUnity.IContainerComponent, relativeTo?: ReactUnity.IReactComponent, insertAfter?: boolean): void;
       UpdateBackgroundGraphic(updateLayout: boolean, updateStyle: boolean): ReactUnity.UGUI.Internal.BorderAndBackground;
       GetRelativePosition(x: number, y: number): UnityEngine.Vector2;
       GetBoundingClientRect(): UnityEngine.Rect;
@@ -9636,7 +9677,6 @@ export declare namespace ReactUnity {
       Remove(): void;
       Destroy(recursive?: boolean): void;
       OnClassChange(): void;
-      SetParent(newParent: ReactUnity.IContainerComponent, relativeTo?: ReactUnity.IReactComponent, insertAfter?: boolean): void;
       SetEventListener(eventName: string, fun: ReactUnity.Helpers.Callback): void;
       FireEvent(eventName: string, arg: any): void;
       SetData(propertyName: string, value: any): void;
@@ -9686,6 +9726,7 @@ export declare namespace ReactUnity {
       ClientHeight: number;
       EventViewport: UnityEngine.RectTransform;
       ResolvedEventViewport: UnityEngine.RectTransform;
+      StuckEdges: ReactUnity.Styling.Rules.ScrollEdge;
       Context: ReactUnity.UGUI.UGUIContext;
       Parent: ReactUnity.IContainerComponent;
       Data: ReactUnity.Reactive.ReactiveObjectRecord;
@@ -9731,6 +9772,7 @@ export declare namespace ReactUnity {
       Revive(): boolean;
       Pool(): boolean;
       AddEventListener(eventName: string, fun: ReactUnity.Helpers.Callback): (() => void);
+      SetParent(newParent: ReactUnity.IContainerComponent, relativeTo?: ReactUnity.IReactComponent, insertAfter?: boolean): void;
       UpdateBackgroundGraphic(updateLayout: boolean, updateStyle: boolean): ReactUnity.UGUI.Internal.BorderAndBackground;
       GetRelativePosition(x: number, y: number): UnityEngine.Vector2;
       GetBoundingClientRect(): UnityEngine.Rect;
@@ -9742,7 +9784,6 @@ export declare namespace ReactUnity {
       Remove(): void;
       Destroy(recursive?: boolean): void;
       OnClassChange(): void;
-      SetParent(newParent: ReactUnity.IContainerComponent, relativeTo?: ReactUnity.IReactComponent, insertAfter?: boolean): void;
       SetEventListener(eventName: string, fun: ReactUnity.Helpers.Callback): void;
       FireEvent(eventName: string, arg: any): void;
       SetData(propertyName: string, value: any): void;
@@ -9791,6 +9832,7 @@ export declare namespace ReactUnity {
       ClientHeight: number;
       EventViewport: UnityEngine.RectTransform;
       ResolvedEventViewport: UnityEngine.RectTransform;
+      StuckEdges: ReactUnity.Styling.Rules.ScrollEdge;
       Context: ReactUnity.UGUI.UGUIContext;
       Parent: ReactUnity.IContainerComponent;
       Data: ReactUnity.Reactive.ReactiveObjectRecord;
@@ -9836,6 +9878,7 @@ export declare namespace ReactUnity {
       Revive(): boolean;
       Pool(): boolean;
       AddEventListener(eventName: string, fun: ReactUnity.Helpers.Callback): (() => void);
+      SetParent(newParent: ReactUnity.IContainerComponent, relativeTo?: ReactUnity.IReactComponent, insertAfter?: boolean): void;
       UpdateBackgroundGraphic(updateLayout: boolean, updateStyle: boolean): ReactUnity.UGUI.Internal.BorderAndBackground;
       GetRelativePosition(x: number, y: number): UnityEngine.Vector2;
       GetBoundingClientRect(): UnityEngine.Rect;
@@ -9847,7 +9890,6 @@ export declare namespace ReactUnity {
       Remove(): void;
       Destroy(recursive?: boolean): void;
       OnClassChange(): void;
-      SetParent(newParent: ReactUnity.IContainerComponent, relativeTo?: ReactUnity.IReactComponent, insertAfter?: boolean): void;
       SetEventListener(eventName: string, fun: ReactUnity.Helpers.Callback): void;
       FireEvent(eventName: string, arg: any): void;
       SetData(propertyName: string, value: any): void;
@@ -9894,6 +9936,7 @@ export declare namespace ReactUnity {
       ClientHeight: number;
       EventViewport: UnityEngine.RectTransform;
       ResolvedEventViewport: UnityEngine.RectTransform;
+      StuckEdges: ReactUnity.Styling.Rules.ScrollEdge;
       Context: ReactUnity.UGUI.UGUIContext;
       Parent: ReactUnity.IContainerComponent;
       Data: ReactUnity.Reactive.ReactiveObjectRecord;
@@ -9939,6 +9982,7 @@ export declare namespace ReactUnity {
       Activate(): void;
       Revive(): boolean;
       Pool(): boolean;
+      SetParent(newParent: ReactUnity.IContainerComponent, relativeTo?: ReactUnity.IReactComponent, insertAfter?: boolean): void;
       UpdateBackgroundGraphic(updateLayout: boolean, updateStyle: boolean): ReactUnity.UGUI.Internal.BorderAndBackground;
       GetRelativePosition(x: number, y: number): UnityEngine.Vector2;
       GetBoundingClientRect(): UnityEngine.Rect;
@@ -9950,7 +9994,6 @@ export declare namespace ReactUnity {
       Remove(): void;
       Destroy(recursive?: boolean): void;
       OnClassChange(): void;
-      SetParent(newParent: ReactUnity.IContainerComponent, relativeTo?: ReactUnity.IReactComponent, insertAfter?: boolean): void;
       SetEventListener(eventName: string, fun: ReactUnity.Helpers.Callback): void;
       FireEvent(eventName: string, arg: any): void;
       SetData(propertyName: string, value: any): void;
@@ -9991,6 +10034,7 @@ export declare namespace ReactUnity {
       ClientHeight: number;
       EventViewport: UnityEngine.RectTransform;
       ResolvedEventViewport: UnityEngine.RectTransform;
+      StuckEdges: ReactUnity.Styling.Rules.ScrollEdge;
       Context: ReactUnity.UGUI.UGUIContext;
       Parent: ReactUnity.IContainerComponent;
       Data: ReactUnity.Reactive.ReactiveObjectRecord;
@@ -10034,6 +10078,7 @@ export declare namespace ReactUnity {
       Pool(): boolean;
       AddEventListener(eventName: string, fun: ReactUnity.Helpers.Callback): (() => void);
       SetProperty(propertyName: string, value: any): void;
+      SetParent(newParent: ReactUnity.IContainerComponent, relativeTo?: ReactUnity.IReactComponent, insertAfter?: boolean): void;
       UpdateBackgroundGraphic(updateLayout: boolean, updateStyle: boolean): ReactUnity.UGUI.Internal.BorderAndBackground;
       GetRelativePosition(x: number, y: number): UnityEngine.Vector2;
       GetBoundingClientRect(): UnityEngine.Rect;
@@ -10045,7 +10090,6 @@ export declare namespace ReactUnity {
       Remove(): void;
       Destroy(recursive?: boolean): void;
       OnClassChange(): void;
-      SetParent(newParent: ReactUnity.IContainerComponent, relativeTo?: ReactUnity.IReactComponent, insertAfter?: boolean): void;
       SetEventListener(eventName: string, fun: ReactUnity.Helpers.Callback): void;
       FireEvent(eventName: string, arg: any): void;
       SetData(propertyName: string, value: any): void;
@@ -10093,6 +10137,7 @@ export declare namespace ReactUnity {
       ClientHeight: number;
       EventViewport: UnityEngine.RectTransform;
       ResolvedEventViewport: UnityEngine.RectTransform;
+      StuckEdges: ReactUnity.Styling.Rules.ScrollEdge;
       Context: ReactUnity.UGUI.UGUIContext;
       Parent: ReactUnity.IContainerComponent;
       Data: ReactUnity.Reactive.ReactiveObjectRecord;
@@ -10138,6 +10183,7 @@ export declare namespace ReactUnity {
       Pool(): boolean;
       Revive(): boolean;
       AddEventListener(eventName: string, fun: ReactUnity.Helpers.Callback): (() => void);
+      SetParent(newParent: ReactUnity.IContainerComponent, relativeTo?: ReactUnity.IReactComponent, insertAfter?: boolean): void;
       UpdateBackgroundGraphic(updateLayout: boolean, updateStyle: boolean): ReactUnity.UGUI.Internal.BorderAndBackground;
       GetRelativePosition(x: number, y: number): UnityEngine.Vector2;
       GetBoundingClientRect(): UnityEngine.Rect;
@@ -10149,7 +10195,6 @@ export declare namespace ReactUnity {
       Remove(): void;
       Destroy(recursive?: boolean): void;
       OnClassChange(): void;
-      SetParent(newParent: ReactUnity.IContainerComponent, relativeTo?: ReactUnity.IReactComponent, insertAfter?: boolean): void;
       SetEventListener(eventName: string, fun: ReactUnity.Helpers.Callback): void;
       FireEvent(eventName: string, arg: any): void;
       SetData(propertyName: string, value: any): void;
@@ -14465,6 +14510,7 @@ export declare namespace ReactUnity {
       ScrollWidth: number;
       ScrollHeight: number;
       IsScrollContainer: boolean;
+      StuckEdges: ReactUnity.Styling.Rules.ScrollEdge;
       SetProperty(propertyName: string, value: any): void;
       Activate(): void;
       OpenUrl(target?: string): void;
@@ -14556,6 +14602,7 @@ export declare namespace ReactUnity {
       ScrollWidth: number;
       ScrollHeight: number;
       IsScrollContainer: boolean;
+      StuckEdges: ReactUnity.Styling.Rules.ScrollEdge;
       SetProperty(property: string, value: any): void;
       AddEventListener(eventName: string, callback: ReactUnity.Helpers.Callback): (() => void);
       ConvertValue(value: any): TValueType;
@@ -14651,6 +14698,7 @@ export declare namespace ReactUnity {
       ScrollWidth: number;
       ScrollHeight: number;
       IsScrollContainer: boolean;
+      StuckEdges: ReactUnity.Styling.Rules.ScrollEdge;
       SetProperty(property: string, value: any): void;
       SelectAll(): void;
       AddEventListener(eventName: string, callback: ReactUnity.Helpers.Callback): (() => void);
@@ -14748,6 +14796,7 @@ export declare namespace ReactUnity {
       ScrollWidth: number;
       ScrollHeight: number;
       IsScrollContainer: boolean;
+      StuckEdges: ReactUnity.Styling.Rules.ScrollEdge;
       SetProperty(property: string, value: any): void;
       SelectRange(rangeCursorIndex: number, selectionIndex: number): void;
       SelectAll(): void;
@@ -14841,6 +14890,7 @@ export declare namespace ReactUnity {
       ScrollWidth: number;
       ScrollHeight: number;
       IsScrollContainer: boolean;
+      StuckEdges: ReactUnity.Styling.Rules.ScrollEdge;
       SetProperty(property: string, value: any): void;
       Pool(): boolean;
       AddEventListener(eventName: string, fun: ReactUnity.Helpers.Callback): (() => void);
@@ -14930,6 +14980,7 @@ export declare namespace ReactUnity {
       ScrollWidth: number;
       ScrollHeight: number;
       IsScrollContainer: boolean;
+      StuckEdges: ReactUnity.Styling.Rules.ScrollEdge;
       SetText(text: string): void;
       SetProperty(property: string, value: any): void;
       Pool(): boolean;
@@ -15019,6 +15070,7 @@ export declare namespace ReactUnity {
       ScrollWidth: number;
       ScrollHeight: number;
       IsScrollContainer: boolean;
+      StuckEdges: ReactUnity.Styling.Rules.ScrollEdge;
       AddEventListener(eventName: string, callback: ReactUnity.Helpers.Callback): (() => void);
       Pool(): boolean;
       SetProperty(property: string, value: any): void;
@@ -15109,6 +15161,7 @@ export declare namespace ReactUnity {
       ScrollWidth: number;
       ScrollHeight: number;
       IsScrollContainer: boolean;
+      StuckEdges: ReactUnity.Styling.Rules.ScrollEdge;
       Pool(): boolean;
       AddEventListener(eventName: string, fun: ReactUnity.Helpers.Callback): (() => void);
       SetProperty(property: string, value: any): void;
@@ -15197,6 +15250,7 @@ export declare namespace ReactUnity {
       ScrollWidth: number;
       ScrollHeight: number;
       IsScrollContainer: boolean;
+      StuckEdges: ReactUnity.Styling.Rules.ScrollEdge;
       SetProperty(property: string, value: any): void;
       MarkDirtyLayout(): void;
       MarkDirtyRepaint(): void;
@@ -15289,6 +15343,7 @@ export declare namespace ReactUnity {
       ScrollWidth: number;
       ScrollHeight: number;
       IsScrollContainer: boolean;
+      StuckEdges: ReactUnity.Styling.Rules.ScrollEdge;
       SetText(text: string): void;
       SetProperty(property: string, value: any): void;
       ApplySet(value: any): void;
@@ -15379,6 +15434,7 @@ export declare namespace ReactUnity {
       ScrollWidth: number;
       ScrollHeight: number;
       IsScrollContainer: boolean;
+      StuckEdges: ReactUnity.Styling.Rules.ScrollEdge;
       SetProperty(property: string, value: any): void;
       Pool(): boolean;
       AddEventListener(eventName: string, fun: ReactUnity.Helpers.Callback): (() => void);
@@ -15470,6 +15526,7 @@ export declare namespace ReactUnity {
       ScrollWidth: number;
       ScrollHeight: number;
       IsScrollContainer: boolean;
+      StuckEdges: ReactUnity.Styling.Rules.ScrollEdge;
       SetParent(newParent: ReactUnity.IContainerComponent, relativeTo?: ReactUnity.IReactComponent, insertAfter?: boolean): void;
       SetProperty(propertyName: string, value: any): void;
       Pool(): boolean;
@@ -15560,6 +15617,7 @@ export declare namespace ReactUnity {
       ScrollWidth: number;
       ScrollHeight: number;
       IsScrollContainer: boolean;
+      StuckEdges: ReactUnity.Styling.Rules.ScrollEdge;
       SetProperty(property: string, value: any): void;
       AddEventListener(eventName: string, callback: ReactUnity.Helpers.Callback): (() => void);
       ConvertValue(value: any): UnityEngine.Vector2;
@@ -15651,6 +15709,7 @@ export declare namespace ReactUnity {
       AfterRules: ReactUnity.Styling.Rules.RuleTreeNode<ReactUnity.Styling.Rules.StyleData>[];
       BeforePseudo: ReactUnity.IReactComponent;
       AfterPseudo: ReactUnity.IReactComponent;
+      StuckEdges: ReactUnity.Styling.Rules.ScrollEdge;
       SetProperty(propertyName: string, value: any): void;
       ScrollTo(left?: number | undefined, top?: number | undefined, smoothness?: number | undefined): void;
       ScrollBy(left?: number | undefined, top?: number | undefined, smoothness?: number | undefined): void;
@@ -15743,6 +15802,7 @@ export declare namespace ReactUnity {
       ScrollWidth: number;
       ScrollHeight: number;
       IsScrollContainer: boolean;
+      StuckEdges: ReactUnity.Styling.Rules.ScrollEdge;
       SetProperty(property: string, value: any): void;
       AddEventListener(eventName: string, callback: ReactUnity.Helpers.Callback): (() => void);
       ConvertValue(value: any): TValueType;
@@ -15838,6 +15898,7 @@ export declare namespace ReactUnity {
       ScrollWidth: number;
       ScrollHeight: number;
       IsScrollContainer: boolean;
+      StuckEdges: ReactUnity.Styling.Rules.ScrollEdge;
       SetProperty(propertyName: string, value: any): void;
       Update(): void;
       Pool(): boolean;
@@ -15927,6 +15988,7 @@ export declare namespace ReactUnity {
       ScrollWidth: number;
       ScrollHeight: number;
       IsScrollContainer: boolean;
+      StuckEdges: ReactUnity.Styling.Rules.ScrollEdge;
       SetText(text: string): void;
       SetProperty(property: string, value: any): void;
       Pool(): boolean;
@@ -16019,6 +16081,7 @@ export declare namespace ReactUnity {
       ScrollWidth: number;
       ScrollHeight: number;
       IsScrollContainer: boolean;
+      StuckEdges: ReactUnity.Styling.Rules.ScrollEdge;
       SetProperty(property: string, value: any): void;
       AddEventListener(eventName: string, callback: ReactUnity.Helpers.Callback): (() => void);
       ConvertValue(value: any): boolean;
@@ -16114,6 +16177,7 @@ export declare namespace ReactUnity {
       ScrollWidth: number;
       ScrollHeight: number;
       IsScrollContainer: boolean;
+      StuckEdges: ReactUnity.Styling.Rules.ScrollEdge;
       Pool(): boolean;
       AddEventListener(eventName: string, fun: ReactUnity.Helpers.Callback): (() => void);
       SetProperty(property: string, value: any): void;
@@ -16203,6 +16267,7 @@ export declare namespace ReactUnity {
       ScrollWidth: number;
       ScrollHeight: number;
       IsScrollContainer: boolean;
+      StuckEdges: ReactUnity.Styling.Rules.ScrollEdge;
       AddEventListener(eventName: string, callback: ReactUnity.Helpers.Callback): (() => void);
       SetProperty(property: string, value: any): void;
       ConvertValue(value: any): TValueType;

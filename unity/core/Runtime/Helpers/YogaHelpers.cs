@@ -11,16 +11,6 @@ namespace ReactUnity.Helpers
             return (val.Unit == YogaUnit.Point || val.Unit == YogaUnit.Percent) && !float.IsNaN(val.Value);
         }
 
-        public static float IfPoint(this YogaValue val, float elseValue = 0f)
-        {
-            return (val.Unit == YogaUnit.Point) ? val.Value : elseValue;
-        }
-
-        public static float IfPercent(this YogaValue val, float elseValue = 0f)
-        {
-            return (val.Unit == YogaUnit.Percent) ? val.Value : elseValue;
-        }
-
         public static float GetPointValue(this YogaValue val, float fullSize, float defaultValue = float.NaN)
         {
             if (val.Unit == YogaUnit.Point) return val.Value;

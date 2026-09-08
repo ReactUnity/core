@@ -54,7 +54,6 @@ namespace ReactUnity.UGUI.Behaviours
             }
         }
 
-        private PositionType previousPositionType = PositionType.Relative;
         private PositionType positionType = PositionType.Relative;
 
         public PositionType PositionType
@@ -65,7 +64,6 @@ namespace ReactUnity.UGUI.Behaviours
                 if (value != positionType)
                 {
                     hasPositionUpdate = true;
-                    previousPositionType = positionType;
                     positionType = value;
                 }
             }
@@ -114,107 +112,18 @@ namespace ReactUnity.UGUI.Behaviours
 
             var z = translateZ.Unit == YogaUnit.Point ? translateZ.Value : 0;
 
-            if (positionType != previousPositionType)
-            {
-                if (positionType != PositionType.Inset)
-                {
-                    rt.anchorMin = Vector2.up;
-                    rt.anchorMax = Vector2.up;
-                }
-            }
+            var posX = Layout.LayoutLeft + pivotDiff.x * Layout.LayoutWidth;
+            var posY = -Layout.LayoutTop + pivotDiff.y * Layout.LayoutHeight;
 
-            if (positionType == PositionType.Inset)
-            {
-                if (currentMotion != null) StopCoroutine(currentMotion);
+            // Sticky is the only offset resolved here rather than by layout, and it has to land the
+            // same frame the scroll moves -- so it never goes through `motion-duration`, which would
+            // chase it a frame behind.
+            var stickyOffset = Vector2.zero;
+            if (sticky && StickyPosition.TryResolve(Component, out var resolved, out _))
+                stickyOffset = new Vector2(resolved.x, -resolved.y);
 
-                float anchorMinX;
-                float anchorMinY;
-                float anchorMaxX;
-                float anchorMaxY;
-                float offsetMinX;
-                float offsetMinY;
-                float offsetMaxX;
-                float offsetMaxY;
-
-                if (Layout.Right.HasValue())
-                {
-                    if (Layout.Left.HasValue())
-                    {
-                        anchorMinX = Layout.Left.IfPercent(0) / 100f;
-                        anchorMaxX = 1 - (Layout.Right.IfPercent(0) / 100f);
-                        offsetMinX = Layout.Left.IfPoint() + tran.x;
-                        offsetMaxX = -Layout.Right.IfPoint() + tran.x;
-                    }
-                    else
-                    {
-                        var anchorValue = 1 - (Layout.Right.IfPercent(0) / 100f);
-                        anchorMinX = anchorValue;
-                        anchorMaxX = anchorValue;
-                        var rightn = Layout.Right.IfPoint();
-
-                        offsetMinX = -rightn + tran.x - Layout.LayoutWidth;
-                        offsetMaxX = -rightn + tran.x;
-                    }
-                }
-                else
-                {
-                    var anchorValue = Layout.Left.IfPercent(0) / 100f;
-                    anchorMinX = anchorValue;
-                    anchorMaxX = anchorValue;
-                    var leftn = Layout.Left.IfPoint();
-                    offsetMinX = leftn + tran.x;
-                    offsetMaxX = leftn + tran.x + Layout.LayoutWidth;
-                }
-
-                if (Layout.Bottom.HasValue())
-                {
-                    if (Layout.Top.HasValue())
-                    {
-                        anchorMinY = Layout.Bottom.IfPercent(0) / 100;
-                        anchorMaxY = 1 - (Layout.Top.IfPercent(0) / 100);
-                        offsetMinY = Layout.Bottom.IfPoint() + tran.y;
-                        offsetMaxY = -Layout.Top.IfPoint() + tran.y;
-                    }
-                    else
-                    {
-                        var anchorVal = Layout.Bottom.IfPercent(0) / 100;
-                        anchorMinY = anchorVal;
-                        anchorMaxY = anchorVal;
-                        var bottomn = Layout.Bottom.IfPoint();
-                        offsetMinY = bottomn + tran.y;
-                        offsetMaxY = bottomn + tran.y + Layout.LayoutHeight;
-                    }
-                }
-                else
-                {
-                    var anchorVal = 1 - (Layout.Top.IfPercent(0) / 100f);
-                    anchorMinY = anchorVal;
-                    anchorMaxY = anchorVal;
-                    var topn = Layout.Top.IfPoint();
-                    offsetMinY = -topn + tran.y - Layout.LayoutHeight;
-                    offsetMaxY = -topn + tran.y;
-                }
-
-                rt.anchorMin = new Vector2(anchorMinX, anchorMinY);
-                rt.anchorMax = new Vector2(anchorMaxX, anchorMaxY);
-                rt.offsetMin = new Vector2(offsetMinX, offsetMinY);
-                rt.offsetMax = new Vector2(offsetMaxX, offsetMaxY);
-            }
-            else
-            {
-                var posX = Layout.LayoutLeft + pivotDiff.x * Layout.LayoutWidth;
-                var posY = -Layout.LayoutTop + pivotDiff.y * Layout.LayoutHeight;
-
-                // Sticky is the only offset resolved here rather than by layout, and it has to land the
-                // same frame the scroll moves -- so it never goes through `motion-duration`, which would
-                // chase it a frame behind.
-                var stickyOffset = Vector2.zero;
-                if (sticky && StickyPosition.TryResolve(Component, out var resolved, out _))
-                    stickyOffset = new Vector2(resolved.x, -resolved.y);
-
-                SetPositionAndSize(new Vector2(posX, posY) + tran + stickyOffset,
-                    new Vector2(Layout.LayoutWidth, Layout.LayoutHeight), z, visible, sticky);
-            }
+            SetPositionAndSize(new Vector2(posX, posY) + tran + stickyOffset,
+                new Vector2(Layout.LayoutWidth, Layout.LayoutHeight), z, visible, sticky);
             hasPositionUpdate = false;
             Layout.MarkLayoutSeen();
         }

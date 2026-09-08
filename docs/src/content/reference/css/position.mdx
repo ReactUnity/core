@@ -10,10 +10,13 @@ Valid values are:
 - `absolute` — out of flow, positioned against the padding box of the nearest positioned ancestor.
 - `fixed` — out of flow, positioned against the viewport, so it does not scroll with an ancestor.
 - `sticky` — in flow, then held inside the nearest scroll container as it scrolls past.
-- `inset` — out of flow, and the insets become anchors, so a pair on one axis stretches the element between them.
 
-`inset` is ReactUnity's own, and it is what makes `top: 0; bottom: 0` fill an axis; the CSS values
-size the element from its own `width` and `height` instead.
+On an out-of-flow element a pair of insets on one axis stretches it between them, as on the web, so
+`top: 0; bottom: 0` fills an axis. A declared `width` or `height` wins over the second inset.
+
+ReactUnity also accepted a non-standard `position: inset`, which anchored the element to its
+containing block's border box rather than its padding box. It is a deprecated alias for `absolute`;
+use `absolute`.
 
 ### Sticky {/*sticky*/}
 

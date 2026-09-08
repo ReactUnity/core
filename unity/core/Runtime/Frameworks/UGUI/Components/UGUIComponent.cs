@@ -197,7 +197,7 @@ namespace ReactUnity.UGUI
 
             Layout.PositionType =
                 pos == PositionType.Static ? YogaPositionType.Static :
-                pos == PositionType.Absolute || pos == PositionType.Fixed || pos == PositionType.Inset ? YogaPositionType.Absolute :
+                pos == PositionType.Absolute || pos == PositionType.Fixed ? YogaPositionType.Absolute :
                 YogaPositionType.Relative;
 
             Layout.StyleDirection = StylingHelpers.GetStyleEnumCustom(computed, LayoutProperties.StyleDirection);

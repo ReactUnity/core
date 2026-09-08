@@ -129,7 +129,7 @@ namespace ReactUnity.UIToolkit
             // -- reading them as absolute took an unpositioned box out of flow entirely. `fixed` has
             // no viewport containing block here, so it lands on absolute like the other two off-flow values.
             TargetElement.style.position =
-                pos == PositionType.Absolute || pos == PositionType.Fixed || pos == PositionType.Inset
+                pos == PositionType.Absolute || pos == PositionType.Fixed
                 ? Position.Absolute : Position.Relative;
             TargetElement.style.overflow = StylingHelpers.GetStyleEnumCustom<Overflow>(computed, LayoutProperties.Overflow);
 
