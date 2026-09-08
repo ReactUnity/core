@@ -148,6 +148,10 @@ namespace ReactUnity.Styling
         public static readonly ValueListStyleProperty<string> animationName = new ValueListStyleProperty<string>("animationName");
         public static readonly ValueListStyleProperty<AnimationPlayState> animationPlayState = new ValueListStyleProperty<AnimationPlayState>("animationPlayState");
         public static readonly ValueListStyleProperty<TimingFunction> animationTimingFunction = new ValueListStyleProperty<TimingFunction>("animationTimingFunction", TimingFunctions.Default);
+        public static readonly ValueListStyleProperty<AnimationTimeline> animationTimeline = new ValueListStyleProperty<AnimationTimeline>("animationTimeline", AnimationTimeline.Auto, baseConverter: AllConverters.AnimationTimelineConverter);
+
+        public static readonly StyleProperty<string> scrollTimelineName = new StyleProperty<string>("scrollTimelineName", null, false, false, AllConverters.TimelineNameConverter);
+        public static readonly StyleProperty<TimelineAxis> scrollTimelineAxis = new StyleProperty<TimelineAxis>("scrollTimelineAxis", TimelineAxis.Block, false, false);
 
         public static readonly ValueListStyleProperty<AudioReference> audioClip = new ValueListStyleProperty<AudioReference>("audioClip");
         public static readonly ValueListStyleProperty<int> audioIterationCount = new ValueListStyleProperty<int>("audioIterationCount", 1);
@@ -275,6 +279,9 @@ namespace ReactUnity.Styling
             { "animationName", animationName },
             { "animationPlayState", animationPlayState },
             { "animationTimingFunction", animationTimingFunction },
+            { "animationTimeline", animationTimeline },
+            { "scrollTimelineName", scrollTimelineName },
+            { "scrollTimelineAxis", scrollTimelineAxis },
 
             { "animation-delay", animationDelay },
             { "animation-direction", animationDirection },
@@ -284,6 +291,9 @@ namespace ReactUnity.Styling
             { "animation-name", animationName },
             { "animation-play-state", animationPlayState },
             { "animation-timing-function", animationTimingFunction },
+            { "animation-timeline", animationTimeline },
+            { "scroll-timeline-name", scrollTimelineName },
+            { "scroll-timeline-axis", scrollTimelineAxis },
 
             { "audioClip", audioClip },
             { "audioDelay", audioDelay },

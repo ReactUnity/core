@@ -26,6 +26,8 @@ namespace ReactUnity.UGUI
         public override float ScrollWidth => ScrollRect.ScrollWidth;
         public override float ScrollHeight => ScrollRect.ScrollHeight;
 
+        public override bool IsScrollContainer => true;
+
         public override float ScrollLeft
         {
             get => ScrollRect.ScrollLeft;

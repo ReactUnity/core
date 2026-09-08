@@ -134,6 +134,9 @@ namespace ReactUnity.Styling
         public ICssValueList<string> animationName => GetStyleValue(StyleProperties.animationName);
         public ICssValueList<AnimationPlayState> animationPlayState => GetStyleValue(StyleProperties.animationPlayState);
         public ICssValueList<TimingFunction> animationTimingFunction => GetStyleValue(StyleProperties.animationTimingFunction);
+        public ICssValueList<AnimationTimeline> animationTimeline => GetStyleValue(StyleProperties.animationTimeline);
+        public string scrollTimelineName => GetStyleValue(StyleProperties.scrollTimelineName);
+        public TimelineAxis scrollTimelineAxis => GetStyleValue(StyleProperties.scrollTimelineAxis);
         public ICssValueList<AudioReference> audioClip => GetStyleValue(StyleProperties.audioClip);
         public ICssValueList<int> audioIterationCount => GetStyleValue(StyleProperties.audioIterationCount);
         public ICssValueList<float> audioDelay => GetStyleValue(StyleProperties.audioDelay);

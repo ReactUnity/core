@@ -70,6 +70,9 @@ namespace ReactUnity
         float ScrollHeight { get; }
         float ClientWidth { get; }
         float ClientHeight { get; }
+
+        /// <summary>Whether this element scrolls its own content, which is what a scroll timeline reads.</summary>
+        bool IsScrollContainer { get; }
     }
 
     [TypescriptListInterfaces]

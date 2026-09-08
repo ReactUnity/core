@@ -153,6 +153,7 @@ export type TimingFunctionType = 'ease' | 'linear' | 'ease-in' | 'ease-out' | 'e
 export type AnimationFillMode = 'none' | 'both' | 'forwards' | 'backwards';
 export type AnimationDirection = 'normal' | 'reverse' | 'alternate' | 'alternate-reverse';
 export type AnimationPlayState = 'running' | 'paused';
+export type TimelineAxis = 'block' | 'inline' | 'x' | 'y';
 export type BackgroundSize = 'cover' | 'contain';
 export type BackgroundRepeat = 'repeat' | 'space' | 'round' | 'no-repeat';
 export type BorderImageRepeat = 'stretch' | 'repeat' | 'space' | 'round';

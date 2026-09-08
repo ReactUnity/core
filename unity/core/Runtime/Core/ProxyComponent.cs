@@ -103,6 +103,8 @@ namespace ReactUnity
 
         public float ClientHeight => Proxy.ClientHeight;
 
+        public bool IsScrollContainer => Proxy.IsScrollContainer;
+
         public List<IReactComponent> Children => Proxy.Children;
 
         public IReactComponent BeforePseudo => Proxy.BeforePseudo;

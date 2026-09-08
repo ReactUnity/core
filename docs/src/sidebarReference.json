@@ -210,6 +210,10 @@
               "path": "/reference/animations/transition"
             },
             {
+              "title": "Scroll Timelines",
+              "path": "/reference/animations/scroll-timelines"
+            },
+            {
               "title": "Enter/Leave Animations",
               "path": "/reference/animations/enter-leave"
             },

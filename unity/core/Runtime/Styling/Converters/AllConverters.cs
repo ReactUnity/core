@@ -29,6 +29,8 @@ namespace ReactUnity.Styling.Converters
 
         static public StyleConverterBase UrlConverter = new UrlConverter();
         static public StyleConverterBase ContainerNameConverter = new ContainerNameConverter();
+        static public StyleConverterBase AnimationTimelineConverter = new AnimationTimelineConverter();
+        static public StyleConverterBase TimelineNameConverter = new TimelineNameConverter();
         static public StyleConverterBase ContainerTypeConverter = new ContainerTypeConverter();
         static public StyleConverterBase ColorSchemeConverter = new ColorSchemeConverter();
         static public StyleConverterBase ScrollbarGutterConverter = new ScrollbarGutterConverter();
@@ -91,6 +93,7 @@ namespace ReactUnity.Styling.Converters
             { typeof(BorderImageSlice), BorderImageSliceConverter },
             { typeof(FilterDefinition), FilterDefinitionConverter },
             { typeof(ContainerType), ContainerTypeConverter },
+            { typeof(AnimationTimeline), AnimationTimelineConverter },
         };
 
         public static StyleConverterBase Get<T>() => Get(typeof(T));

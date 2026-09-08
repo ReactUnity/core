@@ -1,0 +1,108 @@
+---
+title: Scroll Timelines
+---
+
+An animation normally reads its progress from the clock. `animation-timeline` points it at a scroll
+container instead, so the keyframes advance as the container scrolls and rewind as it scrolls back.
+The syntax is the CSS one, described at
+[MDN Docs](https://developer.mozilla.org/en-US/docs/Web/CSS/animation-timeline).
+
+```css
+scroll .progress-bar {
+  animation-name: fill;
+  animation-timeline: scroll();
+  animation-timing-function: linear;
+}
+
+@keyframes fill {
+  from { width: 0%; }
+  to { width: 100%; }
+}
+```
+
+### Which container is read {/*which-container-is-read*/}
+
+`scroll()` takes an optional scroller and an optional axis, in either order.
+
+| Value       | Description                                                                    |
+| ----------- | ------------------------------------------------------------------------------ |
+| `nearest`   | The default. The nearest ancestor that scrolls, which in practice is a `<scroll>`. |
+| `self`      | The element itself, for an animation on the scroll container.                   |
+| `root`      | The root element, when it is the thing that scrolls.                            |
+| `block`, `y`      | The default axis, which is the vertical one.                             |
+| `inline`, `x`     | The horizontal axis.                                                     |
+
+```css
+@keyframes fade { from { opacity: 0; } to { opacity: 1; } }
+
+.hint { animation-name: fade; animation-timeline: scroll(nearest inline); }
+scroll { animation-name: fade; animation-timeline: scroll(self); }
+```
+
+There are no writing modes here, so `block` is always the vertical axis and `inline` always the
+horizontal one.
+
+### Named timelines {/*named-timelines*/}
+
+`scroll-timeline-name` gives a scroll container a name, and `animation-timeline` takes that name in
+place of `scroll()`. The name is a dashed identifier, and `scroll-timeline-axis` picks the axis on
+the container rather than at the point of use. The `scroll-timeline` shorthand sets both.
+
+```css
+scroll#feed {
+  scroll-timeline: --feed block;
+}
+
+.header {
+  animation-name: shrink;
+  animation-timeline: --feed;
+}
+```
+
+A name is visible to the container that declares it and to its descendants. It is the way to read a
+container that is not an ancestor of the animated element's nearest scroller, and the way to read
+one of several scrollers by name.
+
+### What the other animation properties mean {/*what-the-other-animation-properties-mean*/}
+
+Progress stands in for the clock, so the properties that describe time no longer apply.
+`animation-duration`, `animation-delay` and `animation-play-state` are ignored. The rest keep
+working:
+
+- `animation-timing-function` shapes progress just as it shapes time, so the default `ease` makes
+  the middle of the scroll range land past the middle of the animation. Use `linear` to follow the
+  scroll exactly.
+- `animation-iteration-count` divides the scroll range into that many cycles. An infinite count
+  divides a range that is finite, so it counts as one.
+- `animation-direction` applies per cycle, so `alternate` with two iterations plays forwards over
+  the first half of the range and backwards over the second.
+- `animation-fill-mode` has nothing to fill, since the animation covers the whole range.
+
+The `animation` shorthand takes no timeline, so like every other sub-property it leaves out, it
+resets one. Set `animation-timeline` after the shorthand, or in a later rule.
+
+```css
+.bar {
+  animation: fill linear;
+  animation-timeline: scroll();
+}
+```
+
+### Inactive timelines {/*inactive-timelines*/}
+
+A timeline with no container to read is inactive, and an animation on an inactive timeline has no
+effect at all, not even the fill it would otherwise leave behind. That covers
+`animation-timeline: none`, a `scroll()` that finds no scroll container, and a name that no ancestor
+declares. The element simply shows its unanimated style, which makes an animation that only applies
+inside a scroll view safe to declare everywhere.
+
+A container with nothing to scroll yet sits at the start of its range, so its animation holds the
+first keyframe until there is enough content to scroll.
+
+### Notes {/*notes*/}
+
+- An animation reads the container's scroll offset after layout, so a container whose content
+  resizes in the same frame is read on the next one.
+- `view()` timelines, which follow an element's own passage through the scrollport, and
+  `animation-range`, are not implemented yet.
+- `timeline-scope`, which widens where a name is visible, is not implemented yet.

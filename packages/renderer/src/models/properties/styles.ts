@@ -21,6 +21,7 @@ import {
   TextAlign,
   TextOverflowModes,
   TextTransform,
+  TimelineAxis,
   TimingFunctionType,
   VerticalAlign,
   Visibility,
@@ -139,6 +140,9 @@ export interface RenderStyle {
   animationName?: SafeString;
   animationPlayState?: AnimationPlayState;
   animationTimingFunction?: TimingFunctionType;
+  animationTimeline?: SafeString;
+  scrollTimelineName?: SafeString;
+  scrollTimelineAxis?: TimelineAxis;
   audioClip?: AssetReferenceOrHttp;
   audioIterationCount?: number;
   audioDelay?: number;
@@ -177,6 +181,7 @@ export interface RenderStyle {
   gap?: SafeString | number;
   scrollbarColor?: SafeString;
   scrollbarWidth?: 'auto' | 'thin' | 'none' | YogaValueAux;
+  scrollTimeline?: SafeString;
   scrollbarGutter?: 'auto' | 'stable' | 'stable both-edges';
   container?: SafeString;
   paddingInline?: SafeString | number;

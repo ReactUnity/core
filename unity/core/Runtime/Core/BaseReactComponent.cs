@@ -148,6 +148,8 @@ namespace ReactUnity
         public virtual float ScrollHeight => ClientHeight;
         public abstract float ClientWidth { get; }
         public abstract float ClientHeight { get; }
+
+        public virtual bool IsScrollContainer => false;
         #endregion
 
 

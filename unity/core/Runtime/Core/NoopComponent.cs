@@ -50,6 +50,7 @@ namespace ReactUnity
         public float ScrollHeight { get; }
         public float ClientWidth { get; }
         public float ClientHeight { get; }
+        public bool IsScrollContainer => false;
         public float Width { get; }
         public float Height { get; }
         public List<IReactComponent> Children { get; }

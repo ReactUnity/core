@@ -21,6 +21,7 @@ namespace ReactUnity.Styling.Shorthands
             StyleProperties.animationName,
             StyleProperties.animationPlayState,
             StyleProperties.animationTimingFunction,
+            StyleProperties.animationTimeline,
         };
 
         public AnimationShorthand(string name) : base(name) { }
@@ -37,6 +38,7 @@ namespace ReactUnity.Styling.Shorthands
             var durations = new IComputedValue[cnt];
             var easings = new IComputedValue[cnt];
             var delays = new IComputedValue[cnt];
+            var timelines = new IComputedValue[cnt];
 
             for (int ci = 0; ci < cnt; ci++)
             {
@@ -130,6 +132,10 @@ namespace ReactUnity.Styling.Shorthands
                 if (!nameSet) return null;
                 if (!countSet) iterations[ci] = new ComputedConstant(1);
                 if (!timingSet) easings[ci] = new ComputedConstant(TimingFunctions.Default);
+
+                // The shorthand does not take a timeline, so like every other omitted sub-property
+                // it resets one; a scroll timeline has to be set after it, or in a later rule.
+                timelines[ci] = new ComputedConstant(AnimationTimeline.Auto);
             }
 
             collection[StyleProperties.animationName] = StyleProperties.animationName.Converter.FromList(names);
@@ -140,6 +146,7 @@ namespace ReactUnity.Styling.Shorthands
             collection[StyleProperties.animationIterationCount] = StyleProperties.animationIterationCount.Converter.FromList(iterations);
             collection[StyleProperties.animationFillMode] = StyleProperties.animationFillMode.Converter.FromList(fillModes);
             collection[StyleProperties.animationDirection] = StyleProperties.animationDirection.Converter.FromList(directions);
+            collection[StyleProperties.animationTimeline] = StyleProperties.animationTimeline.Converter.FromList(timelines);
 
             return ModifiedProperties;
         }
