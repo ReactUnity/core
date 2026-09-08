@@ -15,6 +15,8 @@ import {
   FontStyles,
   FontVariant,
   FontWeight,
+  Isolation,
+  MixBlendMode,
   NavigationMode,
   ObjectFit,
   PointerEvents,
@@ -89,6 +91,8 @@ export interface RenderStyle {
 
   boxShadow?: SafeString;
   filter?: SafeString;
+  mixBlendMode?: MixBlendMode;
+  isolation?: Isolation;
   backdropFilter?: SafeString;
   objectFit?: ObjectFit;
   objectPosition?: YogaValue2Aux;

@@ -1,6 +1,6 @@
 //
 // Types in assemblies: ReactUnity, ReactUnity.Editor, ReactUnity.UGUI, ReactUnity.UIToolkit
-// Generated 08/09/2026 17:32:35
+// Generated 08/09/2026 22:41:35
 //
 /* eslint-disable */
 
@@ -4411,6 +4411,7 @@ export declare namespace ReactUnity {
       maxLines: number;
       textStrokeWidth: number;
       textStrokeColor: UnityEngine.Color;
+      textDecorationColor: UnityEngine.Color;
       content: string;
       appearance: ReactUnity.Types.Appearance;
       navigation: UnityEngine.UI.Navigation_Mode;
@@ -4438,6 +4439,7 @@ export declare namespace ReactUnity {
       maskRepeatY: ReactUnity.Types.ICssValueList<ReactUnity.Types.BackgroundRepeat>;
       filter: ReactUnity.Types.FilterDefinition;
       backdropFilter: ReactUnity.Types.FilterDefinition;
+      mixBlendMode: ReactUnity.Types.BackgroundBlendMode;
       transitionProperty: ReactUnity.Types.ICssValueList<ReactUnity.Styling.Animations.TransitionProperty>;
       transitionDuration: ReactUnity.Types.ICssValueList<number>;
       transitionTimingFunction: ReactUnity.Types.ICssValueList<((value: number, start?: number, end?: number) => number)>;
@@ -4659,6 +4661,7 @@ export declare namespace ReactUnity {
       static maxLines: ReactUnity.Styling.StyleProperty;
       static textStrokeWidth: ReactUnity.Styling.StyleProperty;
       static textStrokeColor: ReactUnity.Styling.StyleProperty;
+      static textDecorationColor: ReactUnity.Styling.StyleProperty;
       static content: ReactUnity.Styling.StyleProperty;
       static appearance: ReactUnity.Styling.StyleProperty;
       static navigation: ReactUnity.Styling.StyleProperty;
@@ -4691,6 +4694,7 @@ export declare namespace ReactUnity {
       static maskRepeatY: ReactUnity.Styling.ValueListStyleProperty;
       static filter: ReactUnity.Styling.StyleProperty;
       static backdropFilter: ReactUnity.Styling.StyleProperty;
+      static mixBlendMode: ReactUnity.Styling.StyleProperty;
       static transitionProperty: ReactUnity.Styling.ValueListStyleProperty;
       static transitionDuration: ReactUnity.Styling.ValueListStyleProperty;
       static transitionTimingFunction: ReactUnity.Styling.ValueListStyleProperty;
@@ -6663,6 +6667,7 @@ export declare namespace ReactUnity {
       Hue = 13,
       Saturation = 14,
       Luminosity = 15,
+      PlusLighter = 16,
     }
     export class BorderImageSlice {
       constructor(top: Yoga.YogaValue, right: Yoga.YogaValue, bottom: Yoga.YogaValue, left: Yoga.YogaValue, fill: boolean);
@@ -12663,6 +12668,8 @@ export declare namespace ReactUnity {
       export class ElementFilter {
         constructor();
         Definition: ReactUnity.Types.FilterDefinition;
+        BlendMode: ReactUnity.Types.BackgroundBlendMode;
+        Isolated: boolean;
         RenderCount: number;
         destroyCancellationToken: System.Threading.CancellationToken;
         useGUILayout: boolean;
@@ -12677,7 +12684,7 @@ export declare namespace ReactUnity {
         tag: string;
         name: string;
         hideFlags: UnityEngine.HideFlags;
-        static Create(cmp: ReactUnity.UGUI.UGUIComponent, definition: ReactUnity.Types.FilterDefinition): ReactUnity.UGUI.Internal.ElementFilter;
+        static Create(cmp: ReactUnity.UGUI.UGUIComponent, definition: ReactUnity.Types.FilterDefinition, blendMode: ReactUnity.Types.BackgroundBlendMode, isolated: boolean): ReactUnity.UGUI.Internal.ElementFilter;
         Detach(): void;
         Invalidate(): void;
         IsInvoking(): boolean;

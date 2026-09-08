@@ -41,6 +41,7 @@ namespace ReactUnity.UGUI.Internal
         static readonly int ShadowTexId = Shader.PropertyToID("_ShadowTex");
         static readonly int ShadowColorId = Shader.PropertyToID("_ShadowColor");
         static readonly int ShadowOffsetId = Shader.PropertyToID("_ShadowOffset");
+        static readonly int BlendModeId = Shader.PropertyToID("_BlendMode");
 
         // The exact support of the iterated kernel, so no blur can ever be clipped and none is
         // over-allocated for: one pass reaches 4 taps at quarter spacing, so +/- its own radius,
@@ -72,6 +73,7 @@ namespace ReactUnity.UGUI.Internal
 
         private RawImage composite;
         private Material compositeMaterial;
+        private bool compositeBlends;
         private Material blurMaterial;
 
         private FilterDefinition definition;
@@ -79,6 +81,31 @@ namespace ReactUnity.UGUI.Internal
         {
             get => definition;
             set => definition = value;
+        }
+
+        private BackgroundBlendMode blendMode;
+        public BackgroundBlendMode BlendMode
+        {
+            get => blendMode;
+            set
+            {
+                if (blendMode == value) return;
+                blendMode = value;
+                EnsureCompositeMaterial();
+                uniformsDirty = true;
+            }
+        }
+
+        private bool isolated;
+        public bool Isolated
+        {
+            get => isolated;
+            set
+            {
+                if (isolated == value) return;
+                isolated = value;
+                ApplyIsolation();
+            }
         }
 
         private readonly List<Graphic> graphics = new List<Graphic>();
@@ -95,11 +122,13 @@ namespace ReactUnity.UGUI.Internal
         /// <summary>How many offscreen renders this filter has done. For tests.</summary>
         public int RenderCount { get; private set; }
 
-        public static ElementFilter Create(UGUIComponent cmp, FilterDefinition definition)
+        public static ElementFilter Create(UGUIComponent cmp, FilterDefinition definition, BackgroundBlendMode blendMode, bool isolated)
         {
             var filter = cmp.GameObject.AddComponent<ElementFilter>();
             filter.component = cmp;
             filter.definition = definition;
+            filter.blendMode = blendMode;
+            filter.isolated = isolated;
             filter.Attach();
             return filter;
         }
@@ -122,9 +151,8 @@ namespace ReactUnity.UGUI.Internal
             compRect.SetParent(originalParent, false);
             compRect.SetSiblingIndex(originalIndex);
 
-            compositeMaterial = new Material(Resources.Load<Shader>("ReactUnity/shaders/Filter"));
+            EnsureCompositeMaterial();
             blurMaterial = new Material(Resources.Load<Shader>("ReactUnity/shaders/FilterBlur"));
-            composite.material = compositeMaterial;
 
             var canvasGo = ctx.CreateNativeObject("[FilterSurface]", typeof(RectTransform), typeof(Canvas));
             offscreenCanvas = canvasGo.GetComponent<Canvas>();
@@ -160,6 +188,27 @@ namespace ReactUnity.UGUI.Internal
             canvasGo.AddComponent<FilterEventBubble>().Composite = composite;
 
             self.SetParent(canvasGo.transform, false);
+
+            ApplyIsolation();
+        }
+
+        /// <summary>
+        /// Carries the other half of <c>isolation: isolate</c> -- not inheriting parent CanvasGroups
+        /// -- onto the composite. The element's own group went offscreen with the subtree, where
+        /// there are no parent groups left to ignore, so without this an ancestor's opacity would
+        /// quietly start applying to an element the moment it isolated.
+        /// </summary>
+        void ApplyIsolation()
+        {
+            if (!composite) return;
+
+            var group = composite.GetComponent<CanvasGroup>();
+            if (!group)
+            {
+                if (!isolated) return;
+                group = composite.gameObject.AddComponent<CanvasGroup>();
+            }
+            group.ignoreParentGroups = isolated;
         }
 
         /// <summary>
@@ -214,6 +263,23 @@ namespace ReactUnity.UGUI.Internal
                 var root = component?.Context?.RootCanvas;
                 return root ? Mathf.Max(root.scaleFactor, 0.01f) : 1f;
             }
+        }
+
+        /// <summary>
+        /// Points the composite at the shader its blend mode needs. Reading the backdrop costs a
+        /// grab per object, so only an element that actually blends is given the shader that pays
+        /// for one -- a plain `filter` keeps the cheap composite.
+        /// </summary>
+        void EnsureCompositeMaterial()
+        {
+            var blends = blendMode != BackgroundBlendMode.Normal;
+            if (compositeMaterial && compositeBlends == blends) return;
+
+            if (compositeMaterial) Destroy(compositeMaterial);
+            compositeBlends = blends;
+            compositeMaterial = new Material(Resources.Load<Shader>(blends ? "ReactUnity/shaders/FilterBlend" : "ReactUnity/shaders/Filter"));
+            if (composite) composite.material = compositeMaterial;
+            uniformsDirty = true;
         }
 
         /// <summary>
@@ -504,6 +570,7 @@ namespace ReactUnity.UGUI.Internal
         void SetUniforms(Material m)
         {
             m.SetTexture(MainTexId, target);
+            m.SetInt(BlendModeId, (int) blendMode);
             m.SetFloat(BrightnessId, definition.Brightness);
             m.SetFloat(ContrastId, definition.Contrast);
             m.SetFloat(GrayscaleId, definition.Grayscale);

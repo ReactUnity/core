@@ -1,0 +1,84 @@
+---
+title: Mix Blend Mode
+---
+
+Blends an element into whatever is painted behind it. Check out the [MDN](https://developer.mozilla.org/en-US/docs/Web/CSS/mix-blend-mode) for how to use.
+
+The element is rendered off screen and blended as one image, so its background, borders, text and children go into the backdrop together rather than each blending against the ones before it -- as on the web, and the same capture [`filter`](/reference/css/filter) uses. When both are set the filter runs first and its result is what blends.
+
+<Sandpack>
+
+```js
+const modes = [
+  'normal',
+  'multiply',
+  'screen',
+  'overlay',
+  'difference',
+  'exclusion',
+  'hue',
+  'luminosity',
+];
+
+export default function App() {
+  const [index, setIndex] = React.useState(1);
+  const mixBlendMode = modes[index];
+
+  return <>
+    <button onClick={() => setIndex(x => (x + 1) % modes.length)}>
+      mix-blend-mode: {mixBlendMode}
+    </button>
+
+    <view className="stack">
+      <view className="backdrop" />
+      <view className="blob one" style={{ mixBlendMode }} />
+      <view className="blob two" style={{ mixBlendMode }} />
+    </view>
+  </>;
+}
+```
+
+```css active
+.stack {
+  width: 300px;
+  height: 200px;
+  margin-top: 16px;
+}
+
+.backdrop {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 300px;
+  height: 200px;
+  background-image: linear-gradient(120deg, gold, deepskyblue);
+}
+
+.blob {
+  position: absolute;
+  width: 130px;
+  height: 130px;
+  border-radius: 50%;
+  mix-blend-mode: multiply;
+}
+
+.one { left: 40px; top: 35px; background-color: crimson; }
+.two { left: 130px; top: 35px; background-color: seagreen; }
+```
+
+</Sandpack>
+
+## Values {/*values*/}
+
+All sixteen CSS blend functions are supported, and they take the same values as [`background-blend-mode`](https://developer.mozilla.org/en-US/docs/Web/CSS/background-blend-mode):
+
+`normal`, `multiply`, `screen`, `overlay`, `darken`, `lighten`, `color-dodge`, `color-burn`, `hard-light`, `soft-light`, `difference`, `exclusion`, `hue`, `saturation`, `color` and `luminosity`.
+
+`plus-lighter` is supported as well. It is not a blend function: rather than covering the backdrop by its alpha, the element is added to it and the sum is clamped, which is how two overlapping glows brighten each other. `screen` lightens the same way but tapers off (`a + b - ab`), so it never clips; `plus-lighter` does. The element's own [`opacity`](/reference/css/opacity) scales what is added, not the result.
+
+## Notes {/*notes*/}
+
+- The backdrop is read from the frame as it stands when the element is drawn, so blending only sees what is *behind* the element -- anything drawn after it is unaffected, as on the web.
+- `normal` costs nothing: an element only pays for the offscreen capture and the backdrop read once it actually blends.
+- Blending is confined to the nearest blending group above it, which is what [`isolation: isolate`](/reference/css/isolation) creates. A [`filter`](/reference/css/filter) on an ancestor makes one too, since it is the same capture.
+- Under the Universal Render Pipeline the backdrop comes from the camera's opaque texture, which does not contain other transparent UI. Blending against a 3D scene behind the canvas works there; blending against another UI element needs the built-in pipeline.

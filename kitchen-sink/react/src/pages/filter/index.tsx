@@ -1,4 +1,4 @@
-import { icon } from '@reactunity/renderer';
+import { icon, type MixBlendMode } from '@reactunity/renderer';
 import clsx from 'clsx';
 import { useState } from 'react';
 import star from '#src/assets/star.png';
@@ -27,6 +27,27 @@ const functions = [
   'chromatic-aberration(4px)',
   'drop-shadow(6px 8px 5px rgba(15, 23, 42, 0.6))',
   'grayscale(1) blur(2px) brightness(1.3)',
+];
+
+/** Every CSS blend function, plus `plus-lighter`, which adds to the backdrop rather than blending. */
+const blendModes: MixBlendMode[] = [
+  'normal',
+  'multiply',
+  'screen',
+  'overlay',
+  'darken',
+  'lighten',
+  'color-dodge',
+  'color-burn',
+  'hard-light',
+  'soft-light',
+  'difference',
+  'exclusion',
+  'hue',
+  'saturation',
+  'color',
+  'luminosity',
+  'plus-lighter',
 ];
 
 function Card({ className, filter }: { className?: string; filter?: string }) {
@@ -177,6 +198,57 @@ export function FilterPage() {
         <row className={'h-40 justify-center'}>
           <Card className={styles.transformed} />
         </row>
+      </section>
+
+      <section>
+        <h2>
+          <row>
+            Mix blend mode
+            <icon.layers />
+          </row>
+        </h2>
+
+        <text className={styles.note}>
+          `mix-blend-mode` blends the element into what is painted behind it. The element and everything inside it go in as one image, so
+          each chip's fill and its label blend with the gradient together -- the label does not blend against its own chip.
+        </text>
+
+        <view className={'flex-row flex-wrap'}>
+          {blendModes.map((mixBlendMode) => (
+            <view key={mixBlendMode} className={'m-1.5 w-32 shrink-0 items-center'}>
+              <view className={styles.blendHost}>
+                <view className={styles.blendChip} style={{ mixBlendMode }}>
+                  <text>Aa</text>
+                </view>
+              </view>
+              <text className={styles.caption}>{mixBlendMode}</text>
+            </view>
+          ))}
+        </view>
+
+        <text className={styles.note}>
+          A blend reaches as far back as the nearest blending group above it and no further, which is what `isolation: isolate` makes. Both
+          groups below are transparent and sit on the same stripe: the left one's blobs reach the stripe, the right one's stop at their
+          isolated parent -- though they still blend with each other, since isolating draws a boundary rather than switching blending off.
+        </text>
+
+        <view className={styles.blendStage}>
+          <view className={'items-center'}>
+            <view className={styles.blendGroup}>
+              <view className={clsx(styles.blendBlob, styles.blobLeft)} />
+              <view className={clsx(styles.blendBlob, styles.blobRight)} />
+            </view>
+            <text className={styles.caption}>blending with the stripe</text>
+          </view>
+
+          <view className={'items-center'}>
+            <view className={clsx(styles.blendGroup, styles.isolated)}>
+              <view className={clsx(styles.blendBlob, styles.blobLeft)} />
+              <view className={clsx(styles.blendBlob, styles.blobRight)} />
+            </view>
+            <text className={styles.caption}>contained by `isolation: isolate`</text>
+          </view>
+        </view>
       </section>
 
       <section>

@@ -160,8 +160,16 @@
               "path": "/reference/css/filter"
             },
             {
+              "title": "Isolation",
+              "path": "/reference/css/isolation"
+            },
+            {
               "title": "Mask Image",
               "path": "/reference/css/mask-image"
+            },
+            {
+              "title": "Mix Blend Mode",
+              "path": "/reference/css/mix-blend-mode"
             },
             {
               "title": "Opacity",

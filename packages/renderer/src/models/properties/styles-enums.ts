@@ -67,6 +67,14 @@ export type BackgroundBlendMode =
   | 'color'
   | 'luminosity';
 
+// `mix-blend-mode` takes the whole <blend-mode> set plus `plus-lighter`, which composites
+// additively rather than blending. CSS gives that keyword to this property alone.
+export type MixBlendMode = BackgroundBlendMode | 'plus-lighter';
+
+// `isolate` makes the element a blending group of its own, so a descendant's
+// `mix-blend-mode` cannot reach the backdrop behind it.
+export type Isolation = 'auto' | 'isolate';
+
 export type CursorType =
   | 'auto'
   | 'default'

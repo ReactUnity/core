@@ -1,0 +1,66 @@
+---
+title: Isolation
+---
+
+Makes an element a blending group of its own, so that a [`mix-blend-mode`](/reference/css/mix-blend-mode) inside it blends with what the group itself contains and never reaches the backdrop behind it. Check out the [MDN](https://developer.mozilla.org/en-US/docs/Web/CSS/isolation) for how to use.
+
+<Sandpack>
+
+```js
+export default function App() {
+  const [isolate, setIsolate] = React.useState(true);
+
+  return <>
+    <button onClick={() => setIsolate(x => !x)}>
+      isolation: {isolate ? 'isolate' : 'auto'}
+    </button>
+
+    <view className="stage">
+      <view className="group" style={{ isolation: isolate ? 'isolate' : 'auto' }}>
+        <view className="blob one" />
+        <view className="blob two" />
+      </view>
+    </view>
+  </>;
+}
+```
+
+```css active
+.stage {
+  width: 300px;
+  height: 180px;
+  margin-top: 16px;
+  background-image: linear-gradient(120deg, gold, deepskyblue);
+}
+
+.group {
+  width: 300px;
+  height: 180px;
+}
+
+.blob {
+  position: absolute;
+  top: 25px;
+  width: 130px;
+  height: 130px;
+  border-radius: 50%;
+  mix-blend-mode: difference;
+}
+
+.one { left: 30px; background-color: crimson; }
+.two { left: 140px; background-color: seagreen; }
+```
+
+</Sandpack>
+
+The blobs still blend with each other where they overlap, because they are in the group together. What isolating changes is everything below the group: the gradient is outside it, so an isolated group leaves it alone.
+
+## Values {/*values*/}
+
+- `auto` (default) -- the element is not a blending group, and a descendant's blend reaches whatever is painted behind it.
+- `isolate` -- the element becomes a blending group.
+
+## Notes {/*notes*/}
+
+- `isolate` also stops the element inheriting its ancestors' [`opacity`](/reference/css/opacity) and [`pointer-events`](/reference/css/pointer-events). That is a ReactUnity addition with no equivalent on the web, and it is why this property was here before blending was.
+- Isolating renders the element off screen and composites it back, the same capture [`filter`](/reference/css/filter) and `mix-blend-mode` use -- so it costs a render target, and putting a filter on an element isolates it too.

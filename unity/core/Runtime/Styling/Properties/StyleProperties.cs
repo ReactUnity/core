@@ -132,6 +132,7 @@ namespace ReactUnity.Styling
 
         public static readonly StyleProperty<FilterDefinition> filter = new StyleProperty<FilterDefinition>("filter");
         public static readonly StyleProperty<FilterDefinition> backdropFilter = new StyleProperty<FilterDefinition>("backdropFilter");
+        public static readonly StyleProperty<BackgroundBlendMode> mixBlendMode = new StyleProperty<BackgroundBlendMode>("mixBlendMode", BackgroundBlendMode.Normal);
 
         public static readonly ValueListStyleProperty<TransitionProperty> transitionProperty = new ValueListStyleProperty<TransitionProperty>("transitionProperty");
         public static readonly ValueListStyleProperty<float> transitionDuration = new ValueListStyleProperty<float>("transitionDuration", baseConverter: AllConverters.DurationConverter);
@@ -260,6 +261,7 @@ namespace ReactUnity.Styling
 
             { "filter", filter },
             { "backdropFilter", backdropFilter },
+            { "mixBlendMode", mixBlendMode },
 
             { "transitionProperty", transitionProperty },
             { "transitionDuration", transitionDuration },
@@ -357,6 +359,7 @@ namespace ReactUnity.Styling
             { "mask-repeat-x", maskRepeatX },
             { "mask-repeat-y", maskRepeatY },
             { "backdrop-filter", backdropFilter },
+            { "mix-blend-mode", mixBlendMode },
             { "border-top-left-radius", borderTopLeftRadius },
             { "border-top-right-radius", borderTopRightRadius },
             { "border-bottom-left-radius", borderBottomLeftRadius },

@@ -280,16 +280,34 @@ namespace ReactUnity.UGUI
         protected void SetFilter()
         {
             var filter = ComputedStyle.filter;
+            var blendMode = ComputedStyle.mixBlendMode;
 
-            if (filter == null || filter.Equals(FilterDefinition.Default))
+            var hasFilter = filter != null && !filter.Equals(FilterDefinition.Default);
+            // `mix-blend-mode` rides the same offscreen capture, because CSS blends the element and
+            // everything inside it as one image -- which is what the capture already is. It also
+            // puts the two in the order CSS gives them: the filter runs, then the result blends.
+            var hasBlend = blendMode != BackgroundBlendMode.Normal;
+            // And `isolation: isolate` is the capture on its own: a descendant that blends can only
+            // read the backdrop the capture hands it, which is what a stacking context amounts to
+            // here. The chain applies nothing, so the result is the element as it was.
+            var isolated = ComputedStyle.isolation == Isolation.Isolate;
+
+            if (!hasFilter && !hasBlend && !isolated)
             {
                 if (ElementFilter) ElementFilter.Detach();
                 ElementFilter = null;
                 return;
             }
 
-            if (!ElementFilter) ElementFilter = ElementFilter.Create(this, filter);
-            else ElementFilter.Definition = filter;
+            var definition = hasFilter ? filter : FilterDefinition.Default;
+
+            if (!ElementFilter) ElementFilter = ElementFilter.Create(this, definition, blendMode, isolated);
+            else
+            {
+                ElementFilter.Definition = definition;
+                ElementFilter.BlendMode = blendMode;
+                ElementFilter.Isolated = isolated;
+            }
         }
 
         #endregion

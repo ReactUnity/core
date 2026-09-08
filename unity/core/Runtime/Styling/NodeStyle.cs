@@ -116,6 +116,7 @@ namespace ReactUnity.Styling
 
         public FilterDefinition filter => GetStyleValue(StyleProperties.filter);
         public FilterDefinition backdropFilter => GetStyleValue(StyleProperties.backdropFilter);
+        public BackgroundBlendMode mixBlendMode => GetStyleValue(StyleProperties.mixBlendMode);
 
         public ICssValueList<TransitionProperty> transitionProperty => GetStyleValue(StyleProperties.transitionProperty);
         public ICssValueList<float> transitionDuration => GetStyleValue(StyleProperties.transitionDuration);

@@ -131,10 +131,14 @@ context.MediaProvider.SetValue("prefers-color-scheme", "dark");
 | ------------------------------------------------ | -------------------------------------------------------------- |
 | `decoration-dotted`, `decoration-2`              | TMP has one solid line, sized by the font asset                |
 | `grid`, `grid-cols-*`, `col-span-*`              | Layout is flexbox only. The flex utilities are the way         |
-| `mix-blend-*`                                    | Only `background-blend-mode` is implemented                    |
+| `mix-blend-plus-darker`                          | Not in the blend set ReactUnity implements                     |
 
 The rest of the decoration utilities work: `underline`, `line-through`, `no-underline` and
 `decoration-<color>` — see [text decoration](/reference/css#text-decoration).
+
+Every other `mix-blend-*` utility works, from `mix-blend-multiply` through to
+`mix-blend-plus-lighter` — see [mix blend mode](/reference/css/mix-blend-mode). So does `isolate`,
+which contains them the way it does on the web — see [isolation](/reference/css/isolation).
 
 Arbitrary values (`p-[13px]`, `leading-[1.7]`), arbitrary properties, `@theme`, `@utility`,
 `@custom-variant` and the `hover:`, `active:`, `focus:` and `disabled:` variants all work.

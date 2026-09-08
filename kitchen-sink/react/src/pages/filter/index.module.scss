@@ -174,6 +174,75 @@
   filter: pixelate(6px) drop-shadow(0 12px 10px rgba(15, 23, 42, 0.45));
 }
 
+/* A backdrop with both light and dark in it, so the modes that branch on the backdrop --
+   overlay, and the dodge/burn pair -- do visibly different things across the same chip. */
+.blendHost {
+  width: 120px;
+  height: 80px;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  overflow: hidden;
+  background-image: linear-gradient(100deg, #0f172a, #e2e8f0 45%, #f97316);
+}
+
+.blendChip {
+  width: 84px;
+  height: 48px;
+  align-items: center;
+  justify-content: center;
+  border-radius: 6px;
+  background-color: #38bdf8;
+  mix-blend-mode: normal;
+
+  text {
+    font-size: 22px;
+    font-weight: bold;
+    color: #7c3aed;
+  }
+}
+
+/* The stripe both groups sit on. It belongs to neither, so it is only reachable by a blend that
+   is not contained -- which is the whole point of the pair. */
+.blendStage {
+  flex-direction: row;
+  padding: 10px 20px;
+  border-radius: 12px;
+  background-image: linear-gradient(120deg, #fde68a, #38bdf8);
+}
+
+/* Transparent on purpose: the blobs inside have nothing of their own to blend with, so what they
+   find is whatever the capture above them lets them reach. */
+.blendGroup {
+  width: 200px;
+  height: 130px;
+  margin-right: 20px;
+}
+
+.blendBlob {
+  position: absolute;
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  mix-blend-mode: difference;
+}
+
+.blobLeft {
+  left: 10px;
+  top: 15px;
+  background-color: #f43f5e;
+}
+
+.blobRight {
+  left: 80px;
+  top: 15px;
+  background-color: #22c55e;
+}
+
+.isolated {
+  isolation: isolate;
+}
+
 /* Something with detail behind the panel, so the backdrop blur has anything to show. */
 .backdropHost {
   height: 200px;

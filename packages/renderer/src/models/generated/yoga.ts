@@ -1,6 +1,6 @@
 //
 // Types in assemblies: LibYoga
-// Generated 08/09/2026 17:32:35
+// Generated 08/09/2026 22:41:36
 //
 /* eslint-disable */
 
@@ -405,6 +405,9 @@ export declare namespace Yoga {
     Point = 1,
     Percent = 2,
     Auto = 3,
+    MaxContent = 4,
+    FitContent = 5,
+    Stretch = 6,
   }
   export class YogaValue {
     Unit: Yoga.YogaUnit;
@@ -416,6 +419,10 @@ export declare namespace Yoga {
     static Undefined(): Yoga.YogaValue;
     static Auto(): Yoga.YogaValue;
     static Percent(value: number): Yoga.YogaValue;
+    static MaxContent(): Yoga.YogaValue;
+    static FitContent(): Yoga.YogaValue;
+    static Stretch(): Yoga.YogaValue;
+    static IsKeyword(unit: Yoga.YogaUnit): boolean;
     ToString(): string;
     GetType(): System.Type;
   }

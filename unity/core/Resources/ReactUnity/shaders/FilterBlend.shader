@@ -1,12 +1,18 @@
-// Composites an element that was rendered offscreen, applying the CSS `filter` chain.
-// This one never reads the backdrop, so a single subshader serves every pipeline. The variant that
-// does -- for `mix-blend-mode` -- is FilterBlend.shader; the chain itself lives in FilterCore.cginc.
-Shader "ReactUnity/Filter"
+// Filter.shader plus `mix-blend-mode`: the same offscreen composite, blended into the backdrop
+// with one of the CSS Compositing blend functions instead of drawn straight over it.
+//
+// Reading the backdrop is what splits this into two subshaders, the way BackdropFilter.shader is
+// split -- URP has no GrabPass and offers _CameraOpaqueTexture, built-in has no opaque texture and
+// grabs. Only elements that actually blend get this shader, so a plain `filter` never pays for the
+// grab; ElementFilter picks between the two.
+Shader "ReactUnity/FilterBlend"
 {
   Properties
   {
     _MainTex ("Element (RGB)", 2D) = "white" {}
     _Color ("Tint", Color) = (1,1,1,1)
+
+    _BlendMode ("Blend Mode", Int) = 0
 
     _Brightness ("Brightness", Range(0.0, 2.0)) = 1.0
     _Contrast ("Contrast", Range(0.0, 2.0)) = 1.0
@@ -39,7 +45,7 @@ Shader "ReactUnity/Filter"
     [Toggle(UNITY_UI_CLIP_RECT)] _UseUIClipRect("Use Clip Rect", Float) = 1
   }
 
-  SubShader
+  Category
   {
     Tags
     {
@@ -65,22 +71,54 @@ Shader "ReactUnity/Filter"
     ZTest[unity_GUIZTestMode]
     ColorMask[_ColorMask]
 
-    // The offscreen pass drew into a transparent-black target with SrcAlpha OneMinusSrcAlpha, so
-    // the texture's RGB is already multiplied by coverage. Blending it again with SrcAlpha would
-    // multiply twice and leave dark fringes -- hence premultiplied blending here.
+    // The shader returns the blended colour premultiplied by the element's own coverage, so this
+    // one blend state serves every mode: dst = B(Cb, Cs) * a + (1 - a) * Cb, which is what CSS
+    // composites a blended source over an opaque backdrop to.
     Blend One OneMinusSrcAlpha
 
-    Pass
+    SubShader
     {
-      CGPROGRAM
-      #pragma vertex vert
-      #pragma fragment frag
-      #pragma target 2.0
-      #pragma multi_compile_local _ UNITY_UI_CLIP_RECT
-      #pragma multi_compile_local _ UNITY_UI_ALPHACLIP
+      Tags { "RenderPipeline" = "UniversalPipeline" }
 
-      #include "FilterCore.cginc"
-      ENDCG
+      Pass
+      {
+        CGPROGRAM
+        #pragma vertex vert
+        #pragma fragment frag
+        // The non-separable modes need more instructions and a dependent sqrt than 2.0 allows.
+        #pragma target 3.0
+        #pragma multi_compile_local _ UNITY_UI_CLIP_RECT
+        #pragma multi_compile_local _ UNITY_UI_ALPHACLIP
+
+        #define RU_HAS_BACKDROP
+        sampler2D _CameraOpaqueTexture;
+        #define RU_BACKDROP_TEX _CameraOpaqueTexture
+
+        #include "FilterCore.cginc"
+        ENDCG
+      }
+    }
+
+    SubShader
+    {
+      GrabPass { }
+
+      Pass
+      {
+        CGPROGRAM
+        #pragma vertex vert
+        #pragma fragment frag
+        #pragma target 3.0
+        #pragma multi_compile_local _ UNITY_UI_CLIP_RECT
+        #pragma multi_compile_local _ UNITY_UI_ALPHACLIP
+
+        #define RU_HAS_BACKDROP
+        sampler2D _GrabTexture;
+        #define RU_BACKDROP_TEX _GrabTexture
+
+        #include "FilterCore.cginc"
+        ENDCG
+      }
     }
   }
 }
