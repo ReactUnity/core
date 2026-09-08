@@ -142,6 +142,7 @@ namespace ReactUnity.Styling
         public string viewTimelineName => GetStyleValue(StyleProperties.viewTimelineName);
         public TimelineAxis viewTimelineAxis => GetStyleValue(StyleProperties.viewTimelineAxis);
         public YogaValue2 viewTimelineInset => GetStyleValue(StyleProperties.viewTimelineInset);
+        public string timelineScope => GetStyleValue(StyleProperties.timelineScope);
         public ICssValueList<AudioReference> audioClip => GetStyleValue(StyleProperties.audioClip);
         public ICssValueList<int> audioIterationCount => GetStyleValue(StyleProperties.audioIterationCount);
         public ICssValueList<float> audioDelay => GetStyleValue(StyleProperties.audioDelay);

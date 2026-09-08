@@ -1,6 +1,6 @@
 //
 // Types in assemblies: ReactUnity, ReactUnity.Editor, ReactUnity.UGUI, ReactUnity.UIToolkit
-// Generated 08/09/2026 03:57:52
+// Generated 08/09/2026 04:22:28
 //
 /* eslint-disable */
 
@@ -4446,6 +4446,7 @@ export declare namespace ReactUnity {
       viewTimelineName: string;
       viewTimelineAxis: ReactUnity.Styling.Animations.TimelineAxis;
       viewTimelineInset: ReactUnity.Types.YogaValue2;
+      timelineScope: string;
       audioClip: ReactUnity.Types.ICssValueList<ReactUnity.Types.AudioReference>;
       audioIterationCount: ReactUnity.Types.ICssValueList<number>;
       audioDelay: ReactUnity.Types.ICssValueList<number>;
@@ -4698,6 +4699,7 @@ export declare namespace ReactUnity {
       static viewTimelineName: ReactUnity.Styling.StyleProperty;
       static viewTimelineAxis: ReactUnity.Styling.StyleProperty;
       static viewTimelineInset: ReactUnity.Styling.StyleProperty;
+      static timelineScope: ReactUnity.Styling.StyleProperty;
       static audioClip: ReactUnity.Styling.ValueListStyleProperty;
       static audioIterationCount: ReactUnity.Styling.ValueListStyleProperty;
       static audioDelay: ReactUnity.Styling.ValueListStyleProperty;
@@ -5590,6 +5592,7 @@ export declare namespace ReactUnity {
         static AnimationTimelineConverter: ReactUnity.Styling.Converters.StyleConverterBase;
         static TimelineNameConverter: ReactUnity.Styling.Converters.StyleConverterBase;
         static AnimationRangeConverter: ReactUnity.Styling.Converters.StyleConverterBase;
+        static TimelineScopeConverter: ReactUnity.Styling.Converters.StyleConverterBase;
         static ContainerTypeConverter: ReactUnity.Styling.Converters.StyleConverterBase;
         static ColorSchemeConverter: ReactUnity.Styling.Converters.StyleConverterBase;
         static ScrollbarGutterConverter: ReactUnity.Styling.Converters.StyleConverterBase;
@@ -5642,6 +5645,18 @@ export declare namespace ReactUnity {
         ToString(): string;
       }
       export class TimelineNameConverter {
+        constructor();
+        StringifyInternal(value: any): string;
+        StringifyTyped(value: string): string;
+        CanHandleKeyword(keyword: ReactUnity.Styling.CssKeyword): boolean;
+        Convert(value: any): ReactUnity.Styling.Computed.IComputedValue;
+        Stringify(value: any): string;
+        Equals(obj: any): boolean;
+        GetHashCode(): number;
+        GetType(): System.Type;
+        ToString(): string;
+      }
+      export class TimelineScopeConverter {
         constructor();
         StringifyInternal(value: any): string;
         StringifyTyped(value: string): string;

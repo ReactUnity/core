@@ -148,6 +148,7 @@ export interface RenderStyle {
   viewTimelineName?: SafeString;
   viewTimelineAxis?: TimelineAxis;
   viewTimelineInset?: SafeString | number;
+  timelineScope?: SafeString;
   audioClip?: AssetReferenceOrHttp;
   audioIterationCount?: number;
   audioDelay?: number;

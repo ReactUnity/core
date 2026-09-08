@@ -157,6 +157,7 @@ namespace ReactUnity.Styling
         public static readonly StyleProperty<string> viewTimelineName = new StyleProperty<string>("viewTimelineName", null, false, false, AllConverters.TimelineNameConverter);
         public static readonly StyleProperty<TimelineAxis> viewTimelineAxis = new StyleProperty<TimelineAxis>("viewTimelineAxis", TimelineAxis.Block, false, false);
         public static readonly StyleProperty<YogaValue2> viewTimelineInset = new StyleProperty<YogaValue2>("viewTimelineInset", YogaValue2.Zero, false, false, AllConverters.TimelineInsetConverter);
+        public static readonly StyleProperty<string> timelineScope = new StyleProperty<string>("timelineScope", null, false, false, AllConverters.TimelineScopeConverter);
 
         public static readonly ValueListStyleProperty<AudioReference> audioClip = new ValueListStyleProperty<AudioReference>("audioClip");
         public static readonly ValueListStyleProperty<int> audioIterationCount = new ValueListStyleProperty<int>("audioIterationCount", 1);
@@ -292,6 +293,7 @@ namespace ReactUnity.Styling
             { "viewTimelineName", viewTimelineName },
             { "viewTimelineAxis", viewTimelineAxis },
             { "viewTimelineInset", viewTimelineInset },
+            { "timelineScope", timelineScope },
 
             { "animation-delay", animationDelay },
             { "animation-direction", animationDirection },
@@ -309,6 +311,7 @@ namespace ReactUnity.Styling
             { "view-timeline-name", viewTimelineName },
             { "view-timeline-axis", viewTimelineAxis },
             { "view-timeline-inset", viewTimelineInset },
+            { "timeline-scope", timelineScope },
 
             { "audioClip", audioClip },
             { "audioDelay", audioDelay },

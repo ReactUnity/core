@@ -181,6 +181,33 @@ namespace ReactUnity.Styling.Converters
     }
 
     /// <summary>
+    /// <c>timeline-scope</c>: the names this element lends its subtree, kept as a single
+    /// space-separated string, or <c>none</c> for the scope it has by default.
+    /// </summary>
+    public class TimelineScopeConverter : TypedStyleConverterBase<string>
+    {
+        public override bool HandleKeyword(CssKeyword keyword, out IComputedValue result)
+        {
+            if (keyword == CssKeyword.None) return Constant(null, out result);
+            return base.HandleKeyword(keyword, out result);
+        }
+
+        protected override bool ParseInternal(string value, out IComputedValue result)
+        {
+            var names = ParserHelpers.SplitComma(value);
+            if (names.Count == 0) return Fail(out result);
+
+            for (int i = 0; i < names.Count; i++)
+            {
+                names[i] = names[i].Trim();
+                if (!AnimationTimelineConverter.IsTimelineName(names[i])) return Fail(out result);
+            }
+
+            return Constant(names.Count == 1 ? names[0] : string.Join(" ", names), out result);
+        }
+    }
+
+    /// <summary>
     /// One end of <c>animation-range</c>: <c>normal</c>, a length or percentage into the whole
     /// timeline, or a named range with an optional offset into it.
     /// </summary>

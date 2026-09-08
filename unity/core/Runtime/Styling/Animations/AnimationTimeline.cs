@@ -1,3 +1,4 @@
+using System;
 using ReactUnity.Types;
 using Yoga;
 using Mathf = UnityEngine.Mathf;
@@ -98,23 +99,36 @@ namespace ReactUnity.Styling.Animations
                         var style = candidate.ComputedStyle;
                         if (style == null) continue;
 
-                        if (style.scrollTimelineName == Name)
+                        var declaring = candidate;
+
+                        if (style.scrollTimelineName != Name && style.viewTimelineName != Name)
                         {
-                            // A name declared on something that does not scroll names no timeline.
-                            if (!candidate.IsScrollContainer) return false;
-                            source = candidate;
-                            axis = style.scrollTimelineAxis;
-                            break;
+                            if (!ScopeContains(style.timelineScope, Name)) continue;
+
+                            // A scope hands the name to the one timeline declared under it; none and
+                            // more than one both leave it naming nothing.
+                            declaring = FindScopedDeclaration(candidate, Name);
+                            if (declaring == null) return false;
                         }
 
-                        if (style.viewTimelineName == Name)
+                        var declaringStyle = declaring.ComputedStyle;
+
+                        if (declaringStyle.scrollTimelineName == Name)
                         {
-                            subject = candidate;
-                            source = NearestScrollContainer(candidate.Parent);
-                            axis = style.viewTimelineAxis;
-                            inset = style.viewTimelineInset;
-                            break;
+                            // A name declared on something that does not scroll names no timeline.
+                            if (!declaring.IsScrollContainer) return false;
+                            source = declaring;
+                            axis = declaringStyle.scrollTimelineAxis;
                         }
+                        else
+                        {
+                            subject = declaring;
+                            source = NearestScrollContainer(declaring.Parent);
+                            axis = declaringStyle.viewTimelineAxis;
+                            inset = declaringStyle.viewTimelineInset;
+                        }
+
+                        break;
                     }
                     break;
             }
@@ -182,6 +196,56 @@ namespace ReactUnity.Styling.Animations
             for (var candidate = from; candidate != null; candidate = candidate.Parent)
                 if (candidate.IsScrollContainer) return candidate;
             return null;
+        }
+
+        /// <summary><c>timeline-scope</c> keeps its names space-separated, so a match sits on both boundaries.</summary>
+        internal static bool ScopeContains(string scope, string name)
+        {
+            if (string.IsNullOrEmpty(scope) || string.IsNullOrEmpty(name)) return false;
+
+            for (var i = scope.IndexOf(name, StringComparison.Ordinal); i >= 0; i = scope.IndexOf(name, i + 1, StringComparison.Ordinal))
+            {
+                var before = i == 0 || scope[i - 1] == ' ';
+                var after = i + name.Length == scope.Length || scope[i + name.Length] == ' ';
+                if (before && after) return true;
+            }
+
+            return false;
+        }
+
+        // Only one timeline may answer to a scoped name, so the whole subtree is searched rather
+        // than stopped at the first match.
+        private static IReactComponent FindScopedDeclaration(IReactComponent root, string name)
+        {
+            IReactComponent found = null;
+            var ambiguous = false;
+            SearchDeclarations(root, name, ref found, ref ambiguous);
+            return ambiguous ? null : found;
+        }
+
+        private static void SearchDeclarations(IReactComponent node, string name, ref IReactComponent found, ref bool ambiguous)
+        {
+            if (ambiguous) return;
+
+            var style = node.ComputedStyle;
+            if (style != null && (style.scrollTimelineName == name || style.viewTimelineName == name))
+            {
+                if (found != null)
+                {
+                    ambiguous = true;
+                    return;
+                }
+
+                found = node;
+            }
+
+            if (!(node is IContainerComponent container)) return;
+
+            var children = container.Children;
+            if (children == null) return;
+
+            for (int i = 0; i < children.Count; i++)
+                SearchDeclarations(children[i], name, ref found, ref ambiguous);
         }
 
         // Yoga lays a subtree out in the container's own coordinates, so the offsets on the way up

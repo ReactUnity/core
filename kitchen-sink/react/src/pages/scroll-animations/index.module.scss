@@ -1,0 +1,203 @@
+.host {
+  align-items: stretch;
+}
+
+.note {
+  margin-bottom: 12px;
+  font-size: 14px;
+  color: #475569;
+  white-space: normal;
+}
+
+.code {
+  margin-bottom: 12px;
+  padding: 8px 10px;
+  border-radius: 8px;
+  background-color: #0f172a;
+  color: #a5b4fc;
+  font-size: 12px;
+  white-space: normal;
+}
+
+/* --- Scroll progress -------------------------------------------------------------------------
+   The bar is a sibling of the scroll, not a child, so the name would be invisible to it. The
+   wrapper lends `--reader` to its whole subtree, which is the one thing `timeline-scope` does. */
+
+.reading {
+  timeline-scope: --reader;
+  gap: 10px;
+}
+
+.reader {
+  scroll-timeline: --reader;
+  height: 220px;
+  padding: 14px;
+  border-radius: 12px;
+  background-color: #f8fafc;
+  border-width: 2px;
+  border-color: #e2e8f0;
+}
+
+.paragraph {
+  margin-bottom: 10px;
+  flex-shrink: 0;
+  font-size: 13px;
+  color: #475569;
+  white-space: normal;
+}
+
+.track {
+  height: 10px;
+  border-radius: 999px;
+  background-color: #e2e8f0;
+}
+
+.fill {
+  height: 100%;
+  border-radius: 999px;
+  background-color: #6366f1;
+  animation-name: fillWidth;
+  animation-timeline: --reader;
+  animation-timing-function: linear;
+}
+
+@keyframes fillWidth {
+  from {
+    width: 0%;
+  }
+
+  to {
+    width: 100%;
+  }
+}
+
+/* --- View timelines --------------------------------------------------------------------------
+   Each card reads its own passage through the scroll view, so nothing has to know where it is. */
+
+.cards {
+  height: 300px;
+  padding: 16px;
+  border-radius: 12px;
+  background-color: #f1f5f9;
+}
+
+.card {
+  margin-bottom: 12px;
+  padding: 14px;
+  flex-shrink: 0;
+  border-radius: 12px;
+  background-color: white;
+  border-width: 2px;
+  border-color: #e2e8f0;
+  animation-name: riseIn;
+  animation-timeline: view();
+  animation-timing-function: ease-out;
+}
+
+.cardTitle {
+  font-size: 14px;
+  font-weight: bold;
+  color: #0f172a;
+}
+
+.cardBody {
+  font-size: 13px;
+  color: #64748b;
+  white-space: normal;
+}
+
+@keyframes riseIn {
+  from {
+    opacity: 0;
+    translate: 0 40px;
+    scale: 0.9;
+  }
+
+  to {
+    opacity: 1;
+    translate: 0 0;
+    scale: 1;
+  }
+}
+
+.rangeCover {
+  animation-range: cover;
+}
+
+.rangeEntry {
+  animation-range: entry;
+}
+
+.rangeContain {
+  animation-range: contain;
+}
+
+.rangeNarrow {
+  animation-range: entry 25% entry 75%;
+}
+
+.toggle {
+  margin-right: 8px;
+  padding: 6px 12px;
+  border-radius: 8px;
+  background-color: #e2e8f0;
+  color: #0f172a;
+  font-size: 13px;
+}
+
+.toggleOn {
+  background-color: #c7d2fe;
+  color: #3730a3;
+}
+
+.toggles {
+  flex-direction: row;
+  margin-bottom: 12px;
+}
+
+/* --- A named timeline, read from inside --------------------------------------------------------
+   Every chip names its own passage, and the label inside it reads that name. The lookup walks up
+   from the label, so each label finds the chip it sits in and no two of them collide. */
+
+.strip {
+  flex-direction: row;
+  overflow-y: hidden;
+  padding: 16px;
+  border-radius: 12px;
+  background-color: #f1f5f9;
+}
+
+.chip {
+  view-timeline: --chip inline;
+  width: 120px;
+  height: 120px;
+  margin-right: 12px;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  border-radius: 16px;
+  background-color: #1e293b;
+}
+
+.chipLabel {
+  opacity: 0.15;
+  color: #f8fafc;
+  font-size: 28px;
+  font-weight: bold;
+  animation-name: popLabel;
+  animation-timeline: --chip;
+  animation-range: entry;
+  animation-timing-function: ease-out;
+}
+
+@keyframes popLabel {
+  from {
+    opacity: 0.15;
+    scale: 0.2;
+  }
+
+  to {
+    opacity: 1;
+    scale: 1;
+  }
+}

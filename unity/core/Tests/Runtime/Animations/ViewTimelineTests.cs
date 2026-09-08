@@ -307,6 +307,16 @@ namespace ReactUnity.Tests
             Assert.AreEqual(TimelineRangeName.Normal, subject.ComputedStyle.animationRangeEnd.Get(0).Name);
             Assert.AreEqual(YogaUnit.Undefined, subject.ComputedStyle.animationRangeEnd.Get(0).Offset.Unit);
 
+            // Both ends may name a range and an offset into it, which is where the shorthand has to
+            // work out for itself how many tokens the first end took.
+            subject.Style["animation-range"] = "entry 25% exit 75%";
+            yield return null;
+
+            Assert.AreEqual(TimelineRangeName.Entry, subject.ComputedStyle.animationRangeStart.Get(0).Name);
+            Assert.AreEqual(25, subject.ComputedStyle.animationRangeStart.Get(0).Offset.Value, 0.001f);
+            Assert.AreEqual(TimelineRangeName.Exit, subject.ComputedStyle.animationRangeEnd.Get(0).Name);
+            Assert.AreEqual(75, subject.ComputedStyle.animationRangeEnd.Get(0).Offset.Value, 0.001f);
+
             subject.Style["animation-range-end"] = "exit-crossing 25%";
             yield return null;
 

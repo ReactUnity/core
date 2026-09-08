@@ -32,6 +32,7 @@ namespace ReactUnity.Styling.Converters
         static public StyleConverterBase AnimationTimelineConverter = new AnimationTimelineConverter();
         static public StyleConverterBase TimelineNameConverter = new TimelineNameConverter();
         static public StyleConverterBase AnimationRangeConverter = new AnimationRangeConverter();
+        static public StyleConverterBase TimelineScopeConverter = new TimelineScopeConverter();
         static public StyleConverterBase ContainerTypeConverter = new ContainerTypeConverter();
         static public StyleConverterBase ColorSchemeConverter = new ColorSchemeConverter();
         static public StyleConverterBase ScrollbarGutterConverter = new ScrollbarGutterConverter();

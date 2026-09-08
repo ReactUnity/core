@@ -103,6 +103,28 @@ being followed.
 }
 ```
 
+### Widening where a name is visible {/*timeline-scope*/}
+
+Looking the name up from the animated element upwards means a sibling of the scroll container finds
+nothing, which is exactly the case a progress bar next to a scroll view runs into. `timeline-scope`
+on an ancestor of both lends the name to that ancestor's whole subtree, and the timeline declared
+anywhere under it answers to the name everywhere inside.
+
+```css
+.reading { timeline-scope: --reader; }
+.reading scroll { scroll-timeline: --reader; }
+
+.reading .progress {
+  animation-name: fill;
+  animation-timeline: --reader;
+}
+```
+
+It takes one name or a comma-separated list of them, or `none`. Only one timeline may answer to a
+scoped name: if two elements under the scope declare it, or none does, the name is ambiguous and the
+timeline is inactive. The scope claims the name either way, so the lookup stops there rather than
+carrying on to an outer declaration.
+
 ### Choosing part of the timeline {/*animation-range*/}
 
 `animation-range-start` and `animation-range-end`, or the `animation-range` shorthand, say which
@@ -171,4 +193,5 @@ first keyframe until there is enough content to scroll.
 
 - An animation reads the container's scroll offset after layout, so a container whose content
   resizes in the same frame is read on the next one.
-- `timeline-scope`, which widens where a name is visible, is not implemented yet.
+- A scoped name is resolved by searching the scoping element's subtree, so keep the scope on the
+  nearest ancestor that covers both the timeline and the elements reading it.
