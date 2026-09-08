@@ -1,6 +1,6 @@
 //
 // Types in assemblies: LibYoga
-// Generated 01/07/2025 01:03:16
+// Generated 08/09/2026 03:23:15
 //
 /* eslint-disable */
 
@@ -183,8 +183,6 @@ export declare namespace Yoga {
   }
   export enum YogaExperimentalFeature {
     WebFlexBasis = 0,
-    AbsolutePercentageAgainstPaddingEdge = 1,
-    FixAbsoluteTrailingColumnMargin = 2,
   }
   export enum YogaFlexDirection {
     Column = 0,
@@ -198,12 +196,24 @@ export declare namespace Yoga {
     All = 2,
   }
   export enum YogaJustify {
-    FlexStart = 0,
-    Center = 1,
-    FlexEnd = 2,
-    SpaceBetween = 3,
-    SpaceAround = 4,
-    SpaceEvenly = 5,
+    Auto = 0,
+    FlexStart = 1,
+    Center = 2,
+    FlexEnd = 3,
+    SpaceBetween = 4,
+    SpaceAround = 5,
+    SpaceEvenly = 6,
+    Stretch = 7,
+    Start = 8,
+    End = 9,
+  }
+  export enum YogaLogLevel {
+    Error = 0,
+    Warn = 1,
+    Info = 2,
+    Debug = 3,
+    Verbose = 4,
+    Fatal = 5,
   }
   export class YogaLogger {
     constructor(object: any, method: System.IntPtr);
@@ -220,14 +230,6 @@ export declare namespace Yoga {
     Clone(): any;
     GetType(): System.Type;
     ToString(): string;
-  }
-  export enum YogaLogLevel {
-    Error = 0,
-    Warn = 1,
-    Info = 2,
-    Debug = 3,
-    Verbose = 4,
-    Fatal = 5,
   }
   export class YogaMeasureFunc {
     constructor(object: any, method: System.IntPtr);
@@ -254,49 +256,6 @@ export declare namespace Yoga {
     constructor(config?: Yoga.YogaConfig);
     constructor(srcNode: Yoga.YogaNode);
     [key: string]: any;
-    IsDirty: boolean;
-    HasNewLayout: boolean;
-    Parent: Yoga.YogaNode;
-    IsMeasureDefined: boolean;
-    IsBaselineDefined: boolean;
-    StyleDirection: Yoga.YogaDirection;
-    FlexDirection: Yoga.YogaFlexDirection;
-    JustifyContent: Yoga.YogaJustify;
-    Display: Yoga.YogaDisplay;
-    BoxSizing: Yoga.YogaBoxSizing;
-    AlignItems: Yoga.YogaAlign;
-    AlignSelf: Yoga.YogaAlign;
-    AlignContent: Yoga.YogaAlign;
-    PositionType: Yoga.YogaPositionType;
-    Wrap: Yoga.YogaWrap;
-    Flex: number;
-    FlexGrow: number;
-    FlexShrink: number;
-    FlexBasis: Yoga.YogaValue;
-    Width: Yoga.YogaValue;
-    Height: Yoga.YogaValue;
-    MaxWidth: Yoga.YogaValue;
-    MaxHeight: Yoga.YogaValue;
-    MinWidth: Yoga.YogaValue;
-    MinHeight: Yoga.YogaValue;
-    AspectRatio: number;
-    Gap: Yoga.YogaValue;
-    ColumnGap: Yoga.YogaValue;
-    RowGap: Yoga.YogaValue;
-    LayoutLeft: number;
-    LayoutTop: number;
-    LayoutRight: number;
-    LayoutBottom: number;
-    LayoutWidth: number;
-    LayoutHeight: number;
-    LayoutDirection: Yoga.YogaDirection;
-    LayoutHadOverflow: boolean;
-    Overflow: Yoga.YogaOverflow;
-    Data: any; // System.Object
-    Count: number;
-    IsReferenceBaseline: boolean;
-    NodeType: Yoga.YogaNodeType;
-    AlwaysFormsContainingBlock: boolean;
     Left: Yoga.YogaValue;
     Top: Yoga.YogaValue;
     Right: Yoga.YogaValue;
@@ -346,10 +305,55 @@ export declare namespace Yoga {
     LayoutPaddingBottom: number;
     LayoutPaddingStart: number;
     LayoutPaddingEnd: number;
+    IsDirty: boolean;
+    HasNewLayout: boolean;
+    Parent: Yoga.YogaNode;
+    IsMeasureDefined: boolean;
+    IsBaselineDefined: boolean;
+    StyleDirection: Yoga.YogaDirection;
+    FlexDirection: Yoga.YogaFlexDirection;
+    JustifyContent: Yoga.YogaJustify;
+    Display: Yoga.YogaDisplay;
+    BoxSizing: Yoga.YogaBoxSizing;
+    AlignItems: Yoga.YogaAlign;
+    AlignSelf: Yoga.YogaAlign;
+    AlignContent: Yoga.YogaAlign;
+    PositionType: Yoga.YogaPositionType;
+    Wrap: Yoga.YogaWrap;
+    Flex: number;
+    FlexGrow: number;
+    FlexShrink: number;
+    FlexBasis: Yoga.YogaValue;
+    Width: Yoga.YogaValue;
+    Height: Yoga.YogaValue;
+    MaxWidth: Yoga.YogaValue;
+    MaxHeight: Yoga.YogaValue;
+    MinWidth: Yoga.YogaValue;
+    MinHeight: Yoga.YogaValue;
+    AspectRatio: number;
+    Gap: Yoga.YogaValue;
+    ColumnGap: Yoga.YogaValue;
+    RowGap: Yoga.YogaValue;
+    LayoutLeft: number;
+    LayoutTop: number;
+    LayoutRight: number;
+    LayoutBottom: number;
+    LayoutWidth: number;
+    LayoutHeight: number;
+    LayoutDirection: Yoga.YogaDirection;
+    LayoutHadOverflow: boolean;
+    Overflow: Yoga.YogaOverflow;
+    Data: any; // System.Object
+    Count: number;
+    IsReferenceBaseline: boolean;
+    NodeType: Yoga.YogaNodeType;
+    AlwaysFormsContainingBlock: boolean;
     Reset(): void;
     MarkDirty(): void;
     MarkHasNewLayout(): void;
     CopyStyle(srcNode: Yoga.YogaNode): void;
+    LayoutGetPadding(edge: Yoga.YogaEdge): number;
+    LayoutGetBorder(edge: Yoga.YogaEdge): number;
     MarkLayoutSeen(): void;
     ValuesEqual(f1: number, f2: number): boolean;
     Insert(index: number, node: Yoga.YogaNode): void;

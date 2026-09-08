@@ -164,7 +164,17 @@ The C# side of that call surface is `unity/core/Runtime/Core/ReactUnityBridge.cs
 
 ### Type models are generated from C#
 
-`packages/renderer/src/models/generated/*.ts` is emitted by `unity/core/Editor/Developer/TypescriptModelsGenerator.cs`, which reflects over the Unity assemblies. Biome ignores `models/generated`. **Do not hand-edit those files** — change the C# type (or the generator's include/remap options) and regenerate from the Unity Editor.
+`packages/renderer/src/models/generated/*.ts` is emitted by `unity/core/Editor/Developer/TypescriptModelsGenerator.cs`, which reflects over the Unity assemblies. Biome ignores `models/generated`. **Do not hand-edit those files** — change the C# type (or the generator's include/remap options) and regenerate.
+
+Regeneration is a `[CliCommand]` in [ReactUnity.Editor.Pipeline](unity/core/Editor/Developer/Pipeline/TypescriptModelsCommands.cs), against an Editor that is open on a project with `com.unity.pipeline`:
+
+```bash
+unity command generate_models -- --directory packages/renderer/src/models/generated --preset all
+```
+
+`--preset` is one of `react`, `unity`, `editor`, `yoga`, `system`, `tests` or `all`; the assembly it lives in is gated on `REACT_UNITY_DEVELOPER` and on the pipeline package, so it never ships. The menu items under `React/Typescript Generator` do the same thing interactively.
+
+**The six files are one matched set** and have to be regenerated together — `react.ts` and `editor.ts` import Unity's own types from `unity.ts`, so regenerating one against a newer editor leaves references nothing declares, and `pnpm typecheck` is what catches it. The reverse of that is `ExcludedTypes` in the presets: a type declared in an editor assembly but under the `UnityEngine` namespace is sent to `unity.ts` by the namespace-to-file mapping, where nothing declares it, so it is excluded down to `any`.
 
 ### Rendering frameworks
 

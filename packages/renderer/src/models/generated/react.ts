@@ -1,6 +1,6 @@
 //
 // Types in assemblies: ReactUnity, ReactUnity.Editor, ReactUnity.UGUI, ReactUnity.UIToolkit
-// Generated 01/07/2025 01:03:16
+// Generated 08/09/2026 03:23:15
 //
 /* eslint-disable */
 
@@ -53,6 +53,7 @@ export declare namespace ReactUnity {
     ScrollHeight: number;
     ClientWidth: number;
     ClientHeight: number;
+    IsScrollContainer: boolean;
     Update(): void;
     MarkForStyleResolving(recursive: boolean): void;
     Remove(): void;
@@ -122,6 +123,7 @@ export declare namespace ReactUnity {
     ScrollHeight: number;
     ClientWidth: number;
     ClientHeight: number;
+    IsScrollContainer: boolean;
     ApplyLayoutStyles(): void;
     ResolveStyle(recursive?: boolean): void;
     Update(): void;
@@ -227,6 +229,7 @@ export declare namespace ReactUnity {
     ScrollHeight: number;
     ClientWidth: number;
     ClientHeight: number;
+    IsScrollContainer: boolean;
     Width: number;
     Height: number;
     Children: ReactUnity.IReactComponent[];
@@ -302,6 +305,7 @@ export declare namespace ReactUnity {
     ScrollHeight: number;
     ClientWidth: number;
     ClientHeight: number;
+    IsScrollContainer: boolean;
     Children: ReactUnity.IReactComponent[];
     BeforePseudo: ReactUnity.IReactComponent;
     AfterPseudo: ReactUnity.IReactComponent;
@@ -401,21 +405,9 @@ export declare namespace ReactUnity {
     enabled: boolean;
     isActiveAndEnabled: boolean;
     transform: UnityEngine.Transform;
+    transformHandle: UnityEngine.TransformHandle;
     gameObject: UnityEngine.GameObject;
     tag: string;
-    rigidbody: UnityEngine.Component;
-    rigidbody2D: UnityEngine.Component;
-    camera: UnityEngine.Component;
-    light: UnityEngine.Component;
-    animation: UnityEngine.Component;
-    constantForce: UnityEngine.Component;
-    renderer: UnityEngine.Component;
-    audio: UnityEngine.Component;
-    networkView: UnityEngine.Component;
-    collider: UnityEngine.Component;
-    collider2D: UnityEngine.Component;
-    hingeJoint: UnityEngine.Component;
-    particleSystem: UnityEngine.Component;
     name: string;
     hideFlags: UnityEngine.HideFlags;
     Source: ReactUnity.ScriptSource;
@@ -463,6 +455,7 @@ export declare namespace ReactUnity {
     BroadcastMessage(methodName: string, parameter: any): void;
     BroadcastMessage(methodName: string): void;
     BroadcastMessage(methodName: string, options: UnityEngine.SendMessageOptions): void;
+    GetEntityId(): UnityEngine.EntityId;
     GetInstanceID(): number;
     GetHashCode(): number;
     Equals(other: any): boolean;
@@ -499,6 +492,7 @@ export declare namespace ReactUnity {
     FileName: string;
     IsDevServer: boolean;
     EffectiveScriptSource: ReactUnity.ScriptSourceType;
+    ResponseContentType: string;
     Type: ReactUnity.ScriptSourceType;
     Language: ReactUnity.ScriptSourceLanguage;
     SourceAsset: UnityEngine.TextAsset;
@@ -512,6 +506,8 @@ export declare namespace ReactUnity {
     static Text(path: string, language?: ReactUnity.ScriptSourceLanguage): ReactUnity.ScriptSource;
     GetResolvedSourceUrl(useDevServer?: boolean): string;
     GetRemoteUrl(useDevServer?: boolean): System.Uri;
+    IsHtml(code: string): boolean;
+    static LooksLikeHtml(code: string): boolean;
     GetScript(callback: ((obj: string) => void), dispatcher?: ReactUnity.Scheduling.IDispatcher, useDevServer?: boolean): System.IDisposable;
     static WatchFileSystem(path: string, callback: ((obj: string) => void)): System.IDisposable;
     Equals(obj: any): boolean;
@@ -567,6 +563,7 @@ export declare namespace ReactUnity {
     ScrollHeight: number;
     ClientWidth: number;
     ClientHeight: number;
+    IsScrollContainer: boolean;
     Children: ReactUnity.IReactComponent[];
     BeforePseudo: ReactUnity.IReactComponent;
     AfterPseudo: ReactUnity.IReactComponent;
@@ -718,6 +715,17 @@ export declare namespace ReactUnity {
     InEditor = 1,
     Always = 2,
   }
+  export namespace Developer {
+    export class EngineProbe {
+      static Marker: string;
+      static Argument: string;
+      static Backend: string;
+      Equals(obj: any): boolean;
+      GetHashCode(): number;
+      GetType(): System.Type;
+      ToString(): string;
+    }
+  }
   export namespace Editor {
     export class ReactElementDrawer {
       constructor();
@@ -752,6 +760,7 @@ export declare namespace ReactUnity {
       MoveNextTarget(): boolean;
       ResetTarget(): void;
       SetDirty(): void;
+      GetEntityId(): UnityEngine.EntityId;
       GetInstanceID(): number;
       GetHashCode(): number;
       Equals(other: any): boolean;
@@ -876,6 +885,7 @@ export declare namespace ReactUnity {
       SendEvent(e: UnityEngine.Event): boolean;
       GetExtraPaneTypes(): System.Collections.Generic.IEnumerable<System.Type>;
       SetDirty(): void;
+      GetEntityId(): UnityEngine.EntityId;
       GetInstanceID(): number;
       GetHashCode(): number;
       Equals(other: any): boolean;
@@ -968,6 +978,7 @@ export declare namespace ReactUnity {
       SendEvent(e: UnityEngine.Event): boolean;
       GetExtraPaneTypes(): System.Collections.Generic.IEnumerable<System.Type>;
       SetDirty(): void;
+      GetEntityId(): UnityEngine.EntityId;
       GetInstanceID(): number;
       GetHashCode(): number;
       Equals(other: any): boolean;
@@ -1007,6 +1018,7 @@ export declare namespace ReactUnity {
       MoveNextTarget(): boolean;
       ResetTarget(): void;
       SetDirty(): void;
+      GetEntityId(): UnityEngine.EntityId;
       GetInstanceID(): number;
       GetHashCode(): number;
       Equals(other: any): boolean;
@@ -1066,6 +1078,13 @@ export declare namespace ReactUnity {
       ToString(): string;
     }
     export namespace Developer {
+      export class PlayerBuilder {
+        static Build(): void;
+        Equals(obj: any): boolean;
+        GetHashCode(): number;
+        GetType(): System.Type;
+        ToString(): string;
+      }
       export class TypescriptModelsGenerator {
         constructor();
         Assemblies: System.Reflection.Assembly[];
@@ -1338,6 +1357,7 @@ export declare namespace ReactUnity {
         SendEvent(e: UnityEngine.Event): boolean;
         GetExtraPaneTypes(): System.Collections.Generic.IEnumerable<System.Type>;
         SetDirty(): void;
+        GetEntityId(): UnityEngine.EntityId;
         GetInstanceID(): number;
         GetHashCode(): number;
         Equals(other: any): boolean;
@@ -1376,6 +1396,7 @@ export declare namespace ReactUnity {
         MoveNextTarget(): boolean;
         ResetTarget(): void;
         SetDirty(): void;
+        GetEntityId(): UnityEngine.EntityId;
         GetInstanceID(): number;
         GetHashCode(): number;
         Equals(other: any): boolean;
@@ -1453,6 +1474,7 @@ export declare namespace ReactUnity {
         SendEvent(e: UnityEngine.Event): boolean;
         GetExtraPaneTypes(): System.Collections.Generic.IEnumerable<System.Type>;
         SetDirty(): void;
+        GetEntityId(): UnityEngine.EntityId;
         GetInstanceID(): number;
         GetHashCode(): number;
         Equals(other: any): boolean;
@@ -1533,6 +1555,7 @@ export declare namespace ReactUnity {
         ScrollTop: number;
         ScrollWidth: number;
         ScrollHeight: number;
+        IsScrollContainer: boolean;
         Open(): void;
         Close(): void;
         SetProperty(property: string, value: any): void;
@@ -1632,6 +1655,7 @@ export declare namespace ReactUnity {
         SendEvent(e: UnityEngine.Event): boolean;
         GetExtraPaneTypes(): System.Collections.Generic.IEnumerable<System.Type>;
         SetDirty(): void;
+        GetEntityId(): UnityEngine.EntityId;
         GetInstanceID(): number;
         GetHashCode(): number;
         Equals(other: any): boolean;
@@ -1648,12 +1672,10 @@ export declare namespace ReactUnity {
         Shown: boolean;
         Type: ReactUnity.Editor.UIToolkit.DialogType;
         Context: ReactUnity.Editor.Renderer.EditorContext;
-        viewDataKey: string;
         userData: any; // System.Object
         canGrabFocus: boolean;
         focusController: UnityEngine.UIElements.FocusController;
         disablePlayModeTint: boolean;
-        usageHints: UnityEngine.UIElements.UsageHints;
         transform: UnityEngine.UIElements.ITransform;
         scaledPixelsPerPoint: number;
         layout: UnityEngine.Rect;
@@ -1661,16 +1683,28 @@ export declare namespace ReactUnity {
         worldBound: UnityEngine.Rect;
         localBound: UnityEngine.Rect;
         worldTransform: UnityEngine.Matrix4x4;
-        pickingMode: UnityEngine.UIElements.PickingMode;
+        hasActivePseudoState: boolean;
+        hasInactivePseudoState: boolean;
+        hasHoverPseudoState: boolean;
+        hasCheckedPseudoState: boolean;
+        hasEnabledPseudoState: boolean;
+        hasDisabledPseudoState: boolean;
+        hasFocusPseudoState: boolean;
+        hasRootPseudoState: boolean;
         name: string;
-        enabledInHierarchy: boolean;
         enabledSelf: boolean;
+        viewDataKey: string;
+        pickingMode: UnityEngine.UIElements.PickingMode;
+        tooltip: string;
+        usageHints: UnityEngine.UIElements.UsageHints;
         languageDirection: UnityEngine.UIElements.LanguageDirection;
+        dataSourceType: System.Type;
+        resourcesReleased: boolean;
+        enabledInHierarchy: boolean;
         visible: boolean;
         generateVisualContent: ((obj: UnityEngine.UIElements.MeshGenerationContext) => void);
         dataSource: any; // System.Object
         dataSourcePath: Unity.Properties.PropertyPath;
-        dataSourceType: System.Type;
         experimental: UnityEngine.UIElements.IExperimentalFeatures;
         hierarchy: UnityEngine.UIElements.VisualElement_Hierarchy;
         cacheAsBitmap: boolean;
@@ -1683,7 +1717,6 @@ export declare namespace ReactUnity {
         resolvedStyle: UnityEngine.UIElements.IResolvedStyle;
         customStyle: UnityEngine.UIElements.ICustomStyle;
         styleSheets: UnityEngine.UIElements.VisualElementStyleSheetSet;
-        tooltip: string;
         focusable: boolean;
         tabIndex: number;
         delegatesFocus: boolean;
@@ -1696,24 +1729,40 @@ export declare namespace ReactUnity {
         Close(): void;
         ResolveStyle(): void;
         static ResolveStyle(context: ReactUnity.Editor.Renderer.EditorContext, window: any, style: UnityEngine.UIElements.IStyle): void;
+        SetActivePseudoState(value: boolean): void;
+        SetCheckedPseudoState(value: boolean): void;
+        ReleaseResources(): void;
         Focus(): void;
         SendEvent(e: UnityEngine.UIElements.EventBase): void;
         SetEnabled(value: boolean): void;
         MarkDirtyRepaint(): void;
+        IsMarkedForRepaint(): boolean;
         ContainsPoint(localPoint: UnityEngine.Vector2): boolean;
         Overlaps(rectangle: UnityEngine.Rect): boolean;
         ToString(): string;
         GetClasses(): System.Collections.Generic.IEnumerable<string>;
+        GetClassNames(): System.Collections.Generic.IEnumerable<UnityEngine.UIElements.UniqueStyleString>;
         ClearClassList(): void;
         AddToClassList(className: string): void;
+        AddToClassList(className: UnityEngine.UIElements.UniqueStyleString): void;
+        AddToClassList(className: string, className2: string): void;
+        AddToClassList(className: UnityEngine.UIElements.UniqueStyleString, className2: UnityEngine.UIElements.UniqueStyleString): void;
+        AddToClassList(...classNames: string[]): void;
+        AddToClassList(...classNames: UnityEngine.UIElements.UniqueStyleString[]): void;
+        AddToClassList(classNames: System.ReadOnlySpan<UnityEngine.UIElements.UniqueStyleString>): void;
         RemoveFromClassList(className: string): void;
+        RemoveFromClassList(className: UnityEngine.UIElements.UniqueStyleString): void;
         ToggleInClassList(className: string): void;
+        ToggleInClassList(className: UnityEngine.UIElements.UniqueStyleString): void;
         EnableInClassList(className: string, enable: boolean): void;
+        EnableInClassList(className: UnityEngine.UIElements.UniqueStyleString, enable: boolean): void;
         ClassListContains(cls: string): boolean;
+        ClassListContains(cls: UnityEngine.UIElements.UniqueStyleString): boolean;
         FindAncestorUserData(): any;
         SetBinding(bindingId: UnityEngine.UIElements.BindingId, binding: UnityEngine.UIElements.Binding): void;
         GetBinding(bindingId: UnityEngine.UIElements.BindingId): UnityEngine.UIElements.Binding;
         GetBindingInfos(): System.Collections.Generic.IEnumerable<UnityEngine.UIElements.BindingInfo>;
+        GetBindingInfos(bindingInfos: UnityEngine.UIElements.BindingInfo[]): void;
         HasBinding(bindingId: UnityEngine.UIElements.BindingId): boolean;
         ClearBinding(bindingId: UnityEngine.UIElements.BindingId): void;
         ClearBindings(): void;
@@ -1724,6 +1773,7 @@ export declare namespace ReactUnity {
         Remove(element: UnityEngine.UIElements.VisualElement): void;
         RemoveAt(index: number): void;
         Clear(): void;
+        Clear(options: UnityEngine.UIElements.VisualElementClearOptions): void;
         ElementAt(index: number): UnityEngine.UIElements.VisualElement;
         IndexOf(element: UnityEngine.UIElements.VisualElement): number;
         Children(): System.Collections.Generic.IEnumerable<UnityEngine.UIElements.VisualElement>;
@@ -1735,7 +1785,11 @@ export declare namespace ReactUnity {
         RemoveFromHierarchy(): void;
         Contains(child: UnityEngine.UIElements.VisualElement): boolean;
         FindCommonAncestor(other: UnityEngine.UIElements.VisualElement): UnityEngine.UIElements.VisualElement;
+        AddMeshModifier(callback: ((ctx: UnityEngine.UIElements.MeshModificationContext) => void), recursive?: boolean, priority?: number): void;
+        ClearMeshModifiers(): void;
+        RemoveMeshModifier(callback: ((ctx: UnityEngine.UIElements.MeshModificationContext) => void)): void;
         Blur(): void;
+        UnregisterAllRemovableCallbacks(): void;
         HasTrickleDownHandlers(): boolean;
         HasBubbleUpHandlers(): boolean;
         Equals(obj: any): boolean;
@@ -1789,6 +1843,7 @@ export declare namespace ReactUnity {
         ScrollTop: number;
         ScrollWidth: number;
         ScrollHeight: number;
+        IsScrollContainer: boolean;
         ResolveStyle(recursive?: boolean): void;
         Pool(): boolean;
         AddEventListener(eventName: string, fun: ReactUnity.Helpers.Callback): (() => void);
@@ -1878,6 +1933,7 @@ export declare namespace ReactUnity {
         ScrollTop: number;
         ScrollWidth: number;
         ScrollHeight: number;
+        IsScrollContainer: boolean;
         SetProperty(property: string, value: any): void;
         AddEventListener(eventName: string, callback: ReactUnity.Helpers.Callback): (() => void);
         ConvertValue(value: any): System.Enum;
@@ -1970,6 +2026,7 @@ export declare namespace ReactUnity {
         ScrollTop: number;
         ScrollWidth: number;
         ScrollHeight: number;
+        IsScrollContainer: boolean;
         SetProperty(property: string, value: any): void;
         AddEventListener(eventName: string, callback: ReactUnity.Helpers.Callback): (() => void);
         ConvertValue(value: any): UnityEngine.Object;
@@ -2028,12 +2085,10 @@ export declare namespace ReactUnity {
         Globals: ReactUnity.Helpers.GlobalRecord;
         EngineType: ReactUnity.Scripting.JavascriptEngineType;
         AdvancedOptions: ReactUnity.UIToolkit.ReactUnityElement_ReactAdvancedOptions;
-        viewDataKey: string;
         userData: any; // System.Object
         canGrabFocus: boolean;
         focusController: UnityEngine.UIElements.FocusController;
         disablePlayModeTint: boolean;
-        usageHints: UnityEngine.UIElements.UsageHints;
         transform: UnityEngine.UIElements.ITransform;
         scaledPixelsPerPoint: number;
         layout: UnityEngine.Rect;
@@ -2041,16 +2096,28 @@ export declare namespace ReactUnity {
         worldBound: UnityEngine.Rect;
         localBound: UnityEngine.Rect;
         worldTransform: UnityEngine.Matrix4x4;
-        pickingMode: UnityEngine.UIElements.PickingMode;
+        hasActivePseudoState: boolean;
+        hasInactivePseudoState: boolean;
+        hasHoverPseudoState: boolean;
+        hasCheckedPseudoState: boolean;
+        hasEnabledPseudoState: boolean;
+        hasDisabledPseudoState: boolean;
+        hasFocusPseudoState: boolean;
+        hasRootPseudoState: boolean;
         name: string;
-        enabledInHierarchy: boolean;
         enabledSelf: boolean;
+        viewDataKey: string;
+        pickingMode: UnityEngine.UIElements.PickingMode;
+        tooltip: string;
+        usageHints: UnityEngine.UIElements.UsageHints;
         languageDirection: UnityEngine.UIElements.LanguageDirection;
+        dataSourceType: System.Type;
+        resourcesReleased: boolean;
+        enabledInHierarchy: boolean;
         visible: boolean;
         generateVisualContent: ((obj: UnityEngine.UIElements.MeshGenerationContext) => void);
         dataSource: any; // System.Object
         dataSourcePath: Unity.Properties.PropertyPath;
-        dataSourceType: System.Type;
         experimental: UnityEngine.UIElements.IExperimentalFeatures;
         hierarchy: UnityEngine.UIElements.VisualElement_Hierarchy;
         cacheAsBitmap: boolean;
@@ -2064,7 +2131,6 @@ export declare namespace ReactUnity {
         resolvedStyle: UnityEngine.UIElements.IResolvedStyle;
         customStyle: UnityEngine.UIElements.ICustomStyle;
         styleSheets: UnityEngine.UIElements.VisualElementStyleSheetSet;
-        tooltip: string;
         focusable: boolean;
         tabIndex: number;
         delegatesFocus: boolean;
@@ -2073,24 +2139,40 @@ export declare namespace ReactUnity {
         Run(): void;
         Destroy(): void;
         Restart(): void;
+        SetActivePseudoState(value: boolean): void;
+        SetCheckedPseudoState(value: boolean): void;
+        ReleaseResources(): void;
         Focus(): void;
         SendEvent(e: UnityEngine.UIElements.EventBase): void;
         SetEnabled(value: boolean): void;
         MarkDirtyRepaint(): void;
+        IsMarkedForRepaint(): boolean;
         ContainsPoint(localPoint: UnityEngine.Vector2): boolean;
         Overlaps(rectangle: UnityEngine.Rect): boolean;
         ToString(): string;
         GetClasses(): System.Collections.Generic.IEnumerable<string>;
+        GetClassNames(): System.Collections.Generic.IEnumerable<UnityEngine.UIElements.UniqueStyleString>;
         ClearClassList(): void;
         AddToClassList(className: string): void;
+        AddToClassList(className: UnityEngine.UIElements.UniqueStyleString): void;
+        AddToClassList(className: string, className2: string): void;
+        AddToClassList(className: UnityEngine.UIElements.UniqueStyleString, className2: UnityEngine.UIElements.UniqueStyleString): void;
+        AddToClassList(...classNames: string[]): void;
+        AddToClassList(...classNames: UnityEngine.UIElements.UniqueStyleString[]): void;
+        AddToClassList(classNames: System.ReadOnlySpan<UnityEngine.UIElements.UniqueStyleString>): void;
         RemoveFromClassList(className: string): void;
+        RemoveFromClassList(className: UnityEngine.UIElements.UniqueStyleString): void;
         ToggleInClassList(className: string): void;
+        ToggleInClassList(className: UnityEngine.UIElements.UniqueStyleString): void;
         EnableInClassList(className: string, enable: boolean): void;
+        EnableInClassList(className: UnityEngine.UIElements.UniqueStyleString, enable: boolean): void;
         ClassListContains(cls: string): boolean;
+        ClassListContains(cls: UnityEngine.UIElements.UniqueStyleString): boolean;
         FindAncestorUserData(): any;
         SetBinding(bindingId: UnityEngine.UIElements.BindingId, binding: UnityEngine.UIElements.Binding): void;
         GetBinding(bindingId: UnityEngine.UIElements.BindingId): UnityEngine.UIElements.Binding;
         GetBindingInfos(): System.Collections.Generic.IEnumerable<UnityEngine.UIElements.BindingInfo>;
+        GetBindingInfos(bindingInfos: UnityEngine.UIElements.BindingInfo[]): void;
         HasBinding(bindingId: UnityEngine.UIElements.BindingId): boolean;
         ClearBinding(bindingId: UnityEngine.UIElements.BindingId): void;
         ClearBindings(): void;
@@ -2101,6 +2183,7 @@ export declare namespace ReactUnity {
         Remove(element: UnityEngine.UIElements.VisualElement): void;
         RemoveAt(index: number): void;
         Clear(): void;
+        Clear(options: UnityEngine.UIElements.VisualElementClearOptions): void;
         ElementAt(index: number): UnityEngine.UIElements.VisualElement;
         IndexOf(element: UnityEngine.UIElements.VisualElement): number;
         Children(): System.Collections.Generic.IEnumerable<UnityEngine.UIElements.VisualElement>;
@@ -2112,7 +2195,11 @@ export declare namespace ReactUnity {
         RemoveFromHierarchy(): void;
         Contains(child: UnityEngine.UIElements.VisualElement): boolean;
         FindCommonAncestor(other: UnityEngine.UIElements.VisualElement): UnityEngine.UIElements.VisualElement;
+        AddMeshModifier(callback: ((ctx: UnityEngine.UIElements.MeshModificationContext) => void), recursive?: boolean, priority?: number): void;
+        ClearMeshModifiers(): void;
+        RemoveMeshModifier(callback: ((ctx: UnityEngine.UIElements.MeshModificationContext) => void)): void;
         Blur(): void;
+        UnregisterAllRemovableCallbacks(): void;
         HasTrickleDownHandlers(): boolean;
         HasBubbleUpHandlers(): boolean;
         Equals(obj: any): boolean;
@@ -2444,6 +2531,7 @@ export declare namespace ReactUnity {
       ScrollHeight: number;
       ClientWidth: number;
       ClientHeight: number;
+      IsScrollContainer: boolean;
       Children: ReactUnity.IReactComponent[];
       BeforePseudo: ReactUnity.IReactComponent;
       AfterPseudo: ReactUnity.IReactComponent;
@@ -2790,21 +2878,9 @@ export declare namespace ReactUnity {
       enabled: boolean;
       isActiveAndEnabled: boolean;
       transform: UnityEngine.Transform;
+      transformHandle: UnityEngine.TransformHandle;
       gameObject: UnityEngine.GameObject;
       tag: string;
-      rigidbody: UnityEngine.Component;
-      rigidbody2D: UnityEngine.Component;
-      camera: UnityEngine.Component;
-      light: UnityEngine.Component;
-      animation: UnityEngine.Component;
-      constantForce: UnityEngine.Component;
-      renderer: UnityEngine.Component;
-      audio: UnityEngine.Component;
-      networkView: UnityEngine.Component;
-      collider: UnityEngine.Component;
-      collider2D: UnityEngine.Component;
-      hingeJoint: UnityEngine.Component;
-      particleSystem: UnityEngine.Component;
       name: string;
       hideFlags: UnityEngine.HideFlags;
       state: string;
@@ -2849,6 +2925,7 @@ export declare namespace ReactUnity {
       BroadcastMessage(methodName: string, parameter: any): void;
       BroadcastMessage(methodName: string): void;
       BroadcastMessage(methodName: string, options: UnityEngine.SendMessageOptions): void;
+      GetEntityId(): UnityEngine.EntityId;
       GetInstanceID(): number;
       GetHashCode(): number;
       Equals(other: any): boolean;
@@ -2948,21 +3025,9 @@ export declare namespace ReactUnity {
       enabled: boolean;
       isActiveAndEnabled: boolean;
       transform: UnityEngine.Transform;
+      transformHandle: UnityEngine.TransformHandle;
       gameObject: UnityEngine.GameObject;
       tag: string;
-      rigidbody: UnityEngine.Component;
-      rigidbody2D: UnityEngine.Component;
-      camera: UnityEngine.Component;
-      light: UnityEngine.Component;
-      animation: UnityEngine.Component;
-      constantForce: UnityEngine.Component;
-      renderer: UnityEngine.Component;
-      audio: UnityEngine.Component;
-      networkView: UnityEngine.Component;
-      collider: UnityEngine.Component;
-      collider2D: UnityEngine.Component;
-      hingeJoint: UnityEngine.Component;
-      particleSystem: UnityEngine.Component;
       name: string;
       hideFlags: UnityEngine.HideFlags;
       static Create(ctx: ReactUnity.ReactContext, timer?: ReactUnity.Scheduling.ITimer): ReactUnity.Scheduling.RuntimeDispatcherBehavior_RuntimeDispatcher;
@@ -3007,6 +3072,7 @@ export declare namespace ReactUnity {
       BroadcastMessage(methodName: string, parameter: any): void;
       BroadcastMessage(methodName: string): void;
       BroadcastMessage(methodName: string, options: UnityEngine.SendMessageOptions): void;
+      GetEntityId(): UnityEngine.EntityId;
       GetInstanceID(): number;
       GetHashCode(): number;
       Equals(other: any): boolean;
@@ -3110,6 +3176,15 @@ export declare namespace ReactUnity {
       Encoding = 256,
       AbortController = 512,
       QueueMicrotask = 1024,
+      ModuleResolution = 2048,
+    }
+    export class HtmlEntryPoint {
+      static ExtractScripts(html: string): ReactUnity.Scripting.HtmlEntryPoint_HtmlScript[];
+      static ExtractStyles(html: string): ReactUnity.Scripting.HtmlEntryPoint_HtmlStyle[];
+      Equals(obj: any): boolean;
+      GetHashCode(): number;
+      GetType(): System.Type;
+      ToString(): string;
     }
     export enum JavascriptEngineType {
       Auto = 0,
@@ -3175,9 +3250,26 @@ export declare namespace ReactUnity {
       GetType(): System.Type;
       ToString(): string;
     }
+    export class JintModuleLoader {
+      constructor(context: ReactUnity.ReactContext);
+      Resolve(referencingModuleLocation: string, moduleRequest: any): any;
+      LoadModuleAsync(engine: any, resolved: any, completion: any): void;
+      LoadModule(engine: any, resolved: any): any;
+      Equals(obj: any): boolean;
+      GetHashCode(): number;
+      GetType(): System.Type;
+      ToString(): string;
+    }
     export class JintTypeConverter {
       constructor(context: ReactUnity.ReactContext, engine: any);
       Convert(value: any, type: System.Type, formatProvider: System.IFormatProvider): any;
+      Equals(obj: any): boolean;
+      GetHashCode(): number;
+      GetType(): System.Type;
+      ToString(): string;
+    }
+    export class ModuleCompat {
+      static NeedsModuleScope(code: string): boolean;
       Equals(obj: any): boolean;
       GetHashCode(): number;
       GetType(): System.Type;
@@ -3244,6 +3336,16 @@ export declare namespace ReactUnity {
       GetType(): System.Type;
       ToString(): string;
     }
+    export class QuickJSModuleLoader {
+      constructor(context: ReactUnity.ReactContext);
+      Install(runtime: any): void;
+      Close(): void;
+      Dispose(): void;
+      Equals(obj: any): boolean;
+      GetHashCode(): number;
+      GetType(): System.Type;
+      ToString(): string;
+    }
     export class ScriptComponent {
       constructor(ctx: ReactUnity.ReactContext, tag?: string, text?: string);
       Content: string;
@@ -3280,6 +3382,7 @@ export declare namespace ReactUnity {
       ScrollHeight: number;
       ClientWidth: number;
       ClientHeight: number;
+      IsScrollContainer: boolean;
       Children: ReactUnity.IReactComponent[];
       BeforePseudo: ReactUnity.IReactComponent;
       AfterPseudo: ReactUnity.IReactComponent;
@@ -3332,7 +3435,7 @@ export declare namespace ReactUnity {
       EngineType: ReactUnity.Scripting.JavascriptEngineType;
       EngineFactory: ReactUnity.Scripting.IJavaScriptEngineFactory;
       RunMainScript(script: string, beforeStart?: (() => void), afterStart?: (() => void)): void;
-      Initialize(callback: (() => void)): void;
+      Initialize(callback: (() => System.Exception)): void;
       JsonParse(str: string): any;
       ExecuteScript(code: string, fileName?: string, documentType?: ReactUnity.Scripting.JavascriptDocumentType): void;
       EvaluateScript(code: string, fileName?: string): any;
@@ -3381,6 +3484,23 @@ export declare namespace ReactUnity {
       GetType(): System.Type;
       ToString(): string;
     }
+    export class HtmlEntryPoint_HtmlScript {
+      Src: string;
+      Code: string;
+      DocumentType: ReactUnity.Scripting.JavascriptDocumentType;
+      Equals(obj: any): boolean;
+      GetHashCode(): number;
+      ToString(): string;
+      GetType(): System.Type;
+    }
+    export class HtmlEntryPoint_HtmlStyle {
+      Href: string;
+      Code: string;
+      Equals(obj: any): boolean;
+      GetHashCode(): number;
+      ToString(): string;
+      GetType(): System.Type;
+    }
     export namespace DomProxies {
       export class ConsoleProxy {
         constructor(ctx: ReactUnity.ReactContext);
@@ -3401,6 +3521,8 @@ export declare namespace ReactUnity {
       export class DocumentProxy {
         constructor(context: ReactUnity.ReactContext, origin: string);
         documentElement: ReactUnity.Scripting.DomProxies.DocumentProxy;
+        baseURI: string;
+        documentURI: string;
         head: ReactUnity.Scripting.DomProxies.HeadProxy;
         Origin: string;
         Context: ReactUnity.ReactContext;
@@ -4033,6 +4155,7 @@ export declare namespace ReactUnity {
       name: string;
       hideFlags: UnityEngine.HideFlags;
       SetDirty(): void;
+      GetEntityId(): UnityEngine.EntityId;
       GetInstanceID(): number;
       GetHashCode(): number;
       Equals(other: any): boolean;
@@ -4041,12 +4164,19 @@ export declare namespace ReactUnity {
     }
     export class CssFunctions {
       static Calc: ReactUnity.Styling.ICssFunction;
+      static MinMax: ReactUnity.Styling.ICssFunction;
+      static Math: ReactUnity.Styling.ICssFunction;
+      static Linear: ReactUnity.Styling.ICssFunction;
+      static Attr: ReactUnity.Styling.ICssFunction;
+      static LightDark: ReactUnity.Styling.ICssFunction;
       static Steps: ReactUnity.Styling.ICssFunction;
       static CubicBezier: ReactUnity.Styling.ICssFunction;
       static Url: ReactUnity.Styling.ICssFunction;
       static Resource: ReactUnity.Styling.ICssFunction;
       static Rgba: ReactUnity.Styling.ICssFunction;
       static Hsla: ReactUnity.Styling.ICssFunction;
+      static LabColor: ReactUnity.Styling.ICssFunction;
+      static ColorMix: ReactUnity.Styling.ICssFunction;
       static Var: ReactUnity.Styling.ICssFunction;
       static Vector3: ReactUnity.Styling.ICssFunction;
       static LinearGradient: ReactUnity.Styling.ICssFunction;
@@ -4071,6 +4201,7 @@ export declare namespace ReactUnity {
       Unset = 6,
       Default = 7,
       Revert = 8,
+      RevertLayer = 9,
     }
     export class CssProperties {
       static PropertyMap: System.Collections.Generic.Dictionary;
@@ -4090,6 +4221,7 @@ export declare namespace ReactUnity {
       Name: string;
       Cursors: ReactUnity.Styling.CursorRecord;
       SetDirty(): void;
+      GetEntityId(): UnityEngine.EntityId;
       GetInstanceID(): number;
       GetHashCode(): number;
       Equals(other: any): boolean;
@@ -4136,6 +4268,13 @@ export declare namespace ReactUnity {
       GetType(): System.Type;
       ToString(): string;
     }
+    export interface IRevertCalculator {
+      GetRevertValue(prop: ReactUnity.Styling.IStyleProperty, style: ReactUnity.Styling.NodeStyle, converter: ReactUnity.Styling.Converters.IStyleConverter): any;
+    }
+    export interface IStyleKey {
+      ModifiedProperties: ReactUnity.Styling.IStyleProperty[];
+      Modify(collection: System.Collections.Generic.IDictionary<ReactUnity.Styling.IStyleProperty, any>, value: any): ReactUnity.Styling.IStyleProperty[];
+    }
     export class IconSet {
       constructor();
       name: string;
@@ -4148,6 +4287,7 @@ export declare namespace ReactUnity {
       ConvertTextContent(text: string): string;
       GenerateCharactersFromCharacterMap(): void;
       SetDirty(): void;
+      GetEntityId(): UnityEngine.EntityId;
       GetInstanceID(): number;
       GetHashCode(): number;
       Equals(other: any): boolean;
@@ -4193,19 +4333,13 @@ export declare namespace ReactUnity {
       GetType(): System.Type;
       ToString(): string;
     }
-    export interface IRevertCalculator {
-      GetRevertValue(prop: ReactUnity.Styling.IStyleProperty, style: ReactUnity.Styling.NodeStyle, converter: ReactUnity.Styling.Converters.IStyleConverter): any;
-    }
-    export interface IStyleKey {
-      ModifiedProperties: ReactUnity.Styling.IStyleProperty[];
-      Modify(collection: System.Collections.Generic.IDictionary<ReactUnity.Styling.IStyleProperty, any>, value: any): ReactUnity.Styling.IStyleProperty[];
-    }
     export class NodeStyle {
-      constructor(context: ReactUnity.ReactContext, fallback?: ReactUnity.Styling.NodeStyle, cssStyles?: System.Collections.Generic.IDictionary<ReactUnity.Styling.IStyleProperty, any>[], revertCalculator?: ReactUnity.Styling.IRevertCalculator);
+      constructor(context: ReactUnity.ReactContext, fallback?: ReactUnity.Styling.NodeStyle, cssStyles?: System.Collections.Generic.IDictionary<ReactUnity.Styling.IStyleProperty, any>[], revertCalculator?: ReactUnity.Styling.IRevertCalculator, component?: ReactUnity.IReactComponent);
       HasInheritedChanges: boolean;
       Context: ReactUnity.ReactContext;
       Parent: ReactUnity.Styling.NodeStyle;
       RevertCalculator: ReactUnity.Styling.IRevertCalculator;
+      Component: ReactUnity.IReactComponent;
       order: number;
       opacity: number;
       zIndex?: number | undefined;
@@ -4215,6 +4349,10 @@ export declare namespace ReactUnity {
       cursor: ReactUnity.Types.ICssValueList<ReactUnity.Types.Cursor>;
       isolation: ReactUnity.Types.Isolation;
       pointerEvents: ReactUnity.Types.PointerEvents;
+      containerType: ReactUnity.Types.ContainerType;
+      containerName: string;
+      colorScheme: ReactUnity.Types.ColorScheme;
+      scrollbarGutter: ReactUnity.Types.ScrollbarGutter;
       borderTopLeftRadius: ReactUnity.Types.YogaValue2;
       borderTopRightRadius: ReactUnity.Types.YogaValue2;
       borderBottomLeftRadius: ReactUnity.Types.YogaValue2;
@@ -4249,7 +4387,11 @@ export declare namespace ReactUnity {
       textAlign: any; // TMPro.TextAlignmentOptions
       verticalAlign: any; // TMPro.VerticalAlignmentOptions
       textOverflow: any; // TMPro.TextOverflowModes
-      textWrap: boolean;
+      whiteSpace: ReactUnity.Types.WhiteSpace;
+      textShadow: ReactUnity.Types.ICssValueList<ReactUnity.Types.BoxShadow>;
+      caretColor: UnityEngine.Color;
+      overflowX: Yoga.YogaOverflow;
+      overflowY: Yoga.YogaOverflow;
       maxLines: number;
       textStrokeWidth: number;
       textStrokeColor: UnityEngine.Color;
@@ -4296,6 +4438,9 @@ export declare namespace ReactUnity {
       animationName: ReactUnity.Types.ICssValueList<string>;
       animationPlayState: ReactUnity.Types.ICssValueList<ReactUnity.Styling.Animations.AnimationPlayState>;
       animationTimingFunction: ReactUnity.Types.ICssValueList<((value: number, start?: number, end?: number) => number)>;
+      animationTimeline: ReactUnity.Types.ICssValueList<ReactUnity.Styling.Animations.AnimationTimeline>;
+      scrollTimelineName: string;
+      scrollTimelineAxis: ReactUnity.Styling.Animations.TimelineAxis;
       audioClip: ReactUnity.Types.ICssValueList<ReactUnity.Types.AudioReference>;
       audioIterationCount: ReactUnity.Types.ICssValueList<number>;
       audioDelay: ReactUnity.Types.ICssValueList<number>;
@@ -4303,6 +4448,7 @@ export declare namespace ReactUnity {
       audioPitch: ReactUnity.Types.ICssValueList<number>;
       UpdateParent(parent: ReactUnity.Styling.NodeStyle): void;
       GetRawStyleValue(prop: ReactUnity.Styling.IStyleProperty, fromChild?: boolean, activeStyle?: ReactUnity.Styling.NodeStyle): any;
+      GetOwnStyleValue(prop: ReactUnity.Styling.IStyleProperty): any;
       SetStyleValue(prop: ReactUnity.Styling.IStyleProperty, value: any): void;
       MarkChangesSeen(): void;
       HasValue(prop: ReactUnity.Styling.IStyleProperty): boolean;
@@ -4346,13 +4492,17 @@ export declare namespace ReactUnity {
     export class LayoutProperties {
       static StyleDirection: ReactUnity.Styling.LayoutProperty;
       static FlexDirection: ReactUnity.Styling.LayoutProperty;
+      static AlignConverter: ReactUnity.Styling.Converters.StyleConverterBase;
+      static JustifyConverter: ReactUnity.Styling.Converters.StyleConverterBase;
       static JustifyContent: ReactUnity.Styling.LayoutProperty;
+      static DisplayConverter: ReactUnity.Styling.Converters.StyleConverterBase;
       static Display: ReactUnity.Styling.LayoutProperty;
       static BoxSizing: ReactUnity.Styling.LayoutProperty;
       static AlignItems: ReactUnity.Styling.LayoutProperty;
       static AlignSelf: ReactUnity.Styling.LayoutProperty;
       static AlignContent: ReactUnity.Styling.LayoutProperty;
       static Wrap: ReactUnity.Styling.LayoutProperty;
+      static OverflowConverter: ReactUnity.Styling.Converters.StyleConverterBase;
       static Overflow: ReactUnity.Styling.LayoutProperty;
       static AspectRatio: ReactUnity.Styling.LayoutProperty;
       static FlexGrow: ReactUnity.Styling.LayoutProperty;
@@ -4399,6 +4549,7 @@ export declare namespace ReactUnity {
       static RowGap: ReactUnity.Styling.LayoutProperty;
       static ColumnGap: ReactUnity.Styling.LayoutProperty;
       static PropertyMap: System.Collections.Generic.Dictionary;
+      static CombineOverflow(a: Yoga.YogaOverflow, b: Yoga.YogaOverflow): Yoga.YogaOverflow;
       Equals(obj: any): boolean;
       GetHashCode(): number;
       GetType(): System.Type;
@@ -4408,6 +4559,7 @@ export declare namespace ReactUnity {
     }
     export class LayoutProperty<T = any> {
       constructor(name: string, transitionable?: boolean, defaultValue?: T, converter?: ReactUnity.Styling.Converters.StyleConverterBase);
+      constructor(name: string, defaultValue: ReactUnity.Styling.Computed.IComputedValue, converter?: ReactUnity.Styling.Converters.StyleConverterBase);
       affectsLayout: boolean;
       name: string;
       type: System.Type;
@@ -4426,6 +4578,15 @@ export declare namespace ReactUnity {
       GetType(): System.Type;
       ToString(): string;
     }
+    export class SVGProperties {
+      static fill: ReactUnity.Styling.StyleProperty;
+      static stroke: ReactUnity.Styling.StyleProperty;
+      static PropertyMap: System.Collections.Generic.Dictionary;
+      Equals(obj: any): boolean;
+      GetHashCode(): number;
+      GetType(): System.Type;
+      ToString(): string;
+    }
     export class StyleProperties {
       static opacity: ReactUnity.Styling.StyleProperty;
       static zIndex?: ReactUnity.Styling.StyleProperty;
@@ -4435,6 +4596,10 @@ export declare namespace ReactUnity {
       static cursor: ReactUnity.Styling.ValueListStyleProperty;
       static isolation: ReactUnity.Styling.StyleProperty;
       static pointerEvents: ReactUnity.Styling.StyleProperty;
+      static containerType: ReactUnity.Styling.StyleProperty;
+      static containerName: ReactUnity.Styling.StyleProperty;
+      static colorScheme: ReactUnity.Styling.StyleProperty;
+      static scrollbarGutter: ReactUnity.Styling.StyleProperty;
       static borderTopLeftRadius: ReactUnity.Styling.StyleProperty;
       static borderTopRightRadius: ReactUnity.Styling.StyleProperty;
       static borderBottomLeftRadius: ReactUnity.Styling.StyleProperty;
@@ -4468,7 +4633,7 @@ export declare namespace ReactUnity {
       static textAlign: ReactUnity.Styling.StyleProperty;
       static verticalAlign: ReactUnity.Styling.StyleProperty;
       static textOverflow: ReactUnity.Styling.StyleProperty;
-      static textWrap: ReactUnity.Styling.StyleProperty;
+      static whiteSpace: ReactUnity.Styling.StyleProperty;
       static maxLines: ReactUnity.Styling.StyleProperty;
       static textStrokeWidth: ReactUnity.Styling.StyleProperty;
       static textStrokeColor: ReactUnity.Styling.StyleProperty;
@@ -4479,6 +4644,10 @@ export declare namespace ReactUnity {
       static objectFit: ReactUnity.Styling.StyleProperty;
       static objectPosition: ReactUnity.Styling.StyleProperty;
       static boxShadow: ReactUnity.Styling.ValueListStyleProperty;
+      static textShadow: ReactUnity.Styling.ValueListStyleProperty;
+      static caretColor: ReactUnity.Styling.StyleProperty;
+      static overflowX: ReactUnity.Styling.StyleProperty;
+      static overflowY: ReactUnity.Styling.StyleProperty;
       static borderImageSource: ReactUnity.Styling.StyleProperty;
       static borderImageSlice: ReactUnity.Styling.StyleProperty;
       static borderImageRepeat: ReactUnity.Styling.FourDirectionalStyleProperty;
@@ -4516,6 +4685,9 @@ export declare namespace ReactUnity {
       static animationName: ReactUnity.Styling.ValueListStyleProperty;
       static animationPlayState: ReactUnity.Styling.ValueListStyleProperty;
       static animationTimingFunction: ReactUnity.Styling.ValueListStyleProperty;
+      static animationTimeline: ReactUnity.Styling.ValueListStyleProperty;
+      static scrollTimelineName: ReactUnity.Styling.StyleProperty;
+      static scrollTimelineAxis: ReactUnity.Styling.StyleProperty;
       static audioClip: ReactUnity.Styling.ValueListStyleProperty;
       static audioIterationCount: ReactUnity.Styling.ValueListStyleProperty;
       static audioDelay: ReactUnity.Styling.ValueListStyleProperty;
@@ -4544,15 +4716,6 @@ export declare namespace ReactUnity {
       Equals(obj: any): boolean;
       GetStyle(style: ReactUnity.Styling.NodeStyle): any;
       Modify(collection: System.Collections.Generic.IDictionary<ReactUnity.Styling.IStyleProperty, any>, value: any): ReactUnity.Styling.IStyleProperty[];
-      GetType(): System.Type;
-      ToString(): string;
-    }
-    export class SVGProperties {
-      static fill: ReactUnity.Styling.StyleProperty;
-      static stroke: ReactUnity.Styling.StyleProperty;
-      static PropertyMap: System.Collections.Generic.Dictionary;
-      Equals(obj: any): boolean;
-      GetHashCode(): number;
       GetType(): System.Type;
       ToString(): string;
     }
@@ -4601,11 +4764,13 @@ export declare namespace ReactUnity {
     export class StateStyles {
       constructor(cmp: ReactUnity.IReactComponent);
       Subscribed: System.Collections.Generic.HashSet<string>;
-      SubscribeToState(state: string): ReactUnity.IStateHandler;
+      HasAnchor: boolean;
+      QueryContainer: ReactUnity.Styling.Rules.QueryContainerState;
+      SubscribeToState(state: string, declared?: boolean): ReactUnity.IStateHandler;
       StartState(state: string): boolean;
       EndState(state: string): boolean;
       GetState(state: string): boolean;
-      GetStateOrSubscribe(state: string): boolean;
+      GetStateOrSubscribe(state: string, declared?: boolean): boolean;
       Clear(): void;
       Equals(obj: any): boolean;
       GetHashCode(): number;
@@ -4652,6 +4817,7 @@ export declare namespace ReactUnity {
       ScrollHeight: number;
       ClientWidth: number;
       ClientHeight: number;
+      IsScrollContainer: boolean;
       Children: ReactUnity.IReactComponent[];
       BeforePseudo: ReactUnity.IReactComponent;
       AfterPseudo: ReactUnity.IReactComponent;
@@ -4697,12 +4863,15 @@ export declare namespace ReactUnity {
       StyleTree: ReactUnity.Styling.Rules.StyleTree;
       FontFamilies: Record<string, ReactUnity.Types.FontReference>[];
       Keyframes: Record<string, ReactUnity.KeyframeList>[];
+      RegisteredProperties: Record<string, ReactUnity.Styling.Rules.RegisteredProperty>[];
       StyleSheets: ReactUnity.Styling.StyleSheet[];
+      SeedColorScheme(scheme: ReactUnity.Types.ColorScheme): void;
       ResolveStyle(scope?: ReactUnity.IReactComponent): void;
       Insert(sheet: ReactUnity.Styling.StyleSheet): void;
       Remove(sheet: ReactUnity.Styling.StyleSheet): void;
       GetFontFamily(name: string): ReactUnity.Types.FontReference;
       GetKeyframes(name: string): ReactUnity.KeyframeList;
+      GetRegisteredProperty(name: string): ReactUnity.Styling.Rules.RegisteredProperty;
       Equals(obj: any): boolean;
       GetHashCode(): number;
       GetType(): System.Type;
@@ -4723,6 +4892,7 @@ export declare namespace ReactUnity {
       Media: ReactUnity.Styling.Rules.MediaQueryList;
       FontFamilies: Record<string, ReactUnity.Types.FontReference>;
       Keyframes: Record<string, ReactUnity.KeyframeList>;
+      RegisteredProperties: Record<string, ReactUnity.Styling.Rules.RegisteredProperty>;
       MediaQueries: ReactUnity.Styling.Rules.MediaQueryList[];
       Declarations: System.Tuple<ReactUnity.Styling.Rules.RuleTreeNode<ReactUnity.Styling.Rules.StyleData>, System.Collections.Generic.Dictionary<ReactUnity.Styling.IStyleProperty, any>>[];
       AddRules(selector: string, rules: System.Collections.Generic.IDictionary<ReactUnity.Styling.IStyleProperty, any>, important?: boolean): void;
@@ -4801,6 +4971,38 @@ export declare namespace ReactUnity {
         GetType(): System.Type;
         ToString(): string;
       }
+      export enum AnimationTimelineKind {
+        Auto = 0,
+        None = 1,
+        Scroll = 2,
+        Named = 3,
+      }
+      export enum TimelineAxis {
+        Block = 0,
+        Inline = 1,
+        Y = 2,
+        X = 3,
+      }
+      export enum TimelineScroller {
+        Nearest = 0,
+        Root = 1,
+        Self = 2,
+      }
+      export class AnimationTimeline {
+        IsScrollDriven: boolean;
+        static Auto: ReactUnity.Styling.Animations.AnimationTimeline;
+        static None: ReactUnity.Styling.Animations.AnimationTimeline;
+        Kind: ReactUnity.Styling.Animations.AnimationTimelineKind;
+        Scroller: ReactUnity.Styling.Animations.TimelineScroller;
+        Axis: ReactUnity.Styling.Animations.TimelineAxis;
+        Name: string;
+        static Scroll(scroller: ReactUnity.Styling.Animations.TimelineScroller, axis: ReactUnity.Styling.Animations.TimelineAxis): ReactUnity.Styling.Animations.AnimationTimeline;
+        static Named(name: string): ReactUnity.Styling.Animations.AnimationTimeline;
+        Equals(obj: any): boolean;
+        GetHashCode(): number;
+        ToString(): string;
+        GetType(): System.Type;
+      }
       export enum AnimationFillMode {
         None = 0,
         Forwards = 1,
@@ -4852,6 +5054,25 @@ export declare namespace ReactUnity {
         GetType(): System.Type;
         ToString(): string;
       }
+      export enum TimingFunctionType {
+        Ease = 0,
+        Linear = 1,
+        EaseIn = 2,
+        EaseOut = 3,
+        EaseInOut = 4,
+        StepStart = 5,
+        StepEnd = 6,
+      }
+      export enum StepsJumpMode {
+        End = 0,
+        JumpEnd = 0,
+        Start = 1,
+        JumpStart = 1,
+        None = 2,
+        JumpNone = 2,
+        Both = 3,
+        JumpBoth = 3,
+      }
       export class TimingFunction {
         constructor(object: any, method: System.IntPtr);
         Method: System.Reflection.MethodInfo;
@@ -4878,31 +5099,13 @@ export declare namespace ReactUnity {
         static Default: ((value: number, start?: number, end?: number) => number);
         static Linear(t: number, start?: number, end?: number): number;
         static Steps(count: number, mode?: ReactUnity.Styling.Animations.StepsJumpMode): ((value: number, start?: number, end?: number) => number);
+        static Linear(stops: ReactUnity.Styling.Animations.TimingFunctions_LinearStop[]): ((value: number, start?: number, end?: number) => number);
         static Get(easeType: ReactUnity.Styling.Animations.TimingFunctionType): ((value: number, start?: number, end?: number) => number);
         static Get(easeType: string): ((value: number, start?: number, end?: number) => number);
         Equals(obj: any): boolean;
         GetHashCode(): number;
         GetType(): System.Type;
         ToString(): string;
-      }
-      export enum TimingFunctionType {
-        Ease = 0,
-        Linear = 1,
-        EaseIn = 2,
-        EaseOut = 3,
-        EaseInOut = 4,
-        StepStart = 5,
-        StepEnd = 6,
-      }
-      export enum StepsJumpMode {
-        End = 0,
-        JumpEnd = 0,
-        Start = 1,
-        JumpStart = 1,
-        None = 2,
-        JumpNone = 2,
-        Both = 3,
-        JumpBoth = 3,
       }
       export class TransitionProperty {
         constructor(definition: string);
@@ -4915,6 +5118,14 @@ export declare namespace ReactUnity {
         GetHashCode(): number;
         GetType(): System.Type;
         ToString(): string;
+      }
+      export class TimingFunctions_LinearStop {
+        Output: number;
+        Input: number;
+        Equals(obj: any): boolean;
+        GetHashCode(): number;
+        ToString(): string;
+        GetType(): System.Type;
       }
       export class TimingFunctions_CubicBezier {
         static Linear(value: number, start?: number, end?: number): number;
@@ -4950,6 +5161,18 @@ export declare namespace ReactUnity {
       }
     }
     export namespace Computed {
+      export class ComputedAttr {
+        constructor(attribute: string, type: ReactUnity.Styling.Computed.ComputedAttr_Kind, unit: string, fallback: string);
+        Attribute: string;
+        Type: ReactUnity.Styling.Computed.ComputedAttr_Kind;
+        Unit: string;
+        Fallback: string;
+        GetValue(prop: ReactUnity.Styling.IStyleProperty, style: ReactUnity.Styling.NodeStyle, converter: ReactUnity.Styling.Converters.IStyleConverter): any;
+        Equals(obj: any): boolean;
+        GetHashCode(): number;
+        ToString(): string;
+        GetType(): System.Type;
+      }
       export class ComputedCalc {
         constructor(values: ReactUnity.Styling.Computed.IComputedValue[], operators: ReactUnity.Styling.Computed.ComputedCalc_CalcOperator[], converter: ReactUnity.Styling.Converters.StyleConverterBase);
         Values: ReactUnity.Styling.Computed.IComputedValue[];
@@ -4983,6 +5206,16 @@ export declare namespace ReactUnity {
         ToString(): string;
         Equals(obj: any): boolean;
         GetHashCode(): number;
+        GetType(): System.Type;
+      }
+      export class ComputedContainerRelative {
+        constructor(ratio: number, type: ReactUnity.Styling.Computed.ComputedContainerRelative_Axis);
+        Ratio: number;
+        Type: ReactUnity.Styling.Computed.ComputedContainerRelative_Axis;
+        GetValue(prop: ReactUnity.Styling.IStyleProperty, style: ReactUnity.Styling.NodeStyle, converter: ReactUnity.Styling.Converters.IStyleConverter): any;
+        Equals(obj: any): boolean;
+        GetHashCode(): number;
+        ToString(): string;
         GetType(): System.Type;
       }
       export class ComputedCurrentColor {
@@ -5044,6 +5277,17 @@ export declare namespace ReactUnity {
         ToString(): string;
         GetType(): System.Type;
       }
+      export class ComputedLightDark {
+        constructor(light: ReactUnity.Styling.Computed.IComputedValue, dark: ReactUnity.Styling.Computed.IComputedValue);
+        Light: ReactUnity.Styling.Computed.IComputedValue;
+        Dark: ReactUnity.Styling.Computed.IComputedValue;
+        GetValue(prop: ReactUnity.Styling.IStyleProperty, style: ReactUnity.Styling.NodeStyle, converter: ReactUnity.Styling.Converters.IStyleConverter): any;
+        static IsDark(style: ReactUnity.Styling.NodeStyle): boolean;
+        Equals(obj: any): boolean;
+        GetHashCode(): number;
+        ToString(): string;
+        GetType(): System.Type;
+      }
       export class ComputedList {
         constructor(values: ReactUnity.Styling.Computed.IComputedValue[], converter: ReactUnity.Styling.Converters.StyleConverterBase, callback: ((values: any[]) => any), defaultValue?: any);
         Callback: ((values: any[]) => any);
@@ -5064,6 +5308,30 @@ export declare namespace ReactUnity {
         Converter: ReactUnity.Styling.Converters.StyleConverterBase;
         GetValue(prop: ReactUnity.Styling.IStyleProperty, style: ReactUnity.Styling.NodeStyle, converter: ReactUnity.Styling.Converters.IStyleConverter): any;
         static Create(value: ReactUnity.Styling.Computed.IComputedValue, converter: ReactUnity.Styling.Converters.StyleConverterBase, callback: ((value: any) => any)): ReactUnity.Styling.Computed.IComputedValue;
+        Equals(obj: any): boolean;
+        GetHashCode(): number;
+        ToString(): string;
+        GetType(): System.Type;
+      }
+      export class ComputedMath {
+        constructor(values: ReactUnity.Styling.Computed.IComputedValue[], kind: ReactUnity.Styling.Computed.ComputedMath_Op, strategy: ReactUnity.Styling.Computed.ComputedMath_Rounding);
+        Values: ReactUnity.Styling.Computed.IComputedValue[];
+        Kind: ReactUnity.Styling.Computed.ComputedMath_Op;
+        Strategy: ReactUnity.Styling.Computed.ComputedMath_Rounding;
+        static Create(values: ReactUnity.Styling.Computed.IComputedValue[], kind: ReactUnity.Styling.Computed.ComputedMath_Op, strategy?: ReactUnity.Styling.Computed.ComputedMath_Rounding): ReactUnity.Styling.Computed.IComputedValue;
+        GetValue(prop: ReactUnity.Styling.IStyleProperty, style: ReactUnity.Styling.NodeStyle, converter: ReactUnity.Styling.Converters.IStyleConverter): any;
+        static Evaluate(values: any[], kind: ReactUnity.Styling.Computed.ComputedMath_Op, strategy: ReactUnity.Styling.Computed.ComputedMath_Rounding): number | undefined;
+        Equals(obj: any): boolean;
+        GetHashCode(): number;
+        ToString(): string;
+        GetType(): System.Type;
+      }
+      export class ComputedMinMax {
+        constructor(values: ReactUnity.Styling.Computed.IComputedValue[], kind: ReactUnity.Styling.Computed.ComputedMinMax_Mode);
+        Values: ReactUnity.Styling.Computed.IComputedValue[];
+        Kind: ReactUnity.Styling.Computed.ComputedMinMax_Mode;
+        static Create(values: ReactUnity.Styling.Computed.IComputedValue[], kind: ReactUnity.Styling.Computed.ComputedMinMax_Mode): ReactUnity.Styling.Computed.IComputedValue;
+        GetValue(prop: ReactUnity.Styling.IStyleProperty, style: ReactUnity.Styling.NodeStyle, converter: ReactUnity.Styling.Converters.IStyleConverter): any;
         Equals(obj: any): boolean;
         GetHashCode(): number;
         ToString(): string;
@@ -5130,6 +5398,11 @@ export declare namespace ReactUnity {
         GetType(): System.Type;
         ToString(): string;
       }
+      export enum ComputedAttr_Kind {
+        String = 0,
+        Unit = 1,
+        Typed = 2,
+      }
       export enum ComputedCalc_CalcOperator {
         None = 0,
         Add = 1,
@@ -5160,6 +5433,12 @@ export declare namespace ReactUnity {
         Clone(): any;
         GetType(): System.Type;
         ToString(): string;
+      }
+      export enum ComputedContainerRelative_Axis {
+        Inline = 0,
+        Block = 1,
+        Min = 2,
+        Max = 3,
       }
       export enum ComputedFontProperty_FontPropertyType {
         None = 0,
@@ -5200,6 +5479,36 @@ export declare namespace ReactUnity {
         GetType(): System.Type;
         ToString(): string;
       }
+      export enum ComputedMath_Op {
+        Round = 0,
+        Mod = 1,
+        Rem = 2,
+        Abs = 3,
+        Sign = 4,
+        Sin = 5,
+        Cos = 6,
+        Tan = 7,
+        Asin = 8,
+        Acos = 9,
+        Atan = 10,
+        Atan2 = 11,
+        Pow = 12,
+        Sqrt = 13,
+        Hypot = 14,
+        Log = 15,
+        Exp = 16,
+      }
+      export enum ComputedMath_Rounding {
+        Nearest = 0,
+        Up = 1,
+        Down = 2,
+        ToZero = 3,
+      }
+      export enum ComputedMinMax_Mode {
+        Min = 0,
+        Max = 1,
+        Clamp = 2,
+      }
       export enum ComputedRootRelative_RootValueType {
         None = 0,
         Width = 1,
@@ -5219,10 +5528,21 @@ export declare namespace ReactUnity {
         static AngleConverter: ReactUnity.Styling.Converters.StyleConverterBase;
         static LengthConverter: ReactUnity.Styling.Converters.StyleConverterBase;
         static FontSizeConverter: ReactUnity.Styling.Converters.StyleConverterBase;
+        static LineHeightConverter: ReactUnity.Styling.Converters.StyleConverterBase;
         static DurationConverter: ReactUnity.Styling.Converters.StyleConverterBase;
         static PercentageConverter: ReactUnity.Styling.Converters.StyleConverterBase;
         static ColorValueConverter: ReactUnity.Styling.Converters.StyleConverterBase;
+        static OklchChromaConverter: ReactUnity.Styling.Converters.StyleConverterBase;
+        static LabLightnessConverter: ReactUnity.Styling.Converters.StyleConverterBase;
+        static LabAxisConverter: ReactUnity.Styling.Converters.StyleConverterBase;
+        static LchChromaConverter: ReactUnity.Styling.Converters.StyleConverterBase;
         static UrlConverter: ReactUnity.Styling.Converters.StyleConverterBase;
+        static ContainerNameConverter: ReactUnity.Styling.Converters.StyleConverterBase;
+        static AnimationTimelineConverter: ReactUnity.Styling.Converters.StyleConverterBase;
+        static TimelineNameConverter: ReactUnity.Styling.Converters.StyleConverterBase;
+        static ContainerTypeConverter: ReactUnity.Styling.Converters.StyleConverterBase;
+        static ColorSchemeConverter: ReactUnity.Styling.Converters.StyleConverterBase;
+        static ScrollbarGutterConverter: ReactUnity.Styling.Converters.StyleConverterBase;
         static YogaValueConverter: ReactUnity.Styling.Converters.StyleConverterBase;
         static YogaValue2Converter: ReactUnity.Styling.Converters.StyleConverterBase;
         static BorderRadiusConverter: ReactUnity.Styling.Converters.StyleConverterBase;
@@ -5258,6 +5578,30 @@ export declare namespace ReactUnity {
         GetType(): System.Type;
         ToString(): string;
       }
+      export class AnimationTimelineConverter {
+        constructor();
+        StringifyTyped(value: ReactUnity.Styling.Animations.AnimationTimeline): string;
+        StringifyInternal(value: any): string;
+        CanHandleKeyword(keyword: ReactUnity.Styling.CssKeyword): boolean;
+        Convert(value: any): ReactUnity.Styling.Computed.IComputedValue;
+        Stringify(value: any): string;
+        Equals(obj: any): boolean;
+        GetHashCode(): number;
+        GetType(): System.Type;
+        ToString(): string;
+      }
+      export class TimelineNameConverter {
+        constructor();
+        StringifyInternal(value: any): string;
+        StringifyTyped(value: string): string;
+        CanHandleKeyword(keyword: ReactUnity.Styling.CssKeyword): boolean;
+        Convert(value: any): ReactUnity.Styling.Computed.IComputedValue;
+        Stringify(value: any): string;
+        Equals(obj: any): boolean;
+        GetHashCode(): number;
+        GetType(): System.Type;
+        ToString(): string;
+      }
       export class BoolConverter {
         constructor(truthyValues: string[], falsyValues: string[]);
         StringifyInternal(value: any): string;
@@ -5274,6 +5618,58 @@ export declare namespace ReactUnity {
         constructor();
         StringifyTyped(value: UnityEngine.Color): string;
         StringifyInternal(value: any): string;
+        CanHandleKeyword(keyword: ReactUnity.Styling.CssKeyword): boolean;
+        Convert(value: any): ReactUnity.Styling.Computed.IComputedValue;
+        Stringify(value: any): string;
+        Equals(obj: any): boolean;
+        GetHashCode(): number;
+        GetType(): System.Type;
+        ToString(): string;
+      }
+      export enum ColorInterpolationSpace {
+        Srgb = 0,
+        SrgbLinear = 1,
+        Hsl = 2,
+        Lab = 3,
+        Lch = 4,
+        Oklab = 5,
+        Oklch = 6,
+      }
+      export enum HueInterpolationMethod {
+        Shorter = 0,
+        Longer = 1,
+        Increasing = 2,
+        Decreasing = 3,
+      }
+      export class ColorInterpolation {
+        static HueChannel(space: ReactUnity.Styling.Converters.ColorInterpolationSpace): number;
+        static Mix(from: UnityEngine.Color, to: UnityEngine.Color, ratio: number, space: ReactUnity.Styling.Converters.ColorInterpolationSpace, hueMethod: ReactUnity.Styling.Converters.HueInterpolationMethod): UnityEngine.Color;
+        Equals(obj: any): boolean;
+        GetHashCode(): number;
+        GetType(): System.Type;
+        ToString(): string;
+      }
+      export class ColorSpaces {
+        static OklchChromaReference: number;
+        static LabAxisReference: number;
+        static LchChromaReference: number;
+        static SrgbToLinear(c: number): number;
+        static LinearToSrgb(c: number): number;
+        static OklabToColor(l: number, a: number, b: number, alpha: number): UnityEngine.Color;
+        static OklchToColor(l: number, c: number, h: number, alpha: number): UnityEngine.Color;
+        static LabToColor(l: number, a: number, b: number, alpha: number): UnityEngine.Color;
+        static LchToColor(l: number, c: number, h: number, alpha: number): UnityEngine.Color;
+        static HslToColor(h: number, s: number, l: number, alpha: number): UnityEngine.Color;
+        static NormalizeHue(h: number): number;
+        Equals(obj: any): boolean;
+        GetHashCode(): number;
+        GetType(): System.Type;
+        ToString(): string;
+      }
+      export class ContainerNameConverter {
+        constructor();
+        StringifyInternal(value: any): string;
+        StringifyTyped(value: string): string;
         CanHandleKeyword(keyword: ReactUnity.Styling.CssKeyword): boolean;
         Convert(value: any): ReactUnity.Styling.Computed.IComputedValue;
         Stringify(value: any): string;
@@ -5341,6 +5737,62 @@ export declare namespace ReactUnity {
         GetType(): System.Type;
         ToString(): string;
       }
+      export class OklchChromaConverter {
+        constructor();
+        AllowSuffixless: boolean;
+        CalcConverter: ReactUnity.Styling.Converters.CalcConverter;
+        StringifyTyped(value: number): string;
+        StringifyInternal(value: any): string;
+        CanHandleKeyword(keyword: ReactUnity.Styling.CssKeyword): boolean;
+        Convert(value: any): ReactUnity.Styling.Computed.IComputedValue;
+        Stringify(value: any): string;
+        Equals(obj: any): boolean;
+        GetHashCode(): number;
+        GetType(): System.Type;
+        ToString(): string;
+      }
+      export class LabLightnessConverter {
+        constructor();
+        AllowSuffixless: boolean;
+        CalcConverter: ReactUnity.Styling.Converters.CalcConverter;
+        StringifyTyped(value: number): string;
+        StringifyInternal(value: any): string;
+        CanHandleKeyword(keyword: ReactUnity.Styling.CssKeyword): boolean;
+        Convert(value: any): ReactUnity.Styling.Computed.IComputedValue;
+        Stringify(value: any): string;
+        Equals(obj: any): boolean;
+        GetHashCode(): number;
+        GetType(): System.Type;
+        ToString(): string;
+      }
+      export class LabAxisConverter {
+        constructor();
+        AllowSuffixless: boolean;
+        CalcConverter: ReactUnity.Styling.Converters.CalcConverter;
+        StringifyTyped(value: number): string;
+        StringifyInternal(value: any): string;
+        CanHandleKeyword(keyword: ReactUnity.Styling.CssKeyword): boolean;
+        Convert(value: any): ReactUnity.Styling.Computed.IComputedValue;
+        Stringify(value: any): string;
+        Equals(obj: any): boolean;
+        GetHashCode(): number;
+        GetType(): System.Type;
+        ToString(): string;
+      }
+      export class LchChromaConverter {
+        constructor();
+        AllowSuffixless: boolean;
+        CalcConverter: ReactUnity.Styling.Converters.CalcConverter;
+        StringifyTyped(value: number): string;
+        StringifyInternal(value: any): string;
+        CanHandleKeyword(keyword: ReactUnity.Styling.CssKeyword): boolean;
+        Convert(value: any): ReactUnity.Styling.Computed.IComputedValue;
+        Stringify(value: any): string;
+        Equals(obj: any): boolean;
+        GetHashCode(): number;
+        GetType(): System.Type;
+        ToString(): string;
+      }
       export class LengthConverter {
         constructor();
         AllowSuffixless: boolean;
@@ -5357,6 +5809,20 @@ export declare namespace ReactUnity {
         ToString(): string;
       }
       export class FontSizeConverter {
+        constructor();
+        AllowSuffixless: boolean;
+        CalcConverter: ReactUnity.Styling.Converters.CalcConverter;
+        StringifyTyped(value: number): string;
+        StringifyInternal(value: any): string;
+        CanHandleKeyword(keyword: ReactUnity.Styling.CssKeyword): boolean;
+        Convert(value: any): ReactUnity.Styling.Computed.IComputedValue;
+        Stringify(value: any): string;
+        Equals(obj: any): boolean;
+        GetHashCode(): number;
+        GetType(): System.Type;
+        ToString(): string;
+      }
+      export class LineHeightConverter {
         constructor();
         AllowSuffixless: boolean;
         CalcConverter: ReactUnity.Styling.Converters.CalcConverter;
@@ -5451,6 +5917,19 @@ export declare namespace ReactUnity {
       }
       export class RawConverter {
         constructor();
+        Convert(value: any): ReactUnity.Styling.Computed.IComputedValue;
+        Stringify(value: any): string;
+        Equals(obj: any): boolean;
+        GetHashCode(): number;
+        GetType(): System.Type;
+        ToString(): string;
+      }
+      export class RotateConverter {
+        constructor();
+        static FromAxisAngle(axis: UnityEngine.Vector3, angle: number): UnityEngine.Vector3;
+        StringifyInternal(value: any): string;
+        StringifyTyped(value: UnityEngine.Vector3): string;
+        CanHandleKeyword(keyword: ReactUnity.Styling.CssKeyword): boolean;
         Convert(value: any): ReactUnity.Styling.Computed.IComputedValue;
         Stringify(value: any): string;
         Equals(obj: any): boolean;
@@ -5561,6 +6040,49 @@ export declare namespace ReactUnity {
       }
     }
     export namespace Rules {
+      export class CascadeLayer {
+        Name: string;
+        Order: number;
+        ToString(): string;
+        Equals(obj: any): boolean;
+        GetHashCode(): number;
+        GetType(): System.Type;
+      }
+      export class ContainerQuery {
+        Name: string;
+        Parent: ReactUnity.Styling.Rules.ContainerQuery;
+        static Parse(prelude: string, parent?: ReactUnity.Styling.Rules.ContainerQuery): ReactUnity.Styling.Rules.ContainerQuery;
+        Matches(element: ReactUnity.IReactComponent, includeSelf?: boolean): boolean;
+        static SizeType(type: ReactUnity.Types.ContainerType): ReactUnity.Types.ContainerType;
+        static FindSizeContainer(element: ReactUnity.IReactComponent, block: boolean): ReactUnity.IReactComponent;
+        static GetScrollable(component: ReactUnity.IReactComponent): ReactUnity.Styling.Rules.ScrollEdge;
+        static HasName(names: string, name: string): boolean;
+        Equals(obj: any): boolean;
+        GetHashCode(): number;
+        GetType(): System.Type;
+        ToString(): string;
+      }
+      export enum ScrollEdge {
+        None = 0,
+        Top = 1,
+        Right = 2,
+        Bottom = 4,
+        Left = 8,
+      }
+      export class QueryContainerState {
+        constructor();
+        TracksSize: boolean;
+        TracksScroll: boolean;
+        HasStyleDependents: boolean;
+        Listed: boolean;
+        Scrollable: ReactUnity.Styling.Rules.ScrollEdge;
+        Width: number;
+        Height: number;
+        Equals(obj: any): boolean;
+        GetHashCode(): number;
+        GetType(): System.Type;
+        ToString(): string;
+      }
       export interface IMediaProvider {
         MediaType: string;
         HasType(type: string): boolean;
@@ -5596,6 +6118,7 @@ export declare namespace ReactUnity {
         GetNumericalValue(property: string): number;
         GetValue(property: string): string;
         SetValue(property: string, value: string): void;
+        SeedValue(property: string, value: string): void;
         SetNumber(property: string, value: number): void;
         SetDimensions(width: number, height: number): void;
         InitConstants(): void;
@@ -5611,6 +6134,7 @@ export declare namespace ReactUnity {
         media: string;
         matches: boolean;
         static Create(provider: ReactUnity.Styling.Rules.IMediaProvider, media: string, context?: ReactUnity.ReactContext): ReactUnity.Styling.Rules.MediaQueryList;
+        Refresh(): void;
         addEventListener(type: string, listener: any): void;
         removeEventListener(type: string, listener: any): void;
         Equals(obj: any): boolean;
@@ -5618,15 +6142,46 @@ export declare namespace ReactUnity {
         GetType(): System.Type;
         ToString(): string;
       }
+      export class RegisteredProperty {
+        Name: string;
+        Syntax: string;
+        Inherits: boolean;
+        InitialValue: any; // System.Object
+        static UniversalSyntax: string;
+        static Create(rule: any): ReactUnity.Styling.Rules.RegisteredProperty;
+        Equals(obj: any): boolean;
+        GetHashCode(): number;
+        GetType(): System.Type;
+        ToString(): string;
+      }
       export class RuleHelpers {
         static ImportantSpecifity: number;
+        static LayerSpecifityStep: number;
+        static MaxLayerRank: number;
         static SplitSelectorRegex: System.Text.RegularExpressions.Regex;
-        static NthChildRegex: System.Text.RegularExpressions.Regex;
+        static KnownPseudoElements: System.Collections.Generic.HashSet;
+        static LayerRank(layerOrder: number, important: boolean): number;
         static ParseSelector(selector: string, negated?: boolean): ReactUnity.Styling.Rules.RuleSelectorPart[];
-        static GetSpecificity(priority: any): number;
-        static ConvertStyleDeclarationToRecord(rule: any, important: boolean): System.Collections.Generic.Dictionary;
+        static SpecificityOf(part: ReactUnity.Styling.Rules.RuleSelectorPart): number;
+        static ConvertStyleDeclarationToRecord(rule: any, important: boolean): ReactUnity.Styling.Rules.StyleRecord;
         static ConvertStyleDeclarationToRecord(dc: System.Collections.Generic.IDictionary): System.Collections.Generic.Dictionary;
+        static SplitSelectorList(selectorText: string): string[];
+        static ExpandMatchesAny(selector: string): string[];
         static NormalizeSelector(selector: string): string;
+        static StripZeroSpecificityMarks(selector: string): string;
+        static ReadsScope(part: ReactUnity.Styling.Rules.RuleSelectorPart): boolean;
+        static ResolveScopedSelector(selectorList: string): string;
+        static ReplaceNestingSelector(selector: string, replacement: string): string;
+        Equals(obj: any): boolean;
+        GetHashCode(): number;
+        GetType(): System.Type;
+        ToString(): string;
+      }
+      export class RuleScope {
+        constructor(startText: string, endText: string, parent?: ReactUnity.Styling.Rules.RuleScope);
+        Parent: ReactUnity.Styling.Rules.RuleScope;
+        ContainsHasSelector: boolean;
+        static NoProximity: number;
         Equals(obj: any): boolean;
         GetHashCode(): number;
         GetType(): System.Type;
@@ -5640,10 +6195,39 @@ export declare namespace ReactUnity {
         GetType(): System.Type;
         ToString(): string;
       }
+      export class StyleRecord {
+        constructor();
+        [key: string]: any;
+        Comparer: System.Collections.Generic.IEqualityComparer<ReactUnity.Styling.IStyleProperty>;
+        Count: number;
+        Keys: System.Collections.Generic.Dictionary_KeyCollection<ReactUnity.Styling.IStyleProperty, any>;
+        Values: System.Collections.Generic.Dictionary_ValueCollection<ReactUnity.Styling.IStyleProperty, any>;
+        Layer: ReactUnity.Styling.Rules.CascadeLayer;
+        Add(key: ReactUnity.Styling.IStyleProperty, value: any): void;
+        Clear(): void;
+        ContainsKey(key: ReactUnity.Styling.IStyleProperty): boolean;
+        ContainsValue(value: any): boolean;
+        GetEnumerator(): System.Collections.Generic.Dictionary_Enumerator<ReactUnity.Styling.IStyleProperty, any>;
+        GetObjectData(info: System.Runtime.Serialization.SerializationInfo, context: System.Runtime.Serialization.StreamingContext): void;
+        OnDeserialization(sender: any): void;
+        Remove(key: ReactUnity.Styling.IStyleProperty): boolean;
+        TryAdd(key: ReactUnity.Styling.IStyleProperty, value: any): boolean;
+        EnsureCapacity(capacity: number): number;
+        TrimExcess(): void;
+        TrimExcess(capacity: number): void;
+        Equals(obj: any): boolean;
+        GetHashCode(): number;
+        GetType(): System.Type;
+        ToString(): string;
+      }
       export class StyleTree {
         constructor();
+        ContainsHasSelector: boolean;
         MediaQuery: ReactUnity.Styling.Rules.MediaQueryList;
         Scope: ReactUnity.IReactComponent;
+        Layer: ReactUnity.Styling.Rules.CascadeLayer;
+        ContainerQuery: ReactUnity.Styling.Rules.ContainerQuery;
+        RuleScope: ReactUnity.Styling.Rules.RuleScope;
         Specifity: number;
         LeafNodes: ReactUnity.Styling.Rules.RuleTreeNode<ReactUnity.Styling.Rules.StyleData>[];
         BeforeNodes: ReactUnity.Styling.Rules.RuleTreeNode<ReactUnity.Styling.Rules.StyleData>[];
@@ -5655,8 +6239,8 @@ export declare namespace ReactUnity {
         RelationType: ReactUnity.Styling.Rules.RuleRelationType;
         PseudoType: ReactUnity.Styling.Rules.RulePseudoType;
         Data: ReactUnity.Styling.Rules.StyleData;
-        AddStyle(rule: any, importanceOffset?: number, mql?: ReactUnity.Styling.Rules.MediaQueryList, scope?: ReactUnity.IReactComponent): System.Tuple<ReactUnity.Styling.Rules.RuleTreeNode<ReactUnity.Styling.Rules.StyleData>, System.Collections.Generic.Dictionary<ReactUnity.Styling.IStyleProperty, any>>[];
-        AddStyle(selectorText: string, rules: System.Collections.Generic.Dictionary<ReactUnity.Styling.IStyleProperty, any>, importantRules: System.Collections.Generic.Dictionary<ReactUnity.Styling.IStyleProperty, any>, importanceOffset?: number, mql?: ReactUnity.Styling.Rules.MediaQueryList, scope?: ReactUnity.IReactComponent): System.Tuple<ReactUnity.Styling.Rules.RuleTreeNode<ReactUnity.Styling.Rules.StyleData>, System.Collections.Generic.Dictionary<ReactUnity.Styling.IStyleProperty, any>>[];
+        AddStyle(rule: any, importanceOffset?: number, mql?: ReactUnity.Styling.Rules.MediaQueryList, scope?: ReactUnity.IReactComponent, layer?: ReactUnity.Styling.Rules.CascadeLayer, container?: ReactUnity.Styling.Rules.ContainerQuery, selectorText?: string, ruleScope?: ReactUnity.Styling.Rules.RuleScope): System.Tuple<ReactUnity.Styling.Rules.RuleTreeNode<ReactUnity.Styling.Rules.StyleData>, System.Collections.Generic.Dictionary<ReactUnity.Styling.IStyleProperty, any>>[];
+        AddStyle(selectorText: string, rules: System.Collections.Generic.Dictionary<ReactUnity.Styling.IStyleProperty, any>, importantRules: System.Collections.Generic.Dictionary<ReactUnity.Styling.IStyleProperty, any>, importanceOffset?: number, mql?: ReactUnity.Styling.Rules.MediaQueryList, scope?: ReactUnity.IReactComponent, layer?: ReactUnity.Styling.Rules.CascadeLayer): System.Tuple<ReactUnity.Styling.Rules.RuleTreeNode<ReactUnity.Styling.Rules.StyleData>, System.Collections.Generic.Dictionary<ReactUnity.Styling.IStyleProperty, any>>[];
         GetMatchingRules(component: ReactUnity.IReactComponent): System.Collections.Generic.IEnumerable<ReactUnity.Styling.Rules.RuleTreeNode<ReactUnity.Styling.Rules.StyleData>>;
         GetMatchingBefore(component: ReactUnity.IReactComponent): System.Collections.Generic.IEnumerable<ReactUnity.Styling.Rules.RuleTreeNode<ReactUnity.Styling.Rules.StyleData>>;
         GetMatchingAfter(component: ReactUnity.IReactComponent): System.Collections.Generic.IEnumerable<ReactUnity.Styling.Rules.RuleTreeNode<ReactUnity.Styling.Rules.StyleData>>;
@@ -5664,8 +6248,9 @@ export declare namespace ReactUnity {
         Closest(component: ReactUnity.IReactComponent, scope?: ReactUnity.IReactComponent): ReactUnity.IReactComponent;
         GetMatchingChild(component: ReactUnity.IReactComponent, scope?: ReactUnity.IReactComponent): ReactUnity.IReactComponent;
         GetMatchingChildren(component: ReactUnity.IReactComponent, scope?: ReactUnity.IReactComponent): ReactUnity.IReactComponent[];
-        AddSelector(selectorText: string, importanceOffset?: number, mql?: ReactUnity.Styling.Rules.MediaQueryList, scope?: ReactUnity.IReactComponent): ReactUnity.Styling.Rules.RuleTreeNode<ReactUnity.Styling.Rules.StyleData>[];
-        AddChildCascading(selector: string, mq: ReactUnity.Styling.Rules.MediaQueryList, scope: ReactUnity.IReactComponent, importanceOffset?: number): ReactUnity.Styling.Rules.RuleTreeNode<ReactUnity.Styling.Rules.StyleData>;
+        AddSelector(selectorText: string, importanceOffset?: number, mql?: ReactUnity.Styling.Rules.MediaQueryList, scope?: ReactUnity.IReactComponent, layer?: ReactUnity.Styling.Rules.CascadeLayer, container?: ReactUnity.Styling.Rules.ContainerQuery, ruleScope?: ReactUnity.Styling.Rules.RuleScope): ReactUnity.Styling.Rules.RuleTreeNode<ReactUnity.Styling.Rules.StyleData>[];
+        RefreshLayers(): void;
+        AddChildCascading(selector: string, mq: ReactUnity.Styling.Rules.MediaQueryList, scope: ReactUnity.IReactComponent, importanceOffset?: number, layer?: ReactUnity.Styling.Rules.CascadeLayer): ReactUnity.Styling.Rules.RuleTreeNode<ReactUnity.Styling.Rules.StyleData>;
         Matches(component: ReactUnity.IReactComponent): boolean;
         Matches(component: ReactUnity.IReactComponent, scope: ReactUnity.IReactComponent): boolean;
         CompareTo(other: ReactUnity.Styling.Rules.RuleTreeNode<ReactUnity.Styling.Rules.StyleData>): number;
@@ -5676,8 +6261,12 @@ export declare namespace ReactUnity {
       }
       export class RuleTree<T = any> {
         constructor();
+        ContainsHasSelector: boolean;
         MediaQuery: ReactUnity.Styling.Rules.MediaQueryList;
         Scope: ReactUnity.IReactComponent;
+        Layer: ReactUnity.Styling.Rules.CascadeLayer;
+        ContainerQuery: ReactUnity.Styling.Rules.ContainerQuery;
+        RuleScope: ReactUnity.Styling.Rules.RuleScope;
         Specifity: number;
         LeafNodes: ReactUnity.Styling.Rules.RuleTreeNode<T>[];
         BeforeNodes: ReactUnity.Styling.Rules.RuleTreeNode<T>[];
@@ -5696,8 +6285,9 @@ export declare namespace ReactUnity {
         Closest(component: ReactUnity.IReactComponent, scope?: ReactUnity.IReactComponent): ReactUnity.IReactComponent;
         GetMatchingChild(component: ReactUnity.IReactComponent, scope?: ReactUnity.IReactComponent): ReactUnity.IReactComponent;
         GetMatchingChildren(component: ReactUnity.IReactComponent, scope?: ReactUnity.IReactComponent): ReactUnity.IReactComponent[];
-        AddSelector(selectorText: string, importanceOffset?: number, mql?: ReactUnity.Styling.Rules.MediaQueryList, scope?: ReactUnity.IReactComponent): ReactUnity.Styling.Rules.RuleTreeNode<T>[];
-        AddChildCascading(selector: string, mq: ReactUnity.Styling.Rules.MediaQueryList, scope: ReactUnity.IReactComponent, importanceOffset?: number): ReactUnity.Styling.Rules.RuleTreeNode<T>;
+        AddSelector(selectorText: string, importanceOffset?: number, mql?: ReactUnity.Styling.Rules.MediaQueryList, scope?: ReactUnity.IReactComponent, layer?: ReactUnity.Styling.Rules.CascadeLayer, container?: ReactUnity.Styling.Rules.ContainerQuery, ruleScope?: ReactUnity.Styling.Rules.RuleScope): ReactUnity.Styling.Rules.RuleTreeNode<T>[];
+        RefreshLayers(): void;
+        AddChildCascading(selector: string, mq: ReactUnity.Styling.Rules.MediaQueryList, scope: ReactUnity.IReactComponent, importanceOffset?: number, layer?: ReactUnity.Styling.Rules.CascadeLayer): ReactUnity.Styling.Rules.RuleTreeNode<T>;
         Matches(component: ReactUnity.IReactComponent): boolean;
         Matches(component: ReactUnity.IReactComponent, scope: ReactUnity.IReactComponent): boolean;
         CompareTo(other: ReactUnity.Styling.Rules.RuleTreeNode<T>): number;
@@ -5710,6 +6300,9 @@ export declare namespace ReactUnity {
         constructor();
         MediaQuery: ReactUnity.Styling.Rules.MediaQueryList;
         Scope: ReactUnity.IReactComponent;
+        Layer: ReactUnity.Styling.Rules.CascadeLayer;
+        ContainerQuery: ReactUnity.Styling.Rules.ContainerQuery;
+        RuleScope: ReactUnity.Styling.Rules.RuleScope;
         Specifity: number;
         Parent: ReactUnity.Styling.Rules.RuleTreeNode<T>;
         Selector: string;
@@ -5718,7 +6311,7 @@ export declare namespace ReactUnity {
         RelationType: ReactUnity.Styling.Rules.RuleRelationType;
         PseudoType: ReactUnity.Styling.Rules.RulePseudoType;
         Data: T;
-        AddChildCascading(selector: string, mq: ReactUnity.Styling.Rules.MediaQueryList, scope: ReactUnity.IReactComponent, importanceOffset?: number): ReactUnity.Styling.Rules.RuleTreeNode<T>;
+        AddChildCascading(selector: string, mq: ReactUnity.Styling.Rules.MediaQueryList, scope: ReactUnity.IReactComponent, importanceOffset?: number, layer?: ReactUnity.Styling.Rules.CascadeLayer): ReactUnity.Styling.Rules.RuleTreeNode<T>;
         Matches(component: ReactUnity.IReactComponent): boolean;
         Matches(component: ReactUnity.IReactComponent, scope: ReactUnity.IReactComponent): boolean;
         CompareTo(other: ReactUnity.Styling.Rules.RuleTreeNode<T>): number;
@@ -5762,6 +6355,11 @@ export declare namespace ReactUnity {
         Empty = 26,
         Root = 27,
         Scope = 28,
+        FirstOfType = 40,
+        LastOfType = 41,
+        NthOfType = 42,
+        NthLastOfType = 43,
+        OnlyOfType = 44,
         Blank = 30,
         Enabled = 31,
         Disabled = 32,
@@ -5784,6 +6382,8 @@ export declare namespace ReactUnity {
         After = 501,
         Important = 1000,
         Special = 1001,
+        MatchesAny = 1800,
+        Has = 1900,
         State = 2000,
       }
       export class RuleSelectorPart {
@@ -5802,15 +6402,58 @@ export declare namespace ReactUnity {
         GetType(): System.Type;
         ToString(): string;
       }
+      export class AttributeParameter {
+        constructor();
+        Value: string;
+        Operator: System.Char;
+        IgnoreCase: boolean;
+        Matches(attribute: any): boolean;
+        Equals(obj: any): boolean;
+        GetHashCode(): number;
+        GetType(): System.Type;
+        ToString(): string;
+      }
+      export class HasParameter {
+        constructor();
+        Specificity: number;
+        static Parse(text: string): ReactUnity.Styling.Rules.HasParameter;
+        Matches(anchor: ReactUnity.IReactComponent, scope: ReactUnity.IReactComponent): boolean;
+        Equals(obj: any): boolean;
+        GetHashCode(): number;
+        GetType(): System.Type;
+        ToString(): string;
+      }
+      export class SelectorListParameter {
+        constructor();
+        Specificity: number;
+        ReadsScope: boolean;
+        Valid: boolean;
+        static Parse(text: string, zeroSpecificity: boolean): ReactUnity.Styling.Rules.SelectorListParameter;
+        Matches(component: ReactUnity.IReactComponent, scope: ReactUnity.IReactComponent): boolean;
+        Equals(obj: any): boolean;
+        GetHashCode(): number;
+        GetType(): System.Type;
+        ToString(): string;
+      }
       export class NthChildParameter {
         constructor(value: string);
         A: number;
         B: number;
+        Of: ReactUnity.Styling.Rules.RuleSelectorPart[][];
+        OfSpecificity: number;
         Matches(index: number): boolean;
         Equals(obj: any): boolean;
         GetHashCode(): number;
         ToString(): string;
         GetType(): System.Type;
+      }
+      export class SupportsCondition {
+        static Evaluate(condition: string, context?: ReactUnity.ReactContext): boolean;
+        static IsSelectorSupported(selector: string, context?: ReactUnity.ReactContext): boolean;
+        Equals(obj: any): boolean;
+        GetHashCode(): number;
+        GetType(): System.Type;
+        ToString(): string;
       }
       export enum DefaultMediaProvider_PointerAccuracy {
         None = 0,
@@ -5969,6 +6612,42 @@ export declare namespace ReactUnity {
       GetType(): System.Type;
       ToString(): string;
     }
+    export enum ColorScheme {
+      Normal = 0,
+      Light = 1,
+      Dark = 2,
+      LightDark = 3,
+    }
+    export class ColorSchemeConverter {
+      constructor();
+      StringifyTyped(value: ReactUnity.Types.ColorScheme): string;
+      StringifyInternal(value: any): string;
+      CanHandleKeyword(keyword: ReactUnity.Styling.CssKeyword): boolean;
+      Convert(value: any): ReactUnity.Styling.Computed.IComputedValue;
+      Stringify(value: any): string;
+      Equals(obj: any): boolean;
+      GetHashCode(): number;
+      GetType(): System.Type;
+      ToString(): string;
+    }
+    export enum ContainerType {
+      Normal = 0,
+      Size = 1,
+      InlineSize = 2,
+      ScrollState = 4,
+    }
+    export class ContainerTypeConverter {
+      constructor();
+      StringifyTyped(value: ReactUnity.Types.ContainerType): string;
+      StringifyInternal(value: any): string;
+      CanHandleKeyword(keyword: ReactUnity.Styling.CssKeyword): boolean;
+      Convert(value: any): ReactUnity.Styling.Computed.IComputedValue;
+      Stringify(value: any): string;
+      Equals(obj: any): boolean;
+      GetHashCode(): number;
+      GetType(): System.Type;
+      ToString(): string;
+    }
     export interface ICssFourDirectional<T = any> {
       Top: T;
       Right: T;
@@ -6105,8 +6784,14 @@ export declare namespace ReactUnity {
       GetType(): System.Type;
       ToString(): string;
     }
+    export enum DisplayType {
+      Block = 0,
+      Flex = 1,
+      None = 2,
+      Contents = 3,
+    }
     export class FilterDefinition {
-      constructor(blur?: number, brightness?: number, contrast?: number, grayscale?: number, hueRotate?: number, invert?: number, opacity?: number, saturate?: number, grain?: number, pixelate?: number, sepia?: number);
+      constructor(blur?: number, brightness?: number, contrast?: number, grayscale?: number, hueRotate?: number, invert?: number, opacity?: number, saturate?: number, grain?: number, pixelate?: number, sepia?: number, grainPhase?: number, posterize?: number, scanlineIntensity?: number, scanlinePeriod?: number, scanlinePhase?: number, tint?: UnityEngine.Color | undefined, chromaticAberration?: number, dropShadowColor?: UnityEngine.Color | undefined, dropShadowOffset?: UnityEngine.Vector2 | undefined, dropShadowBlur?: number);
       Blur: number;
       Brightness: number;
       Contrast: number;
@@ -6118,7 +6803,18 @@ export declare namespace ReactUnity {
       Grain: number;
       Pixelate: number;
       Sepia: number;
+      GrainPhase: number;
+      Posterize: number;
+      ScanlineIntensity: number;
+      ScanlinePeriod: number;
+      ScanlinePhase: number;
+      Tint: UnityEngine.Color;
+      ChromaticAberration: number;
+      DropShadowColor: UnityEngine.Color;
+      DropShadowOffset: UnityEngine.Vector2;
+      DropShadowBlur: number;
       static Default: ReactUnity.Types.FilterDefinition;
+      static DefaultScanlinePeriod: number;
       Interpolate(to: any, t: number): any;
       Equals(obj: any): boolean;
       GetHashCode(): number;
@@ -6311,6 +7007,23 @@ export declare namespace ReactUnity {
       Vertical = 2,
       Both = 3,
     }
+    export enum ScrollbarGutter {
+      Auto = 0,
+      Stable = 1,
+      StableBothEdges = 2,
+    }
+    export class ScrollbarGutterConverter {
+      constructor();
+      StringifyTyped(value: ReactUnity.Types.ScrollbarGutter): string;
+      StringifyInternal(value: any): string;
+      CanHandleKeyword(keyword: ReactUnity.Styling.CssKeyword): boolean;
+      Convert(value: any): ReactUnity.Styling.Computed.IComputedValue;
+      Stringify(value: any): string;
+      Equals(obj: any): boolean;
+      GetHashCode(): number;
+      GetType(): System.Type;
+      ToString(): string;
+    }
     export class SpriteReference {
       constructor(type: ReactUnity.Types.AssetReferenceType, value: any);
       constructor(url: ReactUnity.Types.Url);
@@ -6393,6 +7106,22 @@ export declare namespace ReactUnity {
       static None: ReactUnity.Types.VideoReference;
       Get(context: ReactUnity.ReactContext, callback: ((obj: ReactUnity.Types.VideoComponentSource) => void)): void;
       Dispose(): void;
+      Equals(obj: any): boolean;
+      GetHashCode(): number;
+      GetType(): System.Type;
+      ToString(): string;
+    }
+    export enum WhiteSpace {
+      Normal = 0,
+      NoWrap = 1,
+      Pre = 2,
+      PreWrap = 3,
+      PreLine = 4,
+      BreakSpaces = 5,
+    }
+    export class WhiteSpaceExtensions {
+      static Wraps(value: ReactUnity.Types.WhiteSpace): boolean;
+      static PreservesWhitespace(value: ReactUnity.Types.WhiteSpace): boolean;
       Equals(obj: any): boolean;
       GetHashCode(): number;
       GetType(): System.Type;
@@ -6652,6 +7381,7 @@ export declare namespace ReactUnity {
       Component: ReactUnity.UGUI.Behaviours.ReactElement;
       BorderAndBackground: ReactUnity.UGUI.Internal.BorderAndBackground;
       OverflowMask: ReactUnity.UGUI.Internal.MaskAndImage;
+      ElementFilter: ReactUnity.UGUI.Internal.ElementFilter;
       Selectable: UnityEngine.UI.Selectable;
       CanvasGroup: UnityEngine.CanvasGroup;
       Canvas: UnityEngine.Canvas;
@@ -6698,6 +7428,7 @@ export declare namespace ReactUnity {
       ScrollTop: number;
       ScrollWidth: number;
       ScrollHeight: number;
+      IsScrollContainer: boolean;
       SetProperty(propertyName: string, value: any): void;
       Activate(): void;
       OpenUrl(target?: string): void;
@@ -6750,6 +7481,7 @@ export declare namespace ReactUnity {
       Component: ReactUnity.UGUI.Behaviours.ReactElement;
       BorderAndBackground: ReactUnity.UGUI.Internal.BorderAndBackground;
       OverflowMask: ReactUnity.UGUI.Internal.MaskAndImage;
+      ElementFilter: ReactUnity.UGUI.Internal.ElementFilter;
       Selectable: UnityEngine.UI.Selectable;
       CanvasGroup: UnityEngine.CanvasGroup;
       Canvas: UnityEngine.Canvas;
@@ -6796,6 +7528,7 @@ export declare namespace ReactUnity {
       ScrollTop: number;
       ScrollWidth: number;
       ScrollHeight: number;
+      IsScrollContainer: boolean;
       SetProperty(propertyName: string, value: any): void;
       Pool(): boolean;
       Revive(): boolean;
@@ -6850,6 +7583,7 @@ export declare namespace ReactUnity {
       Component: ReactUnity.UGUI.Behaviours.ReactElement;
       BorderAndBackground: ReactUnity.UGUI.Internal.BorderAndBackground;
       OverflowMask: ReactUnity.UGUI.Internal.MaskAndImage;
+      ElementFilter: ReactUnity.UGUI.Internal.ElementFilter;
       Selectable: UnityEngine.UI.Selectable;
       CanvasGroup: UnityEngine.CanvasGroup;
       Canvas: UnityEngine.Canvas;
@@ -6896,6 +7630,7 @@ export declare namespace ReactUnity {
       ScrollTop: number;
       ScrollWidth: number;
       ScrollHeight: number;
+      IsScrollContainer: boolean;
       SetProperty(propertyName: string, value: any): void;
       SetDimensions(width: number, height: number): void;
       Pool(): boolean;
@@ -6952,6 +7687,7 @@ export declare namespace ReactUnity {
       Component: ReactUnity.UGUI.Behaviours.ReactElement;
       BorderAndBackground: ReactUnity.UGUI.Internal.BorderAndBackground;
       OverflowMask: ReactUnity.UGUI.Internal.MaskAndImage;
+      ElementFilter: ReactUnity.UGUI.Internal.ElementFilter;
       Selectable: UnityEngine.UI.Selectable;
       CanvasGroup: UnityEngine.CanvasGroup;
       Canvas: UnityEngine.Canvas;
@@ -6998,6 +7734,7 @@ export declare namespace ReactUnity {
       ScrollTop: number;
       ScrollWidth: number;
       ScrollHeight: number;
+      IsScrollContainer: boolean;
       SetText(text: string): void;
       SetProperty(property: string, value: any): void;
       GetLinkInfo(eventData: UnityEngine.EventSystems.PointerEventData): string;
@@ -7050,6 +7787,7 @@ export declare namespace ReactUnity {
       Component: ReactUnity.UGUI.Behaviours.ReactElement;
       BorderAndBackground: ReactUnity.UGUI.Internal.BorderAndBackground;
       OverflowMask: ReactUnity.UGUI.Internal.MaskAndImage;
+      ElementFilter: ReactUnity.UGUI.Internal.ElementFilter;
       Selectable: UnityEngine.UI.Selectable;
       CanvasGroup: UnityEngine.CanvasGroup;
       Canvas: UnityEngine.Canvas;
@@ -7096,6 +7834,7 @@ export declare namespace ReactUnity {
       ScrollTop: number;
       ScrollWidth: number;
       ScrollHeight: number;
+      IsScrollContainer: boolean;
       AddEventListener(eventName: string, callback: ReactUnity.Helpers.Callback): (() => void);
       SetProperty(propertyName: string, value: any): void;
       Activate(): void;
@@ -7145,6 +7884,7 @@ export declare namespace ReactUnity {
       Component: ReactUnity.UGUI.Behaviours.ReactElement;
       BorderAndBackground: ReactUnity.UGUI.Internal.BorderAndBackground;
       OverflowMask: ReactUnity.UGUI.Internal.MaskAndImage;
+      ElementFilter: ReactUnity.UGUI.Internal.ElementFilter;
       Selectable: UnityEngine.UI.Selectable;
       CanvasGroup: UnityEngine.CanvasGroup;
       Canvas: UnityEngine.Canvas;
@@ -7191,6 +7931,7 @@ export declare namespace ReactUnity {
       ScrollTop: number;
       ScrollWidth: number;
       ScrollHeight: number;
+      IsScrollContainer: boolean;
       Revive(): boolean;
       Pool(): boolean;
       AddEventListener(eventName: string, fun: ReactUnity.Helpers.Callback): (() => void);
@@ -7242,6 +7983,7 @@ export declare namespace ReactUnity {
       Component: ReactUnity.UGUI.Behaviours.ReactElement;
       BorderAndBackground: ReactUnity.UGUI.Internal.BorderAndBackground;
       OverflowMask: ReactUnity.UGUI.Internal.MaskAndImage;
+      ElementFilter: ReactUnity.UGUI.Internal.ElementFilter;
       Selectable: UnityEngine.UI.Selectable;
       CanvasGroup: UnityEngine.CanvasGroup;
       Canvas: UnityEngine.Canvas;
@@ -7288,6 +8030,7 @@ export declare namespace ReactUnity {
       ScrollTop: number;
       ScrollWidth: number;
       ScrollHeight: number;
+      IsScrollContainer: boolean;
       Pool(): boolean;
       Revive(): boolean;
       AddEventListener(eventName: string, fun: ReactUnity.Helpers.Callback): (() => void);
@@ -7342,6 +8085,7 @@ export declare namespace ReactUnity {
       Component: ReactUnity.UGUI.Behaviours.ReactElement;
       BorderAndBackground: ReactUnity.UGUI.Internal.BorderAndBackground;
       OverflowMask: ReactUnity.UGUI.Internal.MaskAndImage;
+      ElementFilter: ReactUnity.UGUI.Internal.ElementFilter;
       Selectable: UnityEngine.UI.Selectable;
       CanvasGroup: UnityEngine.CanvasGroup;
       Canvas: UnityEngine.Canvas;
@@ -7388,6 +8132,7 @@ export declare namespace ReactUnity {
       ScrollTop: number;
       ScrollWidth: number;
       ScrollHeight: number;
+      IsScrollContainer: boolean;
       ApplyText(text: string): void;
       SetText(text: string): void;
       ApplySet(value: any): void;
@@ -7442,6 +8187,7 @@ export declare namespace ReactUnity {
       Component: ReactUnity.UGUI.Behaviours.ReactElement;
       BorderAndBackground: ReactUnity.UGUI.Internal.BorderAndBackground;
       OverflowMask: ReactUnity.UGUI.Internal.MaskAndImage;
+      ElementFilter: ReactUnity.UGUI.Internal.ElementFilter;
       Selectable: UnityEngine.UI.Selectable;
       CanvasGroup: UnityEngine.CanvasGroup;
       Canvas: UnityEngine.Canvas;
@@ -7488,6 +8234,7 @@ export declare namespace ReactUnity {
       ScrollTop: number;
       ScrollWidth: number;
       ScrollHeight: number;
+      IsScrollContainer: boolean;
       SetProperty(propertyName: string, value: any): void;
       Pool(): boolean;
       Revive(): boolean;
@@ -7540,12 +8287,14 @@ export declare namespace ReactUnity {
       TextViewport: ReactUnity.UGUI.ContainerComponent;
       TextComponent: ReactUnity.UGUI.TextComponent;
       PlaceholderComponent: ReactUnity.UGUI.TextComponent;
+      SelectionComponent: ReactUnity.UGUI.SelectionComponent;
       VerticalScrollbar: ReactUnity.UGUI.ScrollbarComponent;
       GameObject: UnityEngine.GameObject;
       RectTransform: UnityEngine.RectTransform;
       Component: ReactUnity.UGUI.Behaviours.ReactElement;
       BorderAndBackground: ReactUnity.UGUI.Internal.BorderAndBackground;
       OverflowMask: ReactUnity.UGUI.Internal.MaskAndImage;
+      ElementFilter: ReactUnity.UGUI.Internal.ElementFilter;
       Selectable: UnityEngine.UI.Selectable;
       CanvasGroup: UnityEngine.CanvasGroup;
       Canvas: UnityEngine.Canvas;
@@ -7592,6 +8341,7 @@ export declare namespace ReactUnity {
       ScrollTop: number;
       ScrollWidth: number;
       ScrollHeight: number;
+      IsScrollContainer: boolean;
       SetText(text: string): void;
       Focus(): void;
       Activate(): void;
@@ -7643,6 +8393,7 @@ export declare namespace ReactUnity {
       Component: ReactUnity.UGUI.Behaviours.ReactElement;
       BorderAndBackground: ReactUnity.UGUI.Internal.BorderAndBackground;
       OverflowMask: ReactUnity.UGUI.Internal.MaskAndImage;
+      ElementFilter: ReactUnity.UGUI.Internal.ElementFilter;
       Selectable: UnityEngine.UI.Selectable;
       CanvasGroup: UnityEngine.CanvasGroup;
       Canvas: UnityEngine.Canvas;
@@ -7689,6 +8440,7 @@ export declare namespace ReactUnity {
       ScrollTop: number;
       ScrollWidth: number;
       ScrollHeight: number;
+      IsScrollContainer: boolean;
       SetProperty(propertyName: string, value: any): void;
       Activate(): boolean;
       Revive(): boolean;
@@ -7744,6 +8496,7 @@ export declare namespace ReactUnity {
       Component: ReactUnity.UGUI.Behaviours.ReactElement;
       BorderAndBackground: ReactUnity.UGUI.Internal.BorderAndBackground;
       OverflowMask: ReactUnity.UGUI.Internal.MaskAndImage;
+      ElementFilter: ReactUnity.UGUI.Internal.ElementFilter;
       Selectable: UnityEngine.UI.Selectable;
       CanvasGroup: UnityEngine.CanvasGroup;
       Canvas: UnityEngine.Canvas;
@@ -7790,6 +8543,7 @@ export declare namespace ReactUnity {
       ScrollTop: number;
       ScrollWidth: number;
       ScrollHeight: number;
+      IsScrollContainer: boolean;
       Update(): void;
       SetProperty(propertyName: string, value: any): void;
       SetDimensions(width: number, height: number): void;
@@ -7842,6 +8596,7 @@ export declare namespace ReactUnity {
       Component: ReactUnity.UGUI.Behaviours.ReactElement;
       BorderAndBackground: ReactUnity.UGUI.Internal.BorderAndBackground;
       OverflowMask: ReactUnity.UGUI.Internal.MaskAndImage;
+      ElementFilter: ReactUnity.UGUI.Internal.ElementFilter;
       Selectable: UnityEngine.UI.Selectable;
       CanvasGroup: UnityEngine.CanvasGroup;
       Canvas: UnityEngine.Canvas;
@@ -7888,6 +8643,7 @@ export declare namespace ReactUnity {
       ScrollTop: number;
       ScrollWidth: number;
       ScrollHeight: number;
+      IsScrollContainer: boolean;
       SetParent(newParent: ReactUnity.IContainerComponent, relativeTo?: ReactUnity.IReactComponent, insertAfter?: boolean): void;
       SetProperty(propertyName: string, value: any): void;
       Pool(): boolean;
@@ -7939,6 +8695,7 @@ export declare namespace ReactUnity {
       Component: ReactUnity.UGUI.Behaviours.ReactElement;
       BorderAndBackground: ReactUnity.UGUI.Internal.BorderAndBackground;
       OverflowMask: ReactUnity.UGUI.Internal.MaskAndImage;
+      ElementFilter: ReactUnity.UGUI.Internal.ElementFilter;
       Selectable: UnityEngine.UI.Selectable;
       CanvasGroup: UnityEngine.CanvasGroup;
       Canvas: UnityEngine.Canvas;
@@ -7985,6 +8742,7 @@ export declare namespace ReactUnity {
       ScrollTop: number;
       ScrollWidth: number;
       ScrollHeight: number;
+      IsScrollContainer: boolean;
       SetProperty(propertyName: string, value: any): void;
       SetCustomProperty(propertyName: string, value: any): void;
       AddEventListener(eventName: string, callback: ReactUnity.Helpers.Callback): (() => void);
@@ -8036,6 +8794,7 @@ export declare namespace ReactUnity {
       Component: ReactUnity.UGUI.Behaviours.ReactElement;
       BorderAndBackground: ReactUnity.UGUI.Internal.BorderAndBackground;
       OverflowMask: ReactUnity.UGUI.Internal.MaskAndImage;
+      ElementFilter: ReactUnity.UGUI.Internal.ElementFilter;
       Selectable: UnityEngine.UI.Selectable;
       CanvasGroup: UnityEngine.CanvasGroup;
       Canvas: UnityEngine.Canvas;
@@ -8082,6 +8841,7 @@ export declare namespace ReactUnity {
       ScrollTop: number;
       ScrollWidth: number;
       ScrollHeight: number;
+      IsScrollContainer: boolean;
       SetProperty(propertyName: string, value: any): void;
       Pool(): boolean;
       Revive(): boolean;
@@ -8136,6 +8896,7 @@ export declare namespace ReactUnity {
       Component: ReactUnity.UGUI.Behaviours.ReactElement;
       BorderAndBackground: ReactUnity.UGUI.Internal.BorderAndBackground;
       OverflowMask: ReactUnity.UGUI.Internal.MaskAndImage;
+      ElementFilter: ReactUnity.UGUI.Internal.ElementFilter;
       Selectable: UnityEngine.UI.Selectable;
       CanvasGroup: UnityEngine.CanvasGroup;
       Canvas: UnityEngine.Canvas;
@@ -8182,6 +8943,7 @@ export declare namespace ReactUnity {
       ScrollTop: number;
       ScrollWidth: number;
       ScrollHeight: number;
+      IsScrollContainer: boolean;
       SetProperty(propertyName: string, value: any): void;
       SetDimensions(width: number, height: number): void;
       Pool(): boolean;
@@ -8224,198 +8986,6 @@ export declare namespace ReactUnity {
       GetType(): System.Type;
       ToString(): string;
     }
-    export class ScrollbarComponent {
-      constructor(context: ReactUnity.UGUI.UGUIContext, tag?: string);
-      Horizontal: boolean;
-      Inverted: boolean;
-      Scrollbar: UnityEngine.UI.Scrollbar;
-      Thumb: ReactUnity.UGUI.ScrollbarThumbComponent;
-      GameObject: UnityEngine.GameObject;
-      RectTransform: UnityEngine.RectTransform;
-      Component: ReactUnity.UGUI.Behaviours.ReactElement;
-      BorderAndBackground: ReactUnity.UGUI.Internal.BorderAndBackground;
-      OverflowMask: ReactUnity.UGUI.Internal.MaskAndImage;
-      Selectable: UnityEngine.UI.Selectable;
-      CanvasGroup: UnityEngine.CanvasGroup;
-      Canvas: UnityEngine.Canvas;
-      Container: UnityEngine.RectTransform;
-      ClientWidth: number;
-      ClientHeight: number;
-      EventViewport: UnityEngine.RectTransform;
-      ResolvedEventViewport: UnityEngine.RectTransform;
-      Context: ReactUnity.UGUI.UGUIContext;
-      Parent: ReactUnity.IContainerComponent;
-      Data: ReactUnity.Reactive.ReactiveObjectRecord;
-      Layout: Yoga.YogaNode;
-      ComputedStyle: ReactUnity.Styling.NodeStyle;
-      StyleState: ReactUnity.Styling.StyleState;
-      StateStyles: ReactUnity.Styling.StateStyles;
-      Style: InlineStyleRemap;
-      InlineStylesheet: ReactUnity.Styling.StyleSheet;
-      CustomProperties: Record<string, any>;
-      RevertCalculator: ReactUnity.Styling.IRevertCalculator;
-      ParentIndex: number;
-      CurrentOrder: number;
-      Entering: boolean;
-      Leaving: boolean;
-      UpdatedThisFrame: boolean;
-      Destroyed: boolean;
-      Tag: string;
-      TextContent: string;
-      PoolStack: System.Collections.Generic.Stack<ReactUnity.IPoolableComponent>;
-      IsPseudoElement: boolean;
-      ResolvedName: string;
-      ClassName: string;
-      ClassList: ReactUnity.Helpers.ClassList;
-      Id: string;
-      Name: string;
-      RefId: number;
-      InstanceId: number;
-      IsContainer: boolean;
-      Children: ReactUnity.IReactComponent[];
-      BeforeRules: ReactUnity.Styling.Rules.RuleTreeNode<ReactUnity.Styling.Rules.StyleData>[];
-      AfterRules: ReactUnity.Styling.Rules.RuleTreeNode<ReactUnity.Styling.Rules.StyleData>[];
-      BeforePseudo: ReactUnity.IReactComponent;
-      AfterPseudo: ReactUnity.IReactComponent;
-      ScrollLeft: number;
-      ScrollTop: number;
-      ScrollWidth: number;
-      ScrollHeight: number;
-      SetProperty(propertyName: string, value: any): void;
-      SetParent(newParent: ReactUnity.IContainerComponent, relativeTo?: ReactUnity.IReactComponent, insertAfter?: boolean): void;
-      Revive(): boolean;
-      Pool(): boolean;
-      AddEventListener(eventName: string, fun: ReactUnity.Helpers.Callback): (() => void);
-      UpdateBackgroundGraphic(updateLayout: boolean, updateStyle: boolean): ReactUnity.UGUI.Internal.BorderAndBackground;
-      GetRelativePosition(x: number, y: number): UnityEngine.Vector2;
-      GetBoundingClientRect(): UnityEngine.Rect;
-      GetComponent(type: System.Type): any;
-      AddComponent(type: System.Type): any;
-      UpdateOrder(prev: number, current: number): boolean;
-      Update(): void;
-      MarkForStyleResolving(recursive: boolean): void;
-      Remove(): void;
-      Destroy(recursive?: boolean): void;
-      OnClassChange(): void;
-      SetEventListener(eventName: string, fun: ReactUnity.Helpers.Callback): void;
-      FireEvent(eventName: string, arg: any): void;
-      SetData(propertyName: string, value: any): void;
-      SetCustomProperty(propertyName: string, value: any): void;
-      ResolveStyle(recursive?: boolean): void;
-      MarkForStyleResolvingWithSiblings(recursive: boolean): void;
-      ApplyStyles(): void;
-      ApplyLayoutStyles(): void;
-      Matches(query: string): boolean;
-      Closest(query: string): ReactUnity.IReactComponent;
-      QuerySelector(query: string): ReactUnity.IReactComponent;
-      QuerySelectorAll(query: string): ReactUnity.IReactComponent[];
-      Accept(visitor: ReactUnity.Helpers.Visitors.ReactComponentVisitor, skipSelf?: boolean): void;
-      AddBefore(): void;
-      RemoveBefore(): void;
-      AddAfter(): void;
-      RemoveAfter(): void;
-      RegisterChild(child: ReactUnity.IReactComponent, index?: number): void;
-      UnregisterChild(child: ReactUnity.IReactComponent): void;
-      Clear(): void;
-      Equals(obj: any): boolean;
-      GetHashCode(): number;
-      GetType(): System.Type;
-      ToString(): string;
-    }
-    export class ScrollbarThumbComponent {
-      constructor(context: ReactUnity.UGUI.UGUIContext);
-      GameObject: UnityEngine.GameObject;
-      RectTransform: UnityEngine.RectTransform;
-      Component: ReactUnity.UGUI.Behaviours.ReactElement;
-      BorderAndBackground: ReactUnity.UGUI.Internal.BorderAndBackground;
-      OverflowMask: ReactUnity.UGUI.Internal.MaskAndImage;
-      Selectable: UnityEngine.UI.Selectable;
-      CanvasGroup: UnityEngine.CanvasGroup;
-      Canvas: UnityEngine.Canvas;
-      Container: UnityEngine.RectTransform;
-      ClientWidth: number;
-      ClientHeight: number;
-      EventViewport: UnityEngine.RectTransform;
-      ResolvedEventViewport: UnityEngine.RectTransform;
-      Context: ReactUnity.UGUI.UGUIContext;
-      Parent: ReactUnity.IContainerComponent;
-      Data: ReactUnity.Reactive.ReactiveObjectRecord;
-      Layout: Yoga.YogaNode;
-      ComputedStyle: ReactUnity.Styling.NodeStyle;
-      StyleState: ReactUnity.Styling.StyleState;
-      StateStyles: ReactUnity.Styling.StateStyles;
-      Style: InlineStyleRemap;
-      InlineStylesheet: ReactUnity.Styling.StyleSheet;
-      CustomProperties: Record<string, any>;
-      RevertCalculator: ReactUnity.Styling.IRevertCalculator;
-      ParentIndex: number;
-      CurrentOrder: number;
-      Entering: boolean;
-      Leaving: boolean;
-      UpdatedThisFrame: boolean;
-      Destroyed: boolean;
-      Tag: string;
-      TextContent: string;
-      PoolStack: System.Collections.Generic.Stack<ReactUnity.IPoolableComponent>;
-      IsPseudoElement: boolean;
-      ResolvedName: string;
-      ClassName: string;
-      ClassList: ReactUnity.Helpers.ClassList;
-      Id: string;
-      Name: string;
-      RefId: number;
-      InstanceId: number;
-      IsContainer: boolean;
-      Children: ReactUnity.IReactComponent[];
-      BeforeRules: ReactUnity.Styling.Rules.RuleTreeNode<ReactUnity.Styling.Rules.StyleData>[];
-      AfterRules: ReactUnity.Styling.Rules.RuleTreeNode<ReactUnity.Styling.Rules.StyleData>[];
-      BeforePseudo: ReactUnity.IReactComponent;
-      AfterPseudo: ReactUnity.IReactComponent;
-      ScrollLeft: number;
-      ScrollTop: number;
-      ScrollWidth: number;
-      ScrollHeight: number;
-      SetParent(newParent: ReactUnity.IContainerComponent, relativeTo?: ReactUnity.IReactComponent, insertAfter?: boolean): void;
-      Revive(): boolean;
-      Pool(): boolean;
-      AddEventListener(eventName: string, fun: ReactUnity.Helpers.Callback): (() => void);
-      SetProperty(propertyName: string, value: any): void;
-      UpdateBackgroundGraphic(updateLayout: boolean, updateStyle: boolean): ReactUnity.UGUI.Internal.BorderAndBackground;
-      GetRelativePosition(x: number, y: number): UnityEngine.Vector2;
-      GetBoundingClientRect(): UnityEngine.Rect;
-      GetComponent(type: System.Type): any;
-      AddComponent(type: System.Type): any;
-      UpdateOrder(prev: number, current: number): boolean;
-      Update(): void;
-      MarkForStyleResolving(recursive: boolean): void;
-      Remove(): void;
-      Destroy(recursive?: boolean): void;
-      OnClassChange(): void;
-      SetEventListener(eventName: string, fun: ReactUnity.Helpers.Callback): void;
-      FireEvent(eventName: string, arg: any): void;
-      SetData(propertyName: string, value: any): void;
-      SetCustomProperty(propertyName: string, value: any): void;
-      ResolveStyle(recursive?: boolean): void;
-      MarkForStyleResolvingWithSiblings(recursive: boolean): void;
-      ApplyStyles(): void;
-      ApplyLayoutStyles(): void;
-      Matches(query: string): boolean;
-      Closest(query: string): ReactUnity.IReactComponent;
-      QuerySelector(query: string): ReactUnity.IReactComponent;
-      QuerySelectorAll(query: string): ReactUnity.IReactComponent[];
-      Accept(visitor: ReactUnity.Helpers.Visitors.ReactComponentVisitor, skipSelf?: boolean): void;
-      AddBefore(): void;
-      RemoveBefore(): void;
-      AddAfter(): void;
-      RemoveAfter(): void;
-      RegisterChild(child: ReactUnity.IReactComponent, index?: number): void;
-      UnregisterChild(child: ReactUnity.IReactComponent): void;
-      Clear(): void;
-      Equals(obj: any): boolean;
-      GetHashCode(): number;
-      GetType(): System.Type;
-      ToString(): string;
-    }
     export class ScrollComponent {
       constructor(ctx: ReactUnity.UGUI.UGUIContext);
       ScrollRect: ReactUnity.UGUI.Behaviours.SmoothScrollRect;
@@ -8424,13 +8994,16 @@ export declare namespace ReactUnity {
       VerticalScrollbar: ReactUnity.UGUI.ScrollbarComponent;
       ScrollWidth: number;
       ScrollHeight: number;
+      IsScrollContainer: boolean;
       ScrollLeft: number;
       ScrollTop: number;
+      Gutter: UnityEngine.Vector4;
       GameObject: UnityEngine.GameObject;
       RectTransform: UnityEngine.RectTransform;
       Component: ReactUnity.UGUI.Behaviours.ReactElement;
       BorderAndBackground: ReactUnity.UGUI.Internal.BorderAndBackground;
       OverflowMask: ReactUnity.UGUI.Internal.MaskAndImage;
+      ElementFilter: ReactUnity.UGUI.Internal.ElementFilter;
       Selectable: UnityEngine.UI.Selectable;
       CanvasGroup: UnityEngine.CanvasGroup;
       Canvas: UnityEngine.Canvas;
@@ -8516,19 +9089,20 @@ export declare namespace ReactUnity {
       GetType(): System.Type;
       ToString(): string;
     }
-    export class SvgComponent {
+    export class ScrollbarComponent {
       constructor(context: ReactUnity.UGUI.UGUIContext, tag?: string);
-      Content: string;
-      InnerContent: string;
-      ResolvedContent: string;
-      Image: any; // Unity.VectorGraphics.SVGImage
-      Replaced: ReactUnity.UGUI.BaseImageComponent_ReplacedImageHelper;
-      Source: any; // System.Object
+      Horizontal: boolean;
+      Inverted: boolean;
+      Scrollbar: UnityEngine.UI.Scrollbar;
+      Thumb: ReactUnity.UGUI.ScrollbarThumbComponent;
+      Thickness: number;
+      AtStart: boolean;
       GameObject: UnityEngine.GameObject;
       RectTransform: UnityEngine.RectTransform;
       Component: ReactUnity.UGUI.Behaviours.ReactElement;
       BorderAndBackground: ReactUnity.UGUI.Internal.BorderAndBackground;
       OverflowMask: ReactUnity.UGUI.Internal.MaskAndImage;
+      ElementFilter: ReactUnity.UGUI.Internal.ElementFilter;
       Selectable: UnityEngine.UI.Selectable;
       CanvasGroup: UnityEngine.CanvasGroup;
       Canvas: UnityEngine.Canvas;
@@ -8575,6 +9149,301 @@ export declare namespace ReactUnity {
       ScrollTop: number;
       ScrollWidth: number;
       ScrollHeight: number;
+      IsScrollContainer: boolean;
+      SetProperty(propertyName: string, value: any): void;
+      SetParent(newParent: ReactUnity.IContainerComponent, relativeTo?: ReactUnity.IReactComponent, insertAfter?: boolean): void;
+      Revive(): boolean;
+      Pool(): boolean;
+      AddEventListener(eventName: string, fun: ReactUnity.Helpers.Callback): (() => void);
+      UpdateBackgroundGraphic(updateLayout: boolean, updateStyle: boolean): ReactUnity.UGUI.Internal.BorderAndBackground;
+      GetRelativePosition(x: number, y: number): UnityEngine.Vector2;
+      GetBoundingClientRect(): UnityEngine.Rect;
+      GetComponent(type: System.Type): any;
+      AddComponent(type: System.Type): any;
+      UpdateOrder(prev: number, current: number): boolean;
+      Update(): void;
+      MarkForStyleResolving(recursive: boolean): void;
+      Remove(): void;
+      Destroy(recursive?: boolean): void;
+      OnClassChange(): void;
+      SetEventListener(eventName: string, fun: ReactUnity.Helpers.Callback): void;
+      FireEvent(eventName: string, arg: any): void;
+      SetData(propertyName: string, value: any): void;
+      SetCustomProperty(propertyName: string, value: any): void;
+      ResolveStyle(recursive?: boolean): void;
+      MarkForStyleResolvingWithSiblings(recursive: boolean): void;
+      ApplyStyles(): void;
+      ApplyLayoutStyles(): void;
+      Matches(query: string): boolean;
+      Closest(query: string): ReactUnity.IReactComponent;
+      QuerySelector(query: string): ReactUnity.IReactComponent;
+      QuerySelectorAll(query: string): ReactUnity.IReactComponent[];
+      Accept(visitor: ReactUnity.Helpers.Visitors.ReactComponentVisitor, skipSelf?: boolean): void;
+      AddBefore(): void;
+      RemoveBefore(): void;
+      AddAfter(): void;
+      RemoveAfter(): void;
+      RegisterChild(child: ReactUnity.IReactComponent, index?: number): void;
+      UnregisterChild(child: ReactUnity.IReactComponent): void;
+      Clear(): void;
+      Equals(obj: any): boolean;
+      GetHashCode(): number;
+      GetType(): System.Type;
+      ToString(): string;
+    }
+    export class ScrollbarThumbComponent {
+      constructor(context: ReactUnity.UGUI.UGUIContext);
+      GameObject: UnityEngine.GameObject;
+      RectTransform: UnityEngine.RectTransform;
+      Component: ReactUnity.UGUI.Behaviours.ReactElement;
+      BorderAndBackground: ReactUnity.UGUI.Internal.BorderAndBackground;
+      OverflowMask: ReactUnity.UGUI.Internal.MaskAndImage;
+      ElementFilter: ReactUnity.UGUI.Internal.ElementFilter;
+      Selectable: UnityEngine.UI.Selectable;
+      CanvasGroup: UnityEngine.CanvasGroup;
+      Canvas: UnityEngine.Canvas;
+      Container: UnityEngine.RectTransform;
+      ClientWidth: number;
+      ClientHeight: number;
+      EventViewport: UnityEngine.RectTransform;
+      ResolvedEventViewport: UnityEngine.RectTransform;
+      Context: ReactUnity.UGUI.UGUIContext;
+      Parent: ReactUnity.IContainerComponent;
+      Data: ReactUnity.Reactive.ReactiveObjectRecord;
+      Layout: Yoga.YogaNode;
+      ComputedStyle: ReactUnity.Styling.NodeStyle;
+      StyleState: ReactUnity.Styling.StyleState;
+      StateStyles: ReactUnity.Styling.StateStyles;
+      Style: InlineStyleRemap;
+      InlineStylesheet: ReactUnity.Styling.StyleSheet;
+      CustomProperties: Record<string, any>;
+      RevertCalculator: ReactUnity.Styling.IRevertCalculator;
+      ParentIndex: number;
+      CurrentOrder: number;
+      Entering: boolean;
+      Leaving: boolean;
+      UpdatedThisFrame: boolean;
+      Destroyed: boolean;
+      Tag: string;
+      TextContent: string;
+      PoolStack: System.Collections.Generic.Stack<ReactUnity.IPoolableComponent>;
+      IsPseudoElement: boolean;
+      ResolvedName: string;
+      ClassName: string;
+      ClassList: ReactUnity.Helpers.ClassList;
+      Id: string;
+      Name: string;
+      RefId: number;
+      InstanceId: number;
+      IsContainer: boolean;
+      Children: ReactUnity.IReactComponent[];
+      BeforeRules: ReactUnity.Styling.Rules.RuleTreeNode<ReactUnity.Styling.Rules.StyleData>[];
+      AfterRules: ReactUnity.Styling.Rules.RuleTreeNode<ReactUnity.Styling.Rules.StyleData>[];
+      BeforePseudo: ReactUnity.IReactComponent;
+      AfterPseudo: ReactUnity.IReactComponent;
+      ScrollLeft: number;
+      ScrollTop: number;
+      ScrollWidth: number;
+      ScrollHeight: number;
+      IsScrollContainer: boolean;
+      SetParent(newParent: ReactUnity.IContainerComponent, relativeTo?: ReactUnity.IReactComponent, insertAfter?: boolean): void;
+      Revive(): boolean;
+      Pool(): boolean;
+      AddEventListener(eventName: string, fun: ReactUnity.Helpers.Callback): (() => void);
+      SetProperty(propertyName: string, value: any): void;
+      UpdateBackgroundGraphic(updateLayout: boolean, updateStyle: boolean): ReactUnity.UGUI.Internal.BorderAndBackground;
+      GetRelativePosition(x: number, y: number): UnityEngine.Vector2;
+      GetBoundingClientRect(): UnityEngine.Rect;
+      GetComponent(type: System.Type): any;
+      AddComponent(type: System.Type): any;
+      UpdateOrder(prev: number, current: number): boolean;
+      Update(): void;
+      MarkForStyleResolving(recursive: boolean): void;
+      Remove(): void;
+      Destroy(recursive?: boolean): void;
+      OnClassChange(): void;
+      SetEventListener(eventName: string, fun: ReactUnity.Helpers.Callback): void;
+      FireEvent(eventName: string, arg: any): void;
+      SetData(propertyName: string, value: any): void;
+      SetCustomProperty(propertyName: string, value: any): void;
+      ResolveStyle(recursive?: boolean): void;
+      MarkForStyleResolvingWithSiblings(recursive: boolean): void;
+      ApplyStyles(): void;
+      ApplyLayoutStyles(): void;
+      Matches(query: string): boolean;
+      Closest(query: string): ReactUnity.IReactComponent;
+      QuerySelector(query: string): ReactUnity.IReactComponent;
+      QuerySelectorAll(query: string): ReactUnity.IReactComponent[];
+      Accept(visitor: ReactUnity.Helpers.Visitors.ReactComponentVisitor, skipSelf?: boolean): void;
+      AddBefore(): void;
+      RemoveBefore(): void;
+      AddAfter(): void;
+      RemoveAfter(): void;
+      RegisterChild(child: ReactUnity.IReactComponent, index?: number): void;
+      UnregisterChild(child: ReactUnity.IReactComponent): void;
+      Clear(): void;
+      Equals(obj: any): boolean;
+      GetHashCode(): number;
+      GetType(): System.Type;
+      ToString(): string;
+    }
+    export class SelectionComponent {
+      constructor(context: ReactUnity.UGUI.UGUIContext);
+      GameObject: UnityEngine.GameObject;
+      RectTransform: UnityEngine.RectTransform;
+      Component: ReactUnity.UGUI.Behaviours.ReactElement;
+      BorderAndBackground: ReactUnity.UGUI.Internal.BorderAndBackground;
+      OverflowMask: ReactUnity.UGUI.Internal.MaskAndImage;
+      ElementFilter: ReactUnity.UGUI.Internal.ElementFilter;
+      Selectable: UnityEngine.UI.Selectable;
+      CanvasGroup: UnityEngine.CanvasGroup;
+      Canvas: UnityEngine.Canvas;
+      Container: UnityEngine.RectTransform;
+      ClientWidth: number;
+      ClientHeight: number;
+      EventViewport: UnityEngine.RectTransform;
+      ResolvedEventViewport: UnityEngine.RectTransform;
+      Context: ReactUnity.UGUI.UGUIContext;
+      Parent: ReactUnity.IContainerComponent;
+      Data: ReactUnity.Reactive.ReactiveObjectRecord;
+      Layout: Yoga.YogaNode;
+      ComputedStyle: ReactUnity.Styling.NodeStyle;
+      StyleState: ReactUnity.Styling.StyleState;
+      StateStyles: ReactUnity.Styling.StateStyles;
+      Style: InlineStyleRemap;
+      InlineStylesheet: ReactUnity.Styling.StyleSheet;
+      CustomProperties: Record<string, any>;
+      RevertCalculator: ReactUnity.Styling.IRevertCalculator;
+      ParentIndex: number;
+      CurrentOrder: number;
+      Entering: boolean;
+      Leaving: boolean;
+      UpdatedThisFrame: boolean;
+      Destroyed: boolean;
+      Tag: string;
+      TextContent: string;
+      PoolStack: System.Collections.Generic.Stack<ReactUnity.IPoolableComponent>;
+      IsPseudoElement: boolean;
+      ResolvedName: string;
+      ClassName: string;
+      ClassList: ReactUnity.Helpers.ClassList;
+      Id: string;
+      Name: string;
+      RefId: number;
+      InstanceId: number;
+      IsContainer: boolean;
+      Children: ReactUnity.IReactComponent[];
+      BeforeRules: ReactUnity.Styling.Rules.RuleTreeNode<ReactUnity.Styling.Rules.StyleData>[];
+      AfterRules: ReactUnity.Styling.Rules.RuleTreeNode<ReactUnity.Styling.Rules.StyleData>[];
+      BeforePseudo: ReactUnity.IReactComponent;
+      AfterPseudo: ReactUnity.IReactComponent;
+      ScrollLeft: number;
+      ScrollTop: number;
+      ScrollWidth: number;
+      ScrollHeight: number;
+      IsScrollContainer: boolean;
+      UpdateBackgroundGraphic(updateLayout: boolean, updateStyle: boolean): ReactUnity.UGUI.Internal.BorderAndBackground;
+      Revive(): boolean;
+      Pool(): boolean;
+      AddEventListener(eventName: string, fun: ReactUnity.Helpers.Callback): (() => void);
+      SetProperty(propertyName: string, value: any): void;
+      GetRelativePosition(x: number, y: number): UnityEngine.Vector2;
+      GetBoundingClientRect(): UnityEngine.Rect;
+      GetComponent(type: System.Type): any;
+      AddComponent(type: System.Type): any;
+      UpdateOrder(prev: number, current: number): boolean;
+      Update(): void;
+      MarkForStyleResolving(recursive: boolean): void;
+      Remove(): void;
+      Destroy(recursive?: boolean): void;
+      OnClassChange(): void;
+      SetParent(newParent: ReactUnity.IContainerComponent, relativeTo?: ReactUnity.IReactComponent, insertAfter?: boolean): void;
+      SetEventListener(eventName: string, fun: ReactUnity.Helpers.Callback): void;
+      FireEvent(eventName: string, arg: any): void;
+      SetData(propertyName: string, value: any): void;
+      SetCustomProperty(propertyName: string, value: any): void;
+      ResolveStyle(recursive?: boolean): void;
+      MarkForStyleResolvingWithSiblings(recursive: boolean): void;
+      ApplyStyles(): void;
+      ApplyLayoutStyles(): void;
+      Matches(query: string): boolean;
+      Closest(query: string): ReactUnity.IReactComponent;
+      QuerySelector(query: string): ReactUnity.IReactComponent;
+      QuerySelectorAll(query: string): ReactUnity.IReactComponent[];
+      Accept(visitor: ReactUnity.Helpers.Visitors.ReactComponentVisitor, skipSelf?: boolean): void;
+      AddBefore(): void;
+      RemoveBefore(): void;
+      AddAfter(): void;
+      RemoveAfter(): void;
+      RegisterChild(child: ReactUnity.IReactComponent, index?: number): void;
+      UnregisterChild(child: ReactUnity.IReactComponent): void;
+      Clear(): void;
+      Equals(obj: any): boolean;
+      GetHashCode(): number;
+      GetType(): System.Type;
+      ToString(): string;
+    }
+    export class SvgComponent {
+      constructor(context: ReactUnity.UGUI.UGUIContext, tag?: string);
+      Content: string;
+      InnerContent: string;
+      ResolvedContent: string;
+      Image: any; // Unity.VectorGraphics.SVGImage
+      Replaced: ReactUnity.UGUI.BaseImageComponent_ReplacedImageHelper;
+      Source: any; // System.Object
+      GameObject: UnityEngine.GameObject;
+      RectTransform: UnityEngine.RectTransform;
+      Component: ReactUnity.UGUI.Behaviours.ReactElement;
+      BorderAndBackground: ReactUnity.UGUI.Internal.BorderAndBackground;
+      OverflowMask: ReactUnity.UGUI.Internal.MaskAndImage;
+      ElementFilter: ReactUnity.UGUI.Internal.ElementFilter;
+      Selectable: UnityEngine.UI.Selectable;
+      CanvasGroup: UnityEngine.CanvasGroup;
+      Canvas: UnityEngine.Canvas;
+      Container: UnityEngine.RectTransform;
+      ClientWidth: number;
+      ClientHeight: number;
+      EventViewport: UnityEngine.RectTransform;
+      ResolvedEventViewport: UnityEngine.RectTransform;
+      Context: ReactUnity.UGUI.UGUIContext;
+      Parent: ReactUnity.IContainerComponent;
+      Data: ReactUnity.Reactive.ReactiveObjectRecord;
+      Layout: Yoga.YogaNode;
+      ComputedStyle: ReactUnity.Styling.NodeStyle;
+      StyleState: ReactUnity.Styling.StyleState;
+      StateStyles: ReactUnity.Styling.StateStyles;
+      Style: InlineStyleRemap;
+      InlineStylesheet: ReactUnity.Styling.StyleSheet;
+      CustomProperties: Record<string, any>;
+      RevertCalculator: ReactUnity.Styling.IRevertCalculator;
+      ParentIndex: number;
+      CurrentOrder: number;
+      Entering: boolean;
+      Leaving: boolean;
+      UpdatedThisFrame: boolean;
+      Destroyed: boolean;
+      Tag: string;
+      TextContent: string;
+      PoolStack: System.Collections.Generic.Stack<ReactUnity.IPoolableComponent>;
+      IsPseudoElement: boolean;
+      ResolvedName: string;
+      ClassName: string;
+      ClassList: ReactUnity.Helpers.ClassList;
+      Id: string;
+      Name: string;
+      RefId: number;
+      InstanceId: number;
+      IsContainer: boolean;
+      Children: ReactUnity.IReactComponent[];
+      BeforeRules: ReactUnity.Styling.Rules.RuleTreeNode<ReactUnity.Styling.Rules.StyleData>[];
+      AfterRules: ReactUnity.Styling.Rules.RuleTreeNode<ReactUnity.Styling.Rules.StyleData>[];
+      BeforePseudo: ReactUnity.IReactComponent;
+      AfterPseudo: ReactUnity.IReactComponent;
+      ScrollLeft: number;
+      ScrollTop: number;
+      ScrollWidth: number;
+      ScrollHeight: number;
+      IsScrollContainer: boolean;
       SetProperty(propertyName: string, value: any): void;
       Update(): void;
       Pool(): boolean;
@@ -8626,6 +9495,7 @@ export declare namespace ReactUnity {
       Component: ReactUnity.UGUI.Behaviours.ReactElement;
       BorderAndBackground: ReactUnity.UGUI.Internal.BorderAndBackground;
       OverflowMask: ReactUnity.UGUI.Internal.MaskAndImage;
+      ElementFilter: ReactUnity.UGUI.Internal.ElementFilter;
       Selectable: UnityEngine.UI.Selectable;
       CanvasGroup: UnityEngine.CanvasGroup;
       Canvas: UnityEngine.Canvas;
@@ -8672,6 +9542,7 @@ export declare namespace ReactUnity {
       ScrollTop: number;
       ScrollWidth: number;
       ScrollHeight: number;
+      IsScrollContainer: boolean;
       SetProperty(propertyName: string, value: any): void;
       Pool(): boolean;
       Revive(): boolean;
@@ -8728,6 +9599,7 @@ export declare namespace ReactUnity {
       Component: ReactUnity.UGUI.Behaviours.ReactElement;
       BorderAndBackground: ReactUnity.UGUI.Internal.BorderAndBackground;
       OverflowMask: ReactUnity.UGUI.Internal.MaskAndImage;
+      ElementFilter: ReactUnity.UGUI.Internal.ElementFilter;
       Selectable: UnityEngine.UI.Selectable;
       CanvasGroup: UnityEngine.CanvasGroup;
       Canvas: UnityEngine.Canvas;
@@ -8774,6 +9646,7 @@ export declare namespace ReactUnity {
       ScrollTop: number;
       ScrollWidth: number;
       ScrollHeight: number;
+      IsScrollContainer: boolean;
       SetText(text: string): void;
       SetProperty(property: string, value: any): void;
       GetLinkInfo(eventData: UnityEngine.EventSystems.PointerEventData): string;
@@ -8831,6 +9704,7 @@ export declare namespace ReactUnity {
       Component: ReactUnity.UGUI.Behaviours.ReactElement;
       BorderAndBackground: ReactUnity.UGUI.Internal.BorderAndBackground;
       OverflowMask: ReactUnity.UGUI.Internal.MaskAndImage;
+      ElementFilter: ReactUnity.UGUI.Internal.ElementFilter;
       Selectable: UnityEngine.UI.Selectable;
       CanvasGroup: UnityEngine.CanvasGroup;
       Canvas: UnityEngine.Canvas;
@@ -8877,6 +9751,7 @@ export declare namespace ReactUnity {
       ScrollTop: number;
       ScrollWidth: number;
       ScrollHeight: number;
+      IsScrollContainer: boolean;
       SetText(text: string): void;
       SetProperty(property: string, value: any): void;
       GetLinkInfo(eventData: UnityEngine.EventSystems.PointerEventData): string;
@@ -8932,6 +9807,7 @@ export declare namespace ReactUnity {
       Component: ReactUnity.UGUI.Behaviours.ReactElement;
       BorderAndBackground: ReactUnity.UGUI.Internal.BorderAndBackground;
       OverflowMask: ReactUnity.UGUI.Internal.MaskAndImage;
+      ElementFilter: ReactUnity.UGUI.Internal.ElementFilter;
       Selectable: UnityEngine.UI.Selectable;
       CanvasGroup: UnityEngine.CanvasGroup;
       Canvas: UnityEngine.Canvas;
@@ -8978,6 +9854,7 @@ export declare namespace ReactUnity {
       ScrollTop: number;
       ScrollWidth: number;
       ScrollHeight: number;
+      IsScrollContainer: boolean;
       Focus(): void;
       AddEventListener(eventName: string, callback: ReactUnity.Helpers.Callback): (() => void);
       SetProperty(propertyName: string, value: any): void;
@@ -9027,6 +9904,7 @@ export declare namespace ReactUnity {
       Component: ReactUnity.UGUI.Behaviours.ReactElement;
       BorderAndBackground: ReactUnity.UGUI.Internal.BorderAndBackground;
       OverflowMask: ReactUnity.UGUI.Internal.MaskAndImage;
+      ElementFilter: ReactUnity.UGUI.Internal.ElementFilter;
       Selectable: UnityEngine.UI.Selectable;
       CanvasGroup: UnityEngine.CanvasGroup;
       Canvas: UnityEngine.Canvas;
@@ -9073,6 +9951,7 @@ export declare namespace ReactUnity {
       ScrollTop: number;
       ScrollWidth: number;
       ScrollHeight: number;
+      IsScrollContainer: boolean;
       Revive(): boolean;
       Pool(): boolean;
       AddEventListener(eventName: string, fun: ReactUnity.Helpers.Callback): (() => void);
@@ -9127,6 +10006,7 @@ export declare namespace ReactUnity {
       Component: ReactUnity.UGUI.Behaviours.ReactElement;
       BorderAndBackground: ReactUnity.UGUI.Internal.BorderAndBackground;
       OverflowMask: ReactUnity.UGUI.Internal.MaskAndImage;
+      ElementFilter: ReactUnity.UGUI.Internal.ElementFilter;
       Selectable: UnityEngine.UI.Selectable;
       CanvasGroup: UnityEngine.CanvasGroup;
       Canvas: UnityEngine.Canvas;
@@ -9173,6 +10053,7 @@ export declare namespace ReactUnity {
       ScrollTop: number;
       ScrollWidth: number;
       ScrollHeight: number;
+      IsScrollContainer: boolean;
       VideoPlayer: UnityEngine.Video.VideoPlayer;
       SetProperty(propertyName: string, value: any): void;
       SetDimensions(width: number, height: number): void;
@@ -9241,21 +10122,9 @@ export declare namespace ReactUnity {
       enabled: boolean;
       isActiveAndEnabled: boolean;
       transform: UnityEngine.Transform;
+      transformHandle: UnityEngine.TransformHandle;
       gameObject: UnityEngine.GameObject;
       tag: string;
-      rigidbody: UnityEngine.Component;
-      rigidbody2D: UnityEngine.Component;
-      camera: UnityEngine.Component;
-      light: UnityEngine.Component;
-      animation: UnityEngine.Component;
-      constantForce: UnityEngine.Component;
-      renderer: UnityEngine.Component;
-      audio: UnityEngine.Component;
-      networkView: UnityEngine.Component;
-      collider: UnityEngine.Component;
-      collider2D: UnityEngine.Component;
-      hingeJoint: UnityEngine.Component;
-      particleSystem: UnityEngine.Component;
       name: string;
       hideFlags: UnityEngine.HideFlags;
       CursorSet: ReactUnity.Styling.CursorSet;
@@ -9306,6 +10175,7 @@ export declare namespace ReactUnity {
       BroadcastMessage(methodName: string, parameter: any): void;
       BroadcastMessage(methodName: string): void;
       BroadcastMessage(methodName: string, options: UnityEngine.SendMessageOptions): void;
+      GetEntityId(): UnityEngine.EntityId;
       GetInstanceID(): number;
       GetHashCode(): number;
       Equals(other: any): boolean;
@@ -9320,6 +10190,8 @@ export declare namespace ReactUnity {
       static GetStyleLengthTriple(style: ReactUnity.Styling.NodeStyle, prop: ReactUnity.Styling.StyleProperty, prop2: ReactUnity.Styling.StyleProperty, prop3: ReactUnity.Styling.StyleProperty): Yoga.YogaValue;
       static GetPointValue(val: Yoga.YogaValue, fullSize: number): number;
       static GetScreenClientRect(transform: UnityEngine.RectTransform): UnityEngine.Rect;
+      static RotationOf(cssEuler: UnityEngine.Vector3): UnityEngine.Quaternion;
+      static DisplayOf(display: ReactUnity.Types.DisplayType): Yoga.YogaDisplay;
       Equals(obj: any): boolean;
       GetHashCode(): number;
       GetType(): System.Type;
@@ -9334,6 +10206,7 @@ export declare namespace ReactUnity {
       CursorSet: ReactUnity.Styling.CursorSet;
       PoolRoot: UnityEngine.RectTransform;
       OffscreenRoot: UnityEngine.RectTransform;
+      FilterRoot: UnityEngine.Transform;
       RootCanvas: UnityEngine.Canvas;
       CalculatesLayout: boolean;
       Host: ReactUnity.IHostComponent;
@@ -9440,21 +10313,9 @@ export declare namespace ReactUnity {
         enabled: boolean;
         isActiveAndEnabled: boolean;
         transform: UnityEngine.Transform;
+        transformHandle: UnityEngine.TransformHandle;
         gameObject: UnityEngine.GameObject;
         tag: string;
-        rigidbody: UnityEngine.Component;
-        rigidbody2D: UnityEngine.Component;
-        camera: UnityEngine.Component;
-        light: UnityEngine.Component;
-        animation: UnityEngine.Component;
-        constantForce: UnityEngine.Component;
-        renderer: UnityEngine.Component;
-        audio: UnityEngine.Component;
-        networkView: UnityEngine.Component;
-        collider: UnityEngine.Component;
-        collider2D: UnityEngine.Component;
-        hingeJoint: UnityEngine.Component;
-        particleSystem: UnityEngine.Component;
         name: string;
         hideFlags: UnityEngine.HideFlags;
         EventViewport: UnityEngine.RectTransform;
@@ -9503,6 +10364,7 @@ export declare namespace ReactUnity {
         BroadcastMessage(methodName: string, parameter: any): void;
         BroadcastMessage(methodName: string): void;
         BroadcastMessage(methodName: string, options: UnityEngine.SendMessageOptions): void;
+        GetEntityId(): UnityEngine.EntityId;
         GetInstanceID(): number;
         GetHashCode(): number;
         Equals(other: any): boolean;
@@ -9520,21 +10382,9 @@ export declare namespace ReactUnity {
         enabled: boolean;
         isActiveAndEnabled: boolean;
         transform: UnityEngine.Transform;
+        transformHandle: UnityEngine.TransformHandle;
         gameObject: UnityEngine.GameObject;
         tag: string;
-        rigidbody: UnityEngine.Component;
-        rigidbody2D: UnityEngine.Component;
-        camera: UnityEngine.Component;
-        light: UnityEngine.Component;
-        animation: UnityEngine.Component;
-        constantForce: UnityEngine.Component;
-        renderer: UnityEngine.Component;
-        audio: UnityEngine.Component;
-        networkView: UnityEngine.Component;
-        collider: UnityEngine.Component;
-        collider2D: UnityEngine.Component;
-        hingeJoint: UnityEngine.Component;
-        particleSystem: UnityEngine.Component;
         name: string;
         hideFlags: UnityEngine.HideFlags;
         IsInvoking(): boolean;
@@ -9578,6 +10428,7 @@ export declare namespace ReactUnity {
         BroadcastMessage(methodName: string, parameter: any): void;
         BroadcastMessage(methodName: string): void;
         BroadcastMessage(methodName: string, options: UnityEngine.SendMessageOptions): void;
+        GetEntityId(): UnityEngine.EntityId;
         GetInstanceID(): number;
         GetHashCode(): number;
         Equals(other: any): boolean;
@@ -9594,21 +10445,9 @@ export declare namespace ReactUnity {
         enabled: boolean;
         isActiveAndEnabled: boolean;
         transform: UnityEngine.Transform;
+        transformHandle: UnityEngine.TransformHandle;
         gameObject: UnityEngine.GameObject;
         tag: string;
-        rigidbody: UnityEngine.Component;
-        rigidbody2D: UnityEngine.Component;
-        camera: UnityEngine.Component;
-        light: UnityEngine.Component;
-        animation: UnityEngine.Component;
-        constantForce: UnityEngine.Component;
-        renderer: UnityEngine.Component;
-        audio: UnityEngine.Component;
-        networkView: UnityEngine.Component;
-        collider: UnityEngine.Component;
-        collider2D: UnityEngine.Component;
-        hingeJoint: UnityEngine.Component;
-        particleSystem: UnityEngine.Component;
         name: string;
         hideFlags: UnityEngine.HideFlags;
         MountedTo: ReactUnity.UGUI.PrefabComponent;
@@ -9661,6 +10500,7 @@ export declare namespace ReactUnity {
         BroadcastMessage(methodName: string, parameter: any): void;
         BroadcastMessage(methodName: string): void;
         BroadcastMessage(methodName: string, options: UnityEngine.SendMessageOptions): void;
+        GetEntityId(): UnityEngine.EntityId;
         GetInstanceID(): number;
         GetHashCode(): number;
         Equals(other: any): boolean;
@@ -9689,21 +10529,9 @@ export declare namespace ReactUnity {
         enabled: boolean;
         isActiveAndEnabled: boolean;
         transform: UnityEngine.Transform;
+        transformHandle: UnityEngine.TransformHandle;
         gameObject: UnityEngine.GameObject;
         tag: string;
-        rigidbody: UnityEngine.Component;
-        rigidbody2D: UnityEngine.Component;
-        camera: UnityEngine.Component;
-        light: UnityEngine.Component;
-        animation: UnityEngine.Component;
-        constantForce: UnityEngine.Component;
-        renderer: UnityEngine.Component;
-        audio: UnityEngine.Component;
-        networkView: UnityEngine.Component;
-        collider: UnityEngine.Component;
-        collider2D: UnityEngine.Component;
-        hingeJoint: UnityEngine.Component;
-        particleSystem: UnityEngine.Component;
         name: string;
         hideFlags: UnityEngine.HideFlags;
         IsInvoking(): boolean;
@@ -9747,6 +10575,7 @@ export declare namespace ReactUnity {
         BroadcastMessage(methodName: string, parameter: any): void;
         BroadcastMessage(methodName: string): void;
         BroadcastMessage(methodName: string, options: UnityEngine.SendMessageOptions): void;
+        GetEntityId(): UnityEngine.EntityId;
         GetInstanceID(): number;
         GetHashCode(): number;
         Equals(other: any): boolean;
@@ -9766,21 +10595,9 @@ export declare namespace ReactUnity {
         enabled: boolean;
         isActiveAndEnabled: boolean;
         transform: UnityEngine.Transform;
+        transformHandle: UnityEngine.TransformHandle;
         gameObject: UnityEngine.GameObject;
         tag: string;
-        rigidbody: UnityEngine.Component;
-        rigidbody2D: UnityEngine.Component;
-        camera: UnityEngine.Component;
-        light: UnityEngine.Component;
-        animation: UnityEngine.Component;
-        constantForce: UnityEngine.Component;
-        renderer: UnityEngine.Component;
-        audio: UnityEngine.Component;
-        networkView: UnityEngine.Component;
-        collider: UnityEngine.Component;
-        collider2D: UnityEngine.Component;
-        hingeJoint: UnityEngine.Component;
-        particleSystem: UnityEngine.Component;
         name: string;
         hideFlags: UnityEngine.HideFlags;
         IsInvoking(): boolean;
@@ -9824,6 +10641,7 @@ export declare namespace ReactUnity {
         BroadcastMessage(methodName: string, parameter: any): void;
         BroadcastMessage(methodName: string): void;
         BroadcastMessage(methodName: string, options: UnityEngine.SendMessageOptions): void;
+        GetEntityId(): UnityEngine.EntityId;
         GetInstanceID(): number;
         GetHashCode(): number;
         Equals(other: any): boolean;
@@ -9840,21 +10658,9 @@ export declare namespace ReactUnity {
         enabled: boolean;
         isActiveAndEnabled: boolean;
         transform: UnityEngine.Transform;
+        transformHandle: UnityEngine.TransformHandle;
         gameObject: UnityEngine.GameObject;
         tag: string;
-        rigidbody: UnityEngine.Component;
-        rigidbody2D: UnityEngine.Component;
-        camera: UnityEngine.Component;
-        light: UnityEngine.Component;
-        animation: UnityEngine.Component;
-        constantForce: UnityEngine.Component;
-        renderer: UnityEngine.Component;
-        audio: UnityEngine.Component;
-        networkView: UnityEngine.Component;
-        collider: UnityEngine.Component;
-        collider2D: UnityEngine.Component;
-        hingeJoint: UnityEngine.Component;
-        particleSystem: UnityEngine.Component;
         name: string;
         hideFlags: UnityEngine.HideFlags;
         Layout: Yoga.YogaNode;
@@ -9901,6 +10707,7 @@ export declare namespace ReactUnity {
         BroadcastMessage(methodName: string, parameter: any): void;
         BroadcastMessage(methodName: string): void;
         BroadcastMessage(methodName: string, options: UnityEngine.SendMessageOptions): void;
+        GetEntityId(): UnityEngine.EntityId;
         GetInstanceID(): number;
         GetHashCode(): number;
         Equals(other: any): boolean;
@@ -9910,6 +10717,7 @@ export declare namespace ReactUnity {
       export class ScrollContentResizer {
         constructor();
         Layout: Yoga.YogaNode;
+        Gutter: UnityEngine.Vector2;
         Direction: ReactUnity.Types.ScrollDirection;
         destroyCancellationToken: System.Threading.CancellationToken;
         useGUILayout: boolean;
@@ -9919,21 +10727,9 @@ export declare namespace ReactUnity {
         enabled: boolean;
         isActiveAndEnabled: boolean;
         transform: UnityEngine.Transform;
+        transformHandle: UnityEngine.TransformHandle;
         gameObject: UnityEngine.GameObject;
         tag: string;
-        rigidbody: UnityEngine.Component;
-        rigidbody2D: UnityEngine.Component;
-        camera: UnityEngine.Component;
-        light: UnityEngine.Component;
-        animation: UnityEngine.Component;
-        constantForce: UnityEngine.Component;
-        renderer: UnityEngine.Component;
-        audio: UnityEngine.Component;
-        networkView: UnityEngine.Component;
-        collider: UnityEngine.Component;
-        collider2D: UnityEngine.Component;
-        hingeJoint: UnityEngine.Component;
-        particleSystem: UnityEngine.Component;
         name: string;
         hideFlags: UnityEngine.HideFlags;
         RecalculateSize(): void;
@@ -9978,6 +10774,7 @@ export declare namespace ReactUnity {
         BroadcastMessage(methodName: string, parameter: any): void;
         BroadcastMessage(methodName: string): void;
         BroadcastMessage(methodName: string, options: UnityEngine.SendMessageOptions): void;
+        GetEntityId(): UnityEngine.EntityId;
         GetInstanceID(): number;
         GetHashCode(): number;
         Equals(other: any): boolean;
@@ -9995,21 +10792,9 @@ export declare namespace ReactUnity {
         enabled: boolean;
         isActiveAndEnabled: boolean;
         transform: UnityEngine.Transform;
+        transformHandle: UnityEngine.TransformHandle;
         gameObject: UnityEngine.GameObject;
         tag: string;
-        rigidbody: UnityEngine.Component;
-        rigidbody2D: UnityEngine.Component;
-        camera: UnityEngine.Component;
-        light: UnityEngine.Component;
-        animation: UnityEngine.Component;
-        constantForce: UnityEngine.Component;
-        renderer: UnityEngine.Component;
-        audio: UnityEngine.Component;
-        networkView: UnityEngine.Component;
-        collider: UnityEngine.Component;
-        collider2D: UnityEngine.Component;
-        hingeJoint: UnityEngine.Component;
-        particleSystem: UnityEngine.Component;
         name: string;
         hideFlags: UnityEngine.HideFlags;
         Bubble: boolean;
@@ -10060,6 +10845,7 @@ export declare namespace ReactUnity {
         BroadcastMessage(methodName: string, parameter: any): void;
         BroadcastMessage(methodName: string): void;
         BroadcastMessage(methodName: string, options: UnityEngine.SendMessageOptions): void;
+        GetEntityId(): UnityEngine.EntityId;
         GetInstanceID(): number;
         GetHashCode(): number;
         Equals(other: any): boolean;
@@ -10097,9 +10883,11 @@ export declare namespace ReactUnity {
         horizontalNormalizedPosition: number;
         verticalNormalizedPosition: number;
         minWidth: number;
+        maxWidth: number;
         preferredWidth: number;
         flexibleWidth: number;
         minHeight: number;
+        maxHeight: number;
         preferredHeight: number;
         flexibleHeight: number;
         layoutPriority: number;
@@ -10111,21 +10899,9 @@ export declare namespace ReactUnity {
         enabled: boolean;
         isActiveAndEnabled: boolean;
         transform: UnityEngine.Transform;
+        transformHandle: UnityEngine.TransformHandle;
         gameObject: UnityEngine.GameObject;
         tag: string;
-        rigidbody: UnityEngine.Component;
-        rigidbody2D: UnityEngine.Component;
-        camera: UnityEngine.Component;
-        light: UnityEngine.Component;
-        animation: UnityEngine.Component;
-        constantForce: UnityEngine.Component;
-        renderer: UnityEngine.Component;
-        audio: UnityEngine.Component;
-        networkView: UnityEngine.Component;
-        collider: UnityEngine.Component;
-        collider2D: UnityEngine.Component;
-        hingeJoint: UnityEngine.Component;
-        particleSystem: UnityEngine.Component;
         name: string;
         hideFlags: UnityEngine.HideFlags;
         OnScroll(data: UnityEngine.EventSystems.PointerEventData): void;
@@ -10186,6 +10962,7 @@ export declare namespace ReactUnity {
         BroadcastMessage(methodName: string, parameter: any): void;
         BroadcastMessage(methodName: string): void;
         BroadcastMessage(methodName: string, options: UnityEngine.SendMessageOptions): void;
+        GetEntityId(): UnityEngine.EntityId;
         GetInstanceID(): number;
         GetHashCode(): number;
         Equals(other: any): boolean;
@@ -10220,21 +10997,9 @@ export declare namespace ReactUnity {
         enabled: boolean;
         isActiveAndEnabled: boolean;
         transform: UnityEngine.Transform;
+        transformHandle: UnityEngine.TransformHandle;
         gameObject: UnityEngine.GameObject;
         tag: string;
-        rigidbody: UnityEngine.Component;
-        rigidbody2D: UnityEngine.Component;
-        camera: UnityEngine.Component;
-        light: UnityEngine.Component;
-        animation: UnityEngine.Component;
-        constantForce: UnityEngine.Component;
-        renderer: UnityEngine.Component;
-        audio: UnityEngine.Component;
-        networkView: UnityEngine.Component;
-        collider: UnityEngine.Component;
-        collider2D: UnityEngine.Component;
-        hingeJoint: UnityEngine.Component;
-        particleSystem: UnityEngine.Component;
         name: string;
         hideFlags: UnityEngine.HideFlags;
         OnBeginDrag(eventData: UnityEngine.EventSystems.PointerEventData): void;
@@ -10280,6 +11045,7 @@ export declare namespace ReactUnity {
         BroadcastMessage(methodName: string, parameter: any): void;
         BroadcastMessage(methodName: string): void;
         BroadcastMessage(methodName: string, options: UnityEngine.SendMessageOptions): void;
+        GetEntityId(): UnityEngine.EntityId;
         GetInstanceID(): number;
         GetHashCode(): number;
         Equals(other: any): boolean;
@@ -10296,21 +11062,9 @@ export declare namespace ReactUnity {
         enabled: boolean;
         isActiveAndEnabled: boolean;
         transform: UnityEngine.Transform;
+        transformHandle: UnityEngine.TransformHandle;
         gameObject: UnityEngine.GameObject;
         tag: string;
-        rigidbody: UnityEngine.Component;
-        rigidbody2D: UnityEngine.Component;
-        camera: UnityEngine.Component;
-        light: UnityEngine.Component;
-        animation: UnityEngine.Component;
-        constantForce: UnityEngine.Component;
-        renderer: UnityEngine.Component;
-        audio: UnityEngine.Component;
-        networkView: UnityEngine.Component;
-        collider: UnityEngine.Component;
-        collider2D: UnityEngine.Component;
-        hingeJoint: UnityEngine.Component;
-        particleSystem: UnityEngine.Component;
         name: string;
         hideFlags: UnityEngine.HideFlags;
         OnCancel(eventData: UnityEngine.EventSystems.BaseEventData): void;
@@ -10356,6 +11110,7 @@ export declare namespace ReactUnity {
         BroadcastMessage(methodName: string, parameter: any): void;
         BroadcastMessage(methodName: string): void;
         BroadcastMessage(methodName: string, options: UnityEngine.SendMessageOptions): void;
+        GetEntityId(): UnityEngine.EntityId;
         GetInstanceID(): number;
         GetHashCode(): number;
         Equals(other: any): boolean;
@@ -10372,21 +11127,9 @@ export declare namespace ReactUnity {
         enabled: boolean;
         isActiveAndEnabled: boolean;
         transform: UnityEngine.Transform;
+        transformHandle: UnityEngine.TransformHandle;
         gameObject: UnityEngine.GameObject;
         tag: string;
-        rigidbody: UnityEngine.Component;
-        rigidbody2D: UnityEngine.Component;
-        camera: UnityEngine.Component;
-        light: UnityEngine.Component;
-        animation: UnityEngine.Component;
-        constantForce: UnityEngine.Component;
-        renderer: UnityEngine.Component;
-        audio: UnityEngine.Component;
-        networkView: UnityEngine.Component;
-        collider: UnityEngine.Component;
-        collider2D: UnityEngine.Component;
-        hingeJoint: UnityEngine.Component;
-        particleSystem: UnityEngine.Component;
         name: string;
         hideFlags: UnityEngine.HideFlags;
         OnPointerClick(eventData: UnityEngine.EventSystems.PointerEventData): void;
@@ -10432,6 +11175,7 @@ export declare namespace ReactUnity {
         BroadcastMessage(methodName: string, parameter: any): void;
         BroadcastMessage(methodName: string): void;
         BroadcastMessage(methodName: string, options: UnityEngine.SendMessageOptions): void;
+        GetEntityId(): UnityEngine.EntityId;
         GetInstanceID(): number;
         GetHashCode(): number;
         Equals(other: any): boolean;
@@ -10448,21 +11192,9 @@ export declare namespace ReactUnity {
         enabled: boolean;
         isActiveAndEnabled: boolean;
         transform: UnityEngine.Transform;
+        transformHandle: UnityEngine.TransformHandle;
         gameObject: UnityEngine.GameObject;
         tag: string;
-        rigidbody: UnityEngine.Component;
-        rigidbody2D: UnityEngine.Component;
-        camera: UnityEngine.Component;
-        light: UnityEngine.Component;
-        animation: UnityEngine.Component;
-        constantForce: UnityEngine.Component;
-        renderer: UnityEngine.Component;
-        audio: UnityEngine.Component;
-        networkView: UnityEngine.Component;
-        collider: UnityEngine.Component;
-        collider2D: UnityEngine.Component;
-        hingeJoint: UnityEngine.Component;
-        particleSystem: UnityEngine.Component;
         name: string;
         hideFlags: UnityEngine.HideFlags;
         OnDeselect(eventData: UnityEngine.EventSystems.BaseEventData): void;
@@ -10508,6 +11240,7 @@ export declare namespace ReactUnity {
         BroadcastMessage(methodName: string, parameter: any): void;
         BroadcastMessage(methodName: string): void;
         BroadcastMessage(methodName: string, options: UnityEngine.SendMessageOptions): void;
+        GetEntityId(): UnityEngine.EntityId;
         GetInstanceID(): number;
         GetHashCode(): number;
         Equals(other: any): boolean;
@@ -10524,21 +11257,9 @@ export declare namespace ReactUnity {
         enabled: boolean;
         isActiveAndEnabled: boolean;
         transform: UnityEngine.Transform;
+        transformHandle: UnityEngine.TransformHandle;
         gameObject: UnityEngine.GameObject;
         tag: string;
-        rigidbody: UnityEngine.Component;
-        rigidbody2D: UnityEngine.Component;
-        camera: UnityEngine.Component;
-        light: UnityEngine.Component;
-        animation: UnityEngine.Component;
-        constantForce: UnityEngine.Component;
-        renderer: UnityEngine.Component;
-        audio: UnityEngine.Component;
-        networkView: UnityEngine.Component;
-        collider: UnityEngine.Component;
-        collider2D: UnityEngine.Component;
-        hingeJoint: UnityEngine.Component;
-        particleSystem: UnityEngine.Component;
         name: string;
         hideFlags: UnityEngine.HideFlags;
         OnPointerClick(eventData: UnityEngine.EventSystems.PointerEventData): void;
@@ -10584,6 +11305,7 @@ export declare namespace ReactUnity {
         BroadcastMessage(methodName: string, parameter: any): void;
         BroadcastMessage(methodName: string): void;
         BroadcastMessage(methodName: string, options: UnityEngine.SendMessageOptions): void;
+        GetEntityId(): UnityEngine.EntityId;
         GetInstanceID(): number;
         GetHashCode(): number;
         Equals(other: any): boolean;
@@ -10600,21 +11322,9 @@ export declare namespace ReactUnity {
         enabled: boolean;
         isActiveAndEnabled: boolean;
         transform: UnityEngine.Transform;
+        transformHandle: UnityEngine.TransformHandle;
         gameObject: UnityEngine.GameObject;
         tag: string;
-        rigidbody: UnityEngine.Component;
-        rigidbody2D: UnityEngine.Component;
-        camera: UnityEngine.Component;
-        light: UnityEngine.Component;
-        animation: UnityEngine.Component;
-        constantForce: UnityEngine.Component;
-        renderer: UnityEngine.Component;
-        audio: UnityEngine.Component;
-        networkView: UnityEngine.Component;
-        collider: UnityEngine.Component;
-        collider2D: UnityEngine.Component;
-        hingeJoint: UnityEngine.Component;
-        particleSystem: UnityEngine.Component;
         name: string;
         hideFlags: UnityEngine.HideFlags;
         OnDrag(eventData: UnityEngine.EventSystems.PointerEventData): void;
@@ -10660,6 +11370,7 @@ export declare namespace ReactUnity {
         BroadcastMessage(methodName: string, parameter: any): void;
         BroadcastMessage(methodName: string): void;
         BroadcastMessage(methodName: string, options: UnityEngine.SendMessageOptions): void;
+        GetEntityId(): UnityEngine.EntityId;
         GetInstanceID(): number;
         GetHashCode(): number;
         Equals(other: any): boolean;
@@ -10676,21 +11387,9 @@ export declare namespace ReactUnity {
         enabled: boolean;
         isActiveAndEnabled: boolean;
         transform: UnityEngine.Transform;
+        transformHandle: UnityEngine.TransformHandle;
         gameObject: UnityEngine.GameObject;
         tag: string;
-        rigidbody: UnityEngine.Component;
-        rigidbody2D: UnityEngine.Component;
-        camera: UnityEngine.Component;
-        light: UnityEngine.Component;
-        animation: UnityEngine.Component;
-        constantForce: UnityEngine.Component;
-        renderer: UnityEngine.Component;
-        audio: UnityEngine.Component;
-        networkView: UnityEngine.Component;
-        collider: UnityEngine.Component;
-        collider2D: UnityEngine.Component;
-        hingeJoint: UnityEngine.Component;
-        particleSystem: UnityEngine.Component;
         name: string;
         hideFlags: UnityEngine.HideFlags;
         OnDrop(eventData: UnityEngine.EventSystems.PointerEventData): void;
@@ -10736,6 +11435,7 @@ export declare namespace ReactUnity {
         BroadcastMessage(methodName: string, parameter: any): void;
         BroadcastMessage(methodName: string): void;
         BroadcastMessage(methodName: string, options: UnityEngine.SendMessageOptions): void;
+        GetEntityId(): UnityEngine.EntityId;
         GetInstanceID(): number;
         GetHashCode(): number;
         Equals(other: any): boolean;
@@ -10752,21 +11452,9 @@ export declare namespace ReactUnity {
         enabled: boolean;
         isActiveAndEnabled: boolean;
         transform: UnityEngine.Transform;
+        transformHandle: UnityEngine.TransformHandle;
         gameObject: UnityEngine.GameObject;
         tag: string;
-        rigidbody: UnityEngine.Component;
-        rigidbody2D: UnityEngine.Component;
-        camera: UnityEngine.Component;
-        light: UnityEngine.Component;
-        animation: UnityEngine.Component;
-        constantForce: UnityEngine.Component;
-        renderer: UnityEngine.Component;
-        audio: UnityEngine.Component;
-        networkView: UnityEngine.Component;
-        collider: UnityEngine.Component;
-        collider2D: UnityEngine.Component;
-        hingeJoint: UnityEngine.Component;
-        particleSystem: UnityEngine.Component;
         name: string;
         hideFlags: UnityEngine.HideFlags;
         OnBeginDrag(eventData: UnityEngine.EventSystems.PointerEventData): void;
@@ -10813,6 +11501,7 @@ export declare namespace ReactUnity {
         BroadcastMessage(methodName: string, parameter: any): void;
         BroadcastMessage(methodName: string): void;
         BroadcastMessage(methodName: string, options: UnityEngine.SendMessageOptions): void;
+        GetEntityId(): UnityEngine.EntityId;
         GetInstanceID(): number;
         GetHashCode(): number;
         Equals(other: any): boolean;
@@ -10829,21 +11518,9 @@ export declare namespace ReactUnity {
         enabled: boolean;
         isActiveAndEnabled: boolean;
         transform: UnityEngine.Transform;
+        transformHandle: UnityEngine.TransformHandle;
         gameObject: UnityEngine.GameObject;
         tag: string;
-        rigidbody: UnityEngine.Component;
-        rigidbody2D: UnityEngine.Component;
-        camera: UnityEngine.Component;
-        light: UnityEngine.Component;
-        animation: UnityEngine.Component;
-        constantForce: UnityEngine.Component;
-        renderer: UnityEngine.Component;
-        audio: UnityEngine.Component;
-        networkView: UnityEngine.Component;
-        collider: UnityEngine.Component;
-        collider2D: UnityEngine.Component;
-        hingeJoint: UnityEngine.Component;
-        particleSystem: UnityEngine.Component;
         name: string;
         hideFlags: UnityEngine.HideFlags;
         OnSelect(eventData: UnityEngine.EventSystems.BaseEventData): void;
@@ -10890,6 +11567,7 @@ export declare namespace ReactUnity {
         BroadcastMessage(methodName: string, parameter: any): void;
         BroadcastMessage(methodName: string): void;
         BroadcastMessage(methodName: string, options: UnityEngine.SendMessageOptions): void;
+        GetEntityId(): UnityEngine.EntityId;
         GetInstanceID(): number;
         GetHashCode(): number;
         Equals(other: any): boolean;
@@ -10923,21 +11601,9 @@ export declare namespace ReactUnity {
         enabled: boolean;
         isActiveAndEnabled: boolean;
         transform: UnityEngine.Transform;
+        transformHandle: UnityEngine.TransformHandle;
         gameObject: UnityEngine.GameObject;
         tag: string;
-        rigidbody: UnityEngine.Component;
-        rigidbody2D: UnityEngine.Component;
-        camera: UnityEngine.Component;
-        light: UnityEngine.Component;
-        animation: UnityEngine.Component;
-        constantForce: UnityEngine.Component;
-        renderer: UnityEngine.Component;
-        audio: UnityEngine.Component;
-        networkView: UnityEngine.Component;
-        collider: UnityEngine.Component;
-        collider2D: UnityEngine.Component;
-        hingeJoint: UnityEngine.Component;
-        particleSystem: UnityEngine.Component;
         name: string;
         hideFlags: UnityEngine.HideFlags;
         OnMove(eventData: UnityEngine.EventSystems.AxisEventData): void;
@@ -10983,6 +11649,7 @@ export declare namespace ReactUnity {
         BroadcastMessage(methodName: string, parameter: any): void;
         BroadcastMessage(methodName: string): void;
         BroadcastMessage(methodName: string, options: UnityEngine.SendMessageOptions): void;
+        GetEntityId(): UnityEngine.EntityId;
         GetInstanceID(): number;
         GetHashCode(): number;
         Equals(other: any): boolean;
@@ -10999,21 +11666,9 @@ export declare namespace ReactUnity {
         enabled: boolean;
         isActiveAndEnabled: boolean;
         transform: UnityEngine.Transform;
+        transformHandle: UnityEngine.TransformHandle;
         gameObject: UnityEngine.GameObject;
         tag: string;
-        rigidbody: UnityEngine.Component;
-        rigidbody2D: UnityEngine.Component;
-        camera: UnityEngine.Component;
-        light: UnityEngine.Component;
-        animation: UnityEngine.Component;
-        constantForce: UnityEngine.Component;
-        renderer: UnityEngine.Component;
-        audio: UnityEngine.Component;
-        networkView: UnityEngine.Component;
-        collider: UnityEngine.Component;
-        collider2D: UnityEngine.Component;
-        hingeJoint: UnityEngine.Component;
-        particleSystem: UnityEngine.Component;
         name: string;
         hideFlags: UnityEngine.HideFlags;
         OnPointerClick(eventData: UnityEngine.EventSystems.PointerEventData): void;
@@ -11059,6 +11714,7 @@ export declare namespace ReactUnity {
         BroadcastMessage(methodName: string, parameter: any): void;
         BroadcastMessage(methodName: string): void;
         BroadcastMessage(methodName: string, options: UnityEngine.SendMessageOptions): void;
+        GetEntityId(): UnityEngine.EntityId;
         GetInstanceID(): number;
         GetHashCode(): number;
         Equals(other: any): boolean;
@@ -11075,21 +11731,9 @@ export declare namespace ReactUnity {
         enabled: boolean;
         isActiveAndEnabled: boolean;
         transform: UnityEngine.Transform;
+        transformHandle: UnityEngine.TransformHandle;
         gameObject: UnityEngine.GameObject;
         tag: string;
-        rigidbody: UnityEngine.Component;
-        rigidbody2D: UnityEngine.Component;
-        camera: UnityEngine.Component;
-        light: UnityEngine.Component;
-        animation: UnityEngine.Component;
-        constantForce: UnityEngine.Component;
-        renderer: UnityEngine.Component;
-        audio: UnityEngine.Component;
-        networkView: UnityEngine.Component;
-        collider: UnityEngine.Component;
-        collider2D: UnityEngine.Component;
-        hingeJoint: UnityEngine.Component;
-        particleSystem: UnityEngine.Component;
         name: string;
         hideFlags: UnityEngine.HideFlags;
         OnPointerDown(eventData: UnityEngine.EventSystems.PointerEventData): void;
@@ -11135,6 +11779,7 @@ export declare namespace ReactUnity {
         BroadcastMessage(methodName: string, parameter: any): void;
         BroadcastMessage(methodName: string): void;
         BroadcastMessage(methodName: string, options: UnityEngine.SendMessageOptions): void;
+        GetEntityId(): UnityEngine.EntityId;
         GetInstanceID(): number;
         GetHashCode(): number;
         Equals(other: any): boolean;
@@ -11151,21 +11796,9 @@ export declare namespace ReactUnity {
         enabled: boolean;
         isActiveAndEnabled: boolean;
         transform: UnityEngine.Transform;
+        transformHandle: UnityEngine.TransformHandle;
         gameObject: UnityEngine.GameObject;
         tag: string;
-        rigidbody: UnityEngine.Component;
-        rigidbody2D: UnityEngine.Component;
-        camera: UnityEngine.Component;
-        light: UnityEngine.Component;
-        animation: UnityEngine.Component;
-        constantForce: UnityEngine.Component;
-        renderer: UnityEngine.Component;
-        audio: UnityEngine.Component;
-        networkView: UnityEngine.Component;
-        collider: UnityEngine.Component;
-        collider2D: UnityEngine.Component;
-        hingeJoint: UnityEngine.Component;
-        particleSystem: UnityEngine.Component;
         name: string;
         hideFlags: UnityEngine.HideFlags;
         OnPointerEnter(eventData: UnityEngine.EventSystems.PointerEventData): void;
@@ -11211,6 +11844,7 @@ export declare namespace ReactUnity {
         BroadcastMessage(methodName: string, parameter: any): void;
         BroadcastMessage(methodName: string): void;
         BroadcastMessage(methodName: string, options: UnityEngine.SendMessageOptions): void;
+        GetEntityId(): UnityEngine.EntityId;
         GetInstanceID(): number;
         GetHashCode(): number;
         Equals(other: any): boolean;
@@ -11227,21 +11861,9 @@ export declare namespace ReactUnity {
         enabled: boolean;
         isActiveAndEnabled: boolean;
         transform: UnityEngine.Transform;
+        transformHandle: UnityEngine.TransformHandle;
         gameObject: UnityEngine.GameObject;
         tag: string;
-        rigidbody: UnityEngine.Component;
-        rigidbody2D: UnityEngine.Component;
-        camera: UnityEngine.Component;
-        light: UnityEngine.Component;
-        animation: UnityEngine.Component;
-        constantForce: UnityEngine.Component;
-        renderer: UnityEngine.Component;
-        audio: UnityEngine.Component;
-        networkView: UnityEngine.Component;
-        collider: UnityEngine.Component;
-        collider2D: UnityEngine.Component;
-        hingeJoint: UnityEngine.Component;
-        particleSystem: UnityEngine.Component;
         name: string;
         hideFlags: UnityEngine.HideFlags;
         OnPointerExit(eventData: UnityEngine.EventSystems.PointerEventData): void;
@@ -11287,6 +11909,7 @@ export declare namespace ReactUnity {
         BroadcastMessage(methodName: string, parameter: any): void;
         BroadcastMessage(methodName: string): void;
         BroadcastMessage(methodName: string, options: UnityEngine.SendMessageOptions): void;
+        GetEntityId(): UnityEngine.EntityId;
         GetInstanceID(): number;
         GetHashCode(): number;
         Equals(other: any): boolean;
@@ -11303,21 +11926,9 @@ export declare namespace ReactUnity {
         enabled: boolean;
         isActiveAndEnabled: boolean;
         transform: UnityEngine.Transform;
+        transformHandle: UnityEngine.TransformHandle;
         gameObject: UnityEngine.GameObject;
         tag: string;
-        rigidbody: UnityEngine.Component;
-        rigidbody2D: UnityEngine.Component;
-        camera: UnityEngine.Component;
-        light: UnityEngine.Component;
-        animation: UnityEngine.Component;
-        constantForce: UnityEngine.Component;
-        renderer: UnityEngine.Component;
-        audio: UnityEngine.Component;
-        networkView: UnityEngine.Component;
-        collider: UnityEngine.Component;
-        collider2D: UnityEngine.Component;
-        hingeJoint: UnityEngine.Component;
-        particleSystem: UnityEngine.Component;
         name: string;
         hideFlags: UnityEngine.HideFlags;
         OnPointerEnter(eventData: UnityEngine.EventSystems.PointerEventData): void;
@@ -11364,6 +11975,7 @@ export declare namespace ReactUnity {
         BroadcastMessage(methodName: string, parameter: any): void;
         BroadcastMessage(methodName: string): void;
         BroadcastMessage(methodName: string, options: UnityEngine.SendMessageOptions): void;
+        GetEntityId(): UnityEngine.EntityId;
         GetInstanceID(): number;
         GetHashCode(): number;
         Equals(other: any): boolean;
@@ -11380,21 +11992,9 @@ export declare namespace ReactUnity {
         enabled: boolean;
         isActiveAndEnabled: boolean;
         transform: UnityEngine.Transform;
+        transformHandle: UnityEngine.TransformHandle;
         gameObject: UnityEngine.GameObject;
         tag: string;
-        rigidbody: UnityEngine.Component;
-        rigidbody2D: UnityEngine.Component;
-        camera: UnityEngine.Component;
-        light: UnityEngine.Component;
-        animation: UnityEngine.Component;
-        constantForce: UnityEngine.Component;
-        renderer: UnityEngine.Component;
-        audio: UnityEngine.Component;
-        networkView: UnityEngine.Component;
-        collider: UnityEngine.Component;
-        collider2D: UnityEngine.Component;
-        hingeJoint: UnityEngine.Component;
-        particleSystem: UnityEngine.Component;
         name: string;
         hideFlags: UnityEngine.HideFlags;
         OnPointerUp(eventData: UnityEngine.EventSystems.PointerEventData): void;
@@ -11440,6 +12040,7 @@ export declare namespace ReactUnity {
         BroadcastMessage(methodName: string, parameter: any): void;
         BroadcastMessage(methodName: string): void;
         BroadcastMessage(methodName: string, options: UnityEngine.SendMessageOptions): void;
+        GetEntityId(): UnityEngine.EntityId;
         GetInstanceID(): number;
         GetHashCode(): number;
         Equals(other: any): boolean;
@@ -11456,21 +12057,9 @@ export declare namespace ReactUnity {
         enabled: boolean;
         isActiveAndEnabled: boolean;
         transform: UnityEngine.Transform;
+        transformHandle: UnityEngine.TransformHandle;
         gameObject: UnityEngine.GameObject;
         tag: string;
-        rigidbody: UnityEngine.Component;
-        rigidbody2D: UnityEngine.Component;
-        camera: UnityEngine.Component;
-        light: UnityEngine.Component;
-        animation: UnityEngine.Component;
-        constantForce: UnityEngine.Component;
-        renderer: UnityEngine.Component;
-        audio: UnityEngine.Component;
-        networkView: UnityEngine.Component;
-        collider: UnityEngine.Component;
-        collider2D: UnityEngine.Component;
-        hingeJoint: UnityEngine.Component;
-        particleSystem: UnityEngine.Component;
         name: string;
         hideFlags: UnityEngine.HideFlags;
         OnInitializePotentialDrag(eventData: UnityEngine.EventSystems.PointerEventData): void;
@@ -11516,6 +12105,7 @@ export declare namespace ReactUnity {
         BroadcastMessage(methodName: string, parameter: any): void;
         BroadcastMessage(methodName: string): void;
         BroadcastMessage(methodName: string, options: UnityEngine.SendMessageOptions): void;
+        GetEntityId(): UnityEngine.EntityId;
         GetInstanceID(): number;
         GetHashCode(): number;
         Equals(other: any): boolean;
@@ -11532,21 +12122,9 @@ export declare namespace ReactUnity {
         enabled: boolean;
         isActiveAndEnabled: boolean;
         transform: UnityEngine.Transform;
+        transformHandle: UnityEngine.TransformHandle;
         gameObject: UnityEngine.GameObject;
         tag: string;
-        rigidbody: UnityEngine.Component;
-        rigidbody2D: UnityEngine.Component;
-        camera: UnityEngine.Component;
-        light: UnityEngine.Component;
-        animation: UnityEngine.Component;
-        constantForce: UnityEngine.Component;
-        renderer: UnityEngine.Component;
-        audio: UnityEngine.Component;
-        networkView: UnityEngine.Component;
-        collider: UnityEngine.Component;
-        collider2D: UnityEngine.Component;
-        hingeJoint: UnityEngine.Component;
-        particleSystem: UnityEngine.Component;
         name: string;
         hideFlags: UnityEngine.HideFlags;
         ClearListeners(): void;
@@ -11593,6 +12171,7 @@ export declare namespace ReactUnity {
         BroadcastMessage(methodName: string, parameter: any): void;
         BroadcastMessage(methodName: string): void;
         BroadcastMessage(methodName: string, options: UnityEngine.SendMessageOptions): void;
+        GetEntityId(): UnityEngine.EntityId;
         GetInstanceID(): number;
         GetHashCode(): number;
         Equals(other: any): boolean;
@@ -11621,21 +12200,9 @@ export declare namespace ReactUnity {
         enabled: boolean;
         isActiveAndEnabled: boolean;
         transform: UnityEngine.Transform;
+        transformHandle: UnityEngine.TransformHandle;
         gameObject: UnityEngine.GameObject;
         tag: string;
-        rigidbody: UnityEngine.Component;
-        rigidbody2D: UnityEngine.Component;
-        camera: UnityEngine.Component;
-        light: UnityEngine.Component;
-        animation: UnityEngine.Component;
-        constantForce: UnityEngine.Component;
-        renderer: UnityEngine.Component;
-        audio: UnityEngine.Component;
-        networkView: UnityEngine.Component;
-        collider: UnityEngine.Component;
-        collider2D: UnityEngine.Component;
-        hingeJoint: UnityEngine.Component;
-        particleSystem: UnityEngine.Component;
         name: string;
         hideFlags: UnityEngine.HideFlags;
         OnScroll(eventData: UnityEngine.EventSystems.PointerEventData): void;
@@ -11681,6 +12248,7 @@ export declare namespace ReactUnity {
         BroadcastMessage(methodName: string, parameter: any): void;
         BroadcastMessage(methodName: string): void;
         BroadcastMessage(methodName: string, options: UnityEngine.SendMessageOptions): void;
+        GetEntityId(): UnityEngine.EntityId;
         GetInstanceID(): number;
         GetHashCode(): number;
         Equals(other: any): boolean;
@@ -11697,21 +12265,9 @@ export declare namespace ReactUnity {
         enabled: boolean;
         isActiveAndEnabled: boolean;
         transform: UnityEngine.Transform;
+        transformHandle: UnityEngine.TransformHandle;
         gameObject: UnityEngine.GameObject;
         tag: string;
-        rigidbody: UnityEngine.Component;
-        rigidbody2D: UnityEngine.Component;
-        camera: UnityEngine.Component;
-        light: UnityEngine.Component;
-        animation: UnityEngine.Component;
-        constantForce: UnityEngine.Component;
-        renderer: UnityEngine.Component;
-        audio: UnityEngine.Component;
-        networkView: UnityEngine.Component;
-        collider: UnityEngine.Component;
-        collider2D: UnityEngine.Component;
-        hingeJoint: UnityEngine.Component;
-        particleSystem: UnityEngine.Component;
         name: string;
         hideFlags: UnityEngine.HideFlags;
         OnSelect(eventData: UnityEngine.EventSystems.BaseEventData): void;
@@ -11757,6 +12313,7 @@ export declare namespace ReactUnity {
         BroadcastMessage(methodName: string, parameter: any): void;
         BroadcastMessage(methodName: string): void;
         BroadcastMessage(methodName: string, options: UnityEngine.SendMessageOptions): void;
+        GetEntityId(): UnityEngine.EntityId;
         GetInstanceID(): number;
         GetHashCode(): number;
         Equals(other: any): boolean;
@@ -11773,21 +12330,9 @@ export declare namespace ReactUnity {
         enabled: boolean;
         isActiveAndEnabled: boolean;
         transform: UnityEngine.Transform;
+        transformHandle: UnityEngine.TransformHandle;
         gameObject: UnityEngine.GameObject;
         tag: string;
-        rigidbody: UnityEngine.Component;
-        rigidbody2D: UnityEngine.Component;
-        camera: UnityEngine.Component;
-        light: UnityEngine.Component;
-        animation: UnityEngine.Component;
-        constantForce: UnityEngine.Component;
-        renderer: UnityEngine.Component;
-        audio: UnityEngine.Component;
-        networkView: UnityEngine.Component;
-        collider: UnityEngine.Component;
-        collider2D: UnityEngine.Component;
-        hingeJoint: UnityEngine.Component;
-        particleSystem: UnityEngine.Component;
         name: string;
         hideFlags: UnityEngine.HideFlags;
         OnSubmit(eventData: UnityEngine.EventSystems.BaseEventData): void;
@@ -11833,6 +12378,7 @@ export declare namespace ReactUnity {
         BroadcastMessage(methodName: string, parameter: any): void;
         BroadcastMessage(methodName: string): void;
         BroadcastMessage(methodName: string, options: UnityEngine.SendMessageOptions): void;
+        GetEntityId(): UnityEngine.EntityId;
         GetInstanceID(): number;
         GetHashCode(): number;
         Equals(other: any): boolean;
@@ -11849,21 +12395,9 @@ export declare namespace ReactUnity {
         enabled: boolean;
         isActiveAndEnabled: boolean;
         transform: UnityEngine.Transform;
+        transformHandle: UnityEngine.TransformHandle;
         gameObject: UnityEngine.GameObject;
         tag: string;
-        rigidbody: UnityEngine.Component;
-        rigidbody2D: UnityEngine.Component;
-        camera: UnityEngine.Component;
-        light: UnityEngine.Component;
-        animation: UnityEngine.Component;
-        constantForce: UnityEngine.Component;
-        renderer: UnityEngine.Component;
-        audio: UnityEngine.Component;
-        networkView: UnityEngine.Component;
-        collider: UnityEngine.Component;
-        collider2D: UnityEngine.Component;
-        hingeJoint: UnityEngine.Component;
-        particleSystem: UnityEngine.Component;
         name: string;
         hideFlags: UnityEngine.HideFlags;
         OnUpdateSelected(eventData: UnityEngine.EventSystems.BaseEventData): void;
@@ -11909,6 +12443,7 @@ export declare namespace ReactUnity {
         BroadcastMessage(methodName: string, parameter: any): void;
         BroadcastMessage(methodName: string): void;
         BroadcastMessage(methodName: string, options: UnityEngine.SendMessageOptions): void;
+        GetEntityId(): UnityEngine.EntityId;
         GetInstanceID(): number;
         GetHashCode(): number;
         Equals(other: any): boolean;
@@ -11947,21 +12482,9 @@ export declare namespace ReactUnity {
         enabled: boolean;
         isActiveAndEnabled: boolean;
         transform: UnityEngine.Transform;
+        transformHandle: UnityEngine.TransformHandle;
         gameObject: UnityEngine.GameObject;
         tag: string;
-        rigidbody: UnityEngine.Component;
-        rigidbody2D: UnityEngine.Component;
-        camera: UnityEngine.Component;
-        light: UnityEngine.Component;
-        animation: UnityEngine.Component;
-        constantForce: UnityEngine.Component;
-        renderer: UnityEngine.Component;
-        audio: UnityEngine.Component;
-        networkView: UnityEngine.Component;
-        collider: UnityEngine.Component;
-        collider2D: UnityEngine.Component;
-        hingeJoint: UnityEngine.Component;
-        particleSystem: UnityEngine.Component;
         name: string;
         hideFlags: UnityEngine.HideFlags;
         static Create(go: UnityEngine.GameObject, comp: ReactUnity.UGUI.UGUIComponent, setContainer: ((obj: UnityEngine.RectTransform) => void)): ReactUnity.UGUI.Internal.BorderAndBackground;
@@ -12008,10 +12531,229 @@ export declare namespace ReactUnity {
         BroadcastMessage(methodName: string, parameter: any): void;
         BroadcastMessage(methodName: string): void;
         BroadcastMessage(methodName: string, options: UnityEngine.SendMessageOptions): void;
+        GetEntityId(): UnityEngine.EntityId;
         GetInstanceID(): number;
         GetHashCode(): number;
         Equals(other: any): boolean;
         ToString(): string;
+        GetType(): System.Type;
+      }
+      export class ElementFilter {
+        constructor();
+        Definition: ReactUnity.Types.FilterDefinition;
+        RenderCount: number;
+        destroyCancellationToken: System.Threading.CancellationToken;
+        useGUILayout: boolean;
+        didStart: boolean;
+        didAwake: boolean;
+        runInEditMode: boolean;
+        enabled: boolean;
+        isActiveAndEnabled: boolean;
+        transform: UnityEngine.Transform;
+        transformHandle: UnityEngine.TransformHandle;
+        gameObject: UnityEngine.GameObject;
+        tag: string;
+        name: string;
+        hideFlags: UnityEngine.HideFlags;
+        static Create(cmp: ReactUnity.UGUI.UGUIComponent, definition: ReactUnity.Types.FilterDefinition): ReactUnity.UGUI.Internal.ElementFilter;
+        Detach(): void;
+        Invalidate(): void;
+        IsInvoking(): boolean;
+        CancelInvoke(): void;
+        Invoke(methodName: string, time: number): void;
+        InvokeRepeating(methodName: string, time: number, repeatRate: number): void;
+        CancelInvoke(methodName: string): void;
+        IsInvoking(methodName: string): boolean;
+        StartCoroutine(methodName: string): UnityEngine.Coroutine;
+        StartCoroutine(methodName: string, value: any): UnityEngine.Coroutine;
+        StartCoroutine(routine: System.Collections.IEnumerator): UnityEngine.Coroutine;
+        StartCoroutine_Auto(routine: System.Collections.IEnumerator): UnityEngine.Coroutine;
+        StopCoroutine(routine: System.Collections.IEnumerator): void;
+        StopCoroutine(routine: UnityEngine.Coroutine): void;
+        StopCoroutine(methodName: string): void;
+        StopAllCoroutines(): void;
+        GetComponent(type: System.Type): UnityEngine.Component;
+        GetComponent(type: string): UnityEngine.Component;
+        GetComponentInChildren(t: System.Type, includeInactive: boolean): UnityEngine.Component;
+        GetComponentInChildren(t: System.Type): UnityEngine.Component;
+        GetComponentsInChildren(t: System.Type, includeInactive: boolean): UnityEngine.Component[];
+        GetComponentsInChildren(t: System.Type): UnityEngine.Component[];
+        GetComponentInParent(t: System.Type, includeInactive: boolean): UnityEngine.Component;
+        GetComponentInParent(t: System.Type): UnityEngine.Component;
+        GetComponentsInParent(t: System.Type, includeInactive: boolean): UnityEngine.Component[];
+        GetComponentsInParent(t: System.Type): UnityEngine.Component[];
+        GetComponents(type: System.Type): UnityEngine.Component[];
+        GetComponents(type: System.Type, results: UnityEngine.Component[]): void;
+        GetComponentIndex(): number;
+        CompareTag(tag: string): boolean;
+        CompareTag(tag: UnityEngine.TagHandle): boolean;
+        SendMessageUpwards(methodName: string, value: any, options: UnityEngine.SendMessageOptions): void;
+        SendMessageUpwards(methodName: string, value: any): void;
+        SendMessageUpwards(methodName: string): void;
+        SendMessageUpwards(methodName: string, options: UnityEngine.SendMessageOptions): void;
+        SendMessage(methodName: string, value: any): void;
+        SendMessage(methodName: string): void;
+        SendMessage(methodName: string, value: any, options: UnityEngine.SendMessageOptions): void;
+        SendMessage(methodName: string, options: UnityEngine.SendMessageOptions): void;
+        BroadcastMessage(methodName: string, parameter: any, options: UnityEngine.SendMessageOptions): void;
+        BroadcastMessage(methodName: string, parameter: any): void;
+        BroadcastMessage(methodName: string): void;
+        BroadcastMessage(methodName: string, options: UnityEngine.SendMessageOptions): void;
+        GetEntityId(): UnityEngine.EntityId;
+        GetInstanceID(): number;
+        GetHashCode(): number;
+        Equals(other: any): boolean;
+        ToString(): string;
+        GetType(): System.Type;
+      }
+      export class FilterEventBubble {
+        constructor();
+        destroyCancellationToken: System.Threading.CancellationToken;
+        useGUILayout: boolean;
+        didStart: boolean;
+        didAwake: boolean;
+        runInEditMode: boolean;
+        enabled: boolean;
+        isActiveAndEnabled: boolean;
+        transform: UnityEngine.Transform;
+        transformHandle: UnityEngine.TransformHandle;
+        gameObject: UnityEngine.GameObject;
+        tag: string;
+        name: string;
+        hideFlags: UnityEngine.HideFlags;
+        Composite: UnityEngine.UI.Graphic;
+        OnScroll(eventData: UnityEngine.EventSystems.PointerEventData): void;
+        OnInitializePotentialDrag(eventData: UnityEngine.EventSystems.PointerEventData): void;
+        OnBeginDrag(eventData: UnityEngine.EventSystems.PointerEventData): void;
+        OnDrag(eventData: UnityEngine.EventSystems.PointerEventData): void;
+        OnEndDrag(eventData: UnityEngine.EventSystems.PointerEventData): void;
+        OnDrop(eventData: UnityEngine.EventSystems.PointerEventData): void;
+        OnPointerDown(eventData: UnityEngine.EventSystems.PointerEventData): void;
+        OnPointerUp(eventData: UnityEngine.EventSystems.PointerEventData): void;
+        OnPointerClick(eventData: UnityEngine.EventSystems.PointerEventData): void;
+        IsInvoking(): boolean;
+        CancelInvoke(): void;
+        Invoke(methodName: string, time: number): void;
+        InvokeRepeating(methodName: string, time: number, repeatRate: number): void;
+        CancelInvoke(methodName: string): void;
+        IsInvoking(methodName: string): boolean;
+        StartCoroutine(methodName: string): UnityEngine.Coroutine;
+        StartCoroutine(methodName: string, value: any): UnityEngine.Coroutine;
+        StartCoroutine(routine: System.Collections.IEnumerator): UnityEngine.Coroutine;
+        StartCoroutine_Auto(routine: System.Collections.IEnumerator): UnityEngine.Coroutine;
+        StopCoroutine(routine: System.Collections.IEnumerator): void;
+        StopCoroutine(routine: UnityEngine.Coroutine): void;
+        StopCoroutine(methodName: string): void;
+        StopAllCoroutines(): void;
+        GetComponent(type: System.Type): UnityEngine.Component;
+        GetComponent(type: string): UnityEngine.Component;
+        GetComponentInChildren(t: System.Type, includeInactive: boolean): UnityEngine.Component;
+        GetComponentInChildren(t: System.Type): UnityEngine.Component;
+        GetComponentsInChildren(t: System.Type, includeInactive: boolean): UnityEngine.Component[];
+        GetComponentsInChildren(t: System.Type): UnityEngine.Component[];
+        GetComponentInParent(t: System.Type, includeInactive: boolean): UnityEngine.Component;
+        GetComponentInParent(t: System.Type): UnityEngine.Component;
+        GetComponentsInParent(t: System.Type, includeInactive: boolean): UnityEngine.Component[];
+        GetComponentsInParent(t: System.Type): UnityEngine.Component[];
+        GetComponents(type: System.Type): UnityEngine.Component[];
+        GetComponents(type: System.Type, results: UnityEngine.Component[]): void;
+        GetComponentIndex(): number;
+        CompareTag(tag: string): boolean;
+        CompareTag(tag: UnityEngine.TagHandle): boolean;
+        SendMessageUpwards(methodName: string, value: any, options: UnityEngine.SendMessageOptions): void;
+        SendMessageUpwards(methodName: string, value: any): void;
+        SendMessageUpwards(methodName: string): void;
+        SendMessageUpwards(methodName: string, options: UnityEngine.SendMessageOptions): void;
+        SendMessage(methodName: string, value: any): void;
+        SendMessage(methodName: string): void;
+        SendMessage(methodName: string, value: any, options: UnityEngine.SendMessageOptions): void;
+        SendMessage(methodName: string, options: UnityEngine.SendMessageOptions): void;
+        BroadcastMessage(methodName: string, parameter: any, options: UnityEngine.SendMessageOptions): void;
+        BroadcastMessage(methodName: string, parameter: any): void;
+        BroadcastMessage(methodName: string): void;
+        BroadcastMessage(methodName: string, options: UnityEngine.SendMessageOptions): void;
+        GetEntityId(): UnityEngine.EntityId;
+        GetInstanceID(): number;
+        GetHashCode(): number;
+        Equals(other: any): boolean;
+        ToString(): string;
+        GetType(): System.Type;
+      }
+      export class FilterRaycaster {
+        constructor();
+        sortOrderPriority: number;
+        renderOrderPriority: number;
+        eventCamera: UnityEngine.Camera;
+        ignoreReversedGraphics: boolean;
+        blockingObjects: UnityEngine.UI.GraphicRaycaster_BlockingObjects;
+        blockingMask: UnityEngine.LayerMask;
+        priority: number;
+        rootRaycaster: UnityEngine.EventSystems.BaseRaycaster;
+        destroyCancellationToken: System.Threading.CancellationToken;
+        useGUILayout: boolean;
+        didStart: boolean;
+        didAwake: boolean;
+        runInEditMode: boolean;
+        enabled: boolean;
+        isActiveAndEnabled: boolean;
+        transform: UnityEngine.Transform;
+        transformHandle: UnityEngine.TransformHandle;
+        gameObject: UnityEngine.GameObject;
+        tag: string;
+        name: string;
+        hideFlags: UnityEngine.HideFlags;
+        HostCanvas: UnityEngine.Canvas;
+        Composite: UnityEngine.UI.Graphic;
+        EventViewport: UnityEngine.RectTransform;
+        Raycast(eventData: UnityEngine.EventSystems.PointerEventData, resultAppendList: UnityEngine.EventSystems.RaycastResult[]): void;
+        ToString(): string;
+        IsActive(): boolean;
+        IsDestroyed(): boolean;
+        IsInvoking(): boolean;
+        CancelInvoke(): void;
+        Invoke(methodName: string, time: number): void;
+        InvokeRepeating(methodName: string, time: number, repeatRate: number): void;
+        CancelInvoke(methodName: string): void;
+        IsInvoking(methodName: string): boolean;
+        StartCoroutine(methodName: string): UnityEngine.Coroutine;
+        StartCoroutine(methodName: string, value: any): UnityEngine.Coroutine;
+        StartCoroutine(routine: System.Collections.IEnumerator): UnityEngine.Coroutine;
+        StartCoroutine_Auto(routine: System.Collections.IEnumerator): UnityEngine.Coroutine;
+        StopCoroutine(routine: System.Collections.IEnumerator): void;
+        StopCoroutine(routine: UnityEngine.Coroutine): void;
+        StopCoroutine(methodName: string): void;
+        StopAllCoroutines(): void;
+        GetComponent(type: System.Type): UnityEngine.Component;
+        GetComponent(type: string): UnityEngine.Component;
+        GetComponentInChildren(t: System.Type, includeInactive: boolean): UnityEngine.Component;
+        GetComponentInChildren(t: System.Type): UnityEngine.Component;
+        GetComponentsInChildren(t: System.Type, includeInactive: boolean): UnityEngine.Component[];
+        GetComponentsInChildren(t: System.Type): UnityEngine.Component[];
+        GetComponentInParent(t: System.Type, includeInactive: boolean): UnityEngine.Component;
+        GetComponentInParent(t: System.Type): UnityEngine.Component;
+        GetComponentsInParent(t: System.Type, includeInactive: boolean): UnityEngine.Component[];
+        GetComponentsInParent(t: System.Type): UnityEngine.Component[];
+        GetComponents(type: System.Type): UnityEngine.Component[];
+        GetComponents(type: System.Type, results: UnityEngine.Component[]): void;
+        GetComponentIndex(): number;
+        CompareTag(tag: string): boolean;
+        CompareTag(tag: UnityEngine.TagHandle): boolean;
+        SendMessageUpwards(methodName: string, value: any, options: UnityEngine.SendMessageOptions): void;
+        SendMessageUpwards(methodName: string, value: any): void;
+        SendMessageUpwards(methodName: string): void;
+        SendMessageUpwards(methodName: string, options: UnityEngine.SendMessageOptions): void;
+        SendMessage(methodName: string, value: any): void;
+        SendMessage(methodName: string): void;
+        SendMessage(methodName: string, value: any, options: UnityEngine.SendMessageOptions): void;
+        SendMessage(methodName: string, options: UnityEngine.SendMessageOptions): void;
+        BroadcastMessage(methodName: string, parameter: any, options: UnityEngine.SendMessageOptions): void;
+        BroadcastMessage(methodName: string, parameter: any): void;
+        BroadcastMessage(methodName: string): void;
+        BroadcastMessage(methodName: string, options: UnityEngine.SendMessageOptions): void;
+        GetEntityId(): UnityEngine.EntityId;
+        GetInstanceID(): number;
+        GetHashCode(): number;
+        Equals(other: any): boolean;
         GetType(): System.Type;
       }
       export class MaskAndImage {
@@ -12024,21 +12766,9 @@ export declare namespace ReactUnity {
         enabled: boolean;
         isActiveAndEnabled: boolean;
         transform: UnityEngine.Transform;
+        transformHandle: UnityEngine.TransformHandle;
         gameObject: UnityEngine.GameObject;
         tag: string;
-        rigidbody: UnityEngine.Component;
-        rigidbody2D: UnityEngine.Component;
-        camera: UnityEngine.Component;
-        light: UnityEngine.Component;
-        animation: UnityEngine.Component;
-        constantForce: UnityEngine.Component;
-        renderer: UnityEngine.Component;
-        audio: UnityEngine.Component;
-        networkView: UnityEngine.Component;
-        collider: UnityEngine.Component;
-        collider2D: UnityEngine.Component;
-        hingeJoint: UnityEngine.Component;
-        particleSystem: UnityEngine.Component;
         name: string;
         hideFlags: UnityEngine.HideFlags;
         Mask: UnityEngine.UI.Mask;
@@ -12086,6 +12816,7 @@ export declare namespace ReactUnity {
         BroadcastMessage(methodName: string, parameter: any): void;
         BroadcastMessage(methodName: string): void;
         BroadcastMessage(methodName: string, options: UnityEngine.SendMessageOptions): void;
+        GetEntityId(): UnityEngine.EntityId;
         GetInstanceID(): number;
         GetHashCode(): number;
         Equals(other: any): boolean;
@@ -12115,21 +12846,9 @@ export declare namespace ReactUnity {
         enabled: boolean;
         isActiveAndEnabled: boolean;
         transform: UnityEngine.Transform;
+        transformHandle: UnityEngine.TransformHandle;
         gameObject: UnityEngine.GameObject;
         tag: string;
-        rigidbody: UnityEngine.Component;
-        rigidbody2D: UnityEngine.Component;
-        camera: UnityEngine.Component;
-        light: UnityEngine.Component;
-        animation: UnityEngine.Component;
-        constantForce: UnityEngine.Component;
-        renderer: UnityEngine.Component;
-        audio: UnityEngine.Component;
-        networkView: UnityEngine.Component;
-        collider: UnityEngine.Component;
-        collider2D: UnityEngine.Component;
-        hingeJoint: UnityEngine.Component;
-        particleSystem: UnityEngine.Component;
         name: string;
         hideFlags: UnityEngine.HideFlags;
         Layout: Yoga.YogaNode;
@@ -12177,6 +12896,7 @@ export declare namespace ReactUnity {
         BroadcastMessage(methodName: string, parameter: any): void;
         BroadcastMessage(methodName: string): void;
         BroadcastMessage(methodName: string, options: UnityEngine.SendMessageOptions): void;
+        GetEntityId(): UnityEngine.EntityId;
         GetInstanceID(): number;
         GetHashCode(): number;
         Equals(other: any): boolean;
@@ -12193,21 +12913,9 @@ export declare namespace ReactUnity {
         enabled: boolean;
         isActiveAndEnabled: boolean;
         transform: UnityEngine.Transform;
+        transformHandle: UnityEngine.TransformHandle;
         gameObject: UnityEngine.GameObject;
         tag: string;
-        rigidbody: UnityEngine.Component;
-        rigidbody2D: UnityEngine.Component;
-        camera: UnityEngine.Component;
-        light: UnityEngine.Component;
-        animation: UnityEngine.Component;
-        constantForce: UnityEngine.Component;
-        renderer: UnityEngine.Component;
-        audio: UnityEngine.Component;
-        networkView: UnityEngine.Component;
-        collider: UnityEngine.Component;
-        collider2D: UnityEngine.Component;
-        hingeJoint: UnityEngine.Component;
-        particleSystem: UnityEngine.Component;
         name: string;
         hideFlags: UnityEngine.HideFlags;
         Layout: Yoga.YogaNode;
@@ -12256,6 +12964,7 @@ export declare namespace ReactUnity {
         BroadcastMessage(methodName: string, parameter: any): void;
         BroadcastMessage(methodName: string): void;
         BroadcastMessage(methodName: string, options: UnityEngine.SendMessageOptions): void;
+        GetEntityId(): UnityEngine.EntityId;
         GetInstanceID(): number;
         GetHashCode(): number;
         Equals(other: any): boolean;
@@ -12264,6 +12973,7 @@ export declare namespace ReactUnity {
       }
       export class TextMeasurer {
         constructor();
+        Text: any; // TMPro.TextMeshProUGUI
         destroyCancellationToken: System.Threading.CancellationToken;
         useGUILayout: boolean;
         didStart: boolean;
@@ -12272,21 +12982,9 @@ export declare namespace ReactUnity {
         enabled: boolean;
         isActiveAndEnabled: boolean;
         transform: UnityEngine.Transform;
+        transformHandle: UnityEngine.TransformHandle;
         gameObject: UnityEngine.GameObject;
         tag: string;
-        rigidbody: UnityEngine.Component;
-        rigidbody2D: UnityEngine.Component;
-        camera: UnityEngine.Component;
-        light: UnityEngine.Component;
-        animation: UnityEngine.Component;
-        constantForce: UnityEngine.Component;
-        renderer: UnityEngine.Component;
-        audio: UnityEngine.Component;
-        networkView: UnityEngine.Component;
-        collider: UnityEngine.Component;
-        collider2D: UnityEngine.Component;
-        hingeJoint: UnityEngine.Component;
-        particleSystem: UnityEngine.Component;
         name: string;
         hideFlags: UnityEngine.HideFlags;
         Layout: Yoga.YogaNode;
@@ -12333,6 +13031,7 @@ export declare namespace ReactUnity {
         BroadcastMessage(methodName: string, parameter: any): void;
         BroadcastMessage(methodName: string): void;
         BroadcastMessage(methodName: string, options: UnityEngine.SendMessageOptions): void;
+        GetEntityId(): UnityEngine.EntityId;
         GetInstanceID(): number;
         GetHashCode(): number;
         Equals(other: any): boolean;
@@ -12375,9 +13074,11 @@ export declare namespace ReactUnity {
         pixelsPerUnit: number;
         material: UnityEngine.Material;
         minWidth: number;
+        maxWidth: number;
         preferredWidth: number;
         flexibleWidth: number;
         minHeight: number;
+        maxHeight: number;
         preferredHeight: number;
         flexibleHeight: number;
         layoutPriority: number;
@@ -12400,21 +13101,9 @@ export declare namespace ReactUnity {
         enabled: boolean;
         isActiveAndEnabled: boolean;
         transform: UnityEngine.Transform;
+        transformHandle: UnityEngine.TransformHandle;
         gameObject: UnityEngine.GameObject;
         tag: string;
-        rigidbody: UnityEngine.Component;
-        rigidbody2D: UnityEngine.Component;
-        camera: UnityEngine.Component;
-        light: UnityEngine.Component;
-        animation: UnityEngine.Component;
-        constantForce: UnityEngine.Component;
-        renderer: UnityEngine.Component;
-        audio: UnityEngine.Component;
-        networkView: UnityEngine.Component;
-        collider: UnityEngine.Component;
-        collider2D: UnityEngine.Component;
-        hingeJoint: UnityEngine.Component;
-        particleSystem: UnityEngine.Component;
         name: string;
         hideFlags: UnityEngine.HideFlags;
         Context: ReactUnity.ReactContext;
@@ -12433,9 +13122,9 @@ export declare namespace ReactUnity {
         Cull(clipRect: UnityEngine.Rect, validRect: boolean): void;
         SetClipRect(clipRect: UnityEngine.Rect, validRect: boolean): void;
         SetClipSoftness(clipSoftness: UnityEngine.Vector2): void;
-        ParentMaskStateChanged(): void;
         RecalculateClipping(): void;
         RecalculateMasking(): void;
+        Raycast(sp: UnityEngine.Vector2, eventCamera: UnityEngine.Camera): boolean;
         SetAllDirty(): void;
         SetLayoutDirty(): void;
         SetVerticesDirty(): void;
@@ -12446,7 +13135,6 @@ export declare namespace ReactUnity {
         LayoutComplete(): void;
         GraphicUpdateComplete(): void;
         OnRebuildRequested(): void;
-        Raycast(sp: UnityEngine.Vector2, eventCamera: UnityEngine.Camera): boolean;
         PixelAdjustPoint(point: UnityEngine.Vector2): UnityEngine.Vector2;
         GetPixelAdjustedRect(): UnityEngine.Rect;
         CrossFadeColor(targetColor: UnityEngine.Color, duration: number, ignoreTimeScale: boolean, useAlpha: boolean): void;
@@ -12501,6 +13189,7 @@ export declare namespace ReactUnity {
         BroadcastMessage(methodName: string, parameter: any): void;
         BroadcastMessage(methodName: string): void;
         BroadcastMessage(methodName: string, options: UnityEngine.SendMessageOptions): void;
+        GetEntityId(): UnityEngine.EntityId;
         GetInstanceID(): number;
         GetHashCode(): number;
         Equals(other: any): boolean;
@@ -12535,21 +13224,9 @@ export declare namespace ReactUnity {
         enabled: boolean;
         isActiveAndEnabled: boolean;
         transform: UnityEngine.Transform;
+        transformHandle: UnityEngine.TransformHandle;
         gameObject: UnityEngine.GameObject;
         tag: string;
-        rigidbody: UnityEngine.Component;
-        rigidbody2D: UnityEngine.Component;
-        camera: UnityEngine.Component;
-        light: UnityEngine.Component;
-        animation: UnityEngine.Component;
-        constantForce: UnityEngine.Component;
-        renderer: UnityEngine.Component;
-        audio: UnityEngine.Component;
-        networkView: UnityEngine.Component;
-        collider: UnityEngine.Component;
-        collider2D: UnityEngine.Component;
-        hingeJoint: UnityEngine.Component;
-        particleSystem: UnityEngine.Component;
         name: string;
         hideFlags: UnityEngine.HideFlags;
         insetBorder: ReactUnity.UGUI.Shapes.WebRect;
@@ -12557,9 +13234,9 @@ export declare namespace ReactUnity {
         Cull(clipRect: UnityEngine.Rect, validRect: boolean): void;
         SetClipRect(clipRect: UnityEngine.Rect, validRect: boolean): void;
         SetClipSoftness(clipSoftness: UnityEngine.Vector2): void;
-        ParentMaskStateChanged(): void;
         RecalculateClipping(): void;
         RecalculateMasking(): void;
+        Raycast(sp: UnityEngine.Vector2, eventCamera: UnityEngine.Camera): boolean;
         SetAllDirty(): void;
         SetLayoutDirty(): void;
         SetVerticesDirty(): void;
@@ -12571,7 +13248,6 @@ export declare namespace ReactUnity {
         GraphicUpdateComplete(): void;
         OnRebuildRequested(): void;
         SetNativeSize(): void;
-        Raycast(sp: UnityEngine.Vector2, eventCamera: UnityEngine.Camera): boolean;
         PixelAdjustPoint(point: UnityEngine.Vector2): UnityEngine.Vector2;
         GetPixelAdjustedRect(): UnityEngine.Rect;
         CrossFadeColor(targetColor: UnityEngine.Color, duration: number, ignoreTimeScale: boolean, useAlpha: boolean): void;
@@ -12626,6 +13302,7 @@ export declare namespace ReactUnity {
         BroadcastMessage(methodName: string, parameter: any): void;
         BroadcastMessage(methodName: string): void;
         BroadcastMessage(methodName: string, options: UnityEngine.SendMessageOptions): void;
+        GetEntityId(): UnityEngine.EntityId;
         GetInstanceID(): number;
         GetHashCode(): number;
         Equals(other: any): boolean;
@@ -12658,21 +13335,9 @@ export declare namespace ReactUnity {
         enabled: boolean;
         isActiveAndEnabled: boolean;
         transform: UnityEngine.Transform;
+        transformHandle: UnityEngine.TransformHandle;
         gameObject: UnityEngine.GameObject;
         tag: string;
-        rigidbody: UnityEngine.Component;
-        rigidbody2D: UnityEngine.Component;
-        camera: UnityEngine.Component;
-        light: UnityEngine.Component;
-        animation: UnityEngine.Component;
-        constantForce: UnityEngine.Component;
-        renderer: UnityEngine.Component;
-        audio: UnityEngine.Component;
-        networkView: UnityEngine.Component;
-        collider: UnityEngine.Component;
-        collider2D: UnityEngine.Component;
-        hingeJoint: UnityEngine.Component;
-        particleSystem: UnityEngine.Component;
         name: string;
         hideFlags: UnityEngine.HideFlags;
         Slice: ReactUnity.Types.BorderImageSlice;
@@ -12685,9 +13350,9 @@ export declare namespace ReactUnity {
         Cull(clipRect: UnityEngine.Rect, validRect: boolean): void;
         SetClipRect(clipRect: UnityEngine.Rect, validRect: boolean): void;
         SetClipSoftness(clipSoftness: UnityEngine.Vector2): void;
-        ParentMaskStateChanged(): void;
         RecalculateClipping(): void;
         RecalculateMasking(): void;
+        Raycast(sp: UnityEngine.Vector2, eventCamera: UnityEngine.Camera): boolean;
         SetAllDirty(): void;
         SetLayoutDirty(): void;
         SetVerticesDirty(): void;
@@ -12699,7 +13364,6 @@ export declare namespace ReactUnity {
         GraphicUpdateComplete(): void;
         OnRebuildRequested(): void;
         SetNativeSize(): void;
-        Raycast(sp: UnityEngine.Vector2, eventCamera: UnityEngine.Camera): boolean;
         PixelAdjustPoint(point: UnityEngine.Vector2): UnityEngine.Vector2;
         GetPixelAdjustedRect(): UnityEngine.Rect;
         CrossFadeColor(targetColor: UnityEngine.Color, duration: number, ignoreTimeScale: boolean, useAlpha: boolean): void;
@@ -12754,6 +13418,7 @@ export declare namespace ReactUnity {
         BroadcastMessage(methodName: string, parameter: any): void;
         BroadcastMessage(methodName: string): void;
         BroadcastMessage(methodName: string, options: UnityEngine.SendMessageOptions): void;
+        GetEntityId(): UnityEngine.EntityId;
         GetInstanceID(): number;
         GetHashCode(): number;
         Equals(other: any): boolean;
@@ -12786,21 +13451,9 @@ export declare namespace ReactUnity {
         enabled: boolean;
         isActiveAndEnabled: boolean;
         transform: UnityEngine.Transform;
+        transformHandle: UnityEngine.TransformHandle;
         gameObject: UnityEngine.GameObject;
         tag: string;
-        rigidbody: UnityEngine.Component;
-        rigidbody2D: UnityEngine.Component;
-        camera: UnityEngine.Component;
-        light: UnityEngine.Component;
-        animation: UnityEngine.Component;
-        constantForce: UnityEngine.Component;
-        renderer: UnityEngine.Component;
-        audio: UnityEngine.Component;
-        networkView: UnityEngine.Component;
-        collider: UnityEngine.Component;
-        collider2D: UnityEngine.Component;
-        hingeJoint: UnityEngine.Component;
-        particleSystem: UnityEngine.Component;
         name: string;
         hideFlags: UnityEngine.HideFlags;
         MaskRoot: UnityEngine.Transform;
@@ -12808,9 +13461,9 @@ export declare namespace ReactUnity {
         Cull(clipRect: UnityEngine.Rect, validRect: boolean): void;
         SetClipRect(clipRect: UnityEngine.Rect, validRect: boolean): void;
         SetClipSoftness(clipSoftness: UnityEngine.Vector2): void;
-        ParentMaskStateChanged(): void;
         RecalculateClipping(): void;
         RecalculateMasking(): void;
+        Raycast(sp: UnityEngine.Vector2, eventCamera: UnityEngine.Camera): boolean;
         SetAllDirty(): void;
         SetLayoutDirty(): void;
         SetVerticesDirty(): void;
@@ -12822,7 +13475,6 @@ export declare namespace ReactUnity {
         GraphicUpdateComplete(): void;
         OnRebuildRequested(): void;
         SetNativeSize(): void;
-        Raycast(sp: UnityEngine.Vector2, eventCamera: UnityEngine.Camera): boolean;
         PixelAdjustPoint(point: UnityEngine.Vector2): UnityEngine.Vector2;
         GetPixelAdjustedRect(): UnityEngine.Rect;
         CrossFadeColor(targetColor: UnityEngine.Color, duration: number, ignoreTimeScale: boolean, useAlpha: boolean): void;
@@ -12877,6 +13529,7 @@ export declare namespace ReactUnity {
         BroadcastMessage(methodName: string, parameter: any): void;
         BroadcastMessage(methodName: string): void;
         BroadcastMessage(methodName: string, options: UnityEngine.SendMessageOptions): void;
+        GetEntityId(): UnityEngine.EntityId;
         GetInstanceID(): number;
         GetHashCode(): number;
         Equals(other: any): boolean;
@@ -12951,30 +13604,18 @@ export declare namespace ReactUnity {
         enabled: boolean;
         isActiveAndEnabled: boolean;
         transform: UnityEngine.Transform;
+        transformHandle: UnityEngine.TransformHandle;
         gameObject: UnityEngine.GameObject;
         tag: string;
-        rigidbody: UnityEngine.Component;
-        rigidbody2D: UnityEngine.Component;
-        camera: UnityEngine.Component;
-        light: UnityEngine.Component;
-        animation: UnityEngine.Component;
-        constantForce: UnityEngine.Component;
-        renderer: UnityEngine.Component;
-        audio: UnityEngine.Component;
-        networkView: UnityEngine.Component;
-        collider: UnityEngine.Component;
-        collider2D: UnityEngine.Component;
-        hingeJoint: UnityEngine.Component;
-        particleSystem: UnityEngine.Component;
         name: string;
         hideFlags: UnityEngine.HideFlags;
         GetModifiedMaterial(baseMaterial: UnityEngine.Material): UnityEngine.Material;
         Cull(clipRect: UnityEngine.Rect, validRect: boolean): void;
         SetClipRect(clipRect: UnityEngine.Rect, validRect: boolean): void;
         SetClipSoftness(clipSoftness: UnityEngine.Vector2): void;
-        ParentMaskStateChanged(): void;
         RecalculateClipping(): void;
         RecalculateMasking(): void;
+        Raycast(sp: UnityEngine.Vector2, eventCamera: UnityEngine.Camera): boolean;
         SetAllDirty(): void;
         SetLayoutDirty(): void;
         SetVerticesDirty(): void;
@@ -12986,7 +13627,6 @@ export declare namespace ReactUnity {
         GraphicUpdateComplete(): void;
         OnRebuildRequested(): void;
         SetNativeSize(): void;
-        Raycast(sp: UnityEngine.Vector2, eventCamera: UnityEngine.Camera): boolean;
         PixelAdjustPoint(point: UnityEngine.Vector2): UnityEngine.Vector2;
         GetPixelAdjustedRect(): UnityEngine.Rect;
         CrossFadeColor(targetColor: UnityEngine.Color, duration: number, ignoreTimeScale: boolean, useAlpha: boolean): void;
@@ -13041,6 +13681,7 @@ export declare namespace ReactUnity {
         BroadcastMessage(methodName: string, parameter: any): void;
         BroadcastMessage(methodName: string): void;
         BroadcastMessage(methodName: string, options: UnityEngine.SendMessageOptions): void;
+        GetEntityId(): UnityEngine.EntityId;
         GetInstanceID(): number;
         GetHashCode(): number;
         Equals(other: any): boolean;
@@ -13067,6 +13708,7 @@ export declare namespace ReactUnity {
         BRRadius: ReactUnity.Types.YogaValue2;
         BLRadius: ReactUnity.Types.YogaValue2;
         UniformResolution: ReactUnity.UGUI.Shapes.WebRoundingResolutionProperties;
+        ValueEquals(other: ReactUnity.UGUI.Shapes.WebRoundingProperties): boolean;
         UpdateAdjusted(size: UnityEngine.Vector2, innerSize: UnityEngine.Vector2, outline?: ReactUnity.UGUI.Shapes.WebOutlineSizes | undefined, matchRounding?: ReactUnity.UGUI.Shapes.WebRoundingProperties): void;
         OnCheck(): void;
         OffsetBorder(size: UnityEngine.Vector2, borderSizes: UnityEngine.Vector4): ReactUnity.UGUI.Shapes.WebRoundingProperties;
@@ -13085,6 +13727,7 @@ export declare namespace ReactUnity {
         Resolution: ReactUnity.UGUI.Shapes.WebRoundingResolutionProperties_ResolutionType;
         FixedResolution: number;
         ResolutionMaxDistance: number;
+        ValueEquals(other: ReactUnity.UGUI.Shapes.WebRoundingResolutionProperties): boolean;
         OnCheck(minFixedResolution?: number): void;
         UpdateAdjusted(radius: number, numCorners: number, matchRounding?: ReactUnity.UGUI.Shapes.WebRoundingResolutionProperties): void;
         UpdateAdjusted(radius: number, overrideProperties: ReactUnity.UGUI.Shapes.WebRoundingResolutionProperties, numCorners: number, matchRounding?: ReactUnity.UGUI.Shapes.WebRoundingResolutionProperties): void;
@@ -13119,21 +13762,9 @@ export declare namespace ReactUnity {
         enabled: boolean;
         isActiveAndEnabled: boolean;
         transform: UnityEngine.Transform;
+        transformHandle: UnityEngine.TransformHandle;
         gameObject: UnityEngine.GameObject;
         tag: string;
-        rigidbody: UnityEngine.Component;
-        rigidbody2D: UnityEngine.Component;
-        camera: UnityEngine.Component;
-        light: UnityEngine.Component;
-        animation: UnityEngine.Component;
-        constantForce: UnityEngine.Component;
-        renderer: UnityEngine.Component;
-        audio: UnityEngine.Component;
-        networkView: UnityEngine.Component;
-        collider: UnityEngine.Component;
-        collider2D: UnityEngine.Component;
-        hingeJoint: UnityEngine.Component;
-        particleSystem: UnityEngine.Component;
         name: string;
         hideFlags: UnityEngine.HideFlags;
         MaskRoot: UnityEngine.Transform;
@@ -13141,9 +13772,9 @@ export declare namespace ReactUnity {
         Cull(clipRect: UnityEngine.Rect, validRect: boolean): void;
         SetClipRect(clipRect: UnityEngine.Rect, validRect: boolean): void;
         SetClipSoftness(clipSoftness: UnityEngine.Vector2): void;
-        ParentMaskStateChanged(): void;
         RecalculateClipping(): void;
         RecalculateMasking(): void;
+        Raycast(sp: UnityEngine.Vector2, eventCamera: UnityEngine.Camera): boolean;
         SetAllDirty(): void;
         SetLayoutDirty(): void;
         SetVerticesDirty(): void;
@@ -13155,7 +13786,6 @@ export declare namespace ReactUnity {
         GraphicUpdateComplete(): void;
         OnRebuildRequested(): void;
         SetNativeSize(): void;
-        Raycast(sp: UnityEngine.Vector2, eventCamera: UnityEngine.Camera): boolean;
         PixelAdjustPoint(point: UnityEngine.Vector2): UnityEngine.Vector2;
         GetPixelAdjustedRect(): UnityEngine.Rect;
         CrossFadeColor(targetColor: UnityEngine.Color, duration: number, ignoreTimeScale: boolean, useAlpha: boolean): void;
@@ -13210,6 +13840,7 @@ export declare namespace ReactUnity {
         BroadcastMessage(methodName: string, parameter: any): void;
         BroadcastMessage(methodName: string): void;
         BroadcastMessage(methodName: string, options: UnityEngine.SendMessageOptions): void;
+        GetEntityId(): UnityEngine.EntityId;
         GetInstanceID(): number;
         GetHashCode(): number;
         Equals(other: any): boolean;
@@ -13252,21 +13883,9 @@ export declare namespace ReactUnity {
         enabled: boolean;
         isActiveAndEnabled: boolean;
         transform: UnityEngine.Transform;
+        transformHandle: UnityEngine.TransformHandle;
         gameObject: UnityEngine.GameObject;
         tag: string;
-        rigidbody: UnityEngine.Component;
-        rigidbody2D: UnityEngine.Component;
-        camera: UnityEngine.Component;
-        light: UnityEngine.Component;
-        animation: UnityEngine.Component;
-        constantForce: UnityEngine.Component;
-        renderer: UnityEngine.Component;
-        audio: UnityEngine.Component;
-        networkView: UnityEngine.Component;
-        collider: UnityEngine.Component;
-        collider2D: UnityEngine.Component;
-        hingeJoint: UnityEngine.Component;
-        particleSystem: UnityEngine.Component;
         name: string;
         hideFlags: UnityEngine.HideFlags;
         ClearListeners(): void;
@@ -13313,6 +13932,7 @@ export declare namespace ReactUnity {
         BroadcastMessage(methodName: string, parameter: any): void;
         BroadcastMessage(methodName: string): void;
         BroadcastMessage(methodName: string, options: UnityEngine.SendMessageOptions): void;
+        GetEntityId(): UnityEngine.EntityId;
         GetInstanceID(): number;
         GetHashCode(): number;
         Equals(other: any): boolean;
@@ -13331,21 +13951,9 @@ export declare namespace ReactUnity {
         enabled: boolean;
         isActiveAndEnabled: boolean;
         transform: UnityEngine.Transform;
+        transformHandle: UnityEngine.TransformHandle;
         gameObject: UnityEngine.GameObject;
         tag: string;
-        rigidbody: UnityEngine.Component;
-        rigidbody2D: UnityEngine.Component;
-        camera: UnityEngine.Component;
-        light: UnityEngine.Component;
-        animation: UnityEngine.Component;
-        constantForce: UnityEngine.Component;
-        renderer: UnityEngine.Component;
-        audio: UnityEngine.Component;
-        networkView: UnityEngine.Component;
-        collider: UnityEngine.Component;
-        collider2D: UnityEngine.Component;
-        hingeJoint: UnityEngine.Component;
-        particleSystem: UnityEngine.Component;
         name: string;
         hideFlags: UnityEngine.HideFlags;
         Context: ReactUnity.ReactContext;
@@ -13393,6 +14001,7 @@ export declare namespace ReactUnity {
         BroadcastMessage(methodName: string, parameter: any): void;
         BroadcastMessage(methodName: string): void;
         BroadcastMessage(methodName: string, options: UnityEngine.SendMessageOptions): void;
+        GetEntityId(): UnityEngine.EntityId;
         GetInstanceID(): number;
         GetHashCode(): number;
         Equals(other: any): boolean;
@@ -13409,21 +14018,9 @@ export declare namespace ReactUnity {
         enabled: boolean;
         isActiveAndEnabled: boolean;
         transform: UnityEngine.Transform;
+        transformHandle: UnityEngine.TransformHandle;
         gameObject: UnityEngine.GameObject;
         tag: string;
-        rigidbody: UnityEngine.Component;
-        rigidbody2D: UnityEngine.Component;
-        camera: UnityEngine.Component;
-        light: UnityEngine.Component;
-        animation: UnityEngine.Component;
-        constantForce: UnityEngine.Component;
-        renderer: UnityEngine.Component;
-        audio: UnityEngine.Component;
-        networkView: UnityEngine.Component;
-        collider: UnityEngine.Component;
-        collider2D: UnityEngine.Component;
-        hingeJoint: UnityEngine.Component;
-        particleSystem: UnityEngine.Component;
         name: string;
         hideFlags: UnityEngine.HideFlags;
         ClearListeners(): void;
@@ -13470,6 +14067,7 @@ export declare namespace ReactUnity {
         BroadcastMessage(methodName: string, parameter: any): void;
         BroadcastMessage(methodName: string): void;
         BroadcastMessage(methodName: string, options: UnityEngine.SendMessageOptions): void;
+        GetEntityId(): UnityEngine.EntityId;
         GetInstanceID(): number;
         GetHashCode(): number;
         Equals(other: any): boolean;
@@ -13486,21 +14084,9 @@ export declare namespace ReactUnity {
         enabled: boolean;
         isActiveAndEnabled: boolean;
         transform: UnityEngine.Transform;
+        transformHandle: UnityEngine.TransformHandle;
         gameObject: UnityEngine.GameObject;
         tag: string;
-        rigidbody: UnityEngine.Component;
-        rigidbody2D: UnityEngine.Component;
-        camera: UnityEngine.Component;
-        light: UnityEngine.Component;
-        animation: UnityEngine.Component;
-        constantForce: UnityEngine.Component;
-        renderer: UnityEngine.Component;
-        audio: UnityEngine.Component;
-        networkView: UnityEngine.Component;
-        collider: UnityEngine.Component;
-        collider2D: UnityEngine.Component;
-        hingeJoint: UnityEngine.Component;
-        particleSystem: UnityEngine.Component;
         name: string;
         hideFlags: UnityEngine.HideFlags;
         ClearListeners(): void;
@@ -13547,6 +14133,7 @@ export declare namespace ReactUnity {
         BroadcastMessage(methodName: string, parameter: any): void;
         BroadcastMessage(methodName: string): void;
         BroadcastMessage(methodName: string, options: UnityEngine.SendMessageOptions): void;
+        GetEntityId(): UnityEngine.EntityId;
         GetInstanceID(): number;
         GetHashCode(): number;
         Equals(other: any): boolean;
@@ -13563,21 +14150,9 @@ export declare namespace ReactUnity {
         enabled: boolean;
         isActiveAndEnabled: boolean;
         transform: UnityEngine.Transform;
+        transformHandle: UnityEngine.TransformHandle;
         gameObject: UnityEngine.GameObject;
         tag: string;
-        rigidbody: UnityEngine.Component;
-        rigidbody2D: UnityEngine.Component;
-        camera: UnityEngine.Component;
-        light: UnityEngine.Component;
-        animation: UnityEngine.Component;
-        constantForce: UnityEngine.Component;
-        renderer: UnityEngine.Component;
-        audio: UnityEngine.Component;
-        networkView: UnityEngine.Component;
-        collider: UnityEngine.Component;
-        collider2D: UnityEngine.Component;
-        hingeJoint: UnityEngine.Component;
-        particleSystem: UnityEngine.Component;
         name: string;
         hideFlags: UnityEngine.HideFlags;
         ClearListeners(): void;
@@ -13622,6 +14197,7 @@ export declare namespace ReactUnity {
         BroadcastMessage(methodName: string, parameter: any): void;
         BroadcastMessage(methodName: string): void;
         BroadcastMessage(methodName: string, options: UnityEngine.SendMessageOptions): void;
+        GetEntityId(): UnityEngine.EntityId;
         GetInstanceID(): number;
         GetHashCode(): number;
         Equals(other: any): boolean;
@@ -13638,21 +14214,9 @@ export declare namespace ReactUnity {
         enabled: boolean;
         isActiveAndEnabled: boolean;
         transform: UnityEngine.Transform;
+        transformHandle: UnityEngine.TransformHandle;
         gameObject: UnityEngine.GameObject;
         tag: string;
-        rigidbody: UnityEngine.Component;
-        rigidbody2D: UnityEngine.Component;
-        camera: UnityEngine.Component;
-        light: UnityEngine.Component;
-        animation: UnityEngine.Component;
-        constantForce: UnityEngine.Component;
-        renderer: UnityEngine.Component;
-        audio: UnityEngine.Component;
-        networkView: UnityEngine.Component;
-        collider: UnityEngine.Component;
-        collider2D: UnityEngine.Component;
-        hingeJoint: UnityEngine.Component;
-        particleSystem: UnityEngine.Component;
         name: string;
         hideFlags: UnityEngine.HideFlags;
         OnPointerEnter(eventData: UnityEngine.EventSystems.PointerEventData): void;
@@ -13699,6 +14263,7 @@ export declare namespace ReactUnity {
         BroadcastMessage(methodName: string, parameter: any): void;
         BroadcastMessage(methodName: string): void;
         BroadcastMessage(methodName: string, options: UnityEngine.SendMessageOptions): void;
+        GetEntityId(): UnityEngine.EntityId;
         GetInstanceID(): number;
         GetHashCode(): number;
         Equals(other: any): boolean;
@@ -13715,21 +14280,9 @@ export declare namespace ReactUnity {
         enabled: boolean;
         isActiveAndEnabled: boolean;
         transform: UnityEngine.Transform;
+        transformHandle: UnityEngine.TransformHandle;
         gameObject: UnityEngine.GameObject;
         tag: string;
-        rigidbody: UnityEngine.Component;
-        rigidbody2D: UnityEngine.Component;
-        camera: UnityEngine.Component;
-        light: UnityEngine.Component;
-        animation: UnityEngine.Component;
-        constantForce: UnityEngine.Component;
-        renderer: UnityEngine.Component;
-        audio: UnityEngine.Component;
-        networkView: UnityEngine.Component;
-        collider: UnityEngine.Component;
-        collider2D: UnityEngine.Component;
-        hingeJoint: UnityEngine.Component;
-        particleSystem: UnityEngine.Component;
         name: string;
         hideFlags: UnityEngine.HideFlags;
         OnPointerEnter(eventData: UnityEngine.EventSystems.PointerEventData): void;
@@ -13776,6 +14329,7 @@ export declare namespace ReactUnity {
         BroadcastMessage(methodName: string, parameter: any): void;
         BroadcastMessage(methodName: string): void;
         BroadcastMessage(methodName: string, options: UnityEngine.SendMessageOptions): void;
+        GetEntityId(): UnityEngine.EntityId;
         GetInstanceID(): number;
         GetHashCode(): number;
         Equals(other: any): boolean;
@@ -13832,6 +14386,7 @@ export declare namespace ReactUnity {
       ScrollTop: number;
       ScrollWidth: number;
       ScrollHeight: number;
+      IsScrollContainer: boolean;
       SetProperty(propertyName: string, value: any): void;
       Activate(): void;
       OpenUrl(target?: string): void;
@@ -13922,6 +14477,7 @@ export declare namespace ReactUnity {
       ScrollTop: number;
       ScrollWidth: number;
       ScrollHeight: number;
+      IsScrollContainer: boolean;
       SetProperty(property: string, value: any): void;
       AddEventListener(eventName: string, callback: ReactUnity.Helpers.Callback): (() => void);
       ConvertValue(value: any): TValueType;
@@ -14016,6 +14572,7 @@ export declare namespace ReactUnity {
       ScrollTop: number;
       ScrollWidth: number;
       ScrollHeight: number;
+      IsScrollContainer: boolean;
       SetProperty(property: string, value: any): void;
       SelectAll(): void;
       AddEventListener(eventName: string, callback: ReactUnity.Helpers.Callback): (() => void);
@@ -14112,6 +14669,7 @@ export declare namespace ReactUnity {
       ScrollTop: number;
       ScrollWidth: number;
       ScrollHeight: number;
+      IsScrollContainer: boolean;
       SetProperty(property: string, value: any): void;
       SelectRange(rangeCursorIndex: number, selectionIndex: number): void;
       SelectAll(): void;
@@ -14204,6 +14762,7 @@ export declare namespace ReactUnity {
       ScrollTop: number;
       ScrollWidth: number;
       ScrollHeight: number;
+      IsScrollContainer: boolean;
       SetProperty(property: string, value: any): void;
       Pool(): boolean;
       AddEventListener(eventName: string, fun: ReactUnity.Helpers.Callback): (() => void);
@@ -14292,6 +14851,7 @@ export declare namespace ReactUnity {
       ScrollTop: number;
       ScrollWidth: number;
       ScrollHeight: number;
+      IsScrollContainer: boolean;
       SetText(text: string): void;
       SetProperty(property: string, value: any): void;
       Pool(): boolean;
@@ -14380,6 +14940,7 @@ export declare namespace ReactUnity {
       ScrollTop: number;
       ScrollWidth: number;
       ScrollHeight: number;
+      IsScrollContainer: boolean;
       AddEventListener(eventName: string, callback: ReactUnity.Helpers.Callback): (() => void);
       Pool(): boolean;
       SetProperty(property: string, value: any): void;
@@ -14469,9 +15030,100 @@ export declare namespace ReactUnity {
       ScrollTop: number;
       ScrollWidth: number;
       ScrollHeight: number;
+      IsScrollContainer: boolean;
       Pool(): boolean;
       AddEventListener(eventName: string, fun: ReactUnity.Helpers.Callback): (() => void);
       SetProperty(property: string, value: any): void;
+      GetComponent(type: System.Type): any;
+      AddComponent(type: System.Type): any;
+      CaptureMouse(): void;
+      ReleaseMouse(): void;
+      HasMouseCapture(): boolean;
+      UpdateOrder(prev: number, current: number): boolean;
+      Activate(): void;
+      Update(): void;
+      MarkForStyleResolving(recursive: boolean): void;
+      Remove(): void;
+      Destroy(recursive?: boolean): void;
+      Revive(): boolean;
+      OnClassChange(): void;
+      SetParent(newParent: ReactUnity.IContainerComponent, relativeTo?: ReactUnity.IReactComponent, insertAfter?: boolean): void;
+      SetEventListener(eventName: string, fun: ReactUnity.Helpers.Callback): void;
+      FireEvent(eventName: string, arg: any): void;
+      SetData(propertyName: string, value: any): void;
+      SetCustomProperty(propertyName: string, value: any): void;
+      ResolveStyle(recursive?: boolean): void;
+      MarkForStyleResolvingWithSiblings(recursive: boolean): void;
+      ApplyStyles(): void;
+      ApplyLayoutStyles(): void;
+      Matches(query: string): boolean;
+      Closest(query: string): ReactUnity.IReactComponent;
+      QuerySelector(query: string): ReactUnity.IReactComponent;
+      QuerySelectorAll(query: string): ReactUnity.IReactComponent[];
+      Accept(visitor: ReactUnity.Helpers.Visitors.ReactComponentVisitor, skipSelf?: boolean): void;
+      AddBefore(): void;
+      RemoveBefore(): void;
+      AddAfter(): void;
+      RemoveAfter(): void;
+      RegisterChild(child: ReactUnity.IReactComponent, index?: number): void;
+      UnregisterChild(child: ReactUnity.IReactComponent): void;
+      Clear(): void;
+      Equals(obj: any): boolean;
+      GetHashCode(): number;
+      GetType(): System.Type;
+      ToString(): string;
+    }
+    export class IMGUIComponent {
+      constructor(context: ReactUnity.UIToolkit.UIToolkitContext);
+      Element: UnityEngine.UIElements.IMGUIContainer;
+      TargetElement: UnityEngine.UIElements.VisualElement;
+      ClientWidth: number;
+      ClientHeight: number;
+      Disabled: boolean;
+      Context: ReactUnity.UIToolkit.UIToolkitContext;
+      Parent: ReactUnity.IContainerComponent;
+      Data: ReactUnity.Reactive.ReactiveObjectRecord;
+      Layout: Yoga.YogaNode;
+      ComputedStyle: ReactUnity.Styling.NodeStyle;
+      StyleState: ReactUnity.Styling.StyleState;
+      StateStyles: ReactUnity.Styling.StateStyles;
+      Style: InlineStyleRemap;
+      InlineStylesheet: ReactUnity.Styling.StyleSheet;
+      CustomProperties: Record<string, any>;
+      RevertCalculator: ReactUnity.Styling.IRevertCalculator;
+      ParentIndex: number;
+      CurrentOrder: number;
+      Entering: boolean;
+      Leaving: boolean;
+      UpdatedThisFrame: boolean;
+      Destroyed: boolean;
+      Tag: string;
+      TextContent: string;
+      PoolStack: System.Collections.Generic.Stack<ReactUnity.IPoolableComponent>;
+      IsPseudoElement: boolean;
+      ResolvedName: string;
+      ClassName: string;
+      ClassList: ReactUnity.Helpers.ClassList;
+      Id: string;
+      Name: string;
+      RefId: number;
+      InstanceId: number;
+      IsContainer: boolean;
+      Children: ReactUnity.IReactComponent[];
+      BeforeRules: ReactUnity.Styling.Rules.RuleTreeNode<ReactUnity.Styling.Rules.StyleData>[];
+      AfterRules: ReactUnity.Styling.Rules.RuleTreeNode<ReactUnity.Styling.Rules.StyleData>[];
+      BeforePseudo: ReactUnity.IReactComponent;
+      AfterPseudo: ReactUnity.IReactComponent;
+      ScrollLeft: number;
+      ScrollTop: number;
+      ScrollWidth: number;
+      ScrollHeight: number;
+      IsScrollContainer: boolean;
+      SetProperty(property: string, value: any): void;
+      MarkDirtyLayout(): void;
+      MarkDirtyRepaint(): void;
+      Pool(): boolean;
+      AddEventListener(eventName: string, fun: ReactUnity.Helpers.Callback): (() => void);
       GetComponent(type: System.Type): any;
       AddComponent(type: System.Type): any;
       CaptureMouse(): void;
@@ -14558,6 +15210,7 @@ export declare namespace ReactUnity {
       ScrollTop: number;
       ScrollWidth: number;
       ScrollHeight: number;
+      IsScrollContainer: boolean;
       SetText(text: string): void;
       SetProperty(property: string, value: any): void;
       ApplySet(value: any): void;
@@ -14647,96 +15300,8 @@ export declare namespace ReactUnity {
       ScrollTop: number;
       ScrollWidth: number;
       ScrollHeight: number;
+      IsScrollContainer: boolean;
       SetProperty(property: string, value: any): void;
-      Pool(): boolean;
-      AddEventListener(eventName: string, fun: ReactUnity.Helpers.Callback): (() => void);
-      GetComponent(type: System.Type): any;
-      AddComponent(type: System.Type): any;
-      CaptureMouse(): void;
-      ReleaseMouse(): void;
-      HasMouseCapture(): boolean;
-      UpdateOrder(prev: number, current: number): boolean;
-      Activate(): void;
-      Update(): void;
-      MarkForStyleResolving(recursive: boolean): void;
-      Remove(): void;
-      Destroy(recursive?: boolean): void;
-      Revive(): boolean;
-      OnClassChange(): void;
-      SetParent(newParent: ReactUnity.IContainerComponent, relativeTo?: ReactUnity.IReactComponent, insertAfter?: boolean): void;
-      SetEventListener(eventName: string, fun: ReactUnity.Helpers.Callback): void;
-      FireEvent(eventName: string, arg: any): void;
-      SetData(propertyName: string, value: any): void;
-      SetCustomProperty(propertyName: string, value: any): void;
-      ResolveStyle(recursive?: boolean): void;
-      MarkForStyleResolvingWithSiblings(recursive: boolean): void;
-      ApplyStyles(): void;
-      ApplyLayoutStyles(): void;
-      Matches(query: string): boolean;
-      Closest(query: string): ReactUnity.IReactComponent;
-      QuerySelector(query: string): ReactUnity.IReactComponent;
-      QuerySelectorAll(query: string): ReactUnity.IReactComponent[];
-      Accept(visitor: ReactUnity.Helpers.Visitors.ReactComponentVisitor, skipSelf?: boolean): void;
-      AddBefore(): void;
-      RemoveBefore(): void;
-      AddAfter(): void;
-      RemoveAfter(): void;
-      RegisterChild(child: ReactUnity.IReactComponent, index?: number): void;
-      UnregisterChild(child: ReactUnity.IReactComponent): void;
-      Clear(): void;
-      Equals(obj: any): boolean;
-      GetHashCode(): number;
-      GetType(): System.Type;
-      ToString(): string;
-    }
-    export class IMGUIComponent {
-      constructor(context: ReactUnity.UIToolkit.UIToolkitContext);
-      Element: UnityEngine.UIElements.IMGUIContainer;
-      TargetElement: UnityEngine.UIElements.VisualElement;
-      ClientWidth: number;
-      ClientHeight: number;
-      Disabled: boolean;
-      Context: ReactUnity.UIToolkit.UIToolkitContext;
-      Parent: ReactUnity.IContainerComponent;
-      Data: ReactUnity.Reactive.ReactiveObjectRecord;
-      Layout: Yoga.YogaNode;
-      ComputedStyle: ReactUnity.Styling.NodeStyle;
-      StyleState: ReactUnity.Styling.StyleState;
-      StateStyles: ReactUnity.Styling.StateStyles;
-      Style: InlineStyleRemap;
-      InlineStylesheet: ReactUnity.Styling.StyleSheet;
-      CustomProperties: Record<string, any>;
-      RevertCalculator: ReactUnity.Styling.IRevertCalculator;
-      ParentIndex: number;
-      CurrentOrder: number;
-      Entering: boolean;
-      Leaving: boolean;
-      UpdatedThisFrame: boolean;
-      Destroyed: boolean;
-      Tag: string;
-      TextContent: string;
-      PoolStack: System.Collections.Generic.Stack<ReactUnity.IPoolableComponent>;
-      IsPseudoElement: boolean;
-      ResolvedName: string;
-      ClassName: string;
-      ClassList: ReactUnity.Helpers.ClassList;
-      Id: string;
-      Name: string;
-      RefId: number;
-      InstanceId: number;
-      IsContainer: boolean;
-      Children: ReactUnity.IReactComponent[];
-      BeforeRules: ReactUnity.Styling.Rules.RuleTreeNode<ReactUnity.Styling.Rules.StyleData>[];
-      AfterRules: ReactUnity.Styling.Rules.RuleTreeNode<ReactUnity.Styling.Rules.StyleData>[];
-      BeforePseudo: ReactUnity.IReactComponent;
-      AfterPseudo: ReactUnity.IReactComponent;
-      ScrollLeft: number;
-      ScrollTop: number;
-      ScrollWidth: number;
-      ScrollHeight: number;
-      SetProperty(property: string, value: any): void;
-      MarkDirtyLayout(): void;
-      MarkDirtyRepaint(): void;
       Pool(): boolean;
       AddEventListener(eventName: string, fun: ReactUnity.Helpers.Callback): (() => void);
       GetComponent(type: System.Type): any;
@@ -14826,6 +15391,7 @@ export declare namespace ReactUnity {
       ScrollTop: number;
       ScrollWidth: number;
       ScrollHeight: number;
+      IsScrollContainer: boolean;
       SetParent(newParent: ReactUnity.IContainerComponent, relativeTo?: ReactUnity.IReactComponent, insertAfter?: boolean): void;
       SetProperty(propertyName: string, value: any): void;
       Pool(): boolean;
@@ -14915,6 +15481,7 @@ export declare namespace ReactUnity {
       ScrollTop: number;
       ScrollWidth: number;
       ScrollHeight: number;
+      IsScrollContainer: boolean;
       SetProperty(property: string, value: any): void;
       AddEventListener(eventName: string, callback: ReactUnity.Helpers.Callback): (() => void);
       ConvertValue(value: any): UnityEngine.Vector2;
@@ -14964,6 +15531,7 @@ export declare namespace ReactUnity {
       constructor(context: ReactUnity.UIToolkit.UIToolkitContext, tag?: string);
       ScrollWidth: number;
       ScrollHeight: number;
+      IsScrollContainer: boolean;
       ScrollLeft: number;
       ScrollTop: number;
       Element: UnityEngine.UIElements.ScrollView;
@@ -15096,6 +15664,7 @@ export declare namespace ReactUnity {
       ScrollTop: number;
       ScrollWidth: number;
       ScrollHeight: number;
+      IsScrollContainer: boolean;
       SetProperty(property: string, value: any): void;
       AddEventListener(eventName: string, callback: ReactUnity.Helpers.Callback): (() => void);
       ConvertValue(value: any): TValueType;
@@ -15190,6 +15759,7 @@ export declare namespace ReactUnity {
       ScrollTop: number;
       ScrollWidth: number;
       ScrollHeight: number;
+      IsScrollContainer: boolean;
       SetProperty(propertyName: string, value: any): void;
       Update(): void;
       Pool(): boolean;
@@ -15278,6 +15848,7 @@ export declare namespace ReactUnity {
       ScrollTop: number;
       ScrollWidth: number;
       ScrollHeight: number;
+      IsScrollContainer: boolean;
       SetText(text: string): void;
       SetProperty(property: string, value: any): void;
       Pool(): boolean;
@@ -15369,6 +15940,7 @@ export declare namespace ReactUnity {
       ScrollTop: number;
       ScrollWidth: number;
       ScrollHeight: number;
+      IsScrollContainer: boolean;
       SetProperty(property: string, value: any): void;
       AddEventListener(eventName: string, callback: ReactUnity.Helpers.Callback): (() => void);
       ConvertValue(value: any): boolean;
@@ -15463,6 +16035,7 @@ export declare namespace ReactUnity {
       ScrollTop: number;
       ScrollWidth: number;
       ScrollHeight: number;
+      IsScrollContainer: boolean;
       Pool(): boolean;
       AddEventListener(eventName: string, fun: ReactUnity.Helpers.Callback): (() => void);
       SetProperty(property: string, value: any): void;
@@ -15551,6 +16124,7 @@ export declare namespace ReactUnity {
       ScrollTop: number;
       ScrollWidth: number;
       ScrollHeight: number;
+      IsScrollContainer: boolean;
       AddEventListener(eventName: string, callback: ReactUnity.Helpers.Callback): (() => void);
       SetProperty(property: string, value: any): void;
       ConvertValue(value: any): TValueType;
@@ -15619,21 +16193,9 @@ export declare namespace ReactUnity {
       enabled: boolean;
       isActiveAndEnabled: boolean;
       transform: UnityEngine.Transform;
+      transformHandle: UnityEngine.TransformHandle;
       gameObject: UnityEngine.GameObject;
       tag: string;
-      rigidbody: UnityEngine.Component;
-      rigidbody2D: UnityEngine.Component;
-      camera: UnityEngine.Component;
-      light: UnityEngine.Component;
-      animation: UnityEngine.Component;
-      constantForce: UnityEngine.Component;
-      renderer: UnityEngine.Component;
-      audio: UnityEngine.Component;
-      networkView: UnityEngine.Component;
-      collider: UnityEngine.Component;
-      collider2D: UnityEngine.Component;
-      hingeJoint: UnityEngine.Component;
-      particleSystem: UnityEngine.Component;
       name: string;
       hideFlags: UnityEngine.HideFlags;
       DefaultIconSet: ReactUnity.Styling.IconSet;
@@ -15684,6 +16246,7 @@ export declare namespace ReactUnity {
       BroadcastMessage(methodName: string, parameter: any): void;
       BroadcastMessage(methodName: string): void;
       BroadcastMessage(methodName: string, options: UnityEngine.SendMessageOptions): void;
+      GetEntityId(): UnityEngine.EntityId;
       GetInstanceID(): number;
       GetHashCode(): number;
       Equals(other: any): boolean;
@@ -15700,12 +16263,10 @@ export declare namespace ReactUnity {
       Globals: ReactUnity.Helpers.GlobalRecord;
       EngineType: ReactUnity.Scripting.JavascriptEngineType;
       AdvancedOptions: ReactUnity.UIToolkit.ReactUnityElement_ReactAdvancedOptions;
-      viewDataKey: string;
       userData: any; // System.Object
       canGrabFocus: boolean;
       focusController: UnityEngine.UIElements.FocusController;
       disablePlayModeTint: boolean;
-      usageHints: UnityEngine.UIElements.UsageHints;
       transform: UnityEngine.UIElements.ITransform;
       scaledPixelsPerPoint: number;
       layout: UnityEngine.Rect;
@@ -15713,16 +16274,28 @@ export declare namespace ReactUnity {
       worldBound: UnityEngine.Rect;
       localBound: UnityEngine.Rect;
       worldTransform: UnityEngine.Matrix4x4;
-      pickingMode: UnityEngine.UIElements.PickingMode;
+      hasActivePseudoState: boolean;
+      hasInactivePseudoState: boolean;
+      hasHoverPseudoState: boolean;
+      hasCheckedPseudoState: boolean;
+      hasEnabledPseudoState: boolean;
+      hasDisabledPseudoState: boolean;
+      hasFocusPseudoState: boolean;
+      hasRootPseudoState: boolean;
       name: string;
-      enabledInHierarchy: boolean;
       enabledSelf: boolean;
+      viewDataKey: string;
+      pickingMode: UnityEngine.UIElements.PickingMode;
+      tooltip: string;
+      usageHints: UnityEngine.UIElements.UsageHints;
       languageDirection: UnityEngine.UIElements.LanguageDirection;
+      dataSourceType: System.Type;
+      resourcesReleased: boolean;
+      enabledInHierarchy: boolean;
       visible: boolean;
       generateVisualContent: ((obj: UnityEngine.UIElements.MeshGenerationContext) => void);
       dataSource: any; // System.Object
       dataSourcePath: Unity.Properties.PropertyPath;
-      dataSourceType: System.Type;
       experimental: UnityEngine.UIElements.IExperimentalFeatures;
       hierarchy: UnityEngine.UIElements.VisualElement_Hierarchy;
       cacheAsBitmap: boolean;
@@ -15736,7 +16309,6 @@ export declare namespace ReactUnity {
       resolvedStyle: UnityEngine.UIElements.IResolvedStyle;
       customStyle: UnityEngine.UIElements.ICustomStyle;
       styleSheets: UnityEngine.UIElements.VisualElementStyleSheetSet;
-      tooltip: string;
       focusable: boolean;
       tabIndex: number;
       delegatesFocus: boolean;
@@ -15745,24 +16317,40 @@ export declare namespace ReactUnity {
       Run(): void;
       Destroy(): void;
       Restart(): void;
+      SetActivePseudoState(value: boolean): void;
+      SetCheckedPseudoState(value: boolean): void;
+      ReleaseResources(): void;
       Focus(): void;
       SendEvent(e: UnityEngine.UIElements.EventBase): void;
       SetEnabled(value: boolean): void;
       MarkDirtyRepaint(): void;
+      IsMarkedForRepaint(): boolean;
       ContainsPoint(localPoint: UnityEngine.Vector2): boolean;
       Overlaps(rectangle: UnityEngine.Rect): boolean;
       ToString(): string;
       GetClasses(): System.Collections.Generic.IEnumerable<string>;
+      GetClassNames(): System.Collections.Generic.IEnumerable<UnityEngine.UIElements.UniqueStyleString>;
       ClearClassList(): void;
       AddToClassList(className: string): void;
+      AddToClassList(className: UnityEngine.UIElements.UniqueStyleString): void;
+      AddToClassList(className: string, className2: string): void;
+      AddToClassList(className: UnityEngine.UIElements.UniqueStyleString, className2: UnityEngine.UIElements.UniqueStyleString): void;
+      AddToClassList(...classNames: string[]): void;
+      AddToClassList(...classNames: UnityEngine.UIElements.UniqueStyleString[]): void;
+      AddToClassList(classNames: System.ReadOnlySpan<UnityEngine.UIElements.UniqueStyleString>): void;
       RemoveFromClassList(className: string): void;
+      RemoveFromClassList(className: UnityEngine.UIElements.UniqueStyleString): void;
       ToggleInClassList(className: string): void;
+      ToggleInClassList(className: UnityEngine.UIElements.UniqueStyleString): void;
       EnableInClassList(className: string, enable: boolean): void;
+      EnableInClassList(className: UnityEngine.UIElements.UniqueStyleString, enable: boolean): void;
       ClassListContains(cls: string): boolean;
+      ClassListContains(cls: UnityEngine.UIElements.UniqueStyleString): boolean;
       FindAncestorUserData(): any;
       SetBinding(bindingId: UnityEngine.UIElements.BindingId, binding: UnityEngine.UIElements.Binding): void;
       GetBinding(bindingId: UnityEngine.UIElements.BindingId): UnityEngine.UIElements.Binding;
       GetBindingInfos(): System.Collections.Generic.IEnumerable<UnityEngine.UIElements.BindingInfo>;
+      GetBindingInfos(bindingInfos: UnityEngine.UIElements.BindingInfo[]): void;
       HasBinding(bindingId: UnityEngine.UIElements.BindingId): boolean;
       ClearBinding(bindingId: UnityEngine.UIElements.BindingId): void;
       ClearBindings(): void;
@@ -15773,6 +16361,7 @@ export declare namespace ReactUnity {
       Remove(element: UnityEngine.UIElements.VisualElement): void;
       RemoveAt(index: number): void;
       Clear(): void;
+      Clear(options: UnityEngine.UIElements.VisualElementClearOptions): void;
       ElementAt(index: number): UnityEngine.UIElements.VisualElement;
       IndexOf(element: UnityEngine.UIElements.VisualElement): number;
       Children(): System.Collections.Generic.IEnumerable<UnityEngine.UIElements.VisualElement>;
@@ -15784,7 +16373,11 @@ export declare namespace ReactUnity {
       RemoveFromHierarchy(): void;
       Contains(child: UnityEngine.UIElements.VisualElement): boolean;
       FindCommonAncestor(other: UnityEngine.UIElements.VisualElement): UnityEngine.UIElements.VisualElement;
+      AddMeshModifier(callback: ((ctx: UnityEngine.UIElements.MeshModificationContext) => void), recursive?: boolean, priority?: number): void;
+      ClearMeshModifiers(): void;
+      RemoveMeshModifier(callback: ((ctx: UnityEngine.UIElements.MeshModificationContext) => void)): void;
       Blur(): void;
+      UnregisterAllRemovableCallbacks(): void;
       HasTrickleDownHandlers(): boolean;
       HasBubbleUpHandlers(): boolean;
       Equals(obj: any): boolean;
@@ -15813,6 +16406,8 @@ export declare namespace ReactUnity {
       static GetStyleFloatDouble(style: ReactUnity.Styling.NodeStyle, prop: ReactUnity.Styling.StyleProperty, prop2: ReactUnity.Styling.StyleProperty): UnityEngine.UIElements.StyleFloat;
       static GetStyleLength(style: ReactUnity.Styling.NodeStyle, prop: ReactUnity.Styling.StyleProperty): UnityEngine.UIElements.StyleLength;
       static GetStyleLengthDouble(style: ReactUnity.Styling.NodeStyle, prop: ReactUnity.Styling.StyleProperty, prop2: ReactUnity.Styling.StyleProperty): UnityEngine.UIElements.StyleLength;
+      static GetStyleLengthTriple(style: ReactUnity.Styling.NodeStyle, prop: ReactUnity.Styling.StyleProperty, prop2: ReactUnity.Styling.StyleProperty, prop3: ReactUnity.Styling.StyleProperty): UnityEngine.UIElements.StyleLength;
+      static GetStyleFloatTriple(style: ReactUnity.Styling.NodeStyle, prop: ReactUnity.Styling.StyleProperty, prop2: ReactUnity.Styling.StyleProperty, prop3: ReactUnity.Styling.StyleProperty): UnityEngine.UIElements.StyleFloat;
       static GetStyleBorderRadius(style: ReactUnity.Styling.NodeStyle, prop: ReactUnity.Styling.StyleProperty): UnityEngine.UIElements.StyleLength;
       static GetStyleBorderColor(style: ReactUnity.Styling.NodeStyle, prop: ReactUnity.Styling.StyleProperty): UnityEngine.UIElements.StyleColor;
       static GetStyleBackgroundPosition(style: ReactUnity.Styling.NodeStyle, prop: ReactUnity.Styling.ValueListStyleProperty): UnityEngine.UIElements.StyleBackgroundPosition;
@@ -15897,15 +16492,13 @@ export declare namespace ReactUnity {
       sprite: UnityEngine.Sprite;
       vectorImage: UnityEngine.UIElements.VectorImage;
       sourceRect: UnityEngine.Rect;
-      uv: UnityEngine.Rect;
-      scaleMode: UnityEngine.ScaleMode;
       tintColor: UnityEngine.Color;
-      viewDataKey: string;
+      scaleMode: UnityEngine.ScaleMode;
+      uv: UnityEngine.Rect;
       userData: any; // System.Object
       canGrabFocus: boolean;
       focusController: UnityEngine.UIElements.FocusController;
       disablePlayModeTint: boolean;
-      usageHints: UnityEngine.UIElements.UsageHints;
       transform: UnityEngine.UIElements.ITransform;
       scaledPixelsPerPoint: number;
       layout: UnityEngine.Rect;
@@ -15913,16 +16506,28 @@ export declare namespace ReactUnity {
       worldBound: UnityEngine.Rect;
       localBound: UnityEngine.Rect;
       worldTransform: UnityEngine.Matrix4x4;
-      pickingMode: UnityEngine.UIElements.PickingMode;
+      hasActivePseudoState: boolean;
+      hasInactivePseudoState: boolean;
+      hasHoverPseudoState: boolean;
+      hasCheckedPseudoState: boolean;
+      hasEnabledPseudoState: boolean;
+      hasDisabledPseudoState: boolean;
+      hasFocusPseudoState: boolean;
+      hasRootPseudoState: boolean;
       name: string;
-      enabledInHierarchy: boolean;
       enabledSelf: boolean;
+      viewDataKey: string;
+      pickingMode: UnityEngine.UIElements.PickingMode;
+      tooltip: string;
+      usageHints: UnityEngine.UIElements.UsageHints;
       languageDirection: UnityEngine.UIElements.LanguageDirection;
+      dataSourceType: System.Type;
+      resourcesReleased: boolean;
+      enabledInHierarchy: boolean;
       visible: boolean;
       generateVisualContent: ((obj: UnityEngine.UIElements.MeshGenerationContext) => void);
       dataSource: any; // System.Object
       dataSourcePath: Unity.Properties.PropertyPath;
-      dataSourceType: System.Type;
       experimental: UnityEngine.UIElements.IExperimentalFeatures;
       hierarchy: UnityEngine.UIElements.VisualElement_Hierarchy;
       cacheAsBitmap: boolean;
@@ -15936,28 +16541,43 @@ export declare namespace ReactUnity {
       resolvedStyle: UnityEngine.UIElements.IResolvedStyle;
       customStyle: UnityEngine.UIElements.ICustomStyle;
       styleSheets: UnityEngine.UIElements.VisualElementStyleSheetSet;
-      tooltip: string;
       focusable: boolean;
       tabIndex: number;
       delegatesFocus: boolean;
+      SetActivePseudoState(value: boolean): void;
+      SetCheckedPseudoState(value: boolean): void;
+      ReleaseResources(): void;
       Focus(): void;
       SendEvent(e: UnityEngine.UIElements.EventBase): void;
       SetEnabled(value: boolean): void;
       MarkDirtyRepaint(): void;
+      IsMarkedForRepaint(): boolean;
       ContainsPoint(localPoint: UnityEngine.Vector2): boolean;
       Overlaps(rectangle: UnityEngine.Rect): boolean;
       ToString(): string;
       GetClasses(): System.Collections.Generic.IEnumerable<string>;
+      GetClassNames(): System.Collections.Generic.IEnumerable<UnityEngine.UIElements.UniqueStyleString>;
       ClearClassList(): void;
       AddToClassList(className: string): void;
+      AddToClassList(className: UnityEngine.UIElements.UniqueStyleString): void;
+      AddToClassList(className: string, className2: string): void;
+      AddToClassList(className: UnityEngine.UIElements.UniqueStyleString, className2: UnityEngine.UIElements.UniqueStyleString): void;
+      AddToClassList(...classNames: string[]): void;
+      AddToClassList(...classNames: UnityEngine.UIElements.UniqueStyleString[]): void;
+      AddToClassList(classNames: System.ReadOnlySpan<UnityEngine.UIElements.UniqueStyleString>): void;
       RemoveFromClassList(className: string): void;
+      RemoveFromClassList(className: UnityEngine.UIElements.UniqueStyleString): void;
       ToggleInClassList(className: string): void;
+      ToggleInClassList(className: UnityEngine.UIElements.UniqueStyleString): void;
       EnableInClassList(className: string, enable: boolean): void;
+      EnableInClassList(className: UnityEngine.UIElements.UniqueStyleString, enable: boolean): void;
       ClassListContains(cls: string): boolean;
+      ClassListContains(cls: UnityEngine.UIElements.UniqueStyleString): boolean;
       FindAncestorUserData(): any;
       SetBinding(bindingId: UnityEngine.UIElements.BindingId, binding: UnityEngine.UIElements.Binding): void;
       GetBinding(bindingId: UnityEngine.UIElements.BindingId): UnityEngine.UIElements.Binding;
       GetBindingInfos(): System.Collections.Generic.IEnumerable<UnityEngine.UIElements.BindingInfo>;
+      GetBindingInfos(bindingInfos: UnityEngine.UIElements.BindingInfo[]): void;
       HasBinding(bindingId: UnityEngine.UIElements.BindingId): boolean;
       ClearBinding(bindingId: UnityEngine.UIElements.BindingId): void;
       ClearBindings(): void;
@@ -15968,6 +16588,7 @@ export declare namespace ReactUnity {
       Remove(element: UnityEngine.UIElements.VisualElement): void;
       RemoveAt(index: number): void;
       Clear(): void;
+      Clear(options: UnityEngine.UIElements.VisualElementClearOptions): void;
       ElementAt(index: number): UnityEngine.UIElements.VisualElement;
       IndexOf(element: UnityEngine.UIElements.VisualElement): number;
       Children(): System.Collections.Generic.IEnumerable<UnityEngine.UIElements.VisualElement>;
@@ -15979,7 +16600,11 @@ export declare namespace ReactUnity {
       RemoveFromHierarchy(): void;
       Contains(child: UnityEngine.UIElements.VisualElement): boolean;
       FindCommonAncestor(other: UnityEngine.UIElements.VisualElement): UnityEngine.UIElements.VisualElement;
+      AddMeshModifier(callback: ((ctx: UnityEngine.UIElements.MeshModificationContext) => void), recursive?: boolean, priority?: number): void;
+      ClearMeshModifiers(): void;
+      RemoveMeshModifier(callback: ((ctx: UnityEngine.UIElements.MeshModificationContext) => void)): void;
       Blur(): void;
+      UnregisterAllRemovableCallbacks(): void;
       HasTrickleDownHandlers(): boolean;
       HasBubbleUpHandlers(): boolean;
       Equals(obj: any): boolean;
@@ -16079,6 +16704,30 @@ export declare namespace ReactUnity {
         ClearListeners(): void;
         OnSelect(eventData: UnityEngine.UIElements.FocusEvent): void;
         OnDeselect(eventData: UnityEngine.UIElements.BlurEvent): void;
+        Equals(obj: any): boolean;
+        GetHashCode(): number;
+        GetType(): System.Type;
+        ToString(): string;
+      }
+      export class FocusVisibleStateHandler {
+        constructor();
+        activators: UnityEngine.UIElements.ManipulatorActivationFilter[];
+        target: UnityEngine.UIElements.VisualElement;
+        ClearListeners(): void;
+        OnFocus(eventData: UnityEngine.UIElements.FocusEvent): void;
+        OnBlur(eventData: UnityEngine.UIElements.BlurEvent): void;
+        Equals(obj: any): boolean;
+        GetHashCode(): number;
+        GetType(): System.Type;
+        ToString(): string;
+      }
+      export class FocusWithinStateHandler {
+        constructor();
+        activators: UnityEngine.UIElements.ManipulatorActivationFilter[];
+        target: UnityEngine.UIElements.VisualElement;
+        ClearListeners(): void;
+        OnFocusIn(eventData: UnityEngine.UIElements.FocusInEvent): void;
+        OnFocusOut(eventData: UnityEngine.UIElements.FocusOutEvent): void;
         Equals(obj: any): boolean;
         GetHashCode(): number;
         GetType(): System.Type;

@@ -1,6 +1,6 @@
 //
 // Types in assemblies: mscorlib, System.Core, System
-// Generated 01/07/2025 01:03:18
+// Generated 08/09/2026 03:23:20
 //
 /* eslint-disable */
 
@@ -29276,7 +29276,7 @@ export declare namespace System {
         Tls11 = 768,
         Tls12 = 3072,
         Tls13 = 12288,
-        Default = 240,
+        Default = 15360,
       }
       export namespace ExtendedProtection {
         export class ServiceNameCollection {

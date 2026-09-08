@@ -1,6 +1,6 @@
 //
 // Types in assemblies: nunit.framework
-// Generated 01/07/2025 01:03:18
+// Generated 08/09/2026 03:23:20
 //
 /* eslint-disable */
 
@@ -296,7 +296,6 @@ export declare namespace NUnit {
       NaN: NUnit.Framework.Constraints.NaNConstraint;
       Empty: NUnit.Framework.Constraints.EmptyConstraint;
       Unique: NUnit.Framework.Constraints.UniqueItemsConstraint;
-      BinarySerializable: NUnit.Framework.Constraints.BinarySerializableConstraint;
       XmlSerializable: NUnit.Framework.Constraints.XmlSerializableConstraint;
       Ordered: NUnit.Framework.Constraints.CollectionOrderedConstraint;
       Expect(condition: boolean, message: string, ...args: any[]): void;
@@ -629,7 +628,6 @@ export declare namespace NUnit {
       static NaN: NUnit.Framework.Constraints.NaNConstraint;
       static Empty: NUnit.Framework.Constraints.EmptyConstraint;
       static Unique: NUnit.Framework.Constraints.UniqueItemsConstraint;
-      static BinarySerializable: NUnit.Framework.Constraints.BinarySerializableConstraint;
       static XmlSerializable: NUnit.Framework.Constraints.XmlSerializableConstraint;
       static Ordered: NUnit.Framework.Constraints.CollectionOrderedConstraint;
       static EqualTo(expected: any): NUnit.Framework.Constraints.EqualConstraint;
@@ -1137,23 +1135,6 @@ export declare namespace NUnit {
         GetHashCode(): number;
         GetType(): System.Type;
       }
-      export class BinarySerializableConstraint {
-        constructor();
-        Description: string;
-        DisplayName: string;
-        Arguments: any[];
-        Builder: NUnit.Framework.Constraints.ConstraintBuilder;
-        And: NUnit.Framework.Constraints.ConstraintExpression;
-        With: NUnit.Framework.Constraints.ConstraintExpression;
-        Or: NUnit.Framework.Constraints.ConstraintExpression;
-        ApplyTo(actual: any): NUnit.Framework.Constraints.ConstraintResult;
-        ToString(): string;
-        After(delayInMilliseconds: number): NUnit.Framework.Constraints.DelayedConstraint;
-        After(delayInMilliseconds: number, pollingInterval: number): NUnit.Framework.Constraints.DelayedConstraint;
-        Equals(obj: any): boolean;
-        GetHashCode(): number;
-        GetType(): System.Type;
-      }
       export class CollectionConstraint {
         DisplayName: string;
         Description: string;
@@ -1391,7 +1372,6 @@ export declare namespace NUnit {
         NaN: NUnit.Framework.Constraints.NaNConstraint;
         Empty: NUnit.Framework.Constraints.EmptyConstraint;
         Unique: NUnit.Framework.Constraints.UniqueItemsConstraint;
-        BinarySerializable: NUnit.Framework.Constraints.BinarySerializableConstraint;
         XmlSerializable: NUnit.Framework.Constraints.XmlSerializableConstraint;
         Ordered: NUnit.Framework.Constraints.CollectionOrderedConstraint;
         Exist: NUnit.Framework.Constraints.Constraint;
@@ -1463,7 +1443,6 @@ export declare namespace NUnit {
         NaN: NUnit.Framework.Constraints.NaNConstraint;
         Empty: NUnit.Framework.Constraints.EmptyConstraint;
         Unique: NUnit.Framework.Constraints.UniqueItemsConstraint;
-        BinarySerializable: NUnit.Framework.Constraints.BinarySerializableConstraint;
         XmlSerializable: NUnit.Framework.Constraints.XmlSerializableConstraint;
         Ordered: NUnit.Framework.Constraints.CollectionOrderedConstraint;
         static Exactly(expectedCount: number): NUnit.Framework.Constraints.ConstraintExpression;
@@ -2482,7 +2461,6 @@ export declare namespace NUnit {
         NaN: NUnit.Framework.Constraints.NaNConstraint;
         Empty: NUnit.Framework.Constraints.EmptyConstraint;
         Unique: NUnit.Framework.Constraints.UniqueItemsConstraint;
-        BinarySerializable: NUnit.Framework.Constraints.BinarySerializableConstraint;
         XmlSerializable: NUnit.Framework.Constraints.XmlSerializableConstraint;
         Ordered: NUnit.Framework.Constraints.CollectionOrderedConstraint;
         Exist: NUnit.Framework.Constraints.Constraint;

@@ -1,0 +1,29 @@
+{
+    "name": "ReactUnity.Editor.Pipeline",
+    "rootNamespace": "ReactUnity.Editor.Developer",
+    "references": [
+        "ReactUnity",
+        "ReactUnity.Editor",
+        "Unity.Pipeline"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": false,
+    "defineConstraints": [
+        "REACT_UNITY_DEVELOPER",
+        "REACT_UNITY_PIPELINE"
+    ],
+    "versionDefines": [
+        {
+            "name": "com.unity.pipeline",
+            "expression": "",
+            "define": "REACT_UNITY_PIPELINE"
+        }
+    ],
+    "noEngineReferences": false
+}
