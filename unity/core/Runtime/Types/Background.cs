@@ -151,8 +151,8 @@ namespace ReactUnity.Types
         /// <summary>
         /// Additive compositing rather than a blend function, and the one value here that CSS gives
         /// to `mix-blend-mode` alone -- `background-blend-mode` has no such keyword. It parses for
-        /// both because one enum backs both, and on a background it does what every other
-        /// non-`normal` value there does: tint the image instead of painting behind it.
+        /// both because one enum backs both, and it means the same thing on a background layer:
+        /// the layer is added to what is under it rather than covering it.
         /// </summary>
         PlusLighter,
     }

@@ -1,6 +1,6 @@
 //
 // Types in assemblies: ReactUnity, ReactUnity.Editor, ReactUnity.UGUI, ReactUnity.UIToolkit
-// Generated 08/09/2026 22:41:35
+// Generated 09/09/2026 02:34:04
 //
 /* eslint-disable */
 
@@ -4430,7 +4430,7 @@ export declare namespace ReactUnity {
       backgroundSize: ReactUnity.Types.ICssValueList<ReactUnity.Types.BackgroundSize>;
       backgroundRepeatX: ReactUnity.Types.ICssValueList<ReactUnity.Types.BackgroundRepeat>;
       backgroundRepeatY: ReactUnity.Types.ICssValueList<ReactUnity.Types.BackgroundRepeat>;
-      backgroundBlendMode: ReactUnity.Types.BackgroundBlendMode;
+      backgroundBlendMode: ReactUnity.Types.ICssValueList<ReactUnity.Types.BackgroundBlendMode>;
       maskImage: ReactUnity.Types.ICssValueList<ReactUnity.Types.ImageDefinition>;
       maskPositionX: ReactUnity.Types.ICssValueList<Yoga.YogaValue>;
       maskPositionY: ReactUnity.Types.ICssValueList<Yoga.YogaValue>;
@@ -4685,7 +4685,7 @@ export declare namespace ReactUnity {
       static backgroundSize: ReactUnity.Styling.ValueListStyleProperty;
       static backgroundRepeatX: ReactUnity.Styling.ValueListStyleProperty;
       static backgroundRepeatY: ReactUnity.Styling.ValueListStyleProperty;
-      static backgroundBlendMode: ReactUnity.Styling.StyleProperty;
+      static backgroundBlendMode: ReactUnity.Styling.ValueListStyleProperty;
       static maskImage: ReactUnity.Styling.ValueListStyleProperty;
       static maskPositionX: ReactUnity.Styling.ValueListStyleProperty;
       static maskPositionY: ReactUnity.Styling.ValueListStyleProperty;
@@ -12598,7 +12598,7 @@ export declare namespace ReactUnity {
         BorderSize: ReactUnity.UGUI.Shapes.WebOutlineSizes;
         BorderColors: ReactUnity.UGUI.Shapes.WebOutlineColors;
         BorderStyles: ReactUnity.UGUI.Shapes.WebOutlineStyles;
-        BlendMode: ReactUnity.Types.BackgroundBlendMode;
+        BlendModes: ReactUnity.Types.ICssValueList<ReactUnity.Types.BackgroundBlendMode>;
         BgColor: UnityEngine.Color;
         PointerEvents: ReactUnity.Types.PointerEvents;
         destroyCancellationToken: System.Threading.CancellationToken;
@@ -13239,7 +13239,7 @@ export declare namespace ReactUnity {
         BackgroundPosition: ReactUnity.Types.YogaValue2;
         BackgroundRepeatX: ReactUnity.Types.BackgroundRepeat;
         BackgroundRepeatY: ReactUnity.Types.BackgroundRepeat;
-        SetBackgroundColorAndImage(tint: UnityEngine.Color, image: ReactUnity.Types.ImageDefinition, blendMode?: ReactUnity.Types.BackgroundBlendMode): void;
+        SetBackgroundColorAndImage(tint: UnityEngine.Color, image: ReactUnity.Types.ImageDefinition, blendMode?: ReactUnity.Types.BackgroundBlendMode, blendsWithStack?: boolean): void;
         DisableSpriteOptimizations(): void;
         OnBeforeSerialize(): void;
         OnAfterDeserialize(): void;

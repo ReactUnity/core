@@ -19,8 +19,7 @@ namespace ReactUnity.UGUI.Shapes
             set
             {
                 definition = value;
-                material = definition?.DefaultMaterial;
-                SetMaterialDirty();
+                RefreshMaterial();
             }
         }
 
@@ -29,6 +28,11 @@ namespace ReactUnity.UGUI.Shapes
 
         [SerializeField]
         private BackgroundBlendMode BlendMode;
+
+        // Set on every layer but the bottom one: its backdrop is the layers below rather than the
+        // flat background colour, which only the shader that reads the render target can see.
+        [SerializeField]
+        private bool BlendsWithStack;
 
         [SerializeField]
         private BackgroundSize backgroundSize = BackgroundSize.Auto;
@@ -107,9 +111,11 @@ namespace ReactUnity.UGUI.Shapes
         }
 
 
-        public void SetBackgroundColorAndImage(Color tint, ImageDefinition image, BackgroundBlendMode blendMode = BackgroundBlendMode.Normal)
+        public void SetBackgroundColorAndImage(Color tint, ImageDefinition image, BackgroundBlendMode blendMode = BackgroundBlendMode.Normal, bool blendsWithStack = false)
         {
+            var modeChanged = BlendMode != blendMode || BlendsWithStack != blendsWithStack;
             BlendMode = blendMode;
+            BlendsWithStack = blendsWithStack;
             TintColor = tint;
             if (image != Definition)
             {
@@ -129,6 +135,7 @@ namespace ReactUnity.UGUI.Shapes
             }
             else
             {
+                if (modeChanged) RefreshMaterial();
                 UpdateBlendMode();
             }
         }
@@ -148,9 +155,33 @@ namespace ReactUnity.UGUI.Shapes
             }
         }
 
+        private bool Blends => BlendMode != BackgroundBlendMode.Normal && sprite != null;
+
         private void UpdateBlendMode()
         {
-            color = BlendMode == BackgroundBlendMode.Normal && sprite != null ? Color.white : TintColor;
+            // A blending layer's vertex colour is not a tint: it carries the backdrop the shader
+            // blends against, which for the bottom layer is the background colour. A layer that
+            // reads the stack finds its backdrop there instead and wants nothing from here.
+            color = !Blends ? (sprite != null ? Color.white : TintColor)
+                : BlendsWithStack ? Color.white
+                : TintColor;
+
+            // UGUI drops a mesh whose vertex colour is fully transparent, which is exactly what a
+            // layer blending against no background colour carries -- and it is data here, not
+            // opacity, so the layer still has to draw.
+            if (canvasRenderer) canvasRenderer.cullTransparentMesh = !Blends;
+        }
+
+        /// <summary>
+        /// A blending layer draws with a shader that knows how, and every other layer keeps the
+        /// material its image asked for -- so `background-blend-mode: normal` costs nothing.
+        /// </summary>
+        private void RefreshMaterial()
+        {
+            material = BlendMode == BackgroundBlendMode.Normal
+                ? definition?.DefaultMaterial
+                : ResourcesHelper.GetBackgroundBlendMaterial((int) BlendMode, BlendsWithStack);
+            SetMaterialDirty();
         }
 
 #if UNITY_EDITOR

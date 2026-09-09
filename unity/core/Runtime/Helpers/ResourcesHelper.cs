@@ -21,6 +21,31 @@ namespace ReactUnity.Helpers
         public static Material BackdropFilterMaterial => backdropFilterMaterial = backdropFilterMaterial ??
             Resources.Load<Material>("ReactUnity/materials/BackdropFilter");
 
+        private static readonly Dictionary<int, Material> backgroundBlendMaterials = new Dictionary<int, Material>();
+
+        /// <summary>
+        /// The base material a blending background layer draws with. There is one per mode rather
+        /// than one per layer because the backdrop travels in the vertex colour, so nothing else
+        /// about a layer reaches the material -- a gradient still clones this to add its own.
+        /// </summary>
+        public static Material GetBackgroundBlendMaterial(int blendMode, bool readsStack)
+        {
+            var key = readsStack ? ~blendMode : blendMode;
+            if (backgroundBlendMaterials.TryGetValue(key, out var found) && found) return found;
+
+            var shader = Resources.Load<Shader>(readsStack
+                ? "ReactUnity/shaders/BackgroundImageBlendStack"
+                : "ReactUnity/shaders/BackgroundImageBlend");
+            var mat = new Material(shader);
+            mat.SetInt("_BlendMode", blendMode);
+            // A material built at runtime starts with no keywords, and the toggle property's
+            // default only reaches the keyword through the inspector -- so without this a layer
+            // inside a scroll viewport would ignore its clip rect.
+            mat.EnableKeyword("UNITY_UI_CLIP_RECT");
+            backgroundBlendMaterials[key] = mat;
+            return mat;
+        }
+
         private static Texture2D borderTexture;
         public static Texture2D BorderTexture => borderTexture = borderTexture ??
             Resources.Load<Texture2D>("ReactUnity/sprites/border");

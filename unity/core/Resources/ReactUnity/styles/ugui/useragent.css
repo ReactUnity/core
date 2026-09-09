@@ -115,24 +115,29 @@ toggle {
   pointer-events: all;
 }
 
+/* The tick sprites are white, and the mark is the colour showing through them -- so an unchecked
+   toggle has no mask and paints nothing. It used to be a `multiply` blend, back when any blend mode
+   meant "tint the image and drop the colour" rather than what CSS says it means. */
 toggle:after {
   position: absolute;
   inset: 0;
   content: "";
   pointer-events: none;
-  background-blend-mode: multiply;
+  mask-size: contain;
+  mask-position: center;
+}
+
+toggle:checked:after,
+toggle:indeterminate:after {
   background-color: black;
-  background-image: transparent;
-  background-size: contain;
-  background-position: center;
 }
 
 toggle:checked:after {
-  background-image: url(res:ReactUnity/sprites/check);
+  mask-image: url(res:ReactUnity/sprites/check);
 }
 
 toggle:indeterminate:after {
-  background-image: url(res:ReactUnity/sprites/indeterminate);
+  mask-image: url(res:ReactUnity/sprites/indeterminate);
 }
 
 anchor {

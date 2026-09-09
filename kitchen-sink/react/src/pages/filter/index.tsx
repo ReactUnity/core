@@ -254,6 +254,51 @@ export function FilterPage() {
       <section>
         <h2>
           <row>
+            Background blend mode
+            <icon.gradient />
+          </row>
+        </h2>
+
+        <text className={styles.note}>
+          `background-blend-mode` never leaves the element's own background: each image layer blends with the layers below it, and the
+          bottom one with `background-color`. Nothing behind the element takes part.
+        </text>
+
+        <view className={'flex-row flex-wrap'}>
+          {blendModes.map((backgroundBlendMode) => (
+            <view key={backgroundBlendMode} className={'m-1.5 w-32 shrink-0 items-center'}>
+              <view className={styles.bgBlendTile} style={{ backgroundBlendMode }} />
+              <text className={styles.caption}>{backgroundBlendMode}</text>
+            </view>
+          ))}
+        </view>
+
+        <text className={styles.note}>
+          The list takes one value per layer, in the same order as `background-image`, and repeats when it is shorter than that list. Only
+          the third tile has a blended layer sitting on another one, which is the case that has to read back what was painted.
+        </text>
+
+        <row className={'gap-6'}>
+          <view className={'items-center'}>
+            <view className={clsx(styles.bgLayerTile, styles.bgLayersNormal)} />
+            <text className={styles.caption}>normal</text>
+          </view>
+
+          <view className={'items-center'}>
+            <view className={clsx(styles.bgLayerTile, styles.bgLayersBottom)} />
+            <text className={styles.caption}>normal, difference</text>
+          </view>
+
+          <view className={'items-center'}>
+            <view className={clsx(styles.bgLayerTile, styles.bgLayersBoth)} />
+            <text className={styles.caption}>difference</text>
+          </view>
+        </row>
+      </section>
+
+      <section>
+        <h2>
+          <row>
             Backdrop filter
             <icon.blur_on />
           </row>

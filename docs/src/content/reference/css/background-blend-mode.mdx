@@ -1,0 +1,75 @@
+---
+title: Background Blend Mode
+---
+
+Blends an element's background layers into each other and into its background colour. Check out the [MDN](https://developer.mozilla.org/en-US/docs/Web/CSS/background-blend-mode) for how to use.
+
+Only the background takes part: the element's own borders, text and children are painted over the result as usual, and nothing behind the element is touched. To blend a whole element into the page instead, use [`mix-blend-mode`](/reference/css/mix-blend-mode).
+
+<Sandpack>
+
+```js
+const modes = [
+  'normal',
+  'multiply',
+  'screen',
+  'overlay',
+  'difference',
+  'exclusion',
+  'hue',
+  'luminosity',
+];
+
+export default function App() {
+  const [index, setIndex] = React.useState(1);
+  const backgroundBlendMode = modes[index];
+
+  return <>
+    <button onClick={() => setIndex(x => (x + 1) % modes.length)}>
+      background-blend-mode: {backgroundBlendMode}
+    </button>
+
+    <view className="stage" style={{ backgroundBlendMode }} />
+  </>;
+}
+```
+
+```css active
+.stage {
+  width: 300px;
+  height: 200px;
+  margin-top: 16px;
+
+  background-color: #202040;
+  background-image:
+    linear-gradient(120deg, gold, transparent 70%),
+    linear-gradient(20deg, deepskyblue, crimson);
+  background-blend-mode: multiply;
+}
+```
+
+</Sandpack>
+
+## Values {/*values*/}
+
+All sixteen CSS blend functions are supported:
+
+`normal`, `multiply`, `screen`, `overlay`, `darken`, `lighten`, `color-dodge`, `color-burn`, `hard-light`, `soft-light`, `difference`, `exclusion`, `hue`, `saturation`, `color` and `luminosity`.
+
+`plus-lighter` is accepted here too, though CSS gives that keyword to [`mix-blend-mode`](/reference/css/mix-blend-mode) alone. It is not a blend function: the layer is added to what is under it and the sum is clamped, rather than covering it by its alpha.
+
+A comma-separated list gives one value per background image layer, in the same order as [`background-image`](/reference/css/background-image), and repeats if it is shorter than the list of images:
+
+```css
+background-image: url(res:noise), linear-gradient(gold, crimson);
+background-blend-mode: overlay, normal;
+```
+
+## Notes {/*notes*/}
+
+- Each layer blends with everything below it: the layers already painted, and under those the [`background-color`](/reference/css/background-color). The colour is the bottom of the stack, never a blend of its own.
+- The blend is weighted by what is underneath, so a layer with nothing behind it comes through untouched -- a single image over a transparent colour looks the same in every mode.
+- `normal` costs nothing, and neither does a single blended image over a colour: its backdrop is a value the shader is simply handed.
+- Stacking two or more blended image layers is what costs something. The upper layers have to read back what the ones below actually painted, so the element is rendered to its own target first -- the same capture [`filter`](/reference/css/filter) and `mix-blend-mode` use.
+- Stacking them also contains a descendant's [`mix-blend-mode`](/reference/css/mix-blend-mode), because the capture is the same one [`isolation: isolate`](/reference/css/isolation) creates. CSS does not make a blending group for `background-blend-mode`, so that is a divergence -- one a single blended image does not have.
+- That read is a pipeline feature. Under the Universal Render Pipeline it comes from the camera's opaque texture, which does not contain transparent UI, so stacked blending needs the built-in pipeline. A single blended image over a colour works under both.

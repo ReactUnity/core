@@ -68,7 +68,8 @@ export type BackgroundBlendMode =
   | 'luminosity';
 
 // `mix-blend-mode` takes the whole <blend-mode> set plus `plus-lighter`, which composites
-// additively rather than blending. CSS gives that keyword to this property alone.
+// additively rather than blending. CSS gives that keyword to this property alone; ReactUnity
+// takes it on `background-blend-mode` too, where it means the same thing.
 export type MixBlendMode = BackgroundBlendMode | 'plus-lighter';
 
 // `isolate` makes the element a blending group of its own, so a descendant's

@@ -121,7 +121,7 @@ namespace ReactUnity.Styling
         public static readonly ValueListStyleProperty<BackgroundSize> backgroundSize = new ValueListStyleProperty<BackgroundSize>("backgroundSize", BackgroundSize.Auto);
         public static readonly ValueListStyleProperty<BackgroundRepeat> backgroundRepeatX = new ValueListStyleProperty<BackgroundRepeat>("backgroundRepeatX", BackgroundRepeat.Repeat);
         public static readonly ValueListStyleProperty<BackgroundRepeat> backgroundRepeatY = new ValueListStyleProperty<BackgroundRepeat>("backgroundRepeatY", BackgroundRepeat.Repeat);
-        public static readonly StyleProperty<BackgroundBlendMode> backgroundBlendMode = new StyleProperty<BackgroundBlendMode>("backgroundBlendMode", BackgroundBlendMode.Normal);
+        public static readonly ValueListStyleProperty<BackgroundBlendMode> backgroundBlendMode = new ValueListStyleProperty<BackgroundBlendMode>("backgroundBlendMode", BackgroundBlendMode.Normal);
 
         public static readonly ValueListStyleProperty<ImageDefinition> maskImage = new ValueListStyleProperty<ImageDefinition>("maskImage");
         public static readonly ValueListStyleProperty<YogaValue> maskPositionX = new ValueListStyleProperty<YogaValue>("maskPositionX");

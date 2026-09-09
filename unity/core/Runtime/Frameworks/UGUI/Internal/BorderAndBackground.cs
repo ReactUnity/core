@@ -133,14 +133,10 @@ namespace ReactUnity.UGUI.Internal
             }
         }
 
-        private BackgroundBlendMode blendMode;
-        public BackgroundBlendMode BlendMode
+        private ICssValueList<BackgroundBlendMode> blendModes = CssValueList<BackgroundBlendMode>.Empty;
+        public ICssValueList<BackgroundBlendMode> BlendModes
         {
-            set
-            {
-                blendMode = value;
-                UpdateBgColor();
-            }
+            set => blendModes = value ?? CssValueList<BackgroundBlendMode>.Empty;
         }
 
         private Color bgColor;
@@ -298,23 +294,23 @@ namespace ReactUnity.UGUI.Internal
 
         private void UpdateBgColor()
         {
-            var hasBlend = blendMode == BackgroundBlendMode.Normal || blendMode == BackgroundBlendMode.Color;
             var hasColor = bgColor.a > 0;
             var hasTarget = hasColor || pointerEvents == PointerEvents.All;
 
-            var enabled = hasColor || hasTarget;
+            if (!hasTarget && !bgImage) return;
 
-            if (!enabled && !bgImage) return;
-
+            // Always painted now. It used to be cleared whenever a blend mode was set, because the
+            // colour was being fed to the image as a tint instead -- but it is the bottom of the
+            // stack, and a layer blending against it needs it underneath as well as in the blend.
             var bg = BgImage;
-            bg.color = hasBlend ? bgColor : Color.clear;
+            bg.color = bgColor;
             bg.raycastTarget = hasTarget;
-            bg.enabled = hasBlend || hasTarget;
+            bg.enabled = hasTarget;
         }
 
         public void UpdateStyle(NodeStyle style)
         {
-            blendMode = style.backgroundBlendMode;
+            blendModes = style.backgroundBlendMode;
             bgColor = style.backgroundColor;
             pointerEvents = style.pointerEvents;
             UpdateBgColor();
@@ -494,7 +490,10 @@ namespace ReactUnity.UGUI.Internal
             for (int i = 0; i < len; i++)
             {
                 var sd = BackgroundGraphics[len - 1 - i];
-                sd.SetBackgroundColorAndImage(color, images?.Get(i), blendMode);
+                // CSS puts the first image on top and the background colour at the bottom, so the
+                // last layer is the one whose backdrop is the colour itself. Everything above it
+                // blends with the layers below instead, which only the render target holds.
+                sd.SetBackgroundColorAndImage(color, images?.Get(i), blendModes.Get(i), i < len - 1);
                 sd.BackgroundRepeatX = repeatXs.Get(i);
                 sd.BackgroundRepeatY = repeatYs.Get(i);
                 sd.BackgroundPosition = new YogaValue2(positionsX.Get(i), positionsY.Get(i));

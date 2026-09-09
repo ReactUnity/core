@@ -1,5 +1,9 @@
-Shader "ReactUnity/BackgroundImage"
+Shader "ReactUnity/BackgroundImageBlendStack"
 {
+  // A background layer above the bottom one, whose backdrop is the accumulation of the layers
+  // below it. That is read back out of the render target, which only holds this element's own
+  // background because the element is captured offscreen for it -- see ElementFilter, and
+  // UGUIComponent.SetFilter for what asks for the capture.
   Properties{
     _MainTex("Texture", 2D) = "white" {}
 
@@ -14,6 +18,7 @@ Shader "ReactUnity/BackgroundImage"
     [Toggle()] _repeating("Gradient Repeating", Int) = 0
     [Enum(ReactUnity.Types.GradientType)] _gradientType("Gradient Type", Int) = 0
     [Enum(ReactUnity.Types.RadialGradientShape)] _shape("Gradient Shape", Int) = 0
+    _BlendMode("Blend Mode", Int) = 0
 
     [Enum(UnityEngine.Rendering.CompareFunction)] _StencilComp("Stencil Comparison", Float) = 8
     _Stencil("Stencil ID", Float) = 0
@@ -25,7 +30,7 @@ Shader "ReactUnity/BackgroundImage"
     [Toggle(UNITY_UI_CLIP_RECT)] _UseUIClipRect("Use Clip Rect", Float) = 1
   }
 
-  SubShader{
+  Category {
     Tags {
       "Queue" = "Transparent"
       "IgnoreProjector" = "True"
@@ -46,28 +51,49 @@ Shader "ReactUnity/BackgroundImage"
     ZTest[unity_GUIZTestMode]
     ColorMask[_ColorMask]
 
-    Blend SrcAlpha OneMinusSrcAlpha
+    Blend One OneMinusSrcAlpha
     ZWrite Off
 
-    Pass
-    {
-      CGPROGRAM
+    SubShader {
+      Tags { "RenderPipeline" = "UniversalPipeline" }
 
-      #pragma vertex vert
-      #pragma fragment frag
-      #pragma target 2.0
-      #pragma shader_feature_local _SPECULARHIGHLIGHTS_OFF
-      #pragma shader_feature_local _GLOSSYREFLECTIONS_OFF
+      Pass {
+        CGPROGRAM
+        #pragma vertex vert
+        #pragma fragment frag
+        #pragma target 3.0
 
-      #pragma multi_compile_local _ UNITY_UI_CLIP_RECT
-      #pragma multi_compile_local _ UNITY_UI_ALPHACLIP
+        #pragma multi_compile_local _ UNITY_UI_CLIP_RECT
+        #pragma multi_compile_local _ UNITY_UI_ALPHACLIP
 
-      // The layer as it has always been drawn: no blending, vertex colour as a tint.
-      // BackgroundImageBlend.shader and BackgroundImageBlendStack.shader are the same body with
-      // `background-blend-mode` compiled in.
-      #include "BackgroundImageCore.cginc"
+        #define GRAB_POS
+        #define RU_BG_BLEND
+        sampler2D _CameraOpaqueTexture;
+        #define RU_BG_BACKDROP_TEX _CameraOpaqueTexture
+        #include "../../../Assets/Shaders/BackgroundImageCore.cginc"
+        ENDCG
+      }
+    }
 
-      ENDCG
+    SubShader {
+      GrabPass { }
+
+      Pass {
+        CGPROGRAM
+        #pragma vertex vert
+        #pragma fragment frag
+        #pragma target 3.0
+
+        #pragma multi_compile_local _ UNITY_UI_CLIP_RECT
+        #pragma multi_compile_local _ UNITY_UI_ALPHACLIP
+
+        #define GRAB_POS
+        #define RU_BG_BLEND
+        sampler2D _GrabTexture;
+        #define RU_BG_BACKDROP_TEX _GrabTexture
+        #include "../../../Assets/Shaders/BackgroundImageCore.cginc"
+        ENDCG
+      }
     }
   }
 }

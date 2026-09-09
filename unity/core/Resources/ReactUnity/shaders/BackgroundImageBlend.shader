@@ -1,5 +1,9 @@
-Shader "ReactUnity/BackgroundImage"
+Shader "ReactUnity/BackgroundImageBlend"
 {
+  // A background layer whose backdrop is the flat `background-color`, carried in the vertex colour.
+  // That is exactly the backdrop CSS gives the bottom layer of the stack, so the common
+  // one-image-over-a-colour case is exact here -- with no backdrop read, and on every pipeline.
+  // Layers above the bottom need BackgroundImageBlendStack.shader instead.
   Properties{
     _MainTex("Texture", 2D) = "white" {}
 
@@ -14,6 +18,7 @@ Shader "ReactUnity/BackgroundImage"
     [Toggle()] _repeating("Gradient Repeating", Int) = 0
     [Enum(ReactUnity.Types.GradientType)] _gradientType("Gradient Type", Int) = 0
     [Enum(ReactUnity.Types.RadialGradientShape)] _shape("Gradient Shape", Int) = 0
+    _BlendMode("Blend Mode", Int) = 0
 
     [Enum(UnityEngine.Rendering.CompareFunction)] _StencilComp("Stencil Comparison", Float) = 8
     _Stencil("Stencil ID", Float) = 0
@@ -46,7 +51,9 @@ Shader "ReactUnity/BackgroundImage"
     ZTest[unity_GUIZTestMode]
     ColorMask[_ColorMask]
 
-    Blend SrcAlpha OneMinusSrcAlpha
+    // Premultiplied: the blend already weighted the layer by its own coverage, so the pass only
+    // has to uncover what it replaced.
+    Blend One OneMinusSrcAlpha
     ZWrite Off
 
     Pass
@@ -55,17 +62,13 @@ Shader "ReactUnity/BackgroundImage"
 
       #pragma vertex vert
       #pragma fragment frag
-      #pragma target 2.0
-      #pragma shader_feature_local _SPECULARHIGHLIGHTS_OFF
-      #pragma shader_feature_local _GLOSSYREFLECTIONS_OFF
+      #pragma target 3.0
 
       #pragma multi_compile_local _ UNITY_UI_CLIP_RECT
       #pragma multi_compile_local _ UNITY_UI_ALPHACLIP
 
-      // The layer as it has always been drawn: no blending, vertex colour as a tint.
-      // BackgroundImageBlend.shader and BackgroundImageBlendStack.shader are the same body with
-      // `background-blend-mode` compiled in.
-      #include "BackgroundImageCore.cginc"
+      #define RU_BG_BLEND
+      #include "../../../Assets/Shaders/BackgroundImageCore.cginc"
 
       ENDCG
     }

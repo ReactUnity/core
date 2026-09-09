@@ -243,6 +243,38 @@
   isolation: isolate;
 }
 
+/* Crossed gradients over a colour, so every layer of the stack has something distinct under it. */
+.bgBlendTile,
+.bgLayerTile {
+  border-radius: 8px;
+  background-color: #1e293b;
+  background-image: linear-gradient(100deg, #f97316, transparent 70%), linear-gradient(20deg, #38bdf8, #a855f7);
+}
+
+.bgBlendTile {
+  width: 120px;
+  height: 80px;
+  background-blend-mode: normal;
+}
+
+.bgLayerTile {
+  width: 170px;
+  height: 110px;
+}
+
+.bgLayersNormal {
+  background-blend-mode: normal;
+}
+
+/* Only the bottom layer blends, and its backdrop is the colour -- so nothing is read back. */
+.bgLayersBottom {
+  background-blend-mode: normal, difference;
+}
+
+.bgLayersBoth {
+  background-blend-mode: difference;
+}
+
 /* Something with detail behind the panel, so the backdrop blur has anything to show. */
 .backdropHost {
   height: 200px;

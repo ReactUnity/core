@@ -116,6 +116,10 @@
               "path": "/reference/css/backdrop-filter"
             },
             {
+              "title": "Background Blend Mode",
+              "path": "/reference/css/background-blend-mode"
+            },
+            {
               "title": "Background Color",
               "path": "/reference/css/background-color"
             },

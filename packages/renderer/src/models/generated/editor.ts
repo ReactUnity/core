@@ -1,6 +1,6 @@
 //
 // Types in assemblies: UnityEditor.CoreModule
-// Generated 08/09/2026 22:41:35
+// Generated 09/09/2026 02:34:03
 //
 /* eslint-disable */
 

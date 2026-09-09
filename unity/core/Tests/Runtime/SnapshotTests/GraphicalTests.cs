@@ -398,6 +398,58 @@ namespace ReactUnity.Tests
             Assertions.Snapshot("border-styles/outline-groove-rounded");
         }
 
+        // The useragent stylesheet draws a toggle's tick by painting one sprite over another, and
+        // nothing else here renders it -- so a change to how backgrounds are composited can break
+        // every checkbox in a project without a single test going red.
+        const string ToggleScript = @"
+            function App() {
+                return <view id='test'>
+                    <row>
+                        <toggle />
+                        <toggle checked />
+                        <toggle indeterminate />
+                    </row>
+                    <row className='big'>
+                        <toggle />
+                        <toggle checked />
+                        <toggle indeterminate />
+                    </row>
+                </view>;
+            }
+";
+
+        const string ToggleStyle = @"
+            #test {
+                background-color: white;
+                width: 300px;
+                height: 300px;
+                justify-content: center;
+                align-items: center;
+            }
+
+            /* One row at the default size, which is what the antialiasing has to hold up at, and
+               one blown up, where the shape is legible. */
+            row {
+                flex-direction: row;
+                align-items: center;
+                justify-content: center;
+            }
+
+            row.big toggle {
+                width: 60px;
+                height: 60px;
+                margin: 10px;
+            }
+        ";
+
+        [UGUITest(Script = ToggleScript, Style = ToggleStyle)]
+        public IEnumerator ToggleSnapshots()
+        {
+            yield return null;
+            yield return null;
+            Assertions.Snapshot("components/toggle");
+        }
+
         [UGUITest(Script = BaseScript, Style = BaseStyle)]
         public IEnumerator BackgroundBlendSnapshots()
         {
@@ -409,13 +461,41 @@ namespace ReactUnity.Tests
             yield return null;
             Assertions.Snapshot("backgrounds/blend/normal-blend");
 
+            // The star is a black alpha mask, so `multiply` cannot move it -- black times anything
+            // is black. It is here to prove that, since the old approximation tinted it instead.
             View.Style["background-blend-mode"] = "multiply";
             yield return null;
             Assertions.Snapshot("backgrounds/blend/multiply-blend");
 
+            View.Style["background-blend-mode"] = "screen";
+            yield return null;
+            Assertions.Snapshot("backgrounds/blend/screen-blend");
+
             View.Style["background-blend-mode"] = "color";
             yield return null;
             Assertions.Snapshot("backgrounds/blend/color-blend");
+        }
+
+        [UGUITest(Script = BaseScript, Style = BaseStyle)]
+        public IEnumerator StackedBackgroundBlendSnapshots()
+        {
+            // Two image layers, so the upper one's backdrop is the layer below rather than a flat
+            // colour -- the path that captures the element and reads the target back. Crossed
+            // gradients make that a two-dimensional pattern, which a bad capture cannot fake.
+            View.Style["background-color"] = "transparent";
+            View.Style["background-image"] = "linear-gradient(to right, red, blue), linear-gradient(to bottom, yellow, cyan)";
+            yield return null;
+            Assertions.Snapshot("backgrounds/blend/stacked-normal");
+
+            View.Style["background-blend-mode"] = "difference";
+            yield return null;
+            Assertions.Snapshot("backgrounds/blend/stacked-difference");
+
+            // Only the bottom layer blends now, and its backdrop is the transparent colour, so its
+            // blend weighs nothing and the capture goes away -- back to the first image exactly.
+            View.Style["background-blend-mode"] = "normal, difference";
+            yield return null;
+            Assertions.Snapshot("backgrounds/blend/stacked-normal");
         }
 
 

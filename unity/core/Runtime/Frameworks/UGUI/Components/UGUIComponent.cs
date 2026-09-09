@@ -291,8 +291,12 @@ namespace ReactUnity.UGUI
             // read the backdrop the capture hands it, which is what a stacking context amounts to
             // here. The chain applies nothing, so the result is the element as it was.
             var isolated = ComputedStyle.isolation == Isolation.Isolate;
+            // A background layer above the bottom one blends with the layers below it, which it can
+            // only find by reading back what has been drawn -- and that has to be this element's
+            // background alone, not the page it happens to be sitting on.
+            var stacksBackgroundBlends = StacksBackgroundBlends();
 
-            if (!hasFilter && !hasBlend && !isolated)
+            if (!hasFilter && !hasBlend && !isolated && !stacksBackgroundBlends)
             {
                 if (ElementFilter) ElementFilter.Detach();
                 ElementFilter = null;
@@ -308,6 +312,23 @@ namespace ReactUnity.UGUI
                 ElementFilter.BlendMode = blendMode;
                 ElementFilter.Isolated = isolated;
             }
+        }
+
+        /// <summary>
+        /// Whether any background layer blends against the layers below it rather than against the
+        /// background colour. The bottom layer's backdrop is the colour, which is a value the
+        /// shader is simply handed, so a single blended image never gets here.
+        /// </summary>
+        bool StacksBackgroundBlends()
+        {
+            var layers = ComputedStyle.backgroundImage?.Count ?? 0;
+            if (layers < 2) return false;
+
+            var modes = ComputedStyle.backgroundBlendMode;
+            for (int i = 0; i < layers - 1; i++)
+                if (modes.Get(i) != BackgroundBlendMode.Normal) return true;
+
+            return false;
         }
 
         #endregion
