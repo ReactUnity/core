@@ -35,5 +35,5 @@ export default function App() {
 ## Notes {/*notes*/}
 
 - The backdrop is the frame as it stands when the element is drawn, so the filter only sees what is *behind* it -- anything drawn after it is unaffected, as on the web.
-- Under the Universal Render Pipeline the backdrop comes from the camera's opaque texture, which does not contain other transparent UI. A panel over a 3D scene filters it correctly; a panel over other UI filters the scene behind that UI rather than the interface it sits on.
-- That texture is also downsampled according to the render pipeline asset's *Opaque Downsampling* setting. Lengths are measured in screen pixels either way, so `blur(4px)` is four pixels, but what it reads is already softer at anything but `None`.
+- The built-in pipeline reads the backdrop with a `GrabPass`, which copies the screen as it stands. A scriptable pipeline has none, so the backdrop is rendered instead: the camera draws the frame again with the element and everything after it left out. That is one extra render per element that reads a backdrop, so a screen with many of them costs accordingly.
+- Rendering the backdrop needs a camera whose output the element is part of, which a `ScreenSpaceOverlay` canvas has not got -- it is drawn after every camera has finished. Under a scriptable pipeline an element on an overlay canvas falls back to the camera's opaque texture, which holds the 3D scene but no UI, and is downsampled according to the render pipeline asset's *Opaque Downsampling* setting.

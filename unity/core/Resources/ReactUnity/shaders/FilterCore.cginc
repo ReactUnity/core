@@ -2,8 +2,8 @@
 #define REACTUNITY_FILTERCORE_INCLUDED
 
 // The CSS `filter` chain, applied to an element that was rendered offscreen. Shared by
-// Filter.shader and FilterBlend.shader -- the latter defines RU_HAS_BACKDROP along with a
-// RU_BACKDROP_TEX to read, and blends the result into it for `mix-blend-mode`.
+// Filter.shader and FilterBlend.shader -- the latter defines RU_HAS_BACKDROP along with an
+// RU_READ_BACKDROP(uv) that returns one, and blends the result into it for `mix-blend-mode`.
 
 #include "UnityCG.cginc"
 #include "UnityUI.cginc"
@@ -247,7 +247,7 @@ float4 frag(v2f i) : SV_Target
   // what CSS blends.
   if (_BlendMode != RU_BLEND_NORMAL && a > 0.0001)
   {
-    float3 backdrop = saturate(tex2D(RU_BACKDROP_TEX, i.uvgrab.xy / max(i.uvgrab.w, 1e-6)).rgb);
+    float3 backdrop = saturate(RU_READ_BACKDROP(i.uvgrab.xy / max(i.uvgrab.w, 1e-6)));
 
     if (_BlendMode == RU_BLEND_PLUSLIGHTER)
     {

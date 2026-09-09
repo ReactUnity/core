@@ -23,6 +23,11 @@ Shader "ReactUnity/BackdropFilter"
     _Tint ("Tint", Color) = (1,1,1,1)
     _Aberration ("Chromatic Aberration (texels)", Float) = 0.0
 
+    // Bound per material by BackdropSurface, since a pipeline with no GrabPass has to render the
+    // backdrop and each element gets a different one. Declared here because Material.SetTexture
+    // is silently a no-op for a property the shader never declared.
+    [HideInInspector] _ReactUnityBackdrop ("Backdrop", 2D) = "black" {}
+    [HideInInspector] _ReactUnityBackdropBound ("Backdrop Bound", Float) = 0.0
 
     [Enum(UnityEngine.Rendering.CompareFunction)] _StencilComp("Stencil Comparison", Float) = 8
     _Stencil("Stencil ID", Float) = 0
@@ -105,10 +110,22 @@ Shader "ReactUnity/BackdropFilter"
         float4 _ClipRect;
 
         // Everything below is measured in screen pixels rather than backdrop texels, because
-        // this snapshot is downsampled whenever the URP asset says so, where built-in's
+        // the opaque texture is downsampled whenever the URP asset says so, where built-in's
         // GrabPass is always the full-resolution target.
         sampler2D _CameraOpaqueTexture;
-        #define BACKDROP_TEX _CameraOpaqueTexture
+
+        // The opaque texture is taken before any transparent geometry, so no UI is in it.
+        // BackdropSurface renders one that has, and binds it here; without it -- an overlay canvas,
+        // where nothing can -- the opaque texture is still the closest thing to a backdrop.
+        sampler2D _ReactUnityBackdrop;
+        float _ReactUnityBackdropBound;
+
+        float3 ReadBackdrop(float2 uv)
+        {
+          return _ReactUnityBackdropBound > 0
+            ? tex2D(_ReactUnityBackdrop, uv).rgb
+            : tex2D(_CameraOpaqueTexture, uv).rgb;
+        }
 
         // Built-in chains a separable blur across three passes, re-grabbing between them. URP has
         // one pre-transparent snapshot and no GrabPass, so a chained pass re-reads the unblurred
@@ -117,7 +134,7 @@ Shader "ReactUnity/BackdropFilter"
 
         float3 SampleBackdrop(float2 uv)
         {
-          float3 sum = tex2D(BACKDROP_TEX, uv).rgb;
+          float3 sum = ReadBackdrop(uv);
 
           if (_Blur > 0)
           {
@@ -127,7 +144,7 @@ Shader "ReactUnity/BackdropFilter"
             [unroll] for (int y = 0; y < 9; y++)
             {
               [unroll] for (int x = 0; x < 9; x++)
-                sum += tex2D(BACKDROP_TEX, uv + float2(x - 4, y - 4) * stride).rgb * (RU_BLUR_W[x] * RU_BLUR_W[y]);
+                sum += ReadBackdrop(uv + float2(x - 4, y - 4) * stride) * (RU_BLUR_W[x] * RU_BLUR_W[y]);
             }
           }
 

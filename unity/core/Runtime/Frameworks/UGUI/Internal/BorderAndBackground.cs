@@ -212,6 +212,7 @@ namespace ReactUnity.UGUI.Internal
 
             BackdropFilter.IsBackdrop = true;
             BackdropFilter.MaskRoot = transform;
+            if (BackdropSurface.Required) BackdropFilter.Surface = Context.BackdropSurface;
 
             FullStretch(backdrop, Root, backgroundRoot ? backgroundRoot.GetSiblingIndex() : 1);
 

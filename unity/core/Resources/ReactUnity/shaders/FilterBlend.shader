@@ -2,9 +2,9 @@
 // with one of the CSS Compositing blend functions instead of drawn straight over it.
 //
 // Reading the backdrop is what splits this into two subshaders, the way BackdropFilter.shader is
-// split -- URP has no GrabPass and offers _CameraOpaqueTexture, built-in has no opaque texture and
-// grabs. Only elements that actually blend get this shader, so a plain `filter` never pays for the
-// grab; ElementFilter picks between the two.
+// split -- URP has no GrabPass and reads what BackdropSurface renders for it, built-in has no
+// opaque texture and grabs. Only elements that actually blend get this shader, so a plain `filter`
+// never pays for the grab; ElementFilter picks between the two.
 Shader "ReactUnity/FilterBlend"
 {
   Properties
@@ -31,6 +31,13 @@ Shader "ReactUnity/FilterBlend"
     _ScanlinePhase ("Scanline Phase (texels)", Float) = 0.0
     _Tint ("Tint", Color) = (1,1,1,1)
     _Aberration ("Chromatic Aberration (UV)", Float) = 0.0
+
+    // Bound per material by BackdropSurface, since a pipeline with no GrabPass has to render the
+    // backdrop and each element gets a different one. Declared here because Material.SetTexture
+    // is silently a no-op for a property the shader never declared.
+    [HideInInspector] _ReactUnityBackdrop ("Backdrop", 2D) = "black" {}
+    [HideInInspector] _ReactUnityBackdropBound ("Backdrop Bound", Float) = 0.0
+
     _ShadowTex ("Drop Shadow Silhouette", 2D) = "black" {}
     _ShadowColor ("Drop Shadow Color", Color) = (0,0,0,0)
     _ShadowOffset ("Drop Shadow Offset (UV)", Vector) = (0,0,0,0)
@@ -106,7 +113,13 @@ Shader "ReactUnity/FilterBlend"
 
         #define RU_HAS_BACKDROP
         sampler2D _CameraOpaqueTexture;
-        #define RU_BACKDROP_TEX _CameraOpaqueTexture
+
+        // The opaque texture is taken before any transparent geometry, so no UI is in it.
+        // BackdropSurface renders one that has, and binds it here; without it -- an overlay canvas,
+        // where nothing can -- the opaque texture is still the closest thing to a backdrop.
+        sampler2D _ReactUnityBackdrop;
+        float _ReactUnityBackdropBound;
+        #define RU_READ_BACKDROP(uv) (_ReactUnityBackdropBound > 0 ? tex2D(_ReactUnityBackdrop, uv).rgb : tex2D(_CameraOpaqueTexture, uv).rgb)
 
         #include "FilterCore.cginc"
         ENDCG
@@ -128,7 +141,7 @@ Shader "ReactUnity/FilterBlend"
 
         #define RU_HAS_BACKDROP
         sampler2D _GrabTexture;
-        #define RU_BACKDROP_TEX _GrabTexture
+        #define RU_READ_BACKDROP(uv) tex2D(_GrabTexture, uv).rgb
 
         #include "FilterCore.cginc"
         ENDCG

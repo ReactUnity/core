@@ -93,6 +93,28 @@ namespace ReactUnity.UGUI
             }
         }
 
+        private Internal.BackdropSurface backdropSurface;
+
+        /// <summary>
+        /// Where the elements that read a backdrop get one under a pipeline that has no
+        /// <c>GrabPass</c>. Created on first use, so a scene with nothing reading a backdrop -- or
+        /// one on the built-in pipeline, which grabs -- never renders a second time.
+        /// </summary>
+        public Internal.BackdropSurface BackdropSurface
+        {
+            get
+            {
+                if (!backdropSurface)
+                {
+                    var go = CreateNativeObject("[BackdropSurface]", typeof(Internal.BackdropSurface));
+                    backdropSurface = go.GetComponent<Internal.BackdropSurface>();
+                    backdropSurface.Context = this;
+                    Disposables.Add(() => { if (backdropSurface) UnityEngine.Object.Destroy(backdropSurface.gameObject); });
+                }
+                return backdropSurface;
+            }
+        }
+
         public static Func<string, string, UGUIContext, UGUIComponent> defaultCreator =
             (tag, text, context) => new ContainerComponent(context, tag);
 

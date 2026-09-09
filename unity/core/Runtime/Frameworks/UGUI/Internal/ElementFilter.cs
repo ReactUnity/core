@@ -19,9 +19,11 @@ namespace ReactUnity.UGUI.Internal
     /// `overflow` clips the filtered result, and the composite (a MaskableGraphic left in place) is
     /// clipped normally. Pointer events are routed back in by <see cref="FilterRaycaster"/>.
     /// </remarks>
-    public class ElementFilter : MonoBehaviour
+    public class ElementFilter : MonoBehaviour, IBackdropReader
     {
         static readonly int MainTexId = Shader.PropertyToID("_MainTex");
+        static readonly int BackdropTexId = Shader.PropertyToID("_ReactUnityBackdrop");
+        static readonly int BackdropBoundId = Shader.PropertyToID("_ReactUnityBackdropBound");
         static readonly int BlurId = Shader.PropertyToID("_Blur");
         static readonly int BrightnessId = Shader.PropertyToID("_Brightness");
         static readonly int ContrastId = Shader.PropertyToID("_Contrast");
@@ -509,7 +511,11 @@ namespace ReactUnity.UGUI.Internal
 
             maskLayers.Clear();
 
-            if (composite) Destroy(composite.gameObject);
+            if (composite)
+            {
+                if (compositeBlends && BackdropSurface.Required) component.Context.BackdropSurface.Unregister(this);
+                Destroy(composite.gameObject);
+            }
             if (offscreenCanvas) Destroy(offscreenCanvas.gameObject);
             if (maskCanvas) Destroy(maskCanvas.gameObject);
             if (compositeMaterial) Destroy(compositeMaterial);
@@ -553,6 +559,36 @@ namespace ReactUnity.UGUI.Internal
             compositeMaterial = new Material(Resources.Load<Shader>(blends ? "ReactUnity/shaders/FilterBlend" : "ReactUnity/shaders/Filter"));
             if (composite) composite.material = compositeMaterial;
             uniformsDirty = true;
+
+            // A pipeline with no GrabPass has to render the backdrop instead, and only the elements
+            // that read one are kept out of it.
+            if (composite && BackdropSurface.Required)
+            {
+                var surface = component.Context.BackdropSurface;
+                if (blends) surface.Register(this);
+                else surface.Unregister(this);
+            }
+        }
+
+        public CanvasRenderer BackdropRenderer => composite ? composite.canvasRenderer : null;
+
+        public void SetBackdrop(Texture backdrop)
+        {
+            // Only the blend shader has the property; a mode flipped back to `normal` unregisters,
+            // but not before this frame's surface has already been handed out.
+            if (!compositeMaterial || !compositeBlends) return;
+
+            compositeMaterial.SetTexture(BackdropTexId, backdrop);
+            compositeMaterial.SetFloat(BackdropBoundId, backdrop ? 1 : 0);
+
+            // The stencil copy UGUI substitutes under a mask is a different material object, and it
+            // is the one actually drawn -- the same split SetUniforms has to work around.
+            var drawn = composite ? composite.materialForRendering : null;
+            if (drawn && drawn != compositeMaterial)
+            {
+                drawn.SetTexture(BackdropTexId, backdrop);
+                drawn.SetFloat(BackdropBoundId, backdrop ? 1 : 0);
+            }
         }
 
         /// <summary>
