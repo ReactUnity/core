@@ -570,6 +570,9 @@ namespace ReactUnity.UGUI.Internal
             var img = sd.GetComponent<WebBackgroundImage>();
             img.color = Color.clear;
             img.Context = Context;
+            // Only a layer blending with the layers below it ever uses this, and it decides that
+            // for itself -- here it is only told where to go when it does.
+            if (BackdropSurface.Required) img.Surface = Context.BackdropSurface;
             BackgroundGraphics.Add(img);
             FullStretch(sd.transform as RectTransform, BackgroundRoot);
         }

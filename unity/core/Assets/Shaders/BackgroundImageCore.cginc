@@ -7,9 +7,10 @@
 //
 //   RU_BG_BLEND           -- compile the blend step in, and return premultiplied colour for
 //                            `Blend One OneMinusSrcAlpha`.
-//   RU_BG_BACKDROP_TEX    -- the backdrop is what is already drawn (the layers below this one).
-//                            Without it the backdrop is the flat `background-color`, carried in
-//                            the vertex colour, which is exactly the backdrop of the bottom layer.
+//   RU_BG_READ_BACKDROP   -- reads what is already drawn (the layers below this one), however
+//                            the pipeline gets at it. Without it the backdrop is the flat
+//                            `background-color`, carried in the vertex colour, which is exactly
+//                            the backdrop of the bottom layer.
 
 #include "UnityCG.cginc"
 #include "UnityUI.cginc"
@@ -148,9 +149,9 @@ fixed4 frag(v2f i) : SV_Target
   // backdrop in it instead, so the layer goes into the blend exactly as the image gives it.
   fixed4 res = tex2D(_MainTex, txPos);
 
-  #ifdef RU_BG_BACKDROP_TEX
+  #ifdef RU_BG_READ_BACKDROP
     // Premultiplied, because that is what the render target holds.
-    float4 back = tex2D(RU_BG_BACKDROP_TEX, i.uvgrab);
+    float4 back = RU_BG_READ_BACKDROP(i.uvgrab);
     float ab = saturate(back.a);
     float3 Cb = ab > 0.0001 ? saturate(back.rgb / ab) : 0;
   #else

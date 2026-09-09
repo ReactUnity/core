@@ -4,8 +4,17 @@ Shader "ReactUnity/BackgroundImageBlendStack"
   // below it. That is read back out of the render target, which only holds this element's own
   // background because the element is captured offscreen for it -- see ElementFilter, and
   // UGUIComponent.SetFilter for what asks for the capture.
+  //
+  // Which is why the two subshaders differ: built-in's GrabPass copies whatever target is current,
+  // and inside the capture that is already the right thing. A scriptable pipeline has no GrabPass,
+  // so ElementFilter renders the capture-so-far into a surface and binds it here.
   Properties{
     _MainTex("Texture", 2D) = "white" {}
+
+    // Bound per material by BackdropSurface. Declared here because Material.SetTexture is silently
+    // a no-op for a property the shader never declared.
+    [HideInInspector] _ReactUnityBackdrop ("Backdrop", 2D) = "black" {}
+    [HideInInspector] _ReactUnityBackdropBound ("Backdrop Bound", Float) = 0.0
 
     _angle("Angle", Float) = 0
     _from("From", Float) = 0
@@ -68,8 +77,15 @@ Shader "ReactUnity/BackgroundImageBlendStack"
 
         #define GRAB_POS
         #define RU_BG_BLEND
-        sampler2D _CameraOpaqueTexture;
-        #define RU_BG_BACKDROP_TEX _CameraOpaqueTexture
+
+        // No fallback to _CameraOpaqueTexture, unlike the other two backdrop readers: that texture
+        // is the scene behind the page, and this layer's backdrop is the element's own background.
+        // With nothing bound the layer comes through as though it did not blend, which is the only
+        // honest answer -- and it only happens for the frame before the surface exists.
+        sampler2D _ReactUnityBackdrop;
+        float _ReactUnityBackdropBound;
+        #define RU_BG_READ_BACKDROP(uv) (_ReactUnityBackdropBound > 0 ? tex2D(_ReactUnityBackdrop, uv) : float4(0, 0, 0, 0))
+
         #include "../../../Assets/Shaders/BackgroundImageCore.cginc"
         ENDCG
       }
@@ -90,7 +106,7 @@ Shader "ReactUnity/BackgroundImageBlendStack"
         #define GRAB_POS
         #define RU_BG_BLEND
         sampler2D _GrabTexture;
-        #define RU_BG_BACKDROP_TEX _GrabTexture
+        #define RU_BG_READ_BACKDROP(uv) tex2D(_GrabTexture, uv)
         #include "../../../Assets/Shaders/BackgroundImageCore.cginc"
         ENDCG
       }

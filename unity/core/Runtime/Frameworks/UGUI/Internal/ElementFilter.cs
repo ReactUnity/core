@@ -116,6 +116,12 @@ namespace ReactUnity.UGUI.Internal
         private readonly List<WebBackgroundImage> maskLayers = new List<WebBackgroundImage>();
         private bool maskLuminance;
 
+        // The elements that read a backdrop from inside this capture, and their surfaces. Owned here
+        // rather than by the context's BackdropSurface because only this knows when the capture is
+        // taken, and the backdrops have to exist by then.
+        private readonly BackdropPass innerBackdrops = new BackdropPass();
+        private readonly List<IBackdropReader> innerReaders = new List<IBackdropReader>();
+
         private RawImage composite;
         private Material compositeMaterial;
         private bool compositeBlends;
@@ -525,6 +531,12 @@ namespace ReactUnity.UGUI.Internal
             Release(ref shadow);
             Release(ref maskTarget);
             ReleaseClipMask();
+
+            // Whatever was reading this capture is back on the screen's backdrop now, and the next
+            // pass over the register hands it one.
+            for (int i = 0; i < innerReaders.Count; i++) innerReaders[i]?.SetBackdrop(null);
+            innerReaders.Clear();
+            innerBackdrops.Release();
         }
 
         static void Release(ref RenderTexture rt)
@@ -789,6 +801,12 @@ namespace ReactUnity.UGUI.Internal
             offscreenCamera.nearClipPlane = 0.01f;
             offscreenCamera.farClipPlane = 1000f;
 
+            // Anything blending inside this capture blends with the capture, not with the screen --
+            // which is what makes `isolation: isolate` contain a blend, and what built-in gets from
+            // a GrabPass copying whatever target is current. Taken now, with the camera already
+            // framed, so each reader's backdrop is the same view its own draw will land in.
+            RenderInnerBackdrops(pxWidth, pxHeight);
+
             offscreenCamera.targetTexture = target;
             offscreenCamera.Render();
 
@@ -806,6 +824,24 @@ namespace ReactUnity.UGUI.Internal
             var margins = new Vector4(mLeft, mRight, mBottom, mTop);
             RenderMask(pxWidth, pxHeight, width, height, margins);
             ApplyToComposite(target, margins, width, height);
+        }
+
+        /// <summary>
+        /// Gives every element that reads a backdrop from inside this capture the capture as it
+        /// stands behind it. Nothing to do on built-in, whose GrabPass already grabs this target.
+        /// </summary>
+        void RenderInnerBackdrops(int pxWidth, int pxHeight)
+        {
+            if (!BackdropSurface.Required) return;
+
+            // Asked for rather than made: a filter with nothing blending inside it -- which is most
+            // of them -- has no reason to put a register in the scene, least of all while the
+            // context is being torn down around it.
+            var surface = component.Context.ExistingBackdropSurface;
+            if (!surface) return;
+
+            surface.CollectFor(this, innerReaders);
+            innerBackdrops.Render(offscreenCamera, offscreenCanvas.transform, innerReaders, pxWidth, pxHeight);
         }
 
         /// <summary>

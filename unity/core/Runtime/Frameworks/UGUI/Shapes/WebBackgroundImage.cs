@@ -6,8 +6,11 @@ using UnityEngine.UI;
 namespace ReactUnity.UGUI.Shapes
 {
     [RequireComponent(typeof(CanvasRenderer))]
-    public class WebBackgroundImage : Image
+    public class WebBackgroundImage : Image, Internal.IBackdropReader
     {
+        static readonly int BackdropTexId = Shader.PropertyToID("_ReactUnityBackdrop");
+        static readonly int BackdropBoundId = Shader.PropertyToID("_ReactUnityBackdropBound");
+
         private RectTransform rt;
 
         public Vector2 Size => new Vector2(rt.rect.width, rt.rect.height);
@@ -97,6 +100,23 @@ namespace ReactUnity.UGUI.Shapes
             base.OnEnable();
             rt = GetComponent<RectTransform>();
             raycastTarget = false;
+            SyncRegistration();
+        }
+
+        protected override void OnDisable()
+        {
+            base.OnDisable();
+            SyncRegistration();
+        }
+
+        protected override void OnDestroy()
+        {
+            base.OnDestroy();
+            if (surface && registered) surface.Unregister(this);
+            registered = false;
+            if (instanceMaterial) DestroyImmediate(instanceMaterial);
+            instanceMaterial = null;
+            instanceBase = null;
         }
 
         public override Material materialForRendering
@@ -104,13 +124,27 @@ namespace ReactUnity.UGUI.Shapes
             get
             {
                 var baseMat = base.materialForRendering;
-                if (Definition == null || Definition.DoesNotModifyMaterial) return baseMat;
 
-                var szPoint = ImageUtils.CalculateImageSize(Size, Resolved?.IntrinsicSize ?? Vector2.zero, Resolved?.IntrinsicProportions ?? 1, backgroundSize);
+                if (Definition != null && !Definition.DoesNotModifyMaterial)
+                {
+                    var szPoint = ImageUtils.CalculateImageSize(Size, Resolved?.IntrinsicSize ?? Vector2.zero, Resolved?.IntrinsicProportions ?? 1, backgroundSize);
+                    baseMat = Definition.ModifyMaterial(Context, baseMat, szPoint);
+                }
 
-                var result = Definition?.ModifyMaterial(Context, baseMat, szPoint);
+                if (!registered) return baseMat;
 
-                return result;
+                // Everything above shares its materials -- the blend materials by mode, the gradient
+                // ones by gradient -- and a backdrop cannot be shared, so a reader gets a copy. A new
+                // base material also means a mask above us changed, and ours has to be rebuilt on it.
+                if (!instanceMaterial || instanceBase != baseMat)
+                {
+                    if (instanceMaterial) DestroyImmediate(instanceMaterial);
+                    instanceMaterial = new Material(baseMat);
+                    instanceBase = baseMat;
+                    ApplyBackdrop(instanceMaterial);
+                }
+
+                return instanceMaterial;
             }
         }
 
@@ -188,6 +222,8 @@ namespace ReactUnity.UGUI.Shapes
             // layer blending against no background colour carries -- and it is data here, not
             // opacity, so the layer still has to draw.
             if (canvasRenderer) canvasRenderer.cullTransparentMesh = !Blends;
+
+            SyncRegistration();
         }
 
         /// <summary>
@@ -204,6 +240,72 @@ namespace ReactUnity.UGUI.Shapes
                 : own;
             SetMaterialDirty();
         }
+
+        #region Backdrop
+
+        private Internal.BackdropSurface surface;
+        private Texture backdrop;
+        private bool registered;
+
+        // One material per layer, because the blend materials are shared by mode and the backdrop
+        // is not: two elements stacking the same blend get different layers below them. Built only
+        // for a layer that actually reads one, so every other layer keeps the shared material.
+        private Material instanceMaterial;
+        private Material instanceBase;
+
+        /// <summary>Where this layer's backdrop is rendered when the pipeline cannot grab one.
+        /// Null on built-in, whose GrabPass copies the capture this layer is drawn into.</summary>
+        public Internal.BackdropSurface Surface
+        {
+            get => surface;
+            set
+            {
+                if (surface == value) return;
+                if (surface && registered) surface.Unregister(this);
+                registered = false;
+                surface = value;
+                SyncRegistration();
+            }
+        }
+
+        public CanvasRenderer BackdropRenderer => canvasRenderer;
+
+        public void SetBackdrop(Texture value)
+        {
+            backdrop = value;
+            // Pushed straight onto the live material: materialForRendering is only consulted when
+            // UGUI rebuilds the graphic, which is not every frame, and this changes every frame.
+            if (instanceMaterial) ApplyBackdrop(instanceMaterial);
+        }
+
+        void ApplyBackdrop(Material mat)
+        {
+            mat.SetTexture(BackdropTexId, backdrop);
+            mat.SetFloat(BackdropBoundId, backdrop ? 1 : 0);
+        }
+
+        /// <summary>Only a layer blending against the layers below it has a backdrop to render --
+        /// every other one is handed its backdrop as a colour, or does not blend at all.</summary>
+        void SyncRegistration()
+        {
+            var wanted = surface && Blends && BlendsWithStack && isActiveAndEnabled;
+            if (wanted == registered) return;
+
+            registered = wanted;
+
+            if (wanted) surface.Register(this);
+            else
+            {
+                surface.Unregister(this);
+                // Nothing reads it now, and the shared material it was copied from is what this
+                // layer goes back to drawing with.
+                if (instanceMaterial) DestroyImmediate(instanceMaterial);
+                instanceMaterial = null;
+                instanceBase = null;
+            }
+        }
+
+        #endregion
 
 #if UNITY_EDITOR
         protected override void OnValidate()

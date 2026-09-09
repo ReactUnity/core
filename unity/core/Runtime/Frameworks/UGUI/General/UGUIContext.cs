@@ -104,7 +104,10 @@ namespace ReactUnity.UGUI
         {
             get
             {
-                if (!backdropSurface)
+                // Never after the context is gone: this runs from a scene root, and a Destroy
+                // queued for it has already been drained by then, so a late one would outlive the
+                // scene. Callers with nothing to register should use ExistingBackdropSurface.
+                if (!backdropSurface && !IsDisposed)
                 {
                     var go = CreateNativeObject("[BackdropSurface]", typeof(Internal.BackdropSurface));
                     backdropSurface = go.GetComponent<Internal.BackdropSurface>();
@@ -114,6 +117,10 @@ namespace ReactUnity.UGUI
                 return backdropSurface;
             }
         }
+
+        /// <summary>The register if there is one, without making one. For asking it what it holds,
+        /// where an empty answer and no register at all mean the same thing.</summary>
+        internal Internal.BackdropSurface ExistingBackdropSurface => backdropSurface;
 
         public static Func<string, string, UGUIContext, UGUIComponent> defaultCreator =
             (tag, text, context) => new ContainerComponent(context, tag);

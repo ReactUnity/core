@@ -17,8 +17,8 @@ namespace ReactUnity.UGUI.Internal
     }
 
     /// <summary>
-    /// The frame as it stands behind the elements that read it, for a pipeline that cannot hand one
-    /// over.
+    /// One camera's worth of backdrops: a surface per reader, each holding the frame as it stood
+    /// when that reader was about to be drawn.
     /// </summary>
     /// <remarks>
     /// Built-in's <c>GrabPass { }</c> copies the render target immediately before the pass that reads
@@ -27,10 +27,10 @@ namespace ReactUnity.UGUI.Internal
     /// transparent geometry -- so no UI is ever in it, and a frosted panel over a page blurs the 3D
     /// scene behind the page instead of the page.
     ///
-    /// This renders the canvas's camera again for each reader, with everything from that reader
-    /// onwards hidden, which is the image a grab at that point would have produced. Readers are
-    /// taken in paint order and handed their backdrop as they go, so one that sits over another
-    /// finds the first one's result already in it, as on the web.
+    /// So the camera renders again for each reader, with everything from that reader onwards hidden,
+    /// which is the image a grab at that point would have produced. Readers are taken in paint order
+    /// and handed their backdrop as they go, so one that sits over another finds the first one's
+    /// result already in it, as on the web.
     ///
     /// A render apiece is what the exactness costs, and it is not cheap: about 3 ms per reader in
     /// the editor, of which 1.4 ms is fixed <c>Camera.Render</c> overhead that a smaller target does
@@ -38,61 +38,26 @@ namespace ReactUnity.UGUI.Internal
     /// is the price of having no GrabPass, which copies the target for 0.16 ms -- so the built-in
     /// pipeline keeps grabbing, and this is only for the pipelines that cannot.
     /// </remarks>
-    [DefaultExecutionOrder(100)]
-    public class BackdropSurface : MonoBehaviour
+    public class BackdropPass
     {
-        /// <summary>Whether a backdrop has to be rendered rather than grabbed. Only the built-in
-        /// pipeline has a GrabPass, and it is the one pipeline with no render pipeline asset.</summary>
-        public static bool Required => GraphicsSettings.currentRenderPipeline != null;
-
-        public UGUIContext Context;
-
-        private readonly List<IBackdropReader> readers = new List<IBackdropReader>();
         private readonly List<RenderTexture> surfaces = new List<RenderTexture>();
-
         private readonly List<Transform> hidden = new List<Transform>();
         private readonly List<Vector3> scales = new List<Vector3>();
 
-        public void Register(IBackdropReader reader)
+        /// <summary>
+        /// Renders one surface per reader, in the order given, and hands each reader its own.
+        /// </summary>
+        /// <param name="root">The canvas the readers live under, which bounds how far up the frame
+        /// is taken apart. A reader outside it gets nothing and falls back to the pipeline.</param>
+        public void Render(Camera cam, Transform root, List<IBackdropReader> readers, int width, int height)
         {
-            if (reader != null && !readers.Contains(reader)) readers.Add(reader);
-        }
-
-        public void Unregister(IBackdropReader reader)
-        {
-            // Told before the surface it was handed is released under it.
-            if (readers.Remove(reader)) reader.SetBackdrop(null);
-        }
-
-        /// <summary>The camera whose frame the readers are drawn into. An overlay canvas is drawn
-        /// after every camera has finished, so there is no camera whose output contains it and no
-        /// backdrop to render -- those elements keep reading whatever the pipeline offers.</summary>
-        Camera SourceCamera
-        {
-            get
+            if (!cam || !root || readers.Count == 0)
             {
-                var root = Context?.RootCanvas;
-                if (!root || root.renderMode == RenderMode.ScreenSpaceOverlay) return null;
-                return root.worldCamera ? root.worldCamera : Camera.main;
-            }
-        }
-
-        void LateUpdate()
-        {
-            for (int i = readers.Count - 1; i >= 0; i--)
-                if (readers[i] == null || !readers[i].BackdropRenderer) readers.RemoveAt(i);
-
-            var cam = Required && readers.Count > 0 ? SourceCamera : null;
-            if (!cam)
-            {
-                Clear();
+                Release();
                 return;
             }
 
-            var root = Context.RootCanvas.transform;
-            readers.Sort(ComparePaintOrder);
-            EnsureSurfaces(cam.pixelWidth, cam.pixelHeight);
-
+            EnsureSurfaces(readers.Count, width, height);
             var target = cam.targetTexture;
 
             for (int r = 0; r < readers.Count; r++)
@@ -163,7 +128,43 @@ namespace ReactUnity.UGUI.Internal
             scales.Clear();
         }
 
-        static int ComparePaintOrder(IBackdropReader a, IBackdropReader b)
+        void EnsureSurfaces(int count, int width, int height)
+        {
+            var w = Mathf.Max(1, width);
+            var h = Mathf.Max(1, height);
+
+            for (int i = surfaces.Count - 1; i >= 0; i--)
+            {
+                var rt = surfaces[i];
+                if (i < count && rt && rt.width == w && rt.height == h) continue;
+                Free(rt);
+                surfaces.RemoveAt(i);
+            }
+
+            while (surfaces.Count < count)
+            {
+                var rt = new RenderTexture(w, h, 24) { name = "[BackdropSurface]" };
+                rt.Create();
+                surfaces.Add(rt);
+            }
+        }
+
+        /// <summary>Drops the surfaces. Readers are unbound by whoever registered them.</summary>
+        public void Release()
+        {
+            for (int i = 0; i < surfaces.Count; i++) Free(surfaces[i]);
+            surfaces.Clear();
+        }
+
+        static void Free(RenderTexture rt)
+        {
+            if (!rt) return;
+            rt.Release();
+            Object.Destroy(rt);
+        }
+
+        /// <summary>Which of two readers the canvas paints first.</summary>
+        public static int ComparePaintOrder(IBackdropReader a, IBackdropReader b)
         {
             return ComparePaintOrder(a.BackdropRenderer.transform, b.BackdropRenderer.transform);
         }
@@ -194,43 +195,112 @@ namespace ReactUnity.UGUI.Internal
             while (t.parent) { d++; t = t.parent; }
             return d;
         }
+    }
 
-        void EnsureSurfaces(int width, int height)
+    /// <summary>
+    /// The context's register of everything that reads a backdrop, and the pass that serves the ones
+    /// drawn straight to the screen.
+    /// </summary>
+    /// <remarks>
+    /// A reader inside a <see cref="ElementFilter"/>'s capture is not one of those: it is drawn by
+    /// that filter's offscreen camera, into that filter's target, so its backdrop is the capture so
+    /// far rather than the screen. That is what built-in gets for free -- a GrabPass copies whatever
+    /// render target is current -- and it is what makes `isolation: isolate` contain a blend. Those
+    /// readers are handed back out by <see cref="CollectFor"/> and rendered by the filter itself,
+    /// which is the only thing that knows when its capture is being taken.
+    /// </remarks>
+    [DefaultExecutionOrder(100)]
+    public class BackdropSurface : MonoBehaviour
+    {
+        /// <summary>Whether a backdrop has to be rendered rather than grabbed. Only the built-in
+        /// pipeline has a GrabPass, and it is the one pipeline with no render pipeline asset.</summary>
+        public static bool Required => GraphicsSettings.currentRenderPipeline != null;
+
+        public UGUIContext Context;
+
+        private readonly List<IBackdropReader> readers = new List<IBackdropReader>();
+        private readonly List<IBackdropReader> onScreen = new List<IBackdropReader>();
+        private readonly BackdropPass pass = new BackdropPass();
+        private bool bound;
+
+        public void Register(IBackdropReader reader)
         {
-            var w = Mathf.Max(1, width);
-            var h = Mathf.Max(1, height);
+            if (reader != null && !readers.Contains(reader)) readers.Add(reader);
+        }
 
-            for (int i = surfaces.Count - 1; i >= 0; i--)
+        public void Unregister(IBackdropReader reader)
+        {
+            // Told before the surface it was handed is released under it.
+            if (readers.Remove(reader)) reader.SetBackdrop(null);
+        }
+
+        /// <summary>
+        /// The readers whose backdrop is <paramref name="group"/>'s capture, in paint order -- or the
+        /// ones drawn straight to the screen, for a null group.
+        /// </summary>
+        public void CollectFor(ElementFilter group, List<IBackdropReader> into)
+        {
+            into.Clear();
+
+            for (int i = readers.Count - 1; i >= 0; i--)
             {
-                var rt = surfaces[i];
-                if (i < readers.Count && rt && rt.width == w && rt.height == h) continue;
-                Release(rt);
-                surfaces.RemoveAt(i);
+                var renderer = readers[i]?.BackdropRenderer;
+                if (!renderer)
+                {
+                    readers.RemoveAt(i);
+                    continue;
+                }
+
+                // Whichever capture this renderer is drawn into, which is the nearest filter above
+                // it -- a filter's own composite sits back in the page, so it finds the one outside.
+                if (renderer.GetComponentInParent<ElementFilter>() == group) into.Add(readers[i]);
             }
 
-            while (surfaces.Count < readers.Count)
+            into.Sort(BackdropPass.ComparePaintOrder);
+        }
+
+        /// <summary>The camera whose frame the on-screen readers are drawn into. An overlay canvas is
+        /// drawn after every camera has finished, so there is no camera whose output contains it and
+        /// no backdrop to render -- those elements keep reading whatever the pipeline offers.</summary>
+        Camera SourceCamera
+        {
+            get
             {
-                var rt = new RenderTexture(w, h, 24) { name = "[BackdropSurface]" };
-                rt.Create();
-                surfaces.Add(rt);
+                var root = Context?.RootCanvas;
+                if (!root || root.renderMode == RenderMode.ScreenSpaceOverlay) return null;
+                return root.worldCamera ? root.worldCamera : Camera.main;
             }
+        }
+
+        void LateUpdate()
+        {
+            if (!Required)
+            {
+                Clear();
+                return;
+            }
+
+            CollectFor(null, onScreen);
+
+            var cam = onScreen.Count > 0 ? SourceCamera : null;
+            if (!cam)
+            {
+                Clear();
+                return;
+            }
+
+            pass.Render(cam, Context.RootCanvas.transform, onScreen, cam.pixelWidth, cam.pixelHeight);
+            bound = true;
         }
 
         /// <summary>Drops the surfaces and tells every reader it is on its own again.</summary>
         void Clear()
         {
-            if (surfaces.Count == 0) return;
+            if (!bound) return;
+            bound = false;
 
             for (int i = 0; i < readers.Count; i++) readers[i]?.SetBackdrop(null);
-            for (int i = 0; i < surfaces.Count; i++) Release(surfaces[i]);
-            surfaces.Clear();
-        }
-
-        void Release(RenderTexture rt)
-        {
-            if (!rt) return;
-            rt.Release();
-            Destroy(rt);
+            pass.Release();
         }
 
         void OnDisable() => Clear();
