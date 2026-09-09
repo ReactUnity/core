@@ -67,7 +67,11 @@ namespace ReactUnity.Scripting.DomProxies
         public void DispatchEvent(string eventName, ReactContext context, EventPriority priority = EventPriority.Unknown, params object[] arguments)
         {
             var handlers = GetAllEventListeners(eventName);
-            foreach (var loadHandler in handlers)
+            if (handlers.Count == 0) return;
+
+            // Over a copy: a handler that removes a listener is ordinary DOM usage, and Vite's
+            // dev-server ping drops both of its own from inside whichever one fires first.
+            foreach (var loadHandler in handlers.ToArray())
                 Callback.From(loadHandler, context).CallWithPriority(priority, arguments);
         }
     }

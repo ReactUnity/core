@@ -112,7 +112,7 @@ That works, but **reports a failure** — `COMMAND_FAILED: Invalid response form
 
 ## Running the sample app
 
-`kitchen-sink` renders a React app served by `react-unity-scripts`:
+`kitchen-sink` renders a React app served by Vite on port 3100:
 
 ```bash
 pnpm --filter reactunity-kitchen-sink start

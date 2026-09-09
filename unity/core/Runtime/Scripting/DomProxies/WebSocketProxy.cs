@@ -85,8 +85,16 @@ namespace ReactUnity.Scripting.DomProxies
                 if (IsDisposed) return;
 
                 var arg = new { code = (int) code, reason };
-                context.Dispatcher.OnceUpdate(() =>
-                    eventTarget.DispatchEvent("close", context, EventPriority.Unknown, arg));
+                context.Dispatcher.OnceUpdate(() => {
+                    // A close with no close frame is `error` then `close` in the browser, and
+                    // WebSocketSharp raises no error at all -- a refused connection arrives here as
+                    // code 1006 only. Vite's dev-server ping settles on `open` or `error`, so
+                    // without this its reconnect poll waits forever on the first failed ping.
+                    if (code == WebSocketCloseCode.Abnormal || code == WebSocketCloseCode.TlsHandshakeFailure)
+                        eventTarget.DispatchEvent("error", context, EventPriority.Unknown, new { message = reason });
+
+                    eventTarget.DispatchEvent("close", context, EventPriority.Unknown, arg);
+                });
             };
 
             socket.Connect();

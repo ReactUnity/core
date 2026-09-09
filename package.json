@@ -16,7 +16,7 @@
     "format": "biome format",
     "check": "biome check",
     "build": "pnpm -r --filter \"./packages/*\" run build",
-    "//typecheck": "Unfiltered `-r` on purpose: it reaches the react-unity-scripts apps too, not just packages/*. Nothing else type checks.",
+    "//typecheck": "Unfiltered `-r` on purpose: it reaches the Vite apps too, not just packages/*. Nothing else type checks.",
     "typecheck": "pnpm -r run typecheck",
     "prepare": "husky",
     "tegami": "node scripts/tegami.mts",

@@ -61,13 +61,15 @@ pnpm --filter @reactunity/material watch
 
 ### Running a React app against Unity
 
-Each app (`kitchen-sink/react`, `unity/core/.react/*`) uses `react-unity-scripts`, a CRA fork:
+Every app in this repo — `kitchen-sink/react` and the three under `unity/core/.react/` — is a [Vite](https://vite.dev) 8 app, configured by the `reactUnity()` preset from `@reactunity/renderer/vite`:
 
 ```bash
 pnpm --filter reactunity-kitchen-sink start
 ```
 
-`start` runs a dev server with HMR that Unity connects to (and serves a browser previewer at the port). `build` emits to `BUILD_PATH` — by default `../Assets/Resources/react`, overridden per app in its `.env`. `react-unity-scripts start --test` swaps the entry point to `test.ts`. See [packages/scripts/README.md](packages/scripts/README.md) for the full env-var surface (`FILENAME`, `BUILD_PATH`, `JSX_IMPORT_SOURCE`, …).
+`start` is plain `vite`: a dev server with HMR that Unity connects to, on the port that app's `vite.config.mts` pins with `strictPort` (3100 for kitchen-sink, 4000 and 4200 for the devtools and quick-start editor windows) — so a clash fails the run rather than moving the port out from under the scene's `DevServer` url. `build` writes into the Unity project the preset finds by walking up from the Vite root, at `Assets/Resources/react`; the three package-owned apps spell `build.outDir` out instead, because their output belongs to a UPM package and there is no project to discover. `ReactUnityOptions` in [packages/renderer/src/vite/index.ts](packages/renderer/src/vite/index.ts) documents the rest, including why filename hashes are off by default (a renamed file loses its `.meta`, and so its Unity GUID).
+
+`unity/core/.react/injectable` is the odd one out: it builds the single IIFE bundle the C# suite substitutes fixture code into, so it is a library build under a fixed name rather than an app — its config comments cover why.
 
 ### The documentation site
 
@@ -208,10 +210,9 @@ These are load-bearing and easy to undo (see commit `43e90688`):
 
 - `packages/scripts/tsconfig.json` must keep `preserveSymlinks: false`. Every consumer extends this config; under pnpm every dependency is a symlink, and `true` breaks module identity (renderer's `fetch`/`Response` globals silently drop out of scope).
 - Loaders in `packages/scripts/config/webpack.config.js` must be `require.resolve`'d, not bare strings — webpack resolves loader strings against the *consuming app's* directory, which only ever worked under npm's flat hoisting.
-- `kitchen-sink/react` is `"type": "module"`, so its webpack config is `webpack.config.cjs`; `config/paths.js` prefers a `.cjs` sibling.
 - Root `.npmrc` sets `node-options="--import tsx"` (so `.mts` config is runnable) and `strict-peer-dependencies=false`.
 - TypeScript is 7.x everywhere, `docs` included -- which cost `docs` its type checking: `astro check` runs on the compiler's JS API, and `@astrojs/language-server` throws in `assertCompatibleTypeScript` on 7, so the script and `@astrojs/check` are gone (`docs/package.json` has the note). `astro build` is the remaining gate there. Nothing may reintroduce `require('typescript')` or `resolve.sync('typescript')` — 7 has no CJS entry — and the options it removed (`target: ES5`, `esModuleInterop: false`, `baseUrl`) can't come back into a tsconfig. Everything else in the workspace is on latest.
-- `react-unity-scripts build` does **not** fail on type errors — fork-ts-checker is gone, so `TSC_COMPILE_ON_ERROR` does nothing and `pnpm typecheck` is what catches them. [packages/scripts/config/modules.js](packages/scripts/config/modules.js) derives webpack's `src` alias from `baseUrl`, and accepts `"paths": { "*": ["./*"] }` as the same thing since TS 7 removed `baseUrl`; `unity/core/.react/devtools` relies on that for its `src/…` imports.
+- `vite build` does **not** fail on type errors — nothing in the build pipeline type checks, so `pnpm typecheck` is what catches them. Where an app names its own files by a root-relative path instead of a relative one (`kitchen-sink/react` and `unity/core/.react/devtools` do), that is the `#*` subpath imports in its `package.json` and not a bundler alias — `#*` maps to `./*` literally, so those specifiers carry the extension, which is what `allowImportingTsExtensions` in their tsconfigs is for.
 - `pnpm-workspace.yaml`'s dependency-build allowlist is `allowBuilds`, not pnpm 10's `onlyBuiltDependencies`. pnpm 11 still *accepts* the old key — `pnpm config list` echoes it back — but no longer consults it, so every install script silently gets skipped. Combined with pnpm 11 defaulting `strictDepBuilds` to true, that turns a skipped build into `ERR_PNPM_IGNORED_BUILDS` and fails the install. Packages are listed explicitly as `true` or `false`; omitting one leaves it "undecided", which is what `strictDepBuilds` errors on. Only four are `true` — the ones whose native or downloaded binaries never materialise otherwise. Anything whose install script just prints a funding banner goes in as `false`.
 
 ## Conventions
