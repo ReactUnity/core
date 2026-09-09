@@ -3,6 +3,7 @@ using NUnit.Framework;
 using ReactUnity.Scripting;
 using ReactUnity.UGUI;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 namespace ReactUnity.Tests
@@ -238,7 +239,7 @@ namespace ReactUnity.Tests
             Assert.AreEqual(true, Scroll.ScrollRect.vertical);
             Assert.AreEqual(ScrollRect.ScrollbarVisibility.AutoHide, Scroll.ScrollRect.horizontalScrollbarVisibility);
             Assert.AreEqual(ScrollRect.ScrollbarVisibility.AutoHide, Scroll.ScrollRect.verticalScrollbarVisibility);
-            Assert.AreEqual(50, Scroll.ScrollRect.scrollSensitivity);
+            Assert.AreEqual(100, Scroll.ScrollRect.scrollSensitivity);
             Assert.AreEqual(0.12f, Scroll.ScrollRect.Smoothness);
             Assert.AreEqual(ScrollRect.MovementType.Clamped, Scroll.ScrollRect.movementType);
             Assert.AreEqual(0, Scroll.ScrollRect.elasticity);
@@ -269,6 +270,130 @@ namespace ReactUnity.Tests
             Assert.AreEqual(0, Scroll.ScrollRect.Smoothness);
             Assert.AreEqual(ScrollRect.MovementType.Clamped, Scroll.ScrollRect.movementType);
             Assert.AreEqual(0, Scroll.ScrollRect.elasticity);
+        }
+
+
+        [UGUITest(Script = BaseScript, Style = BaseStyle)]
+        public IEnumerator AWheelTickScrollsAsFarAsTheSensitivitySays()
+        {
+            View.Style.Set("height", 2000);
+            Globals.Set("smoothness", 0);
+            yield return null;
+
+            // One tick, however many units of delta the active input module calls one -- the legacy
+            // module says one and the input system's says six.
+            Wheel(1);
+            yield return null;
+            Assert.AreEqual(100, Scroll.ScrollRect.ScrollTop, 1.5f);
+
+            Wheel(3);
+            yield return null;
+            Assert.AreEqual(400, Scroll.ScrollRect.ScrollTop, 1.5f);
+
+            Globals.Set("sensitivity", 40);
+            yield return null;
+
+            Wheel(1);
+            yield return null;
+            Assert.AreEqual(440, Scroll.ScrollRect.ScrollTop, 1.5f);
+
+            Wheel(-2);
+            yield return null;
+            Assert.AreEqual(360, Scroll.ScrollRect.ScrollTop, 1.5f);
+        }
+
+        [UGUITest(Script = BaseScript, Style = BaseStyle, RealTimer = true)]
+        public IEnumerator TicksArriveOnTopOfAScrollStillInFlight()
+        {
+            View.Style.Set("height", 2000);
+            Globals.Set("smoothness", 0.15f);
+            yield return null;
+
+            Wheel(1);
+            yield return null;
+            Wheel(1);
+            yield return null;
+            Wheel(1);
+
+            // Three ticks land three ticks away however fast they came, rather than each one counting
+            // from wherever the animation before it had reached.
+            yield return AdvanceTime(0.4f);
+            Assert.AreEqual(300, Scroll.ScrollRect.ScrollTop, 2f);
+        }
+
+        [UGUITest(Script = BaseScript, Style = BaseStyle, RealTimer = true)]
+        public IEnumerator ASmoothScrollEasesOutInsteadOfStoppingDead()
+        {
+            View.Style.Set("height", 2000);
+            yield return null;
+
+            // A quarter of the way through the time, an eased scroll has covered about a sixth of the
+            // distance -- a straight interpolation would be a quarter of the way along by now.
+            Scroll.ScrollRect.ScrollTo(0, 400, 0.5f);
+            yield return AdvanceTime(0.125f);
+            Assert.Less(Scroll.ScrollRect.ScrollTop, 84, "a quarter in, it is still gathering speed");
+
+            // Three quarters through it is past where a straight one would be, slowing into the target.
+            yield return AdvanceTime(0.25f);
+            Assert.Greater(Scroll.ScrollRect.ScrollTop, 316, "three quarters in, it is nearly there");
+
+            yield return AdvanceTime(0.25f);
+            Assert.AreEqual(400, Scroll.ScrollRect.ScrollTop, 1.5f);
+        }
+
+        [UGUITest(Script = BaseScript, Style = BaseStyle, RealTimer = true)]
+        public IEnumerator AFlurryOfTicksIsFollowedRatherThanSavedUp()
+        {
+            View.Style.Set("height", 6000);
+            yield return null;
+
+            // Half a second of fast wheeling: 30 ticks, which is 3000 points asked for at 6000 a
+            // second. The view is meant to follow that, a fraction of a second behind.
+            for (var i = 0; i < 30; i++)
+            {
+                Wheel(1);
+                yield return AdvanceTime(1 / 60f);
+            }
+
+            Assert.Greater(Scroll.ScrollRect.ScrollTop, 2000,
+                "the view should have followed the wheel, not stayed behind to catch up at the end");
+
+            yield return AdvanceTime(0.6f);
+            Assert.AreEqual(3000, Scroll.ScrollRect.ScrollTop, 2f, "and it ends where the ticks asked");
+        }
+
+        [UGUITest(Script = BaseScript, Style = BaseStyle, RealTimer = true)]
+        public IEnumerator AFlurryIsFollowedAtAnyFrameRate()
+        {
+            View.Style.Set("height", 6000);
+            yield return null;
+
+            // A tick on every frame, which is the shape of a fast wheel however fast the frames are.
+            // A scroll given a deadline instead of a target covered a fortieth of this, and less the
+            // higher the frame rate went, because each event restarted a curve in its slowest part.
+            for (var i = 0; i < 30; i++)
+            {
+                Wheel(1);
+                yield return null;
+            }
+
+            Assert.Greater(Scroll.ScrollRect.ScrollTop, 300, "the view should be well on its way by now");
+
+            yield return AdvanceTime(0.6f);
+            Assert.AreEqual(3000, Scroll.ScrollRect.ScrollTop, 2f, "and it arrives where the ticks asked");
+        }
+
+        /// Scroll down by <paramref name="ticks"/> ticks, which the wheel reports as a negative delta.
+        /// The magnitude of a tick is the input module's to define, and the conversion is linear, so
+        /// one unit converted back says how many ticks a unit is.
+        private void Wheel(float ticks)
+        {
+            var module = EventSystem.current?.currentInputModule;
+            var perUnit = module == null ? 1f : module.ConvertPointerEventScrollDeltaToTicks(Vector2.one).y;
+            if (Mathf.Approximately(perUnit, 0)) perUnit = 1f;
+
+            Scroll.ScrollRect.OnScroll(new PointerEventData(EventSystem.current)
+            { scrollDelta = new Vector2(0, -ticks / perUnit) });
         }
 
 

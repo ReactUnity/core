@@ -21,6 +21,22 @@ export default function App() {
 
 </Sandpack>
 
+## Scrolling {/*scrolling*/}
+
+A wheel tick scrolls 100 points, which is near enough to what a browser does for one notch of the
+wheel. `sensitivity` is that distance, so `sensitivity={50}` halves it; a trackpad reports fractions
+of a tick and scales with it.
+
+`smoothness` is how long the view takes to catch up with the wheel -- 0.12 seconds by default, and `0` to follow it
+exactly. A wheel scroll has no destination, so it is a follow rather than a fixed animation: turning the wheel again
+moves the target and the motion carries on instead of restarting. A scroll that *is* given a destination -- `ScrollTo`,
+`ScrollTop`, a snap -- takes the time it was given instead.
+`elasticity` above 0 lets the content be pulled past its end and spring back. `direction` fixes which
+way the view scrolls, and `alwaysShow` keeps the named scrollbars from auto-hiding.
+
+Scrolling to a position, animating that scroll and resting on the items inside are
+[`scroll-behavior`](/reference/css/scroll-behavior) and [`scroll-snap`](/reference/css/scroll-snap).
+
 ## Scrollbars {/*scrollbars*/}
 
 The scrollbars are the `::scrollbar` and `::scrollbar-thumb` pseudo elements, and `[horizontal]` or `[vertical]` picks one of them. They can be styled like any element: `width`, `height`, `background-color`, `border-radius`, and `left` or `top` to move a bar to the opposite edge. The web's `::-webkit-scrollbar`, `::-webkit-scrollbar-track` and `::-webkit-scrollbar-thumb` name the same two elements, so a stylesheet written for a browser applies as it is.

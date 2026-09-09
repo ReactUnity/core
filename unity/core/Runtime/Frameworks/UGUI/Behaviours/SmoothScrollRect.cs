@@ -35,6 +35,17 @@ namespace ReactUnity.UGUI.Behaviours
         private bool snapPending;
         private bool snapInstantly;
 
+        /// How fast the running animation is moving, in normalized position per second.
+        private Vector2 smoothVelocity;
+
+        /// Whether the running animation is following a target that can still move, rather than
+        /// carrying the scroll to one it was given.
+        private bool tracking;
+
+        /// How much of the distance a follow still has left once <see cref="Smoothness"/> has passed,
+        /// which is what keeps that number meaning about how long a scroll takes.
+        private const float FollowRemainder = 0.05f;
+
         public bool WheelDirectionTransposed { get; set; } = false;
 
         public float ClientWidth => RT.rect.width;
@@ -71,30 +82,122 @@ namespace ReactUnity.UGUI.Behaviours
                 transpose = !transpose;
 #endif
 
-            if (transpose) data.scrollDelta = new Vector2(data.scrollDelta.y, data.scrollDelta.x);
+            var delta = WheelTicks(data.scrollDelta);
+            if (transpose) delta = new Vector2(delta.y, delta.x);
 
-#if UNITY_2023_2_OR_NEWER
-            // In newer Unity versions, scroll delta is 120 times smaller than before
-            // TODO: check if this is a bug on Unity side
-            data.scrollDelta *= 120;
-#endif
+            // The base class multiplies what it is handed by `scrollSensitivity`, so give it a tick
+            // count and the sensitivity becomes how far one tick scrolls.
+            var incoming = data.scrollDelta;
+            data.scrollDelta = delta;
 
             var positionBefore = normalizedPosition;
+
+            // A tick counts from where the scroll is already headed, not from how far it has got, so
+            // that a flurry of them adds up to the sum of its ticks as it would in a browser.
+            if (SmoothCoroutine != null) normalizedPosition = targetPosition;
+
             base.OnScroll(data);
-            var positionAfter = normalizedPosition;
-            ScrollTo(positionBefore, positionAfter, Smoothness, false);
+            var target = normalizedPosition;
+
+            // Left as it arrived: the same event is bubbled on to any scroll box above this one.
+            data.scrollDelta = incoming;
+
+            normalizedPosition = positionBefore;
+            FollowTo(target);
             RequestSnap();
+        }
+
+        /// <summary>
+        /// Close on <paramref name="target"/> from wherever the scroll is now, with no deadline -- the
+        /// wheel has no destination in mind and can move the target again next frame. What is fixed is
+        /// the fraction of the way left after <see cref="Smoothness"/>, so the speed follows the wheel
+        /// rather than the frame rate.
+        /// </summary>
+        private void FollowTo(Vector2 target)
+        {
+            // An elastic box does not clamp the delta it was handed, and a target past the end is one
+            // the position can never be set to, so the follow would never arrive.
+            targetPosition = new Vector2(Mathf.Clamp01(target.x), Mathf.Clamp01(target.y));
+
+            if (Smoothness <= 0)
+            {
+                StopSmoothing();
+                smoothVelocity = Vector2.zero;
+                normalizedPosition = targetPosition;
+                return;
+            }
+
+            // An animation carrying the scroll somewhere is given up for this, keeping its speed.
+            if (!tracking) StopSmoothing();
+
+            if (SmoothCoroutine == null)
+            {
+                tracking = true;
+                SmoothCoroutine = StartCoroutine(FollowTarget());
+            }
+        }
+
+        private IEnumerator FollowTarget()
+        {
+            var rate = -Mathf.Log(FollowRemainder) / Smoothness;
+
+            while (true)
+            {
+                yield return null;
+
+                var position = normalizedPosition;
+                var remaining = targetPosition - position;
+
+                if (Reached(remaining))
+                {
+                    normalizedPosition = targetPosition;
+                    smoothVelocity = Vector2.zero;
+                    SmoothCoroutine = null;
+                    tracking = false;
+                    yield break;
+                }
+
+                // Frame rate only decides how finely the same approach is sampled.
+                normalizedPosition = position + remaining * (1 - Mathf.Exp(-rate * Time.unscaledDeltaTime));
+                smoothVelocity = remaining * rate;
+            }
+        }
+
+        /// <summary>Whether what is left of a scroll is under the pixel it would be drawn at.</summary>
+        private bool Reached(Vector2 remaining)
+        {
+            return Mathf.Abs(remaining.x) * Mathf.Max(0, ScrollWidth - ClientWidth) < 0.5f
+                && Mathf.Abs(remaining.y) * Mathf.Max(0, ScrollHeight - ClientHeight) < 0.5f;
+        }
+
+        private void StopSmoothing()
+        {
+            if (SmoothCoroutine != null) StopCoroutine(SmoothCoroutine);
+            SmoothCoroutine = null;
+            tracking = false;
+        }
+
+        /// <summary>
+        /// How many wheel ticks a scroll delta is. Only the input module knows, and they disagree: the
+        /// legacy one reports one per tick and the input system's six, either being configurable.
+        /// </summary>
+        private static Vector2 WheelTicks(Vector2 delta)
+        {
+#if UNITY_2023_2_OR_NEWER
+            var module = EventSystem.current?.currentInputModule;
+            if (module != null) return module.ConvertPointerEventScrollDeltaToTicks(delta);
+#endif
+            // Without a module to ask, a delta is one per tick -- what the legacy one reports, and what
+            // every module reported before the conversion above existed.
+            return delta;
         }
 
         public override void OnBeginDrag(PointerEventData eventData)
         {
             // The pointer takes over from wherever the animation reached, rather than from where it
             // was headed -- so a running scroll is dropped in place instead of finished first.
-            if (SmoothCoroutine != null)
-            {
-                StopCoroutine(SmoothCoroutine);
-                SmoothCoroutine = null;
-            }
+            StopSmoothing();
+            smoothVelocity = Vector2.zero;
 
             dragging = true;
             base.OnBeginDrag(eventData);
@@ -198,12 +301,7 @@ namespace ReactUnity.UGUI.Behaviours
         /// </param>
         private void ScrollTo(Vector2 positionBefore, Vector2 positionAfter, float smoothness, bool settle)
         {
-            if (SmoothCoroutine != null)
-            {
-                StopCoroutine(SmoothCoroutine);
-                SmoothCoroutine = null;
-                normalizedPosition = targetPosition;
-            }
+            StopSmoothing();
 
             if (smoothness > 0)
             {
@@ -214,6 +312,7 @@ namespace ReactUnity.UGUI.Behaviours
             }
             else
             {
+                smoothVelocity = Vector2.zero;
                 if (settle) StopMovement();
                 if (normalizedPosition != positionAfter)
                     normalizedPosition = positionAfter;
@@ -222,6 +321,10 @@ namespace ReactUnity.UGUI.Behaviours
 
         private IEnumerator StartScroll(Vector2 from, Vector2 to, float smoothness, bool settle)
         {
+            // The speed this scroll starts at is the speed the one it interrupted had reached, so
+            // retargeting mid-flight -- a second wheel tick, a `scrollTop` -- carries the motion on
+            // instead of restarting it. It still eases out to a stop, and still on time.
+            var initial = smoothVelocity;
             var passed = 0f;
 
             while (true)
@@ -229,15 +332,43 @@ namespace ReactUnity.UGUI.Behaviours
                 yield return null;
                 if (settle) StopMovement();
                 passed += Time.unscaledDeltaTime;
-                if (passed < smoothness)
-                    normalizedPosition = Vector2.Lerp(from, to, passed / smoothness);
-                else
+
+                if (passed >= smoothness)
                 {
                     normalizedPosition = to;
+                    smoothVelocity = Vector2.zero;
                     SmoothCoroutine = null;
                     yield break;
                 }
+
+                var s = passed / smoothness;
+                normalizedPosition = Hermite(from, to, initial, smoothness, s);
+                smoothVelocity = HermiteVelocity(from, to, initial, smoothness, s);
             }
+        }
+
+        /// <summary>
+        /// A cubic Hermite: where a scroll that left <paramref name="from"/> at
+        /// <paramref name="velocity"/> has got to at fraction <paramref name="s"/> of its way to
+        /// <paramref name="to"/>, arriving there with no speed left.
+        /// </summary>
+        private static Vector2 Hermite(Vector2 from, Vector2 to, Vector2 velocity, float duration, float s)
+        {
+            var s2 = s * s;
+            var s3 = s2 * s;
+
+            return from * (2 * s3 - 3 * s2 + 1)
+                + to * (3 * s2 - 2 * s3)
+                + velocity * (duration * (s3 - 2 * s2 + s));
+        }
+
+        /// <summary>How fast <see cref="Hermite"/> is moving there, which is its derivative in time.</summary>
+        private static Vector2 HermiteVelocity(Vector2 from, Vector2 to, Vector2 velocity, float duration, float s)
+        {
+            var s2 = s * s;
+
+            return (from - to) * ((6 * s2 - 6 * s) / duration)
+                + velocity * (3 * s2 - 4 * s + 1);
         }
     }
 }

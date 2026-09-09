@@ -25,6 +25,7 @@ export interface Scroll extends View<ReactUnity.UGUI.ScrollComponent> {
   onValueChanged?: (ev: UnityEngine.Vector2, sender: ReactUnity.UGUI.ScrollComponent) => void;
   direction?: ScrollDirection;
   alwaysShow?: ScrollDirection;
+  /** How far one wheel tick scrolls, in points. Defaults to 100, about a browser's notch. */
   sensitivity?: number;
   elasticity?: number;
   smoothness?: number;

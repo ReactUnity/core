@@ -78,7 +78,8 @@ namespace ReactUnity.UGUI
 
             ScrollRect.viewport = viewport;
             ScrollRect.content = content;
-            ScrollRect.scrollSensitivity = 50;
+            // Points per wheel tick, which is about what a browser scrolls for one.
+            ScrollRect.scrollSensitivity = 100;
             ScrollRect.horizontalScrollbarVisibility = ScrollbarVisibility.AutoHide;
             ScrollRect.verticalScrollbarVisibility = ScrollbarVisibility.AutoHide;
             ScrollRect.elasticity = 0;
@@ -245,7 +246,7 @@ namespace ReactUnity.UGUI
                     ScrollRect.verticalScrollbarVisibility = dir2.HasFlag(ScrollDirection.Vertical) ? ScrollbarVisibility.Permanent : ScrollbarVisibility.AutoHide;
                     break;
                 case "sensitivity":
-                    var fl = AllConverters.FloatConverter.TryGetConstantValue(value, 50f);
+                    var fl = AllConverters.FloatConverter.TryGetConstantValue(value, 100f);
                     ScrollRect.scrollSensitivity = fl;
                     break;
                 default:
