@@ -93,8 +93,8 @@ export default function ScopePage() {
         </h2>
 
         <text className={styles.note}>
-          `:scope` is the scoping root, so the border lands on the card. `&gt; .title` is relative to it, so only its own title is bold, not
-          the one further down.
+          `:scope` is the scoping root, so the border lands on the card. `:scope &gt; .title` is relative to it, so only its own title is
+          bold, not the one further down.
         </text>
 
         <view className={styles.titled}>

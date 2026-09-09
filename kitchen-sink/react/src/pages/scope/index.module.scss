@@ -97,7 +97,9 @@
   }
 }
 
-/* Selectors that name the root: :scope is the card itself, `> .title` its direct child only. */
+/* Selectors that name the root: :scope is the card itself, `:scope > .title` its direct child
+   only. CSS also allows the bare `> .title` inside @scope, but Sass warns on it and CSS
+   minifiers reject it, so spell the root out. */
 .titled {
   gap: 6px;
   padding: 12px;
@@ -116,7 +118,7 @@
     border-color: #6366f1;
   }
 
-  > .title {
+  :scope > .title {
     font-weight: bold;
     color: #3730a3;
   }

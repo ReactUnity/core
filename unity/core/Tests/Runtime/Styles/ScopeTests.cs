@@ -93,6 +93,7 @@ namespace ReactUnity.Tests
                 :scope { color: red; }
                 & { opacity: 0.5; }
                 > .q { color: blue; }
+                :scope > .q { background-color: magenta; }
                 :root #b { color: cyan; }
                 .q { &:first-child { opacity: 0.25; } }
             }
@@ -110,6 +111,11 @@ namespace ReactUnity.Tests
             // A relative selector is relative to the root, so `> .q` stops at its children.
             Assert.AreEqual(Color.blue, Q("#a").ComputedStyle.color);
             Assert.AreEqual(0.25f, Q("#a").ComputedStyle.opacity);
+            // Spelling the root out reaches the same set, which is the form Sass and CSS minifiers
+            // accept -- a selector may not start with a combinator anywhere else, and both refuse
+            // it here rather than special-casing @scope.
+            Assert.AreEqual(Color.magenta, Q("#a").ComputedStyle.backgroundColor);
+            Assert.AreNotEqual(Color.magenta, Q("#b").ComputedStyle.backgroundColor);
             // Only the subject has to be in scope; :root is above it.
             Assert.AreEqual(Color.cyan, Q("#b").ComputedStyle.color);
 
