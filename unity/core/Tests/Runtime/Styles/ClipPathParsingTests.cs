@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Text;
 using NUnit.Framework;
 using ReactUnity.Scripting;
 using ReactUnity.Types;
@@ -254,18 +255,390 @@ namespace ReactUnity.Tests
         }
 
         [UGUITest(Script = BaseScript)]
-        public IEnumerator AGeometryBoxParsesAndIsDropped()
+        public IEnumerator APolygonMayHaveMorePointsThanTheShaderHoldsAtOnce()
         {
             yield return null;
 
-            // Only the border box is drawn against, so the keyword is accepted rather than taking
-            // the declaration down with it.
-            InsertStyle(@"#test { clip-path: padding-box circle(30px); }");
+            // Twenty vertices around a circle, which is past MaxUniformPoints -- the point the list
+            // used to be cut off at, for want of anywhere else to put them.
+            var points = new StringBuilder();
+            for (int i = 0; i < 20; i++)
+            {
+                var a = i * 2f * Mathf.PI / 20f;
+                if (i > 0) points.Append(", ");
+                points.Append(Mathf.RoundToInt(50 + 40 * Mathf.Cos(a)));
+                points.Append("% ");
+                points.Append(Mathf.RoundToInt(50 + 40 * Mathf.Sin(a)));
+                points.Append("%");
+            }
+
+            InsertStyle("#test { clip-path: polygon(" + points + "); }");
             yield return null;
 
             var clip = Clip;
-            Assert.AreEqual(ClipPathKind.Circle, clip.Kind);
-            Assert.AreEqual(30f, clip.Resolve(new Vector2(200, 100)).Radius.x, 0.001f);
+            Assert.AreEqual(20, clip.Points.Length);
+            Assert.AreEqual(21, clip.Resolve(new Vector2(100, 100)).Contours[0].Length);
+        }
+
+        [UGUITest(Script = BaseScript)]
+        public IEnumerator RectGivesEachEdgesPositionFromTheTopLeft()
+        {
+            yield return null;
+
+            InsertStyle(@"#test { clip-path: rect(10px 180px 70px 40px); }");
+            yield return null;
+
+            var clip = Clip;
+            Assert.AreEqual(ClipPathKind.Rect, clip.Kind);
+
+            // Each value is where the edge *is* rather than how far in it sits, so `right: 180px`
+            // is 20px in from a 200-wide box and not 180.
+            var box = clip.Resolve(new Vector2(200, 100)).Box;
+            Assert.AreEqual(40f, box.xMin, 0.001f);
+            Assert.AreEqual(180f, box.xMax, 0.001f);
+            Assert.AreEqual(30f, box.yMin, 0.001f);
+            Assert.AreEqual(90f, box.yMax, 0.001f);
+        }
+
+        [UGUITest(Script = BaseScript)]
+        public IEnumerator RectTakesAutoForTheBoxsOwnEdge()
+        {
+            yield return null;
+
+            InsertStyle(@"#test { clip-path: rect(auto auto auto auto); }");
+            yield return null;
+
+            var box = Clip.Resolve(new Vector2(200, 100)).Box;
+            Assert.AreEqual(0f, box.xMin, 0.001f);
+            Assert.AreEqual(200f, box.xMax, 0.001f);
+            Assert.AreEqual(0f, box.yMin, 0.001f);
+            Assert.AreEqual(100f, box.yMax, 0.001f);
+
+            InsertStyle(@"#test { clip-path: rect(20px auto auto 30px round 8px); }");
+            yield return null;
+
+            var resolved = Clip.Resolve(new Vector2(200, 100));
+            Assert.AreEqual(30f, resolved.Box.xMin, 0.001f);
+            Assert.AreEqual(200f, resolved.Box.xMax, 0.001f);
+            Assert.AreEqual(0f, resolved.Box.yMin, 0.001f);
+            Assert.AreEqual(80f, resolved.Box.yMax, 0.001f);
+            Assert.AreEqual(8f, resolved.RadiiX.x, 0.001f);
+        }
+
+        [UGUITest(Script = BaseScript)]
+        public IEnumerator XywhIsACornerAndASize()
+        {
+            yield return null;
+
+            InsertStyle(@"#test { clip-path: xywh(20px 10px 100px 40px); }");
+            yield return null;
+
+            var clip = Clip;
+            Assert.AreEqual(ClipPathKind.Xywh, clip.Kind);
+            Assert.AreEqual(YogaValue.Point(20), clip.X);
+            Assert.AreEqual(YogaValue.Point(100), clip.Width);
+
+            // y is measured down from the top, so a 40-tall rectangle 10 from the top ends at 50.
+            var box = clip.Resolve(new Vector2(200, 100)).Box;
+            Assert.AreEqual(20f, box.xMin, 0.001f);
+            Assert.AreEqual(120f, box.xMax, 0.001f);
+            Assert.AreEqual(50f, box.yMin, 0.001f);
+            Assert.AreEqual(90f, box.yMax, 0.001f);
+        }
+
+        [UGUITest(Script = BaseScript)]
+        public IEnumerator ARectangleThatIsNotFourValuesIsNotAShape()
+        {
+            yield return null;
+
+            // inset() borrows an opposite side for a value it was not given; neither of the other
+            // two has an opposite side to borrow from.
+            InsertStyle(@"#test { clip-path: rect(10px 20px); }");
+            yield return null;
+            Assert.AreEqual(ClipPathKind.None, Clip.Kind);
+
+            InsertStyle(@"#test { clip-path: xywh(1px 2px 3px); }");
+            yield return null;
+            Assert.AreEqual(ClipPathKind.None, Clip.Kind);
+
+            // And `auto` is rect()'s alone: an inset or a size has nothing to mean by it.
+            InsertStyle(@"#test { clip-path: xywh(auto 0 10px 10px); }");
+            yield return null;
+            Assert.AreEqual(ClipPathKind.None, Clip.Kind);
+        }
+
+        [UGUITest(Script = BaseScript)]
+        public IEnumerator PathReadsSvgDataFromTheBoxsTopLeft()
+        {
+            yield return null;
+
+            InsertStyle(@"#test { clip-path: path('M 0 0 L 100 0 L 100 50 Z'); }");
+            yield return null;
+
+            var clip = Clip;
+            Assert.AreEqual(ClipPathKind.Path, clip.Kind);
+            Assert.AreEqual(4, clip.Commands.Length);
+            Assert.AreEqual(ClipPathCommandKind.Move, clip.Commands[0].Kind);
+            Assert.AreEqual(ClipPathCommandKind.Close, clip.Commands[3].Kind);
+
+            // Path data is y-down from the top-left corner, where a resolved shape is y-up from the
+            // bottom -- so the ring comes back flipped.
+            var contours = clip.Resolve(new Vector2(200, 100)).Contours;
+            Assert.AreEqual(1, contours.Length);
+            Assert.AreEqual(4, contours[0].Length);
+            Assert.AreEqual(new Vector2(0, 100), contours[0][0]);
+            Assert.AreEqual(new Vector2(100, 100), contours[0][1]);
+            Assert.AreEqual(new Vector2(100, 50), contours[0][2]);
+            Assert.AreEqual(contours[0][0], contours[0][3]);
+        }
+
+        [UGUITest(Script = BaseScript)]
+        public IEnumerator PathFlattensItsCurvesAndKeepsItsFillRule()
+        {
+            yield return null;
+
+            InsertStyle(@"#test { clip-path: path(evenodd, 'M 0 0 C 40 0 80 40 80 80 Z'); }");
+            yield return null;
+
+            var clip = Clip;
+            Assert.IsTrue(clip.EvenOdd);
+            Assert.AreEqual(ClipPathCommandKind.Cubic, clip.Commands[1].Kind);
+
+            // A curve is a run of segments by the time anything draws it, so the ring carries far
+            // more points than the three the commands name -- which is the whole reason a shape
+            // this shape cannot ride in the shader's uniform ring.
+            var contours = clip.Resolve(new Vector2(200, 200)).Contours;
+            Assert.AreEqual(1, contours.Length);
+            Assert.Greater(contours[0].Length, ClipPath.MaxUniformPoints);
+        }
+
+        [UGUITest(Script = BaseScript)]
+        public IEnumerator PathDataMayUseCommasAndRepeatACommand()
+        {
+            yield return null;
+
+            // The data's own commas are not the fill rule's, and a repeated coordinate pair after a
+            // moveto is a lineto -- both of which is how a minifier writes path data.
+            InsertStyle(@"#test { clip-path: path('M0,0 100,0 100,100 Z'); }");
+            yield return null;
+
+            var clip = Clip;
+            Assert.AreEqual(ClipPathKind.Path, clip.Kind);
+            Assert.AreEqual(ClipPathCommandKind.Line, clip.Commands[1].Kind);
+            Assert.AreEqual(4, clip.Resolve(new Vector2(200, 200)).Contours[0].Length);
+        }
+
+        [UGUITest(Script = BaseScript)]
+        public IEnumerator PathDataHasToOpenWithAMoveto()
+        {
+            yield return null;
+
+            InsertStyle(@"#test { clip-path: path('L 10 10 L 20 20'); }");
+            yield return null;
+            Assert.AreEqual(ClipPathKind.None, Clip.Kind);
+        }
+
+        [UGUITest(Script = BaseScript)]
+        public IEnumerator ShapeDrawsTheSameOutlineInCss()
+        {
+            yield return null;
+
+            InsertStyle(@"#test { clip-path: shape(from 0 0, line to 100% 0, line to 100% 100%, close); }");
+            yield return null;
+
+            var clip = Clip;
+            Assert.AreEqual(ClipPathKind.Shape, clip.Kind);
+            Assert.AreEqual(4, clip.Commands.Length);
+
+            // Percentages are what shape() has and a path string cannot express.
+            var contour = clip.Resolve(new Vector2(200, 100)).Contours[0];
+            Assert.AreEqual(new Vector2(0, 100), contour[0]);
+            Assert.AreEqual(new Vector2(200, 100), contour[1]);
+            Assert.AreEqual(new Vector2(200, 0), contour[2]);
+        }
+
+        [UGUITest(Script = BaseScript)]
+        public IEnumerator ShapeCurveIsQuadraticWithOneControlAndCubicWithTwo()
+        {
+            yield return null;
+
+            InsertStyle(@"#test { clip-path: shape(from 0 0, curve to 100px 0 with 50px 40px, close); }");
+            yield return null;
+            Assert.AreEqual(ClipPathCommandKind.Quadratic, Clip.Commands[1].Kind);
+
+            InsertStyle(@"#test { clip-path: shape(from 0 0, curve to 100px 0 with 20px 40px / 80px 40px, close); }");
+            yield return null;
+
+            var clip = Clip;
+            Assert.AreEqual(ClipPathCommandKind.Cubic, clip.Commands[1].Kind);
+            Assert.AreEqual(YogaValue2.Point(20, 40), clip.Commands[1].Control1);
+            Assert.AreEqual(YogaValue2.Point(80, 40), clip.Commands[1].Control2);
+        }
+
+        [UGUITest(Script = BaseScript)]
+        public IEnumerator ShapeArcCarriesItsFlagsAndRotation()
+        {
+            yield return null;
+
+            InsertStyle(@"#test { clip-path: shape(from 0 0, arc to 50px 50px of 25px 40px large cw rotate 30deg, close); }");
+            yield return null;
+
+            var command = Clip.Commands[1];
+            Assert.AreEqual(ClipPathCommandKind.Arc, command.Kind);
+            Assert.AreEqual(YogaValue2.Point(25, 40), command.Radius);
+            Assert.IsTrue(command.LargeArc);
+            Assert.IsTrue(command.Clockwise);
+            Assert.AreEqual(30f, command.Angle, 0.001f);
+
+            // One radius is a circular arc, and the flags default to the other two.
+            InsertStyle(@"#test { clip-path: shape(from 0 0, arc to 50px 50px of 25px, close); }");
+            yield return null;
+
+            command = Clip.Commands[1];
+            Assert.AreEqual(YogaValue2.Point(25, 25), command.Radius);
+            Assert.IsFalse(command.LargeArc);
+            Assert.IsFalse(command.Clockwise);
+        }
+
+        [UGUITest(Script = BaseScript)]
+        public IEnumerator ShapeByIsAnOffsetFromTheCurrentPoint()
+        {
+            yield return null;
+
+            InsertStyle(@"#test { clip-path: shape(from 10px 10px, line by 30px 0, line by 0 30px, close); }");
+            yield return null;
+
+            var clip = Clip;
+            Assert.IsTrue(clip.Commands[1].Relative);
+
+            var contour = clip.Resolve(new Vector2(100, 100)).Contours[0];
+            Assert.AreEqual(new Vector2(10, 90), contour[0]);
+            Assert.AreEqual(new Vector2(40, 90), contour[1]);
+            Assert.AreEqual(new Vector2(40, 60), contour[2]);
+        }
+
+        [UGUITest(Script = BaseScript)]
+        public IEnumerator AShapeCommandNobodyKnowsIsNotAShape()
+        {
+            yield return null;
+
+            InsertStyle(@"#test { clip-path: shape(from 0 0, wiggle to 10px 10px); }");
+            yield return null;
+            Assert.AreEqual(ClipPathKind.None, Clip.Kind);
+        }
+
+        [UGUITest(Script = BaseScript)]
+        public IEnumerator AGeometryBoxIsWhatTheShapeIsMeasuredAgainst()
+        {
+            yield return null;
+
+            InsertStyle(@"#test { clip-path: padding-box circle(30px); }");
+            yield return null;
+            Assert.AreEqual(ClipGeometryBox.PaddingBox, Clip.Box);
+            Assert.AreEqual(ClipPathKind.Circle, Clip.Kind);
+
+            // Either order, as CSS allows.
+            InsertStyle(@"#test { clip-path: circle(30px) margin-box; }");
+            yield return null;
+            Assert.AreEqual(ClipGeometryBox.MarginBox, Clip.Box);
+
+            // The three SVG boxes have nothing to measure on an element that is not SVG, so each
+            // resolves to the box that does.
+            InsertStyle(@"#test { clip-path: fill-box circle(30px); }");
+            yield return null;
+            Assert.AreEqual(ClipGeometryBox.ContentBox, Clip.Box);
+
+            InsertStyle(@"#test { clip-path: view-box circle(30px); }");
+            yield return null;
+            Assert.AreEqual(ClipGeometryBox.BorderBox, Clip.Box);
+        }
+
+        [UGUITest(Script = BaseScript)]
+        public IEnumerator ABareGeometryBoxClipsToThatBox()
+        {
+            yield return null;
+
+            InsertStyle(@"#test { clip-path: content-box; }");
+            yield return null;
+
+            var clip = Clip;
+            // The box itself is the shape, which is an inset of nothing measured against it.
+            Assert.AreEqual(ClipPathKind.Inset, clip.Kind);
+            Assert.AreEqual(ClipGeometryBox.ContentBox, clip.Box);
+
+            // Which box that is falls to the element -- Resolve is handed the rectangle, in the
+            // border box's own coordinates, so a shape lands where the padding and border leave it.
+            var box = clip.Resolve(new Rect(10, 20, 100, 50)).Box;
+            Assert.AreEqual(10f, box.xMin, 0.001f);
+            Assert.AreEqual(110f, box.xMax, 0.001f);
+            Assert.AreEqual(20f, box.yMin, 0.001f);
+            Assert.AreEqual(70f, box.yMax, 0.001f);
+        }
+
+        [UGUITest(Script = BaseScript)]
+        public IEnumerator TwoGeometryBoxesIsNotAValue()
+        {
+            yield return null;
+
+            InsertStyle(@"#test { clip-path: padding-box content-box; }");
+            yield return null;
+            Assert.AreEqual(ClipPathKind.None, Clip.Kind);
+        }
+
+        [UGUITest(Script = BaseScript)]
+        public IEnumerator ARasterizedShapeCoversWhatItsContoursEnclose()
+        {
+            yield return null;
+
+            // What a shape past the uniform ring is transported as: a byte of coverage per texel of
+            // the capture, which the composite samples in place of walking a ring per fragment.
+            var square = new[] { Ring(new Vector2(0, 0), new Vector2(5, 0), new Vector2(5, 10), new Vector2(0, 10)) };
+            var coverage = ClipPathGeometry.Rasterize(square, false, 10, 10, Vector2.one, Vector2.zero);
+
+            Assert.AreEqual(100, coverage.Length);
+            Assert.AreEqual(255, coverage[0], "inside the square");
+            Assert.AreEqual(255, coverage[4]);
+            Assert.AreEqual(0, coverage[5], "and outside it");
+            Assert.AreEqual(0, coverage[9]);
+
+            // A texel the edge runs through gets the fraction of it that is covered, which is the
+            // antialiasing the signed-distance shapes get from their own gradient.
+            var half = new[] { Ring(new Vector2(0, 0), new Vector2(4.5f, 0), new Vector2(4.5f, 10), new Vector2(0, 10)) };
+            coverage = ClipPathGeometry.Rasterize(half, false, 10, 10, Vector2.one, Vector2.zero);
+            Assert.AreEqual(128, coverage[4], 2, "half of the fifth texel");
+        }
+
+        /// <summary>The closed form every contour is in: the first point repeated at the end.</summary>
+        static Vector2[] Ring(params Vector2[] points)
+        {
+            var ring = new Vector2[points.Length + 1];
+            points.CopyTo(ring, 0);
+            ring[points.Length] = points[0];
+            return ring;
+        }
+
+        [UGUITest(Script = BaseScript)]
+        public IEnumerator TwoPathsOfTheSameOutlineInterpolate()
+        {
+            yield return null;
+
+            InsertStyle(@"#test { clip-path: path('M 0 0 L 10 0 L 10 10 Z'); }");
+            yield return null;
+            var from = Clip;
+
+            InsertStyle(@"#test { clip-path: path('M 0 0 L 30 0 L 30 30 Z'); }");
+            yield return null;
+
+            var half = from.Interpolate(Clip, 0.5f) as ClipPath;
+            Assert.AreEqual(YogaValue2.Point(20, 0), half.Commands[1].To);
+
+            // A different outline has nothing to correspond to, which is where CSS gives up too.
+            InsertStyle(@"#test { clip-path: path('M 0 0 L 30 0 Z'); }");
+            yield return null;
+
+            var other = Clip;
+            Assert.AreEqual(from.Commands.Length, (from.Interpolate(other, 0.25f) as ClipPath).Commands.Length);
+            Assert.AreEqual(other.Commands.Length, (from.Interpolate(other, 0.75f) as ClipPath).Commands.Length);
         }
 
         [UGUITest(Script = BaseScript)]

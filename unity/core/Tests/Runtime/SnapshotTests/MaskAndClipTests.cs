@@ -201,6 +201,66 @@ namespace ReactUnity.Tests
         }
 
         [UGUITest(Script = BaseScript, Style = BaseStyle)]
+        public IEnumerator APathClipRasterizesItsCurves()
+        {
+            // A circle drawn as two arcs. Flattened it is far past the ring the shader can hold in
+            // uniforms, so this is the coverage-mask transport rather than the per-fragment walk --
+            // the one clip shape that reaches the composite as a texture.
+            View.Style["clip-path"] = "path('M 100 0 A 100 100 0 1 1 100 200 A 100 100 0 1 1 100 0 Z')";
+            yield return null;
+            yield return null;
+            yield return null;
+            yield return null;
+
+            Assert.NotNull(View.ElementFilter, "a clip should have created the offscreen composite");
+
+            var centre = SampleAt(100, 100);
+            var corner = SampleAt(6, 6);
+            Debug.Log($"[CLIP path] centre={Describe(centre)} corner={Describe(corner)}");
+
+            Assert.Greater(Coverage(centre), 0.7f, "the middle of the circle should survive");
+            Assert.Less(Coverage(corner), 0.2f, "a corner is outside a circle inscribed in the box");
+        }
+
+        [UGUITest(Script = BaseScript, Style = BaseStyle)]
+        public IEnumerator AShapeClipCutsWhereItsCommandsSay()
+        {
+            // The same triangle APolygonClipCutsAlongItsEdges draws, in the other grammar.
+            View.Style["clip-path"] = "shape(from 50% 0, line to 100% 100%, line to 0 100%, close)";
+            yield return null;
+            yield return null;
+            yield return null;
+
+            var inside = SampleAt(100, 180);
+            var corner = SampleAt(6, 6);
+            Debug.Log($"[CLIP shape] inside={Describe(inside)} corner={Describe(corner)}");
+
+            Assert.Greater(Coverage(inside), 0.7f, "the base of the triangle should survive");
+            Assert.Less(Coverage(corner), 0.2f, "a top corner is outside it");
+        }
+
+        [UGUITest(Script = BaseScript, Style = BaseStyle)]
+        public IEnumerator AContentBoxClipCutsAtThePadding()
+        {
+            // Border-box sizing keeps the element 200x200 whatever the padding, so the content box
+            // is the middle 100x100 and the clip is the padding frame coming off.
+            View.Style["boxSizing"] = "border-box";
+            View.Style["padding"] = "50px";
+            View.Style["clip-path"] = "content-box";
+            yield return null;
+            yield return null;
+            yield return null;
+            yield return null;
+
+            var centre = SampleAt(100, 100);
+            var padding = SampleAt(20, 100);
+            Debug.Log($"[CLIP content-box] centre={Describe(centre)} padding={Describe(padding)}");
+
+            Assert.Greater(Coverage(centre), 0.7f, "the content box should survive");
+            Assert.Less(Coverage(padding), 0.2f, "and the padding around it should not");
+        }
+
+        [UGUITest(Script = BaseScript, Style = BaseStyle)]
         public IEnumerator ClippingAndMaskingComposeRatherThanReplaceEachOther()
         {
             View.Style["clip-path"] = "inset(0 50% 0 0)";

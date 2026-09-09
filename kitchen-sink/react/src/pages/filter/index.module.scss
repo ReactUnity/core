@@ -410,6 +410,33 @@
   );
 }
 
+/* The other two ways CSS writes a rectangle: edge positions, and a corner plus a size. */
+.clipRect {
+  clip-path: rect(16px auto auto 24px round 12px);
+}
+
+.clipXywh {
+  clip-path: xywh(12% 10% 76% 80% round 26px 8px);
+}
+
+/* Flattened, a heart of arcs and curves is far past the ring the shader holds in uniforms, so
+   this tile is the rasterized-coverage transport rather than the per-fragment walk. */
+.clipPath {
+  clip-path: path('M 75 100 C 5 65 5 45 5 30 A 25 25 0 0 1 75 30 A 25 25 0 0 1 145 30 C 145 45 145 65 75 100 Z');
+}
+
+/* The same outlines in CSS, which is what buys percentages. */
+.clipShape {
+  clip-path: shape(from 0 100%, line to 0 35%, curve to 50% 35% with 25% 0, curve to 100% 35% with 75% 70%, line to 100% 100%, close);
+}
+
+/* A geometry box on its own is a shape -- the box itself, here the tile minus its padding. */
+.clipContentBox {
+  box-sizing: border-box;
+  padding: 16px 28px;
+  clip-path: content-box;
+}
+
 /* Interpolating between two shapes of one kind, which is what makes a clip animatable. */
 .clipAnimated {
   clip-path: circle(45%);

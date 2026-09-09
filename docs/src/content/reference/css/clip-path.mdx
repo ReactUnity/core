@@ -14,6 +14,9 @@ const shapes = [
   'ellipse(45% 30%)',
   'inset(10% 20% round 24px)',
   'polygon(50% 0%, 100% 38%, 82% 100%, 18% 100%, 0% 38%)',
+  "path('M 150 30 C 150 10 120 0 100 20 C 80 0 50 10 50 30 C 50 70 100 100 100 100 C 100 100 150 70 150 30 Z')",
+  'shape(from 0 50%, curve to 50% 0 with 0 0, curve to 100% 50% with 100% 0, curve to 50% 100% with 100% 100%, curve to 0 50% with 0 100%, close)',
+  'xywh(10% 20% 60% 60% round 16px)',
   'none',
 ];
 
@@ -23,7 +26,7 @@ export default function App() {
 
   return <>
     <button onClick={() => setIndex(x => (x + 1) % shapes.length)}>
-      clip-path: {clipPath}
+      next shape
     </button>
 
     <view className="stage" style={{ clipPath }} />
@@ -46,9 +49,9 @@ export default function App() {
 
 ## Values {/*values*/}
 
-Four basic shapes are supported, all measured against the element's border box.
+Every CSS basic shape is supported, on its own or with a geometry box that says what it is measured against. `url()`, which points at an SVG `<clipPath>`, is not.
 
-### `inset()` {/*inset*/}
+### `inset()`, `rect()` and `xywh()` {/*inset*/}
 
 ```css
 clip-path: inset(10px);
@@ -56,9 +59,23 @@ clip-path: inset(10px 20px);
 clip-path: inset(10% 20% 30% 40%);
 clip-path: inset(0 round 24px);
 clip-path: inset(0 round 40px 10px / 20px 5px);
+
+clip-path: rect(10px 180px 70px 40px);
+clip-path: rect(20px auto auto 30px round 8px);
+
+clip-path: xywh(20px 10px 100px 40px);
+clip-path: xywh(10% 20% 60% 60% round 16px);
 ```
 
-One to four lengths or percentages in, from the top, right, bottom and left edges -- the same shorthand as `padding`. An optional `round` takes the whole [`border-radius`](/reference/css/border-radius) grammar, including the `/` that splits the horizontal radii from the vertical ones. Radii that together overflow a side are scaled down as a set, so `inset(0 round 100%)` is a stadium rather than four overlapping quarter-ellipses.
+Three ways to write a rectangle.
+
+`inset()` takes one to four lengths or percentages *in* from the top, right, bottom and left edges -- the same shorthand as `padding`.
+
+`rect()` takes exactly four, and each is where that edge *is*, measured from the box's top-left corner: `rect(10px 180px 70px 40px)` on a 200px-wide box leaves a rectangle 40px from the left and 20px from the right. `auto` is the box's own edge, so `rect(auto auto auto auto)` is the whole box.
+
+`xywh()` takes exactly four as well -- an x and y offset from the top-left corner, then a width and a height, which is how a layout tool exports a rectangle. A negative size is clamped to zero rather than mirroring the rectangle.
+
+All three accept an optional `round`, which takes the whole [`border-radius`](/reference/css/border-radius) grammar including the `/` that splits the horizontal radii from the vertical ones. Radii that together overflow a side are scaled down as a set, so `inset(0 round 100%)` is a stadium rather than four overlapping quarter-ellipses.
 
 ### `circle()` and `ellipse()` {/*circle*/}
 
@@ -82,14 +99,76 @@ clip-path: polygon(evenodd, 0 0, 100% 0, 100% 100%, 0 100%);
 
 Three or more comma-separated vertices, each an `x y` pair of lengths or percentages from the box's top-left. An optional `nonzero` (the default) or `evenodd` fill rule may come first; the two differ only where the outline crosses itself.
 
-Up to 16 points are used. A longer list is cut to that rather than refused, on the grounds that a shape missing its last few vertices is closer to what was asked for than no clip at all.
+There is no practical limit on the number of vertices -- see [how a shape reaches the GPU](#transport) for what changes past sixteen of them.
+
+### `path()` {/*path*/}
+
+```css
+clip-path: path('M 0 0 L 100 0 L 100 50 Z');
+clip-path: path('M 100 0 A 100 100 0 1 1 100 200 A 100 100 0 1 1 100 0 Z');
+clip-path: path(evenodd, 'M 0 0 C 40 0 80 40 80 80 Z');
+```
+
+An SVG path string, in the quotes CSS asks for. The whole `d` grammar is read: `M`, `L`, `H`, `V`, `C`, `S`, `Q`, `T`, `A` and `Z`, each in its relative lowercase form as well, with repeated argument lists, implicit linetos after a moveto, and packed arc flags -- so path data straight out of a design tool works, minified or not.
+
+Coordinates are lengths in px, measured **down** from the box's top-left corner as SVG measures them. Percentages are not part of the grammar; `shape()` is the function that has them. An optional fill rule may come first, comma-separated from the string.
+
+The string may hold several subpaths, and each is filled as though it were closed whether or not it says `Z`. The fill rule then decides what a subpath inside another one does: `nonzero` fills both, and `evenodd` makes the inner one a hole.
+
+### `shape()` {/*shape*/}
+
+```css
+clip-path: shape(from 0 0, line to 100% 0, line to 100% 100%, close);
+clip-path: shape(from 10px 10px, line by 30px 0, line by 0 30px, close);
+clip-path: shape(from 0 50%, curve to 50% 0 with 0 0, curve to 100% 50% with 100% 0, close);
+clip-path: shape(evenodd, from 50% 0, arc to 50% 100% of 25% large cw, close);
+```
+
+The same outlines as `path()`, written in CSS instead of SVG -- which buys percentages, `calc()` and `var()`, none of which a path string can carry.
+
+A `from` gives the starting point, and each comma-separated command after it moves on from there. `to` is absolute and `by` is an offset from the current point:
+
+| Command | Draws |
+| --- | --- |
+| `move [to\|by] <x y>` | starts a new subpath |
+| `line [to\|by] <x y>` | a straight line |
+| `hline [to\|by] <x>` / `vline [to\|by] <y>` | a line along one axis |
+| `curve [to\|by] <x y> with <cx cy>` | a quadratic curve |
+| `curve [to\|by] <x y> with <cx cy> / <cx cy>` | a cubic curve |
+| `smooth [to\|by] <x y> [with <cx cy>]` | a curve whose first control point mirrors the last one |
+| `arc [to\|by] <x y> of <rx> [<ry>] [large\|small] [cw\|ccw] [rotate <angle>]` | an elliptical arc |
+| `close` | closes the subpath |
+
+`arc` defaults to `small` and `ccw`, and to a circular arc when given one radius. As in `path()`, y is measured down from the box's top-left corner, and an optional fill rule may come first.
+
+### Geometry boxes {/*geometry-box*/}
+
+```css
+clip-path: content-box;
+clip-path: padding-box circle(30px);
+clip-path: circle(30px) margin-box;
+```
+
+A geometry box says which of the element's boxes the shape is measured against, and may come before or after the shape. `border-box` is the default, and `padding-box`, `content-box` and `margin-box` are the element's box minus its border, minus its border and padding, and plus its margin. The three SVG boxes are accepted and resolve the way they do on any element with no SVG geometry: `fill-box` to the content box, `stroke-box` and `view-box` to the border box.
+
+The box on its own is a shape -- the box itself -- so `clip-path: content-box` clips the element to its content box, cutting off its own padding and border.
 
 ## Notes {/*notes*/}
 
-- A geometry box keyword -- `border-box`, `padding-box`, `content-box`, and the rest -- parses and is ignored. Everything is measured against the border box.
-- Lengths and percentages are kept as written and resolved against the box each frame, so a percentage shape follows the element as it resizes, and `calc()` works inside one.
-- Two shapes of the same kind interpolate, so a shape can be animated or transitioned. Different kinds, a change of extent keyword, and a change of vertex count are all discrete, exactly as in CSS.
-- The edge is antialiased over a single device pixel, so a diagonal or a curve comes out smooth rather than stepped.
+- Lengths and percentages are kept as written and resolved against the box each frame, so a percentage shape follows the element as it resizes, and `calc()` works inside one. A `shape()`'s coordinates take `var()` as well.
+- A bare geometry box does not pick up the element's [`border-radius`](/reference/css/border-radius); it clips to a plain rectangle.
+- Two shapes of the same kind interpolate, so a shape can be animated or transitioned. A `path()` or a `shape()` interpolates with another whose commands line up one for one -- same command, same `to` or `by` -- which is the same rule CSS applies. Different kinds, a change of extent keyword, a change of vertex count, a change of geometry box and a change of fill rule are all discrete, again exactly as in CSS.
+- The edge is antialiased, so a diagonal or a curve comes out smooth rather than stepped.
 - Clipping happens after [`filter`](/reference/css/filter) and before [`opacity`](/reference/css/opacity), which is the order CSS composites them in: a `drop-shadow()` is clipped along with the element that cast it.
 - Clipping puts the element through the same offscreen capture [`filter`](/reference/css/filter) and [`mix-blend-mode`](/reference/css/mix-blend-mode) use, so it also creates a stacking context the way [`isolation: isolate`](/reference/css/isolation) does.
 - `clip-path: none` is the initial value and costs nothing -- the capture is torn down and the element goes back to drawing in place.
+
+### How a shape reaches the GPU {/*transport*/}
+
+Worth knowing, because it is the one place a complex shape costs something a simple one does not.
+
+A rounded box and an ellipse are a couple of uniforms each, and the fragment shader evaluates them directly as signed distances -- which is what keeps a circle round on an oblong element and its edge antialiased from the distance's own gradient. A ring of up to sixteen points travels the same way, walked per fragment.
+
+Past sixteen points -- which any flattened curve is -- the shape is rasterized to a coverage mask once, at the resolution the element is captured at, and the composite samples that instead. So a `path()` with fifty curves in it costs the same per frame as one with two, and the cost of the shape itself is paid when it changes rather than every frame. What it does cost is a texture per element and a re-rasterization when the element resizes, and beyond 1024 device pixels a side the mask is stretched rather than grown, which softens the edge slightly on a very large element.
+
+Hit testing never goes through the mask: a pointer is tested against the flattened outline itself, so it agrees with the pixels to the point rather than to the texel.

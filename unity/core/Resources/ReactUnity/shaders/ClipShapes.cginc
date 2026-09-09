@@ -9,7 +9,16 @@
 // with y growing up from its bottom edge. Nothing here is in uv, which is what lets a circle stay
 // round in a capture whose texture is not square.
 
-// Distinct polygon vertices, which ClipPath.MaxPolygonPoints matches. The ring repeats the first
+// What _ClipKind selects, which is a resolved form rather than a CSS shape: inset(), rect() and
+// xywh() are all a rounded box, circle() and ellipse() one ellipse, and polygon(), path() and
+// shape() arrive as either a ring of points or a rasterized mask -- see ElementFilter.PrepareClip.
+#define RU_CLIP_NONE 0
+#define RU_CLIP_BOX 1
+#define RU_CLIP_ELLIPSE 2
+#define RU_CLIP_RING 3
+#define RU_CLIP_MASK 4
+
+// Distinct ring vertices, which ClipPath.MaxUniformPoints matches. The ring repeats the first
 // point, so the walk below covers this many edges. Two points ride in each float4.
 #define RU_CLIP_MAX_POINTS 16
 #define RU_CLIP_POLY_SLOTS 9
@@ -23,6 +32,7 @@ float4 _ClipCircle;
 float4 _ClipPoly[RU_CLIP_POLY_SLOTS];
 int _ClipPolyCount;
 int _ClipEvenOdd;
+sampler2D _ClipMaskTex;
 
 // Constant-folds wherever the index is a constant, which is why the walk below is a fixed-bound
 // loop: a dynamically indexed uniform array is what would cost this shader its instruction budget.
@@ -108,7 +118,11 @@ float RuSdPolygon(float2 p)
 /// `isolation` and a stacked background blend run this whole composite with nothing else to do.
 float RuClipCoverage(float2 uv, float2 texel)
 {
-  if (_ClipKind == 0) return 1.0;
+  if (_ClipKind == RU_CLIP_NONE) return 1.0;
+
+  // A shape too complex for the ring above was rasterized over the capture's own region, so its
+  // coverage is already in this uv and already antialiased -- one read, whatever the shape.
+  if (_ClipKind == RU_CLIP_MASK) return tex2D(_ClipMaskTex, uv).r;
 
   // Out of the capture's uv and into the element's box: the capture reaches _ClipRegion.zw past
   // its left and bottom edges, which is the filter region a blur or a shadow asked for.
@@ -117,7 +131,7 @@ float RuClipCoverage(float2 uv, float2 texel)
 
   float d;
 
-  if (_ClipKind == 1)
+  if (_ClipKind == RU_CLIP_BOX)
   {
     float2 halfSize = (_ClipBox.zw - _ClipBox.xy) * 0.5;
     float2 centre = (_ClipBox.zw + _ClipBox.xy) * 0.5;
@@ -130,7 +144,7 @@ float RuClipCoverage(float2 uv, float2 texel)
 
     d = RuSdRoundBox(rel, halfSize, min(r, halfSize));
   }
-  else if (_ClipKind == 4) d = RuSdPolygon(p);
+  else if (_ClipKind == RU_CLIP_RING) d = RuSdPolygon(p);
   else d = RuSdEllipse(p - _ClipCircle.xy, _ClipCircle.zw);
 
   return saturate(0.5 - d / aa);

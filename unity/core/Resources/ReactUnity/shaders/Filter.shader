@@ -41,6 +41,7 @@ Shader "ReactUnity/Filter"
     _ClipCircle ("Clip Circle (cx, cy, rx, ry)", Vector) = (0,0,0,0)
     _ClipPolyCount ("Clip Polygon Ring Length", Int) = 0
     _ClipEvenOdd ("Clip Uses Even-Odd", Int) = 0
+    _ClipMaskTex ("Clip Coverage Mask", 2D) = "white" {}
 
     [Enum(UnityEngine.Rendering.CompareFunction)] _StencilComp("Stencil Comparison", Float) = 8
     _Stencil("Stencil ID", Float) = 0

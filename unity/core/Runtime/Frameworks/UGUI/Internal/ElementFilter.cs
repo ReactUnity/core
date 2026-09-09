@@ -56,10 +56,24 @@ namespace ReactUnity.UGUI.Internal
         static readonly int ClipPolyId = Shader.PropertyToID("_ClipPoly");
         static readonly int ClipPolyCountId = Shader.PropertyToID("_ClipPolyCount");
         static readonly int ClipEvenOddId = Shader.PropertyToID("_ClipEvenOdd");
+        static readonly int ClipMaskTexId = Shader.PropertyToID("_ClipMaskTex");
 
         // Two ring points per float4, matching RU_CLIP_POLY_SLOTS in ClipShapes.cginc. The array is
         // always sent full: a uniform array's length is fixed by the first SetVectorArray call.
         const int ClipPolySlots = 9;
+
+        // What the shader switches on, which is the shape's resolved form rather than the CSS
+        // function it was written as -- RU_CLIP_* in ClipShapes.cginc.
+        const int ClipKindNone = 0;
+        const int ClipKindBox = 1;
+        const int ClipKindEllipse = 2;
+        const int ClipKindRing = 3;
+        const int ClipKindMask = 4;
+
+        // A rasterized clip is a coverage field the composite samples, so its resolution only has
+        // to carry the softness of one edge. Past this the mask is stretched, which costs a shape
+        // the size of a screen a little sharpness rather than four megabytes of upload.
+        const int MaxMaskDimension = 1024;
 
         // The exact support of the iterated kernel, so no blur can ever be clipped and none is
         // over-allocated for: one pass reaches 4 taps at quarter spacing, so +/- its own radius,
@@ -168,6 +182,19 @@ namespace ReactUnity.UGUI.Internal
         private float uvPerUnitX;
         private Vector4 clipRegion;
         private readonly Vector4[] clipPolyBuffer = new Vector4[ClipPolySlots];
+
+        // The shape as the shader will read it, worked out once per uniform push -- SetUniforms runs
+        // twice whenever UGUI substitutes a stencil copy of the material, and resolving a path
+        // twice for that would flatten its curves twice.
+        private Rect referenceBox;
+        private ClipPath.Resolved resolvedClip;
+        private int clipKind;
+
+        // A rasterized clip, and what it was rasterized for: the contour array is kept by the
+        // ClipPath that produced it, so its identity is enough to say nothing has moved.
+        private Texture2D clipMask;
+        private object clipMaskKey;
+        private Vector4 clipMaskRegion;
 
         /// <summary>How many offscreen renders this filter has done. For tests.</summary>
         public int RenderCount { get; private set; }
@@ -491,6 +518,7 @@ namespace ReactUnity.UGUI.Internal
             Release(ref scratch);
             Release(ref shadow);
             Release(ref maskTarget);
+            ReleaseClipMask();
         }
 
         static void Release(ref RenderTexture rt)
@@ -552,6 +580,17 @@ namespace ReactUnity.UGUI.Internal
             {
                 lastRect = self.rect;
                 dirty = true;
+            }
+
+            // A `clip-path` measured against the padding or content box follows the element's own
+            // border and padding, neither of which changes the rect above -- so the box is polled
+            // rather than waiting for something else to notice.
+            var box = ReferenceBox();
+            if (box != referenceBox)
+            {
+                referenceBox = box;
+                uniformsDirty = true;
+                if (clipFilter) clipFilter.ClipBox = box;
             }
 
             // Also the element itself: a `rotate` or `scale` on an element with no background of
@@ -649,6 +688,7 @@ namespace ReactUnity.UGUI.Internal
             if (recapture || uniformsDirty)
             {
                 uniformsDirty = false;
+                PrepareClip();
                 SetUniforms(compositeMaterial);
                 var drawn = composite.materialForRendering;
                 if (drawn && drawn != compositeMaterial) SetUniforms(drawn);
@@ -870,49 +910,134 @@ namespace ReactUnity.UGUI.Internal
         }
 
         /// <summary>
-        /// The resolved shape, in the element box's own points. Kind 0 is written whenever there is
+        /// The shape a <c>clip-path</c> resolved to, and how the shader is to read it. Two shapes
+        /// arrive as geometry the fragment shader evaluates itself -- a rounded box and an ellipse
+        /// are a couple of uniforms each -- and a third as a ring of points it walks.
+        /// </summary>
+        /// <remarks>
+        /// A flattened curve is none of those: the ring is a fixed-size uniform array walked with a
+        /// constant-bound loop, which is what keeps the walk inside a fragment shader's register
+        /// budget, and one <c>path()</c> segment can be sixty points on its own. Anything past that
+        /// budget is rasterized to a coverage mask here and sampled as a texture, so the shader's
+        /// cost stops growing with the shape's complexity at exactly the point the uniforms run out.
+        /// </remarks>
+        void PrepareClip()
+        {
+            var shape = clipShape ?? ClipPath.None;
+
+            clipKind = ClipKindNone;
+            if (shape.Kind == ClipPathKind.None)
+            {
+                ReleaseClipMask();
+                return;
+            }
+
+            resolvedClip = shape.Resolve(referenceBox);
+
+            switch (resolvedClip.Form)
+            {
+                case ClipShapeForm.RoundedBox:
+                    clipKind = ClipKindBox;
+                    break;
+
+                case ClipShapeForm.Ellipse:
+                    clipKind = ClipKindEllipse;
+                    break;
+
+                case ClipShapeForm.Contours:
+                {
+                    var ring = resolvedClip.Ring;
+                    if (ring != null && ring.Length - 1 <= ClipPath.MaxUniformPoints) clipKind = ClipKindRing;
+                    else if (EnsureClipMask()) clipKind = ClipKindMask;
+                    break;
+                }
+            }
+
+            // A shape that resolved to no geometry -- too few points to enclose anything -- leaves
+            // the element alone. Clipping it away entirely is not what a malformed value should do.
+            if (clipKind != ClipKindMask) ReleaseClipMask();
+        }
+
+        /// <summary>
+        /// Rasterizes the contours into a coverage texture over the same region the capture covers,
+        /// so the composite samples it with the uv it already has. Only redone when the shape or
+        /// that region moves -- flattening and rasterizing are frame-time work, not per-frame work.
+        /// </summary>
+        bool EnsureClipMask()
+        {
+            // Nothing to line the mask up with until the first capture has been taken.
+            if (!target) return false;
+
+            var width = Mathf.Clamp(target.width, 1, MaxMaskDimension);
+            var height = Mathf.Clamp(target.height, 1, MaxMaskDimension);
+
+            if (clipMask && clipMask.width == width && clipMask.height == height &&
+                ReferenceEquals(clipMaskKey, resolvedClip.Contours) && clipMaskRegion == clipRegion) return true;
+
+            if (clipRegion.x <= 0 || clipRegion.y <= 0) return false;
+
+            var scale = new Vector2(width / clipRegion.x, height / clipRegion.y);
+            var offset = new Vector2(clipRegion.z, clipRegion.w);
+            var coverage = ClipPathGeometry.Rasterize(resolvedClip.Contours, resolvedClip.EvenOdd, width, height, scale, offset);
+
+            if (!clipMask || clipMask.width != width || clipMask.height != height)
+            {
+                ReleaseClipMask();
+                // Linear, and one channel: this is coverage rather than colour, so a gamma ramp
+                // applied on the way in would bend the antialiased edge.
+                clipMask = new Texture2D(width, height, TextureFormat.R8, false, true)
+                {
+                    filterMode = FilterMode.Bilinear,
+                    wrapMode = TextureWrapMode.Clamp,
+                };
+            }
+
+            clipMask.LoadRawTextureData(coverage);
+            clipMask.Apply(false);
+
+            clipMaskKey = resolvedClip.Contours;
+            clipMaskRegion = clipRegion;
+            return true;
+        }
+
+        void ReleaseClipMask()
+        {
+            if (clipMask) Destroy(clipMask);
+            clipMask = null;
+            clipMaskKey = null;
+        }
+
+        /// <summary>
+        /// The prepared shape, in the border box's own points. Kind 0 is written whenever there is
         /// nothing to clip, which the shader takes as its identity -- an element that only isolated
         /// or only blends has to come back out of the capture as the pixels that went in.
         /// </summary>
         void SetClipUniforms(Material m)
         {
-            var shape = clipShape ?? ClipPath.None;
+            m.SetInt(ClipKindId, clipKind);
+            if (clipKind == ClipKindNone) return;
 
-            if (shape.Kind == ClipPathKind.None)
-            {
-                m.SetInt(ClipKindId, 0);
-                return;
-            }
-
-            var resolved = shape.Resolve(self.rect.size);
-
-            // A polygon with too few points to enclose anything resolves to no ring, and clipping
-            // an element away entirely is not what a malformed shape should do.
-            if (resolved.Kind == ClipPathKind.Polygon && resolved.Ring == null)
-            {
-                m.SetInt(ClipKindId, 0);
-                return;
-            }
-
-            m.SetInt(ClipKindId, (int) resolved.Kind);
             m.SetVector(ClipRegionId, clipRegion);
 
-            switch (resolved.Kind)
+            switch (clipKind)
             {
-                case ClipPathKind.Inset:
-                    m.SetVector(ClipBoxId, new Vector4(resolved.Box.xMin, resolved.Box.yMin, resolved.Box.xMax, resolved.Box.yMax));
-                    m.SetVector(ClipRadiiXId, resolved.RadiiX);
-                    m.SetVector(ClipRadiiYId, resolved.RadiiY);
+                case ClipKindBox:
+                    m.SetVector(ClipBoxId, new Vector4(resolvedClip.Box.xMin, resolvedClip.Box.yMin, resolvedClip.Box.xMax, resolvedClip.Box.yMax));
+                    m.SetVector(ClipRadiiXId, resolvedClip.RadiiX);
+                    m.SetVector(ClipRadiiYId, resolvedClip.RadiiY);
                     break;
 
-                case ClipPathKind.Circle:
-                case ClipPathKind.Ellipse:
-                    m.SetVector(ClipCircleId, new Vector4(resolved.Center.x, resolved.Center.y, resolved.Radius.x, resolved.Radius.y));
+                case ClipKindEllipse:
+                    m.SetVector(ClipCircleId, new Vector4(resolvedClip.Center.x, resolvedClip.Center.y, resolvedClip.Radius.x, resolvedClip.Radius.y));
+                    break;
+
+                case ClipKindMask:
+                    m.SetTexture(ClipMaskTexId, clipMask);
                     break;
 
                 default:
                 {
-                    var ring = resolved.Ring;
+                    var ring = resolvedClip.Ring;
                     for (int i = 0; i < clipPolyBuffer.Length; i++)
                     {
                         var a = 2 * i < ring.Length ? ring[2 * i] : Vector2.zero;
@@ -922,10 +1047,69 @@ namespace ReactUnity.UGUI.Internal
 
                     m.SetVectorArray(ClipPolyId, clipPolyBuffer);
                     m.SetInt(ClipPolyCountId, ring.Length);
-                    m.SetInt(ClipEvenOddId, resolved.EvenOdd ? 1 : 0);
+                    m.SetInt(ClipEvenOddId, resolvedClip.EvenOdd ? 1 : 0);
                     break;
                 }
             }
         }
+
+        /// <summary>
+        /// The box the shape is measured against, in the border box's own coordinates -- so the
+        /// border box is the rect at the origin, a padding or content box sits inside it, and a
+        /// margin box reaches past it.
+        /// </summary>
+        /// <remarks>
+        /// Read off the Yoga node rather than the element's own style, which is where the used
+        /// values are: a percentage padding has already been resolved against the parent by the
+        /// time layout is done, and a border width can have been rounded to fit.
+        /// </remarks>
+        Rect ReferenceBox()
+        {
+            var rect = self.rect;
+            var box = new Rect(0, 0, rect.width, rect.height);
+
+            var shape = clipShape;
+            if (shape == null || shape.Box == ClipGeometryBox.BorderBox) return box;
+
+            var layout = component?.Layout;
+            if (layout == null) return box;
+
+            float left, right, top, bottom;
+
+            if (shape.Box == ClipGeometryBox.MarginBox)
+            {
+                // Outwards: the margin box is the only one of the four bigger than the element.
+                left = -Norm(layout.LayoutMarginLeft);
+                right = -Norm(layout.LayoutMarginRight);
+                top = -Norm(layout.LayoutMarginTop);
+                bottom = -Norm(layout.LayoutMarginBottom);
+            }
+            else
+            {
+                left = Norm(layout.LayoutBorderLeft);
+                right = Norm(layout.LayoutBorderRight);
+                top = Norm(layout.LayoutBorderTop);
+                bottom = Norm(layout.LayoutBorderBottom);
+
+                if (shape.Box == ClipGeometryBox.ContentBox)
+                {
+                    left += Norm(layout.LayoutPaddingLeft);
+                    right += Norm(layout.LayoutPaddingRight);
+                    top += Norm(layout.LayoutPaddingTop);
+                    bottom += Norm(layout.LayoutPaddingBottom);
+                }
+            }
+
+            // CSS's `top` is the box's upper edge, where y grows the other way here.
+            var minX = box.xMin + left;
+            var maxX = box.xMax - right;
+            var minY = box.yMin + bottom;
+            var maxY = box.yMax - top;
+
+            return Rect.MinMaxRect(minX, minY, Mathf.Max(minX, maxX), Mathf.Max(minY, maxY));
+        }
+
+        /// <summary>Yoga reports an undefined edge as NaN, which would take the whole box with it.</summary>
+        static float Norm(float value) => float.IsNaN(value) ? 0f : value;
     }
 }

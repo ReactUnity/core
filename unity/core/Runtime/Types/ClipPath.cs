@@ -23,6 +23,10 @@ namespace ReactUnity.Types
         Circle = 2,
         Ellipse = 3,
         Polygon = 4,
+        Rect = 5,
+        Xywh = 6,
+        Path = 7,
+        Shape = 8,
     }
 
     /// <summary>Where a circle's or an ellipse's radius comes from, when it is a keyword and not a length.</summary>
@@ -34,8 +38,36 @@ namespace ReactUnity.Types
     }
 
     /// <summary>
-    /// https://developer.mozilla.org/en-US/docs/Web/CSS/clip-path -- the basic-shape subset:
-    /// inset(), circle(), ellipse() and polygon().
+    /// The box a shape is measured against, and clips to when it is the whole value. CSS's SVG-only
+    /// boxes are resolved to one of these at parse time, the way they resolve on any element with no
+    /// SVG geometry of its own: `fill-box` to the content box, `stroke-box` and `view-box` to the
+    /// border box.
+    /// </summary>
+    public enum ClipGeometryBox
+    {
+        BorderBox = 0,
+        PaddingBox = 1,
+        ContentBox = 2,
+        MarginBox = 3,
+    }
+
+    /// <summary>
+    /// The geometry a shape came out as once resolved. Several CSS shapes share one form -- an
+    /// <c>inset()</c>, a <c>rect()</c> and an <c>xywh()</c> are all a rounded box -- so this, and
+    /// not <see cref="ClipPathKind"/>, is what the shader and the hit test switch on.
+    /// </summary>
+    public enum ClipShapeForm
+    {
+        None = 0,
+        RoundedBox = 1,
+        Ellipse = 2,
+        Contours = 3,
+    }
+
+    /// <summary>
+    /// https://developer.mozilla.org/en-US/docs/Web/CSS/clip-path -- the basic shapes, a geometry
+    /// box, or both: <c>inset()</c>, <c>rect()</c>, <c>xywh()</c>, <c>circle()</c>,
+    /// <c>ellipse()</c>, <c>polygon()</c>, <c>path()</c> and <c>shape()</c>.
     /// </summary>
     /// <remarks>
     /// Values are kept as written and resolved against the element's box by <see cref="Resolve"/>,
@@ -43,24 +75,42 @@ namespace ReactUnity.Types
     /// follows the element as it resizes.
     /// </remarks>
     [Serializable]
-    public class ClipPath : Interpolatable
+    public partial class ClipPath : Interpolatable
     {
         public static readonly ClipPath None = new ClipPath();
 
         /// <summary>
-        /// How many points a polygon() may carry. The shader walks the ring with a constant-bound
-        /// loop so its uniform-array indices stay compile-time constants, which is what keeps the
-        /// walk inside a fragment shader's register budget; a longer list is cut to this.
+        /// How many points a shape may carry as shader uniforms. The shader walks the ring with a
+        /// constant-bound loop so its uniform-array indices stay compile-time constants, which is
+        /// what keeps the walk inside a fragment shader's register budget. A shape with more than
+        /// this -- any flattened curve, in practice -- is rasterized to a coverage mask instead.
         /// </summary>
-        public const int MaxPolygonPoints = 16;
+        public const int MaxUniformPoints = 16;
 
         public ClipPathKind Kind { get; }
 
-        /// <summary>inset(), as a distance in from each edge of the border box.</summary>
+        /// <summary>The box the shape is measured against, and the shape itself when there is no
+        /// shape function.</summary>
+        public ClipGeometryBox Box { get; }
+
+        /// <summary>
+        /// The four edge values, whose meaning is the shape's: <c>inset()</c> measures each in from
+        /// its own edge of the box, <c>rect()</c> gives each edge's position from the top-left
+        /// corner, and <c>xywh()</c> puts x, y, width and height in <see cref="X"/>,
+        /// <see cref="Y"/>, <see cref="Width"/> and <see cref="Height"/>.
+        /// </summary>
         public YogaValue Top { get; } = YogaValue.Point(0);
         public YogaValue Right { get; } = YogaValue.Point(0);
         public YogaValue Bottom { get; } = YogaValue.Point(0);
         public YogaValue Left { get; } = YogaValue.Point(0);
+
+        /// <summary>xywh(): the rectangle's offset from the reference box's top-left corner.</summary>
+        public YogaValue X => Left;
+        public YogaValue Y => Top;
+
+        /// <summary>xywh(): the rectangle's size.</summary>
+        public YogaValue Width => Right;
+        public YogaValue Height => Bottom;
 
         /// <summary>The `round` radii, in the corner order CSS writes: top-left first, clockwise.</summary>
         public YogaValue2 TopLeftRadius { get; } = YogaValue2.Zero;
@@ -79,7 +129,11 @@ namespace ReactUnity.Types
         /// <summary>polygon() vertices, from the box's top-left.</summary>
         public YogaValue2[] Points { get; } = new YogaValue2[0];
 
-        /// <summary>`evenodd`. CSS defaults to `nonzero`, and the two differ only where a polygon crosses itself.</summary>
+        /// <summary>path() and shape(), which differ only in how they are written.</summary>
+        public ClipPathCommand[] Commands { get; } = new ClipPathCommand[0];
+
+        /// <summary>`evenodd`. CSS defaults to `nonzero`, and the two differ only where a shape's
+        /// outline crosses itself or encloses a second contour.</summary>
         public bool EvenOdd { get; }
 
         public ClipPath()
@@ -89,12 +143,24 @@ namespace ReactUnity.Types
 
         public static ClipPath Inset(YogaValue top, YogaValue right, YogaValue bottom, YogaValue left,
             YogaValue2 tl = default, YogaValue2 tr = default, YogaValue2 br = default, YogaValue2 bl = default)
-            => new ClipPath(top, right, bottom, left, tl, tr, br, bl);
+            => new ClipPath(ClipPathKind.Inset, top, right, bottom, left, tl, tr, br, bl);
 
-        private ClipPath(YogaValue top, YogaValue right, YogaValue bottom, YogaValue left,
+        /// <summary>rect(): the four edges, each measured from the box's top-left corner, or `auto`
+        /// for the box's own edge.</summary>
+        public static ClipPath RectShape(YogaValue top, YogaValue right, YogaValue bottom, YogaValue left,
+            YogaValue2 tl = default, YogaValue2 tr = default, YogaValue2 br = default, YogaValue2 bl = default)
+            => new ClipPath(ClipPathKind.Rect, top, right, bottom, left, tl, tr, br, bl);
+
+        /// <summary>xywh(): a corner and a size, which is the same rectangle written the way a
+        /// layout tool exports one.</summary>
+        public static ClipPath Xywh(YogaValue x, YogaValue y, YogaValue width, YogaValue height,
+            YogaValue2 tl = default, YogaValue2 tr = default, YogaValue2 br = default, YogaValue2 bl = default)
+            => new ClipPath(ClipPathKind.Xywh, y, width, height, x, tl, tr, br, bl);
+
+        private ClipPath(ClipPathKind kind, YogaValue top, YogaValue right, YogaValue bottom, YogaValue left,
             YogaValue2 tl, YogaValue2 tr, YogaValue2 br, YogaValue2 bl)
         {
-            Kind = ClipPathKind.Inset;
+            Kind = kind;
             Top = top;
             Right = right;
             Bottom = bottom;
@@ -128,12 +194,45 @@ namespace ReactUnity.Types
             EvenOdd = evenOdd;
         }
 
-        /// <summary>A shape resolved against a box, in the box's own points with y growing upwards.</summary>
+        public ClipPath(ClipPathKind kind, ClipPathCommand[] commands, bool evenOdd)
+        {
+            Kind = kind;
+            Commands = commands ?? new ClipPathCommand[0];
+            EvenOdd = evenOdd;
+        }
+
+        /// <summary>The same shape against another box. Every value here is immutable, so this
+        /// copies rather than mutating -- and returns the original when there is nothing to change.</summary>
+        public ClipPath WithBox(ClipGeometryBox box) => box == Box ? this : new ClipPath(this, box);
+
+        private ClipPath(ClipPath source, ClipGeometryBox box)
+        {
+            Kind = source.Kind;
+            Box = box;
+            Top = source.Top;
+            Right = source.Right;
+            Bottom = source.Bottom;
+            Left = source.Left;
+            TopLeftRadius = source.TopLeftRadius;
+            TopRightRadius = source.TopRightRadius;
+            BottomRightRadius = source.BottomRightRadius;
+            BottomLeftRadius = source.BottomLeftRadius;
+            Position = source.Position;
+            RadiusX = source.RadiusX;
+            RadiusY = source.RadiusY;
+            ExtentX = source.ExtentX;
+            ExtentY = source.ExtentY;
+            Points = source.Points;
+            Commands = source.Commands;
+            EvenOdd = source.EvenOdd;
+        }
+
+        /// <summary>A shape resolved against a box, in the border box's own points with y growing upwards.</summary>
         public struct Resolved
         {
-            public ClipPathKind Kind;
+            public ClipShapeForm Form;
 
-            /// <summary>inset(): the rectangle that survives.</summary>
+            /// <summary>A rounded box: the rectangle that survives.</summary>
             public Rect Box;
             /// <summary>Corner radii, top-left first and clockwise, already clamped to fit the box.</summary>
             public Vector4 RadiiX;
@@ -143,30 +242,95 @@ namespace ReactUnity.Types
             public Vector2 Center;
             public Vector2 Radius;
 
-            /// <summary>polygon(), closed: the first point is repeated at the end.</summary>
-            public Vector2[] Ring;
+            /// <summary>polygon(), path() and shape(): closed rings, each repeating its first point
+            /// at the end. More than one only comes out of a path with several subpaths.</summary>
+            public Vector2[][] Contours;
             public bool EvenOdd;
+
+            /// <summary>The single ring, when there is exactly one -- which a polygon always is.</summary>
+            public Vector2[] Ring => Contours != null && Contours.Length == 1 ? Contours[0] : null;
         }
 
+        // Resolving a path flattens its curves, and hit testing resolves once per pointer event, so
+        // the last answer is kept. The value is immutable, so only the box can have changed.
+        private Rect cachedBox;
+        private Resolved cached;
+        private bool hasCache;
+
+        /// <summary>Against the border box, which is where every shape with no geometry box of its
+        /// own is measured.</summary>
+        public Resolved Resolve(Vector2 size) => Resolve(new Rect(0, 0, size.x, size.y));
+
         /// <summary>
-        /// The shape in the box's coordinates, y up from its bottom edge -- the space the composite's
-        /// fragment shader works in, and the one RectTransform.rect reports hits in.
+        /// The shape in the border box's coordinates, y up from its bottom edge -- the space the
+        /// composite's fragment shader works in, and the one RectTransform.rect reports hits in.
         /// </summary>
-        public Resolved Resolve(Vector2 size)
+        /// <param name="referenceBox">The box the shape is measured against, itself in those
+        /// coordinates: the border box is (0, 0, width, height), and a padding or content box sits
+        /// inside it.</param>
+        public Resolved Resolve(Rect referenceBox)
         {
-            var result = new Resolved { Kind = Kind, EvenOdd = EvenOdd };
+            if (hasCache && cachedBox == referenceBox) return cached;
+
+            var result = ResolveInternal(referenceBox);
+
+            cachedBox = referenceBox;
+            cached = result;
+            hasCache = true;
+
+            return result;
+        }
+
+        private Resolved ResolveInternal(Rect referenceBox)
+        {
+            var result = new Resolved { EvenOdd = EvenOdd };
+            var size = referenceBox.size;
 
             switch (Kind)
             {
                 case ClipPathKind.Inset:
                 {
                     // CSS measures `top` from the top edge, where y grows the other way here.
-                    var minX = Left.GetPointValue(size.x, 0);
-                    var maxX = size.x - Right.GetPointValue(size.x, 0);
-                    var minY = Bottom.GetPointValue(size.y, 0);
-                    var maxY = size.y - Top.GetPointValue(size.y, 0);
+                    var minX = referenceBox.xMin + Left.GetPointValue(size.x, 0);
+                    var maxX = referenceBox.xMax - Right.GetPointValue(size.x, 0);
+                    var minY = referenceBox.yMin + Bottom.GetPointValue(size.y, 0);
+                    var maxY = referenceBox.yMax - Top.GetPointValue(size.y, 0);
 
+                    result.Form = ClipShapeForm.RoundedBox;
                     result.Box = Rect.MinMaxRect(minX, minY, Mathf.Max(minX, maxX), Mathf.Max(minY, maxY));
+                    ResolveRadii(result.Box.size, out result.RadiiX, out result.RadiiY);
+                    break;
+                }
+
+                case ClipPathKind.Rect:
+                {
+                    // Each value is an edge's position rather than a distance in, and `auto` is the
+                    // box's own edge -- so rect(auto) is the whole box.
+                    var left = Edge(Left, size.x, 0);
+                    var right = Edge(Right, size.x, size.x);
+                    var top = Edge(Top, size.y, 0);
+                    var bottom = Edge(Bottom, size.y, size.y);
+
+                    var minX = referenceBox.xMin + left;
+                    var maxX = referenceBox.xMin + Mathf.Max(left, right);
+                    var maxY = referenceBox.yMax - top;
+                    var minY = Mathf.Min(maxY, referenceBox.yMax - bottom);
+
+                    result.Form = ClipShapeForm.RoundedBox;
+                    result.Box = Rect.MinMaxRect(minX, minY, maxX, maxY);
+                    ResolveRadii(result.Box.size, out result.RadiiX, out result.RadiiY);
+                    break;
+                }
+
+                case ClipPathKind.Xywh:
+                {
+                    var x = X.GetPointValue(size.x, 0);
+                    var y = Y.GetPointValue(size.y, 0);
+                    var w = Mathf.Max(Width.GetPointValue(size.x, 0), 0);
+                    var h = Mathf.Max(Height.GetPointValue(size.y, 0), 0);
+
+                    result.Form = ClipShapeForm.RoundedBox;
+                    result.Box = new Rect(referenceBox.xMin + x, referenceBox.yMax - y - h, w, h);
                     ResolveRadii(result.Box.size, out result.RadiiX, out result.RadiiY);
                     break;
                 }
@@ -175,7 +339,6 @@ namespace ReactUnity.Types
                 case ClipPathKind.Ellipse:
                 {
                     var pos = Position.GetPointValue(size, 0f, true);
-                    result.Center = pos;
 
                     var rx = ResolveRadius(RadiusX, ExtentX, size, pos, true);
                     var ry = ResolveRadius(RadiusY, ExtentY, size, pos, false);
@@ -191,25 +354,44 @@ namespace ReactUnity.Types
                             rx = ry = RadiusX.Value / 100f * Mathf.Sqrt((size.x * size.x + size.y * size.y) / 2f);
                     }
 
+                    result.Form = ClipShapeForm.Ellipse;
+                    result.Center = referenceBox.min + pos;
                     result.Radius = new Vector2(Mathf.Max(rx, 0), Mathf.Max(ry, 0));
                     break;
                 }
 
                 case ClipPathKind.Polygon:
                 {
-                    var count = Mathf.Min(Points.Length, MaxPolygonPoints);
+                    var count = Mathf.Min(Points.Length, ClipPathGeometry.MaxPoints);
                     if (count < 3) break;
 
                     var ring = new Vector2[count + 1];
-                    for (int i = 0; i < count; i++) ring[i] = Points[i].GetPointValue(size, 0f, true);
+                    for (int i = 0; i < count; i++) ring[i] = referenceBox.min + Points[i].GetPointValue(size, 0f, true);
                     ring[count] = ring[0];
-                    result.Ring = ring;
+
+                    result.Form = ClipShapeForm.Contours;
+                    result.Contours = new[] { ring };
+                    break;
+                }
+
+                case ClipPathKind.Path:
+                case ClipPathKind.Shape:
+                {
+                    var contours = ClipPathGeometry.Flatten(Commands, referenceBox);
+                    if (contours == null) break;
+
+                    result.Form = ClipShapeForm.Contours;
+                    result.Contours = contours;
                     break;
                 }
             }
 
             return result;
         }
+
+        /// <summary>An edge position, where `auto` is the box's own edge rather than a length.</summary>
+        private static float Edge(YogaValue value, float full, float auto)
+            => value.Unit == YogaUnit.Auto ? auto : value.GetPointValue(full, 0);
 
         private static float ResolveRadius(YogaValue value, ClipRadiusExtent extent, Vector2 size, Vector2 center, bool horizontal)
         {
@@ -254,6 +436,15 @@ namespace ReactUnity.Types
 
         private static float Ratio(float side, float sum) => sum > 0 ? side / sum : 1f;
 
+        /// <summary>Whether the shape is a command list, which is what <c>path()</c> and
+        /// <c>shape()</c> both are once parsed.</summary>
+        public static bool IsCommandShape(ClipPathKind kind) => kind == ClipPathKind.Path || kind == ClipPathKind.Shape;
+
+        /// <summary>Whether the shape is a rectangle, which <c>inset()</c>, <c>rect()</c> and
+        /// <c>xywh()</c> all are -- written three ways, and each interpolating only with itself.</summary>
+        public static bool IsRectangleShape(ClipPathKind kind) =>
+            kind == ClipPathKind.Inset || kind == ClipPathKind.Rect || kind == ClipPathKind.Xywh;
+
         /// <summary>Interpolater has no pair overload for this; the struct interpolates itself.</summary>
         private static YogaValue2 Lerp(YogaValue2 from, YogaValue2 to, float t) => (YogaValue2) from.Interpolate(to, t);
 
@@ -263,13 +454,16 @@ namespace ReactUnity.Types
             if (tto == null) return t > 0.5f ? to : this;
 
             // Only shapes of one kind have anything to interpolate between; CSS makes the rest
-            // discrete, and so is a polygon whose point count changed.
-            if (tto.Kind != Kind) return t > 0.5f ? tto : (object) this;
+            // discrete, and so is a polygon whose point count changed. A reference box is not a
+            // length either, so a change of box is discrete too.
+            if (tto.Kind != Kind || tto.Box != Box) return t > 0.5f ? tto : (object) this;
 
             switch (Kind)
             {
                 case ClipPathKind.Inset:
-                    return Inset(
+                case ClipPathKind.Rect:
+                case ClipPathKind.Xywh:
+                    return new ClipPath(Kind,
                         Interpolater.Interpolate(Top, tto.Top, t),
                         Interpolater.Interpolate(Right, tto.Right, t),
                         Interpolater.Interpolate(Bottom, tto.Bottom, t),
@@ -277,7 +471,7 @@ namespace ReactUnity.Types
                         Lerp(TopLeftRadius, tto.TopLeftRadius, t),
                         Lerp(TopRightRadius, tto.TopRightRadius, t),
                         Lerp(BottomRightRadius, tto.BottomRightRadius, t),
-                        Lerp(BottomLeftRadius, tto.BottomLeftRadius, t));
+                        Lerp(BottomLeftRadius, tto.BottomLeftRadius, t)).WithBox(Box);
 
                 case ClipPathKind.Circle:
                 case ClipPathKind.Ellipse:
@@ -287,35 +481,59 @@ namespace ReactUnity.Types
                         Interpolater.Interpolate(RadiusX, tto.RadiusX, t),
                         Interpolater.Interpolate(RadiusY, tto.RadiusY, t),
                         ExtentX, ExtentY,
-                        Lerp(Position, tto.Position, t));
+                        Lerp(Position, tto.Position, t)).WithBox(Box);
 
                 case ClipPathKind.Polygon:
                 {
                     if (Points.Length != tto.Points.Length || EvenOdd != tto.EvenOdd) return t > 0.5f ? tto : (object) this;
                     var points = new YogaValue2[Points.Length];
                     for (int i = 0; i < points.Length; i++) points[i] = Lerp(Points[i], tto.Points[i], t);
-                    return new ClipPath(points, EvenOdd);
+                    return new ClipPath(points, EvenOdd).WithBox(Box);
+                }
+
+                case ClipPathKind.Path:
+                case ClipPathKind.Shape:
+                {
+                    // Two command lists meet halfway only if they draw the same shape of outline --
+                    // command for command, including whether each is relative. Anything else has no
+                    // correspondence between the two, which is where CSS gives up as well.
+                    if (EvenOdd != tto.EvenOdd || Commands.Length != tto.Commands.Length) return t > 0.5f ? tto : (object) this;
+
+                    for (int i = 0; i < Commands.Length; i++)
+                        if (!Commands[i].Matches(tto.Commands[i])) return t > 0.5f ? tto : (object) this;
+
+                    var commands = new ClipPathCommand[Commands.Length];
+                    for (int i = 0; i < commands.Length; i++)
+                    {
+                        var a = Commands[i];
+                        var b = tto.Commands[i];
+                        commands[i] = new ClipPathCommand
+                        {
+                            Kind = a.Kind,
+                            Relative = a.Relative,
+                            LargeArc = a.LargeArc,
+                            Clockwise = a.Clockwise,
+                            To = Lerp(a.To, b.To, t),
+                            Control1 = Lerp(a.Control1, b.Control1, t),
+                            Control2 = Lerp(a.Control2, b.Control2, t),
+                            Radius = Lerp(a.Radius, b.Radius, t),
+                            Angle = Mathf.LerpUnclamped(a.Angle, b.Angle, t),
+                        };
+                    }
+
+                    return new ClipPath(Kind, commands, EvenOdd).WithBox(Box);
                 }
             }
 
             return this;
         }
 
-        public class Converter : TypedStyleConverterBase<ClipPath>
+        public partial class Converter : TypedStyleConverterBase<ClipPath>
         {
             private static readonly StyleConverterBase Length = AllConverters.YogaValueConverter;
             private static readonly StyleConverterBase PositionConverter = AllConverters.YogaValue2Converter;
             private static readonly StyleConverterBase RadiusConverter = AllConverters.BorderRadiusConverter;
-
-            /// <summary>
-            /// Geometry boxes CSS lets a shape carry. Only the border box is drawn against here, so
-            /// they parse and are dropped rather than making the whole declaration invalid.
-            /// </summary>
-            private static readonly HashSet<string> GeometryBoxes = new HashSet<string>(StringComparer.OrdinalIgnoreCase)
-            {
-                "border-box", "padding-box", "content-box", "margin-box",
-                "fill-box", "stroke-box", "view-box",
-            };
+            private static readonly StyleConverterBase AngleConverter = AllConverters.AngleConverter;
 
             public override bool HandleKeyword(CssKeyword keyword, out IComputedValue result)
             {
@@ -328,32 +546,93 @@ namespace ReactUnity.Types
                 result = null;
 
                 var shape = (string) null;
+                var box = ClipGeometryBox.BorderBox;
+                var hasBox = false;
+
                 var parts = ParserHelpers.SplitFunctionList(value);
                 for (int i = 0; i < parts.Count; i++)
                 {
                     var trimmed = parts[i]?.Trim();
                     if (string.IsNullOrEmpty(trimmed)) continue;
-                    if (GeometryBoxes.Contains(trimmed)) continue;
+
+                    if (TryReadGeometryBox(trimmed, out var read))
+                    {
+                        if (hasBox) return false;
+                        hasBox = true;
+                        box = read;
+                        continue;
+                    }
+
                     if (shape != null) return false;
                     shape = trimmed;
                 }
 
-                if (shape == null) return false;
+                // A box on its own is a shape: the box itself. It is the only way to clip to the
+                // padding or content box without writing out the edges the element already has.
+                if (shape == null)
+                {
+                    if (!hasBox) return false;
+                    var zero = YogaValue.Point(0);
+                    return Constant(Inset(zero, zero, zero, zero).WithBox(box), out result);
+                }
 
                 var (name, args, ac) = ParserHelpers.ParseFunction(shape);
                 if (name == null || args == null) return false;
 
                 switch (name.ToLowerInvariant())
                 {
-                    case "inset": return ParseInset(ac, out result);
-                    case "circle": return ParseCircle(ac, false, out result);
-                    case "ellipse": return ParseCircle(ac, true, out result);
-                    case "polygon": return ParsePolygon(args, out result);
+                    case "inset": return ParseRectangle(ac, ClipPathKind.Inset, box, out result);
+                    case "rect": return ParseRectangle(ac, ClipPathKind.Rect, box, out result);
+                    case "xywh": return ParseRectangle(ac, ClipPathKind.Xywh, box, out result);
+                    case "circle": return ParseCircle(ac, false, box, out result);
+                    case "ellipse": return ParseCircle(ac, true, box, out result);
+                    case "polygon": return ParsePolygon(args, box, out result);
+                    case "path": return ParsePath(ac, box, out result);
+                    case "shape": return ParseShape(args, box, out result);
                     default: return false;
                 }
             }
 
-            private static bool ParseInset(string args, out IComputedValue result)
+            private static bool TryReadGeometryBox(string value, out ClipGeometryBox box)
+            {
+                switch (value.ToLowerInvariant())
+                {
+                    case "border-box":
+                        box = ClipGeometryBox.BorderBox;
+                        return true;
+                    case "padding-box":
+                        box = ClipGeometryBox.PaddingBox;
+                        return true;
+                    case "content-box":
+                        box = ClipGeometryBox.ContentBox;
+                        return true;
+                    case "margin-box":
+                        box = ClipGeometryBox.MarginBox;
+                        return true;
+
+                    // The three SVG boxes have nothing to measure on an element that is not SVG, and
+                    // CSS resolves each to the box that does: the content box for the fill, and the
+                    // border box for a stroke or a viewport neither of which exists here.
+                    case "fill-box":
+                        box = ClipGeometryBox.ContentBox;
+                        return true;
+                    case "stroke-box":
+                    case "view-box":
+                        box = ClipGeometryBox.BorderBox;
+                        return true;
+
+                    default:
+                        box = ClipGeometryBox.BorderBox;
+                        return false;
+                }
+            }
+
+            /// <summary>
+            /// The three ways CSS writes a rectangle. They differ only in what the four numbers mean
+            /// and in how many are allowed, so one parser reads all three and the factory each kind
+            /// goes through decides the rest.
+            /// </summary>
+            private static bool ParseRectangle(string args, ClipPathKind kind, ClipGeometryBox box, out IComputedValue result)
             {
                 result = null;
 
@@ -362,15 +641,32 @@ namespace ReactUnity.Types
                 var radiusPart = round < 0 ? null : args.Substring(round + 7);
 
                 var edges = ParserHelpers.SplitWhitespace(edgePart);
-                if (edges.Count < 1 || edges.Count > 4) return false;
 
-                // The one-to-four shorthand every box edge list uses.
-                var top = edges[0];
-                var right = edges.Count > 1 ? edges[1] : top;
-                var bottom = edges.Count > 2 ? edges[2] : top;
-                var left = edges.Count > 3 ? edges[3] : right;
+                if (kind == ClipPathKind.Inset)
+                {
+                    if (edges.Count < 1 || edges.Count > 4) return false;
 
-                var values = new List<object> { top, right, bottom, left };
+                    // The one-to-four shorthand every box edge list uses.
+                    var single = edges[0];
+                    edges = new List<string>
+                    {
+                        single,
+                        edges.Count > 1 ? edges[1] : single,
+                        edges.Count > 2 ? edges[2] : single,
+                        edges.Count > 3 ? edges[3] : edges.Count > 1 ? edges[1] : single,
+                    };
+                }
+                // rect() and xywh() take exactly four: neither an edge position nor a width has an
+                // opposite side to borrow from.
+                else if (edges.Count != 4) return false;
+
+                // Only rect() has an `auto` edge. A negative xywh() size is clamped where it
+                // resolves instead, since a calc() only says whether it is one by then.
+                if (kind != ClipPathKind.Rect)
+                    for (int i = 0; i < 4; i++)
+                        if (string.Equals(edges[i], "auto", StringComparison.OrdinalIgnoreCase)) return false;
+
+                var values = new List<object> { edges[0], edges[1], edges[2], edges[3] };
                 var converters = new List<StyleConverterBase> { Length, Length, Length, Length };
 
                 var hasRadii = radiusPart != null;
@@ -383,15 +679,31 @@ namespace ReactUnity.Types
                 }
 
                 return ComputedCompound.Create(out result, values, converters, resolved => {
-                    if (!(resolved[0] is YogaValue t) || !(resolved[1] is YogaValue r) ||
-                        !(resolved[2] is YogaValue b) || !(resolved[3] is YogaValue l)) return null;
+                    if (!(resolved[0] is YogaValue a) || !(resolved[1] is YogaValue b) ||
+                        !(resolved[2] is YogaValue c) || !(resolved[3] is YogaValue d)) return null;
 
-                    if (!hasRadii) return Inset(t, r, b, l);
+                    var tl = YogaValue2.Zero;
+                    var tr = YogaValue2.Zero;
+                    var br = YogaValue2.Zero;
+                    var bl = YogaValue2.Zero;
 
-                    if (!(resolved[4] is YogaValue2 tl) || !(resolved[5] is YogaValue2 tr) ||
-                        !(resolved[6] is YogaValue2 br) || !(resolved[7] is YogaValue2 bl)) return null;
+                    if (hasRadii)
+                    {
+                        if (!(resolved[4] is YogaValue2 rtl) || !(resolved[5] is YogaValue2 rtr) ||
+                            !(resolved[6] is YogaValue2 rbr) || !(resolved[7] is YogaValue2 rbl)) return null;
 
-                    return Inset(t, r, b, l, tl, tr, br, bl);
+                        tl = rtl;
+                        tr = rtr;
+                        br = rbr;
+                        bl = rbl;
+                    }
+
+                    switch (kind)
+                    {
+                        case ClipPathKind.Rect: return RectShape(a, b, c, d, tl, tr, br, bl).WithBox(box);
+                        case ClipPathKind.Xywh: return Xywh(a, b, c, d, tl, tr, br, bl).WithBox(box);
+                        default: return Inset(a, b, c, d, tl, tr, br, bl).WithBox(box);
+                    }
                 });
             }
 
@@ -428,7 +740,7 @@ namespace ReactUnity.Types
                 }
             }
 
-            private static bool ParseCircle(string args, bool ellipse, out IComputedValue result)
+            private static bool ParseCircle(string args, bool ellipse, ClipGeometryBox box, out IComputedValue result)
             {
                 result = null;
 
@@ -470,8 +782,8 @@ namespace ReactUnity.Types
                         !(resolved[2] is YogaValue2 pos)) return null;
 
                     return ellipse
-                        ? Ellipse(x, y, extentX, extentY, pos)
-                        : Circle(x, extentX, pos);
+                        ? Ellipse(x, y, extentX, extentY, pos).WithBox(box)
+                        : Circle(x, extentX, pos).WithBox(box);
                 });
             }
 
@@ -493,7 +805,7 @@ namespace ReactUnity.Types
                 length = value;
             }
 
-            private static bool ParsePolygon(string[] args, out IComputedValue result)
+            private static bool ParsePolygon(string[] args, ClipGeometryBox box, out IComputedValue result)
             {
                 result = null;
                 if (args.Length == 0) return false;
@@ -505,17 +817,12 @@ namespace ReactUnity.Types
                 var head = ParserHelpers.SplitWhitespace(args[0]);
                 if (head.Count == 1)
                 {
-                    if (string.Equals(head[0], "evenodd", StringComparison.OrdinalIgnoreCase)) evenOdd = true;
-                    else if (!string.Equals(head[0], "nonzero", StringComparison.OrdinalIgnoreCase)) return false;
+                    if (!TryReadFillRule(head[0], ref evenOdd)) return false;
                     first = 1;
                 }
 
                 var count = args.Length - first;
-                if (count < 3) return false;
-
-                // Anything past the cap is dropped rather than refused: a shape missing its last few
-                // vertices is closer to what was asked for than no clip at all.
-                count = Mathf.Min(count, MaxPolygonPoints);
+                if (count < 3 || count > ClipPathGeometry.MaxPoints) return false;
 
                 var values = new List<object>(count);
                 var converters = new List<StyleConverterBase>(count);
@@ -535,8 +842,50 @@ namespace ReactUnity.Types
                         if (!(resolved[i] is YogaValue2 p)) return null;
                         points[i] = p;
                     }
-                    return new ClipPath(points, evenOdd);
+                    return new ClipPath(points, evenOdd).WithBox(box);
                 });
+            }
+
+            /// <summary>
+            /// <c>path()</c>: an optional fill rule and a quoted SVG path string. The data is
+            /// numbers in px -- the one thing <c>path()</c> cannot do that <c>shape()</c> can -- so
+            /// nothing in it is worth deferring and it is parsed here and now.
+            /// </summary>
+            private static bool ParsePath(string args, ClipGeometryBox box, out IComputedValue result)
+            {
+                result = null;
+
+                var text = (args ?? "").Trim();
+                if (text.Length == 0) return false;
+
+                var evenOdd = false;
+
+                // The data itself is full of commas, so only a first field that is a fill rule is
+                // one -- `path(M0,0 L1,1)` has no fill rule and three commas.
+                var comma = text.IndexOf(',');
+                if (comma >= 0)
+                {
+                    var head = text.Substring(0, comma).Trim();
+                    if (TryReadFillRule(head, ref evenOdd)) text = text.Substring(comma + 1).Trim();
+                }
+
+                if (text.Length >= 2 && (text[0] == '"' || text[0] == '\'') && text[text.Length - 1] == text[0])
+                    text = text.Substring(1, text.Length - 2);
+
+                if (!ClipPathCommands.TryParsePathData(text, out var commands)) return false;
+
+                return Constant(new ClipPath(ClipPathKind.Path, commands.ToArray(), evenOdd).WithBox(box), out result);
+            }
+
+            private static bool TryReadFillRule(string value, ref bool evenOdd)
+            {
+                if (string.Equals(value, "evenodd", StringComparison.OrdinalIgnoreCase))
+                {
+                    evenOdd = true;
+                    return true;
+                }
+
+                return string.Equals(value, "nonzero", StringComparison.OrdinalIgnoreCase);
             }
         }
 
@@ -544,7 +893,7 @@ namespace ReactUnity.Types
 
         public override bool Equals(object obj)
         {
-            if (!(obj is ClipPath other) || other.Kind != Kind) return false;
+            if (!(obj is ClipPath other) || other.Kind != Kind || other.Box != Box) return false;
 
             switch (Kind)
             {
@@ -552,6 +901,8 @@ namespace ReactUnity.Types
                     return true;
 
                 case ClipPathKind.Inset:
+                case ClipPathKind.Rect:
+                case ClipPathKind.Xywh:
                     return Top == other.Top && Right == other.Right && Bottom == other.Bottom && Left == other.Left &&
                            TopLeftRadius == other.TopLeftRadius && TopRightRadius == other.TopRightRadius &&
                            BottomRightRadius == other.BottomRightRadius && BottomLeftRadius == other.BottomLeftRadius;
@@ -560,6 +911,15 @@ namespace ReactUnity.Types
                 case ClipPathKind.Ellipse:
                     return RadiusX == other.RadiusX && RadiusY == other.RadiusY &&
                            ExtentX == other.ExtentX && ExtentY == other.ExtentY && Position == other.Position;
+
+                case ClipPathKind.Path:
+                case ClipPathKind.Shape:
+                {
+                    if (EvenOdd != other.EvenOdd || Commands.Length != other.Commands.Length) return false;
+                    for (int i = 0; i < Commands.Length; i++)
+                        if (!Commands[i].Equals(other.Commands[i])) return false;
+                    return true;
+                }
 
                 default:
                 {
@@ -579,16 +939,26 @@ namespace ReactUnity.Types
                     return (int) Kind;
 
                 case ClipPathKind.Inset:
-                    return HashCode.Combine((int) Kind, Top, Right, Bottom, Left,
-                        TopLeftRadius, TopRightRadius, BottomRightRadius);
+                case ClipPathKind.Rect:
+                case ClipPathKind.Xywh:
+                    return HashCode.Combine((int) Kind, (int) Box, Top, Right, Bottom, Left,
+                        TopLeftRadius, TopRightRadius);
 
                 case ClipPathKind.Circle:
                 case ClipPathKind.Ellipse:
-                    return HashCode.Combine((int) Kind, RadiusX, RadiusY, (int) ExtentX, (int) ExtentY, Position);
+                    return HashCode.Combine((int) Kind, (int) Box, RadiusX, RadiusY, (int) ExtentX, (int) ExtentY, Position);
+
+                case ClipPathKind.Path:
+                case ClipPathKind.Shape:
+                {
+                    var hash = HashCode.Combine((int) Kind, (int) Box, EvenOdd, Commands.Length);
+                    for (int i = 0; i < Commands.Length; i++) hash = HashCode.Combine(hash, Commands[i]);
+                    return hash;
+                }
 
                 default:
                 {
-                    var hash = HashCode.Combine((int) Kind, EvenOdd, Points.Length);
+                    var hash = HashCode.Combine((int) Kind, (int) Box, EvenOdd, Points.Length);
                     for (int i = 0; i < Points.Length; i++) hash = HashCode.Combine(hash, Points[i]);
                     return hash;
                 }

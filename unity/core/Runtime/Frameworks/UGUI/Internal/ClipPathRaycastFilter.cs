@@ -27,6 +27,13 @@ namespace ReactUnity.UGUI.Internal
 
         public Vector2 BoxOffset;
 
+        /// <summary>
+        /// The shape's reference box, in the border box's own coordinates -- so a
+        /// <c>content-box</c> clip is hit-tested against the same rectangle it is drawn against.
+        /// The border box itself is (0, 0, BoxSize).
+        /// </summary>
+        public Rect ClipBox;
+
         public bool IsRaycastLocationValid(Vector2 screenPoint, Camera eventCamera)
         {
             var shape = Shape;
@@ -40,22 +47,18 @@ namespace ReactUnity.UGUI.Internal
 
             // The same mapping the shader makes out of its uv: out of the composite's rect, then in
             // by the filter region, which lands in the box's own points with y up from its bottom.
-            return Contains(shape.Resolve(BoxSize), local - rt.rect.min - BoxOffset);
+            return Contains(shape.Resolve(ClipBox), local - rt.rect.min - BoxOffset);
         }
 
         /// <summary>The shader's test, in C# and without the antialiased edge -- a pointer is either in or out.</summary>
         public static bool Contains(ClipPath.Resolved shape, Vector2 point)
         {
-            switch (shape.Kind)
+            switch (shape.Form)
             {
-                case ClipPathKind.None:
-                    return true;
-
-                case ClipPathKind.Inset:
+                case ClipShapeForm.RoundedBox:
                     return InsideRoundedBox(shape, point);
 
-                case ClipPathKind.Circle:
-                case ClipPathKind.Ellipse:
+                case ClipShapeForm.Ellipse:
                 {
                     if (shape.Radius.x <= 0 || shape.Radius.y <= 0) return false;
                     var d = point - shape.Center;
@@ -63,8 +66,13 @@ namespace ReactUnity.UGUI.Internal
                     return u.sqrMagnitude <= 1f;
                 }
 
+                case ClipShapeForm.Contours:
+                    return ClipPathGeometry.Contains(shape.Contours, shape.EvenOdd, point);
+
                 default:
-                    return InsideRing(shape, point);
+                    // Nothing to clip, which is also where a malformed shape lands -- an element
+                    // that could not be clipped stays clickable rather than becoming a hole.
+                    return true;
             }
         }
 
@@ -86,33 +94,6 @@ namespace ReactUnity.UGUI.Internal
             if (q.x <= 0 || q.y <= 0) return true;
 
             return new Vector2(q.x / rx, q.y / ry).sqrMagnitude <= 1f;
-        }
-
-        private static bool InsideRing(ClipPath.Resolved shape, Vector2 point)
-        {
-            var ring = shape.Ring;
-            if (ring == null || ring.Length < 4) return false;
-
-            var wind = 0;
-            var crossings = 0;
-
-            for (int i = 0; i < ring.Length - 1; i++)
-            {
-                var a = ring[i];
-                var b = ring[i + 1];
-
-                if ((a.y <= point.y && b.y > point.y) || (b.y <= point.y && a.y > point.y))
-                {
-                    var t = (point.y - a.y) / (b.y - a.y);
-                    if (a.x + t * (b.x - a.x) > point.x)
-                    {
-                        crossings++;
-                        wind += b.y > a.y ? 1 : -1;
-                    }
-                }
-            }
-
-            return shape.EvenOdd ? (crossings % 2) != 0 : wind != 0;
         }
     }
 }

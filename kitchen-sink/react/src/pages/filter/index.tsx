@@ -67,6 +67,11 @@ const clips = [
   ['clipEllipse', 'ellipse(46% 30% at 50% 60%)'],
   ['clipTriangle', 'polygon(50% 0%, 100% 100%, 0% 100%)'],
   ['clipStar', 'polygon(), ten points'],
+  ['clipRect', 'rect(), two edges auto'],
+  ['clipXywh', 'xywh(), rounded'],
+  ['clipPath', 'path(), arcs and curves'],
+  ['clipShape', 'shape(), a curved edge'],
+  ['clipContentBox', 'content-box, on its own'],
   ['clipAnimated', 'animated circle()'],
 ] as const;
 
