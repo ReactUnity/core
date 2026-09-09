@@ -166,11 +166,15 @@ namespace ReactUnity.Styling.Converters
         public override string StringifyTyped(float value) => value + "%";
     }
 
+    /// <summary>
+    /// One channel of `rgb()`, which is 0..255 -- so a percentage is 2.55 of it, not 255. `82%` came
+    /// out as 82 times white and rendered as white, which is what made the default toggle invisible.
+    /// </summary>
     public class ColorValueConverter : FloatConverter
     {
         public ColorValueConverter() : base(new Dictionary<string, float>
         {
-            { "%", 255 },
+            { "%", 2.55f },
         })
         { }
     }
