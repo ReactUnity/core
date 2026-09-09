@@ -190,6 +190,56 @@ namespace ReactUnity.Styling.Converters
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static List<string> SplitShorthand(string val) => Split(val, ' ', '/');
 
+        /// <summary>
+        /// Splits a list of function calls, which is what a `filter` value is. The whitespace
+        /// between two calls is optional in CSS and a minifier drops it, so `grayscale()blur(2px)`
+        /// is two calls -- splitting on whitespace made it one token naming no function at all.
+        /// </summary>
+        public static List<string> SplitFunctionList(string val)
+        {
+            var list = new List<string>();
+            if (string.IsNullOrWhiteSpace(val)) return list;
+
+            var acc = new StringBuilder();
+            var parensStack = 0;
+
+            var len = val.Length;
+            for (int i = 0; i < len; i++)
+            {
+                var c = val[i];
+
+                if (parensStack == 0 && char.IsWhiteSpace(c))
+                {
+                    if (acc.Length > 0)
+                    {
+                        list.Add(acc.ToString());
+                        acc.Clear();
+                    }
+                    continue;
+                }
+
+                acc.Append(c);
+
+                if (c == '(') parensStack++;
+                else if (c == ')')
+                {
+                    // Clamped rather than allowed to go negative, so a stray `)` cannot swallow
+                    // the calls after it by leaving the depth wrong for the rest of the value.
+                    if (parensStack > 0) parensStack--;
+
+                    if (parensStack == 0)
+                    {
+                        list.Add(acc.ToString());
+                        acc.Clear();
+                    }
+                }
+            }
+
+            if (acc.Length > 0) list.Add(acc.ToString());
+
+            return list;
+        }
+
         public static List<string> Split(string val, char separator, char isolateCharacter = default)
         {
             var acc = new StringBuilder();

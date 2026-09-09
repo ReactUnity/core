@@ -158,6 +158,13 @@ namespace ReactUnity.Types
             static IComputedValue chromaticAberrationDefault = new ComputedConstant(0);
             static IComputedValue dropShadowDefault = new ComputedConstant(BoxShadow.Default);
 
+            /// <summary>
+            /// What `grayscale()`, `invert()` and `sepia()` mean written with no argument: CSS gives
+            /// each of them a default of 1, where the values above are the identity. Every other
+            /// function's default is its identity already, so only these three need saying.
+            /// </summary>
+            static IComputedValue fullEffect = new ComputedConstant(1);
+
             protected override System.Type TargetType => typeof(FilterDefinition);
 
             protected override bool ParseInternal(string value, out IComputedValue result)
@@ -183,7 +190,7 @@ namespace ReactUnity.Types
                 IComputedValue chromaticAberration = chromaticAberrationDefault;
                 IComputedValue dropShadow = dropShadowDefault;
 
-                var calls = ParserHelpers.SplitWhitespace(value?.ToString());
+                var calls = ParserHelpers.SplitFunctionList(value?.ToString());
                 var count = calls.Count;
 
                 result = null;
@@ -196,11 +203,20 @@ namespace ReactUnity.Types
 
                     var (name, args, ac) = ParserHelpers.ParseFunction(expression);
 
-                    // Null when the expression is not one function call, which a minifier produces
-                    // by dropping the space in `grayscale(1) brightness(.85)`. Reading its length
-                    // first threw, taking the whole stylesheet down with it.
-                    if (args == null || args.Length == 0) continue;
-                    else if (name == "blur") { if (!AllConverters.LengthConverter.TryConvert(ac, out blur)) return false; }
+                    // Not one function call at all: `none`, or something malformed.
+                    if (name == null || args == null) continue;
+
+                    // No argument is valid CSS and means the function's own default, which a
+                    // minifier writes wherever it can -- `grayscale(1)` arrives as `grayscale()`.
+                    if (args.Length == 0)
+                    {
+                        if (name == "grayscale") grayscale = fullEffect;
+                        else if (name == "invert") invert = fullEffect;
+                        else if (name == "sepia") sepia = fullEffect;
+                        continue;
+                    }
+
+                    if (name == "blur") { if (!AllConverters.LengthConverter.TryConvert(ac, out blur)) return false; }
                     else if (name == "brightness") { if (!AllConverters.PercentageConverter.TryConvert(ac, out brightness)) return false; }
                     else if (name == "contrast") { if (!AllConverters.PercentageConverter.TryConvert(ac, out contrast)) return false; }
                     else if (name == "grayscale") { if (!AllConverters.PercentageConverter.TryConvert(ac, out grayscale)) return false; }
