@@ -196,9 +196,10 @@ namespace ReactUnity.Types
 
                     var (name, args, ac) = ParserHelpers.ParseFunction(expression);
 
-                    var argCount = args.Length;
-
-                    if (args == null || argCount == 0) continue;
+                    // Null when the expression is not one function call, which a minifier produces
+                    // by dropping the space in `grayscale(1) brightness(.85)`. Reading its length
+                    // first threw, taking the whole stylesheet down with it.
+                    if (args == null || args.Length == 0) continue;
                     else if (name == "blur") { if (!AllConverters.LengthConverter.TryConvert(ac, out blur)) return false; }
                     else if (name == "brightness") { if (!AllConverters.PercentageConverter.TryConvert(ac, out brightness)) return false; }
                     else if (name == "contrast") { if (!AllConverters.PercentageConverter.TryConvert(ac, out contrast)) return false; }
