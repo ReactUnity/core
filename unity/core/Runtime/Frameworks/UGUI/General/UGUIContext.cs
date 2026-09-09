@@ -100,19 +100,28 @@ namespace ReactUnity.UGUI
         /// <c>GrabPass</c>. Created on first use, so a scene with nothing reading a backdrop -- or
         /// one on the built-in pipeline, which grabs -- never renders a second time.
         /// </summary>
+        /// <remarks>
+        /// Under the host rather than a scene root of its own, unlike <see cref="FilterRoot"/>:
+        /// nothing here carries a canvas, so nothing forces it out, and being in the host's subtree
+        /// is what makes it go away when the host does. A `Destroy` on a scene root is queued for
+        /// the end of the frame, which a scene close does not wait for -- so anything that put one
+        /// there during teardown outlived the scene it was made in.
+        /// </remarks>
         public Internal.BackdropSurface BackdropSurface
         {
             get
             {
-                // Never after the context is gone: this runs from a scene root, and a Destroy
-                // queued for it has already been drained by then, so a late one would outlive the
-                // scene. Callers with nothing to register should use ExistingBackdropSurface.
-                if (!backdropSurface && !IsDisposed)
+                var host = (Host as HostComponent)?.RectTransform;
+
+                // Not once the host is gone, however the context is being taken apart: a caller can
+                // reach this from a destruction cascade, and a register made then belongs to
+                // nothing. Callers with nothing to register should use ExistingBackdropSurface.
+                if (!backdropSurface && !IsDisposed && host)
                 {
                     var go = CreateNativeObject("[BackdropSurface]", typeof(Internal.BackdropSurface));
+                    go.transform.SetParent(host, false);
                     backdropSurface = go.GetComponent<Internal.BackdropSurface>();
                     backdropSurface.Context = this;
-                    Disposables.Add(() => { if (backdropSurface) UnityEngine.Object.Destroy(backdropSurface.gameObject); });
                 }
                 return backdropSurface;
             }

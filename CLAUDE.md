@@ -99,10 +99,12 @@ pnpm unity player tests --backend il2cpp
 
 Unity's own `unity` CLI (July 2026, installed at `~/AppData/Local/Unity/bin/unity.exe`, its skill at `~/.claude/skills/unity-cli`) covers everything `bridge` does and much more against an Editor that is open, via the `com.unity.pipeline` package kitchen-sink picked up in `b8225447`. It does **not** cover the batch commands, because it launches the Editor without snapshotting the files a local run rewrites — the trap described next. The skill has the mapping.
 
-Two things worth knowing before running any of it:
+Three things worth knowing before running any of it:
 
 - **The editor version comes from each project's `ProjectSettings/ProjectVersion.txt`** — whichever Editor last opened the project is the one the CLI drives. Nothing is pinned in the scripts. `UNITY_VERSION=` overrides per run, and only then is that stamp restored afterwards. `tests/` loads and runs on **6000.5.9f1**, so the older note that the 6000.5 line could not run it at all is wrong. Both suites are green there: EditMode 342/350 and PlayMode 690/701, zero failures. It was not always — `ButtonTests` and `InputTests` used to fail on that editor and only that editor, because the suite transformed its JSX by running Babel inside QuickJS and Babel's parse-then-traverse depth did not fit the main-thread stack 6000.5 leaves. Replacing it with Sucrase fixed all 15; [.claude/skills/unity/SKILL.md](.claude/skills/unity/SKILL.md) keeps the measurements, and they are the ones to beat before putting Babel back. A local pass is still not a matrix pass. That failure was `com.unity.inputsystem` 1.14.2, whose editor assemblies fail obsolete-as-error there — and 1.14.2 was only ever the manifest's *minimum*, which the resolver dropped back to whenever it had reason to re-resolve. The minimums are now raised past it. `test-framework`, `ugui` and `ext.nunit` stay where they are because they are `builtin` and the editor supplies its own. CI runs 6000.0.51f1/6000.1.9f1, so a local pass is still not a matrix pass.
 - **Opening `tests/` rewrites its manifest into a 6000-only shape** — `com.unity.ugui` 2.x, no `textmeshpro`, plus `modules.physicscore2d`/`vectorgraphics`/`adaptiveperformance` — and that manifest fails to resolve on **6000.1** (measured), which yields *zero tests* rather than a red suite. The CLI snapshots those files and restores them after every run; `--no-restore` opts out. Restore covers batch runs only — an interactive Editor churns them freely, so check `git status` after one.
+
+- **Both Unity projects run the Universal Render Pipeline**, assigned in each project's `ProjectSettings/GraphicsSettings.asset` against the `URP_Asset` in its own `Assets/`. `com.unity.render-pipelines.universal` is a `builtin` package in Unity 6, so the manifest version is a floor the editor overrides with its own -- it cannot break a matrix job the way the `inputsystem` pin did. This is what covers the no-`GrabPass` backdrop path (`BackdropSurface`, `backdrop-filter`, `mix-blend-mode`, stacked `background-blend-mode`), which is dead code under built-in; the pipeline is worth flipping back temporarily to compare the two, and both are still supported. The rendering snapshots are pipeline-independent in practice -- moving `tests/` to URP changed none of the 453 of them.
 
 The Test Runner window still works, as does `.github/workflows/unity-tests.yml` for the real matrix. `tests/Packages/manifest.json` already points at `file:../../unity/*`, so the four Unity packages are wired up with no patching.
 
@@ -142,6 +144,8 @@ Tegami config lives in [scripts/tegami.mts](scripts/tegami.mts) (unrelated to `p
 ### The Kitchen Sink sample
 
 `kitchen-sink/` is both the project ReactUnity is manually tested against and the sample users are pointed at, so it is published standalone on the `kitchen-sink` orphan branch by [release-kitchen-sink.yml](.github/workflows/release-kitchen-sink.yml).
+
+It runs URP, and the filter page is the one place that costs: a backdrop read is a `GrabPass` on built-in and a whole extra camera render without one, so its 22 readers take a frame from ~9 ms to ~50-100 ms in the editor. That is the demo page being a stress test rather than a regression -- see [`backdrop-filter`](docs/src/content/reference/css/backdrop-filter.mdx) for the cost model.
 
 ```bash
 node scripts/kitchen-sink/prepare.mts Logs/kitchen-sink --force
