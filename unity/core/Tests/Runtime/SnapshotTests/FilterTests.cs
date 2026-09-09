@@ -404,6 +404,78 @@ namespace ReactUnity.Tests
             Assert.Greater(centre.b, 0.8f);
         }
 
+        // `backdrop-filter` is a different path from `filter`: nothing is captured offscreen, and
+        // the panel reads what is already on the screen behind it -- so it needs its own subject,
+        // with something under the panel to read.
+        const string BackdropScript = @"
+            function App() {
+                return <view id='host'>
+                    <view id='half'></view>
+                    <view id='test'></view>
+                </view>;
+            }
+";
+
+        const string BackdropStyle = @"
+            #host {
+                width: 200px;
+                height: 200px;
+                background-color: red;
+            }
+
+            #half {
+                position: absolute;
+                left: 0;
+                top: 0;
+                width: 100px;
+                height: 200px;
+                background-color: #00ff00;
+            }
+
+            #test {
+                position: absolute;
+                left: 0;
+                top: 0;
+                width: 200px;
+                height: 200px;
+            }
+";
+
+        [UGUITest(Script = BackdropScript, Style = BackdropStyle)]
+        public IEnumerator BackdropBlurPullsTheColourAcrossTheEdgeBehindIt()
+        {
+            for (int i = 0; i < 3; i++) yield return null;
+
+            // 5px onto the red side of the boundary, which is well inside a 8px blur's reach.
+            var sharp = SampleAt(105, 100);
+            Assert.Less(sharp.g, 0.2f, $"unblurred, the red side should be red -- was {Describe(sharp)}");
+
+            View.Style["backdrop-filter"] = "blur(8px)";
+            for (int i = 0; i < 3; i++) yield return null;
+
+            var blurred = SampleAt(105, 100);
+            // Halfway between the boundary and the panel's own right edge, so the 32px the kernel
+            // reaches finds neither the green half nor whatever is beside the panel.
+            var far = SampleAt(150, 100);
+            Debug.Log($"[BACKDROP blur] near the edge {Describe(blurred)} far from it {Describe(far)}");
+            Assert.Greater(blurred.g, sharp.g + 0.15f, "the green half should bleed onto the red side");
+            Assert.Less(far.g, 0.2f, "and out of the kernel's reach, nothing should have moved");
+        }
+
+        [UGUITest(Script = BackdropScript, Style = BackdropStyle)]
+        public IEnumerator BackdropScanlinesDarkenAlternatingRows()
+        {
+            View.Style["backdrop-filter"] = "scanlines(1 4px)";
+            for (int i = 0; i < 3; i++) yield return null;
+
+            // Rows down the screen. The backdrop's own texel size cannot supply them -- Unity
+            // negates it for a flipped grab -- so this is what catches that regression.
+            var rows = RedDown(150, 90, 12);
+            Debug.Log($"[BACKDROP scanlines] {string.Join(", ", rows.ConvertAll(r => r.ToString("F2")))}");
+            Assert.Less(Mathf.Min(rows.ToArray()), 0.2f, "a full-intensity scanline should black its rows out");
+            Assert.Greater(Mathf.Max(rows.ToArray()), 0.8f, "and leave the rows between it alone");
+        }
+
         const string ButtonScript = @"
             function App() {
                 return <view id='test'>

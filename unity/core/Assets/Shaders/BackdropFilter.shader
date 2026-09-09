@@ -71,89 +71,7 @@ Shader "ReactUnity/BackdropFilter"
         CGPROGRAM
         #pragma vertex vert
         #pragma fragment frag
-        #pragma target 2.0
-        #pragma shader_feature_local _SPECULARHIGHLIGHTS_OFF
-        #pragma shader_feature_local _GLOSSYREFLECTIONS_OFF
-        #pragma fragmentoption ARB_precision_hint_fastest
-        #define GRAB_POS
-        #include "UnityCG.cginc"
-        #include "ShaderSetup.cginc"
-
-        float _Blur;
-
-        sampler2D _CameraOpaqueTexture;
-        float4 _CameraOpaqueTexture_TexelSize;
-        #define BACKDROP_TEX _CameraOpaqueTexture
-        #define BACKDROP_TEXELSIZE _CameraOpaqueTexture_TexelSize
-
-        float4 frag( v2f i ) : COLOR {
-          if(_Blur == 0) return float4(0,0,0,0);
-
-          float3 sum = float3(0,0,0);
-
-          #define GRABPIXEL(weight,kernelx) tex2D( BACKDROP_TEX, UNITY_PROJ_COORD(float2(i.uvgrab.x + BACKDROP_TEXELSIZE.x * kernelx*_Blur, i.uvgrab.y))) * weight
-
-          sum += GRABPIXEL(0.05, -4.0);
-          sum += GRABPIXEL(0.09, -3.0);
-          sum += GRABPIXEL(0.12, -2.0);
-          sum += GRABPIXEL(0.15, -1.0);
-          sum += GRABPIXEL(0.18,  0.0);
-          sum += GRABPIXEL(0.15, +1.0);
-          sum += GRABPIXEL(0.12, +2.0);
-          sum += GRABPIXEL(0.09, +3.0);
-          sum += GRABPIXEL(0.05, +4.0);
-
-          return float4(sum, 1);
-        }
-        ENDCG
-      }
-
-      Pass {
-        CGPROGRAM
-        #pragma vertex vert
-        #pragma fragment frag
-        #pragma target 2.0
-        #pragma shader_feature_local _SPECULARHIGHLIGHTS_OFF
-        #pragma shader_feature_local _GLOSSYREFLECTIONS_OFF
-        #pragma fragmentoption ARB_precision_hint_fastest
-        #define GRAB_POS
-        #include "UnityCG.cginc"
-        #include "ShaderSetup.cginc"
-
-        float _Blur;
-
-        sampler2D _CameraOpaqueTexture;
-        float4 _CameraOpaqueTexture_TexelSize;
-        #define BACKDROP_TEX _CameraOpaqueTexture
-        #define BACKDROP_TEXELSIZE _CameraOpaqueTexture_TexelSize
-
-        float4 frag( v2f i ) : COLOR {
-          if(_Blur == 0) return float4(0,0,0,0);
-
-          float3 sum = float3(0,0,0);
-
-          #define GRABPIXEL(weight,kernely) tex2D( BACKDROP_TEX, UNITY_PROJ_COORD(float2(i.uvgrab.x, i.uvgrab.y + BACKDROP_TEXELSIZE.y * kernely*_Blur))) * weight
-
-          sum += GRABPIXEL(0.05, -4.0);
-          sum += GRABPIXEL(0.09, -3.0);
-          sum += GRABPIXEL(0.12, -2.0);
-          sum += GRABPIXEL(0.15, -1.0);
-          sum += GRABPIXEL(0.18,  0.0);
-          sum += GRABPIXEL(0.15, +1.0);
-          sum += GRABPIXEL(0.12, +2.0);
-          sum += GRABPIXEL(0.09, +3.0);
-          sum += GRABPIXEL(0.05, +4.0);
-
-          return float4(sum, 1);
-        }
-        ENDCG
-      }
-
-      Pass {
-        CGPROGRAM
-        #pragma vertex vert
-        #pragma fragment frag
-        #pragma target 2.0
+        #pragma target 3.0
         #pragma shader_feature_local _SPECULARHIGHLIGHTS_OFF
         #pragma shader_feature_local _GLOSSYREFLECTIONS_OFF
         #pragma fragmentoption ARB_precision_hint_fastest
@@ -186,10 +104,35 @@ Shader "ReactUnity/BackdropFilter"
 
         float4 _ClipRect;
 
+        // Everything below is measured in screen pixels rather than backdrop texels, because
+        // this snapshot is downsampled whenever the URP asset says so, where built-in's
+        // GrabPass is always the full-resolution target.
         sampler2D _CameraOpaqueTexture;
-        float4 _CameraOpaqueTexture_TexelSize;
         #define BACKDROP_TEX _CameraOpaqueTexture
-        #define BACKDROP_TEXELSIZE _CameraOpaqueTexture_TexelSize
+
+        // Built-in chains a separable blur across three passes, re-grabbing between them. URP has
+        // one pre-transparent snapshot and no GrabPass, so a chained pass re-reads the unblurred
+        // image -- the same kernel as a 2D outer product is that convolution in a single pass.
+        static const float RU_BLUR_W[9] = { 0.05, 0.09, 0.12, 0.15, 0.18, 0.15, 0.12, 0.09, 0.05 };
+
+        float3 SampleBackdrop(float2 uv)
+        {
+          float3 sum = tex2D(BACKDROP_TEX, uv).rgb;
+
+          if (_Blur > 0)
+          {
+            float2 stride = _Blur / _ScreenParams.xy;
+
+            sum = float3(0, 0, 0);
+            [unroll] for (int y = 0; y < 9; y++)
+            {
+              [unroll] for (int x = 0; x < 9; x++)
+                sum += tex2D(BACKDROP_TEX, uv + float2(x - 4, y - 4) * stride).rgb * (RU_BLUR_W[x] * RU_BLUR_W[y]);
+            }
+          }
+
+          return sum;
+        }
 
         // Convert RGB to Grayscale
         float3 rgb2gray(float3 color)
@@ -229,8 +172,8 @@ Shader "ReactUnity/BackdropFilter"
           // Apply pixelate effect
           if (_Pixelate > 0)
           {
-            float4 ts = BACKDROP_TEXELSIZE * _Pixelate;
-            uvgrab = round(i.uvgrab / ts.xy) * ts.xy;
+            float2 ts = _Pixelate / _ScreenParams.xy;
+            uvgrab = round(i.uvgrab / ts) * ts;
           }
 
           // Grab the texture from behind the current object
@@ -238,13 +181,13 @@ Shader "ReactUnity/BackdropFilter"
           if (_Aberration != 0)
           {
             // One channel from each of three copies, pulled apart along x.
-            float2 off = float2(BACKDROP_TEXELSIZE.x * _Aberration, 0);
+            float2 off = float2(_Aberration / _ScreenParams.x, 0);
             color = float3(
-              tex2D(BACKDROP_TEX, uvgrab + off).r,
-              tex2D(BACKDROP_TEX, uvgrab).g,
-              tex2D(BACKDROP_TEX, uvgrab - off).b);
+              SampleBackdrop(uvgrab + off).r,
+              SampleBackdrop(uvgrab).g,
+              SampleBackdrop(uvgrab - off).b);
           }
-          else color = tex2D(BACKDROP_TEX, uvgrab).rgb;
+          else color = SampleBackdrop(uvgrab);
 
           // Convert to grayscale if needed
           if (_Grayscale > 0)
@@ -285,7 +228,7 @@ Shader "ReactUnity/BackdropFilter"
 
           if (_ScanlineIntensity > 0 && _ScanlinePeriod > 0)
           {
-            float row = i.uvgrab.y / max(BACKDROP_TEXELSIZE.y, 1e-8) + _ScanlinePhase;
+            float row = i.uvgrab.y * _ScreenParams.y + _ScanlinePhase;
             color *= 1.0 - _ScanlineIntensity * step(0.5, frac(row / _ScanlinePeriod));
           }
 
@@ -532,7 +475,10 @@ Shader "ReactUnity/BackdropFilter"
 
           if (_ScanlineIntensity > 0 && _ScanlinePeriod > 0)
           {
-            float row = i.uvgrab.y / max(BACKDROP_TEXELSIZE.y, 1e-8) + _ScanlinePhase;
+            // Rows down the screen, not down the grab: Unity flags a flipped grab by negating
+            // BACKDROP_TEXELSIZE.y, which the guard against a divide by zero then turned into 1e-8
+            // -- and a row index of 1e8 has no precision left to be periodic with.
+            float row = i.uvgrab.y * _ScreenParams.y + _ScanlinePhase;
             color *= 1.0 - _ScanlineIntensity * step(0.5, frac(row / _ScanlinePeriod));
           }
 

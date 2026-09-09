@@ -31,3 +31,9 @@ export default function App() {
 ```
 
 </Sandpack>
+
+## Notes {/*notes*/}
+
+- The backdrop is the frame as it stands when the element is drawn, so the filter only sees what is *behind* it -- anything drawn after it is unaffected, as on the web.
+- Under the Universal Render Pipeline the backdrop comes from the camera's opaque texture, which does not contain other transparent UI. A panel over a 3D scene filters it correctly; a panel over other UI filters the scene behind that UI rather than the interface it sits on.
+- That texture is also downsampled according to the render pipeline asset's *Opaque Downsampling* setting. Lengths are measured in screen pixels either way, so `blur(4px)` is four pixels, but what it reads is already softer at anything but `None`.
