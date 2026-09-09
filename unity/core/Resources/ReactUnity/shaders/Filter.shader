@@ -29,6 +29,19 @@ Shader "ReactUnity/Filter"
     _ShadowColor ("Drop Shadow Color", Color) = (0,0,0,0)
     _ShadowOffset ("Drop Shadow Offset (UV)", Vector) = (0,0,0,0)
 
+    _MaskTex ("Mask Layers", 2D) = "white" {}
+    _MaskEnabled ("Mask Enabled", Float) = 0.0
+    _MaskLuminance ("Mask Reads Luminance", Int) = 0
+
+    _ClipKind ("Clip Path Kind", Int) = 0
+    _ClipRegion ("Clip Region (w, h, left, bottom)", Vector) = (0,0,0,0)
+    _ClipBox ("Clip Inset Box (minX, minY, maxX, maxY)", Vector) = (0,0,0,0)
+    _ClipRadiiX ("Clip Corner Radii X", Vector) = (0,0,0,0)
+    _ClipRadiiY ("Clip Corner Radii Y", Vector) = (0,0,0,0)
+    _ClipCircle ("Clip Circle (cx, cy, rx, ry)", Vector) = (0,0,0,0)
+    _ClipPolyCount ("Clip Polygon Ring Length", Int) = 0
+    _ClipEvenOdd ("Clip Uses Even-Odd", Int) = 0
+
     [Enum(UnityEngine.Rendering.CompareFunction)] _StencilComp("Stencil Comparison", Float) = 8
     _Stencil("Stencil ID", Float) = 0
     [Enum(UnityEngine.Rendering.StencilOp)] _StencilOp("Stencil Operation", Float) = 0
@@ -75,7 +88,10 @@ Shader "ReactUnity/Filter"
       CGPROGRAM
       #pragma vertex vert
       #pragma fragment frag
-      #pragma target 2.0
+      // `clip-path`'s polygon walks a uniform array in an unrolled loop, which needs more constant
+      // registers and integer maths than 2.0 has. FilterBlend has always asked for 3.0, so nothing
+      // Unity 6 still builds for loses the composite over it.
+      #pragma target 3.0
       #pragma multi_compile_local _ UNITY_UI_CLIP_RECT
       #pragma multi_compile_local _ UNITY_UI_ALPHACLIP
 

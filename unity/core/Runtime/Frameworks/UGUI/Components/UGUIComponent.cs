@@ -296,7 +296,16 @@ namespace ReactUnity.UGUI
             // background alone, not the page it happens to be sitting on.
             var stacksBackgroundBlends = StacksBackgroundBlends();
 
-            if (!hasFilter && !hasBlend && !isolated && !stacksBackgroundBlends)
+            // `mask-image` and `clip-path` are the other two things CSS applies to the element and
+            // its contents as one image. A mask needs the capture because a soft edge cannot come
+            // out of a stencil, and a clip because the shape has to cut the subtree, not each
+            // graphic in it.
+            var maskImages = ComputedStyle.maskImage;
+            var hasMask = (maskImages?.Count ?? 0) > 0;
+            var clipShape = ComputedStyle.clipPath ?? ClipPath.None;
+            var hasClip = clipShape.Kind != ClipPathKind.None;
+
+            if (!hasFilter && !hasBlend && !isolated && !stacksBackgroundBlends && !hasMask && !hasClip)
             {
                 if (ElementFilter) ElementFilter.Detach();
                 ElementFilter = null;
@@ -305,13 +314,18 @@ namespace ReactUnity.UGUI
 
             var definition = hasFilter ? filter : FilterDefinition.Default;
 
-            if (!ElementFilter) ElementFilter = ElementFilter.Create(this, definition, blendMode, isolated);
+            if (!ElementFilter) ElementFilter = ElementFilter.Create(this, definition, blendMode, isolated, clipShape);
             else
             {
                 ElementFilter.Definition = definition;
                 ElementFilter.BlendMode = blendMode;
                 ElementFilter.Isolated = isolated;
+                ElementFilter.ClipShape = clipShape;
             }
+
+            ElementFilter.SetMask(maskImages, ComputedStyle.maskPositionX, ComputedStyle.maskPositionY,
+                ComputedStyle.maskSize, ComputedStyle.maskRepeatX, ComputedStyle.maskRepeatY,
+                ComputedStyle.maskMode.Get(0));
         }
 
         /// <summary>
@@ -559,7 +573,6 @@ namespace ReactUnity.UGUI
 
             if (ComputedStyle.backgroundColor.a > 0) return true;
             if (ComputedStyle.HasValue(StyleProperties.backgroundImage)) return true;
-            if (ComputedStyle.HasValue(StyleProperties.maskImage)) return true;
             if (ComputedStyle.HasValue(StyleProperties.boxShadow)) return true;
             if (ComputedStyle.HasValue(StyleProperties.filter)) return true;
             if (ComputedStyle.HasValue(StyleProperties.backdropFilter)) return true;
@@ -605,7 +618,7 @@ namespace ReactUnity.UGUI
 
         protected BorderAndBackground CreateBorderAndBackground()
         {
-            var image = BorderAndBackground.Create(GameObject, this, (x => Container = x));
+            var image = BorderAndBackground.Create(GameObject, this);
             if (Selectable && Selectable.targetGraphic == null)
                 Selectable.targetGraphic = image.BgImage;
             return BorderAndBackground = image;

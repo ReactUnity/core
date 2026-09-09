@@ -302,3 +302,167 @@
     color: #0f172a;
   }
 }
+
+/* A mask is coverage, not a stencil, so the subject here is the busy card again: the gradient shows
+   the fade, and the star's own 50% alpha shows that a sprite mask keeps its alpha. */
+.maskTile {
+  width: 150px;
+  height: 100px;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+  background: linear-gradient(135deg, #f97316, #6366f1 55%, #22d3ee);
+
+  text {
+    font-size: 26px;
+    font-weight: bold;
+    color: white;
+  }
+}
+
+.maskDown {
+  mask-image: linear-gradient(black, transparent);
+}
+
+.maskBand {
+  mask-image: linear-gradient(to right, transparent, black 30%, black 70%, transparent);
+}
+
+.maskCircle {
+  mask-image: radial-gradient(circle at center, black 40%, transparent 72%);
+}
+
+/* Two layers, each a corner fade. They add, which is what CSS `mask-composite: add` means. */
+.maskTwoLayers {
+  mask-image: radial-gradient(circle at 25% 30%, black 30%, transparent 60%),
+    radial-gradient(circle at 75% 70%, black 30%, transparent 60%);
+}
+
+/* A white star read for its brightness rather than its alpha. */
+.maskLuminance {
+  mask-image: linear-gradient(to bottom right, white, black);
+  mask-mode: luminance;
+}
+
+.maskAnimated {
+  mask-image: linear-gradient(to right, black 40%, transparent 60%);
+  mask-size: 300% 100%;
+  animation: mask-sweep 3s linear infinite;
+}
+
+@keyframes mask-sweep {
+  from {
+    mask-position-x: 100%;
+  }
+
+  to {
+    mask-position-x: -100%;
+  }
+}
+
+/* Clips are shapes rather than paint, so the tile is flat and the shape is the whole point. */
+.clipTile {
+  width: 150px;
+  height: 110px;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #34d399, #2563eb);
+
+  text {
+    font-size: 22px;
+    font-weight: bold;
+    color: white;
+  }
+}
+
+.clipInset {
+  clip-path: inset(12% 18%);
+}
+
+.clipRounded {
+  clip-path: inset(6% round 32px 6px);
+}
+
+.clipCircle {
+  clip-path: circle(45%);
+}
+
+.clipEllipse {
+  clip-path: ellipse(46% 30% at 50% 60%);
+}
+
+.clipTriangle {
+  clip-path: polygon(50% 0%, 100% 100%, 0% 100%);
+}
+
+.clipStar {
+  clip-path: polygon(
+    50% 0%,
+    61% 35%,
+    98% 35%,
+    68% 57%,
+    79% 91%,
+    50% 70%,
+    21% 91%,
+    32% 57%,
+    2% 35%,
+    39% 35%
+  );
+}
+
+/* Interpolating between two shapes of one kind, which is what makes a clip animatable. */
+.clipAnimated {
+  clip-path: circle(45%);
+  animation: clip-pulse 2.4s ease-in-out infinite alternate;
+}
+
+@keyframes clip-pulse {
+  from {
+    clip-path: circle(20%);
+  }
+
+  to {
+    clip-path: circle(50%);
+  }
+}
+
+/* A clip changes the element's shape, so it changes where a pointer lands too. */
+.clipButton {
+  width: 150px;
+  height: 110px;
+  align-items: center;
+  justify-content: center;
+  clip-path: circle(45%);
+  background-color: #2563eb;
+  cursor: pointer;
+
+  text {
+    color: white;
+  }
+
+  &:hover {
+    background-color: #f97316;
+  }
+}
+
+/* The star resource is 100x100, so drawing it at 240 is where the sampler starts to show. */
+.zoomed {
+  width: 240px;
+  height: 240px;
+  color: #2563eb;
+  image-rendering: auto;
+}
+
+.pixelated {
+  image-rendering: pixelated;
+}
+
+/* The same choice applies to a background layer, not only to a replaced element. */
+.zoomedBackground {
+  width: 240px;
+  height: 240px;
+  background-color: #e2e8f0;
+  background-image: url(res:star);
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+}

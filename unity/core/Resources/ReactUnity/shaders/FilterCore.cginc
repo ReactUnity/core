@@ -7,6 +7,7 @@
 
 #include "UnityCG.cginc"
 #include "UnityUI.cginc"
+#include "ClipShapes.cginc"
 
 #ifdef RU_HAS_BACKDROP
 #include "BlendModes.cginc"
@@ -58,6 +59,9 @@ float _Aberration;
 sampler2D _ShadowTex;
 float4 _ShadowColor;
 float4 _ShadowOffset;
+sampler2D _MaskTex;
+float _MaskEnabled;
+int _MaskLuminance;
 
 v2f vert(appdata v)
 {
@@ -101,6 +105,18 @@ float rand(float2 co)
 float3 unpremultiply(float4 c)
 {
   return c.a > 0.0001 ? c.rgb / c.a : c.rgb;
+}
+
+// What the mask layers leave of this fragment. The layers were drawn over transparent black with
+// ordinary source-over blending, so two things follow: their alpha composites to `add`, which is
+// what CSS makes `mask-composite` by default, and their colour arrives already multiplied by
+// coverage -- so a luminance mask is one dot product rather than an unpremultiply first.
+float RuMaskCoverage(float2 uv)
+{
+  if (_MaskEnabled <= 0.0) return 1.0;
+
+  float4 m = tex2D(_MaskTex, uv);
+  return _MaskLuminance != 0 ? dot(m.rgb, float3(0.2126, 0.7152, 0.0722)) : m.a;
 }
 
 float4 frag(v2f i) : SV_Target
@@ -206,6 +222,13 @@ float4 frag(v2f i) : SV_Target
     rgb += _ShadowColor.rgb * sa * (1.0 - a);
     a += sa * (1.0 - a);
   }
+
+  // Clipping and masking land after the filter chain and before opacity, which is the order CSS
+  // composites them in: the drop shadow is clipped along with the element that cast it, and
+  // `opacity` fades what survives rather than being masked itself.
+  float coverage = RuClipCoverage(i.uv, _MainTex_TexelSize.xy) * RuMaskCoverage(i.uv);
+  rgb *= coverage;
+  a *= coverage;
 
   // Folded in before the blend rather than after it. For a blend function the two are identical --
   // the fade cancels out of `rgb / a` and comes back through the premultiply -- but `plus-lighter`

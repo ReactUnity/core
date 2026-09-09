@@ -66,6 +66,7 @@ namespace ReactUnity.Styling.Converters
         static public StyleConverterBase SortingLayerConverter = new SortingLayerConverter();
         static public StyleConverterBase BorderImageSliceConverter = new BorderImageSlice.Converter();
         static public StyleConverterBase FilterDefinitionConverter = new FilterDefinition.Converter();
+        static public StyleConverterBase ClipPathConverter = new ClipPath.Converter();
 
 
         private static Dictionary<Type, StyleConverterBase> Map = new Dictionary<Type, StyleConverterBase>()
@@ -95,6 +96,7 @@ namespace ReactUnity.Styling.Converters
             { typeof(SortingLayer), SortingLayerConverter },
             { typeof(BorderImageSlice), BorderImageSliceConverter },
             { typeof(FilterDefinition), FilterDefinitionConverter },
+            { typeof(ClipPath), ClipPathConverter },
             { typeof(ContainerType), ContainerTypeConverter },
             { typeof(AnimationTimeline), AnimationTimelineConverter },
         };

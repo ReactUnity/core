@@ -50,6 +50,26 @@ const blendModes: MixBlendMode[] = [
   'plus-lighter',
 ];
 
+/** Each entry is a class on the same busy tile, so the gallery reads as one comparison. */
+const masks = [
+  ['maskDown', 'linear-gradient(black, transparent)'],
+  ['maskBand', 'linear-gradient(to right, transparent, black 30%, black 70%, transparent)'],
+  ['maskCircle', 'radial-gradient(circle at center, black 40%, transparent 72%)'],
+  ['maskTwoLayers', 'two radial layers, added'],
+  ['maskLuminance', 'mask-mode: luminance'],
+  ['maskAnimated', 'animated mask-position-x'],
+] as const;
+
+const clips = [
+  ['clipInset', 'inset(12% 18%)'],
+  ['clipRounded', 'inset(6% round 32px 6px)'],
+  ['clipCircle', 'circle(45%)'],
+  ['clipEllipse', 'ellipse(46% 30% at 50% 60%)'],
+  ['clipTriangle', 'polygon(50% 0%, 100% 100%, 0% 100%)'],
+  ['clipStar', 'polygon(), ten points'],
+  ['clipAnimated', 'animated circle()'],
+] as const;
+
 function Card({ className, filter }: { className?: string; filter?: string }) {
   return (
     <view className={clsx(styles.card, className)} style={filter ? { filter } : undefined}>
@@ -292,6 +312,121 @@ export function FilterPage() {
           <view className={'items-center'}>
             <view className={clsx(styles.bgLayerTile, styles.bgLayersBoth)} />
             <text className={styles.caption}>difference</text>
+          </view>
+        </row>
+      </section>
+
+      <section>
+        <h2>
+          <row>
+            Mask image
+            <icon.gradient />
+          </row>
+        </h2>
+
+        <text className={styles.note}>
+          A mask is coverage rather than a cut-out, so a gradient fades the element instead of stopping at a threshold. The element and
+          everything inside it are masked as one image, which is why each tile's glyph fades with its background.
+        </text>
+
+        <view className={'flex-row flex-wrap'}>
+          {masks.map(([name, caption]) => (
+            <view key={name} className={'m-1.5 w-40 shrink-0 items-center'}>
+              <view className={clsx(styles.maskTile, styles[name])}>
+                <text>Aa</text>
+              </view>
+              <text className={styles.caption}>{caption}</text>
+            </view>
+          ))}
+        </view>
+
+        <text className={styles.note}>
+          `mask-image` takes the same values `background-image` does, and `mask-position`, `mask-size` and `mask-repeat` place each layer
+          the same way. Layers add: what any one of them covers is kept. A sprite mask keeps its own alpha too -- the star resource is drawn
+          at half opacity throughout, and that is what comes through.
+        </text>
+
+        <row className={'gap-6'}>
+          <view className={'items-center'}>
+            <view className={styles.maskTile} style={{ maskImage: 'url(res:star)', maskRepeat: 'no-repeat', maskSize: 'contain' }}>
+              <text>Aa</text>
+            </view>
+            <text className={styles.caption}>a 50%-alpha sprite as the mask</text>
+          </view>
+        </row>
+      </section>
+
+      <section>
+        <h2>
+          <row>
+            Clip path
+            <icon.crop />
+          </row>
+        </h2>
+
+        <text className={styles.note}>
+          `clip-path` clips the element to a shape. The edge is antialiased over a device pixel, and the shape is resolved against the box
+          every frame -- so a percentage shape follows a resize and two shapes of one kind interpolate.
+        </text>
+
+        <view className={'flex-row flex-wrap'}>
+          {clips.map(([name, caption]) => (
+            <view key={name} className={'m-1.5 w-40 shrink-0 items-center'}>
+              <view className={clsx(styles.clipTile, styles[name])}>
+                <text>Aa</text>
+              </view>
+              <text className={styles.caption}>{caption}</text>
+            </view>
+          ))}
+        </view>
+
+        <text className={styles.note}>
+          A clip changes the element's shape, so it changes where a pointer lands as well -- the corners of the tile below are outside the
+          circle, and hovering them does nothing. A mask never does this: a mask paints, a clip reshapes.
+        </text>
+
+        <row className={'gap-6'}>
+          <view className={'items-center'}>
+            <view className={styles.clipButton}>
+              <text>Hover the middle</text>
+            </view>
+            <text className={styles.caption}>clip-path: circle(45%)</text>
+          </view>
+        </row>
+      </section>
+
+      <section>
+        <h2>
+          <row>
+            Image rendering
+            <icon.grid_on />
+          </row>
+        </h2>
+
+        <text className={styles.note}>
+          `image-rendering: pixelated` snaps each sample to the nearest texel, which is what an upscaled sprite wants. The star resource is
+          100x100 and drawn here at 240, so the diagonals are where the two samplers part company.
+        </text>
+
+        <row className={'gap-6 flex-wrap'}>
+          <view className={'items-center'}>
+            <image source={'res:star'} className={styles.zoomed} />
+            <text className={styles.caption}>auto</text>
+          </view>
+
+          <view className={'items-center'}>
+            <image source={'res:star'} className={clsx(styles.zoomed, styles.pixelated)} />
+            <text className={styles.caption}>pixelated</text>
+          </view>
+
+          <view className={'items-center'}>
+            <view className={styles.zoomedBackground} />
+            <text className={styles.caption}>background, auto</text>
+          </view>
+
+          <view className={'items-center'}>
+            <view className={clsx(styles.zoomedBackground, styles.pixelated)} />
+            <text className={styles.caption}>background, pixelated</text>
           </view>
         </row>
       </section>

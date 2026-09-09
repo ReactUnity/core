@@ -72,6 +72,16 @@ export type BackgroundBlendMode =
 // takes it on `background-blend-mode` too, where it means the same thing.
 export type MixBlendMode = BackgroundBlendMode | 'plus-lighter';
 
+// Which channel of a mask layer is its coverage. `match-source` resolves to `alpha` for every
+// source ReactUnity has -- CSS makes it `luminance` only for an SVG `<mask>`, which has no
+// equivalent here. `mask-type` is accepted as a synonym of `mask-mode` for the same reason.
+export type MaskMode = 'match-source' | 'alpha' | 'luminance';
+
+// `crisp-edges` and `pixelated` both mean nearest-neighbour here; CSS separates them by whether
+// the aspect ratio has to be preserved, which nothing in the sampler can act on. `smooth` and
+// `high-quality` mean `auto` -- there is no better filter to switch to.
+export type ImageRendering = 'auto' | 'smooth' | 'high-quality' | 'crisp-edges' | 'pixelated';
+
 // `isolate` makes the element a blending group of its own, so a descendant's
 // `mix-blend-mode` cannot reach the backdrop behind it.
 export type Isolation = 'auto' | 'isolate';

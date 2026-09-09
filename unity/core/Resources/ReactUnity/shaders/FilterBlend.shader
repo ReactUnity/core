@@ -35,6 +35,19 @@ Shader "ReactUnity/FilterBlend"
     _ShadowColor ("Drop Shadow Color", Color) = (0,0,0,0)
     _ShadowOffset ("Drop Shadow Offset (UV)", Vector) = (0,0,0,0)
 
+    _MaskTex ("Mask Layers", 2D) = "white" {}
+    _MaskEnabled ("Mask Enabled", Float) = 0.0
+    _MaskLuminance ("Mask Reads Luminance", Int) = 0
+
+    _ClipKind ("Clip Path Kind", Int) = 0
+    _ClipRegion ("Clip Region (w, h, left, bottom)", Vector) = (0,0,0,0)
+    _ClipBox ("Clip Inset Box (minX, minY, maxX, maxY)", Vector) = (0,0,0,0)
+    _ClipRadiiX ("Clip Corner Radii X", Vector) = (0,0,0,0)
+    _ClipRadiiY ("Clip Corner Radii Y", Vector) = (0,0,0,0)
+    _ClipCircle ("Clip Circle (cx, cy, rx, ry)", Vector) = (0,0,0,0)
+    _ClipPolyCount ("Clip Polygon Ring Length", Int) = 0
+    _ClipEvenOdd ("Clip Uses Even-Odd", Int) = 0
+
     [Enum(UnityEngine.Rendering.CompareFunction)] _StencilComp("Stencil Comparison", Float) = 8
     _Stencil("Stencil ID", Float) = 0
     [Enum(UnityEngine.Rendering.StencilOp)] _StencilOp("Stencil Operation", Float) = 0

@@ -1,0 +1,95 @@
+---
+title: Clip Path
+---
+
+Clips an element and everything inside it to a shape. Check out the [MDN](https://developer.mozilla.org/en-US/docs/Web/CSS/clip-path) for how to use.
+
+The shape applies to the element as one image, so children, text, borders and background are all cut by the same edge -- and, unlike [`mask-image`](/reference/css/mask-image), so are pointer events: a click that lands outside the shape passes through to whatever is behind it, because a clip changes the element's shape rather than painting over it.
+
+<Sandpack>
+
+```js
+const shapes = [
+  'circle(45%)',
+  'ellipse(45% 30%)',
+  'inset(10% 20% round 24px)',
+  'polygon(50% 0%, 100% 38%, 82% 100%, 18% 100%, 0% 38%)',
+  'none',
+];
+
+export default function App() {
+  const [index, setIndex] = React.useState(0);
+  const clipPath = shapes[index];
+
+  return <>
+    <button onClick={() => setIndex(x => (x + 1) % shapes.length)}>
+      clip-path: {clipPath}
+    </button>
+
+    <view className="stage" style={{ clipPath }} />
+  </>;
+}
+```
+
+```css active
+.stage {
+  width: 300px;
+  height: 200px;
+  margin-top: 16px;
+
+  background-image: linear-gradient(135deg, gold, crimson);
+  clip-path: circle(45%);
+}
+```
+
+</Sandpack>
+
+## Values {/*values*/}
+
+Four basic shapes are supported, all measured against the element's border box.
+
+### `inset()` {/*inset*/}
+
+```css
+clip-path: inset(10px);
+clip-path: inset(10px 20px);
+clip-path: inset(10% 20% 30% 40%);
+clip-path: inset(0 round 24px);
+clip-path: inset(0 round 40px 10px / 20px 5px);
+```
+
+One to four lengths or percentages in, from the top, right, bottom and left edges -- the same shorthand as `padding`. An optional `round` takes the whole [`border-radius`](/reference/css/border-radius) grammar, including the `/` that splits the horizontal radii from the vertical ones. Radii that together overflow a side are scaled down as a set, so `inset(0 round 100%)` is a stadium rather than four overlapping quarter-ellipses.
+
+### `circle()` and `ellipse()` {/*circle*/}
+
+```css
+clip-path: circle(50px);
+clip-path: circle(40% at 25% 75%);
+clip-path: circle(farthest-side at left top);
+clip-path: ellipse(50px 30% at center);
+```
+
+A radius per axis (one for a circle, two for an ellipse), optionally followed by `at` and a position in the [`background-position`](/reference/css/background-image) grammar. The radius may also be `closest-side` or `farthest-side`, which measure to the nearest or furthest edge from the centre -- of all four sides for a `circle()`, which has a single radius, and per axis for an `ellipse()`. `closest-side` is the default.
+
+A percentage radius on a `circle()` resolves against the box's diagonal rather than either side, which is what keeps the shape round on a rectangle.
+
+### `polygon()` {/*polygon*/}
+
+```css
+clip-path: polygon(50% 0%, 100% 100%, 0% 100%);
+clip-path: polygon(evenodd, 0 0, 100% 0, 100% 100%, 0 100%);
+```
+
+Three or more comma-separated vertices, each an `x y` pair of lengths or percentages from the box's top-left. An optional `nonzero` (the default) or `evenodd` fill rule may come first; the two differ only where the outline crosses itself.
+
+Up to 16 points are used. A longer list is cut to that rather than refused, on the grounds that a shape missing its last few vertices is closer to what was asked for than no clip at all.
+
+## Notes {/*notes*/}
+
+- A geometry box keyword -- `border-box`, `padding-box`, `content-box`, and the rest -- parses and is ignored. Everything is measured against the border box.
+- Lengths and percentages are kept as written and resolved against the box each frame, so a percentage shape follows the element as it resizes, and `calc()` works inside one.
+- Two shapes of the same kind interpolate, so a shape can be animated or transitioned. Different kinds, a change of extent keyword, and a change of vertex count are all discrete, exactly as in CSS.
+- The edge is antialiased over a single device pixel, so a diagonal or a curve comes out smooth rather than stepped.
+- Clipping happens after [`filter`](/reference/css/filter) and before [`opacity`](/reference/css/opacity), which is the order CSS composites them in: a `drop-shadow()` is clipped along with the element that cast it.
+- Clipping puts the element through the same offscreen capture [`filter`](/reference/css/filter) and [`mix-blend-mode`](/reference/css/mix-blend-mode) use, so it also creates a stacking context the way [`isolation: isolate`](/reference/css/isolation) does.
+- `clip-path: none` is the initial value and costs nothing -- the capture is torn down and the element goes back to drawing in place.

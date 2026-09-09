@@ -14,7 +14,9 @@ import {
   FontStyles,
   FontVariant,
   FontWeight,
+  ImageRendering,
   Isolation,
+  MaskMode,
   MixBlendMode,
   NavigationMode,
   ObjectFit,
@@ -63,6 +65,7 @@ export interface RenderStyle {
   maskSize?: BackgroundSize | YogaValue2Aux;
   maskRepeatX?: YogaValueAux;
   maskRepeatY?: YogaValueAux;
+  maskMode?: MaskMode;
 
   outlineColor?: ColorAux;
   outlineStyle?: BorderStyle;
@@ -91,6 +94,7 @@ export interface RenderStyle {
   borderImageWidth?: YogaValueAux;
 
   boxShadow?: SafeString;
+  clipPath?: SafeString;
   filter?: SafeString;
   mixBlendMode?: MixBlendMode;
   isolation?: Isolation;
@@ -108,6 +112,7 @@ export interface RenderStyle {
 
   // Inherited styles
   color?: ColorAux;
+  imageRendering?: ImageRendering;
   fontFamily?: AssetReference;
   fontWeight?: FontWeight;
   fontStyle?: FontStyles;
@@ -179,6 +184,7 @@ export interface RenderStyle {
   mask?: SafeString;
   maskPosition?: SafeString;
   maskRepeat?: SafeString;
+  maskType?: MaskMode;
   padding?: SafeString | number;
   inset?: SafeString | number;
   flex?: SafeString;

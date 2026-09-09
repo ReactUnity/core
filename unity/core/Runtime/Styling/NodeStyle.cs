@@ -113,6 +113,10 @@ namespace ReactUnity.Styling
         public ICssValueList<BackgroundSize> maskSize => GetStyleValue(StyleProperties.maskSize);
         public ICssValueList<BackgroundRepeat> maskRepeatX => GetStyleValue(StyleProperties.maskRepeatX);
         public ICssValueList<BackgroundRepeat> maskRepeatY => GetStyleValue(StyleProperties.maskRepeatY);
+        public ICssValueList<MaskMode> maskMode => GetStyleValue(StyleProperties.maskMode);
+
+        public ClipPath clipPath => GetStyleValue(StyleProperties.clipPath);
+        public ImageRendering imageRendering => GetStyleValue(StyleProperties.imageRendering);
 
         public FilterDefinition filter => GetStyleValue(StyleProperties.filter);
         public FilterDefinition backdropFilter => GetStyleValue(StyleProperties.backdropFilter);

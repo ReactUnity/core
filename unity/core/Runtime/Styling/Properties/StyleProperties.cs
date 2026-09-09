@@ -129,6 +129,12 @@ namespace ReactUnity.Styling
         public static readonly ValueListStyleProperty<BackgroundSize> maskSize = new ValueListStyleProperty<BackgroundSize>("maskSize", BackgroundSize.Auto);
         public static readonly ValueListStyleProperty<BackgroundRepeat> maskRepeatX = new ValueListStyleProperty<BackgroundRepeat>("maskRepeatX", BackgroundRepeat.Repeat);
         public static readonly ValueListStyleProperty<BackgroundRepeat> maskRepeatY = new ValueListStyleProperty<BackgroundRepeat>("maskRepeatY", BackgroundRepeat.Repeat);
+        // A list to match the CSS grammar, but the composite reads one mode for the whole mask -- the
+        // layers are already flattened into a single texture by the time it samples them.
+        public static readonly ValueListStyleProperty<MaskMode> maskMode = new ValueListStyleProperty<MaskMode>("maskMode", MaskMode.MatchSource);
+
+        public static readonly StyleProperty<ClipPath> clipPath = new StyleProperty<ClipPath>("clipPath", ClipPath.None, true, false, AllConverters.ClipPathConverter);
+        public static readonly StyleProperty<ImageRendering> imageRendering = new StyleProperty<ImageRendering>("imageRendering", ImageRendering.Auto, false, true);
 
         public static readonly StyleProperty<FilterDefinition> filter = new StyleProperty<FilterDefinition>("filter");
         public static readonly StyleProperty<FilterDefinition> backdropFilter = new StyleProperty<FilterDefinition>("backdropFilter");
@@ -258,6 +264,10 @@ namespace ReactUnity.Styling
             { "maskSize", maskSize },
             { "maskRepeatX", maskRepeatX },
             { "maskRepeatY", maskRepeatY },
+            { "maskMode", maskMode },
+
+            { "clipPath", clipPath },
+            { "imageRendering", imageRendering },
 
             { "filter", filter },
             { "backdropFilter", backdropFilter },
@@ -358,6 +368,12 @@ namespace ReactUnity.Styling
             { "mask-size", maskSize },
             { "mask-repeat-x", maskRepeatX },
             { "mask-repeat-y", maskRepeatY },
+            { "mask-mode", maskMode },
+            // `mask-type` is the same choice made on the mask itself rather than on its user, which
+            // is a distinction only an SVG `<mask>` element can draw.
+            { "mask-type", maskMode },
+            { "clip-path", clipPath },
+            { "image-rendering", imageRendering },
             { "backdrop-filter", backdropFilter },
             { "mix-blend-mode", mixBlendMode },
             { "border-top-left-radius", borderTopLeftRadius },

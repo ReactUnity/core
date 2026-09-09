@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
+using Yoga;
 using ReactUnity.Types;
+using ReactUnity.UGUI.Shapes;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -42,6 +44,22 @@ namespace ReactUnity.UGUI.Internal
         static readonly int ShadowColorId = Shader.PropertyToID("_ShadowColor");
         static readonly int ShadowOffsetId = Shader.PropertyToID("_ShadowOffset");
         static readonly int BlendModeId = Shader.PropertyToID("_BlendMode");
+        static readonly int MaskTexId = Shader.PropertyToID("_MaskTex");
+        static readonly int MaskEnabledId = Shader.PropertyToID("_MaskEnabled");
+        static readonly int MaskLuminanceId = Shader.PropertyToID("_MaskLuminance");
+        static readonly int ClipKindId = Shader.PropertyToID("_ClipKind");
+        static readonly int ClipRegionId = Shader.PropertyToID("_ClipRegion");
+        static readonly int ClipBoxId = Shader.PropertyToID("_ClipBox");
+        static readonly int ClipRadiiXId = Shader.PropertyToID("_ClipRadiiX");
+        static readonly int ClipRadiiYId = Shader.PropertyToID("_ClipRadiiY");
+        static readonly int ClipCircleId = Shader.PropertyToID("_ClipCircle");
+        static readonly int ClipPolyId = Shader.PropertyToID("_ClipPoly");
+        static readonly int ClipPolyCountId = Shader.PropertyToID("_ClipPolyCount");
+        static readonly int ClipEvenOddId = Shader.PropertyToID("_ClipEvenOdd");
+
+        // Two ring points per float4, matching RU_CLIP_POLY_SLOTS in ClipShapes.cginc. The array is
+        // always sent full: a uniform array's length is fixed by the first SetVectorArray call.
+        const int ClipPolySlots = 9;
 
         // The exact support of the iterated kernel, so no blur can ever be clipped and none is
         // over-allocated for: one pass reaches 4 taps at quarter spacing, so +/- its own radius,
@@ -71,10 +89,22 @@ namespace ReactUnity.UGUI.Internal
         private RenderTexture scratch;
         private RenderTexture shadow;
 
+        // The mask's own surface, in a slot of its own so the two cameras cannot see each other's
+        // subtree. Built only once something asks for a mask.
+        private Canvas maskCanvas;
+        private Camera maskCamera;
+        private RectTransform maskRegion;
+        private RectTransform maskBox;
+        private RenderTexture maskTarget;
+        private int maskSlot = -1;
+        private readonly List<WebBackgroundImage> maskLayers = new List<WebBackgroundImage>();
+        private bool maskLuminance;
+
         private RawImage composite;
         private Material compositeMaterial;
         private bool compositeBlends;
         private Material blurMaterial;
+        private ClipPathRaycastFilter clipFilter;
 
         private FilterDefinition definition;
         public FilterDefinition Definition
@@ -108,7 +138,25 @@ namespace ReactUnity.UGUI.Internal
             }
         }
 
+        private ClipPath clipShape = ClipPath.None;
+        public ClipPath ClipShape
+        {
+            get => clipShape;
+            set
+            {
+                var next = value ?? ClipPath.None;
+                if (Equals(clipShape, next)) return;
+                clipShape = next;
+                uniformsDirty = true;
+                if (clipFilter) clipFilter.Shape = next;
+            }
+        }
+
+        /// <summary>Whether anything here needs the offscreen pass to keep running.</summary>
+        public bool HasMask => maskLayers.Count > 0;
+
         private readonly List<Graphic> graphics = new List<Graphic>();
+        private readonly List<Graphic> maskGraphics = new List<Graphic>();
         private readonly List<Graphic> registered = new List<Graphic>();
         private UnityEngine.Events.UnityAction markDirty;
         private FilterDefinition lastRendered;
@@ -118,17 +166,20 @@ namespace ReactUnity.UGUI.Internal
         private Vector4 shadowOffsetUv;
         private float texelsPerUnitY = 1f;
         private float uvPerUnitX;
+        private Vector4 clipRegion;
+        private readonly Vector4[] clipPolyBuffer = new Vector4[ClipPolySlots];
 
         /// <summary>How many offscreen renders this filter has done. For tests.</summary>
         public int RenderCount { get; private set; }
 
-        public static ElementFilter Create(UGUIComponent cmp, FilterDefinition definition, BackgroundBlendMode blendMode, bool isolated)
+        public static ElementFilter Create(UGUIComponent cmp, FilterDefinition definition, BackgroundBlendMode blendMode, bool isolated, ClipPath clipShape)
         {
             var filter = cmp.GameObject.AddComponent<ElementFilter>();
             filter.component = cmp;
             filter.definition = definition;
             filter.blendMode = blendMode;
             filter.isolated = isolated;
+            filter.clipShape = clipShape ?? ClipPath.None;
             filter.Attach();
             return filter;
         }
@@ -150,6 +201,11 @@ namespace ReactUnity.UGUI.Internal
             var compRect = compGo.transform as RectTransform;
             compRect.SetParent(originalParent, false);
             compRect.SetSiblingIndex(originalIndex);
+
+            // A `clip-path` changes the element's shape, so it has to keep pointers out of what it
+            // cut away as well as pixels. Hung off the composite, where Graphic.Raycast starts.
+            clipFilter = compGo.AddComponent<ClipPathRaycastFilter>();
+            clipFilter.Shape = clipShape;
 
             EnsureCompositeMaterial();
             blurMaterial = new Material(Resources.Load<Shader>("ReactUnity/shaders/FilterBlur"));
@@ -211,6 +267,185 @@ namespace ReactUnity.UGUI.Internal
             group.ignoreParentGroups = isolated;
         }
 
+        #region Mask
+
+        /// <summary>
+        /// The <c>mask-image</c> layers, taking the same values <c>background-image</c> does. They are
+        /// drawn to a texture of their own that the composite multiplies into its alpha.
+        /// </summary>
+        /// <remarks>
+        /// This is what a mask costs to have soft edges. A UGUI <see cref="UnityEngine.UI.Mask"/> is
+        /// a stencil, and a stencil bit is either set or not -- so under one, the fade every
+        /// `linear-gradient` mask is written for came out as a hard edge at the alpha clip
+        /// threshold, or as nothing at all.
+        /// </remarks>
+        public void SetMask(
+            ICssValueList<ImageDefinition> images,
+            ICssValueList<YogaValue> positionsX,
+            ICssValueList<YogaValue> positionsY,
+            ICssValueList<BackgroundSize> sizes,
+            ICssValueList<BackgroundRepeat> repeatXs,
+            ICssValueList<BackgroundRepeat> repeatYs,
+            MaskMode mode
+        )
+        {
+            var count = images?.Count ?? 0;
+            var luminance = mode == MaskMode.Luminance;
+
+            if (luminance != maskLuminance)
+            {
+                maskLuminance = luminance;
+                uniformsDirty = true;
+            }
+
+            if (count == 0)
+            {
+                if (maskLayers.Count > 0) ClearMask();
+                return;
+            }
+
+            EnsureMaskSurface();
+
+            while (maskLayers.Count > count) DestroyLastMaskLayer();
+            while (maskLayers.Count < count) CreateMaskLayer();
+
+            var rendering = component.ComputedStyle.imageRendering;
+            var pixelated = rendering == ImageRendering.Pixelated || rendering == ImageRendering.CrispEdges;
+
+            var len = maskLayers.Count;
+            for (int i = 0; i < len; i++)
+            {
+                // CSS declares the topmost layer first, and the last child drawn is the one on top.
+                var layer = maskLayers[len - 1 - i];
+                layer.Pixelated = pixelated;
+                layer.SetBackgroundColorAndImage(Color.white, images.Get(i));
+                layer.BackgroundRepeatX = repeatXs.Get(i);
+                layer.BackgroundRepeatY = repeatYs.Get(i);
+                layer.BackgroundPosition = new YogaValue2(positionsX.Get(i), positionsY.Get(i));
+                layer.BackgroundSize = sizes.Get(i);
+            }
+        }
+
+        void EnsureMaskSurface()
+        {
+            if (maskCanvas) return;
+
+            var ctx = component.Context;
+
+            var canvasGo = ctx.CreateNativeObject("[FilterMaskSurface]", typeof(RectTransform), typeof(Canvas));
+            maskCanvas = canvasGo.GetComponent<Canvas>();
+            maskCanvas.renderMode = RenderMode.WorldSpace;
+
+            var camGo = ctx.CreateNativeObject("[FilterMaskCamera]", typeof(Camera));
+            maskCamera = camGo.GetComponent<Camera>();
+            maskCamera.orthographic = true;
+            maskCamera.clearFlags = CameraClearFlags.SolidColor;
+            // Transparent black, so whatever no layer covers is what the mask hides -- which is the
+            // mask painting area falling outside the border box, exactly as on the web.
+            maskCamera.backgroundColor = Color.clear;
+            maskCamera.cullingMask = 1 << canvasGo.layer;
+            maskCamera.enabled = false;
+            maskCamera.nearClipPlane = 0.01f;
+            maskCamera.farClipPlane = 1000f;
+            camGo.transform.SetParent(canvasGo.transform, false);
+            camGo.transform.localPosition = new Vector3(0, 0, -100);
+            maskCanvas.worldCamera = maskCamera;
+
+            canvasGo.transform.SetParent(ctx.FilterRoot, false);
+
+            // Its own slot: every camera here shares a culling mask, so two surfaces at one spot
+            // would each capture the other.
+            maskSlot = freeSlots.Count > 0 ? freeSlots.Pop() : nextSlot++;
+            canvasGo.transform.position = new Vector3(0, 0, SlotBase + maskSlot * SlotStride);
+
+            // The region is the whole capture, the box only the element -- so the mask's uv lines up
+            // with the composite's while the layers themselves never see the filter region.
+            maskRegion = Centred(ctx, "[MaskRegion]", canvasGo.transform);
+            maskBox = Centred(ctx, "[MaskBox]", maskRegion);
+        }
+
+        static RectTransform Centred(UGUIContext ctx, string name, Transform parent)
+        {
+            var rt = ctx.CreateNativeObject(name, typeof(RectTransform)).transform as RectTransform;
+            rt.SetParent(parent, false);
+            rt.anchorMin = rt.anchorMax = rt.pivot = new Vector2(0.5f, 0.5f);
+            rt.anchoredPosition = Vector2.zero;
+            return rt;
+        }
+
+        void CreateMaskLayer()
+        {
+            var go = component.Context.CreateNativeObject("[MaskLayer]", typeof(RectTransform), typeof(WebBackgroundImage));
+            var layer = go.GetComponent<WebBackgroundImage>();
+            layer.Context = component.Context;
+            layer.color = Color.clear;
+            layer.raycastTarget = false;
+
+            var rt = go.transform as RectTransform;
+            rt.SetParent(maskBox, false);
+            rt.anchorMin = Vector2.zero;
+            rt.anchorMax = Vector2.one;
+            rt.pivot = new Vector2(0.5f, 0.5f);
+            rt.sizeDelta = Vector2.zero;
+            rt.anchoredPosition = Vector2.zero;
+
+            maskLayers.Add(layer);
+            dirty = true;
+        }
+
+        void DestroyLastMaskLayer()
+        {
+            var i = maskLayers.Count - 1;
+            var layer = maskLayers[i];
+            maskLayers.RemoveAt(i);
+            if (layer) DestroyImmediate(layer.gameObject);
+            dirty = true;
+        }
+
+        void ClearMask()
+        {
+            while (maskLayers.Count > 0) DestroyLastMaskLayer();
+
+            if (maskCanvas) Destroy(maskCanvas.gameObject);
+            maskCanvas = null;
+            maskCamera = null;
+            maskRegion = null;
+            maskBox = null;
+            Release(ref maskTarget);
+
+            if (maskSlot >= 0)
+            {
+                freeSlots.Push(maskSlot);
+                maskSlot = -1;
+            }
+
+            uniformsDirty = true;
+        }
+
+        /// <summary>Draws the layers over the same region the capture covers, at the same resolution.</summary>
+        void RenderMask(int pxWidth, int pxHeight, float width, float height, Vector4 margins)
+        {
+            if (!maskCanvas || maskLayers.Count == 0) return;
+
+            if (!maskTarget || maskTarget.width != pxWidth || maskTarget.height != pxHeight)
+            {
+                Release(ref maskTarget);
+                maskTarget = Allocate(pxWidth, pxHeight, 24);
+            }
+
+            maskRegion.sizeDelta = new Vector2(width, height);
+            maskBox.sizeDelta = self.rect.size;
+            // The box sits off the region's centre by however lopsided the filter region is.
+            maskBox.anchoredPosition = new Vector2((margins.x - margins.y) * 0.5f, (margins.z - margins.w) * 0.5f);
+
+            maskCamera.orthographicSize = height / 2f;
+            maskCamera.aspect = (float) pxWidth / pxHeight;
+            maskCamera.targetTexture = maskTarget;
+            maskCamera.Render();
+        }
+
+        #endregion
+
         /// <summary>
         /// Puts the subtree back where it was and removes the filter. Use this rather than
         /// destroying the component -- OnDestroy also runs while the whole GameObject is going
@@ -239,13 +474,23 @@ namespace ReactUnity.UGUI.Internal
                 slot = -1;
             }
 
+            if (maskSlot >= 0)
+            {
+                freeSlots.Push(maskSlot);
+                maskSlot = -1;
+            }
+
+            maskLayers.Clear();
+
             if (composite) Destroy(composite.gameObject);
             if (offscreenCanvas) Destroy(offscreenCanvas.gameObject);
+            if (maskCanvas) Destroy(maskCanvas.gameObject);
             if (compositeMaterial) Destroy(compositeMaterial);
             if (blurMaterial) Destroy(blurMaterial);
             Release(ref target);
             Release(ref scratch);
             Release(ref shadow);
+            Release(ref maskTarget);
         }
 
         static void Release(ref RenderTexture rt)
@@ -321,6 +566,15 @@ namespace ReactUnity.UGUI.Internal
             // the canvas re-batches without any graphic going dirty.
             graphics.Clear();
             self.GetComponentsInChildren(true, graphics);
+
+            // The mask layers hang off their own surface rather than the subtree, so they have to be
+            // appended by hand -- through a second list, since the List overload clears what it is
+            // given. From here on they are watched exactly like everything else.
+            if (maskBox)
+            {
+                maskBox.GetComponentsInChildren(true, maskGraphics);
+                graphics.AddRange(maskGraphics);
+            }
 
             if (graphics.Count != registered.Count) Reregister();
             else
@@ -473,7 +727,9 @@ namespace ReactUnity.UGUI.Internal
                 else Graphics.Blit(target, shadow);
             }
 
-            ApplyToComposite(target, new Vector4(mLeft, mRight, mBottom, mTop), width, height);
+            var margins = new Vector4(mLeft, mRight, mBottom, mTop);
+            RenderMask(pxWidth, pxHeight, width, height, margins);
+            ApplyToComposite(target, margins, width, height);
         }
 
         /// <summary>
@@ -563,6 +819,14 @@ namespace ReactUnity.UGUI.Internal
             // moves without changing the capture still converts against the frame it is drawn in.
             texelsPerUnitY = height > 0 ? source.height / height : 1f;
             uvPerUnitX = width > 0 ? 1f / width : 0f;
+
+            // How the shader gets from the capture's uv back to the element's own box, which is the
+            // space `clip-path` was resolved in.
+            clipRegion = new Vector4(width, height, mLeft, mBottom);
+
+            // And how the raycast filter gets there, which is the same trip in points.
+            clipFilter.BoxSize = rect.size;
+            clipFilter.BoxOffset = new Vector2(mLeft, mBottom);
         }
 
         /// <summary>Writes the whole filter chain onto one material. Called for the composite's own
@@ -596,6 +860,72 @@ namespace ReactUnity.UGUI.Internal
                 m.SetVector(ShadowOffsetId, shadowOffsetUv);
             }
             else m.SetColor(ShadowColorId, Color.clear);
+
+            var hasMask = maskTarget && maskLayers.Count > 0;
+            m.SetFloat(MaskEnabledId, hasMask ? 1f : 0f);
+            m.SetInt(MaskLuminanceId, maskLuminance ? 1 : 0);
+            if (hasMask) m.SetTexture(MaskTexId, maskTarget);
+
+            SetClipUniforms(m);
+        }
+
+        /// <summary>
+        /// The resolved shape, in the element box's own points. Kind 0 is written whenever there is
+        /// nothing to clip, which the shader takes as its identity -- an element that only isolated
+        /// or only blends has to come back out of the capture as the pixels that went in.
+        /// </summary>
+        void SetClipUniforms(Material m)
+        {
+            var shape = clipShape ?? ClipPath.None;
+
+            if (shape.Kind == ClipPathKind.None)
+            {
+                m.SetInt(ClipKindId, 0);
+                return;
+            }
+
+            var resolved = shape.Resolve(self.rect.size);
+
+            // A polygon with too few points to enclose anything resolves to no ring, and clipping
+            // an element away entirely is not what a malformed shape should do.
+            if (resolved.Kind == ClipPathKind.Polygon && resolved.Ring == null)
+            {
+                m.SetInt(ClipKindId, 0);
+                return;
+            }
+
+            m.SetInt(ClipKindId, (int) resolved.Kind);
+            m.SetVector(ClipRegionId, clipRegion);
+
+            switch (resolved.Kind)
+            {
+                case ClipPathKind.Inset:
+                    m.SetVector(ClipBoxId, new Vector4(resolved.Box.xMin, resolved.Box.yMin, resolved.Box.xMax, resolved.Box.yMax));
+                    m.SetVector(ClipRadiiXId, resolved.RadiiX);
+                    m.SetVector(ClipRadiiYId, resolved.RadiiY);
+                    break;
+
+                case ClipPathKind.Circle:
+                case ClipPathKind.Ellipse:
+                    m.SetVector(ClipCircleId, new Vector4(resolved.Center.x, resolved.Center.y, resolved.Radius.x, resolved.Radius.y));
+                    break;
+
+                default:
+                {
+                    var ring = resolved.Ring;
+                    for (int i = 0; i < clipPolyBuffer.Length; i++)
+                    {
+                        var a = 2 * i < ring.Length ? ring[2 * i] : Vector2.zero;
+                        var b = 2 * i + 1 < ring.Length ? ring[2 * i + 1] : Vector2.zero;
+                        clipPolyBuffer[i] = new Vector4(a.x, a.y, b.x, b.y);
+                    }
+
+                    m.SetVectorArray(ClipPolyId, clipPolyBuffer);
+                    m.SetInt(ClipPolyCountId, ring.Length);
+                    m.SetInt(ClipEvenOddId, resolved.EvenOdd ? 1 : 0);
+                    break;
+                }
+            }
         }
     }
 }

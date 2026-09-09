@@ -54,7 +54,25 @@ namespace ReactUnity.UGUI
 
             Replaced.Graphic.color = style.color;
 
+            SetImageRendering(style.imageRendering);
+
             Replaced.Graphic.raycastTarget = style.pointerEvents != Types.PointerEvents.None;
+        }
+
+        /// <summary>
+        /// Swaps in the nearest-neighbour material for the sharpening keywords. A vector graphic is
+        /// left alone -- it has no texels to snap to, and its own material is what draws it.
+        /// </summary>
+        void SetImageRendering(Types.ImageRendering mode)
+        {
+            var graphic = Replaced.Graphic;
+            if (!(graphic is Image || graphic is RawImage)) return;
+
+            var pixelated = mode == Types.ImageRendering.Pixelated || mode == Types.ImageRendering.CrispEdges;
+
+            // The setter already ignores a repeat, and the getter would answer with the default
+            // material rather than the null that was set, so compare nothing here.
+            graphic.material = pixelated ? Helpers.ResourcesHelper.PixelatedImageMaterial : null;
         }
 
         public override bool Pool()

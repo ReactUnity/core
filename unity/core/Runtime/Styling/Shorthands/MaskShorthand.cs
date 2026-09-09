@@ -9,6 +9,7 @@ namespace ReactUnity.Styling.Shorthands
     internal class MaskShorthand : StyleShorthand
     {
         private static StyleConverterBase RepeatConverter = AllConverters.Get<BackgroundRepeat>();
+        private static StyleConverterBase ModeConverter = AllConverters.Get<MaskMode>();
 
         public override List<IStyleProperty> ModifiedProperties { get; } = new List<IStyleProperty>
         {
@@ -18,6 +19,7 @@ namespace ReactUnity.Styling.Shorthands
             StyleProperties.maskSize,
             StyleProperties.maskRepeatX,
             StyleProperties.maskRepeatY,
+            StyleProperties.maskMode,
         };
 
         public MaskShorthand(string name) : base(name) { }
@@ -33,6 +35,7 @@ namespace ReactUnity.Styling.Shorthands
             var sizes = new IComputedValue[count];
             var repeatXs = new IComputedValue[count];
             var repeatYs = new IComputedValue[count];
+            var modes = new IComputedValue[count];
 
             for (int ci = 0; ci < count; ci++)
             {
@@ -55,6 +58,7 @@ namespace ReactUnity.Styling.Shorthands
 
                 var repeatXSet = false;
                 var repeatYSet = false;
+                var modeSet = false;
 
                 var canSetSize = -1;
 
@@ -68,6 +72,17 @@ namespace ReactUnity.Styling.Shorthands
                         {
                             images[ci] = v;
                             imageSet = true;
+                            continue;
+                        }
+                    }
+
+                    // Ahead of the position, whose keywords are the edge names and cannot collide.
+                    if (!modeSet)
+                    {
+                        if (ModeConverter.TryParse(split, out var v))
+                        {
+                            modes[ci] = v;
+                            modeSet = true;
                             continue;
                         }
                     }
@@ -209,6 +224,7 @@ namespace ReactUnity.Styling.Shorthands
             collection[StyleProperties.maskSize] = StyleProperties.maskSize.Converter.FromList(sizes);
             collection[StyleProperties.maskRepeatX] = StyleProperties.maskRepeatX.Converter.FromList(repeatXs);
             collection[StyleProperties.maskRepeatY] = StyleProperties.maskRepeatY.Converter.FromList(repeatYs);
+            collection[StyleProperties.maskMode] = StyleProperties.maskMode.Converter.FromList(modes);
 
             return ModifiedProperties;
         }

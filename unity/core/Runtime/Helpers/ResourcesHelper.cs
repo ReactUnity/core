@@ -42,6 +42,22 @@ namespace ReactUnity.Helpers
             return mat;
         }
 
+        private static Material pixelatedImageMaterial;
+
+        /// <summary>
+        /// The material behind <c>image-rendering: pixelated</c>. One instance serves every element
+        /// asking for it -- nothing about the element reaches the material, only the texture it is
+        /// handed per renderer.
+        /// </summary>
+        public static Material PixelatedImageMaterial
+        {
+            get
+            {
+                if (pixelatedImageMaterial) return pixelatedImageMaterial;
+                return pixelatedImageMaterial = new Material(Resources.Load<Shader>("ReactUnity/shaders/PixelatedImage"));
+            }
+        }
+
         private static Texture2D borderTexture;
         public static Texture2D BorderTexture => borderTexture = borderTexture ??
             Resources.Load<Texture2D>("ReactUnity/sprites/border");

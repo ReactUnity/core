@@ -1,0 +1,53 @@
+---
+title: Image Rendering
+---
+
+Chooses how an image is sampled when it is drawn at a size other than its own. Check out the [MDN](https://developer.mozilla.org/en-US/docs/Web/CSS/image-rendering) for how to use.
+
+The one thing this changes here is whether an upscaled image keeps its pixels. `pixelated` samples the nearest texel, so a 16x16 sprite drawn at 160x160 shows sixteen crisp squares per side instead of a bilinear smear -- which is what pixel art, tile sheets and low-resolution icons are drawn for.
+
+<Sandpack>
+
+```js
+export default function App() {
+  const [pixelated, setPixelated] = React.useState(true);
+
+  return <>
+    <button onClick={() => setPixelated(x => !x)}>
+      image-rendering: {pixelated ? 'pixelated' : 'auto'}
+    </button>
+
+    <image
+      className="sprite"
+      source="res:star"
+      style={{ imageRendering: pixelated ? 'pixelated' : 'auto' }}
+    />
+  </>;
+}
+```
+
+```css active
+.sprite {
+  width: 200px;
+  height: 200px;
+  margin-top: 16px;
+}
+```
+
+</Sandpack>
+
+## Values {/*values*/}
+
+- `auto` -- the default: the smooth, bilinear sampling everything else uses.
+- `smooth` and `high-quality` -- accepted, and the same as `auto`. There is no better filter to switch to.
+- `pixelated` -- nearest-neighbour. Each drawn pixel takes the colour of the texel it lands in.
+- `crisp-edges` -- the same as `pixelated`. CSS distinguishes the two by whether the aspect ratio must be preserved, which nothing here can act on.
+
+## Notes {/*notes*/}
+
+- The property is inherited, as it is on the web, so setting it on a container covers the images inside it.
+- It applies to [`<image>`](/reference/components/image) and `<rawimage>` elements, to [`background-image`](/reference/css/background-image) layers and to [`mask-image`](/reference/css/mask-image) layers.
+- It has no effect on a gradient. A gradient is generated at the size it is drawn at, so there are no texels to snap to.
+- It has no effect on an SVG either -- that is geometry rather than a raster, and its own material is what draws it.
+- A background layer with a [`background-blend-mode`](/reference/css/background-blend-mode) other than `normal` keeps the blending sampler, since a layer can only have one material.
+- The sampling is chosen per element rather than by changing the texture's import setting, so two elements can draw the same image at different settings, and nothing about the asset on disk changes.

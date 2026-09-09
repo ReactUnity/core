@@ -144,6 +144,10 @@
               "path": "/reference/css/box-shadow"
             },
             {
+              "title": "Clip Path",
+              "path": "/reference/css/clip-path"
+            },
+            {
               "title": "Color",
               "path": "/reference/css/color"
             },
@@ -162,6 +166,10 @@
             {
               "title": "Filter",
               "path": "/reference/css/filter"
+            },
+            {
+              "title": "Image Rendering",
+              "path": "/reference/css/image-rendering"
             },
             {
               "title": "Isolation",

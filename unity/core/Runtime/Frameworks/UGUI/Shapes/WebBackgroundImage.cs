@@ -26,6 +26,24 @@ namespace ReactUnity.UGUI.Shapes
 
         public ReactContext Context;
 
+        private bool pixelated;
+
+        /// <summary>
+        /// <c>image-rendering: pixelated</c> for this layer. A blending layer and a gradient both
+        /// bring a material of their own, so they keep it -- and a gradient is generated at the
+        /// size it is drawn at anyway, with nothing to snap to.
+        /// </summary>
+        public bool Pixelated
+        {
+            get => pixelated;
+            set
+            {
+                if (pixelated == value) return;
+                pixelated = value;
+                RefreshMaterial();
+            }
+        }
+
         [SerializeField]
         private BackgroundBlendMode BlendMode;
 
@@ -178,9 +196,12 @@ namespace ReactUnity.UGUI.Shapes
         /// </summary>
         private void RefreshMaterial()
         {
-            material = BlendMode == BackgroundBlendMode.Normal
-                ? definition?.DefaultMaterial
-                : ResourcesHelper.GetBackgroundBlendMaterial((int) BlendMode, BlendsWithStack);
+            var own = definition?.DefaultMaterial;
+
+            material = BlendMode != BackgroundBlendMode.Normal
+                ? ResourcesHelper.GetBackgroundBlendMaterial((int) BlendMode, BlendsWithStack)
+                : pixelated && own == null ? ResourcesHelper.PixelatedImageMaterial
+                : own;
             SetMaterialDirty();
         }
 

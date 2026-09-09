@@ -2,26 +2,67 @@
 title: Mask
 ---
 
-Sets the mask image of a component.
+Hides part of an element according to an image. Check out the [MDN](https://developer.mozilla.org/en-US/docs/Web/CSS/mask) for how to use.
 
-See [MDN](https://developer.mozilla.org/en-US/docs/Web/CSS/mask) for usage.
+The mask is a real coverage value rather than an on-or-off test, so a gradient fades the element instead of cutting it at a threshold -- which is what makes `linear-gradient(black, transparent)` the useful mask it is on the web.
 
 <Sandpack>
 
 ```js
+const masks = [
+  'linear-gradient(black, transparent)',
+  'linear-gradient(to right, transparent, black 30%, black 70%, transparent)',
+  'radial-gradient(circle at center, black 40%, transparent 70%)',
+  'none',
+];
+
 export default function App() {
+  const [index, setIndex] = React.useState(0);
+  const maskImage = masks[index];
+
   return <>
-    <view />
+    <button onClick={() => setIndex(x => (x + 1) % masks.length)}>
+      mask-image: {maskImage === 'none' ? 'none' : masks[index].split('(')[0] + '(…)'}
+    </button>
+
+    <view className="stage" style={{ maskImage }} />
   </>;
 }
 ```
 
 ```css active
-view {
-  flex-grow: 1;
-  mask-image: url(res:star);
-  background-color: red;
+.stage {
+  width: 300px;
+  height: 200px;
+  margin-top: 16px;
+
+  background-image: linear-gradient(135deg, gold, crimson);
+  mask-image: linear-gradient(black, transparent);
 }
 ```
 
 </Sandpack>
+
+## Values {/*values*/}
+
+`mask-image` takes the same values [`background-image`](/reference/css/background-image) does -- a `url()`, a gradient, or a comma-separated list of them -- and each layer is positioned, sized and repeated by the matching `mask-position`, `mask-size`, `mask-repeat` and their long-hand axis forms. The `mask` shorthand sets all of them at once, in the same grammar as `background`.
+
+Layers add: what any one of them covers is kept, which is CSS's default `mask-composite: add`. The other composite operators are not supported.
+
+### `mask-mode` {/*mask-mode*/}
+
+Which channel of the mask is read.
+
+- `match-source` -- the default, and here it always resolves to `alpha`. CSS makes it `luminance` only for an SVG `<mask>` element, which has no equivalent.
+- `alpha` -- the mask's own alpha is the coverage.
+- `luminance` -- the mask's brightness is the coverage, so white keeps and black hides.
+
+`mask-type` is accepted as a synonym. The two differ on the web only in which end of an SVG mask makes the decision.
+
+## Notes {/*notes*/}
+
+- Anything the layers do not cover is hidden, so a mask smaller than the element crops it -- the mask paints over transparent black.
+- Masking happens after [`filter`](/reference/css/filter) and before [`opacity`](/reference/css/opacity), the order CSS composites them in, so a `drop-shadow()` is masked along with the element that cast it.
+- A mask does not change where the element can be clicked. For that, use [`clip-path`](/reference/css/clip-path), which changes the element's shape rather than painting over it.
+- Masking puts the element through the same offscreen capture [`filter`](/reference/css/filter) and [`mix-blend-mode`](/reference/css/mix-blend-mode) use, so it also creates a stacking context the way [`isolation: isolate`](/reference/css/isolation) does.
+- [`image-rendering`](/reference/css/image-rendering) applies to a mask's raster layers as it does to a background's.

@@ -47,7 +47,11 @@ Shader "ReactUnity/BackdropFilter"
     ZTest[unity_GUIZTestMode]
     ColorMask[_ColorMask]
 
-    Blend SrcAlpha OneMinusSrcAlpha
+    // Separate alpha blending, the way UGUI's own default UI shader does it: `SrcAlpha` on the
+    // alpha channel would square a translucent draw's coverage in a render target that started
+    // transparent, which is what a mask layer and the filter capture both are. Nothing on screen
+    // changes -- the back buffer's alpha is never read.
+    Blend SrcAlpha OneMinusSrcAlpha, One OneMinusSrcAlpha
     ZWrite Off
 
     Tags {
