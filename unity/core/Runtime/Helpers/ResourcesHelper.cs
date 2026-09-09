@@ -38,10 +38,6 @@ namespace ReactUnity.Helpers
                 : "ReactUnity/shaders/BackgroundImageBlend");
             var mat = new Material(shader);
             mat.SetInt("_BlendMode", blendMode);
-            // A material built at runtime starts with no keywords, and the toggle property's
-            // default only reaches the keyword through the inspector -- so without this a layer
-            // inside a scroll viewport would ignore its clip rect.
-            mat.EnableKeyword("UNITY_UI_CLIP_RECT");
             backgroundBlendMaterials[key] = mat;
             return mat;
         }
