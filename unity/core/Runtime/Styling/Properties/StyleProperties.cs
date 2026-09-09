@@ -27,6 +27,9 @@ namespace ReactUnity.Styling
         public static readonly StyleProperty<string> containerName = new StyleProperty<string>("containerName", null, false, false, AllConverters.ContainerNameConverter);
         public static readonly StyleProperty<ColorScheme> colorScheme = new StyleProperty<ColorScheme>("colorScheme", ColorScheme.Normal, false, true, AllConverters.ColorSchemeConverter);
         public static readonly StyleProperty<ScrollbarGutter> scrollbarGutter = new StyleProperty<ScrollbarGutter>("scrollbarGutter", ScrollbarGutter.Auto, false, false, AllConverters.ScrollbarGutterConverter);
+        public static readonly StyleProperty<ScrollBehavior> scrollBehavior = new StyleProperty<ScrollBehavior>("scrollBehavior", ScrollBehavior.Auto);
+        public static readonly StyleProperty<ScrollSnapType> scrollSnapType = new StyleProperty<ScrollSnapType>("scrollSnapType", ScrollSnapType.None, false, false, AllConverters.ScrollSnapTypeConverter);
+        public static readonly StyleProperty<ScrollSnapAlign> scrollSnapAlign = new StyleProperty<ScrollSnapAlign>("scrollSnapAlign", ScrollSnapAlign.None, false, false, AllConverters.ScrollSnapAlignConverter);
         public static readonly StyleProperty<YogaValue2> borderTopLeftRadius = new StyleProperty<YogaValue2>("borderTopLeftRadius", YogaValue2.Zero, true, converter: AllConverters.BorderRadiusConverter);
         public static readonly StyleProperty<YogaValue2> borderTopRightRadius = new StyleProperty<YogaValue2>("borderTopRightRadius", YogaValue2.Zero, true, converter: AllConverters.BorderRadiusConverter);
         public static readonly StyleProperty<YogaValue2> borderBottomLeftRadius = new StyleProperty<YogaValue2>("borderBottomLeftRadius", YogaValue2.Zero, true, converter: AllConverters.BorderRadiusConverter);
@@ -189,6 +192,9 @@ namespace ReactUnity.Styling
             { "containerName", containerName },
             { "colorScheme", colorScheme },
             { "scrollbarGutter", scrollbarGutter },
+            { "scrollBehavior", scrollBehavior },
+            { "scrollSnapType", scrollSnapType },
+            { "scrollSnapAlign", scrollSnapAlign },
             { "borderTopLeftRadius", borderTopLeftRadius },
             { "borderTopRightRadius", borderTopRightRadius },
             { "borderBottomLeftRadius", borderBottomLeftRadius },
@@ -354,6 +360,9 @@ namespace ReactUnity.Styling
             { "container-name", containerName },
             { "color-scheme", colorScheme },
             { "scrollbar-gutter", scrollbarGutter },
+            { "scroll-behavior", scrollBehavior },
+            { "scroll-snap-type", scrollSnapType },
+            { "scroll-snap-align", scrollSnapAlign },
             { "background-color", backgroundColor },
             { "background-image", backgroundImage },
             { "background-position-x", backgroundPositionX },

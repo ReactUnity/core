@@ -1,0 +1,109 @@
+---
+title: Scroll Snap
+---
+
+Makes a scroll container come to rest on the items inside it rather than wherever the gesture left it. Check out the [MDN](https://developer.mozilla.org/en-US/docs/Web/CSS/scroll-snap-type) for how to use.
+
+Two properties do it together: `scroll-snap-type` on the scroll container says which axes snap, and `scroll-snap-align` on the items in it says where each one lines up.
+
+<Sandpack>
+
+```js
+const types = ['x mandatory', 'x proximity', 'none'];
+const aligns = ['center', 'start', 'end'];
+
+export default function App() {
+  const [type, setType] = React.useState(0);
+  const [align, setAlign] = React.useState(0);
+
+  return <>
+    <view className="controls">
+      <button onClick={() => setType(x => (x + 1) % types.length)}>
+        scroll-snap-type: {types[type]}
+      </button>
+      <button onClick={() => setAlign(x => (x + 1) % aligns.length)}>
+        scroll-snap-align: {aligns[align]}
+      </button>
+    </view>
+
+    <scroll className="strip" style={{ scrollSnapType: types[type] }}>
+      {['Aa', 'Bb', 'Cc', 'Dd', 'Ee', 'Ff', 'Gg'].map(card => (
+        <view key={card} className="card" style={{ scrollSnapAlign: aligns[align] }}>
+          {card}
+        </view>
+      ))}
+    </scroll>
+  </>;
+}
+```
+
+```css active
+.strip {
+  flex-direction: row;
+  overflow-y: hidden;
+  height: 160px;
+  padding: 16px;
+  border-radius: 12px;
+  background-color: #f1f5f9;
+
+  scroll-snap-type: x mandatory;
+}
+
+.card {
+  width: 140px;
+  height: 120px;
+  margin-right: 12px;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  border-radius: 16px;
+  background-image: linear-gradient(160deg, #6366f1, #0ea5e9);
+  color: white;
+  font-size: 28px;
+
+  scroll-snap-align: center;
+}
+
+.controls {
+  flex-direction: row;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+```
+
+</Sandpack>
+
+The snap is taken once the scroll settles, so nothing fights the gesture while it is happening -- and it is measured from where a fling would have landed rather than from where the pointer let go, so a flick chooses the item it was thrown at.
+
+## `scroll-snap-type` {/*scroll-snap-type*/}
+
+An axis, and optionally how strictly it snaps.
+
+- `none` (default) -- nothing snaps.
+- `x`, `y`, `both` -- the axes to snap on.
+- `block`, `inline` -- the same two axes by their logical names. There are no writing modes here, so `block` is always `y` and `inline` is always `x`.
+- `proximity` (the default when no strictness is given) -- snap only when the scroll comes to rest near a snap point.
+- `mandatory` -- always rest on a snap point, however far away the nearest one is.
+
+An axis is required: `scroll-snap-type: mandatory` names nothing to snap and is not a value.
+
+## `scroll-snap-align` {/*scroll-snap-align*/}
+
+Where an item lines up inside the scrollport, one alignment per axis.
+
+- `none` (default) -- the item is not a snap point.
+- `start` -- the item's start edge meets the scrollport's start edge.
+- `end` -- the item's end edge meets the scrollport's end edge.
+- `center` -- the item is centred in the scrollport.
+
+One value covers both axes. Two are block first, as every logical pair is, so `scroll-snap-align: start center` starts vertically and centres horizontally.
+
+Any descendant of the scroll container can be a snap point, not only a direct child -- except one inside a nested scroll container, which belongs to that one instead.
+
+## Notes {/*notes*/}
+
+- The scrollport is measured to the container's padding edge, so a `start` snap on the first item is the top of the travel rather than an offset that scrolls the padding away.
+- An item too far along to be reached snaps to the closest offset that shows it, which is how a `start`-aligned last item still counts as snapped at the end of the travel.
+- How near `proximity` has to be is left to the implementation by CSS; here it is half the scrollport.
+- A snap animates over the same duration a wheel scroll smooths over, or over [`scroll-behavior`](/reference/css/scroll-behavior)'s when that asks for `smooth`. A re-snap after a resize is instant, as CSS specifies.
+- `scroll-snap-stop`, `scroll-padding` and `scroll-margin` are not supported: the snap point is the item's border box, measured against the container's padding box.

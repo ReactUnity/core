@@ -204,6 +204,14 @@
               "path": "/reference/css/scale"
             },
             {
+              "title": "Scroll Behavior",
+              "path": "/reference/css/scroll-behavior"
+            },
+            {
+              "title": "Scroll Snap",
+              "path": "/reference/css/scroll-snap"
+            },
+            {
               "title": "Transform Origin",
               "path": "/reference/css/transform-origin"
             },

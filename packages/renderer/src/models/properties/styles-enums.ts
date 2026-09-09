@@ -86,6 +86,21 @@ export type ImageRendering = 'auto' | 'smooth' | 'high-quality' | 'crisp-edges' 
 // `mix-blend-mode` cannot reach the backdrop behind it.
 export type Isolation = 'auto' | 'isolate';
 
+// Whether a scroll the element is asked to make -- `scrollTop`, `scrollTo`, a snap -- animates
+// instead of jumping. A wheel or a drag has its own smoothing either way.
+export type ScrollBehavior = 'auto' | 'smooth';
+
+// There are no writing modes here, so `block` is the vertical axis and `inline` the horizontal one.
+export type ScrollSnapAxis = 'x' | 'y' | 'block' | 'inline' | 'both';
+
+// The strictness is optional and CSS defaults it to `proximity`; the axis is not optional.
+export type ScrollSnapType = 'none' | ScrollSnapAxis | `${ScrollSnapAxis} mandatory` | `${ScrollSnapAxis} proximity`;
+
+export type ScrollSnapAlignment = 'none' | 'start' | 'end' | 'center';
+
+// One alignment per axis, block first, or one covering both.
+export type ScrollSnapAlign = ScrollSnapAlignment | `${ScrollSnapAlignment} ${ScrollSnapAlignment}`;
+
 export type CursorType =
   | 'auto'
   | 'default'

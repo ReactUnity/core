@@ -1,0 +1,70 @@
+---
+title: Scroll Behavior
+---
+
+Animates the scrolls an element is *asked* to make, instead of jumping to them. Check out the [MDN](https://developer.mozilla.org/en-US/docs/Web/CSS/scroll-behavior) for how to use.
+
+An asked-for scroll is one that names a position: assigning `ScrollTop` or `ScrollLeft`, calling `ScrollTo` or `ScrollBy`, or landing a [snap](/reference/css/scroll-snap). A wheel or a drag is a gesture rather than a request, and keeps its own smoothing either way.
+
+<Sandpack>
+
+```js
+export default function App() {
+  const scroll = React.useRef();
+  const [smooth, setSmooth] = React.useState(true);
+
+  return <>
+    <view className="controls">
+      <button onClick={() => setSmooth(x => !x)}>
+        scroll-behavior: {smooth ? 'smooth' : 'auto'}
+      </button>
+      <button onClick={() => { scroll.current.ScrollTop = 0; }}>Top</button>
+      <button onClick={() => { scroll.current.ScrollTop = 1000; }}>Bottom</button>
+    </view>
+
+    <scroll ref={scroll} className="reader" style={{ scrollBehavior: smooth ? 'smooth' : 'auto' }}>
+      {Array.from({ length: 20 }, (_, i) => (
+        <view key={i} className="line">{i + 1}. Somewhere along the way</view>
+      ))}
+    </scroll>
+  </>;
+}
+```
+
+```css active
+.reader {
+  width: 300px;
+  height: 180px;
+  padding: 14px;
+  border-radius: 12px;
+  background-color: #f8fafc;
+
+  scroll-behavior: smooth;
+}
+
+.line {
+  margin-bottom: 10px;
+  flex-shrink: 0;
+  color: #475569;
+}
+
+.controls {
+  flex-direction: row;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+```
+
+</Sandpack>
+
+## Values {/*values*/}
+
+- `auto` (default) -- an asked-for scroll arrives at once.
+- `smooth` -- it is animated instead.
+
+## Notes {/*notes*/}
+
+- The property is read off the scroll container itself, not off whatever asks it to scroll, and it is not inherited.
+- `<scroll>`'s `smoothness` prop is the separate duration a wheel scroll is smoothed over, and it is what a snap animates over while `scroll-behavior` is `auto`.
+- Passing a duration explicitly -- `ScrollTo(0, 100, 0)` -- overrides both, which is how a scroll can be made to jump under `smooth`.
+- A new drag takes over from wherever a running animation reached, rather than finishing it first.

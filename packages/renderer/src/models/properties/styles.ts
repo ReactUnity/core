@@ -21,6 +21,9 @@ import {
   NavigationMode,
   ObjectFit,
   PointerEvents,
+  ScrollBehavior,
+  ScrollSnapAlign,
+  ScrollSnapType,
   TextAlign,
   TextOverflowModes,
   TextTransform,
@@ -47,6 +50,12 @@ export interface RenderStyle {
   content?: SafeString;
   appearance?: Appearance;
   navigation?: NavigationMode;
+
+  // `scroll-snap-type` and `scroll-behavior` describe a scroll container, `scroll-snap-align` one
+  // of the items in it.
+  scrollBehavior?: ScrollBehavior;
+  scrollSnapType?: ScrollSnapType;
+  scrollSnapAlign?: ScrollSnapAlign;
 
   // One value per background image layer, repeating to cover them all -- so a comma-separated
   // list is as valid here as a single keyword.

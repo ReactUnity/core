@@ -36,6 +36,8 @@ namespace ReactUnity.Styling.Converters
         static public StyleConverterBase ContainerTypeConverter = new ContainerTypeConverter();
         static public StyleConverterBase ColorSchemeConverter = new ColorSchemeConverter();
         static public StyleConverterBase ScrollbarGutterConverter = new ScrollbarGutterConverter();
+        static public StyleConverterBase ScrollSnapTypeConverter = new ScrollSnapType.Converter();
+        static public StyleConverterBase ScrollSnapAlignConverter = new ScrollSnapAlign.Converter();
         static public StyleConverterBase YogaValueConverter = new YogaValueConverter();
         static public StyleConverterBase YogaValue2Converter = new YogaValue2.Converter();
         static public StyleConverterBase BorderRadiusConverter = new YogaValue2.Converter(false, ' ', true);

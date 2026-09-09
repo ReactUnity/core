@@ -5,6 +5,7 @@ using ReactUnity.Styling;
 using ReactUnity.Styling.Converters;
 using ReactUnity.Types;
 using ReactUnity.UGUI.Behaviours;
+using ReactUnity.UGUI.Internal;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
@@ -71,6 +72,7 @@ namespace ReactUnity.UGUI
             content.sizeDelta = Vector2.zero;
             var resizer = ContentResizer = content.gameObject.AddComponent<ScrollContentResizer>();
             resizer.Layout = Layout;
+            resizer.Resized = OnContentResized;
 
             SetupContents();
 
@@ -81,6 +83,7 @@ namespace ReactUnity.UGUI
             ScrollRect.verticalScrollbarVisibility = ScrollbarVisibility.AutoHide;
             ScrollRect.elasticity = 0;
             ScrollRect.movementType = MovementType.Clamped;
+            ScrollRect.FindSnapTarget = FindSnapTarget;
         }
 
         private bool DirectionFromProp;
@@ -92,6 +95,7 @@ namespace ReactUnity.UGUI
         {
             base.ApplyStylesSelf();
             if (!DirectionFromProp) SetDirection(DirectionFromStyle());
+            RefreshScrolling();
         }
 
         protected override void ApplyLayoutStylesSelf()
@@ -150,6 +154,35 @@ namespace ReactUnity.UGUI
             if (padding.Unit == YogaUnit.Point) return YogaValue.Point(padding.Value + gutter);
             return YogaValue.Point(gutter);
         }
+
+        private ScrollSnapType snapType = ScrollSnapType.None;
+
+        // `scroll-behavior` and `scroll-snap-type` describe the scroll box, so they are pushed to it
+        // here; `scroll-snap-align` describes what it holds, and is read off the children as they snap.
+        private void RefreshScrolling()
+        {
+            var style = ComputedStyle;
+            if (style == null) return;
+
+            ScrollRect.SmoothBehavior = style.scrollBehavior == ScrollBehavior.Smooth;
+
+            var type = style.scrollSnapType;
+            if (type == snapType) return;
+            snapType = type;
+
+            // A mandatory container has to be resting on a snap point, so taking one is part of the
+            // property arriving rather than something the next scroll gets around to.
+            if (type.Mandatory) ScrollRect.RequestSnap(true);
+        }
+
+        // The content resized, so whatever snap point the container was resting on has moved with it.
+        private void OnContentResized()
+        {
+            if (snapType.Mandatory) ScrollRect.RequestSnap(true);
+        }
+
+        private Vector2? FindSnapTarget(Vector2 current) =>
+            ScrollSnapping.TryResolve(this, current, out var target) ? target : (Vector2?) null;
 
         // `overflow-x: hidden` beside a scrolling y axis is how CSS asks for one direction. Both hidden
         // or both scrolling stays Both, which is what an `overflow: hidden` scroll view always was.
@@ -239,8 +272,10 @@ namespace ReactUnity.UGUI
         {
             if (!base.Revive()) return false;
 
-            ScrollLeft = 0;
-            ScrollTop = 0;
+            // Explicitly instant: the styles of the element this one is being reused for have not
+            // arrived yet, so `scroll-behavior` still reads as whatever the last one asked for.
+            ScrollRect.ScrollTo(0, 0, 0);
+            snapType = ScrollSnapType.None;
             SetupContents();
 
             return true;

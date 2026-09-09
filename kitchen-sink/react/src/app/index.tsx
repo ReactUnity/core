@@ -17,6 +17,7 @@ const pages = [
   { path: 'material', label: 'Material', Icon: icon.widgets },
   { path: 'animations', label: 'Animations', Icon: icon.animation },
   { path: 'scroll-animations', label: 'Scroll Animations', Icon: icon.linear_scale },
+  { path: 'scrolling', label: 'Scrolling', Icon: icon.swap_vert },
   { path: 'images', label: 'Images', Icon: icon.image },
   { path: 'bg-patterns', label: 'Background Patterns', Icon: icon.texture },
   { path: 'svgs', label: 'SVGs', Icon: icon.gesture },

@@ -1,0 +1,126 @@
+.host {
+  align-items: stretch;
+}
+
+.note {
+  margin-bottom: 12px;
+  font-size: 14px;
+  color: #475569;
+  white-space: normal;
+}
+
+.code {
+  margin-bottom: 12px;
+  padding: 8px 10px;
+  border-radius: 8px;
+  background-color: #0f172a;
+  color: #a5b4fc;
+  font-size: 12px;
+  white-space: normal;
+}
+
+.toggles {
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.toggle {
+  padding: 6px 12px;
+  border-radius: 999px;
+  background-color: #e2e8f0;
+  color: #334155;
+  font-size: 13px;
+  transition: background-color 0.15s, color 0.15s;
+}
+
+.toggleOn {
+  background-color: #6366f1;
+  color: white;
+}
+
+/* --- Snapping --------------------------------------------------------------------------------
+   A horizontal strip: the scroll box carries `scroll-snap-type` and each card carries the
+   alignment. Both are set inline from the page's toggles, so the values here are the defaults. */
+
+.strip {
+  flex-direction: row;
+  overflow-y: hidden;
+  height: 160px;
+  padding: 16px;
+  border-radius: 12px;
+  background-color: #f1f5f9;
+  scroll-snap-type: x mandatory;
+}
+
+.card {
+  width: 160px;
+  height: 120px;
+  margin-right: 12px;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  border-radius: 16px;
+  background-image: linear-gradient(160deg, #6366f1, #0ea5e9);
+  scroll-snap-align: center;
+}
+
+.cardLabel {
+  color: #f8fafc;
+  font-size: 32px;
+  font-weight: bold;
+}
+
+/* --- Paging ----------------------------------------------------------------------------------
+   Panels the height of the port with a mandatory snap on their top edge, which is the whole of
+   what makes a pager. */
+
+.pager {
+  height: 220px;
+  border-radius: 12px;
+  background-color: #f8fafc;
+  border-width: 2px;
+  border-color: #e2e8f0;
+  scroll-snap-type: y mandatory;
+}
+
+.panel {
+  height: 100%;
+  flex-shrink: 0;
+  padding: 20px;
+  justify-content: center;
+  scroll-snap-align: start;
+}
+
+.panelTitle {
+  margin-bottom: 8px;
+  color: #0f172a;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.panelBody {
+  color: #475569;
+  font-size: 14px;
+  white-space: normal;
+}
+
+/* --- Smooth scrolling ------------------------------------------------------------------------ */
+
+.reader {
+  height: 200px;
+  padding: 14px;
+  border-radius: 12px;
+  background-color: #f8fafc;
+  border-width: 2px;
+  border-color: #e2e8f0;
+}
+
+.line {
+  margin-bottom: 10px;
+  flex-shrink: 0;
+  font-size: 13px;
+  color: #475569;
+  white-space: normal;
+}
