@@ -10,9 +10,9 @@ namespace ReactUnity.Styling.Rules
 {
     public static class RuleHelpers
     {
-        // Specificity is packed into one int, most significant field first:
+        // Specificity is packed into one long, most significant field first:
         //
-        //   bits 24+     importance offset, one step per inserted stylesheet
+        //   bits 24-55   importance offset, one step per inserted stylesheet (signed)
         //   bit  23      !important
         //   bits 18-22   cascade layer rank
         //   bits 12-17   id count
@@ -22,8 +22,14 @@ namespace ReactUnity.Styling.Rules
         // Layer sits above specificity and below importance because that is the order CSS Cascade 5
         // resolves them in. Its five bits leave exactly enough room below bit 23 for a full
         // specificity alongside the highest rank, so nothing can carry into the importance bit.
+        //
+        // Everything below the offset therefore fills bits 0-23 exactly -- important plus the
+        // highest layer rank plus a saturated selector is 2^24 - 1 -- so the offset step cannot be
+        // any smaller than this. It is a long because the offset is a caller's number: the whole
+        // int range of it has to fit above bit 23, and in an int only -128..127 did.
         public static int ImportantSpecifity = 1 << 23;
         public static int LayerSpecifityStep = 1 << 18;
+        public static readonly long ImportanceSpecifityStep = 1L << 24;
         public const int MaxLayerRank = 31;
 
         /// <summary>

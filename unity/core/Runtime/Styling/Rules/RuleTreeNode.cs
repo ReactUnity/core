@@ -32,8 +32,8 @@ namespace ReactUnity.Styling.Rules
         // reads :scope. Lets a scoped rule be ruled out cheaply before the walk up to its root.
         private bool ScopeIndependent = true;
 
-        private int RawSpecifity { get; set; } = 0;
-        public int Specifity { get; private set; }
+        private long RawSpecifity { get; set; } = 0;
+        public long Specifity { get; private set; }
 
         private int ImportanceOffset;
         private bool Important;
@@ -106,7 +106,7 @@ namespace ReactUnity.Styling.Rules
 
             Specifity = RawSpecifity
                 + RuleHelpers.LayerRank(layerOrder, Important) * RuleHelpers.LayerSpecifityStep
-                + ImportanceOffset * (1 << 24);
+                + ImportanceOffset * RuleHelpers.ImportanceSpecifityStep;
         }
 
         /// <summary>

@@ -49,5 +49,31 @@ namespace ReactUnity.Tests.Editor
             Assert.AreEqual(plain.Specifity + (1 << 6), withClass.Specifity);
             Assert.AreEqual(plain.Specifity + (1 << 12), withId.Specifity);
         }
+
+        [Test]
+        public void ImportanceOffsetsDoNotWrapAroundTheCascade()
+        {
+            // !important, the highest layer rank and a selector saturating everything under the
+            // layer field add up to one step less one, so no smaller step could carry the offset.
+            Assert.AreEqual(RuleHelpers.ImportanceSpecifityStep - 1,
+                RuleHelpers.ImportantSpecifity
+                + (long) RuleHelpers.MaxLayerRank * RuleHelpers.LayerSpecifityStep
+                + (RuleHelpers.LayerSpecifityStep - 1));
+
+            var tree = new RuleTree<string>();
+
+            // 128 is where the offset term used to carry out of an int and go negative.
+            var plain = tree.AddSelector("#a#b#c")[0];
+            Assert.Greater(tree.AddSelector("view", 128)[0].Specifity, plain.Specifity);
+
+            // A bigger offset still outranks a smaller one well past that.
+            var bigger = tree.AddSelector("text", 1000)[0];
+            var smaller = tree.AddSelector("#a#b#c", 999)[0];
+            Assert.Greater(bigger.Specifity, smaller.Specifity);
+
+            // The whole int range a caller can pass is representable, in both directions.
+            Assert.Greater(tree.AddSelector("view", int.MaxValue)[0].Specifity, bigger.Specifity);
+            Assert.Less(tree.AddSelector("view", int.MinValue)[0].Specifity, smaller.Specifity);
+        }
     }
 }
