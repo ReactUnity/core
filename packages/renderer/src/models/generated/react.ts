@@ -1,6 +1,6 @@
 //
 // Types in assemblies: ReactUnity, ReactUnity.Editor, ReactUnity.UGUI, ReactUnity.UIToolkit
-// Generated 09/09/2026 02:34:04
+// Generated 10/09/2026 08:39:02
 //
 /* eslint-disable */
 
@@ -3539,6 +3539,8 @@ export declare namespace ReactUnity {
         documentElement: ReactUnity.Scripting.DomProxies.DocumentProxy;
         baseURI: string;
         documentURI: string;
+        visibilityState: string;
+        hidden: boolean;
         head: ReactUnity.Scripting.DomProxies.HeadProxy;
         Origin: string;
         Context: ReactUnity.ReactContext;
@@ -3549,6 +3551,9 @@ export declare namespace ReactUnity {
         querySelectorAll(query: string): any;
         getElementById(id: string): any;
         getElementsByTagName(tagName: string): ReactUnity.Scripting.DomProxies.IDomElementProxy[];
+        addEventListener(eventType: string, callback: any, options?: any): void;
+        removeEventListener(eventType: string, callback: any, options?: any): void;
+        dispatchEvent(ev: any): boolean;
         Equals(obj: any): boolean;
         GetHashCode(): number;
         GetType(): System.Type;
@@ -4369,6 +4374,9 @@ export declare namespace ReactUnity {
       containerName: string;
       colorScheme: ReactUnity.Types.ColorScheme;
       scrollbarGutter: ReactUnity.Types.ScrollbarGutter;
+      scrollBehavior: ReactUnity.Types.ScrollBehavior;
+      scrollSnapType: ReactUnity.Types.ScrollSnapType;
+      scrollSnapAlign: ReactUnity.Types.ScrollSnapAlign;
       borderTopLeftRadius: ReactUnity.Types.YogaValue2;
       borderTopRightRadius: ReactUnity.Types.YogaValue2;
       borderBottomLeftRadius: ReactUnity.Types.YogaValue2;
@@ -4437,6 +4445,9 @@ export declare namespace ReactUnity {
       maskSize: ReactUnity.Types.ICssValueList<ReactUnity.Types.BackgroundSize>;
       maskRepeatX: ReactUnity.Types.ICssValueList<ReactUnity.Types.BackgroundRepeat>;
       maskRepeatY: ReactUnity.Types.ICssValueList<ReactUnity.Types.BackgroundRepeat>;
+      maskMode: ReactUnity.Types.ICssValueList<ReactUnity.Types.MaskMode>;
+      clipPath: ReactUnity.Types.ClipPath;
+      imageRendering: ReactUnity.Types.ImageRendering;
       filter: ReactUnity.Types.FilterDefinition;
       backdropFilter: ReactUnity.Types.FilterDefinition;
       mixBlendMode: ReactUnity.Types.BackgroundBlendMode;
@@ -4624,6 +4635,9 @@ export declare namespace ReactUnity {
       static containerName: ReactUnity.Styling.StyleProperty;
       static colorScheme: ReactUnity.Styling.StyleProperty;
       static scrollbarGutter: ReactUnity.Styling.StyleProperty;
+      static scrollBehavior: ReactUnity.Styling.StyleProperty;
+      static scrollSnapType: ReactUnity.Styling.StyleProperty;
+      static scrollSnapAlign: ReactUnity.Styling.StyleProperty;
       static borderTopLeftRadius: ReactUnity.Styling.StyleProperty;
       static borderTopRightRadius: ReactUnity.Styling.StyleProperty;
       static borderBottomLeftRadius: ReactUnity.Styling.StyleProperty;
@@ -4692,6 +4706,9 @@ export declare namespace ReactUnity {
       static maskSize: ReactUnity.Styling.ValueListStyleProperty;
       static maskRepeatX: ReactUnity.Styling.ValueListStyleProperty;
       static maskRepeatY: ReactUnity.Styling.ValueListStyleProperty;
+      static maskMode: ReactUnity.Styling.ValueListStyleProperty;
+      static clipPath: ReactUnity.Styling.StyleProperty;
+      static imageRendering: ReactUnity.Styling.StyleProperty;
       static filter: ReactUnity.Styling.StyleProperty;
       static backdropFilter: ReactUnity.Styling.StyleProperty;
       static mixBlendMode: ReactUnity.Styling.StyleProperty;
@@ -4894,7 +4911,7 @@ export declare namespace ReactUnity {
       MediaProvider: ReactUnity.Styling.Rules.IMediaProvider;
       Parser: any; // ExCSS.StylesheetParser
       StyleTree: ReactUnity.Styling.Rules.StyleTree;
-      FontFamilies: Record<string, ReactUnity.Types.FontReference>[];
+      FontFamilies: Record<string, ReactUnity.Styling.Rules.FontFace[]>[];
       Keyframes: Record<string, ReactUnity.KeyframeList>[];
       RegisteredProperties: Record<string, ReactUnity.Styling.Rules.RegisteredProperty>[];
       StyleSheets: ReactUnity.Styling.StyleSheet[];
@@ -4903,6 +4920,7 @@ export declare namespace ReactUnity {
       Insert(sheet: ReactUnity.Styling.StyleSheet): void;
       Remove(sheet: ReactUnity.Styling.StyleSheet): void;
       GetFontFamily(name: string): ReactUnity.Types.FontReference;
+      GetFontFace(name: string, weight: number, italic: boolean): ReactUnity.Styling.Rules.FontFace;
       GetKeyframes(name: string): ReactUnity.KeyframeList;
       GetRegisteredProperty(name: string): ReactUnity.Styling.Rules.RegisteredProperty;
       Equals(obj: any): boolean;
@@ -4923,7 +4941,7 @@ export declare namespace ReactUnity {
       Scope: ReactUnity.IReactComponent;
       ImportanceOffset: number;
       Media: ReactUnity.Styling.Rules.MediaQueryList;
-      FontFamilies: Record<string, ReactUnity.Types.FontReference>;
+      FontFamilies: Record<string, ReactUnity.Styling.Rules.FontFace[]>;
       Keyframes: Record<string, ReactUnity.KeyframeList>;
       RegisteredProperties: Record<string, ReactUnity.Styling.Rules.RegisteredProperty>;
       MediaQueries: ReactUnity.Styling.Rules.MediaQueryList[];
@@ -5307,6 +5325,16 @@ export declare namespace ReactUnity {
         ToString(): string;
         GetType(): System.Type;
       }
+      export class ComputedFontFamily {
+        constructor(entries: System.Collections.Generic.IReadOnlyList<any>);
+        Entries: System.Collections.Generic.IReadOnlyList<any>;
+        GetValue(targetProp: ReactUnity.Styling.IStyleProperty, targetStyle: ReactUnity.Styling.NodeStyle, converter: ReactUnity.Styling.Converters.IStyleConverter): any;
+        GetHashCode(): number;
+        Equals(obj: any): boolean;
+        static Parse(splits: string[]): ReactUnity.Styling.Computed.ComputedFontFamily;
+        GetType(): System.Type;
+        ToString(): string;
+      }
       export class ComputedFontProperty {
         constructor(ratio: number, type: ReactUnity.Styling.Computed.ComputedFontProperty_FontPropertyType);
         Ratio: number;
@@ -5617,6 +5645,8 @@ export declare namespace ReactUnity {
         static ContainerTypeConverter: ReactUnity.Styling.Converters.StyleConverterBase;
         static ColorSchemeConverter: ReactUnity.Styling.Converters.StyleConverterBase;
         static ScrollbarGutterConverter: ReactUnity.Styling.Converters.StyleConverterBase;
+        static ScrollSnapTypeConverter: ReactUnity.Styling.Converters.StyleConverterBase;
+        static ScrollSnapAlignConverter: ReactUnity.Styling.Converters.StyleConverterBase;
         static YogaValueConverter: ReactUnity.Styling.Converters.StyleConverterBase;
         static YogaValue2Converter: ReactUnity.Styling.Converters.StyleConverterBase;
         static BorderRadiusConverter: ReactUnity.Styling.Converters.StyleConverterBase;
@@ -5647,6 +5677,7 @@ export declare namespace ReactUnity {
         static SortingLayerConverter: ReactUnity.Styling.Converters.StyleConverterBase;
         static BorderImageSliceConverter: ReactUnity.Styling.Converters.StyleConverterBase;
         static FilterDefinitionConverter: ReactUnity.Styling.Converters.StyleConverterBase;
+        static ClipPathConverter: ReactUnity.Styling.Converters.StyleConverterBase;
         static Get(type: System.Type): ReactUnity.Styling.Converters.StyleConverterBase;
         Equals(obj: any): boolean;
         GetHashCode(): number;
@@ -6183,6 +6214,21 @@ export declare namespace ReactUnity {
         GetType(): System.Type;
         ToString(): string;
       }
+      export class FontFace {
+        Family: string;
+        Weight: number;
+        Italic: boolean;
+        Sources: ReactUnity.Types.FontReference[];
+        Reference: ReactUnity.Types.FontReference;
+        static NormalWeight: number;
+        static BoldWeight: number;
+        static Create(rule: any): ReactUnity.Styling.Rules.FontFace;
+        MatchScore(weight: number, italic: boolean): number;
+        Equals(obj: any): boolean;
+        GetHashCode(): number;
+        GetType(): System.Type;
+        ToString(): string;
+      }
       export interface IMediaProvider {
         MediaType: string;
         HasType(type: string): boolean;
@@ -6624,6 +6670,7 @@ export declare namespace ReactUnity {
       Value: ReactUnity.Types.YogaValue2;
       Interpolate(to: any, t: number): any;
       Equals(obj: any): boolean;
+      Equals(other: ReactUnity.Types.BackgroundSize): boolean;
       GetHashCode(): number;
       ToString(): string;
       GetType(): System.Type;
@@ -6681,6 +6728,7 @@ export declare namespace ReactUnity {
       Fill: boolean;
       Interpolate(to: any, t: number): any;
       Equals(obj: any): boolean;
+      Equals(other: ReactUnity.Types.BorderImageSlice): boolean;
       GetHashCode(): number;
       ToString(): string;
       GetType(): System.Type;
@@ -6708,6 +6756,130 @@ export declare namespace ReactUnity {
       static Default: ReactUnity.Types.BoxShadow;
       static DefaultInset: ReactUnity.Types.BoxShadow;
       Interpolate(to: any, t: number): any;
+      Equals(obj: any): boolean;
+      GetHashCode(): number;
+      GetType(): System.Type;
+      ToString(): string;
+    }
+    export class ClipPath {
+      constructor();
+      constructor(points: ReactUnity.Types.YogaValue2[], evenOdd: boolean);
+      constructor(kind: ReactUnity.Types.ClipPathKind, commands: ReactUnity.Types.ClipPathCommand[], evenOdd: boolean);
+      Kind: ReactUnity.Types.ClipPathKind;
+      Box: ReactUnity.Types.ClipGeometryBox;
+      Top: Yoga.YogaValue;
+      Right: Yoga.YogaValue;
+      Bottom: Yoga.YogaValue;
+      Left: Yoga.YogaValue;
+      X: Yoga.YogaValue;
+      Y: Yoga.YogaValue;
+      Width: Yoga.YogaValue;
+      Height: Yoga.YogaValue;
+      TopLeftRadius: ReactUnity.Types.YogaValue2;
+      TopRightRadius: ReactUnity.Types.YogaValue2;
+      BottomRightRadius: ReactUnity.Types.YogaValue2;
+      BottomLeftRadius: ReactUnity.Types.YogaValue2;
+      Position: ReactUnity.Types.YogaValue2;
+      RadiusX: Yoga.YogaValue;
+      RadiusY: Yoga.YogaValue;
+      ExtentX: ReactUnity.Types.ClipRadiusExtent;
+      ExtentY: ReactUnity.Types.ClipRadiusExtent;
+      Points: ReactUnity.Types.YogaValue2[];
+      Commands: ReactUnity.Types.ClipPathCommand[];
+      EvenOdd: boolean;
+      static None: ReactUnity.Types.ClipPath;
+      static MaxUniformPoints: number;
+      static Inset(top: Yoga.YogaValue, right: Yoga.YogaValue, bottom: Yoga.YogaValue, left: Yoga.YogaValue, tl?: ReactUnity.Types.YogaValue2, tr?: ReactUnity.Types.YogaValue2, br?: ReactUnity.Types.YogaValue2, bl?: ReactUnity.Types.YogaValue2): ReactUnity.Types.ClipPath;
+      static RectShape(top: Yoga.YogaValue, right: Yoga.YogaValue, bottom: Yoga.YogaValue, left: Yoga.YogaValue, tl?: ReactUnity.Types.YogaValue2, tr?: ReactUnity.Types.YogaValue2, br?: ReactUnity.Types.YogaValue2, bl?: ReactUnity.Types.YogaValue2): ReactUnity.Types.ClipPath;
+      static Xywh(x: Yoga.YogaValue, y: Yoga.YogaValue, width: Yoga.YogaValue, height: Yoga.YogaValue, tl?: ReactUnity.Types.YogaValue2, tr?: ReactUnity.Types.YogaValue2, br?: ReactUnity.Types.YogaValue2, bl?: ReactUnity.Types.YogaValue2): ReactUnity.Types.ClipPath;
+      static Circle(radius: Yoga.YogaValue, extent: ReactUnity.Types.ClipRadiusExtent, position: ReactUnity.Types.YogaValue2): ReactUnity.Types.ClipPath;
+      static Ellipse(rx: Yoga.YogaValue, ry: Yoga.YogaValue, ex: ReactUnity.Types.ClipRadiusExtent, ey: ReactUnity.Types.ClipRadiusExtent, position: ReactUnity.Types.YogaValue2): ReactUnity.Types.ClipPath;
+      WithBox(box: ReactUnity.Types.ClipGeometryBox): ReactUnity.Types.ClipPath;
+      Resolve(size: UnityEngine.Vector2): ReactUnity.Types.ClipPath_Resolved;
+      Resolve(referenceBox: UnityEngine.Rect): ReactUnity.Types.ClipPath_Resolved;
+      static IsCommandShape(kind: ReactUnity.Types.ClipPathKind): boolean;
+      static IsRectangleShape(kind: ReactUnity.Types.ClipPathKind): boolean;
+      Interpolate(to: any, t: number): any;
+      Equals(obj: any): boolean;
+      GetHashCode(): number;
+      GetType(): System.Type;
+      ToString(): string;
+    }
+    export enum ClipPathKind {
+      None = 0,
+      Inset = 1,
+      Circle = 2,
+      Ellipse = 3,
+      Polygon = 4,
+      Rect = 5,
+      Xywh = 6,
+      Path = 7,
+      Shape = 8,
+    }
+    export enum ClipRadiusExtent {
+      Length = 0,
+      ClosestSide = 1,
+      FarthestSide = 2,
+    }
+    export enum ClipGeometryBox {
+      BorderBox = 0,
+      PaddingBox = 1,
+      ContentBox = 2,
+      MarginBox = 3,
+    }
+    export enum ClipShapeForm {
+      None = 0,
+      RoundedBox = 1,
+      Ellipse = 2,
+      Contours = 3,
+    }
+    export enum ClipPathCommandKind {
+      Move = 0,
+      Line = 1,
+      HLine = 2,
+      VLine = 3,
+      Cubic = 4,
+      Quadratic = 5,
+      SmoothCubic = 6,
+      SmoothQuadratic = 7,
+      Arc = 8,
+      Close = 9,
+    }
+    export class ClipPathCommand {
+      Kind: ReactUnity.Types.ClipPathCommandKind;
+      Relative: boolean;
+      To: ReactUnity.Types.YogaValue2;
+      Control1: ReactUnity.Types.YogaValue2;
+      Control2: ReactUnity.Types.YogaValue2;
+      Radius: ReactUnity.Types.YogaValue2;
+      Angle: number;
+      LargeArc: boolean;
+      Clockwise: boolean;
+      static ClosePath: ReactUnity.Types.ClipPathCommand;
+      static Simple(kind: ReactUnity.Types.ClipPathCommandKind, relative: boolean, to: ReactUnity.Types.YogaValue2): ReactUnity.Types.ClipPathCommand;
+      static Curve(kind: ReactUnity.Types.ClipPathCommandKind, relative: boolean, to: ReactUnity.Types.YogaValue2, c1: ReactUnity.Types.YogaValue2, c2: ReactUnity.Types.YogaValue2): ReactUnity.Types.ClipPathCommand;
+      static ArcTo(relative: boolean, to: ReactUnity.Types.YogaValue2, radius: ReactUnity.Types.YogaValue2, angle: number, largeArc: boolean, clockwise: boolean): ReactUnity.Types.ClipPathCommand;
+      Equals(other: ReactUnity.Types.ClipPathCommand): boolean;
+      Equals(obj: any): boolean;
+      GetHashCode(): number;
+      Matches(other: ReactUnity.Types.ClipPathCommand): boolean;
+      ToString(): string;
+      GetType(): System.Type;
+    }
+    export class ClipPathCommands {
+      static MaxCommands: number;
+      Equals(obj: any): boolean;
+      GetHashCode(): number;
+      GetType(): System.Type;
+      ToString(): string;
+    }
+    export class ClipPathGeometry {
+      static Tolerance: number;
+      static MaxPoints: number;
+      static Flatten(commands: ReactUnity.Types.ClipPathCommand[], box: UnityEngine.Rect): UnityEngine.Vector2[][];
+      static Contains(contours: UnityEngine.Vector2[][], evenOdd: boolean, point: UnityEngine.Vector2): boolean;
+      static CountPoints(contours: UnityEngine.Vector2[][]): number;
+      static Rasterize(contours: UnityEngine.Vector2[][], evenOdd: boolean, width: number, height: number, scale: UnityEngine.Vector2, offset: UnityEngine.Vector2): Byte[];
       Equals(obj: any): boolean;
       GetHashCode(): number;
       GetType(): System.Type;
@@ -6932,6 +7104,33 @@ export declare namespace ReactUnity {
       Font: UnityEngine.Font;
       TmpFontAsset: any; // TMPro.TMP_FontAsset
       TextCoreFontAsset: UnityEngine.TextCore.Text.FontAsset;
+      Fallbacks: ReactUnity.Types.FontSource[];
+      MatchesWeight: boolean;
+      MatchesItalic: boolean;
+      Equals(obj: any): boolean;
+      GetHashCode(): number;
+      GetType(): System.Type;
+      ToString(): string;
+    }
+    export class FontCandidate {
+      constructor(reference: ReactUnity.Types.FontReference, matchesWeight?: boolean, matchesItalic?: boolean);
+      Reference: ReactUnity.Types.FontReference;
+      MatchesWeight: boolean;
+      MatchesItalic: boolean;
+      Equals(obj: any): boolean;
+      GetHashCode(): number;
+      ToString(): string;
+      GetType(): System.Type;
+    }
+    export class FontFamilyReference {
+      constructor(candidates: ReactUnity.Types.FontCandidate[], chained?: boolean);
+      constructor(references: ReactUnity.Types.FontReference[], chained?: boolean);
+      Type: ReactUnity.Types.AssetReferenceType;
+      Value: any; // System.Object
+      IsCached: boolean;
+      CachedValue: ReactUnity.Types.FontSource;
+      Get(context: ReactUnity.ReactContext, callback: ((obj: ReactUnity.Types.FontSource) => void)): void;
+      Dispose(): void;
       Equals(obj: any): boolean;
       GetHashCode(): number;
       GetType(): System.Type;
@@ -7076,9 +7275,21 @@ export declare namespace ReactUnity {
       GetType(): System.Type;
       ToString(): string;
     }
+    export enum ImageRendering {
+      Auto = 0,
+      Smooth = 1,
+      HighQuality = 2,
+      CrispEdges = 3,
+      Pixelated = 4,
+    }
     export enum Isolation {
       Auto = 0,
       Isolate = 1,
+    }
+    export enum MaskMode {
+      MatchSource = 0,
+      Alpha = 1,
+      Luminance = 2,
     }
     export enum ObjectFit {
       Fill = 0,
@@ -7101,11 +7312,51 @@ export declare namespace ReactUnity {
       Fixed = 3,
       Sticky = 4,
     }
+    export enum ScrollBehavior {
+      Auto = 0,
+      Smooth = 1,
+    }
     export enum ScrollDirection {
       None = 0,
       Horizontal = 1,
       Vertical = 2,
       Both = 3,
+    }
+    export enum ScrollSnapAlignment {
+      None = 0,
+      Start = 1,
+      End = 2,
+      Center = 3,
+    }
+    export class ScrollSnapAlign {
+      constructor(block: ReactUnity.Types.ScrollSnapAlignment, inline: ReactUnity.Types.ScrollSnapAlignment);
+      Block: ReactUnity.Types.ScrollSnapAlignment;
+      Inline: ReactUnity.Types.ScrollSnapAlignment;
+      static None: ReactUnity.Types.ScrollSnapAlign;
+      Get(horizontal: boolean): ReactUnity.Types.ScrollSnapAlignment;
+      Equals(other: ReactUnity.Types.ScrollSnapAlign): boolean;
+      Equals(obj: any): boolean;
+      GetHashCode(): number;
+      ToString(): string;
+      GetType(): System.Type;
+    }
+    export enum ScrollSnapAxis {
+      None = 0,
+      X = 1,
+      Y = 2,
+      Both = 3,
+    }
+    export class ScrollSnapType {
+      constructor(axis: ReactUnity.Types.ScrollSnapAxis, mandatory: boolean);
+      Axis: ReactUnity.Types.ScrollSnapAxis;
+      Mandatory: boolean;
+      static None: ReactUnity.Types.ScrollSnapType;
+      Snaps(horizontal: boolean): boolean;
+      Equals(other: ReactUnity.Types.ScrollSnapType): boolean;
+      Equals(obj: any): boolean;
+      GetHashCode(): number;
+      ToString(): string;
+      GetType(): System.Type;
     }
     export enum ScrollbarGutter {
       Auto = 0,
@@ -7241,6 +7492,7 @@ export declare namespace ReactUnity {
       AsVector(): UnityEngine.Vector2;
       IsZero(): boolean;
       Equals(obj: any): boolean;
+      Equals(other: ReactUnity.Types.YogaValue2): boolean;
       GetHashCode(): number;
       ToCSS(): string;
       Negate(): ReactUnity.Types.YogaValue2;
@@ -7308,6 +7560,33 @@ export declare namespace ReactUnity {
       GetHashCode(): number;
       GetType(): System.Type;
       ToString(): string;
+    }
+    export class ClipPath_Converter {
+      constructor();
+      StringifyInternal(value: any): string;
+      StringifyTyped(value: ReactUnity.Types.ClipPath): string;
+      CanHandleKeyword(keyword: ReactUnity.Styling.CssKeyword): boolean;
+      Convert(value: any): ReactUnity.Styling.Computed.IComputedValue;
+      Stringify(value: any): string;
+      Equals(obj: any): boolean;
+      GetHashCode(): number;
+      GetType(): System.Type;
+      ToString(): string;
+    }
+    export class ClipPath_Resolved {
+      Ring: UnityEngine.Vector2[];
+      Form: ReactUnity.Types.ClipShapeForm;
+      Box: UnityEngine.Rect;
+      RadiiX: UnityEngine.Vector4;
+      RadiiY: UnityEngine.Vector4;
+      Center: UnityEngine.Vector2;
+      Radius: UnityEngine.Vector2;
+      Contours: UnityEngine.Vector2[][];
+      EvenOdd: boolean;
+      Equals(obj: any): boolean;
+      GetHashCode(): number;
+      ToString(): string;
+      GetType(): System.Type;
     }
     export class CssFourDirectional_Converter<T = any> {
       constructor(baseConverter?: ReactUnity.Styling.Converters.StyleConverterBase);
@@ -7410,6 +7689,30 @@ export declare namespace ReactUnity {
       AllowWithoutUrl: boolean;
       StringifyInternal(value: any): string;
       StringifyTyped(value: ReactUnity.Types.ImageReference): string;
+      CanHandleKeyword(keyword: ReactUnity.Styling.CssKeyword): boolean;
+      Convert(value: any): ReactUnity.Styling.Computed.IComputedValue;
+      Stringify(value: any): string;
+      Equals(obj: any): boolean;
+      GetHashCode(): number;
+      GetType(): System.Type;
+      ToString(): string;
+    }
+    export class ScrollSnapAlign_Converter {
+      constructor();
+      StringifyTyped(value: ReactUnity.Types.ScrollSnapAlign): string;
+      StringifyInternal(value: any): string;
+      CanHandleKeyword(keyword: ReactUnity.Styling.CssKeyword): boolean;
+      Convert(value: any): ReactUnity.Styling.Computed.IComputedValue;
+      Stringify(value: any): string;
+      Equals(obj: any): boolean;
+      GetHashCode(): number;
+      GetType(): System.Type;
+      ToString(): string;
+    }
+    export class ScrollSnapType_Converter {
+      constructor();
+      StringifyTyped(value: ReactUnity.Types.ScrollSnapType): string;
+      StringifyInternal(value: any): string;
       CanHandleKeyword(keyword: ReactUnity.Styling.CssKeyword): boolean;
       Convert(value: any): ReactUnity.Styling.Computed.IComputedValue;
       Stringify(value: any): string;
@@ -10334,6 +10637,7 @@ export declare namespace ReactUnity {
       PoolRoot: UnityEngine.RectTransform;
       OffscreenRoot: UnityEngine.RectTransform;
       FilterRoot: UnityEngine.Transform;
+      BackdropSurface: ReactUnity.UGUI.Internal.BackdropSurface;
       RootCanvas: UnityEngine.Canvas;
       CalculatesLayout: boolean;
       Host: ReactUnity.IHostComponent;
@@ -10845,6 +11149,7 @@ export declare namespace ReactUnity {
         constructor();
         Layout: Yoga.YogaNode;
         Gutter: UnityEngine.Vector2;
+        Resized: (() => void);
         Direction: ReactUnity.Types.ScrollDirection;
         destroyCancellationToken: System.Threading.CancellationToken;
         useGUILayout: boolean;
@@ -10982,6 +11287,9 @@ export declare namespace ReactUnity {
       export class SmoothScrollRect {
         constructor();
         Smoothness: number;
+        SmoothBehavior: boolean;
+        BehaviorSmoothness: number;
+        FindSnapTarget?: ((arg: UnityEngine.Vector2) => UnityEngine.Vector2 | undefined);
         WheelDirectionTransposed: boolean;
         ClientWidth: number;
         ClientHeight: number;
@@ -11032,6 +11340,9 @@ export declare namespace ReactUnity {
         name: string;
         hideFlags: UnityEngine.HideFlags;
         OnScroll(data: UnityEngine.EventSystems.PointerEventData): void;
+        OnBeginDrag(eventData: UnityEngine.EventSystems.PointerEventData): void;
+        OnEndDrag(eventData: UnityEngine.EventSystems.PointerEventData): void;
+        RequestSnap(instant?: boolean): void;
         ScrollBy(left?: number | undefined, top?: number | undefined, smoothness?: number | undefined): void;
         ScrollTo(left?: number | undefined, top?: number | undefined, smoothness?: number | undefined): void;
         Rebuild(executing: UnityEngine.UI.CanvasUpdate): void;
@@ -11040,8 +11351,6 @@ export declare namespace ReactUnity {
         IsActive(): boolean;
         StopMovement(): void;
         OnInitializePotentialDrag(eventData: UnityEngine.EventSystems.PointerEventData): void;
-        OnBeginDrag(eventData: UnityEngine.EventSystems.PointerEventData): void;
-        OnEndDrag(eventData: UnityEngine.EventSystems.PointerEventData): void;
         OnDrag(eventData: UnityEngine.EventSystems.PointerEventData): void;
         CalculateLayoutInputHorizontal(): void;
         CalculateLayoutInputVertical(): void;
@@ -12579,6 +12888,88 @@ export declare namespace ReactUnity {
       }
     }
     export namespace Internal {
+      export interface IBackdropReader {
+        BackdropRenderer: UnityEngine.CanvasRenderer;
+        SetBackdrop(backdrop: UnityEngine.Texture): void;
+      }
+      export class BackdropPass {
+        constructor();
+        Render(cam: UnityEngine.Camera, root: UnityEngine.Transform, readers: ReactUnity.UGUI.Internal.IBackdropReader[], width: number, height: number): void;
+        Release(): void;
+        static ComparePaintOrder(a: ReactUnity.UGUI.Internal.IBackdropReader, b: ReactUnity.UGUI.Internal.IBackdropReader): number;
+        Equals(obj: any): boolean;
+        GetHashCode(): number;
+        GetType(): System.Type;
+        ToString(): string;
+      }
+      export class BackdropSurface {
+        constructor();
+        static Required: boolean;
+        destroyCancellationToken: System.Threading.CancellationToken;
+        useGUILayout: boolean;
+        didStart: boolean;
+        didAwake: boolean;
+        runInEditMode: boolean;
+        enabled: boolean;
+        isActiveAndEnabled: boolean;
+        transform: UnityEngine.Transform;
+        transformHandle: UnityEngine.TransformHandle;
+        gameObject: UnityEngine.GameObject;
+        tag: string;
+        name: string;
+        hideFlags: UnityEngine.HideFlags;
+        Context: ReactUnity.UGUI.UGUIContext;
+        Register(reader: ReactUnity.UGUI.Internal.IBackdropReader): void;
+        Unregister(reader: ReactUnity.UGUI.Internal.IBackdropReader): void;
+        CollectFor(group: ReactUnity.UGUI.Internal.ElementFilter, into: ReactUnity.UGUI.Internal.IBackdropReader[]): void;
+        IsInvoking(): boolean;
+        CancelInvoke(): void;
+        Invoke(methodName: string, time: number): void;
+        InvokeRepeating(methodName: string, time: number, repeatRate: number): void;
+        CancelInvoke(methodName: string): void;
+        IsInvoking(methodName: string): boolean;
+        StartCoroutine(methodName: string): UnityEngine.Coroutine;
+        StartCoroutine(methodName: string, value: any): UnityEngine.Coroutine;
+        StartCoroutine(routine: System.Collections.IEnumerator): UnityEngine.Coroutine;
+        StartCoroutine_Auto(routine: System.Collections.IEnumerator): UnityEngine.Coroutine;
+        StopCoroutine(routine: System.Collections.IEnumerator): void;
+        StopCoroutine(routine: UnityEngine.Coroutine): void;
+        StopCoroutine(methodName: string): void;
+        StopAllCoroutines(): void;
+        GetComponent(type: System.Type): UnityEngine.Component;
+        GetComponent(type: string): UnityEngine.Component;
+        GetComponentInChildren(t: System.Type, includeInactive: boolean): UnityEngine.Component;
+        GetComponentInChildren(t: System.Type): UnityEngine.Component;
+        GetComponentsInChildren(t: System.Type, includeInactive: boolean): UnityEngine.Component[];
+        GetComponentsInChildren(t: System.Type): UnityEngine.Component[];
+        GetComponentInParent(t: System.Type, includeInactive: boolean): UnityEngine.Component;
+        GetComponentInParent(t: System.Type): UnityEngine.Component;
+        GetComponentsInParent(t: System.Type, includeInactive: boolean): UnityEngine.Component[];
+        GetComponentsInParent(t: System.Type): UnityEngine.Component[];
+        GetComponents(type: System.Type): UnityEngine.Component[];
+        GetComponents(type: System.Type, results: UnityEngine.Component[]): void;
+        GetComponentIndex(): number;
+        CompareTag(tag: string): boolean;
+        CompareTag(tag: UnityEngine.TagHandle): boolean;
+        SendMessageUpwards(methodName: string, value: any, options: UnityEngine.SendMessageOptions): void;
+        SendMessageUpwards(methodName: string, value: any): void;
+        SendMessageUpwards(methodName: string): void;
+        SendMessageUpwards(methodName: string, options: UnityEngine.SendMessageOptions): void;
+        SendMessage(methodName: string, value: any): void;
+        SendMessage(methodName: string): void;
+        SendMessage(methodName: string, value: any, options: UnityEngine.SendMessageOptions): void;
+        SendMessage(methodName: string, options: UnityEngine.SendMessageOptions): void;
+        BroadcastMessage(methodName: string, parameter: any, options: UnityEngine.SendMessageOptions): void;
+        BroadcastMessage(methodName: string, parameter: any): void;
+        BroadcastMessage(methodName: string): void;
+        BroadcastMessage(methodName: string, options: UnityEngine.SendMessageOptions): void;
+        GetEntityId(): UnityEngine.EntityId;
+        GetInstanceID(): number;
+        GetHashCode(): number;
+        Equals(other: any): boolean;
+        ToString(): string;
+        GetType(): System.Type;
+      }
       export class BorderAndBackground {
         constructor();
         Root: UnityEngine.RectTransform;
@@ -12593,8 +12984,6 @@ export declare namespace ReactUnity {
         BorderImage: ReactUnity.UGUI.Shapes.WebBorderImage;
         ShadowGraphics: ReactUnity.UGUI.Shapes.WebShadow[];
         BackgroundGraphics: ReactUnity.UGUI.Shapes.WebBackgroundImage[];
-        MaskGraphics: ReactUnity.UGUI.Shapes.WebBackgroundImage[];
-        LastMask: ReactUnity.UGUI.Shapes.WebBackgroundImage;
         BorderSize: ReactUnity.UGUI.Shapes.WebOutlineSizes;
         BorderColors: ReactUnity.UGUI.Shapes.WebOutlineColors;
         BorderStyles: ReactUnity.UGUI.Shapes.WebOutlineStyles;
@@ -12614,9 +13003,78 @@ export declare namespace ReactUnity {
         tag: string;
         name: string;
         hideFlags: UnityEngine.HideFlags;
-        static Create(go: UnityEngine.GameObject, comp: ReactUnity.UGUI.UGUIComponent, setContainer: ((obj: UnityEngine.RectTransform) => void)): ReactUnity.UGUI.Internal.BorderAndBackground;
+        static Create(go: UnityEngine.GameObject, comp: ReactUnity.UGUI.UGUIComponent): ReactUnity.UGUI.Internal.BorderAndBackground;
         UpdateStyle(style: ReactUnity.Styling.NodeStyle): void;
         UpdateLayout(layout: Yoga.YogaNode): void;
+        IsInvoking(): boolean;
+        CancelInvoke(): void;
+        Invoke(methodName: string, time: number): void;
+        InvokeRepeating(methodName: string, time: number, repeatRate: number): void;
+        CancelInvoke(methodName: string): void;
+        IsInvoking(methodName: string): boolean;
+        StartCoroutine(methodName: string): UnityEngine.Coroutine;
+        StartCoroutine(methodName: string, value: any): UnityEngine.Coroutine;
+        StartCoroutine(routine: System.Collections.IEnumerator): UnityEngine.Coroutine;
+        StartCoroutine_Auto(routine: System.Collections.IEnumerator): UnityEngine.Coroutine;
+        StopCoroutine(routine: System.Collections.IEnumerator): void;
+        StopCoroutine(routine: UnityEngine.Coroutine): void;
+        StopCoroutine(methodName: string): void;
+        StopAllCoroutines(): void;
+        GetComponent(type: System.Type): UnityEngine.Component;
+        GetComponent(type: string): UnityEngine.Component;
+        GetComponentInChildren(t: System.Type, includeInactive: boolean): UnityEngine.Component;
+        GetComponentInChildren(t: System.Type): UnityEngine.Component;
+        GetComponentsInChildren(t: System.Type, includeInactive: boolean): UnityEngine.Component[];
+        GetComponentsInChildren(t: System.Type): UnityEngine.Component[];
+        GetComponentInParent(t: System.Type, includeInactive: boolean): UnityEngine.Component;
+        GetComponentInParent(t: System.Type): UnityEngine.Component;
+        GetComponentsInParent(t: System.Type, includeInactive: boolean): UnityEngine.Component[];
+        GetComponentsInParent(t: System.Type): UnityEngine.Component[];
+        GetComponents(type: System.Type): UnityEngine.Component[];
+        GetComponents(type: System.Type, results: UnityEngine.Component[]): void;
+        GetComponentIndex(): number;
+        CompareTag(tag: string): boolean;
+        CompareTag(tag: UnityEngine.TagHandle): boolean;
+        SendMessageUpwards(methodName: string, value: any, options: UnityEngine.SendMessageOptions): void;
+        SendMessageUpwards(methodName: string, value: any): void;
+        SendMessageUpwards(methodName: string): void;
+        SendMessageUpwards(methodName: string, options: UnityEngine.SendMessageOptions): void;
+        SendMessage(methodName: string, value: any): void;
+        SendMessage(methodName: string): void;
+        SendMessage(methodName: string, value: any, options: UnityEngine.SendMessageOptions): void;
+        SendMessage(methodName: string, options: UnityEngine.SendMessageOptions): void;
+        BroadcastMessage(methodName: string, parameter: any, options: UnityEngine.SendMessageOptions): void;
+        BroadcastMessage(methodName: string, parameter: any): void;
+        BroadcastMessage(methodName: string): void;
+        BroadcastMessage(methodName: string, options: UnityEngine.SendMessageOptions): void;
+        GetEntityId(): UnityEngine.EntityId;
+        GetInstanceID(): number;
+        GetHashCode(): number;
+        Equals(other: any): boolean;
+        ToString(): string;
+        GetType(): System.Type;
+      }
+      export class ClipPathRaycastFilter {
+        constructor();
+        destroyCancellationToken: System.Threading.CancellationToken;
+        useGUILayout: boolean;
+        didStart: boolean;
+        didAwake: boolean;
+        runInEditMode: boolean;
+        enabled: boolean;
+        isActiveAndEnabled: boolean;
+        transform: UnityEngine.Transform;
+        transformHandle: UnityEngine.TransformHandle;
+        gameObject: UnityEngine.GameObject;
+        tag: string;
+        name: string;
+        hideFlags: UnityEngine.HideFlags;
+        Shape: ReactUnity.Types.ClipPath;
+        BoxSize: UnityEngine.Vector2;
+        BoxOffset: UnityEngine.Vector2;
+        ClipBox: UnityEngine.Rect;
+        IsRaycastLocationValid(screenPoint: UnityEngine.Vector2, eventCamera: UnityEngine.Camera): boolean;
+        static Contains(shape: ReactUnity.Types.ClipPath_Resolved, point: UnityEngine.Vector2): boolean;
         IsInvoking(): boolean;
         CancelInvoke(): void;
         Invoke(methodName: string, time: number): void;
@@ -12670,7 +13128,10 @@ export declare namespace ReactUnity {
         Definition: ReactUnity.Types.FilterDefinition;
         BlendMode: ReactUnity.Types.BackgroundBlendMode;
         Isolated: boolean;
+        ClipShape: ReactUnity.Types.ClipPath;
+        HasMask: boolean;
         RenderCount: number;
+        BackdropRenderer: UnityEngine.CanvasRenderer;
         destroyCancellationToken: System.Threading.CancellationToken;
         useGUILayout: boolean;
         didStart: boolean;
@@ -12684,8 +13145,10 @@ export declare namespace ReactUnity {
         tag: string;
         name: string;
         hideFlags: UnityEngine.HideFlags;
-        static Create(cmp: ReactUnity.UGUI.UGUIComponent, definition: ReactUnity.Types.FilterDefinition, blendMode: ReactUnity.Types.BackgroundBlendMode, isolated: boolean): ReactUnity.UGUI.Internal.ElementFilter;
+        static Create(cmp: ReactUnity.UGUI.UGUIComponent, definition: ReactUnity.Types.FilterDefinition, blendMode: ReactUnity.Types.BackgroundBlendMode, isolated: boolean, clipShape: ReactUnity.Types.ClipPath): ReactUnity.UGUI.Internal.ElementFilter;
+        SetMask(images: ReactUnity.Types.ICssValueList<ReactUnity.Types.ImageDefinition>, positionsX: ReactUnity.Types.ICssValueList<Yoga.YogaValue>, positionsY: ReactUnity.Types.ICssValueList<Yoga.YogaValue>, sizes: ReactUnity.Types.ICssValueList<ReactUnity.Types.BackgroundSize>, repeatXs: ReactUnity.Types.ICssValueList<ReactUnity.Types.BackgroundRepeat>, repeatYs: ReactUnity.Types.ICssValueList<ReactUnity.Types.BackgroundRepeat>, mode: ReactUnity.Types.MaskMode): void;
         Detach(): void;
+        SetBackdrop(backdrop: UnityEngine.Texture): void;
         Invalidate(): void;
         IsInvoking(): boolean;
         CancelInvoke(): void;
@@ -13183,8 +13646,14 @@ export declare namespace ReactUnity {
         constructor();
         Size: UnityEngine.Vector2;
         Definition: ReactUnity.Types.ImageDefinition;
+        Pixelated: boolean;
         BackgroundSize: ReactUnity.Types.BackgroundSize;
+        BackgroundPosition: ReactUnity.Types.YogaValue2;
+        BackgroundRepeatX: ReactUnity.Types.BackgroundRepeat;
+        BackgroundRepeatY: ReactUnity.Types.BackgroundRepeat;
         materialForRendering: UnityEngine.Material;
+        Surface: ReactUnity.UGUI.Internal.BackdropSurface;
+        BackdropRenderer: UnityEngine.CanvasRenderer;
         sprite: UnityEngine.Sprite;
         overrideSprite: UnityEngine.Sprite;
         type: UnityEngine.UI.Image_Type;
@@ -13236,10 +13705,8 @@ export declare namespace ReactUnity {
         name: string;
         hideFlags: UnityEngine.HideFlags;
         Context: ReactUnity.ReactContext;
-        BackgroundPosition: ReactUnity.Types.YogaValue2;
-        BackgroundRepeatX: ReactUnity.Types.BackgroundRepeat;
-        BackgroundRepeatY: ReactUnity.Types.BackgroundRepeat;
         SetBackgroundColorAndImage(tint: UnityEngine.Color, image: ReactUnity.Types.ImageDefinition, blendMode?: ReactUnity.Types.BackgroundBlendMode, blendsWithStack?: boolean): void;
+        SetBackdrop(value: UnityEngine.Texture): void;
         DisableSpriteOptimizations(): void;
         OnBeforeSerialize(): void;
         OnAfterDeserialize(): void;
@@ -13442,6 +13909,10 @@ export declare namespace ReactUnity {
         constructor();
         Size: UnityEngine.Vector2;
         Definition: ReactUnity.Types.ImageDefinition;
+        Slice: ReactUnity.Types.BorderImageSlice;
+        Repeat: ReactUnity.Types.ICssFourDirectional<ReactUnity.Types.BackgroundRepeat>;
+        Outset: ReactUnity.Types.ICssFourDirectional<Yoga.YogaValue>;
+        Width: ReactUnity.Types.ICssFourDirectional<Yoga.YogaValue>;
         mainTexture: UnityEngine.Texture;
         materialForRendering: UnityEngine.Material;
         onCullStateChanged: UnityEngine.UI.MaskableGraphic_CullStateChangedEvent;
@@ -13469,10 +13940,6 @@ export declare namespace ReactUnity {
         tag: string;
         name: string;
         hideFlags: UnityEngine.HideFlags;
-        Slice: ReactUnity.Types.BorderImageSlice;
-        Repeat: ReactUnity.Types.ICssFourDirectional<ReactUnity.Types.BackgroundRepeat>;
-        Outset: ReactUnity.Types.ICssFourDirectional<Yoga.YogaValue>;
-        Width: ReactUnity.Types.ICssFourDirectional<Yoga.YogaValue>;
         Context: ReactUnity.ReactContext;
         SetBorderImage(image: ReactUnity.Types.ImageDefinition): void;
         GetModifiedMaterial(baseMaterial: UnityEngine.Material): UnityEngine.Material;
@@ -13556,6 +14023,8 @@ export declare namespace ReactUnity {
       }
       export class WebFilter {
         constructor();
+        Surface: ReactUnity.UGUI.Internal.BackdropSurface;
+        BackdropRenderer: UnityEngine.CanvasRenderer;
         materialForRendering: UnityEngine.Material;
         IsBackdrop: boolean;
         Definition: ReactUnity.Types.FilterDefinition;
@@ -13586,6 +14055,7 @@ export declare namespace ReactUnity {
         name: string;
         hideFlags: UnityEngine.HideFlags;
         MaskRoot: UnityEngine.Transform;
+        SetBackdrop(value: UnityEngine.Texture): void;
         GetModifiedMaterial(baseMaterial: UnityEngine.Material): UnityEngine.Material;
         Cull(clipRect: UnityEngine.Rect, validRect: boolean): void;
         SetClipRect(clipRect: UnityEngine.Rect, validRect: boolean): void;

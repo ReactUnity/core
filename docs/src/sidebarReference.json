@@ -168,6 +168,10 @@
               "path": "/reference/css/filter"
             },
             {
+              "title": "Font Family",
+              "path": "/reference/css/font-family"
+            },
+            {
               "title": "Image Rendering",
               "path": "/reference/css/image-rendering"
             },

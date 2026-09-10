@@ -1,0 +1,87 @@
+---
+title: Font Family
+---
+
+Names the fonts an element draws its text with, most wanted first.
+
+```css
+font-family: "Inter", "Noto Sans CJK", sans-serif;
+```
+
+Each entry is either a family declared by [`@font-face`](#font-face) or a `url()` pointing straight at a font asset. The first entry that loads is the font; the ones after it supply the glyphs it has none of, which is how a CJK or emoji face is reached. `sans-serif` and `monospace` are declared by ReactUnity itself and are always available.
+
+A single name is a list of one, so `font-family: "Inter"` behaves the same way — it just has nothing to fall back to.
+
+## @font-face {/*font-face*/}
+
+A `@font-face` rule gives a font asset a name. Several rules may name the same family; together they are its faces, and `font-weight` and `font-style` on the element pick between them.
+
+```css
+@font-face {
+  font-family: "Inter";
+  src: url(resource:Fonts/Inter-Regular);
+}
+
+@font-face {
+  font-family: "Inter";
+  font-weight: 700;
+  src: url(resource:Fonts/Inter-Bold);
+}
+
+@font-face {
+  font-family: "Inter";
+  font-style: italic;
+  src: url(resource:Fonts/Inter-Italic);
+}
+```
+
+With those three rules, `font-weight: bold` on any element inheriting `font-family: "Inter"` draws with the bold asset — the child never names the family again.
+
+| Descriptor | Accepts | Default |
+| --- | --- | --- |
+| `font-family` | The name this face is filed under. Required. | |
+| `src` | `url()` or `resource()`, one or several separated by commas. The first that loads wins. Required. | |
+| `font-weight` | `normal`, `bold`, or a multiple of 100 from `100` to `900`. | `normal` |
+| `font-style` | `normal`, `italic` or `oblique`. | `normal` |
+
+`local()` entries in `src` are skipped, because Unity cannot hand out a system font as a font asset, and `format()` and `tech()` hints are ignored — a font asset has already been built by the time CSS sees it. `unicode-range` is not implemented: which face covers a character is decided per glyph by the font itself, not by a declared range.
+
+## How a face is chosen {/*how-a-face-is-chosen*/}
+
+Slope is matched first, then weight, following [CSS Fonts 4](https://www.w3.org/TR/css-fonts-4/#font-style-matching). A weight with no face of its own takes the nearest declared one — upward from `600`, downward from `300`, and `400` reaches for `500` before anything lighter.
+
+When the chosen face is the one declared for the element's weight or slope, TextMeshPro's synthetic bold and skew are switched off: the asset already is that variant. A family that declares only one face keeps the old behaviour, where the weight goes to the asset's own weight table and is faked if that is empty.
+
+Fallbacks are wired into the first font's own fallback table, which is the only per-glyph fallback TextMeshPro has. That table belongs to the font asset rather than to the element, so a fallback declared behind a font anywhere is reachable behind it everywhere. Lists are merged rather than replaced, so an element naming fewer fallbacks never takes another's away.
+
+<Sandpack>
+
+```js
+export default function App() {
+  return <>
+    <view className="one">The quick brown fox</view>
+    <view className="two">The quick brown fox</view>
+    <view className="three">The quick brown fox</view>
+  </>;
+}
+```
+
+```css active
+view {
+  font-size: 24px;
+}
+
+.one {
+  font-family: sans-serif;
+}
+
+.two {
+  font-family: "Not Installed", monospace;
+}
+
+.three {
+  font: bold 24px monospace, sans-serif;
+}
+```
+
+</Sandpack>

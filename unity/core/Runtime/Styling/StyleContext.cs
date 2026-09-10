@@ -1,7 +1,9 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using ExCSS;
 using ReactUnity.Helpers.Visitors;
+using ReactUnity.Styling.Computed;
 using ReactUnity.Styling.Rules;
 using ReactUnity.Types;
 
@@ -19,7 +21,7 @@ namespace ReactUnity.Styling
         /// same layer in all of them and takes its place from the first sheet that mentions it.
         /// </summary>
         internal readonly CascadeLayers Layers = new CascadeLayers();
-        public readonly List<Dictionary<string, FontReference>> FontFamilies = new List<Dictionary<string, FontReference>>();
+        public readonly List<Dictionary<string, List<FontFace>>> FontFamilies = new List<Dictionary<string, List<FontFace>>>();
         public readonly List<Dictionary<string, KeyframeList>> Keyframes = new List<Dictionary<string, KeyframeList>>();
         public readonly List<Dictionary<string, RegisteredProperty>> RegisteredProperties = new List<Dictionary<string, RegisteredProperty>>();
         public readonly List<StyleSheet> StyleSheets = new List<StyleSheet>();
@@ -206,14 +208,91 @@ namespace ReactUnity.Styling
             if (Layers.Rebuild(StyleSheets.Select(x => x.LayerNames))) StyleTree.RefreshLayers();
         }
 
-        public FontReference GetFontFamily(string name)
+        /// <summary>The regular upright face of a family, which is what a name on its own asks for.</summary>
+        public FontReference GetFontFamily(string name) => GetFontFace(name, FontFace.NormalWeight, false)?.Reference;
+
+        /// <summary>
+        /// The face of <paramref name="name"/> that best fits the weight and slope, over every attached
+        /// sheet, or null when no sheet declares the family. Later rules win a tie, as the cascade does.
+        /// </summary>
+        public FontFace GetFontFace(string name, int weight, bool italic)
         {
-            for (int i = FontFamilies.Count - 1; i >= 0; i--)
+            if (name == null) return null;
+
+            FontFace best = null;
+            var bestScore = int.MaxValue;
+
+            for (int i = 0; i < FontFamilies.Count; i++)
             {
-                var list = FontFamilies[i];
-                if (list.TryGetValue(name, out var found)) return found;
+                if (!FontFamilies[i].TryGetValue(name, out var faces)) continue;
+
+                for (int j = 0; j < faces.Count; j++)
+                {
+                    var score = faces[j].MatchScore(weight, italic);
+                    if (score > bestScore) continue;
+
+                    bestScore = score;
+                    best = faces[j];
+                }
             }
-            return null;
+
+            return best;
+        }
+
+        /// <summary>
+        /// The reference a <c>font-family</c> list resolves to for one weight and slope. Cached, because
+        /// the resolution is read on every style pass and its result is compared by identity -- a fresh
+        /// one each time would reload the font asset every frame.
+        /// </summary>
+        internal FontReference ResolveFontFamily(ComputedFontFamily list, int weight, bool italic)
+        {
+            var key = new FontQuery(list, weight, italic);
+            if (ResolvedFonts.TryGetValue(key, out var cached)) return cached;
+
+            List<FontCandidate> candidates = null;
+
+            for (int i = 0; i < list.Entries.Count; i++)
+            {
+                var entry = list.Entries[i];
+
+                if (entry is FontReference direct)
+                {
+                    (candidates ??= new List<FontCandidate>()).Add(new FontCandidate(direct));
+                    continue;
+                }
+
+                var face = GetFontFace(entry as string, weight, italic);
+                if (face == null) continue;
+
+                (candidates ??= new List<FontCandidate>()).Add(
+                    new FontCandidate(face.Reference, face.Weight == weight, face.Italic == italic));
+            }
+
+            var resolved = candidates == null ? FontReference.None : new FontFamilyReference(candidates);
+            return ResolvedFonts[key] = resolved;
+        }
+
+        private readonly Dictionary<FontQuery, FontReference> ResolvedFonts = new Dictionary<FontQuery, FontReference>();
+
+        /// <summary>Discards the resolutions, which a sheet coming or going may have changed.</summary>
+        internal void RefreshFontFamilies() => ResolvedFonts.Clear();
+
+        private struct FontQuery : IEquatable<FontQuery>
+        {
+            private readonly ComputedFontFamily List;
+            private readonly int Weight;
+            private readonly bool Italic;
+
+            public FontQuery(ComputedFontFamily list, int weight, bool italic)
+            {
+                List = list;
+                Weight = weight;
+                Italic = italic;
+            }
+
+            public bool Equals(FontQuery other) => Weight == other.Weight && Italic == other.Italic && List.Equals(other.List);
+            public override bool Equals(object obj) => obj is FontQuery other && Equals(other);
+            public override int GetHashCode() => (List.GetHashCode() * 397 ^ Weight) * 2 + (Italic ? 1 : 0);
         }
 
         public KeyframeList GetKeyframes(string name)

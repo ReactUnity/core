@@ -53,6 +53,7 @@ namespace ReactUnity.UGUI
                         if (ft?.TmpFontAsset)
                         {
                             var asset = ft.TmpFontAsset;
+                            FontFallbacks.Apply(asset, ft.Fallbacks);
                             Text.font = asset;
                             var style = ComputedStyle;
                             RecalculateFontStyleAndWeight(style.fontStyle, style.fontWeight, style.textTransform);
@@ -239,16 +240,26 @@ namespace ReactUnity.UGUI
             styles = styles & ResetTextTransform;
             var finalStyle = styles;
 
+            // A `@font-face` that named this weight or this slope already gave us the face for it, so
+            // neither TMP's own weight table nor its synthetic bold and skew have anything left to do.
+            var resolved = font?.CachedValue;
+
+            if (resolved != null && resolved.MatchesItalic) finalStyle = finalStyle & ~FontStyles.Italic;
+            var appliedWeight = resolved != null && resolved.MatchesWeight ? FontWeight.Regular : weight;
+
             if (Text.font)
             {
-                var weightIndex = ((int) weight / 100) - 1;
-                var isItalic = styles.HasFlag(FontStyles.Italic);
-                var assignedWeight = Text.font.fontWeightTable[weightIndex];
-                var wg = isItalic ? assignedWeight.italicTypeface : assignedWeight.regularTypeface;
-
-                if (!wg && weightIndex >= 6)
+                if (resolved == null || !resolved.MatchesWeight)
                 {
-                    finalStyle = finalStyle | FontStyles.Bold;
+                    var weightIndex = ((int) weight / 100) - 1;
+                    var isItalic = styles.HasFlag(FontStyles.Italic);
+                    var assignedWeight = Text.font.fontWeightTable[weightIndex];
+                    var wg = isItalic ? assignedWeight.italicTypeface : assignedWeight.regularTypeface;
+
+                    if (!wg && weightIndex >= 6)
+                    {
+                        finalStyle = finalStyle | FontStyles.Bold;
+                    }
                 }
 
                 if (transform == TextTransform.UpperCase) finalStyle = finalStyle | FontStyles.UpperCase;
@@ -259,7 +270,7 @@ namespace ReactUnity.UGUI
             // Assigned once, and only on a change: TMP rebuilds the mesh on every assignment, and
             // this runs on each style application -- every frame while an animation is going.
             if (Text.fontStyle != finalStyle) Text.fontStyle = finalStyle;
-            if (Text.fontWeight != weight) Text.fontWeight = weight;
+            if (Text.fontWeight != appliedWeight) Text.fontWeight = appliedWeight;
         }
 
         /// <summary>

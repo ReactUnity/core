@@ -234,7 +234,11 @@ namespace ReactUnity.UIToolkit
 #endif
                     else TargetElement.style.unityFont = ResourcesHelper.DefaultFont;
 #if REACT_TEXTCORE
-                    if (x?.TextCoreFontAsset != null) TargetElement.style.unityFontDefinition = FontDefinition.FromSDFFont(x?.TextCoreFontAsset);
+                    if (x?.TextCoreFontAsset != null)
+                    {
+                        FontFallbacks.Apply(x.TextCoreFontAsset, x.Fallbacks);
+                        TargetElement.style.unityFontDefinition = FontDefinition.FromSDFFont(x?.TextCoreFontAsset);
+                    }
 #endif
                 });
             }

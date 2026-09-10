@@ -1,6 +1,6 @@
 //
 // Types in assemblies: UnityEngine.AIModule, UnityEngine.CoreModule, UnityEngine.PropertiesModule, Unity.InputSystem, UnityEngine.AudioModule, UnityEngine.UIModule, UnityEngine.TextRenderingModule, UnityEngine.AnimationModule, UnityEngine.IMGUIModule, UnityEngine.UnityAnalyticsModule, UnityEngine.ParticleSystemModule, UnityEngine.UnityWebRequestModule, UnityEngine.PhysicsModule, UnityEngine.InputLegacyModule, UnityEngine.UnityAnalyticsCommonModule, UnityEngine.UI, UnityEngine.VideoModule, UnityEngine.TestRunner, UnityEngine.TextCoreFontEngineModule, UnityEngine.TextCoreTextEngineModule, UnityEngine.UIElementsModule, UnityEngine.XRModule
-// Generated 09/09/2026 02:34:01
+// Generated 10/09/2026 08:38:57
 //
 /* eslint-disable */
 

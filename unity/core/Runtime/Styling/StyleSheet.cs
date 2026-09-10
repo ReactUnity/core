@@ -18,7 +18,11 @@ namespace ReactUnity.Styling
         public readonly int ImportanceOffset;
         public readonly MediaQueryList Media;
 
-        public readonly Dictionary<string, FontReference> FontFamilies = new Dictionary<string, FontReference>();
+        /// <summary>
+        /// The <c>@font-face</c> rules of this sheet, grouped by family. Every rule naming one family
+        /// is a face of it, which is how a family declares its weights and its italics.
+        /// </summary>
+        public readonly Dictionary<string, List<FontFace>> FontFamilies = new Dictionary<string, List<FontFace>>();
         public readonly Dictionary<string, KeyframeList> Keyframes = new Dictionary<string, KeyframeList>();
         public readonly Dictionary<string, RegisteredProperty> RegisteredProperties = new Dictionary<string, RegisteredProperty>();
         public readonly List<MediaQueryList> MediaQueries = new List<MediaQueryList>();
@@ -272,8 +276,13 @@ namespace ReactUnity.Styling
                 }
                 else if (child is IFontFaceRule ffr)
                 {
-                    FontFamilies[StringConverter.Normalize(ffr.Family)] =
-                        AllConverters.FontReferenceConverter.TryGetConstantValue(ffr.Source, FontReference.None);
+                    var face = FontFace.Create(ffr);
+                    if (face != null)
+                    {
+                        if (!FontFamilies.TryGetValue(face.Family, out var faces))
+                            FontFamilies[face.Family] = faces = new List<FontFace>();
+                        faces.Add(face);
+                    }
                 }
                 else if (child is StyleRule str)
                 {
@@ -348,6 +357,7 @@ namespace ReactUnity.Styling
                 mql.OnUpdate += ResolveStyle;
 
             Context.FontFamilies.Add(FontFamilies);
+            Context.RefreshFontFamilies();
             Context.Keyframes.Add(Keyframes);
             Context.RegisteredProperties.Add(RegisteredProperties);
 
@@ -365,6 +375,7 @@ namespace ReactUnity.Styling
                 mql.OnUpdate -= ResolveStyle;
 
             Context.FontFamilies.Remove(FontFamilies);
+            Context.RefreshFontFamilies();
             Context.Keyframes.Remove(Keyframes);
             Context.RegisteredProperties.Remove(RegisteredProperties);
 
