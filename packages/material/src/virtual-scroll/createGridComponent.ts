@@ -374,6 +374,10 @@ export function createGridComponent({
           children: items,
           ref: innerRef,
           style: {
+            // The cells are absolutely positioned, so this box has no content height to hold it
+            // open -- without this the scroll's flex-shrink collapses it back to the viewport and
+            // nothing ever overflows, which means no scrollbar and no scrolling.
+            flexShrink: 0,
             height: estimatedTotalHeight,
             pointerEvents: isScrolling ? 'none' : undefined,
             width: estimatedTotalWidth,

@@ -71,7 +71,7 @@ function App() {
       </scroll>
 
       <scroll className={'flex-1'}>
-        <view className={'mx-auto w-full max-w-4xl shrink-0 items-stretch p-10'}>
+        <view className={'mx-auto w-full max-w-5xl shrink-0 items-stretch p-10'}>
           <AppRoutes />
         </view>
       </scroll>
