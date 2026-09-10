@@ -1,0 +1,58 @@
+---
+title: Text Shadow
+---
+
+Draws a shadow behind the glyphs of a text element. Check out the [MDN](https://developer.mozilla.org/en-US/docs/Web/CSS/text-shadow) for how to use. The grammar is [`box-shadow`](/reference/css/box-shadow)'s without the spread radius and without `inset`, which is what CSS specifies for this property too.
+
+<Sandpack>
+
+```js
+export default function App() {
+  return <>
+    <text className="one">Offset shadow</text>
+    <text className="two">Soft glow</text>
+    <text className="three">Hard outline shadow</text>
+  </>;
+}
+```
+
+```css active
+:root {
+  padding: 24px;
+  gap: 20px;
+  background-color: #22262b;
+}
+
+text {
+  font-size: 34px;
+  color: white;
+}
+
+.one {
+  text-shadow: 3px 3px black;
+}
+
+.two {
+  text-shadow: 0 0 12px deepskyblue;
+}
+
+.three {
+  color: gold;
+  text-shadow: 2px 2px 0 crimson;
+}
+```
+
+</Sandpack>
+
+## Values {/*values*/}
+
+- `none` (default).
+- `<x-offset> <y-offset> <blur>? <color>?` -- the offsets are required, the blur radius and the color are not. The color defaults to [`color`](/reference/css/color), and the offsets follow the web's axes: positive y moves the shadow down.
+
+## Notes {/*notes*/}
+
+- **Only the first shadow in the list is drawn.** TextMeshPro renders the shadow as its underlay, and a material has one underlay -- so a comma-separated list parses and animates, but the second and later shadows have nothing to draw with.
+- The property is inherited, unlike `box-shadow`.
+- The offset and blur are converted from pixels into the padding TextMeshPro leaves around each glyph in its atlas. That padding is finite: an offset far larger than the font size is clamped at the edge of it rather than continuing to move.
+- The shadow costs a material variant. Elements that end up with the same stroke and shadow share one, so a rule applied to many elements is a single extra material rather than one each.
+- For a shadow around the element's box instead of its glyphs, use [`box-shadow`](/reference/css/box-shadow); for an outline drawn along the glyph edges, use `text-stroke`.

@@ -1,0 +1,79 @@
+---
+title: Border Image
+---
+
+Paints an image around the element's edges, cut into nine pieces so the corners keep their shape while the sides stretch or tile to fit. Check out the [MDN](https://developer.mozilla.org/en-US/docs/Web/CSS/border-image) for how to use.
+
+The longhands are:
+
+- `border-image-source`
+- `border-image-slice`
+- `border-image-width`
+- `border-image-outset`
+- `border-image-repeat`
+
+<Sandpack>
+
+```js
+export default function App() {
+  return <>
+    <view className="frame">
+      <text>Nine-slice</text>
+    </view>
+  </>;
+}
+```
+
+```css active
+:root {
+  padding: 30px;
+  align-items: center;
+  background-color: #22262b;
+}
+
+.frame {
+  width: 300px;
+  height: 170px;
+  align-items: center;
+  justify-content: center;
+
+  border-image-source: url(res:border-image);
+  border-image-slice: 80 72 84;
+  border-image-width: 40 36 42;
+  border-image-repeat: round;
+}
+
+text {
+  color: white;
+  font-size: 22px;
+}
+```
+
+</Sandpack>
+
+## The shorthand {/*the-shorthand*/}
+
+`border-image` sets all five at once. The source comes first, and the slice, width, outset and repeat follow it in that order, each in its own `/`-separated part and each optional:
+
+```css
+view {
+  border-image: url(res:border-image) 80 fill / 40 / 0 / round;
+}
+```
+
+CSS writes the repeat without a slash, directly after the outset. Here every component gets its own part, so `... / 0 round` is not understood -- write `... / 0 / round`, or drop the outset and write `... / 40 / round`.
+
+## Values {/*values*/}
+
+- `border-image-source` -- a `url()`, as [`background-image`](/reference/css/background-image) takes. `none` (the default) draws nothing.
+- `border-image-slice` -- where to cut the source, one to four values measured against the *image*: a bare number is pixels of the image, a percentage is a share of it. Adding `fill` keeps the middle piece and paints it behind the element's content.
+- `border-image-width` -- how wide the painted edges are on the *element*, one to four values in pixels or percentages of the element.
+- `border-image-outset` -- how far outside the element's box the whole thing is pushed, one to four values. Defaults to `0`.
+- `border-image-repeat` -- `stretch` (the default), `repeat`, `round` or `space`, per side. CSS takes one or two values here; up to four are accepted, in the usual top/right/bottom/left order.
+
+## Notes {/*notes*/}
+
+- **Give it a width.** `border-image-width` defaults to `auto`, and unlike a browser that does not fall back to the slice size -- nothing is drawn until the width is a length or a percentage. This is the usual reason a border image does not appear.
+- The border image is painted over the element's own border rather than replacing it, which is the other difference from CSS. Leave [`border-style`](/reference/css/border-style) at `none`, or the width at `0`, if you do not want both.
+- The image's geometry comes from `border-image-width` and `border-image-outset` alone, never from [`border-width`](/reference/css/border-width), so an element needs no border of its own for one to be drawn. It also means the frame takes no space in layout: give the element padding if its content should clear the image.
+- Slice, width and outset all animate; the source and the repeat swap at the halfway point.

@@ -1,0 +1,59 @@
+---
+title: Text Transform
+---
+
+Changes the case the text is drawn in, without changing the text itself. Check out the [MDN](https://developer.mozilla.org/en-US/docs/Web/CSS/text-transform) for how to use.
+
+<Sandpack>
+
+```js
+export default function App() {
+  const values = ['none', 'uppercase', 'lowercase', 'capitalize', 'small-caps'];
+
+  return <>
+    {values.map(v => (
+      <view key={v} className="row">
+        <text className="label">{v}</text>
+        <text style={{ textTransform: v }}>the QUICK brown fox</text>
+      </view>
+    ))}
+  </>;
+}
+```
+
+```css active
+:root {
+  padding: 20px;
+  gap: 10px;
+  background-color: #eef1f4;
+}
+
+.row {
+  flex-direction: row;
+  align-items: center;
+  gap: 14px;
+}
+
+.label {
+  width: 100px;
+  color: #667;
+  font-size: 13px;
+}
+```
+
+</Sandpack>
+
+## Values {/*values*/}
+
+- `none` (default), and `normal`, which is the same thing.
+- `uppercase`
+- `lowercase`
+- `capitalize`
+- `small-caps` -- lowercase letters drawn as smaller capitals.
+
+## Notes {/*notes*/}
+
+- **`font-variant` and `font-variant-caps` set this same property.** TextMeshPro's small caps are a case transform rather than a font feature, which is why they arrive here: `font-variant: small-caps` and `text-transform: small-caps` do the same thing, and the later of the two wins. `all-small-caps`, `petite-caps` and `all-petite-caps` are read as `small-caps`, since there is one form to give them.
+- `uppercase`, `lowercase` and `small-caps` are drawn by TextMeshPro without touching the string, so the text a script reads back is the text you wrote.
+- `capitalize` is the exception: it is applied by rewriting the string, using the current culture's title casing. That means it capitalizes each word rather than each letter after a non-letter, and a word already in capitals is left alone -- both of which differ slightly from what a browser does.
+- The property is inherited.

@@ -1,0 +1,68 @@
+---
+title: White Space
+---
+
+Decides whether text wraps and whether the whitespace in it is collapsed. It is the CSS property described at [MDN Docs](https://developer.mozilla.org/en-US/docs/Web/CSS/white-space), and `text-wrap` is another name for the same property here rather than a separate one.
+
+<Sandpack>
+
+```js
+export default function App() {
+  const modes = ['normal', 'nowrap', 'pre', 'pre-wrap'];
+  const [mode, setMode] = React.useState('normal');
+
+  return <>
+    <view className="row">
+      {modes.map(m => (
+        <button key={m} onClick={() => setMode(m)} className={m === mode ? 'on' : ''}>{m}</button>
+      ))}
+    </view>
+
+    <text className="sample" style={{ whiteSpace: mode }}>
+      {'  A line with    runs of spaces,\n  a newline, and enough words to need wrapping.'}
+    </text>
+  </>;
+}
+```
+
+```css active
+.row {
+  display: flex;
+  gap: 6px;
+  margin-bottom: 12px;
+}
+
+button {
+  padding: 4px 10px;
+  background-color: #d8dde3;
+  border-radius: 4px;
+}
+
+button.on {
+  background-color: coral;
+  color: white;
+}
+
+.sample {
+  width: 240px;
+  padding: 8px;
+  background-color: #eef1f4;
+}
+```
+
+</Sandpack>
+
+## Values {/*values*/}
+
+- `normal` (default) -- whitespace is collapsed and the text wraps.
+- `nowrap` -- whitespace is collapsed and the text does not wrap.
+- `pre` -- whitespace is preserved and the text does not wrap.
+- `pre-wrap` -- whitespace is preserved and the text wraps.
+- `pre-line` -- the text wraps, but whitespace is collapsed rather than only the spaces: TextMeshPro keeps or collapses whitespace as a whole, so this is `normal` in practice.
+- `break-spaces` -- behaves as `pre-wrap`.
+
+## Notes {/*notes*/}
+
+- `text-wrap` sets this same property, so `text-wrap: nowrap` and `white-space: nowrap` do the same thing and the later of the two wins. Its `balance`, `pretty` and `stable` values are accepted and read as `wrap`, since TextMeshPro has no way to refine where a line breaks.
+- The property is inherited, so setting it on a container covers the text inside it.
+- Wrapping is what makes a `<text>` measure taller than one line; changing it re-measures the element and can move its siblings.

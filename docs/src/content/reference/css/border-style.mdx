@@ -1,0 +1,71 @@
+---
+title: Border Style
+---
+
+Chooses how the element's border is drawn. Check out the [MDN](https://developer.mozilla.org/en-US/docs/Web/CSS/border-style) for how to use. Nothing is drawn until [`border-width`](/reference/css/border-width) is set, since the style only says what to do with the width the border already has.
+
+Each side can be set separately with the following properties:
+
+- `border-top-style`
+- `border-right-style`
+- `border-bottom-style`
+- `border-left-style`
+
+<Sandpack>
+
+```js
+export default function App() {
+  const styles = ['solid', 'dashed', 'dotted', 'double', 'groove', 'ridge', 'inset', 'outset'];
+
+  return <>
+    {styles.map(s => (
+      <view key={s} className="cell">
+        <view className="swatch" style={{ borderStyle: s }} />
+        <text>{s}</text>
+      </view>
+    ))}
+  </>;
+}
+```
+
+```css active
+:root {
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 14px;
+  padding: 18px;
+  justify-content: center;
+}
+
+.cell {
+  align-items: center;
+  gap: 4px;
+}
+
+.swatch {
+  width: 74px;
+  height: 54px;
+  border-width: 6px;
+  border-color: coral;
+  border-radius: 8px;
+  background-color: #eef1f4;
+}
+```
+
+</Sandpack>
+
+## Values {/*values*/}
+
+- `solid` (default)
+- `none`, and `hidden`, which is the same value here -- the border is not drawn, but the width still takes its space in layout.
+- `dashed` and `dotted`, both tiled along the edge
+- `double`
+- `groove`, `ridge`, `inset` and `outset`, each shading two of the sides to fake a bevel
+
+## Notes {/*notes*/}
+
+- The default is `solid`, not the web's `none`: a `border-width` with no style draws a border here rather than nothing.
+- The style follows [`border-radius`](/reference/css/border-radius) around the corners, dashes and dots included -- they are laid out by arc length, so they stay evenly spaced through a curve.
+- Dashes and dots are sized from the border width: a dot is one width across, a dash three, with a gap of two. There is no `border-dash` or equivalent to set them directly.
+- The same values set [`outline-style`](/reference/css/outline).
+- There is nothing between two border styles, so a transition or a keyframe over this property swaps at the halfway point instead of interpolating. The width and the color animate normally alongside it.

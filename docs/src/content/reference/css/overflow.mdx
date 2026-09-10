@@ -1,0 +1,74 @@
+---
+title: Overflow
+---
+
+Decides what happens to content that does not fit its element. Check out the [MDN](https://developer.mozilla.org/en-US/docs/Web/CSS/overflow) for how to use. `overflow-x` and `overflow-y` set one axis each, and `overflow` is the shorthand for both -- one value sets them together, two set x then y.
+
+<Sandpack>
+
+```js
+export default function App() {
+  const values = ['visible', 'hidden', 'scroll'];
+  const [value, setValue] = React.useState('visible');
+
+  return <>
+    <view className="row">
+      {values.map(v => (
+        <button key={v} onClick={() => setValue(v)} className={v === value ? 'on' : ''}>{v}</button>
+      ))}
+    </view>
+
+    <scroll className="box" style={{ overflow: value }}>
+      <view className="tall" />
+    </scroll>
+  </>;
+}
+```
+
+```css active
+.row {
+  display: flex;
+  gap: 6px;
+  margin-bottom: 12px;
+}
+
+button {
+  padding: 4px 10px;
+  background-color: #d8dde3;
+  border-radius: 4px;
+}
+
+button.on {
+  background-color: coral;
+  color: white;
+}
+
+.box {
+  width: 200px;
+  height: 120px;
+  background-color: #eef1f4;
+}
+
+.tall {
+  width: 300px;
+  height: 300px;
+  background-image: linear-gradient(135deg, coral, deepskyblue);
+}
+```
+
+</Sandpack>
+
+## Values {/*values*/}
+
+- `visible` (default) -- content is drawn past the element's bounds.
+- `hidden` -- content is clipped to the element, following its [`border-radius`](/reference/css/border-radius).
+- `clip` -- read as `hidden`.
+- `scroll` -- the element scrolls.
+- `auto` -- read as `scroll`.
+
+## Notes {/*notes*/}
+
+- **Clipping is not per-axis.** It is a rect mask, which clips both directions -- so `overflow-x: hidden` on a plain element clips the vertical overflow too. The web's "one axis clipped, the other scrolling" is only available on a [`<scroll>`](/reference/components/scroll), below.
+- On a `<scroll>`, hiding one axis is how you ask it to scroll in the other direction only: `overflow-x: hidden` leaves a vertical scroll view, `overflow-y: hidden` a horizontal one. Hiding both, or hiding neither, scrolls both ways.
+- Layout sees one overflow for both axes, since that is all Yoga has, and it is the strongest of the three declarations: `scroll` on either axis beats `hidden`, which beats `visible`.
+- Scrollbars are drawn over the content. `scrollbar-gutter: stable` reserves room for them instead, and `scrollbar-color` and `scrollbar-width` style them -- see [`<scroll>`](/reference/components/scroll) for those and for the `::scrollbar` pseudo-elements.

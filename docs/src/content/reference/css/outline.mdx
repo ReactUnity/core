@@ -1,0 +1,75 @@
+---
+title: Outline
+---
+
+Draws a line around the element, outside its box and without taking part in layout. Check out the [MDN](https://developer.mozilla.org/en-US/docs/Web/CSS/outline) for how to use. `outline` is the shorthand for the width, the style and the color, in any order; `outline-offset` is separate from it, as on the web.
+
+The longhands are:
+
+- `outline-width`
+- `outline-style`
+- `outline-color`
+- `outline-offset`
+
+<Sandpack>
+
+```js
+export default function App() {
+  return <>
+    <view className="card">
+      <text>Hover me</text>
+    </view>
+
+    <view className="card dashed" />
+  </>;
+}
+```
+
+```css active
+:root {
+  flex-direction: row;
+  gap: 40px;
+  padding: 30px;
+  justify-content: center;
+  background-color: #eef1f4;
+}
+
+.card {
+  width: 130px;
+  height: 90px;
+  border-radius: 12px;
+  background-color: white;
+  align-items: center;
+  justify-content: center;
+  transition: outline-width 150ms, outline-offset 150ms;
+  outline: 0 solid deepskyblue;
+  outline-offset: 0;
+}
+
+.card:hover {
+  outline-width: 3px;
+  outline-offset: 4px;
+}
+
+.dashed {
+  outline: 2px dashed coral;
+  outline-offset: 6px;
+}
+```
+
+</Sandpack>
+
+## Values {/*values*/}
+
+- `outline-width` -- a length. `0` (the default) draws nothing.
+- `outline-style` -- the same set as [`border-style`](/reference/css/border-style), defaulting to `solid`. `none` draws nothing whatever the width is.
+- `outline-color` -- a color, defaulting to black.
+- `outline-offset` -- the gap between the element's box and the outline. Defaults to `0`; negative values pull the outline inward over the element.
+
+## Notes {/*notes*/}
+
+- The outline does not affect layout and does not push siblings around, so it is the property to reach for when a highlight must not move anything -- a focus or hover ring, typically.
+- The shorthand only sets the components you name, and leaves the rest as they were. This is the one place it differs from CSS, where the omitted components are reset to their initial values.
+- It follows the element's [`border-radius`](/reference/css/border-radius). The radius is used as declared rather than grown by the offset the way a browser does, so a large offset on a heavily rounded element traces a slightly tighter curve than the same CSS would in a browser.
+- Width, color and offset all animate. Style does not interpolate -- see [`border-style`](/reference/css/border-style).
+- Being drawn outside the box, the outline is clipped by an ancestor's `overflow: hidden` even though the element itself is fully inside it.

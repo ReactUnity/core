@@ -1,0 +1,30 @@
+---
+title: Sorting Layer
+---
+
+Puts the element on one of the project's [sorting layers](https://docs.unity3d.com/Manual/class-TagManager.html), which is how Unity orders what draws over what across the whole scene -- canvases, sprites and particles included. There is no CSS equivalent: this is ReactUnity's own property.
+
+```css
+#hud {
+  sorting-layer: UI;
+}
+
+#tooltip {
+  sorting-layer: Overlay;
+  z-index: 10;
+}
+```
+
+## Values {/*values*/}
+
+- A layer name, as spelled in **Project Settings › Tags and Layers**: `sorting-layer: Foreground`.
+- The layer's index in that same list, as a number.
+
+The default is the layer the element's canvas already uses, which for most projects is `Default`.
+
+## Notes {/*notes*/}
+
+- Sorting layers rank above [`z-index`](/reference/css/z-index): everything on a later layer draws over everything on an earlier one, whatever their z-indexes are. Within one layer, `z-index` decides.
+- Setting either property turns the element into its own Unity `Canvas` with sorting overridden, which is a draw call boundary. It is worth doing for the handful of elements that need to escape their place in the tree, and not worth doing broadly.
+- A name that no layer in the project matches falls back to the default layer rather than failing, since the layer list is a project setting and not something a stylesheet can create.
+- This is a UGUI property. UIToolkit has no sorting layers, and ignores it.

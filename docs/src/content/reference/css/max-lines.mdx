@@ -1,0 +1,69 @@
+---
+title: Max Lines
+---
+
+Limits a text element to a number of lines. `line-clamp` and `-webkit-line-clamp` are other names for this same property, so a stylesheet written for a browser -- or Tailwind's `line-clamp-*` utilities -- applies as it is.
+
+<Sandpack>
+
+```js
+export default function App() {
+  const [lines, setLines] = React.useState(2);
+  const text = 'ReactUnity renders a React tree into Unity, with no DOM anywhere in the middle. Layout is Yoga, styling is a CSS subset, and the components are Unity ones.';
+
+  return <>
+    <view className="row">
+      {[1, 2, 3, 0].map(n => (
+        <button key={n} onClick={() => setLines(n)} className={n === lines ? 'on' : ''}>
+          {n === 0 ? 'no limit' : n}
+        </button>
+      ))}
+    </view>
+
+    <text className="clamped" style={lines ? { maxLines: lines } : {}}>{text}</text>
+  </>;
+}
+```
+
+```css active
+:root {
+  padding: 18px;
+  background-color: #eef1f4;
+}
+
+.row {
+  flex-direction: row;
+  gap: 6px;
+  margin-bottom: 12px;
+}
+
+button {
+  padding: 4px 10px;
+  background-color: #d8dde3;
+  border-radius: 4px;
+}
+
+button.on {
+  background-color: coral;
+  color: white;
+}
+
+.clamped {
+  width: 250px;
+  background-color: white;
+  padding: 8px;
+}
+```
+
+</Sandpack>
+
+## Values {/*values*/}
+
+- A whole number of lines. The default is no limit.
+
+## Notes {/*notes*/}
+
+- The lines past the limit are not drawn, and they are not measured either: a clamped element is as tall as the lines it kept, so the ones below it move up. This is what makes the property useful for a card or a list row of fixed height.
+- Nothing is appended where the text was cut. [`text-overflow`](https://developer.mozilla.org/en-US/docs/Web/CSS/text-overflow) is the separate property for that -- `text-overflow: ellipsis` puts a `…` where the text runs past the element's bounds.
+- The property is inherited, so it can be set on a container rather than on each `<text>`.
+- It interpolates, so a transition on it steps through whole line counts rather than fading -- each step is a re-measure, so animating it is not free.

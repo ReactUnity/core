@@ -1,0 +1,59 @@
+---
+title: Transform
+---
+
+Moves, rotates and scales an element without disturbing layout. Check out the [MDN](https://developer.mozilla.org/en-US/docs/Web/CSS/transform) for how to use.
+
+`transform` is a shorthand here, not a property of its own: it is parsed into [`translate`](/reference/css/translate), `translate-z`, [`rotate`](/reference/css/rotate) and [`scale`](/reference/css/scale), which are what actually apply. Those four are also the ones a transition or a keyframe animates -- see the notes.
+
+<Sandpack>
+
+```js
+export default function App() {
+  return <>
+    <view className="tile a" />
+    <view className="tile b" />
+    <view className="tile c" />
+  </>;
+}
+```
+
+```css active
+:root {
+  flex-direction: row;
+  gap: 40px;
+  padding: 40px;
+  justify-content: center;
+  background-color: #eef1f4;
+}
+
+.tile {
+  width: 80px;
+  height: 80px;
+  background-color: coral;
+  border-radius: 8px;
+}
+
+.a { transform: rotate(20deg); }
+.b { transform: scale(1.3) translateY(-10px); }
+.c { transform: rotateX(55deg) rotate(15deg); }
+```
+
+</Sandpack>
+
+## Functions {/*functions*/}
+
+- `translate()`, `translate3d()`, `translateX()`, `translateY()`, `translateZ()` -- lengths or percentages of the element's own size
+- `rotate()` and `rotateZ()`, `rotateX()`, `rotateY()`, `rotate3d()`
+- `scale()`, `scale3d()`, `scaleX()`, `scaleY()`, `scaleZ()`
+
+`transform-origin` decides the point all of them work around, and `none` resets the lot.
+
+`matrix()`, `matrix3d()`, `skew()`, `skewX()`, `skewY()` and `perspective()` do not exist -- there is nothing behind this shorthand that could hold a shear or a projection.
+
+## Notes {/*notes*/}
+
+- **The order of the functions does not matter.** Repeats of the same kind combine -- two `translateX()` add up, two `scale()` multiply, two rotations compose -- but the three groups are then applied in a fixed order, scale first, then rotation, then translation. A browser applies the list left to right, so `translateX(50px) rotate(45deg)` and `rotate(45deg) translateX(50px)` differ there and are the same thing here.
+- **`var()` does not work inside a function.** Each argument is read as a constant while the shorthand is parsed, and a custom property is not one yet at that point; it falls back to the function's default. Set [`translate`](/reference/css/translate), [`rotate`](/reference/css/rotate) or [`scale`](/reference/css/scale) directly when a value comes from a variable -- those are ordinary properties and resolve `var()` normally.
+- `transition: transform 300ms` works, and covers the four properties the shorthand writes. What is interpolated is each of them separately, though, not the transform list the way CSS defines it -- notably a rotation travels through its Euler angles, so an animation between two three-axis rotations takes a different path than it would in a browser.
+- `translate-z` takes a length only; a percentage is read as `0`. It moves the element along Unity's Z axis, which is what puts one element in front of another in a world-space canvas -- for ordering within a screen-space canvas use [`z-index`](/reference/css/z-index).

@@ -1,0 +1,62 @@
+---
+title: Vertical Align
+---
+
+Places the text block inside the space its element has, on the vertical axis -- the counterpart of `text-align`, which does the same on the horizontal one.
+
+This is not the web's [`vertical-align`](https://developer.mozilla.org/en-US/docs/Web/CSS/vertical-align), which shifts an inline box against its line. There are no inline boxes here, so the property was given the job that TextMeshPro actually has for it.
+
+<Sandpack>
+
+```js
+export default function App() {
+  const values = ['top', 'middle', 'bottom', 'capline'];
+
+  return <>
+    {values.map(v => (
+      <view key={v} className="box">
+        <text style={{ verticalAlign: v }}>{v}</text>
+      </view>
+    ))}
+  </>;
+}
+```
+
+```css active
+:root {
+  flex-direction: row;
+  gap: 12px;
+  padding: 20px;
+  justify-content: center;
+  background-color: #eef1f4;
+}
+
+.box {
+  width: 90px;
+  height: 110px;
+  background-color: white;
+  border-radius: 6px;
+}
+
+text {
+  height: 100%;
+  text-align: center;
+}
+```
+
+</Sandpack>
+
+## Values {/*values*/}
+
+- `top` (default)
+- `middle`
+- `bottom`
+- `baseline` -- the first line's baseline sits at the top of the element.
+- `capline` -- as `top`, but measured from the cap height rather than the ascender, so the tops of the capitals line up with the element's edge.
+- `geometry` -- centered on the rendered glyphs rather than on the line metrics, which centers a short string more convincingly than `middle` does.
+
+## Notes {/*notes*/}
+
+- It applies to the text inside the element, not to the element itself. To move an element within its parent, use `align-self` or the parent's `align-items`.
+- **`text-align` can override it.** TextMeshPro carries both axes in one alignment value, so a `text-align` that names a vertical position -- `top-left`, `bottom-right` and the rest of the combined spellings -- sets the vertical alignment as well, and `vertical-align` is then ignored. It is respected with `text-align` unset, or set to one of the horizontal-only values: `left`, `center`, `right`, `justify`, `flush`, `start` and `end`.
+- The property is inherited.

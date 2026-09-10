@@ -1,0 +1,33 @@
+---
+title: Navigation
+---
+
+Controls how Unity's [EventSystem](https://docs.unity3d.com/Manual/script-Selectable.html) moves focus from one selectable element to the next -- what a gamepad stick or the arrow keys do. There is no CSS equivalent: this is ReactUnity's own property.
+
+It applies to elements that are selectable in the first place: a `<button>`, an `<input>`, a `<toggle>`, an `<anchor>`, and anything else backed by a Unity `Selectable`.
+
+```css
+/* A row of buttons that focus only moves along, not out of. */
+.toolbar button {
+  navigation: horizontal;
+}
+
+/* Reachable by pointer, but skipped by the stick. */
+.decorative {
+  navigation: none;
+}
+```
+
+## Values {/*values*/}
+
+- `automatic` (default) -- Unity picks the nearest selectable in the direction pressed.
+- `horizontal` -- left and right only.
+- `vertical` -- up and down only.
+- `none` -- the element is never navigated to. It can still be clicked.
+- `explicit` -- the directions come from the `Selectable`'s own `selectOnUp`/`selectOnDown`/`selectOnLeft`/`selectOnRight` fields, which nothing in CSS can set. Only useful when a script or a prefab fills them in.
+
+## Notes {/*notes*/}
+
+- `automatic` is what an element gets when the property is not set, and it leaves Unity's own default in place rather than assigning one -- so a `Selectable` configured in a prefab keeps whatever it was given.
+- To take an element out of pointer interaction as well, use [`pointer-events`](/reference/css/pointer-events); `navigation: none` only affects focus movement.
+- This is a UGUI property. UIToolkit has its own focus model and ignores it.

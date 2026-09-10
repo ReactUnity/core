@@ -132,8 +132,16 @@
               "path": "/reference/css/border-color"
             },
             {
+              "title": "Border Image",
+              "path": "/reference/css/border-image"
+            },
+            {
               "title": "Border Radius",
               "path": "/reference/css/border-radius"
+            },
+            {
+              "title": "Border Style",
+              "path": "/reference/css/border-style"
             },
             {
               "title": "Border Width",
@@ -184,12 +192,28 @@
               "path": "/reference/css/mask-image"
             },
             {
+              "title": "Max Lines",
+              "path": "/reference/css/max-lines"
+            },
+            {
               "title": "Mix Blend Mode",
               "path": "/reference/css/mix-blend-mode"
             },
             {
+              "title": "Navigation",
+              "path": "/reference/css/navigation"
+            },
+            {
               "title": "Opacity",
               "path": "/reference/css/opacity"
+            },
+            {
+              "title": "Outline",
+              "path": "/reference/css/outline"
+            },
+            {
+              "title": "Overflow",
+              "path": "/reference/css/overflow"
             },
             {
               "title": "Pointer Events",
@@ -216,6 +240,22 @@
               "path": "/reference/css/scroll-snap"
             },
             {
+              "title": "Sorting Layer",
+              "path": "/reference/css/sorting-layer"
+            },
+            {
+              "title": "Text Shadow",
+              "path": "/reference/css/text-shadow"
+            },
+            {
+              "title": "Text Transform",
+              "path": "/reference/css/text-transform"
+            },
+            {
+              "title": "Transform",
+              "path": "/reference/css/transform"
+            },
+            {
               "title": "Transform Origin",
               "path": "/reference/css/transform-origin"
             },
@@ -224,8 +264,16 @@
               "path": "/reference/css/translate"
             },
             {
+              "title": "Vertical Align",
+              "path": "/reference/css/vertical-align"
+            },
+            {
               "title": "Visibility",
               "path": "/reference/css/visibility"
+            },
+            {
+              "title": "White Space",
+              "path": "/reference/css/white-space"
             },
             {
               "title": "Z Index",
@@ -264,32 +312,38 @@
           ]
         },
         {
-          "title": "CSS Media Queries",
-          "path": "/reference/media-queries"
-        },
-        {
-          "title": "CSS Container Queries",
-          "path": "/reference/container-queries"
-        },
-        {
-          "title": "CSS Feature Queries",
-          "path": "/reference/feature-queries"
-        },
-        {
-          "title": "CSS Cascade Layers",
-          "path": "/reference/cascade-layers"
-        },
-        {
-          "title": "CSS Scoped Styles",
-          "path": "/reference/scoped-styles"
-        },
-        {
-          "title": "CSS Nesting",
-          "path": "/reference/nesting"
-        },
-        {
-          "title": "CSS Registered Properties",
-          "path": "/reference/registered-properties"
+          "title": "CSS Rules",
+          "path": "/reference/rules",
+          "routes": [
+            {
+              "title": "Media Queries",
+              "path": "/reference/rules/media-queries"
+            },
+            {
+              "title": "Container Queries",
+              "path": "/reference/rules/container-queries"
+            },
+            {
+              "title": "Feature Queries",
+              "path": "/reference/rules/feature-queries"
+            },
+            {
+              "title": "Cascade Layers",
+              "path": "/reference/rules/cascade-layers"
+            },
+            {
+              "title": "Scoped Styles",
+              "path": "/reference/rules/scoped-styles"
+            },
+            {
+              "title": "Nesting",
+              "path": "/reference/rules/nesting"
+            },
+            {
+              "title": "Registered Properties",
+              "path": "/reference/rules/registered-properties"
+            }
+          ]
         },
         {
           "hasSectionHeader": true,

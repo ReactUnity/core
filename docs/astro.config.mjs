@@ -20,6 +20,21 @@ export default defineConfig({
     mdx(),
   ],
 
+  // The seven at-rule pages used to sit at the top level of /reference; they moved under
+  // /reference/rules when they were grouped in the sidebar. A static build emits each of
+  // these as a meta-refresh page, which is all GitHub Pages can serve.
+  redirects: Object.fromEntries(
+    [
+      'media-queries',
+      'container-queries',
+      'feature-queries',
+      'cascade-layers',
+      'scoped-styles',
+      'nesting',
+      'registered-properties',
+    ].map((page) => [`/reference/${page}`, `/reference/rules/${page}`])
+  ),
+
   markdown: {
     // Plugins go through `unified()` rather than `markdown.remarkPlugins`, which Astro 7
     // deprecated in favour of configuring the processor directly.

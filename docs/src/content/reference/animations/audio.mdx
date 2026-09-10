@@ -4,9 +4,10 @@ title: Audio
 
 Plays audio in certain situations. This property is unique to React Unity and does not exist in standard CSS.
 
-The property must have the format `<url> <delay> <iteration-count | infinite>`
+The property must have the format `<url> <delay> <iteration-count | infinite> <volume>`, in any order -- each part but the url is optional.
 - Example: `url(res:click) 400ms 1` - Meaning to play the resource named `click` after 400ms delay once
 - Example: `url(res:ambiance) infinite` - Meaning to play the resource named `ambiance` on an infinite loop
+- Example: `url(res:click) 40%` - Meaning to play `click` at 40% volume
 
 <Sandpack>
 
@@ -33,3 +34,32 @@ button:active {
 ```
 
 </Sandpack>
+
+## Longhands {/*longhands*/}
+
+`audio` is a shorthand. Each part is a property of its own, and each takes a comma-separated list so that one rule can start several clips at once -- the same shape [`background-image`](/reference/css/background-image) and the animation properties have.
+
+| Property | Value | Default |
+| --- | --- | --- |
+| `audio-clip` | A `url()` pointing at an audio asset. | none |
+| `audio-delay` | A duration to wait before the clip starts. | `0s` |
+| `audio-iteration-count` | A number, or `infinite`. `0` skips the clip. | `1` |
+| `audio-volume` | A percentage or a number, `1` being the clip's own level. | `1` |
+| `audio-pitch` | A multiplier on playback speed, `1` being the clip's own. `2` is an octave up. | `1` |
+
+```css
+#ambiance {
+  audio-clip: url(res:wind), url(res:birds);
+  audio-iteration-count: infinite, infinite;
+  audio-volume: 30%, 15%;
+  audio-pitch: 1, 0.9;
+}
+```
+
+`audio-pitch` is the one the shorthand cannot set -- a bare number there is read as an iteration count -- so it has to be written as a longhand.
+
+## Notes {/*notes*/}
+
+- Playback starts when the value of `audio-clip` changes, which is what makes a rule on `:hover` or `:active` play a sound once on entering the state. Leaving the state cancels the iterations that have not begun; a clip already sounding runs to its end.
+- The clips are played through one `AudioSource` on the context's host object, with `PlayOneShot`. Volume is fixed per clip as it starts, but pitch belongs to that shared source, so starting a clip at another pitch also shifts anything still sounding.
+- Under UIToolkit there is no `AudioSource`: the context raises its `OnAudioPlayback` event with the clip, volume and pitch instead, and playing it is the host application's job.
