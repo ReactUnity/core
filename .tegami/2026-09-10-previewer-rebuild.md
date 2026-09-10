@@ -9,4 +9,6 @@ The dev server's built-in previewer loads a Unity WebGL player hosted on `reactu
 
 The mismatch was not cosmetic, because the previewer only supplies the *JavaScript* from your dev server: layout, styling and every element the renderer talks to live in the C# inside that player. So it knew nothing about container queries, `:has()`, scroll-driven animations, blend modes, `clip-path`, soft masks or `font-family` fallbacks, and — now that the flex defaults have moved to the web's — it would have laid every one of those containers out the old way. A preview could disagree with a real player about where the boxes went, with nothing on the page to say why.
 
-Nothing else changes: the build is still fetched on first load and cached by the browser, still nothing is downloaded at install time, and a `previewer/` folder in your own project still takes precedence over it.
+It is also a quarter of the download. The player used to be served raw, at ~107 MB, because the host it sits on cannot be told to send `Content-Encoding`; it is now gzip that the Unity loader inflates itself, at ~26 MB. First load pays a decompression pass instead of streaming the wasm straight into the compiler, which is the better trade at that size — and only the first load pays anything, since the browser caches it.
+
+Nothing else changes: nothing is downloaded at install time, and a `previewer/` folder in your own project still takes precedence over the hosted one.

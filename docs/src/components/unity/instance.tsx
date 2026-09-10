@@ -84,9 +84,16 @@ export function Unity({
       const unityInstance: UnityInstance = await globalThis.createUnityInstance(
         canvas,
         {
-          dataUrl: playerFileUrl(sampleName, 'data'),
-          frameworkUrl: playerFileUrl(sampleName, 'framework.js'),
-          codeUrl: playerFileUrl(sampleName, 'wasm'),
+          /*
+           * `.unityweb` is Unity's name for "gzipped, and the loader inflates it itself".
+           * GitHub Pages cannot be told to send `Content-Encoding`, so the alternative to
+           * this is shipping the files raw -- which is what this used to do, at ~82 MB
+           * against ~26 MB now. The cost is streaming compilation: the wasm has to be
+           * inflated in full before the browser can start on it.
+           */
+          dataUrl: playerFileUrl(sampleName, 'data.unityweb'),
+          frameworkUrl: playerFileUrl(sampleName, 'framework.js.unityweb'),
+          codeUrl: playerFileUrl(sampleName, 'wasm.unityweb'),
           streamingAssetsUrl: `${PLAYER_BASE_URL}/${sampleName}/StreamingAssets`,
           companyName: 'reactunity',
           productName: sampleName,

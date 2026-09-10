@@ -75,7 +75,7 @@ The Unity WebGL demos load `https://reactunity.github.io/Unity/<sample>/Build/We
 That player is built by hand from `kitchen-sink`'s `WebInjectable` build profile — the recipe
 and the four ways it goes quietly wrong are in
 [kitchen-sink/README.md](../kitchen-sink/README.md#the-two-hosted-webgl-players).
-It is over 100 MB, so it is not tracked here: it lives permanently under `Unity/` on the
+It is ~26 MB, so it is not tracked here: it lives permanently under `Unity/` on the
 `gh-pages` branch, and the deploy is configured not to wipe it. The URL is absolute rather than
 site-relative precisely because these are never present locally: a dev server would
 otherwise have no player at all.

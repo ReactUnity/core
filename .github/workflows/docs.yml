@@ -62,18 +62,19 @@ jobs:
       # WebInjectable and Previewer build profiles and uploaded there -- see
       # kitchen-sink/README.md; nothing in CI produces them, which has no WebGL module:
       #
-      #   Unity/injectable/Build/WebInjectable.*  (~82 MB) - the players embedded in
+      #   Unity/injectable/Build/WebInjectable.*  (~26 MB) - the players embedded in
       #     the docs examples. docs/src/components/unity/instance.tsx loads
-      #     /Unity/<sample>/Build/WebInjectable.{wasm,data,framework.js,loader.js},
-      #     and defaultUnityInstanceName makes <sample> `injectable`. Same-origin
-      #     with the site, so no CORS involved.
-      #   Unity/previewer/<version>/Build/Previewer.*  (~82 MB) - served to the
+      #     /Unity/<sample>/Build/WebInjectable.{wasm,data,framework.js}.unityweb plus
+      #     an uncompressed .loader.js, and defaultUnityInstanceName makes <sample>
+      #     `injectable`. Same-origin with the site, so no CORS involved.
+      #   Unity/previewer/<version>/Build/Previewer.*  (~26 MB) - served to the
       #     @reactunity/scripts dev server, which is cross-origin. That works because
-      #     GitHub Pages sends Access-Control-Allow-Origin: * and
-      #     Content-Type: application/wasm. See packages/scripts/config/public/index.html.
+      #     GitHub Pages sends Access-Control-Allow-Origin: *. It cannot be told to send
+      #     Content-Encoding, which is why the three big files are .unityweb -- gzip the
+      #     loader inflates itself. See packages/scripts/config/public/index.html.
       #
       # This deploy runs with clean: true, so anything outside Unity/** is replaced on
-      # every run. Dropping the exclude would delete ~165 MB that only exists there and
+      # every run. Dropping the exclude would delete ~52 MB that only exists there and
       # would have to be rebuilt in Unity by hand.
       - name: Deploy to ReactUnity/reactunity.github.io@gh-pages
         if: env.DOCS_DEPLOY_TOKEN != ''

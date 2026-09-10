@@ -113,9 +113,13 @@
   <script>
     /*
      * The Unity build lives on reactunity.github.io rather than in an npm package: it is
-     * ~82 MB, and shipping it as a dependency meant every install paid for it. GitHub
-     * Pages serves it with `Content-Type: application/wasm` and `Access-Control-Allow-Origin: *`,
-     * so streaming compilation works cross-origin from this dev server.
+     * ~26 MB, and shipping it as a dependency meant every install paid for it. GitHub Pages
+     * sends `Access-Control-Allow-Origin: *`, so a cross-origin fetch from this dev server
+     * is fine.
+     *
+     * `.unityweb` is Unity's name for "gzipped, and the loader inflates it itself". Pages
+     * cannot be told to send `Content-Encoding`, so the alternative is shipping the files
+     * raw, which is three times the download. It costs streaming compilation.
      *
      * The version is part of the path on purpose. Unity's loader, framework and wasm are
      * built as a set and are not interchangeable, so each build gets its own directory and
@@ -151,9 +155,9 @@
       if (typeof createUnityInstance !== 'function') return fail();
 
       createUnityInstance(document.getElementById('unity-canvas'), {
-        dataUrl: PREVIEWER_BASE + 'Previewer.data',
-        frameworkUrl: PREVIEWER_BASE + 'Previewer.framework.js',
-        codeUrl: PREVIEWER_BASE + 'Previewer.wasm',
+        dataUrl: PREVIEWER_BASE + 'Previewer.data.unityweb',
+        frameworkUrl: PREVIEWER_BASE + 'Previewer.framework.js.unityweb',
+        codeUrl: PREVIEWER_BASE + 'Previewer.wasm.unityweb',
         // Absolute like the rest. Left relative it would resolve against this dev server,
         // which has no StreamingAssets to serve.
         streamingAssetsUrl: PREVIEWER_BASE + '../StreamingAssets',
