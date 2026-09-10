@@ -32,17 +32,18 @@ namespace ReactUnity.UGUI.Internal
     /// and handed their backdrop as they go, so one that sits over another finds the first one's
     /// result already in it, as on the web.
     ///
-    /// A render apiece is what the exactness costs, and it is not cheap: about 3 ms per reader in
-    /// the editor, of which 1.4 ms is fixed <c>Camera.Render</c> overhead that a smaller target does
-    /// not touch, and the rest is the canvas re-batching for content it has not drawn before. That
-    /// is the price of having no GrabPass, which copies the target for 0.16 ms -- so the built-in
-    /// pipeline keeps grabbing, and this is only for the pipelines that cannot.
+    /// A render apiece is what the exactness costs: about 1.5 ms per reader in the editor, against
+    /// the 0.16 ms a GrabPass takes to copy the target -- so the built-in pipeline keeps grabbing,
+    /// and this is only for the pipelines that cannot. What it must not also cost is a canvas
+    /// rebuild, which is far more than the render; see <see cref="Hide"/>.
     /// </remarks>
     public class BackdropPass
     {
         private readonly List<RenderTexture> surfaces = new List<RenderTexture>();
         private readonly List<Transform> hidden = new List<Transform>();
-        private readonly List<Vector3> scales = new List<Vector3>();
+        private readonly List<CanvasRenderer> dimmed = new List<CanvasRenderer>();
+        private readonly List<float> alphas = new List<float>();
+        private readonly List<CanvasRenderer> buffer = new List<CanvasRenderer>();
 
         /// <summary>
         /// Renders one surface per reader, in the order given, and hands each reader its own.
@@ -91,13 +92,15 @@ namespace ReactUnity.UGUI.Internal
         /// render. False if the reader is not under this canvas, and nothing was touched.
         /// </summary>
         /// <remarks>
-        /// A zero scale, rather than the <c>CanvasRenderer.cull</c> flag that looks like it is for
-        /// exactly this: RectMask2D re-derives cull for every maskable graphic it clips on each
-        /// canvas update, and one of those runs inside the render below -- so the flag survived on
-        /// only the third of the page that no scroll box contained. Disabling the graphics instead
-        /// would hold, but it clears their geometry and dirties them again on the way back, which
-        /// rebuilds the whole page twice a frame. A degenerate transform rasterizes nothing and
-        /// costs a re-batch.
+        /// Zero alpha on the CanvasRenderers, rather than either of the two things that look like
+        /// they are for exactly this. The <c>CanvasRenderer.cull</c> flag does not hold: RectMask2D
+        /// re-derives cull for every maskable graphic it clips on each canvas update, and one of
+        /// those runs inside the render below, so the flag survived on only the third of the page
+        /// that no scroll box contained. A degenerate transform does hold, but it collapses every
+        /// rect beneath it, which sends RectMask2D the other way -- it culls the whole page, clears
+        /// the geometry and rebuilds it on the way back, twice a frame. That cost 33 ms a frame on
+        /// the sample's scrolling page against 8.6 ms for this. Alpha moves no rect, so nothing is
+        /// re-clipped and nothing is re-tessellated; the canvas only re-submits what it already has.
         /// </remarks>
         bool Hide(Transform reader, Transform root)
         {
@@ -105,6 +108,7 @@ namespace ReactUnity.UGUI.Internal
 
             // The reader's own subtree, then every later sibling on the way up to the canvas: the
             // tail of a depth-first walk, in as few transforms as it can be written.
+            hidden.Clear();
             hidden.Add(reader);
             for (var t = reader; t != root; t = t.parent)
             {
@@ -114,8 +118,13 @@ namespace ReactUnity.UGUI.Internal
 
             for (int i = 0; i < hidden.Count; i++)
             {
-                scales.Add(hidden[i].localScale);
-                hidden[i].localScale = Vector3.zero;
+                hidden[i].GetComponentsInChildren(true, buffer);
+                for (int k = 0; k < buffer.Count; k++)
+                {
+                    dimmed.Add(buffer[k]);
+                    alphas.Add(buffer[k].GetAlpha());
+                    buffer[k].SetAlpha(0);
+                }
             }
 
             return true;
@@ -123,9 +132,9 @@ namespace ReactUnity.UGUI.Internal
 
         void Unhide()
         {
-            for (int i = 0; i < hidden.Count; i++) hidden[i].localScale = scales[i];
-            hidden.Clear();
-            scales.Clear();
+            for (int i = 0; i < dimmed.Count; i++) if (dimmed[i]) dimmed[i].SetAlpha(alphas[i]);
+            dimmed.Clear();
+            alphas.Clear();
         }
 
         void EnsureSurfaces(int count, int width, int height)

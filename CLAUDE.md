@@ -145,7 +145,7 @@ Tegami config lives in [scripts/tegami.mts](scripts/tegami.mts) (unrelated to `p
 
 `kitchen-sink/` is both the project ReactUnity is manually tested against and the sample users are pointed at, so it is published standalone on the `kitchen-sink` orphan branch by [release-kitchen-sink.yml](.github/workflows/release-kitchen-sink.yml).
 
-It runs URP, and the filter page is the one place that costs: a backdrop read is a `GrabPass` on built-in and a whole extra camera render without one, so its 22 readers take a frame from ~9 ms to ~50-100 ms in the editor. That is the demo page being a stress test rather than a regression -- see [`backdrop-filter`](docs/src/content/reference/css/backdrop-filter.mdx) for the cost model.
+It runs URP, and the filter page is the one place that costs: a backdrop read is a `GrabPass` on built-in and a whole extra camera render without one, so its 22 readers take a frame from ~9 ms to ~53 ms in the editor. Every other page reads one backdrop -- the root's `backdrop-blur-sm` -- and stays under 13 ms. That is the demo page being a stress test rather than a regression -- see [`backdrop-filter`](docs/src/content/reference/css/backdrop-filter.mdx) for the cost model.
 
 ```bash
 node scripts/kitchen-sink/prepare.mts Logs/kitchen-sink --force
