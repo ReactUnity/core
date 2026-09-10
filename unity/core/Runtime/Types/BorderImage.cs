@@ -7,8 +7,13 @@ using ReactUnity.Styling.Converters;
 
 namespace ReactUnity.Types
 {
+#if (NET_STANDARD_2_0 && !NET_STANDARD_2_1) || (NET_4_6 && !UNITY_2021_2_OR_NEWER)
+    using HashCode = ReactUnity.Helpers.HashCode;
+#else
+    using HashCode = System.HashCode;
+#endif
     [Serializable]
-    public struct BorderImageSlice : Interpolatable
+    public struct BorderImageSlice : Interpolatable, IEquatable<BorderImageSlice>
     {
         public static readonly BorderImageSlice Auto = new BorderImageSlice(YogaValue.Auto(), YogaValue.Auto(), YogaValue.Auto(), YogaValue.Auto(), false);
 
@@ -60,6 +65,19 @@ namespace ReactUnity.Types
             }
             return t > 0.5f ? to : this;
         }
+
+        // Value equality, because the graphic guards a per-frame assignment with it -- and the
+        // default for a struct is a reflective field walk.
+        public override bool Equals(object obj) => obj is BorderImageSlice other && Equals(other);
+
+        public bool Equals(BorderImageSlice other) =>
+            Top == other.Top && Right == other.Right && Bottom == other.Bottom && Left == other.Left && Fill == other.Fill;
+
+        public override int GetHashCode() => HashCode.Combine(Top, Right, Bottom, Left, Fill);
+
+        public static bool operator ==(BorderImageSlice left, BorderImageSlice right) => left.Equals(right);
+
+        public static bool operator !=(BorderImageSlice left, BorderImageSlice right) => !left.Equals(right);
 
         public class Converter : StyleConverterBase
         {

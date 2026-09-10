@@ -14,7 +14,7 @@ namespace ReactUnity.Types
 {
     [Serializable]
     [StructLayout(LayoutKind.Sequential)]
-    public struct YogaValue2 : Interpolatable
+    public struct YogaValue2 : Interpolatable, IEquatable<YogaValue2>
     {
         public static YogaValue2 Zero = new YogaValue2(YogaValue.Point(0), YogaValue.Point(0));
         public static YogaValue2 Undefined = new YogaValue2(YogaValue.Undefined(), YogaValue.Undefined());
@@ -60,12 +60,10 @@ namespace ReactUnity.Types
             return X.Value == 0 && Y.Value == 0;
         }
 
-        public override bool Equals(object obj)
-        {
-            return obj is YogaValue2 value &&
-                   X == value.X &&
-                   Y == value.Y;
-        }
+        public override bool Equals(object obj) => obj is YogaValue2 value && Equals(value);
+
+        // Typed, because `==` is on a per-frame path -- the boxing overload allocated there.
+        public bool Equals(YogaValue2 other) => X == other.X && Y == other.Y;
 
         public override int GetHashCode()
         {

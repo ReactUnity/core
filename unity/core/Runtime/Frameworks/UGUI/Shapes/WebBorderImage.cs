@@ -25,10 +25,74 @@ namespace ReactUnity.UGUI.Shapes
             }
         }
 
-        public BorderImageSlice Slice;
-        public ICssFourDirectional<BackgroundRepeat> Repeat;
-        public ICssFourDirectional<YogaValue> Outset;
-        public ICssFourDirectional<YogaValue> Width;
+        // All four are read by the mesh and by nothing else, and applying a style re-assigns each
+        // of them on every frame the element is visited -- which the caller used to answer with a
+        // blanket SetVerticesDirty, re-tessellating the border on every frame whether or not any
+        // of them had moved. Each setter carries the rebuild instead, so an unchanged frame costs
+        // nothing and a changed one still reaches the mesh.
+        private BorderImageSlice slice;
+        public BorderImageSlice Slice
+        {
+            get => slice;
+            set
+            {
+                if (slice == value) return;
+                slice = value;
+                SetVerticesDirty();
+            }
+        }
+
+        private ICssFourDirectional<BackgroundRepeat> repeat;
+        public ICssFourDirectional<BackgroundRepeat> Repeat
+        {
+            get => repeat;
+            set
+            {
+                if (Same(repeat, value)) return;
+                repeat = value;
+                SetVerticesDirty();
+            }
+        }
+
+        private ICssFourDirectional<YogaValue> outset;
+        public ICssFourDirectional<YogaValue> Outset
+        {
+            get => outset;
+            set
+            {
+                if (Same(outset, value)) return;
+                outset = value;
+                SetVerticesDirty();
+            }
+        }
+
+        private ICssFourDirectional<YogaValue> width;
+        public ICssFourDirectional<YogaValue> Width
+        {
+            get => width;
+            set
+            {
+                if (Same(width, value)) return;
+                width = value;
+                SetVerticesDirty();
+            }
+        }
+
+        // Side by side rather than generically: the interface is implemented both by a class the
+        // style resolver rebuilds and by the struct an animation rebuilds every frame, so neither
+        // reference equality nor a struct's own works -- and `EqualityComparer<T>.Default` boxes
+        // both YogaValues on every side it compares.
+        private static bool Same(ICssFourDirectional<YogaValue> a, ICssFourDirectional<YogaValue> b)
+        {
+            if (a == null || b == null) return ReferenceEquals(a, b);
+            return a.Top == b.Top && a.Right == b.Right && a.Bottom == b.Bottom && a.Left == b.Left;
+        }
+
+        private static bool Same(ICssFourDirectional<BackgroundRepeat> a, ICssFourDirectional<BackgroundRepeat> b)
+        {
+            if (a == null || b == null) return ReferenceEquals(a, b);
+            return a.Top == b.Top && a.Right == b.Right && a.Bottom == b.Bottom && a.Left == b.Left;
+        }
 
 
         private Texture2D texture;
@@ -46,6 +110,9 @@ namespace ReactUnity.UGUI.Shapes
                 {
                     resolved = value;
                     texture = value?.Texture;
+                    // Backs mainTexture and sizes the UVs, so an image resolved after the first
+                    // frame -- anything not already loaded -- needs both halves rebuilt.
+                    SetAllDirty();
                 }
             }
         }
@@ -138,20 +205,20 @@ namespace ReactUnity.UGUI.Shapes
 
             var imageSize = ImageUtils.CalculateImageSize(Size, Resolved?.IntrinsicSize ?? Vector2.zero, Resolved?.IntrinsicProportions ?? 1, BackgroundSize.Auto);
 
-            var topSlice = Slice.Top.GetPointValue(imageSize.y, 0);
-            var leftSlice = Slice.Left.GetPointValue(imageSize.x, 0);
-            var bottomSlice = Slice.Bottom.GetPointValue(imageSize.y, 0);
-            var rightSlice = Slice.Right.GetPointValue(imageSize.x, 0);
+            var topSlice = slice.Top.GetPointValue(imageSize.y, 0);
+            var leftSlice = slice.Left.GetPointValue(imageSize.x, 0);
+            var bottomSlice = slice.Bottom.GetPointValue(imageSize.y, 0);
+            var rightSlice = slice.Right.GetPointValue(imageSize.x, 0);
 
-            var topWidth = Width.Top.GetPointValue(size.y);
-            var leftWidth = Width.Left.GetPointValue(size.x);
-            var bottomWidth = Width.Bottom.GetPointValue(size.y);
-            var rightWidth = Width.Right.GetPointValue(size.x);
+            var topWidth = width.Top.GetPointValue(size.y);
+            var leftWidth = width.Left.GetPointValue(size.x);
+            var bottomWidth = width.Bottom.GetPointValue(size.y);
+            var rightWidth = width.Right.GetPointValue(size.x);
 
-            var topOutset = Outset.Top.GetPointValue(size.y);
-            var leftOutset = Outset.Left.GetPointValue(size.x);
-            var bottomOutset = Outset.Bottom.GetPointValue(size.y);
-            var rightOutset = Outset.Right.GetPointValue(size.x);
+            var topOutset = outset.Top.GetPointValue(size.y);
+            var leftOutset = outset.Left.GetPointValue(size.x);
+            var bottomOutset = outset.Bottom.GetPointValue(size.y);
+            var rightOutset = outset.Right.GetPointValue(size.x);
 
 
 
@@ -243,7 +310,7 @@ namespace ReactUnity.UGUI.Shapes
                 var tileSize = new Vector2(fillXSlice, topSlice);
                 var tileUv = new Rect(u1, v1, u2 - u1, v0 - v1);
 
-                ImageUtils.CreateTiledImageMesh(vh, tileSize, Vector2.zero, tileArea, tileOffset + center, Repeat.Top, BackgroundRepeat.Stretch, color, tileUv);
+                ImageUtils.CreateTiledImageMesh(vh, tileSize, Vector2.zero, tileArea, tileOffset + center, repeat.Top, BackgroundRepeat.Stretch, color, tileUv);
             }
 
 
@@ -255,7 +322,7 @@ namespace ReactUnity.UGUI.Shapes
                 var tileSize = new Vector2(rightSlice, fillYSlice);
                 var tileUv = new Rect(u2, v2, u3 - u2, v1 - v2);
 
-                ImageUtils.CreateTiledImageMesh(vh, tileSize, Vector2.zero, tileArea, tileOffset + center, BackgroundRepeat.Stretch, Repeat.Right, color, tileUv);
+                ImageUtils.CreateTiledImageMesh(vh, tileSize, Vector2.zero, tileArea, tileOffset + center, BackgroundRepeat.Stretch, repeat.Right, color, tileUv);
             }
 
 
@@ -267,7 +334,7 @@ namespace ReactUnity.UGUI.Shapes
                 var tileSize = new Vector2(fillXSlice, bottomSlice);
                 var tileUv = new Rect(u1, v3, u2 - u1, v2 - v3);
 
-                ImageUtils.CreateTiledImageMesh(vh, tileSize, Vector2.zero, tileArea, tileOffset + center, Repeat.Bottom, BackgroundRepeat.Stretch, color, tileUv);
+                ImageUtils.CreateTiledImageMesh(vh, tileSize, Vector2.zero, tileArea, tileOffset + center, repeat.Bottom, BackgroundRepeat.Stretch, color, tileUv);
             }
 
             // Left
@@ -278,18 +345,18 @@ namespace ReactUnity.UGUI.Shapes
                 var tileSize = new Vector2(leftSlice, fillYSlice);
                 var tileUv = new Rect(u0, v2, u1 - u0, v1 - v2);
 
-                ImageUtils.CreateTiledImageMesh(vh, tileSize, Vector2.zero, tileArea, tileOffset + center, BackgroundRepeat.Stretch, Repeat.Left, color, tileUv);
+                ImageUtils.CreateTiledImageMesh(vh, tileSize, Vector2.zero, tileArea, tileOffset + center, BackgroundRepeat.Stretch, repeat.Left, color, tileUv);
             }
 
             // Fill
-            if (Slice.Fill && fillWidth > 0 && fillHeight > 0 && fillXSlice > 0 && fillYSlice > 0)
+            if (slice.Fill && fillWidth > 0 && fillHeight > 0 && fillXSlice > 0 && fillYSlice > 0)
             {
                 var tileArea = new Vector2(fillWidth, fillHeight);
                 var tileOffset = new Vector2(leftWidth - leftOutset, bottomWidth - bottomOutset);
                 var tileSize = new Vector2(fillXSlice, fillYSlice);
                 var tileUv = new Rect(u1, v2, u2 - u1, v1 - v2);
 
-                ImageUtils.CreateTiledImageMesh(vh, tileSize, Vector2.zero, tileArea, tileOffset + center, Repeat.Top, Repeat.Right, color, tileUv);
+                ImageUtils.CreateTiledImageMesh(vh, tileSize, Vector2.zero, tileArea, tileOffset + center, repeat.Top, repeat.Right, color, tileUv);
             }
         }
     }

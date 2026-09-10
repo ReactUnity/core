@@ -332,7 +332,8 @@ namespace ReactUnity.UGUI.Internal
                 img.Width = style.borderImageWidth;
                 img.Repeat = style.borderImageRepeat;
                 img.Outset = style.borderImageOutset;
-                img.SetVerticesDirty();
+                // No blanket dirty: each setter above rebuilds the mesh when its own value moves,
+                // and this block runs on every frame the element is visited.
                 if (!img.gameObject.activeSelf) img.gameObject.SetActive(true);
             }
             else if (borderImage)

@@ -12,7 +12,7 @@ namespace ReactUnity.Types
     using HashCode = System.HashCode;
 #endif
     [Serializable]
-    public struct BackgroundSize : Interpolatable
+    public struct BackgroundSize : Interpolatable, IEquatable<BackgroundSize>
     {
         public static readonly BackgroundSize Auto = new BackgroundSize(YogaValue2.Auto);
         public static readonly BackgroundSize Contain = new BackgroundSize(BackgroundSizeKeyword.Contain);
@@ -46,12 +46,9 @@ namespace ReactUnity.Types
             return t > 0.5f ? to : this;
         }
 
-        public override bool Equals(object obj)
-        {
-            return obj is BackgroundSize size &&
-                   Keyword == size.Keyword &&
-                   Value == size.Value;
-        }
+        public override bool Equals(object obj) => obj is BackgroundSize size && Equals(size);
+
+        public bool Equals(BackgroundSize other) => Keyword == other.Keyword && Value.Equals(other.Value);
 
         public override int GetHashCode()
         {

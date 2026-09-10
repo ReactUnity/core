@@ -70,12 +70,48 @@ namespace ReactUnity.UGUI.Shapes
             }
         }
 
+        // Position and repeat are read by the mesh and by nothing else, so they dirty the vertices
+        // rather than going through RefreshSize. They need a setter at all because a plain field
+        // leaves the mesh holding the last value it was built with -- which froze a sprite sheet
+        // animated by `background-position` once the size setter stopped rebuilding unasked.
         [SerializeField]
-        public YogaValue2 BackgroundPosition = YogaValue2.Zero;
+        private YogaValue2 backgroundPosition = YogaValue2.Zero;
+        public YogaValue2 BackgroundPosition
+        {
+            get => backgroundPosition;
+            set
+            {
+                if (backgroundPosition == value) return;
+                backgroundPosition = value;
+                SetVerticesDirty();
+            }
+        }
+
         [SerializeField]
-        public BackgroundRepeat BackgroundRepeatX;
+        private BackgroundRepeat backgroundRepeatX;
+        public BackgroundRepeat BackgroundRepeatX
+        {
+            get => backgroundRepeatX;
+            set
+            {
+                if (backgroundRepeatX == value) return;
+                backgroundRepeatX = value;
+                SetVerticesDirty();
+            }
+        }
+
         [SerializeField]
-        public BackgroundRepeat BackgroundRepeatY;
+        private BackgroundRepeat backgroundRepeatY;
+        public BackgroundRepeat BackgroundRepeatY
+        {
+            get => backgroundRepeatY;
+            set
+            {
+                if (backgroundRepeatY == value) return;
+                backgroundRepeatY = value;
+                SetVerticesDirty();
+            }
+        }
 
         private Color TintColor;
 
@@ -322,9 +358,9 @@ namespace ReactUnity.UGUI.Shapes
             var offset = -size * rectTransform.pivot;
 
             var szPoint = ImageUtils.CalculateImageSize(size, Resolved?.IntrinsicSize ?? Vector2.zero, Resolved?.IntrinsicProportions ?? 1, backgroundSize);
-            var psPoint = BackgroundPosition.GetPointValue(size - szPoint, 0, true);
+            var psPoint = backgroundPosition.GetPointValue(size - szPoint, 0, true);
 
-            ImageUtils.CreateTiledImageMesh(vh, szPoint, psPoint, size, offset, BackgroundRepeatX, BackgroundRepeatY, color, new Rect(0, 0, 1, 1));
+            ImageUtils.CreateTiledImageMesh(vh, szPoint, psPoint, size, offset, backgroundRepeatX, backgroundRepeatY, color, new Rect(0, 0, 1, 1));
         }
     }
 }
