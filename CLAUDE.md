@@ -157,6 +157,8 @@ Then it verifies, which is the part that matters: **it fails if OpenUPM or npm h
 
 Anything added to `kitchen-sink/` that only works inside this checkout has to be handled in `prepare.mts`, or the exported project breaks in a way nothing here would catch.
 
+It is also where the two hosted Unity WebGL players are built from — `WebInjectable`, which every docs example runs in, and `Previewer`, which the `@reactunity/scripts` dev server loads. Both are build profiles in this project, built by hand against an open Editor and uploaded under `Unity/` on the docs site's `gh-pages` branch; [kitchen-sink/README.md](kitchen-sink/README.md#the-two-hosted-webgl-players) has the recipe and the four ways a build goes quietly wrong (a profile switch that does not reach the scene list, the output folder name, WebGL compression, and the previewer's versioned path).
+
 ## Architecture
 
 ### The JS ↔ C# boundary

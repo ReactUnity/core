@@ -57,22 +57,23 @@ jobs:
           PUBLIC_GA_TRACKING_ID: ${{ secrets.ANALYTICS_ID }}
         run: pnpm build
 
-      # clean-exclude is load-bearing. Two sets of hand-built Unity WebGL artifacts
-      # live permanently on the target branch under Unity/, and nothing in this repo
-      # builds either of them:
+      # clean-exclude is load-bearing. Two sets of Unity WebGL artifacts live permanently
+      # on the target branch under Unity/. Both are built by hand from kitchen-sink's
+      # WebInjectable and Previewer build profiles and uploaded there -- see
+      # kitchen-sink/README.md; nothing in CI produces them, which has no WebGL module:
       #
-      #   Unity/injectable/Build/WebInjectable.*  (~145 MB) - the players embedded in
+      #   Unity/injectable/Build/WebInjectable.*  (~82 MB) - the players embedded in
       #     the docs examples. docs/src/components/unity/instance.tsx loads
       #     /Unity/<sample>/Build/WebInjectable.{wasm,data,framework.js,loader.js},
       #     and defaultUnityInstanceName makes <sample> `injectable`. Same-origin
       #     with the site, so no CORS involved.
-      #   Unity/previewer/<version>/Build/Previewer.*  (~107 MB) - served to the
+      #   Unity/previewer/<version>/Build/Previewer.*  (~82 MB) - served to the
       #     @reactunity/scripts dev server, which is cross-origin. That works because
       #     GitHub Pages sends Access-Control-Allow-Origin: * and
       #     Content-Type: application/wasm. See packages/scripts/config/public/index.html.
       #
       # This deploy runs with clean: true, so anything outside Unity/** is replaced on
-      # every run. Dropping the exclude would delete ~250 MB that only exists there and
+      # every run. Dropping the exclude would delete ~165 MB that only exists there and
       # would have to be rebuilt in Unity by hand.
       - name: Deploy to ReactUnity/reactunity.github.io@gh-pages
         if: env.DOCS_DEPLOY_TOKEN != ''

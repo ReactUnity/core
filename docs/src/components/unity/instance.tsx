@@ -10,10 +10,11 @@ import {
 } from './types';
 
 /*
- * The player is a hand-built, >100 MB artifact that nothing in this repository produces,
- * so it is never present locally -- it lives permanently under /Unity on the gh-pages
- * branch of reactunity.github.io. Loading it from there absolutely means a dev server and
- * any non-production deploy get a working preview instead of four 404s.
+ * The player is a >100 MB artifact, built by hand from kitchen-sink's WebInjectable build
+ * profile (see kitchen-sink/README.md) and uploaded to /Unity on the gh-pages branch of
+ * reactunity.github.io, where it lives permanently -- it is never present locally. Loading
+ * it from there absolutely means a dev server and any non-production deploy get a working
+ * preview instead of four 404s.
  */
 const PLAYER_BASE_URL = 'https://reactunity.github.io/Unity';
 

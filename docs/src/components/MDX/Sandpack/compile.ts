@@ -10,12 +10,11 @@ export interface CompiledCode {
 type TransformFn = (x: string) => string | null | undefined;
 /*
  * `runtime: 'classic'` is not the default any more -- Babel 8 flipped preset-react over to
- * the automatic runtime, which emits `require('react/jsx-runtime')`. The player runs the
- * result through the injectable wrapper's tiny require shim
- * (unity/core/.react/injectable/scripts/injected-code.js), which knows nothing about
- * `react/jsx-runtime` and hands back undefined, so every example died on
- * "Cannot read properties of undefined (reading 'jsx')". Classic emits
- * `React.createElement`, and the wrapper puts `React` on globalThis.
+ * the automatic runtime, which emits `require('react/jsx-runtime')`. That used to hand back
+ * undefined and kill every example on "Cannot read properties of undefined (reading 'jsx')".
+ * The injectable harness' require shim (unity/core/.react/injectable/scripts/harness.js) maps
+ * the specifier now, so either runtime renders; classic stays because `React.createElement`
+ * needs nothing beyond the `React` that same harness puts on globalThis.
  */
 const transformJsxToES5: TransformFn = (code: string) =>
   Babel.transform(code, {

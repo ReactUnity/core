@@ -72,10 +72,12 @@ The deploy step is skipped when the `DOCS_DEPLOY_TOKEN` secret is not set; the b
 still runs, so the workflow stays useful as a compile check.
 
 The Unity WebGL demos load `https://reactunity.github.io/Unity/<sample>/Build/WebInjectable.*`.
-Those artifacts are hand-built, over 100 MB, and nothing in this repository produces them,
-so they are not tracked here — they live permanently under `Unity/` on the `gh-pages`
-branch, and the deploy is configured not to wipe them. The URL is absolute rather than
-site-relative precisely because they are never present locally: a dev server would
+That player is built by hand from `kitchen-sink`'s `WebInjectable` build profile — the recipe
+and the four ways it goes quietly wrong are in
+[kitchen-sink/README.md](../kitchen-sink/README.md#the-two-hosted-webgl-players).
+It is over 100 MB, so it is not tracked here: it lives permanently under `Unity/` on the
+`gh-pages` branch, and the deploy is configured not to wipe it. The URL is absolute rather than
+site-relative precisely because these are never present locally: a dev server would
 otherwise have no player at all.
 
 The three Optimistic Display fonts are licensed to Meta rather than to this project, so

@@ -113,16 +113,18 @@
   <script>
     /*
      * The Unity build lives on reactunity.github.io rather than in an npm package: it is
-     * ~107 MB, and shipping it as a dependency meant every install paid for it. GitHub
+     * ~82 MB, and shipping it as a dependency meant every install paid for it. GitHub
      * Pages serves it with `Content-Type: application/wasm` and `Access-Control-Allow-Origin: *`,
      * so streaming compilation works cross-origin from this dev server.
      *
      * The version is part of the path on purpose. Unity's loader, framework and wasm are
      * built as a set and are not interchangeable, so each build gets its own directory and
-     * nothing is ever overwritten. Publishing a new previewer build means adding a directory
-     * on that branch and bumping the version here -- those two have to move together.
+     * nothing is ever overwritten. It names the release the build ships in, not the day it
+     * was made. Publishing a new previewer build means adding a directory on that branch and
+     * bumping the version here -- in that order, or every dev server in the wild asks for a
+     * directory that is not there yet.
      */
-    var PREVIEWER_VERSION = '0.20.0';
+    var PREVIEWER_VERSION = '0.24.0';
     var PREVIEWER_BASE = 'https://reactunity.github.io/Unity/previewer/' + PREVIEWER_VERSION + '/Build/';
 
     function fail() {
