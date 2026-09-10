@@ -145,7 +145,8 @@ export function ImagesPage() {
               cameraRoot.transform.Rotate(new Interop.UnityEngine.Vector3(-ev.delta.y, ev.delta.x, 0));
             }}
             onScroll={(ev: UnityEngine.EventSystems.PointerEventData) => {
-              renderCamera.transform.Translate(0, 0, Math.fround(ev.scrollDelta.y * 10), Interop.UnityEngine.Space.Self);
+              // Half a unit per wheel tick, against a camera that sits eight units out.
+              renderCamera.transform.Translate(0, 0, Math.fround(ev.scrollDelta.y * 0.5), Interop.UnityEngine.Space.Self);
             }}
             onMount={(ev) => ev.gameObject.SetActive(true)}
             onUnmount={(ev) => ev.gameObject.SetActive(false)}

@@ -82,7 +82,7 @@ namespace ReactUnity.UGUI.Behaviours
                 transpose = !transpose;
 #endif
 
-            var delta = WheelTicks(data.scrollDelta);
+            var delta = UnityHelpers.WheelTicks(data.scrollDelta);
             if (transpose) delta = new Vector2(delta.y, delta.x);
 
             // The base class multiplies what it is handed by `scrollSensitivity`, so give it a tick
@@ -175,21 +175,6 @@ namespace ReactUnity.UGUI.Behaviours
             if (SmoothCoroutine != null) StopCoroutine(SmoothCoroutine);
             SmoothCoroutine = null;
             tracking = false;
-        }
-
-        /// <summary>
-        /// How many wheel ticks a scroll delta is. Only the input module knows, and they disagree: the
-        /// legacy one reports one per tick and the input system's six, either being configurable.
-        /// </summary>
-        private static Vector2 WheelTicks(Vector2 delta)
-        {
-#if UNITY_2023_2_OR_NEWER
-            var module = EventSystem.current?.currentInputModule;
-            if (module != null) return module.ConvertPointerEventScrollDeltaToTicks(delta);
-#endif
-            // Without a module to ask, a delta is one per tick -- what the legacy one reports, and what
-            // every module reported before the conversion above existed.
-            return delta;
         }
 
         public override void OnBeginDrag(PointerEventData eventData)

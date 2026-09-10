@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Generic;
 using NUnit.Framework;
 using ReactUnity.Scripting;
 using ReactUnity.UGUI;
@@ -33,6 +34,14 @@ namespace ReactUnity.Tests
             }
             scroll > view {
                 flex-shrink: 0;
+            }
+        ";
+
+        const string ListenerScript = @"
+            function App() {
+                return <>
+                    <view onScroll={(ev) => Globals.list?.Add(ev.scrollDelta.y)} />
+                </>;
             }
         ";
 
@@ -384,16 +393,38 @@ namespace ReactUnity.Tests
         }
 
         /// Scroll down by <paramref name="ticks"/> ticks, which the wheel reports as a negative delta.
+        private void Wheel(float ticks)
+        {
+            Scroll.ScrollRect.OnScroll(new PointerEventData(EventSystem.current)
+            { scrollDelta = new Vector2(0, -ticks / TicksPerUnit()) });
+        }
+
         /// The magnitude of a tick is the input module's to define, and the conversion is linear, so
         /// one unit converted back says how many ticks a unit is.
-        private void Wheel(float ticks)
+        private static float TicksPerUnit()
         {
             var module = EventSystem.current?.currentInputModule;
             var perUnit = module == null ? 1f : module.ConvertPointerEventScrollDeltaToTicks(Vector2.one).y;
-            if (Mathf.Approximately(perUnit, 0)) perUnit = 1f;
+            return Mathf.Approximately(perUnit, 0) ? 1f : perUnit;
+        }
 
-            Scroll.ScrollRect.OnScroll(new PointerEventData(EventSystem.current)
-            { scrollDelta = new Vector2(0, -ticks / perUnit) });
+        [UGUITest(Script = ListenerScript)]
+        public IEnumerator AWheelListenerIsHandedTicks()
+        {
+            var list = new List<object>();
+            Globals["list"] = list;
+            yield return null;
+
+            // Two ticks up, said in whatever unit the module reports them in -- one on the legacy
+            // module, six on the input system's, and a project can set it to something else again.
+            var perUnit = TicksPerUnit();
+            var data = new PointerEventData(EventSystem.current) { scrollDelta = new Vector2(0, 2 / perUnit) };
+            ExecuteEvents.Execute(View.GameObject, data, ExecuteEvents.scrollHandler);
+            yield return null;
+
+            Assert.AreEqual(1, list.Count);
+            Assert.AreEqual(2f, System.Convert.ToSingle(list[0]), 0.001f, "the listener is handed ticks, not the module's units");
+            Assert.AreEqual(2 / perUnit, data.scrollDelta.y, 0.001f, "and the event goes on to anything above as it arrived");
         }
 
 
