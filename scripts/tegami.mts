@@ -87,6 +87,53 @@ const syncUnityVersions: TegamiPlugin = {
   },
 };
 
+// Tegami writes one CHANGELOG.md per workspace package, at a path it hardcodes.
+// That leaves this repo with no single view of a release, and leaves the four UPM
+// packages with no changelog at all -- they are outside the graph, so nothing ever
+// calls appendChangelog for them, and `upm:com.reactunity.core` is most of what a
+// release contains. This writes the root CHANGELOG.md: every entry once, under the
+// one shared version, tagged with the packages it touches.
+//
+// 'post' for the same reason syncUnityVersions is - it reads the bumped version.
+// Every applyDraft hook runs before Draft.apply() writes the per-package files and
+// deletes the pending entries, so the draft still holds all of them here.
+const rootChangelog: TegamiPlugin = {
+  name: 'reactunity:root-changelog',
+  enforce: 'post',
+  async applyDraft(draft) {
+    const version = this.graph.get(VERSION_SOURCE)?.version;
+    if (!version) return;
+
+    const lines: string[] = [];
+
+    for (const entry of draft.getChangelogs()) {
+      // getChangelogs() includes replay-only entries, which name no bump yet and
+      // belong to a later release. A config with no `type` is one of those.
+      const packages = [...entry.packages]
+        .filter(([, config]) => config.type)
+        .map(([name]) => name.replace(/^(?:npm|upm):/, ''))
+        .sort();
+      if (packages.length === 0) continue;
+
+      entry.sections.forEach((section, index) => {
+        lines.push(`### ${section.title}`, '');
+        // Under the first heading only, so a multi-section entry says it once.
+        if (index === 0) lines.push(packages.map((name) => `\`${name}\``).join(', '), '');
+        lines.push(section.content, '');
+      });
+    }
+
+    if (lines.length === 0) return;
+
+    const file = path.resolve(process.cwd(), 'CHANGELOG.md');
+    const existing = await fs.readFile(file, 'utf8').catch(() => '');
+    const section = [`## ${version}`, '', ...lines].join('\n').trim();
+    const next = `${section}\n\n${existing}`.trimEnd();
+    await fs.writeFile(file, `${next}\n`);
+    console.log(`[tegami] CHANGELOG.md -> ${version}`);
+  },
+};
+
 const paper = tegami({
   // Private packages, excluded from the version graph entirely. Tegami versions
   // private packages by default, but versioning these would only produce
@@ -160,6 +207,7 @@ const paper = tegami({
       },
     }),
     syncUnityVersions,
+    rootChangelog,
   ],
 });
 
