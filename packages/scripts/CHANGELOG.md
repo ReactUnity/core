@@ -1,3 +1,9 @@
+## @reactunity/scripts@0.24.0
+
+### The browser previewer
+
+It loads a player built from this release instead of 0.20.0, at a quarter of the download.
+
 ## @reactunity/scripts@0.23.0
 
 ### Serve the web previewer without installing it
