@@ -1,31 +1,110 @@
 core:changelogs:
-  - content: "---\npackages:\n  npm:@reactunity/create:\n    type: patch\n---\n\n### Refresh the scaffold's prebuilt bundle, and keep it refreshed\n\nA scaffolded project renders `Assets/Resources/react/index.js` on first open, before the user has run a build. That bundle was webpack output from April 2024 carrying React 18.2, sitting in a project whose `package.json` asked for React 19. Nothing in the repo could catch it: generated output that nothing regenerates is invisible until someone scaffolds a project and looks at it.\n\n`scripts/create/refresh-scaffold.mts` rebuilds it from the scaffold's own app, in a temp copy so the shipped template never gains a `node_modules`, and a nightly workflow opens a PR when the result moves. Because the rebuild resolves the app's dependency ranges fresh, it also catches breakage arriving from upstream rather than only from a ReactUnity release. `--check` reports drift without writing, for use as a gate.\n\nIt verifies that the build still emits exactly the asset set the scaffold has `.meta` files for. A sourcemap or a hashed chunk would otherwise land in a user's project unimported, and anything that stopped being emitted would leave an orphan `.meta` behind.\n\nThe scaffold project itself moved to Unity 6000.5.5f1, matching the sample ReactUnity is developed against. The script reports that drift but never writes it — Unity performs an Editor upgrade by opening the project and re-serializing it, so editing `ProjectVersion.txt` alone would label a project upgraded without upgrading it.\n"
-    filename: 2026-08-18-7c4e19.md
+  - content: "---\npackages:\n  npm:@reactunity/renderer:\n    type: minor\n  npm:@reactunity/material:\n    type: patch\n  upm:com.reactunity.core:\n    type: minor\n---\n\n### `position: inset` is removed\n\nUse `absolute`, which Yoga now resolves correctly against a containing block that has padding.\n"
+    filename: 2026-09-08-3b6d18.md
     v: 0.0.0
-  - content: "---\npackages:\n  npm:@reactunity/create:\n    type: patch\n---\n\n### Keep the scaffold's ReactUnity pins on the released version\n\nA scaffolded project asked for `com.reactunity.core` 0.18.0, `com.reactunity.quickjs` 0.17.1 and `@reactunity/renderer` ^0.20.1 — the UPM pair untouched since April 2024. The scaffold sits outside the pnpm workspace on purpose, so nothing in the release ever bumped it.\n\nThe rot was hidden rather than harmless: the CLI repairs both at scaffold time, `openupm-cli add` for the Unity manifest and `ncu -u` for the React app. Both are best-effort network calls, and both were dead on Windows for months, which handed those users the checked-in numbers verbatim.\n\n`syncUnityVersions` in `scripts/tegami.mts` now carries the released version into both files alongside the four UPM manifests, and throws if a pin it expects has been renamed away rather than leaving it silently frozen.\n"
-    filename: 2026-08-18-b93d05.md
+  - content: "---\npackages:\n  npm:@reactunity/renderer:\n    type: minor\n---\n\n### Tailwind's Preflight\n\n`@reactunity/renderer/tailwind.css` replaces it with a reset written for what ReactUnity renders, and\n`@reactunity/renderer/vite` aliases `@import \"tailwindcss\"` to that file.\n"
+    filename: 2026-09-03-1f9ad3.md
     v: 0.0.0
-  - content: "---\npackages:\n  npm:@reactunity/create:\n    type: patch\n---\n\n### Fix `npx @reactunity/create` failing to find its own scaffold\n\nEvery run ended at `Copying files failed` with `ENOENT ... dist/scaffold/react`. The scaffold ships at the package root, but the CLI resolves it relative to its own file — which stopped being the package root when tsdown moved the build output into `dist/`.\n\nThe entry point moved to `src/index.ts` so that source and bundle sit at the same depth, and the scaffold is now `../scaffold` from either. `.npmignore` still whitelisted the pre-tsdown `/index.js`; `dist/index.js` was only reaching the tarball because npm force-includes `bin`, so its sourcemap was being dropped.\n\nThe same run then failed at `spawn EINVAL` on Windows. Node 20.12 stopped spawning `.cmd` files directly (CVE-2024-27980), and `npx`, `npm` and `yarn` are all `.cmd` there — so the package update step, `--install` and `--unity`'s OpenUPM call were all dead. Those now go through a shell on Windows, with arguments quoted so a project path containing a space still works.\n"
-    filename: 2026-08-18-e4a71c.md
+  - content: "---\npackages:\n  npm:@reactunity/renderer:\n    type: minor\n  upm:com.reactunity.core:\n    type: minor\n---\n\n### CSS logical properties\n\n`padding-inline`, `margin-block`, `inset-inline-start` and the rest work, so `direction` turns the inline\naxis around for a whole subtree and Tailwind's `px-*`, `ps-*` and `space-x-*` utilities do something.\n"
+    filename: 2026-09-03-4ac1e7.md
+    v: 0.0.0
+  - content: "---\npackages:\n  npm:@reactunity/renderer:\n    type: minor\n---\n\n### The Vite preset\n\n`@reactunity/renderer/vite` configures Vite the way a ReactUnity app needs it, building into the Unity\nproject it finds and keeping the `.meta` files that carry its GUIDs.\n"
+    filename: 2026-09-03-7b3e41.md
+    v: 0.0.0
+  - content: "---\npackages:\n  npm:@reactunity/renderer:\n    type: minor\n  upm:com.reactunity.core:\n    type: minor\n---\n\n### `@starting-style`, `light-dark()` and more\n\n`@starting-style`, `light-dark()`, `color-scheme`, the `place-*` shorthands, the CSS math functions,\n`:nth-child(An+B of S)`, `attr()`, `linear()` and the boolean `(hover)` and `(pointer)` media queries all\nwork.\n"
+    filename: 2026-09-05-9f2d4b.md
+    v: 0.0.0
+  - content: "---\npackages:\n  npm:@reactunity/renderer:\n    type: minor\n  upm:com.reactunity.core:\n    type: minor\n---\n\n### Web and Tailwind CSS spellings\n\nA stylesheet written for a browser or generated by Tailwind is accepted where it used to be dropped: vendor\nprefixes, `min()`, `max()` and `clamp()`, `white-space`, `text-shadow`, `overflow-x` and `overflow-y`,\n`caret-color`, `::selection`, `scrollbar-color`, `scrollbar-width`, the viewport length units, and the\n`prefers-color-scheme` and `prefers-reduced-motion` media features.\n"
+    filename: 2026-09-05-b7e3a1.md
+    v: 0.0.0
+  - content: "---\npackages:\n  npm:@reactunity/renderer:\n    type: minor\n  upm:com.reactunity.core:\n    type: minor\n---\n\n### Container queries\n\nThey work with size and `style()` conditions, along with `container-type`, `container-name` and the `cq*`\nunits.\n"
+    filename: 2026-09-05-e4c1a7.md
+    v: 0.0.0
+  - content: "---\npackages:\n  npm:@reactunity/renderer:\n    type: minor\n  upm:com.reactunity.core:\n    type: minor\n---\n\n### `scrollbar-gutter`, and `scrollbar-size` is gone\n\nThe gutter reserves room along the bar's edge so content is never covered, and `scrollbar-width` is now the\nonly spelling.\n"
+    filename: 2026-09-06-a4c7e2.md
+    v: 0.0.0
+  - content: "---\npackages:\n  npm:@reactunity/renderer:\n    type: minor\n  upm:com.reactunity.core:\n    type: minor\n---\n\n### `filter`\n\nThe property renders on UGUI, with `blur`, `drop-shadow` and the rest of the CSS functions plus the\nnon-standard `grain`, `pixelate`, `posterize`, `scanlines`, `tint` and `chromatic-aberration`. `filter` and\n`backdrop-filter` are typed in `Style`. A `style={undefined}` no longer takes the whole app down. Animating\n`backdrop-filter` no longer leaks a material per frame, and applying a style that did not change no longer\nrebuilds the element.\n"
+    filename: 2026-09-07-8b4f2c.md
+    v: 0.0.0
+  - content: "---\npackages:\n  npm:@reactunity/renderer:\n    type: patch\n  upm:com.reactunity.core:\n    type: patch\n---\n\n### Inline styles and `!important`\n\nAn element's inline style no longer loses to rules that are entirely `!important`.\n"
+    filename: 2026-09-07-c9a4e2.md
+    v: 0.0.0
+  - content: "---\npackages:\n  npm:@reactunity/renderer:\n    type: minor\n  upm:com.reactunity.core:\n    type: minor\n---\n\n### `text-decoration`\n\nThe shorthand applies the line and the colour, so `text-decoration: underline dotted red` draws the underline\ninstead of dropping the whole declaration.\n"
+    filename: 2026-09-08-2a94f7.md
+    v: 0.0.0
+  - content: "---\npackages:\n  npm:@reactunity/renderer:\n    type: minor\n  upm:com.reactunity.core:\n    type: minor\n---\n\n### `timeline-scope`\n\nA timeline name can be lent to an ancestor's whole subtree, so a progress bar beside a scroll view can read\nit.\n"
+    filename: 2026-09-08-4f8ac3.md
+    v: 0.0.0
+  - content: "---\npackages:\n  npm:@reactunity/renderer:\n    type: minor\n  upm:com.reactunity.core:\n    type: minor\n---\n\n### Complex selectors, `@custom-media` and more\n\n`:is()`, `:where()` and `:not()` take a complex selector anywhere, `:state()` names a custom state, the\n`-webkit-` and `-moz-` spellings of the scrollbar and placeholder parts work, and `@custom-media`,\n`@container scroll-state()` and `@supports selector()` are new.\n"
+    filename: 2026-09-08-5d2e9a.md
+    v: 0.0.0
+  - content: "---\npackages:\n  npm:@reactunity/renderer:\n    type: minor\n  upm:com.reactunity.core:\n    type: minor\n---\n\n### Scroll-driven animations\n\n`animation-timeline: scroll()` and `scroll-timeline-name` drive an animation from a scroll container's\nposition instead of the clock.\n"
+    filename: 2026-09-08-7c3f1a.md
+    v: 0.0.0
+  - content: "---\npackages:\n  npm:@reactunity/renderer:\n    type: minor\n  upm:com.reactunity.core:\n    type: minor\n---\n\n### The generated Typescript models\n\nAll six files are regenerated against a current Editor, for the first time since January 2025.\n"
+    filename: 2026-09-08-b41e73.md
+    v: 0.0.0
+  - content: "---\npackages:\n  npm:@reactunity/renderer:\n    type: minor\n  upm:com.reactunity.core:\n    type: minor\n---\n\n### View timelines and `animation-range`\n\n`animation-timeline: view()` runs an animation over the element's own passage through its scroll view, and\n`animation-range` says which part of a timeline it covers.\n"
+    filename: 2026-09-08-e91b4c.md
+    v: 0.0.0
+  - content: "---\npackages:\n  npm:@reactunity/renderer:\n    type: minor\n  upm:com.reactunity.core:\n    type: minor\n---\n\n### `mix-blend-mode`\n\nAn element, and everything inside it, blends into what is painted behind — all sixteen CSS blend functions\nplus `plus-lighter` — and `isolation: isolate` contains one.\n"
+    filename: 2026-09-08-mixblend.md
+    v: 0.0.0
+  - content: "---\npackages:\n  npm:@reactunity/renderer:\n    type: minor\n  upm:com.reactunity.core:\n    type: minor\n---\n\n### `background-blend-mode`\n\nEach background image layer blends with what is under it, through the same sixteen functions\n`mix-blend-mode` has, instead of tinting the image with the background colour.\n"
+    filename: 2026-09-09-bgblend.md
+    v: 0.0.0
+  - content: "---\npackages:\n  npm:@reactunity/renderer:\n    type: minor\n  upm:com.reactunity.core:\n    type: minor\n---\n\n### The rest of `clip-path`\n\nThe remaining CSS shapes work — `path()`, `shape()`, `rect()` and `xywh()` — along with a geometry box, and\n`polygon()` has no vertex cap.\n"
+    filename: 2026-09-09-clippath-shapes.md
+    v: 0.0.0
+  - content: "---\npackages:\n  npm:@reactunity/renderer:\n    type: minor\n  upm:com.reactunity.core:\n    type: minor\n---\n\n### Scroll snapping\n\n`scroll-snap-type`, `scroll-snap-align` and `scroll-behavior: smooth` are new.\n"
+    filename: 2026-09-09-scroll-snap.md
+    v: 0.0.0
+  - content: "---\npackages:\n  npm:@reactunity/renderer:\n    type: minor\n  upm:com.reactunity.core:\n    type: minor\n---\n\n### Soft masks, `clip-path` and `image-rendering`\n\n`mask-image` is real coverage rather than a one-bit stencil, so a gradient mask fades, and `clip-path` and\n`image-rendering: pixelated` are new.\n"
+    filename: 2026-09-09-softmask.md
+    v: 0.0.0
+  - content: "---\npackages:\n  npm:@reactunity/scripts:\n    type: patch\n---\n\n### The browser previewer\n\nIt loads a player built from this release instead of 0.20.0, at a quarter of the download.\n"
+    filename: 2026-09-10-previewer-rebuild.md
     v: 0.0.0
 core:packages:
   - id: npm:@reactunity/monorepo
     updated: false
+  - id: npm:@reactunity/create
+    updated: true
   - changelogIds:
-      - 2026-08-18-7c4e19.md
-      - 2026-08-18-b93d05.md
-      - 2026-08-18-e4a71c.md
-    id: npm:@reactunity/create
+      - 2026-09-08-3b6d18.md
+    id: npm:@reactunity/material
     updated: true
-  - id: npm:@reactunity/material
+  - changelogIds:
+      - 2026-09-03-1f9ad3.md
+      - 2026-09-03-4ac1e7.md
+      - 2026-09-03-7b3e41.md
+      - 2026-09-05-9f2d4b.md
+      - 2026-09-05-b7e3a1.md
+      - 2026-09-05-e4c1a7.md
+      - 2026-09-06-a4c7e2.md
+      - 2026-09-07-8b4f2c.md
+      - 2026-09-07-c9a4e2.md
+      - 2026-09-08-2a94f7.md
+      - 2026-09-08-3b6d18.md
+      - 2026-09-08-4f8ac3.md
+      - 2026-09-08-5d2e9a.md
+      - 2026-09-08-7c3f1a.md
+      - 2026-09-08-b41e73.md
+      - 2026-09-08-e91b4c.md
+      - 2026-09-08-mixblend.md
+      - 2026-09-09-bgblend.md
+      - 2026-09-09-clippath-shapes.md
+      - 2026-09-09-scroll-snap.md
+      - 2026-09-09-softmask.md
+    id: npm:@reactunity/renderer
     updated: true
-  - id: npm:@reactunity/scripts
-    updated: true
-  - id: npm:@reactunity/renderer
+  - changelogIds:
+      - 2026-09-10-previewer-rebuild.md
+    id: npm:@reactunity/scripts
     updated: true
 npm:packages:
   - id: npm:@reactunity/monorepo
   - id: npm:@reactunity/create
   - id: npm:@reactunity/material
-  - id: npm:@reactunity/scripts
   - id: npm:@reactunity/renderer
+  - id: npm:@reactunity/scripts
