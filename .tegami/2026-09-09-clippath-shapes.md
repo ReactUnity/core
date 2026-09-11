@@ -6,5 +6,7 @@ packages:
     type: minor
 ---
 
-`clip-path` takes the rest of the CSS shapes — `path()`, `shape()`, `rect()` and `xywh()` — along with a
-geometry box, and `polygon()` has no vertex cap.
+### The rest of `clip-path`
+
+The remaining CSS shapes work — `path()`, `shape()`, `rect()` and `xywh()` — along with a geometry box, and
+`polygon()` has no vertex cap.
