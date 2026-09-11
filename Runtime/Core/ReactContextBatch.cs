@@ -110,7 +110,9 @@ namespace ReactUnity
 
         IEnumerator<KeyValuePair<string, object>> MultiEnumerator(JToken val, bool eventsAsObjects = false)
         {
-            if (val == null) yield break;
+            // `style={undefined}` is a prop that is present and null, which arrives as a JSON null
+            // rather than an object -- and a null has no children to read.
+            if (val == null || val.Type == JTokenType.Null || val.Type == JTokenType.Undefined) yield break;
 
             var events = val["e"];
             var props = val["p"];

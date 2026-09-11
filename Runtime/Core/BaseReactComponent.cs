@@ -148,6 +148,9 @@ namespace ReactUnity
         public virtual float ScrollHeight => ClientHeight;
         public abstract float ClientWidth { get; }
         public abstract float ClientHeight { get; }
+
+        public virtual bool IsScrollContainer => false;
+        public virtual ScrollEdge StuckEdges => ScrollEdge.None;
         #endregion
 
 
@@ -213,7 +216,8 @@ namespace ReactUnity
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         protected void StyleChanged(IStyleProperty key, object value, ReactiveDictionary<IStyleProperty, object> style)
         {
-            MarkForStyleResolving(key == null || key.inherited);
+            // Container type and name are not inherited, but every descendant's @container reads them.
+            MarkForStyleResolving(key == null || key.inherited || key == StyleProperties.containerType || key == StyleProperties.containerName);
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -480,15 +484,20 @@ namespace ReactUnity
             else if (Tag == "_after") matchingRules = Parent.AfterRules;
             else matchingRules = Context.Style.StyleTree.GetMatchingRules(this).ToList();
 
-            var importantIndex = Math.Max(0, matchingRules.FindIndex(x => x.Specifity <= RuleHelpers.ImportantSpecifity));
+            // Inline styles sit below every !important rule and above the rest; with no rest, that is the end.
+            var importantIndex = matchingRules.FindIndex(x => x.Specifity <= RuleHelpers.ImportantSpecifity);
+            if (importantIndex < 0) importantIndex = matchingRules.Count;
             var cssStyles = new List<IDictionary<IStyleProperty, object>> { };
 
             for (int i = 0; i < importantIndex; i++) cssStyles.AddRange(matchingRules[i].Data?.Rules);
             cssStyles.Add(Style);
             for (int i = importantIndex; i < matchingRules.Count; i++) cssStyles.AddRange(matchingRules[i].Data?.Rules);
 
-            var resolvedStyle = new NodeStyle(Context, null, cssStyles, RevertCalculator);
+            var resolvedStyle = new NodeStyle(Context, null, cssStyles, RevertCalculator, this);
             resolvedStyle.UpdateParent(Parent?.ComputedStyle);
+
+            // The root's color-scheme is the page's, and so is what prefers-color-scheme defaults to.
+            if (this is IHostComponent) Context.Style.SeedColorScheme(resolvedStyle.colorScheme);
 
             StyleState.SetCurrent(resolvedStyle);
             MarkForStyleApply(true);
@@ -496,9 +505,14 @@ namespace ReactUnity
             if (IsContainer)
             {
                 var inheritedChanges = ComputedStyle.HasInheritedChanges;
+                var query = StateStyles.QueryContainer;
 
-                if (inheritedChanges || recursive)
+                // A style() query below reads this element's style, so any change to it is theirs too.
+                if (inheritedChanges || recursive || query?.HasStyleDependents == true)
                 {
+                    // The subtree matches its rules again now, and whatever still reads this element as its container says so.
+                    if (query != null) query.TracksSize = query.TracksScroll = query.HasStyleDependents = false;
+
                     BeforeRules = Context.Style.StyleTree.GetMatchingBefore(this).ToList();
                     if (BeforeRules.Count > 0 &&
                         BeforeRules.Any(x => x.Data.Rules.Any(y => y.ContainsKey(StyleProperties.content))))
@@ -539,6 +553,44 @@ namespace ReactUnity
                 resolve = resolve || child == this;
                 if (resolve) child.MarkForStyleResolving(recursive);
             }
+
+            if (Context.Style.StyleTree.ContainsHasSelector) MarkHasAnchors();
+        }
+
+        /// <summary>
+        /// A <c>:has()</c> anchor is styled by what is under it and after it, so a change here has
+        /// to reach every flagged ancestor and every flagged earlier sibling on the way up. Each
+        /// one is marked along with what follows it, as its own change would be, since a rule may
+        /// go on from the anchor to a descendant or a later sibling.
+        /// </summary>
+        private void MarkHasAnchors()
+        {
+            IReactComponent node = this;
+            while (node.Parent != null)
+            {
+                var siblings = node.Parent.Children;
+                if (siblings == null)
+                {
+                    if (node.StateStyles?.HasAnchor == true) node.MarkForStyleResolving(true);
+                }
+                else
+                {
+                    var first = -1;
+                    for (int i = 0; i < siblings.Count; i++)
+                    {
+                        var sibling = siblings[i];
+                        if (first < 0 && sibling.StateStyles?.HasAnchor == true) first = i;
+                        if (sibling == node) break;
+                    }
+
+                    if (first >= 0)
+                        for (int i = first; i < siblings.Count; i++) siblings[i].MarkForStyleResolving(true);
+                }
+
+                node = node.Parent;
+            }
+
+            if (node.StateStyles?.HasAnchor == true) node.MarkForStyleResolving(true);
         }
 
         protected abstract void ApplyStylesSelf();

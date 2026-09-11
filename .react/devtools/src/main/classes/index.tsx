@@ -1,7 +1,7 @@
 import { EditorElements } from '@reactunity/renderer/editor';
 import { useCallback, useMemo, useState } from 'react';
-import { useSelection } from 'src/context/selection';
-import { useStyleContext } from 'src/context/style';
+import { useSelection } from '#src/context/selection.tsx';
+import { useStyleContext } from '#src/context/style.tsx';
 import style from './index.module.scss';
 
 const savedClasses: Record<string, string[]> = {};

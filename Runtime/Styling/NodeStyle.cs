@@ -3,6 +3,7 @@ using Yoga;
 using ReactUnity.Styling.Animations;
 using ReactUnity.Styling.Computed;
 using ReactUnity.Styling.Converters;
+using ReactUnity.Styling.Rules;
 using ReactUnity.Types;
 using TMPro;
 using UnityEngine;
@@ -23,6 +24,9 @@ namespace ReactUnity.Styling
         public NodeStyle Parent { get; private set; }
         public IRevertCalculator RevertCalculator { get; }
 
+        /// <summary>The element this is the style of, when it is one's resolved style rather than a bare style bag.</summary>
+        public IReactComponent Component { get; }
+
         #region Getters
 
         public int order => GetStyleValue(LayoutProperties.Order);
@@ -34,6 +38,13 @@ namespace ReactUnity.Styling
         public ICssValueList<Types.Cursor> cursor => GetStyleValue(StyleProperties.cursor);
         public Isolation isolation => GetStyleValue(StyleProperties.isolation);
         public PointerEvents pointerEvents => GetStyleValue(StyleProperties.pointerEvents);
+        public ContainerType containerType => GetStyleValue(StyleProperties.containerType);
+        public string containerName => GetStyleValue(StyleProperties.containerName);
+        public ColorScheme colorScheme => GetStyleValue(StyleProperties.colorScheme);
+        public ScrollbarGutter scrollbarGutter => GetStyleValue(StyleProperties.scrollbarGutter);
+        public ScrollBehavior scrollBehavior => GetStyleValue(StyleProperties.scrollBehavior);
+        public ScrollSnapType scrollSnapType => GetStyleValue(StyleProperties.scrollSnapType);
+        public ScrollSnapAlign scrollSnapAlign => GetStyleValue(StyleProperties.scrollSnapAlign);
         public YogaValue2 borderTopLeftRadius => GetStyleValue(StyleProperties.borderTopLeftRadius);
         public YogaValue2 borderTopRightRadius => GetStyleValue(StyleProperties.borderTopRightRadius);
         public YogaValue2 borderBottomLeftRadius => GetStyleValue(StyleProperties.borderBottomLeftRadius);
@@ -68,10 +79,15 @@ namespace ReactUnity.Styling
         public TextAlignmentOptions textAlign => GetStyleValue(StyleProperties.textAlign);
         public VerticalAlignmentOptions verticalAlign => GetStyleValue(StyleProperties.verticalAlign);
         public TextOverflowModes textOverflow => GetStyleValue(StyleProperties.textOverflow);
-        public bool textWrap => GetStyleValue(StyleProperties.textWrap);
+        public WhiteSpace whiteSpace => GetStyleValue(StyleProperties.whiteSpace);
+        public ICssValueList<BoxShadow> textShadow => GetStyleValue(StyleProperties.textShadow);
+        public Color caretColor => GetStyleValue(StyleProperties.caretColor);
+        public YogaOverflow overflowX => GetStyleValue(StyleProperties.overflowX);
+        public YogaOverflow overflowY => GetStyleValue(StyleProperties.overflowY);
         public int maxLines => GetStyleValue(StyleProperties.maxLines);
         public float textStrokeWidth => GetStyleValue(StyleProperties.textStrokeWidth);
         public Color textStrokeColor => GetStyleValue(StyleProperties.textStrokeColor);
+        public Color textDecorationColor => GetStyleValue(StyleProperties.textDecorationColor);
         public string content => GetStyleValue(StyleProperties.content);
         public Appearance appearance => GetStyleValue(StyleProperties.appearance);
         public NavigationMode navigation => GetStyleValue(StyleProperties.navigation);
@@ -92,7 +108,7 @@ namespace ReactUnity.Styling
         public ICssValueList<BackgroundSize> backgroundSize => GetStyleValue(StyleProperties.backgroundSize);
         public ICssValueList<BackgroundRepeat> backgroundRepeatX => GetStyleValue(StyleProperties.backgroundRepeatX);
         public ICssValueList<BackgroundRepeat> backgroundRepeatY => GetStyleValue(StyleProperties.backgroundRepeatY);
-        public BackgroundBlendMode backgroundBlendMode => GetStyleValue(StyleProperties.backgroundBlendMode);
+        public ICssValueList<BackgroundBlendMode> backgroundBlendMode => GetStyleValue(StyleProperties.backgroundBlendMode);
 
         public ICssValueList<ImageDefinition> maskImage => GetStyleValue(StyleProperties.maskImage);
         public ICssValueList<YogaValue> maskPositionX => GetStyleValue(StyleProperties.maskPositionX);
@@ -100,9 +116,14 @@ namespace ReactUnity.Styling
         public ICssValueList<BackgroundSize> maskSize => GetStyleValue(StyleProperties.maskSize);
         public ICssValueList<BackgroundRepeat> maskRepeatX => GetStyleValue(StyleProperties.maskRepeatX);
         public ICssValueList<BackgroundRepeat> maskRepeatY => GetStyleValue(StyleProperties.maskRepeatY);
+        public ICssValueList<MaskMode> maskMode => GetStyleValue(StyleProperties.maskMode);
+
+        public ClipPath clipPath => GetStyleValue(StyleProperties.clipPath);
+        public ImageRendering imageRendering => GetStyleValue(StyleProperties.imageRendering);
 
         public FilterDefinition filter => GetStyleValue(StyleProperties.filter);
         public FilterDefinition backdropFilter => GetStyleValue(StyleProperties.backdropFilter);
+        public BackgroundBlendMode mixBlendMode => GetStyleValue(StyleProperties.mixBlendMode);
 
         public ICssValueList<TransitionProperty> transitionProperty => GetStyleValue(StyleProperties.transitionProperty);
         public ICssValueList<float> transitionDuration => GetStyleValue(StyleProperties.transitionDuration);
@@ -122,6 +143,15 @@ namespace ReactUnity.Styling
         public ICssValueList<string> animationName => GetStyleValue(StyleProperties.animationName);
         public ICssValueList<AnimationPlayState> animationPlayState => GetStyleValue(StyleProperties.animationPlayState);
         public ICssValueList<TimingFunction> animationTimingFunction => GetStyleValue(StyleProperties.animationTimingFunction);
+        public ICssValueList<AnimationTimeline> animationTimeline => GetStyleValue(StyleProperties.animationTimeline);
+        public ICssValueList<AnimationRangeBoundary> animationRangeStart => GetStyleValue(StyleProperties.animationRangeStart);
+        public ICssValueList<AnimationRangeBoundary> animationRangeEnd => GetStyleValue(StyleProperties.animationRangeEnd);
+        public string scrollTimelineName => GetStyleValue(StyleProperties.scrollTimelineName);
+        public TimelineAxis scrollTimelineAxis => GetStyleValue(StyleProperties.scrollTimelineAxis);
+        public string viewTimelineName => GetStyleValue(StyleProperties.viewTimelineName);
+        public TimelineAxis viewTimelineAxis => GetStyleValue(StyleProperties.viewTimelineAxis);
+        public YogaValue2 viewTimelineInset => GetStyleValue(StyleProperties.viewTimelineInset);
+        public string timelineScope => GetStyleValue(StyleProperties.timelineScope);
         public ICssValueList<AudioReference> audioClip => GetStyleValue(StyleProperties.audioClip);
         public ICssValueList<int> audioIterationCount => GetStyleValue(StyleProperties.audioIterationCount);
         public ICssValueList<float> audioDelay => GetStyleValue(StyleProperties.audioDelay);
@@ -134,10 +164,12 @@ namespace ReactUnity.Styling
             ReactContext context,
             NodeStyle fallback = null,
             List<IDictionary<IStyleProperty, object>> cssStyles = null,
-            IRevertCalculator revertCalculator = null
+            IRevertCalculator revertCalculator = null,
+            IReactComponent component = null
         )
         {
             Context = context;
+            Component = component;
             StyleMap = new Dictionary<string, object>();
             Fallback = fallback;
             CssStyles = cssStyles;
@@ -179,6 +211,19 @@ namespace ReactUnity.Styling
             return Cache[prop] = GetStyleValueSpecial(value, prop, activeStyle ?? this) ?? prop?.defaultValue;
         }
 
+        /// <summary>
+        /// The value declared on this node itself, skipping the walk up to the parent that an
+        /// inherited property does. A custom property registered with <c>inherits: false</c> cannot
+        /// be read any other way, since a variable is inherited otherwise.
+        /// </summary>
+        public object GetOwnStyleValue(IStyleProperty prop)
+        {
+            if (!StyleMap.TryGetValue(prop.name, out var value) && !CssTryGetValue(prop, out value))
+                return Fallback?.GetOwnStyleValue(prop);
+
+            return GetStyleValueSpecial(value, prop, this);
+        }
+
         private object GetStyleValueSpecial(object value, IStyleProperty prop, NodeStyle activeStyle)
         {
             if (value == null) return null;
@@ -193,7 +238,7 @@ namespace ReactUnity.Styling
                 }
                 else if (ck == CssKeyword.Auto || ck == CssKeyword.None || ck == CssKeyword.Initial || ck == CssKeyword.Default)
                     return prop?.defaultValue;
-                else if (ck == CssKeyword.Revert)
+                else if (ck == CssKeyword.Revert || ck == CssKeyword.RevertLayer)
                     return ComputedKeyword.Revert;
             }
             return value;
@@ -278,14 +323,45 @@ namespace ReactUnity.Styling
                 res = null;
                 return false;
             }
+
+            // The layers a `revert-layer` declaration took out of the cascade. Their declarations
+            // are all passed over, which is what rolling a layer back means: the winner becomes
+            // whatever would have won had the layer never been declared at all.
+            List<CascadeLayer> reverted = null;
+
             for (int i = 0; i < CssStyles.Count; i++)
             {
                 var dic = CssStyles[i];
-                if (dic.TryGetValue(prop, out res)) return true;
+                if (!dic.TryGetValue(prop, out var value)) continue;
+
+                var layer = (dic as StyleRecord)?.Layer;
+                if (layer != null && reverted != null && reverted.Contains(layer)) continue;
+
+                if (!IsRevertLayer(value))
+                {
+                    res = value;
+                    return true;
+                }
+
+                if (reverted == null) reverted = new List<CascadeLayer>(1);
+
+                // Unlayered, so there is no earlier layer to roll back to -- only the origin.
+                if (layer == null) break;
+
+                reverted.Add(layer);
             }
-            res = null;
-            return false;
+
+            // Nothing was left once the reverted layers were passed over, so the cascade rolls
+            // back past this origin, which is what `revert` does.
+            res = reverted == null ? null : RevertedValue;
+            return reverted != null;
         }
+
+        private static readonly object RevertedValue = ComputedKeyword.Revert;
+
+        private static bool IsRevertLayer(object value) =>
+            (value is ComputedKeyword ck && ck.Keyword == CssKeyword.RevertLayer) ||
+            (value is CssKeyword raw && raw == CssKeyword.RevertLayer);
 
         private bool CssHasValue(IStyleProperty prop)
         {

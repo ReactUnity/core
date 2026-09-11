@@ -19,8 +19,8 @@ namespace ReactUnity.Styling.Functions
         {
             if (args.Length < 2) return null;
 
-            var first = args[0];
-            var startIndex = 0;
+            var first = ParserHelpers.StripColorInterpolationMethod(args[0], out var hasHint);
+            var startIndex = hasHint ? 1 : 0;
 
             var isRepeating = name.FastStartsWith("repeating-");
 

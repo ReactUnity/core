@@ -134,6 +134,22 @@ namespace ReactUnity.UIToolkit
             else return StyleKeyword.Null;
         }
 
+        public static StyleLength GetStyleLengthTriple(NodeStyle style, StyleProperty<YogaValue> prop, StyleProperty<YogaValue> prop2, StyleProperty<YogaValue> prop3)
+        {
+            if (style.HasValue(prop)) return YogaValueToStyleLength(style.GetStyleValue<YogaValue>(prop));
+            if (style.HasValue(prop2)) return YogaValueToStyleLength(style.GetStyleValue<YogaValue>(prop2));
+            if (style.HasValue(prop3)) return YogaValueToStyleLength(style.GetStyleValue<YogaValue>(prop3));
+            else return StyleKeyword.Null;
+        }
+
+        public static StyleFloat GetStyleFloatTriple(NodeStyle style, StyleProperty<float> prop, StyleProperty<float> prop2, StyleProperty<float> prop3)
+        {
+            if (style.HasValue(prop)) return style.GetStyleValue<float>(prop);
+            if (style.HasValue(prop2)) return style.GetStyleValue<float>(prop2);
+            if (style.HasValue(prop3)) return style.GetStyleValue<float>(prop3);
+            else return StyleKeyword.Null;
+        }
+
         public static StyleEnum<T> GetStyleEnum<T>(NodeStyle style, StyleProperty<T> prop) where T : struct, IConvertible
         {
             if (style.HasValue(prop)) return style.GetStyleValue<T>(prop);

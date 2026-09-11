@@ -68,6 +68,45 @@ namespace ReactUnity.Tests
         }
 
         [UGUITest(Script = BaseScript, Style = BaseStyle)]
+        public IEnumerator TextDecorationColorWrapsTheContent()
+        {
+            Component.Globals.Set("richText", true);
+            Component.Globals.Set("textContent", "abc");
+            InsertStyle(@"text { color: white; text-decoration: underline red; }");
+            yield return null;
+
+            // TMP has no per-element underline colour, so a differing one arrives as a tag.
+            Assert.AreEqual("<u color=#FF0000FF>abc</u>", Text.Text.text);
+            // The tags are TMP's business: `textContent` and `:empty` keep seeing the content.
+            Assert.AreEqual("abc", Text.Content);
+            Assert.AreEqual("abc", Text.TextContent);
+
+            // A colour matching `color` needs no tag -- that is what TMP draws the line in already.
+            InsertStyle(@"text { text-decoration-color: white; }");
+            yield return null;
+            Assert.AreEqual("abc", Text.Text.text);
+
+            // Each line gets its own tag, and the pair nests.
+            InsertStyle(@"text { text-decoration: underline line-through blue; }");
+            yield return null;
+            Assert.AreEqual("<u color=#0000FFFF><s color=#0000FFFF>abc</s></u>", Text.Text.text);
+
+            // Without a line there is nothing to colour.
+            InsertStyle(@"text { text-decoration-line: none; }");
+            yield return null;
+            Assert.AreEqual("abc", Text.Text.text);
+
+            InsertStyle(@"text { text-decoration-line: underline; }");
+            yield return null;
+            Assert.AreEqual("<u color=#0000FFFF>abc</u>", Text.Text.text);
+
+            // With rich text off the tags would draw as characters, so none are emitted.
+            Component.Globals.Set("richText", false);
+            yield return null;
+            Assert.AreEqual("abc", Text.Text.text);
+        }
+
+        [UGUITest(Script = BaseScript, Style = BaseStyle)]
         public IEnumerator OverflowAndMaskDoesNotBreakText()
         {
             InsertStyle(@"text {
@@ -298,5 +337,40 @@ Line 6");
             Assert.AreEqual(113, height, 10);
         }
 
+        [UGUITest(Script = BaseScript, Style = BaseStyle)]
+        public IEnumerator GlyphsPaintOverTheTextsOwnBackground()
+        {
+            if (TestHelpers.IsNoGraphics()) Assert.Inconclusive("Needs a graphics device to read pixels back.");
+
+            InsertStyle(@"#text { background-color: red; color: white; font-size: 60px; padding: 10px; }");
+            yield return null;
+            yield return null;
+
+            var corners = new Vector3[4];
+            Text.RectTransform.GetWorldCorners(corners);
+            var cam = Camera.main;
+            var min = RectTransformUtility.WorldToScreenPoint(cam, corners[0]);
+            var max = RectTransformUtility.WorldToScreenPoint(cam, corners[2]);
+
+            // Sampled inside the padding, so an edge pixel of whatever is behind cannot pass for a glyph.
+            var capture = Assertions.CaptureScreenshot();
+            int red = 0, white = 0;
+            for (int y = Mathf.CeilToInt(min.y) + 5; y < Mathf.FloorToInt(max.y) - 5; y++)
+                for (int x = Mathf.CeilToInt(min.x) + 5; x < Mathf.FloorToInt(max.x) - 5; x++)
+                {
+                    var c = capture.GetPixel(x, y);
+                    if (c.r > 0.8f && c.g < 0.2f && c.b < 0.2f) red++;
+                    else if (c.r > 0.8f && c.g > 0.8f && c.b > 0.8f) white++;
+                }
+            Object.Destroy(capture);
+
+            Assert.Greater(red, 0, "The background was not drawn");
+            Assert.Greater(white, 0, "The glyphs are under the background");
+
+            // They paint after it because they live on a child kept after the background object.
+            var glyphs = Text.Text.transform;
+            Assert.AreEqual(Text.RectTransform, glyphs.parent);
+            Assert.AreEqual(Text.RectTransform.childCount - 1, glyphs.GetSiblingIndex());
+        }
     }
 }

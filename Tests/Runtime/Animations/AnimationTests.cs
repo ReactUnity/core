@@ -39,6 +39,24 @@ namespace ReactUnity.Tests
                     color: white;
                 }
             }
+
+            @keyframes slidePosition {
+                from {
+                    background-position: 0 0%;
+                }
+                to {
+                    background-position: 0 100%;
+                }
+            }
+
+            @keyframes growBorderImage {
+                from {
+                    border-image-width: 5px;
+                }
+                to {
+                    border-image-width: 20px;
+                }
+            }
 ";
 
         public AnimationTests(JavascriptEngineType engineType) : base(engineType) { }
@@ -195,6 +213,86 @@ namespace ReactUnity.Tests
             Assert.AreEqual(Color.white, text.color);
         }
 
+
+
+        // A sprite sheet scrolled by `background-position` is the case this covers, and the style
+        // is the wrong thing to read for it: the animated value lands there whether or not the mesh
+        // is rebuilt from it, which is exactly how a frozen sprite once passed for a working one.
+        [UGUITest(Script = BaseScript, Style = BaseStyle)]
+        public IEnumerator AnimatingBackgroundPositionRebuildsTheMesh()
+        {
+            var view = Q("#test") as UGUI.ContainerComponent;
+
+            // An image taller than the element, so the position has somewhere to travel.
+            view.Style.Set("background-image", "linear-gradient(black, white)");
+            view.Style.Set("background-size", "100px 400px");
+            view.Style.Set("width", "100px");
+            view.Style.Set("height", "100px");
+            view.Style.Set("animation", "slidePosition 1s linear infinite");
+            yield return AdvanceTime(0.1f);
+            yield return null;
+
+            var image = view.GameObject.GetComponentInChildren<UGUI.Shapes.WebBackgroundImage>();
+            Assert.NotNull(image, "sanity: a background image should have brought a graphic into being");
+
+            var rebuilds = 0;
+            image.RegisterDirtyVerticesCallback(() => rebuilds++);
+
+            for (int i = 0; i < 4; i++) { yield return AdvanceTime(0.1f); yield return null; }
+
+            Assert.Greater(rebuilds, 0, "an animated background-position must rebuild the mesh it is drawn from");
+        }
+
+
+        [UGUITest(Script = BaseScript, Style = BaseStyle)]
+        public IEnumerator AnimatingBorderImageWidthRebuildsTheMesh()
+        {
+            var view = Q("#test") as UGUI.ContainerComponent;
+
+            view.Style.Set("width", "100px");
+            view.Style.Set("height", "100px");
+            view.Style.Set("border-image", $"url({TestHelpers.DiamondsUrl}) 30px / 10px / stretch");
+            view.Style.Set("animation", "growBorderImage 1s linear infinite");
+            yield return AdvanceTime(0.1f);
+            yield return null;
+
+            var image = view.GameObject.GetComponentInChildren<UGUI.Shapes.WebBorderImage>();
+            Assert.NotNull(image, "sanity: a border image should have brought a graphic into being");
+
+            var rebuilds = 0;
+            image.RegisterDirtyVerticesCallback(() => rebuilds++);
+
+            for (int i = 0; i < 4; i++) { yield return AdvanceTime(0.1f); yield return null; }
+
+            Assert.Greater(rebuilds, 0, "an animated border-image-width must rebuild the mesh it is drawn from");
+        }
+
+
+        // The animation is on an unrelated property, so what this measures is the style application
+        // itself: it used to re-tessellate the border image every frame whether or not any
+        // `border-image-*` value had moved, which also made a filtered ancestor re-capture.
+        [UGUITest(Script = BaseScript, Style = BaseStyle)]
+        public IEnumerator AStaticBorderImageDoesNotRebuildEveryFrame()
+        {
+            var view = Q("#test") as UGUI.ContainerComponent;
+
+            view.Style.Set("width", "100px");
+            view.Style.Set("height", "100px");
+            view.Style.Set("border-image", $"url({TestHelpers.DiamondsUrl}) 30px / 10px / stretch");
+            view.Style.Set("animation", "fadeColor 4s linear infinite");
+            yield return AdvanceTime(0.1f);
+            yield return null;
+
+            var image = view.GameObject.GetComponentInChildren<UGUI.Shapes.WebBorderImage>();
+            Assert.NotNull(image, "sanity: a border image should have brought a graphic into being");
+
+            var rebuilds = 0;
+            image.RegisterDirtyVerticesCallback(() => rebuilds++);
+
+            for (int i = 0; i < 4; i++) { yield return AdvanceTime(0.1f); yield return null; }
+
+            Assert.AreEqual(0, rebuilds, "a border image whose own style has not moved must not re-tessellate");
+        }
 
 
         [UGUITest(Script = BaseScript, Style = BaseStyle)]

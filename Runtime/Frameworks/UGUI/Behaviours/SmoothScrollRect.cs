@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -12,10 +13,38 @@ namespace ReactUnity.UGUI.Behaviours
     {
         public float Smoothness { get; set; } = 0.12f;
 
+        /// <summary><c>scroll-behavior: smooth</c>: animate the scrolls this rect is asked to make.</summary>
+        public bool SmoothBehavior { get; set; }
+
+        /// <summary>How long one of those takes. Longer than the wheel's, which follows a live gesture.</summary>
+        public float BehaviorSmoothness { get; set; } = 0.3f;
+
+        /// <summary>
+        /// Where the scroll should come to rest, given where it is heading, in <see cref="ScrollLeft"/>
+        /// and <see cref="ScrollTop"/> points -- or null when nothing snaps. A rect cannot answer this
+        /// itself, the snap targets being elements, so the component fills it in.
+        /// </summary>
+        public Func<Vector2, Vector2?> FindSnapTarget { get; set; }
+
         private Coroutine SmoothCoroutine;
         private Vector2 targetPosition;
         private RectTransform rt;
         private RectTransform RT => rt ?? (rt = GetComponent<RectTransform>());
+
+        private bool dragging;
+        private bool snapPending;
+        private bool snapInstantly;
+
+        /// How fast the running animation is moving, in normalized position per second.
+        private Vector2 smoothVelocity;
+
+        /// Whether the running animation is following a target that can still move, rather than
+        /// carrying the scroll to one it was given.
+        private bool tracking;
+
+        /// How much of the distance a follow still has left once <see cref="Smoothness"/> has passed,
+        /// which is what keeps that number meaning about how long a scroll takes.
+        private const float FollowRemainder = 0.05f;
 
         public bool WheelDirectionTransposed { get; set; } = false;
 
@@ -24,16 +53,18 @@ namespace ReactUnity.UGUI.Behaviours
         public float ScrollWidth => Mathf.Max(content.rect.width, ClientWidth);
         public float ScrollHeight => Mathf.Max(content.rect.height, ClientHeight);
 
+        // These two jump unless `scroll-behavior` asked for an animation, which is where CSS puts the
+        // decision: assigning `scrollTop` is an asked-for scroll, not a gesture.
         public float ScrollLeft
         {
             get => normalizedPosition.x * (ScrollWidth - ClientWidth);
-            set => ScrollTo(value, null, 0);
+            set => ScrollTo(value, null, SmoothBehavior ? BehaviorSmoothness : 0f);
         }
 
         public float ScrollTop
         {
             get => (1 - normalizedPosition.y) * (ScrollHeight - ClientHeight);
-            set => ScrollTo(null, value, 0);
+            set => ScrollTo(null, value, SmoothBehavior ? BehaviorSmoothness : 0f);
         }
 
         public override void OnScroll(PointerEventData data)
@@ -51,18 +82,174 @@ namespace ReactUnity.UGUI.Behaviours
                 transpose = !transpose;
 #endif
 
-            if (transpose) data.scrollDelta = new Vector2(data.scrollDelta.y, data.scrollDelta.x);
+            var delta = UnityHelpers.WheelTicks(data.scrollDelta);
+            if (transpose) delta = new Vector2(delta.y, delta.x);
 
-#if UNITY_2023_2_OR_NEWER
-            // In newer Unity versions, scroll delta is 120 times smaller than before
-            // TODO: check if this is a bug on Unity side
-            data.scrollDelta *= 120;
-#endif
+            // The base class multiplies what it is handed by `scrollSensitivity`, so give it a tick
+            // count and the sensitivity becomes how far one tick scrolls.
+            var incoming = data.scrollDelta;
+            data.scrollDelta = delta;
 
             var positionBefore = normalizedPosition;
+
+            // A tick counts from where the scroll is already headed, not from how far it has got, so
+            // that a flurry of them adds up to the sum of its ticks as it would in a browser.
+            if (SmoothCoroutine != null) normalizedPosition = targetPosition;
+
             base.OnScroll(data);
-            var positionAfter = normalizedPosition;
-            ScrollTo(positionBefore, positionAfter, Smoothness);
+            var target = normalizedPosition;
+
+            // Left as it arrived: the same event is bubbled on to any scroll box above this one.
+            data.scrollDelta = incoming;
+
+            normalizedPosition = positionBefore;
+            FollowTo(target);
+            RequestSnap();
+        }
+
+        /// <summary>
+        /// Close on <paramref name="target"/> from wherever the scroll is now, with no deadline -- the
+        /// wheel has no destination in mind and can move the target again next frame. What is fixed is
+        /// the fraction of the way left after <see cref="Smoothness"/>, so the speed follows the wheel
+        /// rather than the frame rate.
+        /// </summary>
+        private void FollowTo(Vector2 target)
+        {
+            // An elastic box does not clamp the delta it was handed, and a target past the end is one
+            // the position can never be set to, so the follow would never arrive.
+            targetPosition = new Vector2(Mathf.Clamp01(target.x), Mathf.Clamp01(target.y));
+
+            if (Smoothness <= 0)
+            {
+                StopSmoothing();
+                smoothVelocity = Vector2.zero;
+                normalizedPosition = targetPosition;
+                return;
+            }
+
+            // An animation carrying the scroll somewhere is given up for this, keeping its speed.
+            if (!tracking) StopSmoothing();
+
+            if (SmoothCoroutine == null)
+            {
+                tracking = true;
+                SmoothCoroutine = StartCoroutine(FollowTarget());
+            }
+        }
+
+        private IEnumerator FollowTarget()
+        {
+            var rate = -Mathf.Log(FollowRemainder) / Smoothness;
+
+            while (true)
+            {
+                yield return null;
+
+                var position = normalizedPosition;
+                var remaining = targetPosition - position;
+
+                if (Reached(remaining))
+                {
+                    normalizedPosition = targetPosition;
+                    smoothVelocity = Vector2.zero;
+                    SmoothCoroutine = null;
+                    tracking = false;
+                    yield break;
+                }
+
+                // Frame rate only decides how finely the same approach is sampled.
+                normalizedPosition = position + remaining * (1 - Mathf.Exp(-rate * Time.unscaledDeltaTime));
+                smoothVelocity = remaining * rate;
+            }
+        }
+
+        /// <summary>Whether what is left of a scroll is under the pixel it would be drawn at.</summary>
+        private bool Reached(Vector2 remaining)
+        {
+            return Mathf.Abs(remaining.x) * Mathf.Max(0, ScrollWidth - ClientWidth) < 0.5f
+                && Mathf.Abs(remaining.y) * Mathf.Max(0, ScrollHeight - ClientHeight) < 0.5f;
+        }
+
+        private void StopSmoothing()
+        {
+            if (SmoothCoroutine != null) StopCoroutine(SmoothCoroutine);
+            SmoothCoroutine = null;
+            tracking = false;
+        }
+
+        public override void OnBeginDrag(PointerEventData eventData)
+        {
+            // The pointer takes over from wherever the animation reached, rather than from where it
+            // was headed -- so a running scroll is dropped in place instead of finished first.
+            StopSmoothing();
+            smoothVelocity = Vector2.zero;
+
+            dragging = true;
+            base.OnBeginDrag(eventData);
+        }
+
+        public override void OnEndDrag(PointerEventData eventData)
+        {
+            base.OnEndDrag(eventData);
+            dragging = false;
+            RequestSnap();
+        }
+
+        /// <summary>
+        /// Take a snap once the scroll settles. <paramref name="instant"/> for a snap a layout change
+        /// asked for rather than the user: CSS re-snaps on a resize without animating it.
+        /// </summary>
+        public void RequestSnap(bool instant = false)
+        {
+            snapPending = true;
+            snapInstantly = instant;
+        }
+
+        protected override void LateUpdate()
+        {
+            base.LateUpdate();
+            UpdateSnap();
+        }
+
+        private void UpdateSnap()
+        {
+            if (!snapPending || FindSnapTarget == null) return;
+
+            // A drag is still choosing where to go, and an animation is already going somewhere.
+            if (dragging || SmoothCoroutine != null) return;
+
+            snapPending = false;
+
+            var target = FindSnapTarget(Projected());
+            if (!target.HasValue) return;
+
+            // The inertia the base class would have coasted on is spent: this is the rest position now.
+            StopMovement();
+            ScrollTo(target.Value.x, target.Value.y, snapInstantly ? 0 : (float?) null);
+        }
+
+        /// <summary>
+        /// Where the scroll would come to rest untouched, which is what a snap has to measure against --
+        /// a fling is asking for the item it is thrown at, not the one under the finger when it let go.
+        /// The base class decays the velocity by <c>decelerationRate</c> per second, so the travel left
+        /// in it is <c>v / -ln(rate)</c>.
+        /// </summary>
+        private Vector2 Projected()
+        {
+            var position = new Vector2(ScrollLeft, ScrollTop);
+
+            if (inertia)
+            {
+                var rate = Mathf.Clamp(decelerationRate, 0.0001f, 0.9999f);
+                var travel = 1f / -Mathf.Log(rate);
+
+                // The content moves against the scroll offset on one axis and with it on the other.
+                position += new Vector2(-velocity.x, velocity.y) * travel;
+            }
+
+            return new Vector2(
+                Mathf.Clamp(position.x, 0, Mathf.Max(0, ScrollWidth - ClientWidth)),
+                Mathf.Clamp(position.y, 0, Mathf.Max(0, ScrollHeight - ClientHeight)));
         }
 
         public void ScrollBy(float? left = null, float? top = null, float? smoothness = null)
@@ -81,49 +268,92 @@ namespace ReactUnity.UGUI.Behaviours
             var slr = Mathf.Clamp01(sl / (ScrollWidth - ClientWidth));
             var str = Mathf.Clamp01(1 - st / (ScrollHeight - ClientHeight));
 
-            ScrollTo(normalizedPosition, new Vector2(slr, str), smoothness ?? Smoothness);
+            ScrollTo(normalizedPosition, new Vector2(slr, str), smoothness ?? DefaultSmoothness(), true);
+
+            // A scroll that lands off a snap point is snapped from there, the way CSS re-snaps after
+            // any scrolling operation and not only after a gesture. The snap resolves to where it
+            // already is when this was the snap, so it costs a search rather than a second animation.
+            RequestSnap();
         }
 
-        private void ScrollTo(Vector2 positionBefore, Vector2 positionAfter, float smoothness)
+        /// <summary>What an asked-for scroll animates over when it names no duration of its own.</summary>
+        private float DefaultSmoothness() => SmoothBehavior ? BehaviorSmoothness : Smoothness;
+
+        /// <param name="settle">
+        /// Whether the scroll ends where it was sent. A wheel keeps the velocity the base class coasts
+        /// on afterwards, which is half of what makes it feel smooth; a scroll aimed at a position --
+        /// a snap, a `scrollTop` -- would drift straight back off it.
+        /// </param>
+        private void ScrollTo(Vector2 positionBefore, Vector2 positionAfter, float smoothness, bool settle)
         {
-            if (SmoothCoroutine != null)
-            {
-                StopCoroutine(SmoothCoroutine);
-                SmoothCoroutine = null;
-                normalizedPosition = targetPosition;
-            }
+            StopSmoothing();
 
             if (smoothness > 0)
             {
                 targetPosition = positionAfter;
 
                 normalizedPosition = positionBefore;
-                SmoothCoroutine = StartCoroutine(StartScroll(positionBefore, positionAfter, smoothness));
+                SmoothCoroutine = StartCoroutine(StartScroll(positionBefore, positionAfter, smoothness, settle));
             }
             else
             {
+                smoothVelocity = Vector2.zero;
+                if (settle) StopMovement();
                 if (normalizedPosition != positionAfter)
                     normalizedPosition = positionAfter;
             }
         }
 
-        private IEnumerator StartScroll(Vector2 from, Vector2 to, float smoothness)
+        private IEnumerator StartScroll(Vector2 from, Vector2 to, float smoothness, bool settle)
         {
+            // The speed this scroll starts at is the speed the one it interrupted had reached, so
+            // retargeting mid-flight -- a second wheel tick, a `scrollTop` -- carries the motion on
+            // instead of restarting it. It still eases out to a stop, and still on time.
+            var initial = smoothVelocity;
             var passed = 0f;
 
             while (true)
             {
                 yield return null;
+                if (settle) StopMovement();
                 passed += Time.unscaledDeltaTime;
-                if (passed < smoothness)
-                    normalizedPosition = Vector2.Lerp(from, to, passed / smoothness);
-                else
+
+                if (passed >= smoothness)
                 {
                     normalizedPosition = to;
+                    smoothVelocity = Vector2.zero;
                     SmoothCoroutine = null;
                     yield break;
                 }
+
+                var s = passed / smoothness;
+                normalizedPosition = Hermite(from, to, initial, smoothness, s);
+                smoothVelocity = HermiteVelocity(from, to, initial, smoothness, s);
             }
+        }
+
+        /// <summary>
+        /// A cubic Hermite: where a scroll that left <paramref name="from"/> at
+        /// <paramref name="velocity"/> has got to at fraction <paramref name="s"/> of its way to
+        /// <paramref name="to"/>, arriving there with no speed left.
+        /// </summary>
+        private static Vector2 Hermite(Vector2 from, Vector2 to, Vector2 velocity, float duration, float s)
+        {
+            var s2 = s * s;
+            var s3 = s2 * s;
+
+            return from * (2 * s3 - 3 * s2 + 1)
+                + to * (3 * s2 - 2 * s3)
+                + velocity * (duration * (s3 - 2 * s2 + s));
+        }
+
+        /// <summary>How fast <see cref="Hermite"/> is moving there, which is its derivative in time.</summary>
+        private static Vector2 HermiteVelocity(Vector2 from, Vector2 to, Vector2 velocity, float duration, float s)
+        {
+            var s2 = s * s;
+
+            return (from - to) * ((6 * s2 - 6 * s) / duration)
+                + velocity * (3 * s2 - 4 * s + 1);
         }
     }
 }

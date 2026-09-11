@@ -8,12 +8,19 @@ namespace ReactUnity.Styling
     public static class CssFunctions
     {
         public static ICssFunction Calc = new CalcFunction();
+        public static ICssFunction MinMax = new MinMaxFunction();
+        public static ICssFunction Math = new MathFunction();
+        public static ICssFunction Linear = new LinearFunction();
+        public static ICssFunction Attr = new AttrFunction();
+        public static ICssFunction LightDark = new LightDarkFunction();
         public static ICssFunction Steps = new StepsFunction();
         public static ICssFunction CubicBezier = new CubicBezierFunction();
         public static ICssFunction Url = new UrlFunction();
         public static ICssFunction Resource = new UrlFunction() { DefaultProtocol = Types.UrlProtocol.Resource };
         public static ICssFunction Rgba = new RgbaFunction();
         public static ICssFunction Hsla = new HslaFunction();
+        public static ICssFunction LabColor = new LabColorFunction();
+        public static ICssFunction ColorMix = new ColorMixFunction();
         public static ICssFunction Var = new VarFunction();
         public static ICssFunction Vector3 = new Vector3Function();
         public static ICssFunction LinearGradient = new LinearGradientFunction();
@@ -23,6 +30,29 @@ namespace ReactUnity.Styling
         private static Dictionary<string, ICssFunction> Functions = new Dictionary<string, ICssFunction>(StringComparer.InvariantCultureIgnoreCase)
         {
             { "calc", Calc },
+            { "min", MinMax },
+            { "max", MinMax },
+            { "clamp", MinMax },
+            { "round", Math },
+            { "mod", Math },
+            { "rem", Math },
+            { "abs", Math },
+            { "sign", Math },
+            { "sin", Math },
+            { "cos", Math },
+            { "tan", Math },
+            { "asin", Math },
+            { "acos", Math },
+            { "atan", Math },
+            { "atan2", Math },
+            { "pow", Math },
+            { "sqrt", Math },
+            { "hypot", Math },
+            { "log", Math },
+            { "exp", Math },
+            { "linear", Linear },
+            { "attr", Attr },
+            { "light-dark", LightDark },
             { "rgb", Rgba },
             { "hsl", Hsla },
             { "hsv", Hsla },
@@ -34,6 +64,11 @@ namespace ReactUnity.Styling
             { "resource", Resource },
             { "rgba", Rgba },
             { "hsla", Hsla },
+            { "oklch", LabColor },
+            { "oklab", LabColor },
+            { "lch", LabColor },
+            { "lab", LabColor },
+            { "color-mix", ColorMix },
             { "var", Var },
             { "vector3", Vector3 },
             { "linear-gradient", LinearGradient },
@@ -60,7 +95,8 @@ namespace ReactUnity.Styling
                 return false;
             }
 
-            if ((allowed == null || allowed.Contains(name) || name == "var")
+            // var() and attr() substitute text, so every property takes them.
+            if ((allowed == null || allowed.Contains(name) || name == "var" || name == "attr")
                 && Functions.TryGetValue(name, out var fun)
                 && fun.CanHandleArguments(splits.Length, name, splits))
             {

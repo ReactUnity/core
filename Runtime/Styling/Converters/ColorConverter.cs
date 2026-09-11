@@ -8,7 +8,9 @@ namespace ReactUnity.Styling.Converters
 {
     public class ColorConverter : TypedStyleConverterBase<Color>
     {
-        private static HashSet<string> DefaultAllowedFunctions = new HashSet<string> { "rgb", "rgba", "hsl", "hsla", "hsv", "hsva" };
+        private static HashSet<string> DefaultAllowedFunctions = new HashSet<string>(StringComparer.InvariantCultureIgnoreCase) {
+            "rgb", "rgba", "hsl", "hsla", "hsv", "hsva", "oklch", "oklab", "lch", "lab", "color-mix", "light-dark",
+        };
         protected override HashSet<string> AllowedFunctions => DefaultAllowedFunctions;
 
         static Dictionary<string, string> KnownColors = new Dictionary<string, string>(StringComparer.InvariantCultureIgnoreCase) {
@@ -162,17 +164,20 @@ namespace ReactUnity.Styling.Converters
             { "yellowgreen", "#9acd32" },
         };
 
+        // A CSS keyword is case-insensitive, and `currentcolor` is how Tailwind writes it.
+        private static bool Keyword(string value, string keyword) => string.Equals(value, keyword, StringComparison.OrdinalIgnoreCase);
+
         protected override bool ParseInternal(string value, out IComputedValue result)
         {
             if (KnownColors.TryGetValue(value, out var known)) value = known;
 
-            if (value == "clear" || value == "transparent")
+            if (Keyword(value, "clear") || Keyword(value, "transparent"))
             {
                 result = new ComputedConstant(Color.clear);
                 return true;
             }
 
-            if (value == "currentColor")
+            if (Keyword(value, "currentColor"))
             {
                 result = ComputedCurrentColor.Instance;
                 return true;

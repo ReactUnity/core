@@ -2,6 +2,7 @@ using System;
 using System.Runtime.CompilerServices;
 using Yoga;
 using ReactUnity.Styling;
+using ReactUnity.Types;
 using UnityEngine;
 
 namespace ReactUnity.UGUI
@@ -72,6 +73,23 @@ namespace ReactUnity.UGUI
             pos.y = Screen.height - pos.y - ((1.0f - transform.pivot.y) * size.y);
             return new Rect(pos, size);
         }
+
+        /// <summary>
+        /// The rotation a CSS <c>rotate</c> value means on a canvas. CSS has y down and z toward the
+        /// viewer, a canvas y up and z away, so the y and z terms of the rotation flip and a positive
+        /// angle turns clockwise, as on the web.
+        /// </summary>
+        public static Quaternion RotationOf(Vector3 cssEuler)
+        {
+            var q = Quaternion.Euler(cssEuler);
+            return new Quaternion(q.x, -q.y, -q.z, q.w);
+        }
+
+        /// <summary>Yoga's display for a CSS one. Every layout but none and contents is a flex container.</summary>
+        public static YogaDisplay DisplayOf(DisplayType display) =>
+            display == DisplayType.None ? YogaDisplay.None :
+            display == DisplayType.Contents ? YogaDisplay.Contents :
+            YogaDisplay.Flex;
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void Swap<T>(ref T lhs, ref T rhs)

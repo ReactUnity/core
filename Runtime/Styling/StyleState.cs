@@ -19,6 +19,7 @@ namespace ReactUnity.Styling
             public float Duration = 0;
             public float ElapsedTimeSinceRun = 0;
             public bool Ended = false;
+            public int Cycle = 0;
 
             public KeyframeList Keyframes;
 
@@ -126,7 +127,7 @@ namespace ReactUnity.Styling
 
             if (hasTransition || hasAnimation)
             {
-                Active = new NodeStyle(Context, Current, null, Current.RevertCalculator);
+                Active = new NodeStyle(Context, Current, null, Current.RevertCalculator, Current.Component);
                 Active.UpdateParent(Parent?.Active);
 
                 var switchTransitions = hasTransition && activeTransitions != transition;
@@ -439,6 +440,9 @@ namespace ReactUnity.Styling
             var iterationCount = Current.animationIterationCount;
             var playState = Current.animationPlayState;
             var timingFunction = Current.animationTimingFunction;
+            var timeline = Current.animationTimeline;
+            var rangeStart = Current.animationRangeStart;
+            var rangeEnd = Current.animationRangeEnd;
 
             var length = name.Count;
 
@@ -475,18 +479,56 @@ namespace ReactUnity.Styling
                     state.Duration = dr;
                 }
 
-                float delta = playState.Get(ind) == AnimationPlayState.Paused ? 0 : currentTime - state.LastUpdatedAt;
-                state.ElapsedTimeSinceRun += delta;
+                var tl = timeline.Get(ind);
+                var scrollDriven = tl.IsScrollDriven;
+                var inactive = false;
 
-                var delayDiff = state.ElapsedTimeSinceRun - delay.Get(ind);
-                var delayPassed = delayDiff > 0;
-                var ratio = delayDiff / dr;
-                var maxRatio = it >= 0 ? it : float.MaxValue;
-                ratio = Math.Max(0, Math.Min(ratio, maxRatio));
+                float ratio;
+                bool delayPassed;
+                bool ended;
+                int cycle;
 
-                var ended = dr <= 0 || (it >= 0 && ratio >= it);
+                if (scrollDriven)
+                {
+                    // A scroll container's progress stands in for the clock, so the duration, the
+                    // delay and the play state have nothing to say. A count of infinity would divide
+                    // a range that is finite, so it counts as one.
+                    var cycles = it > 0 ? it : 1;
 
-                var cycle = dr == 0 ? 0 : Mathf.FloorToInt(ratio);
+                    if (tl.TryGetProgress(Current.Component, rangeStart.Get(ind), rangeEnd.Get(ind), out var progress))
+                    {
+                        ratio = Mathf.Clamp01(progress) * cycles;
+                        delayPassed = true;
+                        // Scrolling back is always possible, so this never finishes; the last cycle
+                        // holds its end value rather than wrapping around to its start.
+                        ended = it == 0;
+                        cycle = Math.Min(Mathf.FloorToInt(ratio), cycles - 1);
+                    }
+                    else
+                    {
+                        inactive = true;
+                        ratio = 0;
+                        delayPassed = false;
+                        ended = false;
+                        cycle = 0;
+                    }
+                }
+                else
+                {
+                    float delta = playState.Get(ind) == AnimationPlayState.Paused ? 0 : currentTime - state.LastUpdatedAt;
+                    state.ElapsedTimeSinceRun += delta;
+
+                    var delayDiff = state.ElapsedTimeSinceRun - delay.Get(ind);
+                    delayPassed = delayDiff > 0;
+                    ratio = delayDiff / dr;
+                    var maxRatio = it >= 0 ? it : float.MaxValue;
+                    ratio = Math.Max(0, Math.Min(ratio, maxRatio));
+
+                    ended = dr <= 0 || (it >= 0 && ratio >= it);
+
+                    cycle = dr == 0 ? 0 : Mathf.FloorToInt(ratio);
+                }
+
                 var cycleOffset = ratio - cycle;
 
                 var even = cycle % 2 == 0;
@@ -496,7 +538,7 @@ namespace ReactUnity.Styling
                     || (dir == AnimationDirection.AlternateReverse && even);
 
 
-                var step = !delayPassed ? 0 : (dr == 0 ? 1 : Mathf.Min(Mathf.Max(0, cycleOffset), 1));
+                var step = !delayPassed ? 0 : (!scrollDriven && dr == 0 ? 1 : Mathf.Clamp01(cycleOffset));
                 if (reverse) step = 1 - step;
 
 
@@ -506,15 +548,41 @@ namespace ReactUnity.Styling
 
                 var stepCount = steps.Count - 1;
 
+                if (inactive)
+                {
+                    // No container to read progress from: the animation has no effect at all, not
+                    // even the fill it would leave behind. It is still polled, since a scroll
+                    // container may yet appear above this element.
+                    foreach (var sp in properties)
+                    {
+                        if (sp == null) continue;
+
+                        var unanimated = Current.GetRawStyleValue(sp);
+                        updated = updated || (Active.GetRawStyleValue(sp) != unanimated);
+                        hasLayout = hasLayout || sp.affectsLayout;
+                        Active.SetStyleValue(sp, unanimated);
+                    }
+
+                    if (!state.Ended && state.Ratio > 0) OnEvent?.Invoke("onAnimationCancel", state.CreateEvent());
+
+                    state.Ratio = 0;
+                    state.Cycle = 0;
+                    state.LastUpdatedAt = currentTime;
+                    finished = false;
+                    continue;
+                }
+
                 var previousRatio = state.Ratio;
                 var previousEnded = state.Ended;
+                var previousCycle = state.Cycle;
                 state.Ratio = ratio;
                 state.LastUpdatedAt = currentTime;
                 state.Ended = ended;
+                state.Cycle = cycle;
 
                 if ((ratio > 0 && previousRatio == 0) || (previousEnded && !ended)) OnEvent?.Invoke("onAnimationStart", state.CreateEvent());
                 if (ratio != previousRatio && ended) OnEvent?.Invoke("onAnimationEnd", state.CreateEvent());
-                if (Mathf.FloorToInt(ratio) != Mathf.FloorToInt(previousRatio) && !ended) OnEvent?.Invoke("onAnimationIteration", state.CreateEvent());
+                if (cycle != previousCycle && !ended) OnEvent?.Invoke("onAnimationIteration", state.CreateEvent());
 
                 foreach (var sp in properties)
                 {

@@ -96,32 +96,78 @@ namespace ReactUnity.Scripting
         {
             if (documentType == JavascriptDocumentType.Module)
             {
-                // import.meta.url is the specifier, so it has to be the address the code came from -
-                // and the cache is keyed on it, so a hot update needs a fresh one.
-                var specifier = $"{fileName ?? "module"}?__ru={moduleCount++}";
-                Engine.Modules.Add(specifier, code);
-
-                // Not awaited: anything this module imports is fetched by JintModuleLoader, which
-                // needs the frames a blocking import would be holding.
-                var import = Engine.Modules.StartImport(specifier);
-
-                // Draining the queue the import just filled is enough to finish a module that
-                // needs nothing from the loader - which is every bundle, so those still evaluate
-                // before this returns. A graph waiting on a request cannot, and finishes over the
-                // next few Update()s instead.
-                if (!import.IsCompleted) Engine.Advanced.ProcessTasks();
-
-                if (!import.IsCompleted) pendingImports.Add(import);
-                else if (import.IsFaulted) throw new JavaScriptException(import.Error);
+                // One root at a time. An entry document's script tags are a list a browser runs in
+                // order, and starting the next graph while the previous one is still fetching lets
+                // the fetches decide instead: Vite inlines the React Refresh preamble and then
+                // loads the app, and the app reads what the preamble installs.
+                if (moduleInFlight != null) moduleQueue.Enqueue(new PendingModule { Code = code, FileName = fileName });
+                else StartModule(code, fileName);
                 return;
             }
 
             Engine.Execute(code);
         }
 
+        private void StartModule(string code, string fileName)
+        {
+            // import.meta.url is the specifier, so it has to be the address the code came from - and
+            // a chunk importing the entry back resolves to exactly that address, so the first run of
+            // one keeps it. The cache is keyed on the specifier, so only a re-run needs a fresh one.
+            var url = ModuleUrl.Canonical(fileName) ?? "module";
+            var specifier = moduleSpecifiers.Add(url) ? url : $"{url}?__ru={moduleCount++}";
+            Engine.Modules.Add(specifier, code);
+
+            // Not awaited: anything this module imports is fetched by JintModuleLoader, which
+            // needs the frames a blocking import would be holding.
+            var import = Engine.Modules.StartImport(specifier);
+
+            // Draining the queue the import just filled is enough to finish a module that
+            // needs nothing from the loader - which is every bundle, so those still evaluate
+            // before this returns. A graph waiting on a request cannot, and finishes over the
+            // next few Update()s instead.
+            if (!import.IsCompleted) Engine.Advanced.ProcessTasks();
+
+            if (!import.IsCompleted)
+            {
+                moduleInFlight = import;
+                pendingImports.Add(import);
+            }
+            else
+            {
+                StartNextModule();
+                if (import.IsFaulted) throw new JavaScriptException(import.Error);
+            }
+        }
+
+        /// Runs whatever queued behind the graph that just settled. Loops rather than recurses so
+        /// a run of bundles that each finish inline cannot nest one frame per script.
+        private void StartNextModule()
+        {
+            moduleInFlight = null;
+
+            while (moduleInFlight == null && moduleQueue.Count > 0)
+            {
+                var next = moduleQueue.Dequeue();
+
+                // A root that throws must not strand the ones behind it.
+                try { StartModule(next.Code, next.FileName); }
+                catch (Exception ex) { Debug.LogException(ex); }
+            }
+        }
+
         private int moduleCount;
+        private readonly HashSet<string> moduleSpecifiers = new HashSet<string>();
         private readonly JintModuleLoader moduleLoader;
         private readonly List<ModuleImportOperation> pendingImports = new List<ModuleImportOperation>();
+
+        private struct PendingModule
+        {
+            public string Code;
+            public string FileName;
+        }
+
+        private ModuleImportOperation moduleInFlight;
+        private readonly Queue<PendingModule> moduleQueue = new Queue<PendingModule>();
 
         /// The only place a graph that finished loading after Execute returned can be reported.
         void ReportFinishedImports()
@@ -133,6 +179,7 @@ namespace ReactUnity.Scripting
 
                 pendingImports.RemoveAt(i);
                 if (import.IsFaulted) Debug.LogError($"Module import failed: {Describe(import.Error)}");
+                if (import == moduleInFlight) StartNextModule();
             }
         }
 

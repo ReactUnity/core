@@ -18,14 +18,30 @@ namespace ReactUnity.Styling.Converters
         static public StyleConverterBase AngleConverter = new AngleConverter();
         static public StyleConverterBase LengthConverter = new LengthConverter();
         static public StyleConverterBase FontSizeConverter = new FontSizeConverter();
+        static public StyleConverterBase LineHeightConverter = new LineHeightConverter();
         static public StyleConverterBase DurationConverter = new DurationConverter();
         static public StyleConverterBase PercentageConverter = new PercentageConverter();
         static public StyleConverterBase ColorValueConverter = new ColorValueConverter();
+        static public StyleConverterBase OklchChromaConverter = new OklchChromaConverter();
+        static public StyleConverterBase LabLightnessConverter = new LabLightnessConverter();
+        static public StyleConverterBase LabAxisConverter = new LabAxisConverter();
+        static public StyleConverterBase LchChromaConverter = new LchChromaConverter();
 
         static public StyleConverterBase UrlConverter = new UrlConverter();
+        static public StyleConverterBase ContainerNameConverter = new ContainerNameConverter();
+        static public StyleConverterBase AnimationTimelineConverter = new AnimationTimelineConverter();
+        static public StyleConverterBase TimelineNameConverter = new TimelineNameConverter();
+        static public StyleConverterBase AnimationRangeConverter = new AnimationRangeConverter();
+        static public StyleConverterBase TimelineScopeConverter = new TimelineScopeConverter();
+        static public StyleConverterBase ContainerTypeConverter = new ContainerTypeConverter();
+        static public StyleConverterBase ColorSchemeConverter = new ColorSchemeConverter();
+        static public StyleConverterBase ScrollbarGutterConverter = new ScrollbarGutterConverter();
+        static public StyleConverterBase ScrollSnapTypeConverter = new ScrollSnapType.Converter();
+        static public StyleConverterBase ScrollSnapAlignConverter = new ScrollSnapAlign.Converter();
         static public StyleConverterBase YogaValueConverter = new YogaValueConverter();
         static public StyleConverterBase YogaValue2Converter = new YogaValue2.Converter();
         static public StyleConverterBase BorderRadiusConverter = new YogaValue2.Converter(false, ' ', true);
+        static public StyleConverterBase TimelineInsetConverter = new YogaValue2.Converter(false, ' ', true);
         static public StyleConverterBase Vector2Converter = new Vector2Converter();
         static public StyleConverterBase Vector3Converter = new Vector3Converter();
         static public StyleConverterBase IntConverter = new IntConverter();
@@ -41,7 +57,7 @@ namespace ReactUnity.Styling.Converters
         static public StyleConverterBase AudioReferenceConverter = new AudioReference.Converter();
         static public StyleConverterBase VideoReferenceConverter = new VideoReference.Converter();
         static public StyleConverterBase FontReferenceConverter = new FontReference.Converter();
-        static public StyleConverterBase RotateConverter = new Vector3Converter((v) => new Vector3(0, 0, v), AngleConverter);
+        static public StyleConverterBase RotateConverter = new RotateConverter();
         static public StyleConverterBase ScaleConverter = new Vector3Converter(null, null, 1);
         static public StyleConverterBase TransitionPropertyConverter = new TransitionProperty.Converter();
         static public StyleConverterBase CursorConverter = new Types.Cursor.Converter();
@@ -52,6 +68,7 @@ namespace ReactUnity.Styling.Converters
         static public StyleConverterBase SortingLayerConverter = new SortingLayerConverter();
         static public StyleConverterBase BorderImageSliceConverter = new BorderImageSlice.Converter();
         static public StyleConverterBase FilterDefinitionConverter = new FilterDefinition.Converter();
+        static public StyleConverterBase ClipPathConverter = new ClipPath.Converter();
 
 
         private static Dictionary<Type, StyleConverterBase> Map = new Dictionary<Type, StyleConverterBase>()
@@ -80,7 +97,10 @@ namespace ReactUnity.Styling.Converters
             { typeof(BackgroundSize), BackgroundSizeConverter },
             { typeof(SortingLayer), SortingLayerConverter },
             { typeof(BorderImageSlice), BorderImageSliceConverter },
-            { typeof(FilterDefinition), FilterDefinitionConverter }
+            { typeof(FilterDefinition), FilterDefinitionConverter },
+            { typeof(ClipPath), ClipPathConverter },
+            { typeof(ContainerType), ContainerTypeConverter },
+            { typeof(AnimationTimeline), AnimationTimelineConverter },
         };
 
         public static StyleConverterBase Get<T>() => Get(typeof(T));

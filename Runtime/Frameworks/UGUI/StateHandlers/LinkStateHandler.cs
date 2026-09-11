@@ -18,7 +18,7 @@ namespace ReactUnity.UGUI.StateHandlers
 
         private void Start()
         {
-            Text = GetComponent<TextMeshProUGUI>();
+            Text = GetComponentInChildren<TextMeshProUGUI>();
         }
 
         public void OnPointerEnter(PointerEventData eventData)

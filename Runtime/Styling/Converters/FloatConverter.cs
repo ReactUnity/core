@@ -9,8 +9,23 @@ namespace ReactUnity.Styling.Converters
 {
     public class FloatConverter : TypedStyleConverterBase<float>
     {
-        private static HashSet<string> DefaultAllowedFunctions = new HashSet<string>() { "calc" };
+        private static HashSet<string> DefaultAllowedFunctions = new HashSet<string>(StringComparer.InvariantCultureIgnoreCase) {
+            "calc", "min", "max", "clamp",
+            "round", "mod", "rem", "abs", "sign",
+            "sin", "cos", "tan", "asin", "acos", "atan", "atan2",
+            "pow", "sqrt", "hypot", "log", "exp",
+        };
         protected override HashSet<string> AllowedFunctions => DefaultAllowedFunctions;
+
+        // The numeric constants calc() knows. Only where a bare number is allowed at all, since they are one.
+        private static readonly Dictionary<string, float> MathConstants = new Dictionary<string, float>(StringComparer.InvariantCultureIgnoreCase)
+        {
+            { "pi", Mathf.PI },
+            { "e", (float) Math.E },
+            { "infinity", float.PositiveInfinity },
+            { "-infinity", float.NegativeInfinity },
+            { "nan", float.NaN },
+        };
 
         static CultureInfo culture = new CultureInfo("en-US");
 
@@ -43,6 +58,11 @@ namespace ReactUnity.Styling.Converters
                 result = new ComputedConstant(val);
                 return true;
             }
+            if (AllowSuffixless && MathConstants.TryGetValue(value.Trim(), out var constant))
+            {
+                result = new ComputedConstant(constant);
+                return true;
+            }
             return ParseVal(value, out result);
         }
 
@@ -69,6 +89,12 @@ namespace ReactUnity.Styling.Converters
             return base.ConvertInternal(value, out result);
         }
 
+        /// <summary>
+        /// What a number with no unit means. A length in pixels, other than where CSS gives a bare
+        /// number a meaning of its own.
+        /// </summary>
+        internal virtual IComputedValue Suffixless(float value) => new ComputedConstant(value);
+
         private bool ParseVal(string value, out IComputedValue result)
         {
             var i = 0;
@@ -94,21 +120,25 @@ namespace ReactUnity.Styling.Converters
             {
                 var suffix = suffixPart.ToString();
 
-                var multiplier = 1f;
-                if (suffix != "")
+                if (suffix == "")
                 {
-                    if (SuffixMapper.TryGetValue(suffix, out var mapper))
-                    {
-                        result = StylingUtils.CreateComputed(mapper(res));
-                        return true;
-                    }
-                    if (!SuffixMap.TryGetValue(suffix, out multiplier))
+                    if (!AllowSuffixless && res != 0)
                     {
                         result = null;
                         return false;
                     }
+
+                    result = Suffixless(res);
+                    return true;
                 }
-                else if (!AllowSuffixless && res != 0)
+
+                if (SuffixMapper.TryGetValue(suffix, out var mapper))
+                {
+                    result = StylingUtils.CreateComputed(mapper(res));
+                    return true;
+                }
+
+                if (!SuffixMap.TryGetValue(suffix, out var multiplier))
                 {
                     result = null;
                     return false;
@@ -136,11 +166,63 @@ namespace ReactUnity.Styling.Converters
         public override string StringifyTyped(float value) => value + "%";
     }
 
+    /// <summary>
+    /// One channel of `rgb()`, which is 0..255 -- so a percentage is 2.55 of it, not 255. `82%` came
+    /// out as 82 times white and rendered as white, which is what made the default toggle invisible.
+    /// </summary>
     public class ColorValueConverter : FloatConverter
     {
         public ColorValueConverter() : base(new Dictionary<string, float>
         {
-            { "%", 255 },
+            { "%", 2.55f },
+        })
+        { }
+    }
+
+    /// <summary>
+    /// Chroma in oklch(), and the a/b axes in oklab(), where 100% means 0.4.
+    /// </summary>
+    public class OklchChromaConverter : FloatConverter
+    {
+        public OklchChromaConverter() : base(new Dictionary<string, float>
+        {
+            { "%", ColorSpaces.OklchChromaReference / 100f },
+        })
+        { }
+    }
+
+    /// <summary>
+    /// Lightness in lab() and lch(), which is 0..100 rather than 0..1, so a percentage is itself.
+    /// </summary>
+    public class LabLightnessConverter : FloatConverter
+    {
+        public LabLightnessConverter() : base(new Dictionary<string, float>
+        {
+            { "%", 1f },
+        })
+        { }
+    }
+
+    /// <summary>
+    /// The a/b axes in lab(), where 100% means 125.
+    /// </summary>
+    public class LabAxisConverter : FloatConverter
+    {
+        public LabAxisConverter() : base(new Dictionary<string, float>
+        {
+            { "%", ColorSpaces.LabAxisReference / 100f },
+        })
+        { }
+    }
+
+    /// <summary>
+    /// Chroma in lch(), where 100% means 150.
+    /// </summary>
+    public class LchChromaConverter : FloatConverter
+    {
+        public LchChromaConverter() : base(new Dictionary<string, float>
+        {
+            { "%", ColorSpaces.LchChromaReference / 100f },
         })
         { }
     }
@@ -163,22 +245,46 @@ namespace ReactUnity.Styling.Converters
 
         public LengthConverter() : base(
             UnitValueMap,
-            new Dictionary<string, Func<float, object>>
+            WithContainerUnits(WithViewportUnits(new Dictionary<string, Func<float, object>>
             {
                 { "rem", x => new ComputedRootRelative(x, ComputedRootRelative.RootValueType.Rem) },
-                { "vw", x => new ComputedRootRelative(x / 100f, ComputedRootRelative.RootValueType.Width) },
-                { "vh", x => new ComputedRootRelative(x / 100f, ComputedRootRelative.RootValueType.Height) },
-                { "vmin", x => new ComputedRootRelative(x / 100f, ComputedRootRelative.RootValueType.Min) },
-                { "vmax", x => new ComputedRootRelative(x / 100f, ComputedRootRelative.RootValueType.Max) },
                 { "em", x => new ComputedFontSize(x) },
                 { "%", x => new ComputedPercentage(x) },
                 { "lh", x => new ComputedFontProperty(x, ComputedFontProperty.FontPropertyType.LineHeight) },
                 { "rlh", x => new ComputedFontProperty(x, ComputedFontProperty.FontPropertyType.RootLineHeight) },
                 { "ch", x => new ComputedFontProperty(x, ComputedFontProperty.FontPropertyType.CharacterWidth) },
                 { "ex", x => new ComputedFontProperty(x, ComputedFontProperty.FontPropertyType.XHeight) },
-            }
+            }))
         )
         { }
+
+        /// <summary>
+        /// The viewport units. The small/large/dynamic variants only differ where a browser's own bars
+        /// can shrink the viewport, and the logical `vi`/`vb` assume horizontal writing, so all map to `vw`/`vh`.
+        /// </summary>
+        internal static Dictionary<string, Func<float, object>> WithViewportUnits(Dictionary<string, Func<float, object>> map)
+        {
+            foreach (var prefix in new[] { "v", "dv", "sv", "lv" })
+            {
+                map[prefix + "w"] = x => new ComputedRootRelative(x / 100f, ComputedRootRelative.RootValueType.Width);
+                map[prefix + "h"] = x => new ComputedRootRelative(x / 100f, ComputedRootRelative.RootValueType.Height);
+                map[prefix + "min"] = x => new ComputedRootRelative(x / 100f, ComputedRootRelative.RootValueType.Min);
+                map[prefix + "max"] = x => new ComputedRootRelative(x / 100f, ComputedRootRelative.RootValueType.Max);
+                map[prefix + "i"] = map[prefix + "w"];
+                map[prefix + "b"] = map[prefix + "h"];
+            }
+            return map;
+        }
+
+        /// <summary>The container units. `cqi`/`cqb` assume horizontal writing, like `vi`/`vb`.</summary>
+        internal static Dictionary<string, Func<float, object>> WithContainerUnits(Dictionary<string, Func<float, object>> map)
+        {
+            map["cqw"] = map["cqi"] = x => new ComputedContainerRelative(x / 100f, ComputedContainerRelative.Axis.Inline);
+            map["cqh"] = map["cqb"] = x => new ComputedContainerRelative(x / 100f, ComputedContainerRelative.Axis.Block);
+            map["cqmin"] = x => new ComputedContainerRelative(x / 100f, ComputedContainerRelative.Axis.Min);
+            map["cqmax"] = x => new ComputedContainerRelative(x / 100f, ComputedContainerRelative.Axis.Max);
+            return map;
+        }
 
         public override string StringifyTyped(float value) => value + "px";
     }
@@ -187,24 +293,30 @@ namespace ReactUnity.Styling.Converters
     {
         public FontSizeConverter() : base(
             LengthConverter.UnitValueMap,
-            new Dictionary<string, Func<float, object>>
+            LengthConverter.WithContainerUnits(LengthConverter.WithViewportUnits(new Dictionary<string, Func<float, object>>
             {
                 { "rem", x => new ComputedRootRelative(x, ComputedRootRelative.RootValueType.Rem) },
-                { "vw", x => new ComputedRootRelative(x / 100f, ComputedRootRelative.RootValueType.Width) },
-                { "vh", x => new ComputedRootRelative(x / 100f, ComputedRootRelative.RootValueType.Height) },
-                { "vmin", x => new ComputedRootRelative(x / 100f, ComputedRootRelative.RootValueType.Min) },
-                { "vmax", x => new ComputedRootRelative(x / 100f, ComputedRootRelative.RootValueType.Max) },
                 { "em", x => new ComputedFontSize(x) },
                 { "%", x => new ComputedFontSize(x / 100f) },
                 { "lh", x => new ComputedFontProperty(x, ComputedFontProperty.FontPropertyType.LineHeight) },
                 { "rlh", x => new ComputedFontProperty(x, ComputedFontProperty.FontPropertyType.RootLineHeight) },
                 { "ch", x => new ComputedFontProperty(x, ComputedFontProperty.FontPropertyType.CharacterWidth) },
                 { "ex", x => new ComputedFontProperty(x, ComputedFontProperty.FontPropertyType.XHeight) },
-            }
+            }))
         )
         { }
 
         public override string StringifyTyped(float value) => value + "px";
+    }
+
+    /// <summary>
+    /// <c>line-height</c>, where a number with no unit is a multiple of the element's own font size
+    /// rather than a length -- which is what the CSS property means, and what a framework's type
+    /// scale is written in: Tailwind's `text-base` asks for a line height of `calc(1.5 / 1)`.
+    /// </summary>
+    public class LineHeightConverter : FontSizeConverter
+    {
+        internal override IComputedValue Suffixless(float value) => new ComputedFontSize(value);
     }
 
     public class AngleConverter : FloatConverter
@@ -279,6 +391,10 @@ namespace ReactUnity.Styling.Converters
 
         protected override bool ParseInternal(string value, out IComputedValue result)
         {
+            // An operand with no unit is a plain number, whatever the property makes of a bare number
+            // alone: `calc(var(--spacing) * 6)` is six times a length, and a divisor has to be unitless.
+            if (AllowsUnitless && TryParseUnitless(value, out result)) return true;
+
             if (BaseConverter.TryConvert(value, out var floatResult))
             {
                 result = ComputedMapper.Create(floatResult, BaseConverter, (res) => {
@@ -288,16 +404,24 @@ namespace ReactUnity.Styling.Converters
                 return true;
             }
 
-            if (!AllowsUnitless && AllConverters.FloatConverter.TryConvert(value, out var floatResultUnitless))
-            {
-                result = ComputedMapper.Create(floatResultUnitless, AllConverters.FloatConverter, (res) => {
-                    if (res is float f) return new ComputedCalc.CalcValue { Value = f, HasUnit = false };
-                    return null;
-                });
-                return true;
-            }
+            if (TryParseUnitless(value, out result)) return true;
 
             return base.ParseInternal(value, out result);
+        }
+
+        private static bool TryParseUnitless(string value, out IComputedValue result)
+        {
+            if (!AllConverters.FloatConverter.TryConvert(value, out var unitless))
+            {
+                result = null;
+                return false;
+            }
+
+            result = ComputedMapper.Create(unitless, AllConverters.FloatConverter, (res) => {
+                if (res is float f) return new ComputedCalc.CalcValue { Value = f, HasUnit = false };
+                return null;
+            });
+            return result != null;
         }
     }
 }

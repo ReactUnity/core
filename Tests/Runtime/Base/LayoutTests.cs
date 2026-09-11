@@ -134,7 +134,6 @@ namespace ReactUnity.Tests
         [UGUITest(
             Script = @"
             function App() {
-                const globals = ReactUnity.useGlobals();
                 return <view id='parent'>
                     <view id='test' />
                 </view>;
@@ -144,125 +143,93 @@ namespace ReactUnity.Tests
                     background-color: gray;
                     width: 200px;
                     height: 160px;
+                    border: 5px solid black;
+                    padding: 20px;
                 }
 
                 #test {
                     background-color: red;
                     width: 20px;
                     height: 32px;
-                    position: inset;
+                    position: absolute;
                     transform-origin: top left;
                 }
             ")]
-        public IEnumerator InsetLayoutPositionsElementsCorrectly()
+        public IEnumerator AbsoluteInsetsResolveAgainstThePaddingBox()
         {
-            var parent = Q("#parent") as UGUI.ContainerComponent;
+            // The parent is border-box 200x160 with a 5px border and 20px of padding, so the three
+            // boxes all differ: border box 200x160 at (0, 0), padding box 190x150 at (5, 5), content
+            // box 150x110 at (25, 25). Insets resolve against the padding box -- inside the border,
+            // outside the padding -- and only the static position is moved by the padding. The border
+            // is what makes this test discriminating: `position: inset` measured every one of these
+            // from the border box, which is why it existed and why Yoga 1.19 needed it.
             var cmp = Q("#test") as UGUI.ContainerComponent;
 
-            Assert.AreEqual(new Rect(0, 0, 20, 32), GetRect(cmp));
+            IEnumerator Set(params string[] props)
+            {
+                for (var i = 0; i < props.Length; i += 2) cmp.Style.Set(props[i], props[i + 1]);
+                yield return null;
+            }
 
+            // With no insets it sits at its static position, which is the content box origin.
+            Assert.AreEqual(new Rect(25, 25, 20, 32), GetRect(cmp));
 
+            yield return Set("left", "0", "top", "10px");
+            Assert.AreEqual(new Rect(5, 15, 20, 32), GetRect(cmp));
 
-            cmp.Style.Set("translate", "none");
-            cmp.Style.Set("top", "10px");
-            yield return null;
-            Assert.AreEqual(new Rect(0, 10, 20, 32), GetRect(cmp));
+            yield return Set("translate", "0 10px");
+            Assert.AreEqual(new Rect(5, 25, 20, 32), GetRect(cmp));
 
-            cmp.Style.Set("translate", "0 10px");
-            yield return null;
-            Assert.AreEqual(new Rect(0, 20, 20, 32), GetRect(cmp));
+            // A percentage resolves against the padding box height, 150, not the border box's 160.
+            yield return Set("translate", "none", "top", "10%");
+            Assert.AreEqual(new Rect(5, 20, 20, 32), GetRect(cmp));
 
+            yield return Set("translate", "0 10px");
+            Assert.AreEqual(new Rect(5, 30, 20, 32), GetRect(cmp));
 
+            // Over-constrained: a declared height wins and `bottom` is dropped, as in CSS. Under
+            // `position: inset` the insets won instead and stretched the box.
+            yield return Set("translate", "none", "bottom", "10%");
+            Assert.AreEqual(new Rect(5, 20, 20, 32), GetRect(cmp));
 
-            cmp.Style.Set("translate", "none");
-            cmp.Style.Set("top", "10%");
-            yield return null;
-            Assert.AreEqual(new Rect(0, 16, 20, 32), GetRect(cmp));
+            yield return Set("top", "initial", "bottom", "20px");
+            Assert.AreEqual(new Rect(5, 103, 20, 32), GetRect(cmp));
 
-            cmp.Style.Set("translate", "0 10px");
-            yield return null;
-            Assert.AreEqual(new Rect(0, 26, 20, 32), GetRect(cmp));
+            yield return Set("translate", "0 10px");
+            Assert.AreEqual(new Rect(5, 113, 20, 32), GetRect(cmp));
 
+            // With the height dropped, the pair of insets stretches it across the padding box.
+            yield return Set("translate", "none", "top", "0", "bottom", "0", "height", "initial");
+            Assert.AreEqual(new Rect(5, 5, 20, 150), GetRect(cmp));
 
+            // The same, from percentages: 150 less 10% at each end.
+            yield return Set("top", "10%", "bottom", "10%");
+            Assert.AreEqual(new Rect(5, 20, 20, 120), GetRect(cmp));
 
-            cmp.Style.Set("translate", "none");
-            cmp.Style.Set("bottom", "10%");
-            yield return null;
-            Assert.AreEqual(new Rect(0, 16, 20, 128), GetRect(cmp));
+            yield return Set("bottom", "initial", "height", "32px", "top", "0", "left", "10px");
+            Assert.AreEqual(new Rect(15, 5, 20, 32), GetRect(cmp));
 
-            cmp.Style.Set("translate", "0 10px");
-            yield return null;
-            Assert.AreEqual(new Rect(0, 26, 20, 128), GetRect(cmp));
+            yield return Set("translate", "10px 0");
+            Assert.AreEqual(new Rect(25, 5, 20, 32), GetRect(cmp));
 
+            yield return Set("translate", "none", "left", "10%");
+            Assert.AreEqual(new Rect(24, 5, 20, 32), GetRect(cmp));
 
+            yield return Set("left", "initial", "right", "20px");
+            Assert.AreEqual(new Rect(155, 5, 20, 32), GetRect(cmp));
 
-            cmp.Style.Set("translate", "none");
-            cmp.Style.Set("top", "initial");
-            cmp.Style.Set("bottom", "20px");
-            yield return null;
-            Assert.AreEqual(new Rect(0, 108, 20, 32), GetRect(cmp));
+            yield return Set("translate", "10px 0");
+            Assert.AreEqual(new Rect(165, 5, 20, 32), GetRect(cmp));
 
-            cmp.Style.Set("translate", "0 10px");
-            yield return null;
-            Assert.AreEqual(new Rect(0, 118, 20, 32), GetRect(cmp));
+            // Over-constrained on this axis too: the declared width wins and `right` is dropped.
+            yield return Set("translate", "none", "left", "10%", "right", "10%");
+            Assert.AreEqual(new Rect(24, 5, 20, 32), GetRect(cmp));
 
+            yield return Set("left", "0", "right", "0", "width", "initial");
+            Assert.AreEqual(new Rect(5, 5, 190, 32), GetRect(cmp));
 
-
-
-
-
-
-
-
-
-
-
-
-
-            cmp.Style.Set("top", "initial");
-            cmp.Style.Set("bottom", "initial");
-            cmp.Style.Set("translate", "none");
-            cmp.Style.Set("left", "10px");
-            yield return null;
-            Assert.AreEqual(new Rect(10, 0, 20, 32), GetRect(cmp));
-
-            cmp.Style.Set("translate", "10px 0");
-            yield return null;
-            Assert.AreEqual(new Rect(20, 0, 20, 32), GetRect(cmp));
-
-
-
-            cmp.Style.Set("translate", "none");
-            cmp.Style.Set("left", "10%");
-            yield return null;
-            Assert.AreEqual(new Rect(20, 0, 20, 32), GetRect(cmp));
-
-            cmp.Style.Set("translate", "30px 0");
-            yield return null;
-            Assert.AreEqual(new Rect(50, 0, 20, 32), GetRect(cmp));
-
-
-
-            cmp.Style.Set("translate", "none");
-            cmp.Style.Set("right", "10%");
-            yield return null;
-            Assert.AreEqual(new Rect(20, 0, 160, 32), GetRect(cmp));
-
-            cmp.Style.Set("translate", "10px 0");
-            yield return null;
-            Assert.AreEqual(new Rect(30, 0, 160, 32), GetRect(cmp));
-
-
-
-            cmp.Style.Set("translate", "none");
-            cmp.Style.Set("left", "initial");
-            cmp.Style.Set("right", "20px");
-            yield return null;
-            Assert.AreEqual(new Rect(160, 0, 20, 32), GetRect(cmp));
-
-            cmp.Style.Set("translate", "10px 0");
-            yield return null;
-            Assert.AreEqual(new Rect(170, 0, 20, 32), GetRect(cmp));
+            yield return Set("left", "10%", "right", "10%");
+            Assert.AreEqual(new Rect(24, 5, 152, 32), GetRect(cmp));
         }
 
         private Rect GetRect(UGUI.ContainerComponent cmp)

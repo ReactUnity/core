@@ -109,7 +109,9 @@ namespace ReactUnity.Editor.Developer
                 IncludedNamespaces = new List<string> { "UnityEditor" },
                 ExcludedNamespaces = new List<string> { "UnityEngine.InputSystem", "UnityEngine.InputSystem.LowLevel", "UnityEngine.Experimental", "UnityEngine.TerrainTools", "UnityEditor.TerrainTools", "UnityEngine.TextCore" },
                 ImportNamespaces = new Dictionary<string, string> { { "UnityEngine", "./unity" }, { "Unity", "./unity" }, { "System", "./system" } },
-                ExcludedTypes = new List<string> { "UnityEngine.ConfigurableJointMotion", "UnityEngine.RaycastHit", "UnityEngine.Terrain", "UnityEngine.TerrainLayer", "UnityEngine.AssetBundleManifest" },
+                // InputExtraction+BakeInput is declared in an editor assembly but under the UnityEngine
+                // namespace, which the namespace-to-file mapping sends to unity.ts, where nothing declares it.
+                ExcludedTypes = new List<string> { "UnityEngine.ConfigurableJointMotion", "UnityEngine.RaycastHit", "UnityEngine.Terrain", "UnityEngine.TerrainLayer", "UnityEngine.AssetBundleManifest", "UnityEngine.LightTransport.InputExtraction+BakeInput" },
                 ExportAsClass = true,
                 AllowGeneric = true,
                 Members = TypescriptModelsGenerator.MemberFlags.All,

@@ -103,6 +103,10 @@ namespace ReactUnity
 
         public float ClientHeight => Proxy.ClientHeight;
 
+        public bool IsScrollContainer => Proxy.IsScrollContainer;
+
+        public ScrollEdge StuckEdges => Proxy.StuckEdges;
+
         public List<IReactComponent> Children => Proxy.Children;
 
         public IReactComponent BeforePseudo => Proxy.BeforePseudo;
@@ -126,8 +130,13 @@ namespace ReactUnity
 
         public void Accept(ReactComponentVisitor visitor, bool skipSelf = false) => Proxy.Accept(visitor, skipSelf);
 
-        public virtual void SetParent(IContainerComponent parent, IReactComponent relativeTo = null, bool insertAfter = false) =>
+        public virtual void SetParent(IContainerComponent parent, IReactComponent relativeTo = null, bool insertAfter = false)
+        {
             Proxy.SetParent(parent, relativeTo, insertAfter);
+
+            if (parent == null) Context.MountedProxies.Remove(this);
+            else Context.MountedProxies.Add(this);
+        }
 
         public virtual void SetProperty(string property, object value) => Proxy.SetProperty(property, value);
 

@@ -70,6 +70,16 @@ namespace ReactUnity
         float ScrollHeight { get; }
         float ClientWidth { get; }
         float ClientHeight { get; }
+
+        /// <summary>Whether this element scrolls its own content, which is what a scroll timeline reads.</summary>
+        bool IsScrollContainer { get; }
+
+        /// <summary>
+        /// Which scrollport edges a <c>position: sticky</c> box is currently held against, and so what
+        /// <c>scroll-state(stuck)</c> reads. <see cref="ScrollEdge.None"/> for anything not sticky, and
+        /// for a sticky box still sitting at its in-flow position.
+        /// </summary>
+        ScrollEdge StuckEdges { get; }
     }
 
     [TypescriptListInterfaces]
@@ -135,5 +145,14 @@ namespace ReactUnity
         Stack<IPoolableComponent> PoolStack { get; set; }
         bool Pool();
         bool Revive();
+    }
+
+    /// <summary>
+    /// A component whose layout is not Yoga's, so the content box a container query measures has to
+    /// come from the framework. Internal so that it stays out of the generated TypeScript models.
+    /// </summary>
+    internal interface IContentBoxComponent : IReactComponent
+    {
+        void GetContentBox(out float width, out float height);
     }
 }

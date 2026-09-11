@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using ReactUnity.Styling.Rules;
 using UnityEngine;
 
 namespace ReactUnity.Styling
@@ -9,12 +10,23 @@ namespace ReactUnity.Styling
         private readonly HashSet<string> States = new HashSet<string>();
         private readonly IReactComponent Component;
 
+        /// <summary>
+        /// Set once a <c>:has()</c> has been evaluated on the element, after which a change below it
+        /// or after it re-resolves it and everything that follows it. It stays set for the element's
+        /// life: the rule that evaluated it may belong to some other element, which a resolve of this
+        /// one would not run again, so clearing it here could miss a dependency.
+        /// </summary>
+        public bool HasAnchor { get; set; }
+
+        /// <summary>Set once a @container rule or a container unit has read this element as its container.</summary>
+        public QueryContainerState QueryContainer { get; set; }
+
         public StateStyles(IReactComponent cmp)
         {
             Component = cmp;
         }
 
-        public IStateHandler SubscribeToState(string state)
+        public IStateHandler SubscribeToState(string state, bool declared = false)
         {
             if (Component.Context.StateHandlers.TryGetValue(state, out var handlerClass))
             {
@@ -30,7 +42,19 @@ namespace ReactUnity.Styling
                 else Debug.LogError($"The class {handlerClass.Name} does not implement IStateHandler");
                 return handler;
             }
+
+            if (!declared) WarnUnknownState(state);
             return null;
+        }
+
+        private static readonly HashSet<string> Warned = new HashSet<string>();
+
+        // A pseudo-class this engine does not have parses as a custom state and then never matches,
+        // which is indistinguishable from a rule that is simply wrong. Once per name is enough.
+        private static void WarnUnknownState(string state)
+        {
+            if (state == "enter" || state == "leave" || !Warned.Add(state)) return;
+            Debug.LogWarning($"':{state}' is not a pseudo-class ReactUnity knows. It matches only while a state named '{state}' is started on the element.");
         }
 
         public bool StartState(string state)
@@ -57,9 +81,13 @@ namespace ReactUnity.Styling
 
         public bool GetState(string state) => States.Contains(state);
 
-        public bool GetStateOrSubscribe(string state)
+        /// <summary>
+        /// Whether the state is on, subscribing to it on first use. <paramref name="declared"/> is a
+        /// name written as <c>:state(name)</c>, which is a custom state on purpose and not warned about.
+        /// </summary>
+        public bool GetStateOrSubscribe(string state, bool declared = false)
         {
-            if (Subscribed.Add(state)) SubscribeToState(state);
+            if (Subscribed.Add(state)) SubscribeToState(state, declared);
             return States.Contains(state);
         }
 
@@ -67,6 +95,8 @@ namespace ReactUnity.Styling
         {
             Subscribed.Clear();
             States.Clear();
+            HasAnchor = false;
+            QueryContainer = null;
         }
     }
 }

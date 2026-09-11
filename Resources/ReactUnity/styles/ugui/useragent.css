@@ -80,20 +80,24 @@ input::placeholder {
   opacity: 0.6;
 }
 
-scroll {
-  overflow: scroll;
-  flex-shrink: 1;
+input::selection {
+  background-color: rgba(168, 206, 255, 0.75);
 }
 
+scroll {
+  overflow: scroll;
+}
+
+/* scrollbar-color and scrollbar-width on the scroll feed these; a ::scrollbar rule overrides them. */
 scroll::scrollbar {
-  background-color: rgb(210, 210, 210);
+  background-color: var(--scrollbar-track-color, rgb(210, 210, 210));
   appearance: button;
-  width: 12px;
-  height: 12px;
+  width: var(--scrollbar-width, 12px);
+  height: var(--scrollbar-width, 12px);
 }
 
 scroll::scrollbar-thumb {
-  background-color: rgba(170, 170, 170);
+  background-color: var(--scrollbar-thumb-color, rgb(170, 170, 170));
 }
 
 toggle {
@@ -111,24 +115,29 @@ toggle {
   pointer-events: all;
 }
 
+/* The tick sprites are white, and the mark is the colour showing through them -- so an unchecked
+   toggle has no mask and paints nothing. It used to be a `multiply` blend, back when any blend mode
+   meant "tint the image and drop the colour" rather than what CSS says it means. */
 toggle:after {
   position: absolute;
   inset: 0;
   content: "";
   pointer-events: none;
-  background-blend-mode: multiply;
+  mask-size: contain;
+  mask-position: center;
+}
+
+toggle:checked:after,
+toggle:indeterminate:after {
   background-color: black;
-  background-image: transparent;
-  background-size: contain;
-  background-position: center;
 }
 
 toggle:checked:after {
-  background-image: url(res:ReactUnity/sprites/check);
+  mask-image: url(res:ReactUnity/sprites/check);
 }
 
 toggle:indeterminate:after {
-  background-image: url(res:ReactUnity/sprites/indeterminate);
+  mask-image: url(res:ReactUnity/sprites/indeterminate);
 }
 
 anchor {

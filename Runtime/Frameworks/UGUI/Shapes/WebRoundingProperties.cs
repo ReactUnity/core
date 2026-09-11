@@ -64,6 +64,21 @@ namespace ReactUnity.UGUI.Shapes
             BLRadius = borders[3];
         }
 
+        /// <summary>
+        /// Compares the radii and resolutions, not the adjusted output -- the assignment sites all
+        /// build a fresh instance from the style, so reference equality would never match.
+        /// </summary>
+        public bool ValueEquals(WebRoundingProperties other)
+        {
+            if (other == null) return false;
+            return Type == other.Type && ResolutionMode == other.ResolutionMode &&
+                UniformRadius == other.UniformRadius && TLRadius == other.TLRadius &&
+                TRRadius == other.TRRadius && BRRadius == other.BRRadius && BLRadius == other.BLRadius &&
+                TLResolution.ValueEquals(other.TLResolution) && TRResolution.ValueEquals(other.TRResolution) &&
+                BRResolution.ValueEquals(other.BRResolution) && BLResolution.ValueEquals(other.BLResolution) &&
+                UniformResolution.ValueEquals(other.UniformResolution);
+        }
+
         public void UpdateAdjusted(Vector2 size, Vector2 innerSize, WebOutlineSizes? outline = null, WebRoundingProperties matchRounding = null)
         {
             var ot = outline ?? DefaultOutlineSizes;

@@ -60,10 +60,9 @@ namespace ReactUnity.Scripting
                 // The url doubles as the module specifier, so it has to stand in for
                 // "ReactUnity/main" whenever this turns out to be module-shaped output.
                 var url = Context.Location?.href;
-                var documentType = JavascriptDocumentType.Script;
-                var code = MakeExecutable(script, ref documentType);
+                var documentType = DocumentTypeOf(script, JavascriptDocumentType.Script);
                 var fileName = documentType == JavascriptDocumentType.Module && !string.IsNullOrEmpty(url) ? url : "ReactUnity/main";
-                return engine.TryExecute(code, fileName, documentType);
+                return engine.TryExecute(script, fileName, documentType);
             });
         }
 
@@ -89,7 +88,6 @@ namespace ReactUnity.Scripting
                     CreateConsole(engine);
                     CreateScheduler(engine, Context);
                     CreatePolyfills(engine);
-                    CreateImportHook(engine);
 
                     Context.MediaProvider.SetValue("engine", engine.Key);
 
@@ -121,6 +119,32 @@ namespace ReactUnity.Scripting
                     engine.SetGlobal("removeEventListener", new EventTarget.removeEventListener((e, h, o) => GlobalEventTarget.RemoveEventListener(e, h)));
                     engine.SetGlobal("dispatchEvent", new EventTarget.dispatchEvent((e, a) => GlobalEventTarget.DispatchEvent(e, Context, EventPriority.Unknown, a)));
 
+                    // An Event, and a dispatchEvent that takes one. Bundler output reports a
+                    // failure this way and reads `defaultPrevented` to decide whether to rethrow --
+                    // Vite's dynamic-import wrapper does, so without this a chunk that fails to
+                    // load reports `Event is not defined` and the real reason is lost. Only the
+                    // event's own members are here; there is no tree for it to travel through.
+                    engine.Execute(@"
+                        global.Event = function Event (type, options) {
+                            this.type = type;
+                            this.cancelable = !!(options && options.cancelable);
+                            this.defaultPrevented = false;
+                        };
+                        global.Event.prototype.preventDefault = function preventDefault () {
+                            if (this.cancelable) this.defaultPrevented = true;
+                        };
+
+                        var hostDispatchEvent = global.dispatchEvent;
+                        global.dispatchEvent = function dispatchEvent (event) {
+                            var rest = Array.prototype.slice.call(arguments, 1);
+                            if (event === null || typeof event !== 'object') return hostDispatchEvent(event, rest);
+
+                            hostDispatchEvent(event.type, [event].concat(rest));
+                            return !event.defaultPrevented;
+                        };
+                        void 0;
+                    ", "ReactUnity/shims/event");
+
                     afterStartCallbacks.Add((success) => GlobalEventTarget.DispatchEvent("DOMContentLoaded", Context, EventPriority.Discrete, success, this));
 
                     EngineInitialized = true;
@@ -140,26 +164,20 @@ namespace ReactUnity.Scripting
 
         public void ExecuteScript(string code, string fileName = null, JavascriptDocumentType documentType = JavascriptDocumentType.Script)
         {
-            Engine.Execute(MakeExecutable(code, ref documentType), fileName, documentType);
+            Engine.Execute(code, fileName, DocumentTypeOf(code, documentType));
         }
 
-        /// Decides how a piece of bundler output has to be run.
+        /// How a piece of bundler output has to be run, which is only ever a promotion of what the
+        /// caller asked for.
         ///
         /// Browser-targeted output carries module-only syntax even when it is otherwise a classic
         /// script - a Vite dev bundle has `import.meta.url` and a trailing `export`, and an HMR
         /// patch has the `; export {}` Vite appends - so the document type is upgraded to match.
-        /// The code itself is left alone; every engine executes real modules.
-        ///
-        /// Dynamic import is separate: executing a module does not mean the engine can resolve a
-        /// specifier, and the ones that cannot are pointed at the host loader.
-        internal string MakeExecutable(string code, ref JavascriptDocumentType documentType)
+        /// The code is never rewritten: every engine executes real modules and resolves its own
+        /// specifiers, so classifying the chunk is the whole job.
+        internal JavascriptDocumentType DocumentTypeOf(string code, JavascriptDocumentType requested)
         {
-            if (ModuleCompat.NeedsModuleScope(code)) documentType = JavascriptDocumentType.Module;
-
-            if (!Engine.Capabilities.HasFlag(EngineCapabilities.ModuleResolution))
-                return ModuleCompat.RewriteDynamicImports(code);
-
-            return code;
+            return ModuleCompat.NeedsModuleScope(code) ? JavascriptDocumentType.Module : requested;
         }
 
         public object EvaluateScript(string code, string fileName = null)
@@ -265,45 +283,6 @@ namespace ReactUnity.Scripting
 
             if (!engine.Capabilities.HasFlag(EngineCapabilities.AbortController))
                 engine.Execute(ResourcesHelper.GetPolyfill("abortcontroller"), "ReactUnity/polyfills/abortcontroller");
-        }
-
-        /// Stands in for dynamic import on engines that cannot resolve one. Vite's HMR client
-        /// applies every patch with `import(url)`, and a patch chunk is a classic script once its
-        /// trailing export is gone - so fetching it and executing it in global scope is enough.
-        /// ModuleCompat redirects the call sites here.
-        void CreateImportHook(IJavaScriptEngine engine)
-        {
-            if (engine.Capabilities.HasFlag(EngineCapabilities.ModuleResolution)) return;
-
-            engine.SetGlobal("__reactunity_load_script", new Action<string, Callback, Callback>(LoadScript));
-            engine.Execute($@"
-                global.{ModuleCompat.ImportHook} = function {ModuleCompat.ImportHook} (url) {{
-                    return new Promise(function (resolve, reject) {{
-                        global.__reactunity_load_script(String(url), function () {{ resolve({{}}); }}, reject);
-                    }});
-                }};
-            ", "ReactUnity/shims/import");
-        }
-
-        void LoadScript(string url, Callback resolve, Callback reject)
-        {
-            var resolved = Context.ResolvePath(url);
-
-            Context.Dispatcher.StartDeferred(ScriptSource.WatchWebRequest(
-                UnityEngine.Networking.UnityWebRequest.Get(resolved),
-                code => {
-                    try
-                    {
-                        ExecuteScript(code, resolved);
-                        resolve?.Call();
-                    }
-                    catch (Exception ex)
-                    {
-                        UnityEngine.Debug.LogException(ex);
-                        reject?.Call(ex.Message);
-                    }
-                },
-                error => reject?.Call($"Failed to load '{resolved}': {error}")));
         }
 
         static void CreateScheduler(IJavaScriptEngine engine, ReactContext context)

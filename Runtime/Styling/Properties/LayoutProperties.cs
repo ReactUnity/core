@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
+using ReactUnity.Styling.Computed;
 using ReactUnity.Styling.Converters;
+using ReactUnity.Types;
 using Yoga;
 
 namespace ReactUnity.Styling
@@ -8,18 +10,72 @@ namespace ReactUnity.Styling
     public static class LayoutProperties
     {
         public static readonly LayoutProperty<YogaDirection> StyleDirection = new LayoutProperty<YogaDirection>("StyleDirection");
-        public static readonly LayoutProperty<YogaFlexDirection> FlexDirection = new LayoutProperty<YogaFlexDirection>("FlexDirection");
-        public static readonly LayoutProperty<YogaJustify> JustifyContent = new LayoutProperty<YogaJustify>("JustifyContent");
-        public static readonly LayoutProperty<YogaDisplay> Display = new LayoutProperty<YogaDisplay>("Display");
+        public static readonly LayoutProperty<YogaFlexDirection> FlexDirection = new LayoutProperty<YogaFlexDirection>("FlexDirection", new DisplayFlexDirection());
+        // The web's spellings of what Yoga calls flex-start and flex-end, and the fallback positions
+        // it has no value for. `normal` behaves as stretch on the align axis and as start on justify.
+        public static readonly StyleConverterBase AlignConverter = new EnumConverter(typeof(YogaAlign), false, true, new Dictionary<string, object>
+        {
+            { "start", YogaAlign.FlexStart },
+            { "end", YogaAlign.FlexEnd },
+            { "selfstart", YogaAlign.FlexStart },
+            { "selfend", YogaAlign.FlexEnd },
+            { "left", YogaAlign.FlexStart },
+            { "right", YogaAlign.FlexEnd },
+            { "normal", YogaAlign.Stretch },
+            { "firstbaseline", YogaAlign.Baseline },
+            { "lastbaseline", YogaAlign.Baseline },
+        });
+        public static readonly StyleConverterBase JustifyConverter = new EnumConverter(typeof(YogaJustify), false, true, new Dictionary<string, object>
+        {
+            { "start", YogaJustify.FlexStart },
+            { "end", YogaJustify.FlexEnd },
+            { "left", YogaJustify.FlexStart },
+            { "right", YogaJustify.FlexEnd },
+            { "normal", YogaJustify.FlexStart },
+            { "stretch", YogaJustify.FlexStart },
+        });
+        // Spelled out because Yoga's zero is `Auto` now, not `FlexStart`.
+        public static readonly LayoutProperty<YogaJustify> JustifyContent = new LayoutProperty<YogaJustify>("JustifyContent", defaultValue: YogaJustify.FlexStart, converter: JustifyConverter);
+        // The web's other spellings of the two layouts that exist here: a block stacks, a flex box is a row.
+        public static readonly StyleConverterBase DisplayConverter = new EnumConverter(typeof(DisplayType), false, true, new Dictionary<string, object>
+        {
+            { "inlineblock", DisplayType.Block },
+            { "flowroot", DisplayType.Block },
+            { "inlineflex", DisplayType.Flex },
+        });
+        public static readonly LayoutProperty<DisplayType> Display = new LayoutProperty<DisplayType>("Display", converter: DisplayConverter);
+
+        // Unset, flex-direction follows display as on the web: a flex box is a row and a block stacks.
+        private class DisplayFlexDirection : IComputedValue
+        {
+            public object GetValue(IStyleProperty prop, NodeStyle style, IStyleConverter converter) =>
+                style.GetStyleValue(Display, true) == DisplayType.Flex ? YogaFlexDirection.Row : YogaFlexDirection.Column;
+        }
         public static readonly LayoutProperty<YogaBoxSizing> BoxSizing = new LayoutProperty<YogaBoxSizing>("BoxSizing");
-        public static readonly LayoutProperty<YogaAlign> AlignItems = new LayoutProperty<YogaAlign>("AlignItems");
-        public static readonly LayoutProperty<YogaAlign> AlignSelf = new LayoutProperty<YogaAlign>("AlignSelf");
-        public static readonly LayoutProperty<YogaAlign> AlignContent = new LayoutProperty<YogaAlign>("AlignContent");
+        public static readonly LayoutProperty<YogaAlign> AlignItems = new LayoutProperty<YogaAlign>("AlignItems", converter: AlignConverter);
+        public static readonly LayoutProperty<YogaAlign> AlignSelf = new LayoutProperty<YogaAlign>("AlignSelf", converter: AlignConverter);
+        public static readonly LayoutProperty<YogaAlign> AlignContent = new LayoutProperty<YogaAlign>("AlignContent", converter: AlignConverter);
         public static readonly LayoutProperty<YogaWrap> Wrap = new LayoutProperty<YogaWrap>("Wrap");
-        public static readonly LayoutProperty<YogaOverflow> Overflow = new LayoutProperty<YogaOverflow>("Overflow");
+        // Yoga's enum has no `auto` -- which is a scroll container that may not need to scroll -- and no `clip`.
+        public static readonly StyleConverterBase OverflowConverter = new EnumConverter(typeof(YogaOverflow), false, true, new Dictionary<string, object>
+        {
+            { "auto", YogaOverflow.Scroll },
+            { "clip", YogaOverflow.Hidden },
+        });
+        public static readonly LayoutProperty<YogaOverflow> Overflow = new LayoutProperty<YogaOverflow>("Overflow", converter: OverflowConverter);
+
+        /// <summary>
+        /// The one overflow Yoga gets from two axes: scroll on either beats hidden, which beats visible.
+        /// </summary>
+        public static YogaOverflow CombineOverflow(YogaOverflow a, YogaOverflow b)
+        {
+            if (a == YogaOverflow.Scroll || b == YogaOverflow.Scroll) return YogaOverflow.Scroll;
+            if (a == YogaOverflow.Hidden || b == YogaOverflow.Hidden) return YogaOverflow.Hidden;
+            return YogaOverflow.Visible;
+        }
         public static readonly LayoutProperty<float> AspectRatio = new LayoutProperty<float>("AspectRatio", true, float.NaN);
         public static readonly LayoutProperty<float> FlexGrow = new LayoutProperty<float>("FlexGrow", true, float.NaN);
-        public static readonly LayoutProperty<float> FlexShrink = new LayoutProperty<float>("FlexShrink", true, float.NaN);
+        public static readonly LayoutProperty<float> FlexShrink = new LayoutProperty<float>("FlexShrink", true, 1f);
         public static readonly LayoutProperty<YogaValue> FlexBasis = new LayoutProperty<YogaValue>("FlexBasis", true);
         public static readonly LayoutProperty<YogaValue> Width = new LayoutProperty<YogaValue>("Width", true);
         public static readonly LayoutProperty<YogaValue> Height = new LayoutProperty<YogaValue>("Height", true);
@@ -38,8 +94,8 @@ namespace ReactUnity.Styling
         public static readonly LayoutProperty<YogaValue> MarginRight = new LayoutProperty<YogaValue>("MarginRight", true);
         public static readonly LayoutProperty<YogaValue> MarginTop = new LayoutProperty<YogaValue>("MarginTop", true);
         public static readonly LayoutProperty<YogaValue> MarginBottom = new LayoutProperty<YogaValue>("MarginBottom", true);
-        public static readonly LayoutProperty<YogaValue> MarginStart = new LayoutProperty<YogaValue>("MarginStart", true);
-        public static readonly LayoutProperty<YogaValue> MarginEnd = new LayoutProperty<YogaValue>("MarginEnd", true);
+        public static readonly LayoutProperty<YogaValue> MarginStart = new LayoutProperty<YogaValue>("MarginStart", true, YogaValue.Undefined());
+        public static readonly LayoutProperty<YogaValue> MarginEnd = new LayoutProperty<YogaValue>("MarginEnd", true, YogaValue.Undefined());
         public static readonly LayoutProperty<YogaValue> MarginHorizontal = new LayoutProperty<YogaValue>("MarginHorizontal", true);
         public static readonly LayoutProperty<YogaValue> MarginVertical = new LayoutProperty<YogaValue>("MarginVertical", true);
         public static readonly LayoutProperty<YogaValue> Padding = new LayoutProperty<YogaValue>("Padding", true);
@@ -47,8 +103,8 @@ namespace ReactUnity.Styling
         public static readonly LayoutProperty<YogaValue> PaddingRight = new LayoutProperty<YogaValue>("PaddingRight", true);
         public static readonly LayoutProperty<YogaValue> PaddingTop = new LayoutProperty<YogaValue>("PaddingTop", true);
         public static readonly LayoutProperty<YogaValue> PaddingBottom = new LayoutProperty<YogaValue>("PaddingBottom", true);
-        public static readonly LayoutProperty<YogaValue> PaddingStart = new LayoutProperty<YogaValue>("PaddingStart", true);
-        public static readonly LayoutProperty<YogaValue> PaddingEnd = new LayoutProperty<YogaValue>("PaddingEnd", true);
+        public static readonly LayoutProperty<YogaValue> PaddingStart = new LayoutProperty<YogaValue>("PaddingStart", true, YogaValue.Undefined());
+        public static readonly LayoutProperty<YogaValue> PaddingEnd = new LayoutProperty<YogaValue>("PaddingEnd", true, YogaValue.Undefined());
         public static readonly LayoutProperty<YogaValue> PaddingHorizontal = new LayoutProperty<YogaValue>("PaddingHorizontal", true);
         public static readonly LayoutProperty<YogaValue> PaddingVertical = new LayoutProperty<YogaValue>("PaddingVertical", true);
         public static readonly LayoutProperty<float> BorderWidth = new LayoutProperty<float>("BorderWidth", true, converter: AllConverters.LengthConverter);
@@ -56,8 +112,8 @@ namespace ReactUnity.Styling
         public static readonly LayoutProperty<float> BorderRightWidth = new LayoutProperty<float>("BorderRightWidth", true, converter: AllConverters.LengthConverter);
         public static readonly LayoutProperty<float> BorderTopWidth = new LayoutProperty<float>("BorderTopWidth", true, converter: AllConverters.LengthConverter);
         public static readonly LayoutProperty<float> BorderBottomWidth = new LayoutProperty<float>("BorderBottomWidth", true, converter: AllConverters.LengthConverter);
-        public static readonly LayoutProperty<float> BorderStartWidth = new LayoutProperty<float>("BorderStartWidth", true, converter: AllConverters.LengthConverter);
-        public static readonly LayoutProperty<float> BorderEndWidth = new LayoutProperty<float>("BorderEndWidth", true, converter: AllConverters.LengthConverter);
+        public static readonly LayoutProperty<float> BorderStartWidth = new LayoutProperty<float>("BorderStartWidth", true, float.NaN, AllConverters.LengthConverter);
+        public static readonly LayoutProperty<float> BorderEndWidth = new LayoutProperty<float>("BorderEndWidth", true, float.NaN, AllConverters.LengthConverter);
         public static readonly LayoutProperty<int> Order = new LayoutProperty<int>("order", true);
 
         public static readonly LayoutProperty<YogaValue> RowGap = new LayoutProperty<YogaValue>("RowGap", true);
@@ -161,6 +217,44 @@ namespace ReactUnity.Styling
             { "direction", StyleDirection },
             { "flex-wrap", Wrap },
             { "flexWrap", Wrap },
+
+            // CSS logical properties. The inline axis lands on Yoga's Start and End edges, which
+            // Yoga resolves against the direction a node inherits -- so `direction: rtl` on any
+            // ancestor flips them, and nothing here has to track that itself. The block axis is
+            // always vertical: `writing-mode` does not exist here, so block-start is top.
+            { "padding-inline-start", PaddingStart },
+            { "padding-inline-end", PaddingEnd },
+            { "padding-block-start", PaddingTop },
+            { "padding-block-end", PaddingBottom },
+            { "margin-inline-start", MarginStart },
+            { "margin-inline-end", MarginEnd },
+            { "margin-block-start", MarginTop },
+            { "margin-block-end", MarginBottom },
+            { "inset-inline-start", Start },
+            { "inset-inline-end", End },
+            { "inset-block-start", Top },
+            { "inset-block-end", Bottom },
+            { "border-inline-start-width", BorderStartWidth },
+            { "border-inline-end-width", BorderEndWidth },
+            { "border-block-start-width", BorderTopWidth },
+            { "border-block-end-width", BorderBottomWidth },
+
+            { "paddingInlineStart", PaddingStart },
+            { "paddingInlineEnd", PaddingEnd },
+            { "paddingBlockStart", PaddingTop },
+            { "paddingBlockEnd", PaddingBottom },
+            { "marginInlineStart", MarginStart },
+            { "marginInlineEnd", MarginEnd },
+            { "marginBlockStart", MarginTop },
+            { "marginBlockEnd", MarginBottom },
+            { "insetInlineStart", Start },
+            { "insetInlineEnd", End },
+            { "insetBlockStart", Top },
+            { "insetBlockEnd", Bottom },
+            { "borderInlineStartWidth", BorderStartWidth },
+            { "borderInlineEndWidth", BorderEndWidth },
+            { "borderBlockStartWidth", BorderTopWidth },
+            { "borderBlockEndWidth", BorderBottomWidth },
         };
     }
 }

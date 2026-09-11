@@ -1,8 +1,10 @@
 using System.Collections;
+using System.Collections.Generic;
 using NUnit.Framework;
 using ReactUnity.Scripting;
 using ReactUnity.UGUI;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 namespace ReactUnity.Tests
@@ -29,6 +31,17 @@ namespace ReactUnity.Tests
             scroll {
                 height: 200px;
                 width: 200px;
+            }
+            scroll > view {
+                flex-shrink: 0;
+            }
+        ";
+
+        const string ListenerScript = @"
+            function App() {
+                return <>
+                    <view onScroll={(ev) => Globals.list?.Add(ev.scrollDelta.y)} />
+                </>;
             }
         ";
 
@@ -83,6 +96,74 @@ namespace ReactUnity.Tests
             Assert.IsFalse(Scroll.ScrollRect.verticalScrollbar.isActiveAndEnabled);
 
         }
+
+        [UGUITest(Script = BaseScript, Style = BaseStyle)]
+        public IEnumerator ScrollbarGutterReservesTheScrollbarThickness()
+        {
+            View.Style.Set("width", "100%");
+            View.Style.Set("height", 300);
+            yield return null;
+            yield return null;
+
+            var viewport = Scroll.ScrollRect.viewport;
+            Assert.AreEqual(Vector4.zero, Scroll.Gutter);
+            Assert.AreEqual(201, viewport.rect.width, 0.01f);
+            Assert.AreEqual(200, View.RectTransform.rect.width, 0.01f);
+            Assert.IsFalse(Scroll.ScrollRect.horizontalScrollbar.isActiveAndEnabled);
+            Assert.IsTrue(Scroll.ScrollRect.verticalScrollbar.isActiveAndEnabled);
+
+            // Both axes can scroll, so the user-agent's 12px bar is reserved on the right and the bottom.
+            Context.InsertStyle("scroll { scrollbar-gutter: stable; }");
+            yield return null;
+            yield return null;
+            Assert.AreEqual(new Vector4(0, 0, 12, 12), Scroll.Gutter);
+            Assert.AreEqual(189, viewport.rect.width, 0.01f);
+            Assert.AreEqual(189, viewport.rect.height, 0.01f);
+            Assert.AreEqual(188, View.RectTransform.rect.width, 0.01f);
+            Assert.AreEqual(0, LeftEdge(View.RectTransform), 0.01f);
+            Assert.IsFalse(Scroll.ScrollRect.horizontalScrollbar.isActiveAndEnabled);
+            Assert.IsTrue(Scroll.ScrollRect.verticalScrollbar.isActiveAndEnabled);
+
+            // A vertical-only view gives the horizontal gutter back.
+            Globals.Set("direction", "vertical");
+            yield return null;
+            yield return null;
+            Assert.AreEqual(new Vector4(0, 0, 12, 0), Scroll.Gutter);
+            Assert.AreEqual(201, viewport.rect.height, 0.01f);
+            Assert.AreEqual(188, View.RectTransform.rect.width, 0.01f);
+
+            // The start edge is a viewport offset; Yoga still loses both gutters from the right.
+            Context.InsertStyle("scroll { scrollbar-gutter: stable both-edges; }", 1);
+            yield return null;
+            yield return null;
+            Assert.AreEqual(new Vector4(12, 0, 12, 0), Scroll.Gutter);
+            Assert.AreEqual(12, viewport.offsetMin.x, 0.01f);
+            Assert.AreEqual(177, viewport.rect.width, 0.01f);
+            Assert.AreEqual(176, View.RectTransform.rect.width, 0.01f);
+            Assert.AreEqual(0, LeftEdge(View.RectTransform), 0.01f);
+
+            // A thinner bar reserves less, and no bar reserves nothing.
+            Context.InsertStyle("scroll { scrollbar-gutter: stable; scrollbar-width: thin; }", 2);
+            yield return null;
+            yield return null;
+            Assert.AreEqual(new Vector4(0, 0, 6, 0), Scroll.Gutter);
+            Assert.AreEqual(194, View.RectTransform.rect.width, 0.01f);
+
+            Context.InsertStyle("scroll { scrollbar-width: none; }", 3);
+            yield return null;
+            yield return null;
+            Assert.AreEqual(Vector4.zero, Scroll.Gutter);
+            Assert.AreEqual(200, View.RectTransform.rect.width, 0.01f);
+
+            Context.InsertStyle("scroll { scrollbar-gutter: auto; scrollbar-width: auto; }", 4);
+            yield return null;
+            yield return null;
+            Assert.AreEqual(Vector4.zero, Scroll.Gutter);
+            Assert.AreEqual(201, viewport.rect.width, 0.01f);
+            Assert.AreEqual(200, View.RectTransform.rect.width, 0.01f);
+        }
+
+        static float LeftEdge(RectTransform rt) => rt.anchoredPosition.x - rt.pivot.x * rt.rect.width;
 
         private IEnumerator RunWithRandomCoords(System.Func<IEnumerator> cb)
         {
@@ -167,7 +248,7 @@ namespace ReactUnity.Tests
             Assert.AreEqual(true, Scroll.ScrollRect.vertical);
             Assert.AreEqual(ScrollRect.ScrollbarVisibility.AutoHide, Scroll.ScrollRect.horizontalScrollbarVisibility);
             Assert.AreEqual(ScrollRect.ScrollbarVisibility.AutoHide, Scroll.ScrollRect.verticalScrollbarVisibility);
-            Assert.AreEqual(50, Scroll.ScrollRect.scrollSensitivity);
+            Assert.AreEqual(100, Scroll.ScrollRect.scrollSensitivity);
             Assert.AreEqual(0.12f, Scroll.ScrollRect.Smoothness);
             Assert.AreEqual(ScrollRect.MovementType.Clamped, Scroll.ScrollRect.movementType);
             Assert.AreEqual(0, Scroll.ScrollRect.elasticity);
@@ -198,6 +279,152 @@ namespace ReactUnity.Tests
             Assert.AreEqual(0, Scroll.ScrollRect.Smoothness);
             Assert.AreEqual(ScrollRect.MovementType.Clamped, Scroll.ScrollRect.movementType);
             Assert.AreEqual(0, Scroll.ScrollRect.elasticity);
+        }
+
+
+        [UGUITest(Script = BaseScript, Style = BaseStyle)]
+        public IEnumerator AWheelTickScrollsAsFarAsTheSensitivitySays()
+        {
+            View.Style.Set("height", 2000);
+            Globals.Set("smoothness", 0);
+            yield return null;
+
+            // One tick, however many units of delta the active input module calls one -- the legacy
+            // module says one and the input system's says six.
+            Wheel(1);
+            yield return null;
+            Assert.AreEqual(100, Scroll.ScrollRect.ScrollTop, 1.5f);
+
+            Wheel(3);
+            yield return null;
+            Assert.AreEqual(400, Scroll.ScrollRect.ScrollTop, 1.5f);
+
+            Globals.Set("sensitivity", 40);
+            yield return null;
+
+            Wheel(1);
+            yield return null;
+            Assert.AreEqual(440, Scroll.ScrollRect.ScrollTop, 1.5f);
+
+            Wheel(-2);
+            yield return null;
+            Assert.AreEqual(360, Scroll.ScrollRect.ScrollTop, 1.5f);
+        }
+
+        [UGUITest(Script = BaseScript, Style = BaseStyle, RealTimer = true)]
+        public IEnumerator TicksArriveOnTopOfAScrollStillInFlight()
+        {
+            View.Style.Set("height", 2000);
+            Globals.Set("smoothness", 0.15f);
+            yield return null;
+
+            Wheel(1);
+            yield return null;
+            Wheel(1);
+            yield return null;
+            Wheel(1);
+
+            // Three ticks land three ticks away however fast they came, rather than each one counting
+            // from wherever the animation before it had reached.
+            yield return AdvanceTime(0.4f);
+            Assert.AreEqual(300, Scroll.ScrollRect.ScrollTop, 2f);
+        }
+
+        [UGUITest(Script = BaseScript, Style = BaseStyle, RealTimer = true)]
+        public IEnumerator ASmoothScrollEasesOutInsteadOfStoppingDead()
+        {
+            View.Style.Set("height", 2000);
+            yield return null;
+
+            // A quarter of the way through the time, an eased scroll has covered about a sixth of the
+            // distance -- a straight interpolation would be a quarter of the way along by now.
+            Scroll.ScrollRect.ScrollTo(0, 400, 0.5f);
+            yield return AdvanceTime(0.125f);
+            Assert.Less(Scroll.ScrollRect.ScrollTop, 84, "a quarter in, it is still gathering speed");
+
+            // Three quarters through it is past where a straight one would be, slowing into the target.
+            yield return AdvanceTime(0.25f);
+            Assert.Greater(Scroll.ScrollRect.ScrollTop, 316, "three quarters in, it is nearly there");
+
+            yield return AdvanceTime(0.25f);
+            Assert.AreEqual(400, Scroll.ScrollRect.ScrollTop, 1.5f);
+        }
+
+        [UGUITest(Script = BaseScript, Style = BaseStyle, RealTimer = true)]
+        public IEnumerator AFlurryOfTicksIsFollowedRatherThanSavedUp()
+        {
+            View.Style.Set("height", 6000);
+            yield return null;
+
+            // Half a second of fast wheeling: 30 ticks, which is 3000 points asked for at 6000 a
+            // second. The view is meant to follow that, a fraction of a second behind.
+            for (var i = 0; i < 30; i++)
+            {
+                Wheel(1);
+                yield return AdvanceTime(1 / 60f);
+            }
+
+            Assert.Greater(Scroll.ScrollRect.ScrollTop, 2000,
+                "the view should have followed the wheel, not stayed behind to catch up at the end");
+
+            yield return AdvanceTime(0.6f);
+            Assert.AreEqual(3000, Scroll.ScrollRect.ScrollTop, 2f, "and it ends where the ticks asked");
+        }
+
+        [UGUITest(Script = BaseScript, Style = BaseStyle, RealTimer = true)]
+        public IEnumerator AFlurryIsFollowedAtAnyFrameRate()
+        {
+            View.Style.Set("height", 6000);
+            yield return null;
+
+            // A tick on every frame, which is the shape of a fast wheel however fast the frames are.
+            // A scroll given a deadline instead of a target covered a fortieth of this, and less the
+            // higher the frame rate went, because each event restarted a curve in its slowest part.
+            for (var i = 0; i < 30; i++)
+            {
+                Wheel(1);
+                yield return null;
+            }
+
+            Assert.Greater(Scroll.ScrollRect.ScrollTop, 300, "the view should be well on its way by now");
+
+            yield return AdvanceTime(0.6f);
+            Assert.AreEqual(3000, Scroll.ScrollRect.ScrollTop, 2f, "and it arrives where the ticks asked");
+        }
+
+        /// Scroll down by <paramref name="ticks"/> ticks, which the wheel reports as a negative delta.
+        private void Wheel(float ticks)
+        {
+            Scroll.ScrollRect.OnScroll(new PointerEventData(EventSystem.current)
+            { scrollDelta = new Vector2(0, -ticks / TicksPerUnit()) });
+        }
+
+        /// The magnitude of a tick is the input module's to define, and the conversion is linear, so
+        /// one unit converted back says how many ticks a unit is.
+        private static float TicksPerUnit()
+        {
+            var module = EventSystem.current?.currentInputModule;
+            var perUnit = module == null ? 1f : module.ConvertPointerEventScrollDeltaToTicks(Vector2.one).y;
+            return Mathf.Approximately(perUnit, 0) ? 1f : perUnit;
+        }
+
+        [UGUITest(Script = ListenerScript)]
+        public IEnumerator AWheelListenerIsHandedTicks()
+        {
+            var list = new List<object>();
+            Globals["list"] = list;
+            yield return null;
+
+            // Two ticks up, said in whatever unit the module reports them in -- one on the legacy
+            // module, six on the input system's, and a project can set it to something else again.
+            var perUnit = TicksPerUnit();
+            var data = new PointerEventData(EventSystem.current) { scrollDelta = new Vector2(0, 2 / perUnit) };
+            ExecuteEvents.Execute(View.GameObject, data, ExecuteEvents.scrollHandler);
+            yield return null;
+
+            Assert.AreEqual(1, list.Count);
+            Assert.AreEqual(2f, System.Convert.ToSingle(list[0]), 0.001f, "the listener is handed ticks, not the module's units");
+            Assert.AreEqual(2 / perUnit, data.scrollDelta.y, 0.001f, "and the event goes on to anything above as it arrived");
         }
 
 

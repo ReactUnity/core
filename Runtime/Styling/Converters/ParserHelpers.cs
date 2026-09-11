@@ -4,6 +4,7 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Text.RegularExpressions;
+using ReactUnity.Helpers;
 using ReactUnity.Styling.Computed;
 
 namespace ReactUnity.Styling.Converters
@@ -165,6 +166,18 @@ namespace ReactUnity.Styling.Converters
             return true;
         }
 
+        /// <summary>
+        /// Drops the `in oklab` (or `in oklch longer hue`) interpolation hint from a gradient's first
+        /// argument. Ramps interpolate in one space on the GPU, so the hint is accepted and ignored.
+        /// </summary>
+        public static string StripColorInterpolationMethod(string val, out bool found)
+        {
+            val = val.Trim();
+            var index = val.FastStartsWith("in ") ? 0 : val.IndexOf(" in ", StringComparison.Ordinal);
+            found = index >= 0;
+            return found ? val.Substring(0, index).Trim() : val;
+        }
+
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static List<string> SplitComma(string val) => Split(val, ',');
 
@@ -176,6 +189,56 @@ namespace ReactUnity.Styling.Converters
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static List<string> SplitShorthand(string val) => Split(val, ' ', '/');
+
+        /// <summary>
+        /// Splits a list of function calls, which is what a `filter` value is. The whitespace
+        /// between two calls is optional in CSS and a minifier drops it, so `grayscale()blur(2px)`
+        /// is two calls -- splitting on whitespace made it one token naming no function at all.
+        /// </summary>
+        public static List<string> SplitFunctionList(string val)
+        {
+            var list = new List<string>();
+            if (string.IsNullOrWhiteSpace(val)) return list;
+
+            var acc = new StringBuilder();
+            var parensStack = 0;
+
+            var len = val.Length;
+            for (int i = 0; i < len; i++)
+            {
+                var c = val[i];
+
+                if (parensStack == 0 && char.IsWhiteSpace(c))
+                {
+                    if (acc.Length > 0)
+                    {
+                        list.Add(acc.ToString());
+                        acc.Clear();
+                    }
+                    continue;
+                }
+
+                acc.Append(c);
+
+                if (c == '(') parensStack++;
+                else if (c == ')')
+                {
+                    // Clamped rather than allowed to go negative, so a stray `)` cannot swallow
+                    // the calls after it by leaving the depth wrong for the rest of the value.
+                    if (parensStack > 0) parensStack--;
+
+                    if (parensStack == 0)
+                    {
+                        list.Add(acc.ToString());
+                        acc.Clear();
+                    }
+                }
+            }
+
+            if (acc.Length > 0) list.Add(acc.ToString());
+
+            return list;
+        }
 
         public static List<string> Split(string val, char separator, char isolateCharacter = default)
         {
@@ -233,19 +296,32 @@ namespace ReactUnity.Styling.Converters
 
         public static bool ParseCommaSeparatedColor(string[] vals, ColorCallback callback, bool hsl, out IComputedValue result)
         {
+            var cv = AllConverters.ColorValueConverter;
+            var pc = AllConverters.PercentageConverter;
+
+            return ParseCommaSeparatedColor(
+                vals,
+                callback,
+                hsl ? new List<StyleConverterBase> { AllConverters.AngleConverter, pc, pc, pc } : new List<StyleConverterBase> { cv, cv, cv, pc },
+                out result);
+        }
+
+        /// <summary>
+        /// Builds a color out of 3 channels plus an optional alpha, each parsed by its own converter.
+        /// Stays lazy when a channel is a var(), which is why colors are not parsed eagerly here.
+        /// </summary>
+        public static bool ParseCommaSeparatedColor(string[] vals, ColorCallback callback, List<StyleConverterBase> converters, out IComputedValue result)
+        {
             if (vals.Length != 3 && vals.Length != 4)
             {
                 result = null;
                 return false;
             }
 
-            var cv = AllConverters.ColorValueConverter;
-            var pc = AllConverters.PercentageConverter;
-
             return ComputedCompound.Create(
                 out result,
                 vals.OfType<object>().ToList(),
-                hsl ? new List<StyleConverterBase> { AllConverters.AngleConverter, pc, pc, pc } : new List<StyleConverterBase> { cv, cv, cv, pc },
+                converters,
                 (resolved) => {
                     if (resolved[0] is float r && resolved[1] is float g && resolved[2] is float b)
                     {
@@ -262,12 +338,19 @@ namespace ReactUnity.Styling.Converters
             return ParseCommaSeparatedColor(vals.ToArray(), callback, hsl, out result);
         }
 
+        public static bool ParseSpaceSeparatedColor(string val, ColorCallback callback, List<StyleConverterBase> converters, out IComputedValue result)
+        {
+            var vals = ParseSpaceSeparatedColorArguments(val);
+            return ParseCommaSeparatedColor(vals.ToArray(), callback, converters, out result);
+        }
+
 
         public static List<string> ParseSpaceSeparatedColorArguments(string val)
         {
-            var alphaSplit = val.Split(new[] { '/' }, 2);
+            // Paren-aware, so the slash in calc(180 / 2) is not mistaken for the alpha separator.
+            var alphaSplit = SplitSlash(val);
             var vals = SplitWhitespace(alphaSplit[0]);
-            if (alphaSplit.Length > 1) vals.Add(alphaSplit[1].Trim());
+            for (int i = 1; i < alphaSplit.Count; i++) vals.Add(alphaSplit[i].Trim());
             return vals;
         }
 
@@ -278,6 +361,13 @@ namespace ReactUnity.Styling.Converters
             {
                 keyword = CssKeyword.NoKeyword;
                 return false;
+            }
+
+            // The one keyword whose name is not something the enum can spell.
+            if (value.Equals("revert-layer", StringComparison.OrdinalIgnoreCase))
+            {
+                keyword = CssKeyword.RevertLayer;
+                return true;
             }
 
             var parsed = Enum.TryParse(value, true, out keyword);

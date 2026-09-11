@@ -27,6 +27,7 @@ namespace ReactUnity.Scripting
         public V8ScriptEngine Engine { get; private set; }
         public object NativeEngine => Engine;
         private bool ShouldAwait = false;
+        private DocumentLoader documentLoader;
 
         private ReactContext Context { get; }
 
@@ -59,7 +60,7 @@ namespace ReactUnity.Scripting
             Runtime = new V8Runtime("ReactUnityRuntime", runtimeFlags, 9222);
 
             Runtime.DocumentSettings.AccessFlags = DocumentAccessFlags.EnableAllLoading;
-            Runtime.DocumentSettings.Loader = new DocumentLoader(context);
+            Runtime.DocumentSettings.Loader = documentLoader = new DocumentLoader(context);
             Runtime.DocumentSettings.ContextCallback = DocumentContextCallback;
 
             Engine = Runtime.CreateScriptEngine(
@@ -116,11 +117,19 @@ namespace ReactUnity.Scripting
                 (fileName == null ? DocumentFlags.IsTransient : DocumentFlags.None) |
                 (isMainFile && ShouldAwait ? DocumentFlags.AwaitDebuggerAndPause : DocumentFlags.None);
 
-            var hasUri = Uri.TryCreate(fileName, UriKind.RelativeOrAbsolute, out var url);
+            // An absolute url, always: DocumentInfo turns a relative one into a path under the current
+            // directory, which for a bundle out of Resources is a file that does not exist - and every
+            // import below it then resolves against that phantom. ModuleUrl gives it a real origin.
+            var url = remoteUrl ?? ModuleUrl.Base(fileName);
 
-            var document = remoteUrl != null || hasUri ?
-                new DocumentInfo(remoteUrl ?? url) { Category = category, Flags = flags, ContextCallback = DocumentContextCallback } :
+            var document = url != null ?
+                new DocumentInfo(url) { Category = category, Flags = flags, ContextCallback = DocumentContextCallback } :
                 new DocumentInfo(fileName) { Category = category, Flags = flags, ContextCallback = DocumentContextCallback };
+
+            // A module executed here was never loaded, so the loader is told about it: a chunk that
+            // imports the entry back for the runtime the two share then gets this same document,
+            // rather than reading the bundle again and evaluating a second copy of it.
+            if (category != null && url != null) documentLoader.CacheDocument(new StringDocument(document, code), true);
 
             if (ShouldAwait && isMainFile)
             {
@@ -312,14 +321,56 @@ namespace ReactUnity.Scripting
             {
                 if (!specifier.StartsWith("http"))
                 {
-                    specifier = Context.ResolvePath(specifier);
-                    if (sourceInfo.HasValue) sourceInfo = new DocumentInfo(new Uri(specifier))
+                    var url = ResolveUrl(sourceInfo, specifier);
+
+                    if (url != null)
                     {
-                        Category = category,
-                        ContextCallback = (di) => DocumentContextCallback((DocumentInfo) sourceInfo),
-                    };
+                        specifier = url.AbsoluteUri;
+
+                        // The document being loaded stands in for the one that imported it, so its
+                        // own relative imports resolve against its url and not the referrer's.
+                        sourceInfo = new DocumentInfo(url)
+                        {
+                            Category = category,
+                            ContextCallback = (di) => DocumentContextCallback(di),
+                        };
+
+                        // ClearScript's own loader reads a file or a url and knows neither of
+                        // these, so a module out of Resources is read here and handed over as
+                        // text. Synchronous, which is what the rest of this loader already is.
+                        if (ModuleUrl.IsResource(url))
+                        {
+                            // Through the cache, and not to save the read: one url has to give back
+                            // one document. A chunk importing its own importer back is otherwise
+                            // read afresh on every hop, and the two descend until the stack goes.
+                            var cached = GetCachedDocument(url);
+                            if (cached != null) return Task.FromResult(cached);
+
+                            var source = ModuleUrl.ReadResource(url);
+                            if (source == null) throw new System.IO.FileNotFoundException($"Failed to load module '{url.AbsoluteUri}': no such resource");
+                            return Task.FromResult(CacheDocument(new StringDocument(sourceInfo.Value, source), false));
+                        }
+                    }
                 }
                 return base.LoadDocumentAsync(settings, sourceInfo, specifier, category, contextCallback);
+            }
+
+            /// Relative to the importing module first, the way the QuickJS and Jint loaders resolve.
+            /// The entry source only stands in when the referrer has no url of its own, which is the
+            /// root of a module added from source.
+            Uri ResolveUrl(DocumentInfo? sourceInfo, string specifier)
+            {
+                var referrer = sourceInfo?.Uri ?? ModuleUrl.Base(sourceInfo?.Name);
+                if (referrer != null && referrer.IsAbsoluteUri && Uri.TryCreate(referrer, specifier, out var resolved)) return resolved;
+
+                try
+                {
+                    return Uri.TryCreate(Context.ResolvePath(specifier), UriKind.Absolute, out var fromSource) ? fromSource : null;
+                }
+                catch
+                {
+                    return null;
+                }
             }
         }
 

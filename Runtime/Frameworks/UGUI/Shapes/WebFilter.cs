@@ -14,7 +14,7 @@ namespace ReactUnity.UGUI.Shapes
 #endif
 
     [RequireComponent(typeof(CanvasRenderer))]
-    public class WebFilter : MaskableGraphic
+    public class WebFilter : MaskableGraphic, Internal.IBackdropReader
     {
         #region Material Stuff
 
@@ -28,7 +28,7 @@ namespace ReactUnity.UGUI.Shapes
             {
                 return obj is ShaderProps props &&
                        EqualityComparer<Material>.Default.Equals(BaseMaterial, props.BaseMaterial) &&
-                       Definition == props.Definition &&
+                       Equals(Definition, props.Definition) &&
                        StencilId == props.StencilId;
             }
 
@@ -62,13 +62,64 @@ namespace ReactUnity.UGUI.Shapes
                     mat.SetFloat("_Grain", Definition.Grain);
                     mat.SetFloat("_Pixelate", Definition.Pixelate);
                     mat.SetFloat("_Sepia", Definition.Sepia);
+                    mat.SetFloat("_GrainPhase", Definition.GrainPhase);
+                    mat.SetFloat("_Posterize", Definition.Posterize);
+                    mat.SetFloat("_ScanlineIntensity", Definition.ScanlineIntensity);
+                    mat.SetFloat("_ScanlinePeriod", Definition.ScanlinePeriod);
+                    mat.SetFloat("_ScanlinePhase", Definition.ScanlinePhase);
+                    mat.SetColor("_Tint", Definition.Tint);
+                    mat.SetFloat("_Aberration", Definition.ChromaticAberration);
                 }
             }
         }
 
-        static Dictionary<ShaderProps, Material> CachedMaterials = new Dictionary<ShaderProps, Material>();
+        static readonly int BackdropTexId = Shader.PropertyToID("_ReactUnityBackdrop");
+        static readonly int BackdropBoundId = Shader.PropertyToID("_ReactUnityBackdropBound");
 
         public Transform MaskRoot;
+
+        private Internal.BackdropSurface surface;
+        private Texture backdrop;
+
+        /// <summary>Where this element's backdrop is rendered when the pipeline cannot grab one.
+        /// Null on built-in, where the shader's own GrabPass is both exact and cheaper.</summary>
+        /// <remarks>Registering here rather than only in <c>OnEnable</c>, which has already run by
+        /// the time whoever built this graphic can hand it a surface -- and on an object that is
+        /// not in the hierarchy yet, so it cannot wait for the graphic to be active either.</remarks>
+        public Internal.BackdropSurface Surface
+        {
+            get => surface;
+            set
+            {
+                if (surface == value) return;
+                if (surface) surface.Unregister(this);
+                surface = value;
+                if (surface) surface.Register(this);
+            }
+        }
+
+        public CanvasRenderer BackdropRenderer => canvasRenderer;
+
+        public void SetBackdrop(Texture value)
+        {
+            backdrop = value;
+            // Pushed straight onto the live material: materialForRendering is only consulted when
+            // UGUI rebuilds the graphic, which is not every frame, and this changes every frame.
+            if (instanceMaterial) ApplyBackdrop(instanceMaterial);
+        }
+
+        void ApplyBackdrop(Material mat)
+        {
+            mat.SetTexture(BackdropTexId, backdrop);
+            mat.SetFloat(BackdropBoundId, backdrop ? 1 : 0);
+        }
+
+        // One material per component, mutated in place. Keying a shared cache on the props instead
+        // leaked a Material per frame for every animated filter, because FilterDefinition is
+        // interpolatable and so each frame of a transition minted a distinct key.
+        private Material instanceMaterial;
+        private ShaderProps appliedProps;
+        private bool hasAppliedProps;
 
         public override Material materialForRendering
         {
@@ -93,15 +144,33 @@ namespace ReactUnity.UGUI.Shapes
                     Definition = Definition
                 };
 
-                if (!CachedMaterials.TryGetValue(props, out var result) || !result)
+                // A new base material (a mask above us changed) means ours has to be rebuilt on it.
+                if (!instanceMaterial || !hasAppliedProps || appliedProps.BaseMaterial != props.BaseMaterial)
                 {
-                    result = new Material(props.BaseMaterial);
-                    props.SetToMaterial(result);
-                    CachedMaterials[props] = result;
+                    if (instanceMaterial) DestroyImmediate(instanceMaterial);
+                    instanceMaterial = new Material(props.BaseMaterial);
+                    ApplyBackdrop(instanceMaterial);
+                    hasAppliedProps = false;
                 }
 
-                return result;
+                if (!hasAppliedProps || !appliedProps.Equals(props))
+                {
+                    props.SetToMaterial(instanceMaterial);
+                    appliedProps = props;
+                    hasAppliedProps = true;
+                }
+
+                return instanceMaterial;
             }
+        }
+
+        protected override void OnDestroy()
+        {
+            base.OnDestroy();
+            if (surface) surface.Unregister(this);
+            if (instanceMaterial) DestroyImmediate(instanceMaterial);
+            instanceMaterial = null;
+            hasAppliedProps = false;
         }
 
         #endregion
@@ -138,6 +207,13 @@ namespace ReactUnity.UGUI.Shapes
             color = Color.white;
             raycastTarget = false;
             material = ResourcesHelper.BackdropFilterMaterial;
+            if (surface) surface.Register(this);
+        }
+
+        protected override void OnDisable()
+        {
+            base.OnDisable();
+            if (surface) surface.Unregister(this);
         }
 
 #if UNITY_EDITOR

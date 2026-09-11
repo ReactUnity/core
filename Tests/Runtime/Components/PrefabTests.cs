@@ -30,7 +30,7 @@ namespace ReactUnity.Tests
 
         const string PrefabBaseStyle = @"
             prefab {
-                flex: 0;
+                flex: none;
                 align-self: flex-start;
             }
         ";

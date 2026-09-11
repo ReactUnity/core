@@ -59,6 +59,16 @@
             "name": "com.reactunity.quickjs",
             "expression": "",
             "define": "REACT_QUICKJS_AVAILABLE"
+        },
+        {
+            "name": "com.unity.textmeshpro",
+            "expression": "3.2.0-pre.0",
+            "define": "REACT_TMP_X2"
+        },
+        {
+            "name": "Unity",
+            "expression": "2023.2",
+            "define": "REACT_TMP_X2"
         }
     ],
     "noEngineReferences": false

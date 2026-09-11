@@ -38,10 +38,59 @@ namespace ReactUnity.Tests.Editor.Renderer
             }
 ";
 
+        const string StartingStyle = @"
+            #test {
+                color: black;
+                transition: color 1s linear;
+            }
+
+            @starting-style {
+                #test { color: white; }
+            }
+";
+
+        const string NestedStartingStyle = @"
+            #test {
+                color: black;
+                transition: color 1s linear;
+
+                @starting-style {
+                    color: white;
+                }
+            }
+";
+
         public EnterLeaveTests(JavascriptEngineType engineType) : base(engineType) { }
 
 
         UIToolkitComponent<VisualElement> View => Q("#test") as UIToolkitComponent<VisualElement>;
+
+        [EditorInjectableTest(Script = BaseScript, Style = StartingStyle)]
+        public IEnumerator StartingStyleIsWhereATransitionStartsFrom() => StartingStyleTransitions();
+
+        [EditorInjectableTest(Script = BaseScript, Style = NestedStartingStyle)]
+        public IEnumerator NestedStartingStyleIsWhereATransitionStartsFrom() => StartingStyleTransitions();
+
+        // The starting style is the first frame's style and nothing more: it does not stick, and
+        // the transition to the element's own style runs from it.
+        IEnumerator StartingStyleTransitions()
+        {
+            Assert.IsNull(View);
+            Globals.Set("show", true);
+            yield return null;
+            yield return null;
+
+            var view = View;
+            Assert.NotNull(view);
+            Assert.AreEqual(1, view.ComputedStyle.color.r, 0.05f);
+
+            yield return AdvanceTime(0.5f);
+            Assert.AreEqual(0.5f, view.ComputedStyle.color.r, 0.1f);
+
+            yield return AdvanceTime(0.6f);
+            Assert.AreEqual(Color.black, view.ComputedStyle.color);
+            Assert.False(view.Entering);
+        }
 
         [EditorInjectableTest(Script = BaseScript, Style = BaseStyle)]
         public IEnumerator EnterLeaveWorksWithTransitions()

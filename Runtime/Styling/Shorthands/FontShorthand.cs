@@ -48,8 +48,6 @@ namespace ReactUnity.Styling.Shorthands
             {
                 var split = splits[i];
 
-                if (familySet) return null;
-
                 if (!weightSet)
                 {
                     if (WeightConverter.TryParse(split, out var v))
@@ -93,7 +91,7 @@ namespace ReactUnity.Styling.Shorthands
                         {
                             if (lineHeightSet) return null;
 
-                            if (AllConverters.FontSizeConverter.TryParse(lineSplit, out var lh))
+                            if (AllConverters.LineHeightConverter.TryParse(lineSplit, out var lh))
                             {
                                 lineHeight = lh;
                                 lineHeightSet = true;
@@ -105,13 +103,15 @@ namespace ReactUnity.Styling.Shorthands
                     }
                 }
 
-                if (!familySet)
+                // Everything left is the family list, commas and all -- the shorthand's grammar puts it
+                // last, and only after a size, which is what keeps a junk first token from landing here.
+                if (!familySet && sizeSet)
                 {
-                    if (AllConverters.FontReferenceConverter.TryParse(split, out var v))
+                    if (AllConverters.FontReferenceConverter.TryParse(string.Join(" ", splits.GetRange(i, splits.Count - i)), out var v))
                     {
                         family = v;
                         familySet = true;
-                        continue;
+                        break;
                     }
                 }
 

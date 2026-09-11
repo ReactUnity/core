@@ -12,7 +12,7 @@ namespace ReactUnity.Types
     using HashCode = System.HashCode;
 #endif
     [Serializable]
-    public struct BackgroundSize : Interpolatable
+    public struct BackgroundSize : Interpolatable, IEquatable<BackgroundSize>
     {
         public static readonly BackgroundSize Auto = new BackgroundSize(YogaValue2.Auto);
         public static readonly BackgroundSize Contain = new BackgroundSize(BackgroundSizeKeyword.Contain);
@@ -46,12 +46,9 @@ namespace ReactUnity.Types
             return t > 0.5f ? to : this;
         }
 
-        public override bool Equals(object obj)
-        {
-            return obj is BackgroundSize size &&
-                   Keyword == size.Keyword &&
-                   Value == size.Value;
-        }
+        public override bool Equals(object obj) => obj is BackgroundSize size && Equals(size);
+
+        public bool Equals(BackgroundSize other) => Keyword == other.Keyword && Value.Equals(other.Value);
 
         public override int GetHashCode()
         {
@@ -147,5 +144,13 @@ namespace ReactUnity.Types
         Hue,
         Saturation,
         Luminosity,
+
+        /// <summary>
+        /// Additive compositing rather than a blend function, and the one value here that CSS gives
+        /// to `mix-blend-mode` alone -- `background-blend-mode` has no such keyword. It parses for
+        /// both because one enum backs both, and it means the same thing on a background layer:
+        /// the layer is added to what is under it rather than covering it.
+        /// </summary>
+        PlusLighter,
     }
 }

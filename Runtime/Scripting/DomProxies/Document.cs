@@ -20,6 +20,14 @@ namespace ReactUnity.Scripting.DomProxies
         public string baseURI => Context?.Location?.href ?? Origin;
         public string documentURI => baseURI;
 
+        /// Constant, and no `visibilitychange` is ever dispatched. Vite's HMR client parks its
+        /// reconnect poll until the document is visible again, so reporting Unity's focus state
+        /// here would stall a dev-server restart for as long as the Editor sits in the background.
+        public string visibilityState => "visible";
+        public bool hidden => false;
+
+        private EventTarget eventTarget = new EventTarget();
+
         public DocumentProxy(ReactContext context, string origin)
         {
             head = new HeadProxy();
@@ -64,6 +72,43 @@ namespace ReactUnity.Scripting.DomProxies
         public List<IDomElementProxy> getElementsByTagName(string tagName)
         {
             return head.Children.FindAll(x => x.tagName == tagName);
+        }
+
+        /// The document is an event target of its own -- nothing here dispatches to it yet, but a
+        /// listener has to be accepted: Vite's HMR client waits for a restarted dev server behind
+        /// `addEventListener("visibilitychange", ...)` and threw a TypeError instead of reconnecting.
+        public void addEventListener(string eventType, object callback, object options = null)
+        {
+            // TODO: handle options
+            eventTarget.AddEventListener(eventType, callback);
+        }
+
+        public void removeEventListener(string eventType, object callback, object options = null)
+        {
+            eventTarget.RemoveEventListener(eventType, callback);
+        }
+
+        public bool dispatchEvent(object ev)
+        {
+            var type = ev as string;
+            var engine = Context?.Script?.Engine;
+
+            if (type == null && engine != null && engine.IsScriptObject(ev))
+            {
+                var props = engine.TraverseScriptObject(ev);
+                while (props.MoveNext())
+                {
+                    if (props.Current.Key != "type") continue;
+                    type = props.Current.Value?.ToString();
+                    break;
+                }
+            }
+
+            if (string.IsNullOrEmpty(type)) return true;
+
+            eventTarget.DispatchEvent(type, Context, EventPriority.Unknown, ev);
+            // `preventDefault` is not read back; no event here is cancelable.
+            return true;
         }
     }
 

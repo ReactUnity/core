@@ -1,7 +1,7 @@
 import { ReactUnity } from '@reactunity/renderer';
 import { EditorElements } from '@reactunity/renderer/editor';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
-import { useSelection } from 'src/context/selection';
+import { useSelection } from '#src/context/selection.tsx';
 import style from './index.module.scss';
 
 const stylesheets: Record<string, ReactUnity.Styling.StyleSheet> = {};

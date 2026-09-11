@@ -21,6 +21,9 @@ namespace ReactUnity.Styling.Shorthands
             StyleProperties.animationName,
             StyleProperties.animationPlayState,
             StyleProperties.animationTimingFunction,
+            StyleProperties.animationTimeline,
+            StyleProperties.animationRangeStart,
+            StyleProperties.animationRangeEnd,
         };
 
         public AnimationShorthand(string name) : base(name) { }
@@ -37,6 +40,9 @@ namespace ReactUnity.Styling.Shorthands
             var durations = new IComputedValue[cnt];
             var easings = new IComputedValue[cnt];
             var delays = new IComputedValue[cnt];
+            var timelines = new IComputedValue[cnt];
+            var rangeStarts = new IComputedValue[cnt];
+            var rangeEnds = new IComputedValue[cnt];
 
             for (int ci = 0; ci < cnt; ci++)
             {
@@ -130,6 +136,12 @@ namespace ReactUnity.Styling.Shorthands
                 if (!nameSet) return null;
                 if (!countSet) iterations[ci] = new ComputedConstant(1);
                 if (!timingSet) easings[ci] = new ComputedConstant(TimingFunctions.Default);
+
+                // The shorthand takes neither a timeline nor a range, so like every other omitted
+                // sub-property it resets both; they have to be set after it, or in a later rule.
+                timelines[ci] = new ComputedConstant(AnimationTimeline.Auto);
+                rangeStarts[ci] = new ComputedConstant(new AnimationRangeBoundary());
+                rangeEnds[ci] = new ComputedConstant(new AnimationRangeBoundary());
             }
 
             collection[StyleProperties.animationName] = StyleProperties.animationName.Converter.FromList(names);
@@ -140,6 +152,9 @@ namespace ReactUnity.Styling.Shorthands
             collection[StyleProperties.animationIterationCount] = StyleProperties.animationIterationCount.Converter.FromList(iterations);
             collection[StyleProperties.animationFillMode] = StyleProperties.animationFillMode.Converter.FromList(fillModes);
             collection[StyleProperties.animationDirection] = StyleProperties.animationDirection.Converter.FromList(directions);
+            collection[StyleProperties.animationTimeline] = StyleProperties.animationTimeline.Converter.FromList(timelines);
+            collection[StyleProperties.animationRangeStart] = StyleProperties.animationRangeStart.Converter.FromList(rangeStarts);
+            collection[StyleProperties.animationRangeEnd] = StyleProperties.animationRangeEnd.Converter.FromList(rangeEnds);
 
             return ModifiedProperties;
         }

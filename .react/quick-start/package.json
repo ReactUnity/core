@@ -5,16 +5,18 @@
   "main": "index.ts",
   "private": true,
   "scripts": {
-    "start": "react-unity-scripts start",
-    "typecheck": "tsc",
-    "build": "react-unity-scripts build"
+    "dev": "vite",
+    "start": "vite",
+    "build": "vite build",
+    "typecheck": "tsc"
   },
   "dependencies": {
     "@reactunity/renderer": "workspace:*",
     "react": "^19.2.8"
   },
   "devDependencies": {
-    "@reactunity/scripts": "workspace:*",
-    "typescript": "^7.0.2"
+    "sass": "^1.103.1",
+    "typescript": "^7.0.2",
+    "vite": "^8.2.2"
   }
 }

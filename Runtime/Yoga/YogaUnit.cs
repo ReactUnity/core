@@ -6,5 +6,8 @@ namespace Yoga
         Point,
         Percent,
         Auto,
+        MaxContent,
+        FitContent,
+        Stretch,
     }
 }

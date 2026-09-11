@@ -1,6 +1,7 @@
 using System;
 using ReactUnity.Helpers;
 using ReactUnity.Styling;
+using ReactUnity.Styling.Rules;
 using ReactUnity.Types;
 using ReactUnity.UGUI.Behaviours;
 using ReactUnity.UGUI.Internal;
@@ -19,6 +20,7 @@ namespace ReactUnity.UGUI
         public ReactElement Component { get; private set; }
         public BorderAndBackground BorderAndBackground { get; protected set; }
         public MaskAndImage OverflowMask { get; protected set; }
+        public ElementFilter ElementFilter { get; protected set; }
 
         private Selectable selectable;
         public Selectable Selectable
@@ -185,11 +187,18 @@ namespace ReactUnity.UGUI
             var computed = ComputedStyle;
 
             var pos = StylingHelpers.GetStyleEnumCustom(computed, StyleProperties.position);
+
+            // Yoga has neither fixed nor sticky, and each is missing for a different reason. A fixed box
+            // is absolute against a containing block Yoga cannot reach, so it is lifted to the host and
+            // laid out there. A sticky box stays in flow, so it is relative and the scroll-time offset is
+            // applied after layout -- which is why its insets are the one set Yoga is not given.
+            IsSticky = pos == PositionType.Sticky;
+            SetLiftedToViewport(pos == PositionType.Fixed);
+
             Layout.PositionType =
                 pos == PositionType.Static ? YogaPositionType.Static :
-                pos == PositionType.Relative ? YogaPositionType.Relative :
-                pos == PositionType.Absolute || pos == PositionType.Fixed || pos == PositionType.Inset ? YogaPositionType.Absolute :
-                YogaPositionType.Default;
+                pos == PositionType.Absolute || pos == PositionType.Fixed ? YogaPositionType.Absolute :
+                YogaPositionType.Relative;
 
             Layout.StyleDirection = StylingHelpers.GetStyleEnumCustom(computed, LayoutProperties.StyleDirection);
             Layout.FlexDirection = StylingHelpers.GetStyleEnumCustom(computed, LayoutProperties.FlexDirection);
@@ -217,10 +226,23 @@ namespace ReactUnity.UGUI
             Layout.MarginLeft = StylingHelpers.GetStyleLengthTriple(computed, LayoutProperties.MarginLeft, LayoutProperties.MarginHorizontal, LayoutProperties.Margin);
             Layout.MarginRight = StylingHelpers.GetStyleLengthTriple(computed, LayoutProperties.MarginRight, LayoutProperties.MarginHorizontal, LayoutProperties.Margin);
 
-            Layout.Left = StylingHelpers.GetStyleLength(computed, LayoutProperties.Left);
-            Layout.Right = StylingHelpers.GetStyleLength(computed, LayoutProperties.Right);
-            Layout.Top = StylingHelpers.GetStyleLength(computed, LayoutProperties.Top);
-            Layout.Bottom = StylingHelpers.GetStyleLength(computed, LayoutProperties.Bottom);
+            // The inline edges, which is what `padding-inline-start` and the rest set. Yoga picks
+            // the physical side from the direction the node inherits, and prefers these over the
+            // physical edge when both are set -- so a logical value always wins, cascade or not.
+            Layout.PaddingStart = StylingHelpers.GetStyleLength(computed, LayoutProperties.PaddingStart);
+            Layout.PaddingEnd = StylingHelpers.GetStyleLength(computed, LayoutProperties.PaddingEnd);
+            Layout.MarginStart = StylingHelpers.GetStyleLength(computed, LayoutProperties.MarginStart);
+            Layout.MarginEnd = StylingHelpers.GetStyleLength(computed, LayoutProperties.MarginEnd);
+
+            // Sticky insets are read back off the computed style at scroll time; handing them over here
+            // would shift the box in flow, which is the one thing sticky must never do.
+            var undefined = YogaValue.Undefined();
+            Layout.Left = IsSticky ? undefined : StylingHelpers.GetStyleLength(computed, LayoutProperties.Left);
+            Layout.Right = IsSticky ? undefined : StylingHelpers.GetStyleLength(computed, LayoutProperties.Right);
+            Layout.Top = IsSticky ? undefined : StylingHelpers.GetStyleLength(computed, LayoutProperties.Top);
+            Layout.Bottom = IsSticky ? undefined : StylingHelpers.GetStyleLength(computed, LayoutProperties.Bottom);
+            Layout.Start = IsSticky ? undefined : StylingHelpers.GetStyleLength(computed, LayoutProperties.Start);
+            Layout.End = IsSticky ? undefined : StylingHelpers.GetStyleLength(computed, LayoutProperties.End);
 
             Layout.RowGap = StylingHelpers.GetStyleLength(computed, LayoutProperties.RowGap);
             Layout.ColumnGap = StylingHelpers.GetStyleLength(computed, LayoutProperties.ColumnGap);
@@ -229,10 +251,14 @@ namespace ReactUnity.UGUI
             Layout.BorderRightWidth = StylingHelpers.GetStyleFloatDouble(computed, LayoutProperties.BorderRightWidth, LayoutProperties.BorderWidth);
             Layout.BorderTopWidth = StylingHelpers.GetStyleFloatDouble(computed, LayoutProperties.BorderTopWidth, LayoutProperties.BorderWidth);
             Layout.BorderBottomWidth = StylingHelpers.GetStyleFloatDouble(computed, LayoutProperties.BorderBottomWidth, LayoutProperties.BorderWidth);
+            Layout.BorderStartWidth = StylingHelpers.GetStyleFloat(computed, LayoutProperties.BorderStartWidth);
+            Layout.BorderEndWidth = StylingHelpers.GetStyleFloat(computed, LayoutProperties.BorderEndWidth);
 
-            Layout.Display = StylingHelpers.GetStyleEnumCustom(computed, LayoutProperties.Display);
+            Layout.Display = StylingHelpers.DisplayOf(StylingHelpers.GetStyleEnumCustom(computed, LayoutProperties.Display));
             Layout.BoxSizing = StylingHelpers.GetStyleEnumCustom(computed, LayoutProperties.BoxSizing);
-            Layout.Overflow = StylingHelpers.GetStyleEnumCustom(computed, LayoutProperties.Overflow);
+            Layout.Overflow = LayoutProperties.CombineOverflow(
+                StylingHelpers.GetStyleEnumCustom(computed, LayoutProperties.Overflow),
+                LayoutProperties.CombineOverflow(computed.overflowX, computed.overflowY));
 
             Layout.AlignContent = StylingHelpers.GetStyleEnumCustom(computed, LayoutProperties.AlignContent);
             Layout.AlignItems = StylingHelpers.GetStyleEnumCustom(computed, LayoutProperties.AlignItems);
@@ -248,6 +274,185 @@ namespace ReactUnity.UGUI
             SetOverflow();
             SetCursor();
             UpdateBackgroundGraphic(false, true);
+            SetFilter();
+        }
+
+        protected void SetFilter()
+        {
+            var filter = ComputedStyle.filter;
+            var blendMode = ComputedStyle.mixBlendMode;
+
+            var hasFilter = filter != null && !filter.Equals(FilterDefinition.Default);
+            // `mix-blend-mode` rides the same offscreen capture, because CSS blends the element and
+            // everything inside it as one image -- which is what the capture already is. It also
+            // puts the two in the order CSS gives them: the filter runs, then the result blends.
+            var hasBlend = blendMode != BackgroundBlendMode.Normal;
+            // And `isolation: isolate` is the capture on its own: a descendant that blends can only
+            // read the backdrop the capture hands it, which is what a stacking context amounts to
+            // here. The chain applies nothing, so the result is the element as it was.
+            var isolated = ComputedStyle.isolation == Isolation.Isolate;
+            // A background layer above the bottom one blends with the layers below it, which it can
+            // only find by reading back what has been drawn -- and that has to be this element's
+            // background alone, not the page it happens to be sitting on.
+            var stacksBackgroundBlends = StacksBackgroundBlends();
+
+            // `mask-image` and `clip-path` are the other two things CSS applies to the element and
+            // its contents as one image. A mask needs the capture because a soft edge cannot come
+            // out of a stencil, and a clip because the shape has to cut the subtree, not each
+            // graphic in it.
+            var maskImages = ComputedStyle.maskImage;
+            var hasMask = (maskImages?.Count ?? 0) > 0;
+            var clipShape = ComputedStyle.clipPath ?? ClipPath.None;
+            var hasClip = clipShape.Kind != ClipPathKind.None;
+
+            if (!hasFilter && !hasBlend && !isolated && !stacksBackgroundBlends && !hasMask && !hasClip)
+            {
+                if (ElementFilter) ElementFilter.Detach();
+                ElementFilter = null;
+                return;
+            }
+
+            var definition = hasFilter ? filter : FilterDefinition.Default;
+
+            if (!ElementFilter) ElementFilter = ElementFilter.Create(this, definition, blendMode, isolated, clipShape);
+            else
+            {
+                ElementFilter.Definition = definition;
+                ElementFilter.BlendMode = blendMode;
+                ElementFilter.Isolated = isolated;
+                ElementFilter.ClipShape = clipShape;
+            }
+
+            ElementFilter.SetMask(maskImages, ComputedStyle.maskPositionX, ComputedStyle.maskPositionY,
+                ComputedStyle.maskSize, ComputedStyle.maskRepeatX, ComputedStyle.maskRepeatY,
+                ComputedStyle.maskMode.Get(0));
+        }
+
+        /// <summary>
+        /// Whether any background layer blends against the layers below it rather than against the
+        /// background colour. The bottom layer's backdrop is the colour, which is a value the
+        /// shader is simply handed, so a single blended image never gets here.
+        /// </summary>
+        bool StacksBackgroundBlends()
+        {
+            var layers = ComputedStyle.backgroundImage?.Count ?? 0;
+            if (layers < 2) return false;
+
+            var modes = ComputedStyle.backgroundBlendMode;
+            for (int i = 0; i < layers - 1; i++)
+                if (modes.Get(i) != BackgroundBlendMode.Normal) return true;
+
+            return false;
+        }
+
+        #endregion
+
+
+        #region Positioning
+
+        /// <summary>Whether <c>position: sticky</c> holds this box, which <see cref="ReactElement"/> acts on.</summary>
+        internal bool IsSticky { get; private set; }
+
+        public override ScrollEdge StuckEdges =>
+            IsSticky && StickyPosition.TryResolve(this, out _, out var stuck) ? stuck : ScrollEdge.None;
+
+        private YogaNode viewportPlaceholder;
+
+        /// <summary>
+        /// The node holding this element's slot among its parent's layout children. Normally its own, but a
+        /// <c>position: fixed</c> element -- like a portal -- leaves a hidden stand-in behind while its real
+        /// node hangs off the host.
+        /// </summary>
+        internal virtual YogaNode LayoutInParent => viewportPlaceholder ?? Layout;
+
+        /// <summary>Whether this element's transform lives somewhere other than under its parent's container.</summary>
+        internal virtual bool TransformDetached => viewportPlaceholder != null;
+
+        /// <summary>
+        /// Moves the element to the host and back, which is what makes <c>position: fixed</c> fixed: the
+        /// viewport becomes its containing block, and it stops being scrolled or clipped by anything in
+        /// between. The React tree is untouched, so inherited style, states and events all still follow it.
+        /// </summary>
+        /// <remarks>
+        /// The same trick <see cref="PortalComponent"/> plays, and with the same two consequences. A lifted
+        /// element no longer inherits an ancestor's <c>opacity</c>, <c>transform</c> or <c>filter</c> -- for
+        /// the first two that is closer to CSS than staying put, since a transformed ancestor is not its
+        /// containing block here. And with no insets it lands at the viewport's origin rather than at the
+        /// static position it left behind, which layout does not keep.
+        /// </remarks>
+        private void SetLiftedToViewport(bool lifted)
+        {
+            if (lifted == (viewportPlaceholder != null)) return;
+            // The host is the viewport, so it has nowhere to lift to; nor does a detached element.
+            if (this is IHostComponent || Layout == null) return;
+            if (!(Parent is UGUIComponent parent) || parent.Layout == null) return;
+
+            var host = Context.Host as UGUIComponent;
+            if (host?.Layout == null || host == this) return;
+
+            if (lifted)
+            {
+                var placeholder = viewportPlaceholder = new YogaNode { Display = YogaDisplay.None, Data = this };
+                Swap(parent.Layout, Layout, placeholder);
+
+                host.Layout.AddChild(Layout);
+                RectTransform.SetParent(host.Container, false);
+            }
+            else
+            {
+                var placeholder = viewportPlaceholder;
+                viewportPlaceholder = null;
+
+                Layout.Parent?.RemoveChild(Layout);
+                Swap(parent.Layout, placeholder, Layout);
+
+                parent.RestoreChildTransform(this);
+            }
+        }
+
+        /// <summary>Puts <paramref name="replacement"/> where <paramref name="node"/> stands, or appends it.</summary>
+        private static void Swap(YogaNode parent, YogaNode node, YogaNode replacement)
+        {
+            if (parent == null) return;
+
+            var index = parent.IndexOf(node);
+            if (index < 0)
+            {
+                parent.AddChild(replacement);
+                return;
+            }
+
+            parent.RemoveAt(index);
+            parent.Insert(index, replacement);
+        }
+
+        /// <summary>
+        /// Puts a child's transform back under this container at the sibling position its order asks for.
+        /// </summary>
+        internal void RestoreChildTransform(UGUIComponent child)
+        {
+            if (!child.RectTransform) return;
+            child.RectTransform.SetParent(Container, false);
+
+            var index = Children == null ? -1 : Children.IndexOf(child);
+            if (index < 0) return;
+
+            // SetParent appended it, so it only has to move if a later sibling is standing in front of it.
+            for (int i = index + 1; i < Children.Count; i++)
+            {
+                if (!(Children[i] is UGUIComponent next) || !next.RectTransform) continue;
+                if (next.RectTransform.parent != Container) continue;
+                child.RectTransform.SetSiblingIndex(next.RectTransform.GetSiblingIndex());
+                return;
+            }
+        }
+
+        public override void SetParent(IContainerComponent newParent, IReactComponent relativeTo = null, bool insertAfter = false)
+        {
+            // Put the element back before the tree moves under it, or the stand-in is left in a parent that
+            // will never hear of it again. The next layout pass lifts it out of the new parent instead.
+            SetLiftedToViewport(false);
+            base.SetParent(newParent, relativeTo, insertAfter);
         }
 
         #endregion
@@ -286,7 +491,7 @@ namespace ReactUnity.UGUI
 
             // Restore rotation and scale
             RectTransform.localScale = style.scale;
-            RectTransform.localRotation = Quaternion.Euler(style.rotate);
+            RectTransform.localRotation = StylingHelpers.RotationOf(style.rotate);
         }
 
         protected void ResolveOpacityAndInteractable()
@@ -324,7 +529,9 @@ namespace ReactUnity.UGUI
         {
             var computed = ComputedStyle;
             var mask = OverflowMask;
-            var hasMask = StylingHelpers.GetStyleEnumCustom(computed, LayoutProperties.Overflow) == YogaOverflow.Hidden;
+            // A mask clips both axes, so hiding one axis clips the other too -- the closest a RectMask2D gets.
+            var hasMask = StylingHelpers.GetStyleEnumCustom(computed, LayoutProperties.Overflow) == YogaOverflow.Hidden
+                || computed.overflowX == YogaOverflow.Hidden || computed.overflowY == YogaOverflow.Hidden;
 
             // Mask is not defined and there is no need for it
             if (!hasMask && mask == null) return;
@@ -366,7 +573,6 @@ namespace ReactUnity.UGUI
 
             if (ComputedStyle.backgroundColor.a > 0) return true;
             if (ComputedStyle.HasValue(StyleProperties.backgroundImage)) return true;
-            if (ComputedStyle.HasValue(StyleProperties.maskImage)) return true;
             if (ComputedStyle.HasValue(StyleProperties.boxShadow)) return true;
             if (ComputedStyle.HasValue(StyleProperties.filter)) return true;
             if (ComputedStyle.HasValue(StyleProperties.backdropFilter)) return true;
@@ -412,7 +618,7 @@ namespace ReactUnity.UGUI
 
         protected BorderAndBackground CreateBorderAndBackground()
         {
-            var image = BorderAndBackground.Create(GameObject, this, (x => Container = x));
+            var image = BorderAndBackground.Create(GameObject, this);
             if (Selectable && Selectable.targetGraphic == null)
                 Selectable.targetGraphic = image.BgImage;
             return BorderAndBackground = image;
@@ -539,6 +745,24 @@ namespace ReactUnity.UGUI
 
         #endregion
 
+        /// <summary>
+        /// Hosts a graphic on a full-stretch child of the element instead of on its own object. UGUI paints
+        /// an object before its children, so a graphic on the element itself would sit under the background
+        /// and border objects; a child added first stays last, since those are inserted at the front.
+        /// </summary>
+        protected T CreateGraphicChild<T>(string name) where T : Component
+        {
+            var go = Context.CreateNativeObject(name, typeof(RectTransform), typeof(T));
+            var rt = go.transform as RectTransform;
+            rt.SetParent(RectTransform, false);
+            rt.anchorMin = Vector2.zero;
+            rt.anchorMax = Vector2.one;
+            rt.pivot = new Vector2(0.5f, 0.5f);
+            rt.offsetMin = Vector2.zero;
+            rt.offsetMax = Vector2.zero;
+            return go.GetComponent<T>();
+        }
+
         #region Container Functions
 
         protected override bool InsertChild(IReactComponent child, int index)
@@ -578,7 +802,8 @@ namespace ReactUnity.UGUI
             var siblings = Parent.Layout;
             var count = siblings.Count;
             var currentIndex = -1;
-            var layout = Layout;
+            // A lifted element keeps its slot here through a stand-in, so that is the node to move.
+            var layout = LayoutInParent;
 
             for (int i = 0; i < count; i++)
             {
@@ -621,10 +846,14 @@ namespace ReactUnity.UGUI
                 hasUpdate = true;
             }
 
-            if (siblings.Count > expectedIndex + 1)
+            // Nothing below reorders anything: this element's transform is not among the parent's.
+            if (TransformDetached) return hasUpdate;
+
+            var next = NextAttachedSibling(siblings, expectedIndex + 1);
+
+            if (next != null)
             {
-                var item = siblings[expectedIndex + 1];
-                var newInd = (item.Data as UGUIComponent).RectTransform.GetSiblingIndex();
+                var newInd = next.RectTransform.GetSiblingIndex();
                 var oldInd = RectTransform.GetSiblingIndex();
                 if (newInd > oldInd) newInd--;
 
@@ -659,6 +888,25 @@ namespace ReactUnity.UGUI
             }
 
             return hasUpdate;
+        }
+
+        /// <summary>
+        /// The first sibling from <paramref name="index"/> on whose transform is actually under the shared
+        /// container, so a lifted one is stepped over rather than measured where it no longer is.
+        /// </summary>
+        private UGUIComponent NextAttachedSibling(YogaNode siblings, int index)
+        {
+            var parentContainer = RectTransform.parent;
+
+            for (int i = index; i < siblings.Count; i++)
+            {
+                if (!(siblings[i].Data is UGUIComponent sibling)) continue;
+                if (sibling.TransformDetached || !sibling.RectTransform) continue;
+                if (sibling.RectTransform.parent != parentContainer) continue;
+                return sibling;
+            }
+
+            return null;
         }
 
         protected void PropagateEventViewportChange(UGUIComponent cmp, RectTransform vp, bool skipSelf)

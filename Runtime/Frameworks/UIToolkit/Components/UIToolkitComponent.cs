@@ -24,7 +24,7 @@ namespace ReactUnity.UIToolkit
         VisualElement TargetElement { get; }
     }
 
-    public class UIToolkitComponent<T> : BaseReactComponent<UIToolkitContext>, IActivatableComponent, IUIToolkitComponent, IUIToolkitComponent<T> where T : VisualElement, new()
+    public class UIToolkitComponent<T> : BaseReactComponent<UIToolkitContext>, IActivatableComponent, IUIToolkitComponent, IUIToolkitComponent<T>, IContentBoxComponent where T : VisualElement, new()
     {
         public T Element { get; protected set; }
         VisualElement IUIToolkitComponent.Element => Element;
@@ -32,6 +32,14 @@ namespace ReactUnity.UIToolkit
 
         public override float ClientWidth => Element.layout.width;
         public override float ClientHeight => Element.layout.height;
+
+        // `layout` is the border box; a container query measures inside the padding.
+        void IContentBoxComponent.GetContentBox(out float width, out float height)
+        {
+            var rect = Element.contentRect;
+            width = rect.width;
+            height = rect.height;
+        }
 
         public bool Disabled
         {
@@ -75,28 +83,37 @@ namespace ReactUnity.UIToolkit
             TargetElement.style.maxWidth = StylingHelpers.GetStyleLength(computed, LayoutProperties.MaxWidth);
             TargetElement.style.maxHeight = StylingHelpers.GetStyleLength(computed, LayoutProperties.MaxHeight);
 
+            // The inline edges are folded in here rather than handed over, since UIElements has no
+            // start/end edge and no `direction` to resolve one against: inline-start is always the
+            // left. Logical beats physical, which is the order Yoga applies them in under UGUI.
             TargetElement.style.paddingBottom = StylingHelpers.GetStyleLengthDouble(computed, LayoutProperties.PaddingBottom, LayoutProperties.Padding);
             TargetElement.style.paddingTop = StylingHelpers.GetStyleLengthDouble(computed, LayoutProperties.PaddingTop, LayoutProperties.Padding);
-            TargetElement.style.paddingLeft = StylingHelpers.GetStyleLengthDouble(computed, LayoutProperties.PaddingLeft, LayoutProperties.Padding);
-            TargetElement.style.paddingRight = StylingHelpers.GetStyleLengthDouble(computed, LayoutProperties.PaddingRight, LayoutProperties.Padding);
+            TargetElement.style.paddingLeft = StylingHelpers.GetStyleLengthTriple(computed, LayoutProperties.PaddingStart, LayoutProperties.PaddingLeft, LayoutProperties.Padding);
+            TargetElement.style.paddingRight = StylingHelpers.GetStyleLengthTriple(computed, LayoutProperties.PaddingEnd, LayoutProperties.PaddingRight, LayoutProperties.Padding);
 
             TargetElement.style.marginBottom = StylingHelpers.GetStyleLengthDouble(computed, LayoutProperties.MarginBottom, LayoutProperties.Margin);
             TargetElement.style.marginTop = StylingHelpers.GetStyleLengthDouble(computed, LayoutProperties.MarginTop, LayoutProperties.Margin);
-            TargetElement.style.marginLeft = StylingHelpers.GetStyleLengthDouble(computed, LayoutProperties.MarginLeft, LayoutProperties.Margin);
-            TargetElement.style.marginRight = StylingHelpers.GetStyleLengthDouble(computed, LayoutProperties.MarginRight, LayoutProperties.Margin);
+            TargetElement.style.marginLeft = StylingHelpers.GetStyleLengthTriple(computed, LayoutProperties.MarginStart, LayoutProperties.MarginLeft, LayoutProperties.Margin);
+            TargetElement.style.marginRight = StylingHelpers.GetStyleLengthTriple(computed, LayoutProperties.MarginEnd, LayoutProperties.MarginRight, LayoutProperties.Margin);
 
-            TargetElement.style.left = StylingHelpers.GetStyleLength(computed, LayoutProperties.Left);
-            TargetElement.style.right = StylingHelpers.GetStyleLength(computed, LayoutProperties.Right);
-            TargetElement.style.top = StylingHelpers.GetStyleLength(computed, LayoutProperties.Top);
-            TargetElement.style.bottom = StylingHelpers.GetStyleLength(computed, LayoutProperties.Bottom);
+            var pos = computed.position;
+
+            // Sticky insets are a scroll-time offset, not a layout one, and UIElements has no way to
+            // apply them as one -- so a sticky box degrades to its in-flow position rather than being
+            // shifted by insets it should never honour in flow.
+            var sticky = pos == PositionType.Sticky;
+            TargetElement.style.left = sticky ? StyleKeyword.Null : StylingHelpers.GetStyleLengthDouble(computed, LayoutProperties.Start, LayoutProperties.Left);
+            TargetElement.style.right = sticky ? StyleKeyword.Null : StylingHelpers.GetStyleLengthDouble(computed, LayoutProperties.End, LayoutProperties.Right);
+            TargetElement.style.top = sticky ? StyleKeyword.Null : StylingHelpers.GetStyleLength(computed, LayoutProperties.Top);
+            TargetElement.style.bottom = sticky ? StyleKeyword.Null : StylingHelpers.GetStyleLength(computed, LayoutProperties.Bottom);
 
             TargetElement.style.borderLeftWidth =
                 computed.borderLeftStyle == BorderStyle.None ? 0 :
-                StylingHelpers.GetStyleFloatDouble(computed, LayoutProperties.BorderLeftWidth, LayoutProperties.BorderWidth);
+                StylingHelpers.GetStyleFloatTriple(computed, LayoutProperties.BorderStartWidth, LayoutProperties.BorderLeftWidth, LayoutProperties.BorderWidth);
 
             TargetElement.style.borderRightWidth =
                 computed.borderRightStyle == BorderStyle.None ? 0 :
-                StylingHelpers.GetStyleFloatDouble(computed, LayoutProperties.BorderRightWidth, LayoutProperties.BorderWidth);
+                StylingHelpers.GetStyleFloatTriple(computed, LayoutProperties.BorderEndWidth, LayoutProperties.BorderRightWidth, LayoutProperties.BorderWidth);
 
             TargetElement.style.borderTopWidth =
                 computed.borderTopStyle == BorderStyle.None ? 0 :
@@ -106,10 +123,14 @@ namespace ReactUnity.UIToolkit
                 computed.borderBottomStyle == BorderStyle.None ? 0 :
                 StylingHelpers.GetStyleFloatDouble(computed, LayoutProperties.BorderBottomWidth, LayoutProperties.BorderWidth);
 
-            TargetElement.style.display = StylingHelpers.GetStyleEnumCustom<DisplayStyle>(computed, LayoutProperties.Display);
+            TargetElement.style.display = computed.GetStyleValue(LayoutProperties.Display, true) == DisplayType.None ? DisplayStyle.None : DisplayStyle.Flex;
 
-            var pos = computed.position;
-            TargetElement.style.position = pos == PositionType.Relative ? Position.Relative : Position.Absolute;
+            // UIElements has only these two. `static` and `sticky` are in flow, so both are relative
+            // -- reading them as absolute took an unpositioned box out of flow entirely. `fixed` has
+            // no viewport containing block here, so it lands on absolute like the other two off-flow values.
+            TargetElement.style.position =
+                pos == PositionType.Absolute || pos == PositionType.Fixed
+                ? Position.Absolute : Position.Relative;
             TargetElement.style.overflow = StylingHelpers.GetStyleEnumCustom<Overflow>(computed, LayoutProperties.Overflow);
 
             TargetElement.style.alignContent = StylingHelpers.GetStyleEnumCustom<Align>(computed, LayoutProperties.AlignContent);
@@ -128,7 +149,14 @@ namespace ReactUnity.UIToolkit
 #endif
             TargetElement.style.visibility = StylingHelpers.GetStyleBoolToEnum(computed, StyleProperties.visibility, Visibility.Visible, Visibility.Hidden);
             TargetElement.style.opacity = StylingHelpers.GetStyleFloat(computed, StyleProperties.opacity);
-            TargetElement.style.whiteSpace = StylingHelpers.GetStyleBoolToEnum(computed, StyleProperties.textWrap, WhiteSpace.Normal, WhiteSpace.NoWrap);
+            var whiteSpace = computed.whiteSpace;
+#if UNITY_6000_0_OR_NEWER
+            TargetElement.style.whiteSpace = whiteSpace.PreservesWhitespace()
+                ? (whiteSpace.Wraps() ? UnityEngine.UIElements.WhiteSpace.PreWrap : UnityEngine.UIElements.WhiteSpace.Pre)
+                : (whiteSpace.Wraps() ? UnityEngine.UIElements.WhiteSpace.Normal : UnityEngine.UIElements.WhiteSpace.NoWrap);
+#else
+            TargetElement.style.whiteSpace = whiteSpace.Wraps() ? UnityEngine.UIElements.WhiteSpace.Normal : UnityEngine.UIElements.WhiteSpace.NoWrap;
+#endif
 
             if (computed.HasValue(StyleProperties.fontSize)) TargetElement.style.fontSize = computed.fontSize;
             else TargetElement.style.fontSize = StyleKeyword.Null;
@@ -206,7 +234,11 @@ namespace ReactUnity.UIToolkit
 #endif
                     else TargetElement.style.unityFont = ResourcesHelper.DefaultFont;
 #if REACT_TEXTCORE
-                    if (x?.TextCoreFontAsset != null) TargetElement.style.unityFontDefinition = FontDefinition.FromSDFFont(x?.TextCoreFontAsset);
+                    if (x?.TextCoreFontAsset != null)
+                    {
+                        FontFallbacks.Apply(x.TextCoreFontAsset, x.Fallbacks);
+                        TargetElement.style.unityFontDefinition = FontDefinition.FromSDFFont(x?.TextCoreFontAsset);
+                    }
 #endif
                 });
             }

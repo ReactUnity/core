@@ -1,3 +1,4 @@
+using System;
 using Yoga;
 using ReactUnity.Types;
 using UnityEngine;
@@ -9,6 +10,12 @@ namespace ReactUnity.UGUI.Behaviours
     {
         private RectTransform rt;
         public YogaNode Layout { get; set; }
+
+        /// <summary>Width and height a scrollbar gutter took from the viewport; not counted as content.</summary>
+        public Vector2 Gutter { get; internal set; }
+
+        /// <summary>Called when the content changed size, which moves every snap point with it.</summary>
+        public Action Resized { get; internal set; }
 
         private ScrollDirection direction = ScrollDirection.Both;
         public ScrollDirection Direction
@@ -74,7 +81,7 @@ namespace ReactUnity.UGUI.Behaviours
 
             if (hasHorizontal)
             {
-                var rightInset = NormalizeFloat(Layout.LayoutPaddingRight) + NormalizeFloat(Layout.BorderRightWidth);
+                var rightInset = NormalizeFloat(Layout.LayoutPaddingRight) + NormalizeFloat(Layout.BorderRightWidth) - Gutter.x;
                 var width = Mathf.Floor(maxX - minX + rightInset);
                 var dfx = width - Layout.LayoutWidth;
                 if (dfx <= 1 && dfx > 0) width = Layout.LayoutWidth;
@@ -83,13 +90,17 @@ namespace ReactUnity.UGUI.Behaviours
 
             if (hasVertical)
             {
-                var bottomInset = NormalizeFloat(Layout.LayoutPaddingBottom) + NormalizeFloat(Layout.BorderBottomWidth);
+                var bottomInset = NormalizeFloat(Layout.LayoutPaddingBottom) + NormalizeFloat(Layout.BorderBottomWidth) - Gutter.y;
                 var height = Mathf.Floor(maxY - minY + bottomInset);
                 var dfy = height - Layout.LayoutHeight;
                 if (dfy <= 1 && dfy > 0) height = Layout.LayoutHeight;
                 vertical = height;
             }
-            rt.sizeDelta = new Vector2(horizontal, vertical);
+            var size = new Vector2(horizontal, vertical);
+            if (rt.sizeDelta == size) return;
+
+            rt.sizeDelta = size;
+            Resized?.Invoke();
         }
 
         float NormalizeFloat(float value)

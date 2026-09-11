@@ -68,6 +68,69 @@ namespace ReactUnity.UGUI
         public RectTransform PoolRoot { get; }
         public RectTransform OffscreenRoot { get; }
 
+        private Transform filterRoot;
+
+        /// <summary>
+        /// Where <see cref="Internal.ElementFilter"/> parks the canvas it renders a filtered subtree
+        /// on. Created on first use, and empty in a scene with no filter in it.
+        /// </summary>
+        /// <remarks>
+        /// A scene root, which is the one place it can be: each surface carries a `WorldSpace`
+        /// canvas, and a canvas nested under another inherits that one's render mode instead --
+        /// so putting these under the host would turn the offscreen pass back into an onscreen one.
+        /// Collecting them under a single object is as close as that constraint allows.
+        /// </remarks>
+        public Transform FilterRoot
+        {
+            get
+            {
+                if (!filterRoot)
+                {
+                    filterRoot = CreateNativeObject("[Filters]").transform;
+                    Disposables.Add(() => { if (filterRoot) UnityEngine.Object.Destroy(filterRoot.gameObject); });
+                }
+                return filterRoot;
+            }
+        }
+
+        private Internal.BackdropSurface backdropSurface;
+
+        /// <summary>
+        /// Where the elements that read a backdrop get one under a pipeline that has no
+        /// <c>GrabPass</c>. Created on first use, so a scene with nothing reading a backdrop -- or
+        /// one on the built-in pipeline, which grabs -- never renders a second time.
+        /// </summary>
+        /// <remarks>
+        /// Under the host rather than a scene root of its own, unlike <see cref="FilterRoot"/>:
+        /// nothing here carries a canvas, so nothing forces it out, and being in the host's subtree
+        /// is what makes it go away when the host does. A `Destroy` on a scene root is queued for
+        /// the end of the frame, which a scene close does not wait for -- so anything that put one
+        /// there during teardown outlived the scene it was made in.
+        /// </remarks>
+        public Internal.BackdropSurface BackdropSurface
+        {
+            get
+            {
+                var host = (Host as HostComponent)?.RectTransform;
+
+                // Not once the host is gone, however the context is being taken apart: a caller can
+                // reach this from a destruction cascade, and a register made then belongs to
+                // nothing. Callers with nothing to register should use ExistingBackdropSurface.
+                if (!backdropSurface && !IsDisposed && host)
+                {
+                    var go = CreateNativeObject("[BackdropSurface]", typeof(Internal.BackdropSurface));
+                    go.transform.SetParent(host, false);
+                    backdropSurface = go.GetComponent<Internal.BackdropSurface>();
+                    backdropSurface.Context = this;
+                }
+                return backdropSurface;
+            }
+        }
+
+        /// <summary>The register if there is one, without making one. For asking it what it holds,
+        /// where an empty answer and no register at all mean the same thing.</summary>
+        internal Internal.BackdropSurface ExistingBackdropSurface => backdropSurface;
+
         public static Func<string, string, UGUIContext, UGUIComponent> defaultCreator =
             (tag, text, context) => new ContainerComponent(context, tag);
 

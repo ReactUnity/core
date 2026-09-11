@@ -16,8 +16,10 @@ namespace ReactUnity.Styling.Converters
 
         public override bool HandleKeyword(CssKeyword keyword, out IComputedValue result)
         {
-            if (Enum.IsDefined(EnumType, keyword.ToString()))
-                return ParseInternal(keyword.ToString().ToLower(), out result);
+            // A mapping may claim a CSS-wide keyword too: `overflow: auto` is scroll, `text-decoration: none` is normal.
+            var name = keyword.ToString();
+            if (Enum.IsDefined(EnumType, name) || (Mappings != null && Mappings.ContainsKey(name.ToLowerInvariant())))
+                return ParseInternal(name.ToLowerInvariant(), out result);
 
             return base.HandleKeyword(keyword, out result);
         }
@@ -54,9 +56,11 @@ namespace ReactUnity.Styling.Converters
 
         public static bool FromString(Type type, string value, bool allowFlags, bool keywordOnly, Dictionary<string, object> mappings, out IComputedValue result)
         {
-            if (allowFlags && value.Contains(","))
+            if (allowFlags && (value.Contains(",") || value.Trim().Contains(" ")))
             {
-                var splits = ParserHelpers.SplitComma(value);
+                // Flags combine with commas or, as `text-decoration-line: underline line-through` does, spaces.
+                var splits = new List<string>();
+                foreach (var part in ParserHelpers.SplitComma(value)) splits.AddRange(ParserHelpers.SplitWhitespace(part));
 
                 var enumValue = 0;
 

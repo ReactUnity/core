@@ -46,17 +46,16 @@ Shader "ReactUnity/BackgroundImage"
     ZTest[unity_GUIZTestMode]
     ColorMask[_ColorMask]
 
-    Blend SrcAlpha OneMinusSrcAlpha
+    // Separate alpha blending, the way UGUI's own default UI shader does it: `SrcAlpha` on the
+    // alpha channel would square a translucent draw's coverage in a render target that started
+    // transparent, which is what a mask layer and the filter capture both are. Nothing on screen
+    // changes -- the back buffer's alpha is never read.
+    Blend SrcAlpha OneMinusSrcAlpha, One OneMinusSrcAlpha
     ZWrite Off
 
     Pass
     {
       CGPROGRAM
-
-      #include "UnityCG.cginc"
-      #include "UnityUI.cginc"
-      #include "CustomFunctions.hlsl"
-      #include "ShaderSetup.cginc"
 
       #pragma vertex vert
       #pragma fragment frag
@@ -67,140 +66,10 @@ Shader "ReactUnity/BackgroundImage"
       #pragma multi_compile_local _ UNITY_UI_CLIP_RECT
       #pragma multi_compile_local _ UNITY_UI_ALPHACLIP
 
-      bool _repeating;
-      float _gradientType;
-      float _angle;
-      float _from;
-      float _offset;
-      float _length;
-      float _distance;
-      float _radius;
-      float _aspect;
-      int _shape;
-      float2 _at;
-      sampler2D _MainTex;
-      float4 _MainTex_ST;
-      float4 _ClipRect;
-
-      float calculateRepeat(float uv, float size, float pos, int repeat, out bool visible)
-      {
-        visible = true;
-        float countd = 1 / size;
-
-        if(repeat == 0 || repeat == 3 || size >= 1 || (repeat == 1 && countd < 2)) {
-          float d = (uv - pos);
-          float dr = d / size;
-          if(repeat != 0 && (dr > 1 || dr < 0)) visible = false;
-          return dr - floor(dr);
-        }
-        else if (repeat == 1) {
-          // space
-
-          float count = floor(countd);
-          float cx = count - 1;
-          float totalSpace = (1 - count * size);
-          float spacing = cx == 0 ? totalSpace : totalSpace / cx;
-          float per = (1 - totalSpace) / count;
-          float persz = per + spacing;
-
-          float cp = uv / persz;
-          float cpd = floor(cp);
-
-          float dr = (cp - cpd) / per * persz;
-
-          if(dr > 1 || dr < 0) visible = false;
-          return dr;
-        }
-        else if(repeat == 2) {
-          // round
-
-          float countd = 1 / size;
-          float count = round(countd);
-          float cx = count - 1;
-          float totalSpace = (repeat == 2) ? 0 : (1 - count * size);
-          float per = (1 - totalSpace) / count;
-
-          float cp = uv / per;
-          float cpd = floor(cp);
-
-          float dr = cp - cpd;
-
-          if(dr > 1 || dr < 0) visible = false;
-          return dr;
-        }
-        else return 0;
-      }
-
-      fixed4 frag(v2f i) : SV_Target
-      {
-        float2 uv = i.uv;
-        float2 txPos = uv;
-
-        if (_gradientType == 1) {
-          float maxY = 1 / _aspect;
-          float y = uv.y;
-          float x = uv.x;
-
-          float sa = sin(_angle);
-          float ca = cos(_angle);
-
-          float ratioX = 0;
-          if (ca == 0) {
-            ratioX = sa < 0 ? 1 - x : x;
-          }
-          else if (sa == 0) {
-            ratioX = ca < 0 ? 1 - y : y;
-          }
-          else {
-            float zx = sa < 0 ? 1 : 0;
-            float zy = ca < 0 ? maxY : 0;
-
-            float2 A = float2(x, y / _aspect);
-            float2 B = A + float2(ca, -sa);
-
-            float2 C = float2(zx, zy);
-            float2 D = float2(1 - zx, maxY - zy);
-
-            ratioX = ((B.x*A.y - A.x*B.y) * (D.x - C.x) - (B.x - A.x) * (D.x * C.y - D.y * C.x))
-            / ((B.x-A.x)*(D.y-C.y)-(B.y-A.y)*(D.x-C.x));
-
-            ratioX = (sa < 0) ? 1 - ratioX : ratioX;
-          }
-
-          txPos = float2(ratioX, 0);
-        }
-        else if (_gradientType == 2) {
-          float2 r2 = uv - _at;
-
-          if (_shape == 1) {
-            r2 = float2(r2.x, r2.y / _aspect);
-          }
-
-          txPos = float2(length(r2) / _radius, 0);
-        }
-        else if (_gradientType == 3) {
-          float2 r2 = uv - _at;
-          float angle = (atan2(r2.x, r2.y) - _from) / pi2;
-          txPos = float2(angle - floor(angle), 0);
-        }
-
-        if (_gradientType != 0 && _repeating) {
-          float x = (txPos.x - _offset) / _length;
-          txPos = float2(x, txPos.y);
-        }
-
-        fixed4 res = mixAlpha(tex2D(_MainTex, txPos), i.color, 1);
-
-        #ifdef UNITY_UI_CLIP_RECT
-          res.a *= UnityGet2DClipping(i.worldPosition.xy, _ClipRect);
-        #endif
-
-        #ifdef UNITY_UI_ALPHACLIP
-          clip(res.a - 0.001);
-        #endif
-
-        return res;
-      }
+      // The layer as it has always been drawn: no blending, vertex colour as a tint.
+      // BackgroundImageBlend.shader and BackgroundImageBlendStack.shader are the same body with
+      // `background-blend-mode` compiled in.
+      #include "BackgroundImageCore.cginc"
 
       ENDCG
     }

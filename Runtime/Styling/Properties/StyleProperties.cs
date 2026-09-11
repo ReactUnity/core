@@ -23,6 +23,13 @@ namespace ReactUnity.Styling
         public static readonly ValueListStyleProperty<Cursor> cursor = new ValueListStyleProperty<Cursor>("cursor");
         public static readonly StyleProperty<Isolation> isolation = new StyleProperty<Isolation>("isolation", Isolation.Auto);
         public static readonly StyleProperty<PointerEvents> pointerEvents = new StyleProperty<PointerEvents>("pointerEvents", PointerEvents.Auto);
+        public static readonly StyleProperty<ContainerType> containerType = new StyleProperty<ContainerType>("containerType", ContainerType.Normal, false, false, AllConverters.ContainerTypeConverter);
+        public static readonly StyleProperty<string> containerName = new StyleProperty<string>("containerName", null, false, false, AllConverters.ContainerNameConverter);
+        public static readonly StyleProperty<ColorScheme> colorScheme = new StyleProperty<ColorScheme>("colorScheme", ColorScheme.Normal, false, true, AllConverters.ColorSchemeConverter);
+        public static readonly StyleProperty<ScrollbarGutter> scrollbarGutter = new StyleProperty<ScrollbarGutter>("scrollbarGutter", ScrollbarGutter.Auto, false, false, AllConverters.ScrollbarGutterConverter);
+        public static readonly StyleProperty<ScrollBehavior> scrollBehavior = new StyleProperty<ScrollBehavior>("scrollBehavior", ScrollBehavior.Auto);
+        public static readonly StyleProperty<ScrollSnapType> scrollSnapType = new StyleProperty<ScrollSnapType>("scrollSnapType", ScrollSnapType.None, false, false, AllConverters.ScrollSnapTypeConverter);
+        public static readonly StyleProperty<ScrollSnapAlign> scrollSnapAlign = new StyleProperty<ScrollSnapAlign>("scrollSnapAlign", ScrollSnapAlign.None, false, false, AllConverters.ScrollSnapAlignConverter);
         public static readonly StyleProperty<YogaValue2> borderTopLeftRadius = new StyleProperty<YogaValue2>("borderTopLeftRadius", YogaValue2.Zero, true, converter: AllConverters.BorderRadiusConverter);
         public static readonly StyleProperty<YogaValue2> borderTopRightRadius = new StyleProperty<YogaValue2>("borderTopRightRadius", YogaValue2.Zero, true, converter: AllConverters.BorderRadiusConverter);
         public static readonly StyleProperty<YogaValue2> borderBottomLeftRadius = new StyleProperty<YogaValue2>("borderBottomLeftRadius", YogaValue2.Zero, true, converter: AllConverters.BorderRadiusConverter);
@@ -47,19 +54,46 @@ namespace ReactUnity.Styling
         public static readonly StyleProperty<FontReference> fontFamily = new StyleProperty<FontReference>("fontFamily", FontReference.None, false, true);
         public static readonly StyleProperty<Color> color = new StyleProperty<Color>("color", ComputedCurrentColor.Instance, true, false);
         public static readonly StyleProperty<FontWeight> fontWeight = new StyleProperty<FontWeight>("fontWeight", FontWeight.Regular, false, true);
-        public static readonly StyleProperty<FontStyles> fontStyle = new StyleProperty<FontStyles>("fontStyle", FontStyles.Normal, false, true, converter: new EnumConverter(typeof(FontStyles), true, new Dictionary<string, object> { { "linethrough", FontStyles.Strikethrough }, { "solid", FontStyles.Underline } }));
-        public static readonly StyleProperty<TextTransform> textTransform = new StyleProperty<TextTransform>("textTransform", TextTransform.None, false, true);
+        public static readonly StyleProperty<FontStyles> fontStyle = new StyleProperty<FontStyles>("fontStyle", FontStyles.Normal, false, true, converter: new EnumConverter(typeof(FontStyles), true, new Dictionary<string, object> { { "linethrough", FontStyles.Strikethrough }, { "none", FontStyles.Normal } }));
+        // `font-variant` lands here too: TextMeshPro's small caps are a case transform, which is why `text-transform: small-caps` already existed.
+        public static readonly StyleProperty<TextTransform> textTransform = new StyleProperty<TextTransform>("textTransform", TextTransform.None, false, true, converter: new EnumConverter(typeof(TextTransform), false, true, new Dictionary<string, object>
+        {
+            { "normal", TextTransform.None },
+            { "allsmallcaps", TextTransform.SmallCaps },
+            { "petitecaps", TextTransform.SmallCaps },
+            { "allpetitecaps", TextTransform.SmallCaps },
+        }));
         public static readonly StyleProperty<float> fontSize = new StyleProperty<float>("fontSize", ComputedFontSize.Default, true, false, AllConverters.FontSizeConverter);
-        public static readonly StyleProperty<float> lineHeight = new StyleProperty<float>("lineHeight", new ComputedFontProperty(1, ComputedFontProperty.FontPropertyType.LineHeight), true, true, AllConverters.FontSizeConverter);
+        public static readonly StyleProperty<float> lineHeight = new StyleProperty<float>("lineHeight", new ComputedFontProperty(1, ComputedFontProperty.FontPropertyType.LineHeight), true, true, AllConverters.LineHeightConverter);
         public static readonly StyleProperty<float> letterSpacing = new StyleProperty<float>("letterSpacing", 0f, true, true, AllConverters.FontSizeConverter);
         public static readonly StyleProperty<float> wordSpacing = new StyleProperty<float>("wordSpacing", 0f, true, true, AllConverters.FontSizeConverter);
-        public static readonly StyleProperty<TextAlignmentOptions> textAlign = new StyleProperty<TextAlignmentOptions>("textAlign", TextAlignmentOptions.Converted, false, true);
+        // `start` and `end` do not follow `direction`: TextMeshPro has no direction-aware alignment.
+        public static readonly StyleProperty<TextAlignmentOptions> textAlign = new StyleProperty<TextAlignmentOptions>("textAlign", TextAlignmentOptions.Converted, false, true, converter: new EnumConverter(typeof(TextAlignmentOptions), false, true, new Dictionary<string, object>
+        {
+            { "justify", TextAlignmentOptions.Justified },
+            { "start", TextAlignmentOptions.Left },
+            { "end", TextAlignmentOptions.Right },
+            { "matchparent", TextAlignmentOptions.Left },
+        }));
         public static readonly StyleProperty<VerticalAlignmentOptions> verticalAlign = new StyleProperty<VerticalAlignmentOptions>("verticalAlign", VerticalAlignmentOptions.Top, false, true);
-        public static readonly StyleProperty<TextOverflowModes> textOverflow = new StyleProperty<TextOverflowModes>("textOverflow", TextOverflowModes.Overflow, false, true);
-        public static readonly StyleProperty<bool> textWrap = new StyleProperty<bool>("textWrap", true, inherited: true, converter: new BoolConverter(new string[] { "wrap", "normal" }, new string[] { "nowrap" }));
+        public static readonly StyleProperty<TextOverflowModes> textOverflow = new StyleProperty<TextOverflowModes>("textOverflow", TextOverflowModes.Overflow, false, true, converter: new EnumConverter(typeof(TextOverflowModes), false, true, new Dictionary<string, object>
+        {
+            { "clip", TextOverflowModes.Masking },
+        }));
+        // `white-space` and `text-wrap` share this: `balance`, `pretty` and `stable` are all a wrap TextMeshPro cannot refine.
+        public static readonly StyleProperty<WhiteSpace> whiteSpace = new StyleProperty<WhiteSpace>("whiteSpace", WhiteSpace.Normal, false, true, converter: new EnumConverter(typeof(WhiteSpace), false, true, new Dictionary<string, object>
+        {
+            { "wrap", WhiteSpace.Normal },
+            { "balance", WhiteSpace.Normal },
+            { "pretty", WhiteSpace.Normal },
+            { "stable", WhiteSpace.Normal },
+        }));
         public static readonly StyleProperty<int> maxLines = new StyleProperty<int>("maxLines", (int) short.MaxValue, true, true);
         public static readonly StyleProperty<float> textStrokeWidth = new StyleProperty<float>("textStrokeWidth", 0f, true, true);
         public static readonly StyleProperty<Color> textStrokeColor = new StyleProperty<Color>("textStrokeColor", ComputedCurrentColor.Instance, true, true);
+        // Inherited, where the web's is not: the line itself rides on `fontStyle`, which is
+        // inherited, so a non-inherited colour would draw nested text's underline in the wrong one.
+        public static readonly StyleProperty<Color> textDecorationColor = new StyleProperty<Color>("textDecorationColor", ComputedCurrentColor.Instance, true, true);
         public static readonly StyleProperty<string> content = new StyleProperty<string>("content", null, false);
         public static readonly StyleProperty<Appearance> appearance = new StyleProperty<Appearance>("appearance", Appearance.None);
         public static readonly StyleProperty<NavigationMode> navigation = new StyleProperty<NavigationMode>("navigation", NavigationMode.Automatic);
@@ -68,6 +102,14 @@ namespace ReactUnity.Styling
         public static readonly StyleProperty<YogaValue2> objectPosition = new StyleProperty<YogaValue2>("objectPosition", YogaValue2.Center, true);
 
         public static readonly ValueListStyleProperty<BoxShadow> boxShadow = new ValueListStyleProperty<BoxShadow>("boxShadow", BoxShadow.Default, true);
+        // Same grammar minus spread and inset; only the first shadow is drawn, since TextMeshPro has one underlay per material.
+        public static readonly ValueListStyleProperty<BoxShadow> textShadow = new ValueListStyleProperty<BoxShadow>("textShadow", BoxShadow.Default, true, true);
+        public static readonly StyleProperty<Color> caretColor = new StyleProperty<Color>("caretColor", ComputedCurrentColor.Instance, true, false);
+
+        // Yoga has one overflow for both axes. These are what `overflow-x`/`overflow-y` set; the layout
+        // value and the mask are derived from all three, and a scroll view reads them for its direction.
+        public static readonly StyleProperty<YogaOverflow> overflowX = new StyleProperty<YogaOverflow>("overflowX", YogaOverflow.Visible, false, false, LayoutProperties.OverflowConverter);
+        public static readonly StyleProperty<YogaOverflow> overflowY = new StyleProperty<YogaOverflow>("overflowY", YogaOverflow.Visible, false, false, LayoutProperties.OverflowConverter);
 
         public static readonly StyleProperty<ImageDefinition> borderImageSource = new StyleProperty<ImageDefinition>("borderImageSource");
         public static readonly StyleProperty<BorderImageSlice> borderImageSlice = new StyleProperty<BorderImageSlice>("borderImageSlice", BorderImageSlice.Auto, true);
@@ -82,7 +124,7 @@ namespace ReactUnity.Styling
         public static readonly ValueListStyleProperty<BackgroundSize> backgroundSize = new ValueListStyleProperty<BackgroundSize>("backgroundSize", BackgroundSize.Auto);
         public static readonly ValueListStyleProperty<BackgroundRepeat> backgroundRepeatX = new ValueListStyleProperty<BackgroundRepeat>("backgroundRepeatX", BackgroundRepeat.Repeat);
         public static readonly ValueListStyleProperty<BackgroundRepeat> backgroundRepeatY = new ValueListStyleProperty<BackgroundRepeat>("backgroundRepeatY", BackgroundRepeat.Repeat);
-        public static readonly StyleProperty<BackgroundBlendMode> backgroundBlendMode = new StyleProperty<BackgroundBlendMode>("backgroundBlendMode", BackgroundBlendMode.Normal);
+        public static readonly ValueListStyleProperty<BackgroundBlendMode> backgroundBlendMode = new ValueListStyleProperty<BackgroundBlendMode>("backgroundBlendMode", BackgroundBlendMode.Normal);
 
         public static readonly ValueListStyleProperty<ImageDefinition> maskImage = new ValueListStyleProperty<ImageDefinition>("maskImage");
         public static readonly ValueListStyleProperty<YogaValue> maskPositionX = new ValueListStyleProperty<YogaValue>("maskPositionX");
@@ -90,9 +132,16 @@ namespace ReactUnity.Styling
         public static readonly ValueListStyleProperty<BackgroundSize> maskSize = new ValueListStyleProperty<BackgroundSize>("maskSize", BackgroundSize.Auto);
         public static readonly ValueListStyleProperty<BackgroundRepeat> maskRepeatX = new ValueListStyleProperty<BackgroundRepeat>("maskRepeatX", BackgroundRepeat.Repeat);
         public static readonly ValueListStyleProperty<BackgroundRepeat> maskRepeatY = new ValueListStyleProperty<BackgroundRepeat>("maskRepeatY", BackgroundRepeat.Repeat);
+        // A list to match the CSS grammar, but the composite reads one mode for the whole mask -- the
+        // layers are already flattened into a single texture by the time it samples them.
+        public static readonly ValueListStyleProperty<MaskMode> maskMode = new ValueListStyleProperty<MaskMode>("maskMode", MaskMode.MatchSource);
+
+        public static readonly StyleProperty<ClipPath> clipPath = new StyleProperty<ClipPath>("clipPath", ClipPath.None, true, false, AllConverters.ClipPathConverter);
+        public static readonly StyleProperty<ImageRendering> imageRendering = new StyleProperty<ImageRendering>("imageRendering", ImageRendering.Auto, false, true);
 
         public static readonly StyleProperty<FilterDefinition> filter = new StyleProperty<FilterDefinition>("filter");
         public static readonly StyleProperty<FilterDefinition> backdropFilter = new StyleProperty<FilterDefinition>("backdropFilter");
+        public static readonly StyleProperty<BackgroundBlendMode> mixBlendMode = new StyleProperty<BackgroundBlendMode>("mixBlendMode", BackgroundBlendMode.Normal);
 
         public static readonly ValueListStyleProperty<TransitionProperty> transitionProperty = new ValueListStyleProperty<TransitionProperty>("transitionProperty");
         public static readonly ValueListStyleProperty<float> transitionDuration = new ValueListStyleProperty<float>("transitionDuration", baseConverter: AllConverters.DurationConverter);
@@ -112,6 +161,16 @@ namespace ReactUnity.Styling
         public static readonly ValueListStyleProperty<string> animationName = new ValueListStyleProperty<string>("animationName");
         public static readonly ValueListStyleProperty<AnimationPlayState> animationPlayState = new ValueListStyleProperty<AnimationPlayState>("animationPlayState");
         public static readonly ValueListStyleProperty<TimingFunction> animationTimingFunction = new ValueListStyleProperty<TimingFunction>("animationTimingFunction", TimingFunctions.Default);
+        public static readonly ValueListStyleProperty<AnimationTimeline> animationTimeline = new ValueListStyleProperty<AnimationTimeline>("animationTimeline", AnimationTimeline.Auto, baseConverter: AllConverters.AnimationTimelineConverter);
+        public static readonly ValueListStyleProperty<AnimationRangeBoundary> animationRangeStart = new ValueListStyleProperty<AnimationRangeBoundary>("animationRangeStart", new AnimationRangeBoundary(), baseConverter: AllConverters.AnimationRangeConverter);
+        public static readonly ValueListStyleProperty<AnimationRangeBoundary> animationRangeEnd = new ValueListStyleProperty<AnimationRangeBoundary>("animationRangeEnd", new AnimationRangeBoundary(), baseConverter: AllConverters.AnimationRangeConverter);
+
+        public static readonly StyleProperty<string> scrollTimelineName = new StyleProperty<string>("scrollTimelineName", null, false, false, AllConverters.TimelineNameConverter);
+        public static readonly StyleProperty<TimelineAxis> scrollTimelineAxis = new StyleProperty<TimelineAxis>("scrollTimelineAxis", TimelineAxis.Block, false, false);
+        public static readonly StyleProperty<string> viewTimelineName = new StyleProperty<string>("viewTimelineName", null, false, false, AllConverters.TimelineNameConverter);
+        public static readonly StyleProperty<TimelineAxis> viewTimelineAxis = new StyleProperty<TimelineAxis>("viewTimelineAxis", TimelineAxis.Block, false, false);
+        public static readonly StyleProperty<YogaValue2> viewTimelineInset = new StyleProperty<YogaValue2>("viewTimelineInset", YogaValue2.Zero, false, false, AllConverters.TimelineInsetConverter);
+        public static readonly StyleProperty<string> timelineScope = new StyleProperty<string>("timelineScope", null, false, false, AllConverters.TimelineScopeConverter);
 
         public static readonly ValueListStyleProperty<AudioReference> audioClip = new ValueListStyleProperty<AudioReference>("audioClip");
         public static readonly ValueListStyleProperty<int> audioIterationCount = new ValueListStyleProperty<int>("audioIterationCount", 1);
@@ -129,6 +188,13 @@ namespace ReactUnity.Styling
             { "cursor", cursor },
             { "isolation", isolation },
             { "pointerEvents", pointerEvents },
+            { "containerType", containerType },
+            { "containerName", containerName },
+            { "colorScheme", colorScheme },
+            { "scrollbarGutter", scrollbarGutter },
+            { "scrollBehavior", scrollBehavior },
+            { "scrollSnapType", scrollSnapType },
+            { "scrollSnapAlign", scrollSnapAlign },
             { "borderTopLeftRadius", borderTopLeftRadius },
             { "borderTopRightRadius", borderTopRightRadius },
             { "borderBottomLeftRadius", borderBottomLeftRadius },
@@ -162,12 +228,20 @@ namespace ReactUnity.Styling
             { "textAlign", textAlign },
             { "verticalAlign", verticalAlign },
             { "textOverflow", textOverflow },
-            { "textWrap", textWrap },
-            { "whiteSpace", textWrap },
+            { "textWrap", whiteSpace },
+            { "whiteSpace", whiteSpace },
+            { "textDecorationLine", fontStyle },
+            { "fontVariant", textTransform },
+            { "fontVariantCaps", textTransform },
+            { "textShadow", textShadow },
+            { "caretColor", caretColor },
+            { "overflowX", overflowX },
+            { "overflowY", overflowY },
             { "maxLines", maxLines },
             { "lineClamp", maxLines },
             { "textStrokeWidth", textStrokeWidth },
             { "textStrokeColor", textStrokeColor },
+            { "textDecorationColor", textDecorationColor },
             { "content", content },
             { "appearance", appearance },
             { "navigation", navigation },
@@ -196,9 +270,14 @@ namespace ReactUnity.Styling
             { "maskSize", maskSize },
             { "maskRepeatX", maskRepeatX },
             { "maskRepeatY", maskRepeatY },
+            { "maskMode", maskMode },
+
+            { "clipPath", clipPath },
+            { "imageRendering", imageRendering },
 
             { "filter", filter },
             { "backdropFilter", backdropFilter },
+            { "mixBlendMode", mixBlendMode },
 
             { "transitionProperty", transitionProperty },
             { "transitionDuration", transitionDuration },
@@ -228,6 +307,15 @@ namespace ReactUnity.Styling
             { "animationName", animationName },
             { "animationPlayState", animationPlayState },
             { "animationTimingFunction", animationTimingFunction },
+            { "animationTimeline", animationTimeline },
+            { "animationRangeStart", animationRangeStart },
+            { "animationRangeEnd", animationRangeEnd },
+            { "scrollTimelineName", scrollTimelineName },
+            { "scrollTimelineAxis", scrollTimelineAxis },
+            { "viewTimelineName", viewTimelineName },
+            { "viewTimelineAxis", viewTimelineAxis },
+            { "viewTimelineInset", viewTimelineInset },
+            { "timelineScope", timelineScope },
 
             { "animation-delay", animationDelay },
             { "animation-direction", animationDirection },
@@ -237,6 +325,15 @@ namespace ReactUnity.Styling
             { "animation-name", animationName },
             { "animation-play-state", animationPlayState },
             { "animation-timing-function", animationTimingFunction },
+            { "animation-timeline", animationTimeline },
+            { "animation-range-start", animationRangeStart },
+            { "animation-range-end", animationRangeEnd },
+            { "scroll-timeline-name", scrollTimelineName },
+            { "scroll-timeline-axis", scrollTimelineAxis },
+            { "view-timeline-name", viewTimelineName },
+            { "view-timeline-axis", viewTimelineAxis },
+            { "view-timeline-inset", viewTimelineInset },
+            { "timeline-scope", timelineScope },
 
             { "audioClip", audioClip },
             { "audioDelay", audioDelay },
@@ -259,6 +356,13 @@ namespace ReactUnity.Styling
             { "z-index", zIndex },
             { "sorting-layer", sortingLayer },
             { "pointer-events", pointerEvents },
+            { "container-type", containerType },
+            { "container-name", containerName },
+            { "color-scheme", colorScheme },
+            { "scrollbar-gutter", scrollbarGutter },
+            { "scroll-behavior", scrollBehavior },
+            { "scroll-snap-type", scrollSnapType },
+            { "scroll-snap-align", scrollSnapAlign },
             { "background-color", backgroundColor },
             { "background-image", backgroundImage },
             { "background-position-x", backgroundPositionX },
@@ -273,7 +377,14 @@ namespace ReactUnity.Styling
             { "mask-size", maskSize },
             { "mask-repeat-x", maskRepeatX },
             { "mask-repeat-y", maskRepeatY },
+            { "mask-mode", maskMode },
+            // `mask-type` is the same choice made on the mask itself rather than on its user, which
+            // is a distinction only an SVG `<mask>` element can draw.
+            { "mask-type", maskMode },
+            { "clip-path", clipPath },
+            { "image-rendering", imageRendering },
             { "backdrop-filter", backdropFilter },
+            { "mix-blend-mode", mixBlendMode },
             { "border-top-left-radius", borderTopLeftRadius },
             { "border-top-right-radius", borderTopRightRadius },
             { "border-bottom-left-radius", borderBottomLeftRadius },
@@ -296,7 +407,6 @@ namespace ReactUnity.Styling
             { "font-family", fontFamily },
             { "font-weight", fontWeight },
             { "font-style", fontStyle },
-            { "text-decoration", fontStyle },
             { "text-transform", textTransform },
             { "font-size", fontSize },
             { "line-height", lineHeight },
@@ -305,12 +415,20 @@ namespace ReactUnity.Styling
             { "text-align", textAlign },
             { "vertical-align", verticalAlign },
             { "text-overflow", textOverflow },
-            { "text-wrap", textWrap },
+            { "text-wrap", whiteSpace },
+            { "text-decoration-line", fontStyle },
+            { "text-decoration-color", textDecorationColor },
+            { "font-variant", textTransform },
+            { "font-variant-caps", textTransform },
+            { "text-shadow", textShadow },
+            { "caret-color", caretColor },
+            { "overflow-x", overflowX },
+            { "overflow-y", overflowY },
             { "max-lines", maxLines },
             { "line-clamp", maxLines },
             { "text-stroke-color", textStrokeColor },
             { "text-stroke-width", textStrokeWidth },
-            { "white-space", textWrap },
+            { "white-space", whiteSpace },
             { "object-fit", objectFit },
             { "object-position", objectPosition },
             { "state-duration", stateDuration },

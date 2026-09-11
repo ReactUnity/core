@@ -56,6 +56,12 @@ namespace ReactUnity
         public bool CalculatesLayout { get; }
         public IHostComponent Host { get; protected set; }
         public HashSet<IReactComponent> DetachedRoots { get; protected set; } = new HashSet<IReactComponent>();
+        // A ProxyComponent never enters the tree itself -- SetParent delegates to the component it
+        // wraps, so that one is what a parent's Children holds -- leaving the weak Refs table as
+        // the only thing pointing at a mounted <style> or <script>. Collect one and every later
+        // command for its ref is dropped in silence. Held here for exactly as long as it is
+        // parented, which is what Children does for everything else.
+        internal HashSet<IReactComponent> MountedProxies { get; } = new HashSet<IReactComponent>();
         public GlobalRecord Globals { get; private set; }
         public bool IsDisposed { get; private set; }
         public virtual bool IsEditorContext => false;
@@ -91,7 +97,9 @@ namespace ReactUnity
             CursorAPI = new CursorAPI(this);
             LocalStorage = new LocalStorage();
 
-            StyleParser = new StylesheetParser(true, true, true, true, true, false, true);
+            // The last flag is the vendored patch: declarations arrive with the name and value as
+            // written, since ReactUnity's property set and its shorthands are not the web's.
+            StyleParser = new StylesheetParser(true, true, true, true, true, false, true, true);
             Style = CreateStyleContext();
 
             Html = new HtmlContext(this);
@@ -99,6 +107,8 @@ namespace ReactUnity
             Dispatcher.OnEveryUpdate(UpdateElementsRecursively);
             Dispatcher.OnEveryLateUpdate(LateUpdateElementsRecursively);
             if (CalculatesLayout) Dispatcher.OnEveryLateUpdate(CalculateLayoutRecursively);
+            // Without a layout pass of its own, a container resized by the framework is seen a frame later.
+            else Dispatcher.OnEveryLateUpdate(() => Style.RestyleResizedContainers());
 
 #if UNITY_EDITOR
             // Runtime contexts are disposed on reload (by OnDisable), but this is required for editor contexts
@@ -110,9 +120,18 @@ namespace ReactUnity
         {
             using (ReactProfiling.Layout.Auto())
             {
-                Host?.Layout.CalculateLayout();
-                foreach (var dr in DetachedRoots) dr.Layout.CalculateLayout();
+                CalculateLayout();
+
+                // A container query answered by this layout may change the layout. Two rounds settle
+                // the ordinary case; one whose size depends on its own contents can oscillate, and is left where it lands.
+                for (var pass = 0; pass < 2 && Style.RestyleResizedContainers(); pass++) CalculateLayout();
             }
+        }
+
+        private void CalculateLayout()
+        {
+            Host?.Layout.CalculateLayout();
+            foreach (var dr in DetachedRoots) dr.Layout.CalculateLayout();
         }
 
         public void UpdateElementsRecursively()
@@ -241,16 +260,35 @@ namespace ReactUnity
             }
         }
 
-        /// Runs the scripts of a dev server entry document. `src` ones go through the same script
-        /// component the DOM shim uses, so they are fetched, executed and watched identically.
+        /// Runs the scripts and applies the stylesheets of an entry document. `src` and `href`
+        /// ones go through the same components the DOM shim uses, so they are fetched, executed
+        /// and watched identically.
+        ///
+        /// Styles are inserted before any script runs, the way a browser has the document's
+        /// stylesheets in hand before it renders what the scripts build.
         private void RunHtmlEntryPoint(string html)
         {
             var scripts = HtmlEntryPoint.ExtractScripts(html);
+            var styles = HtmlEntryPoint.ExtractStyles(html);
 
-            if (scripts.Count == 0)
+            if (scripts.Count == 0 && styles.Count == 0)
             {
-                Debug.LogWarning($"The dev server at {Source.DevServer} returned an HTML document with no runnable script tags.");
+                Debug.LogWarning($"The entry document at {Source.GetResolvedSourceUrl()} has no runnable script tags or stylesheets.");
                 return;
+            }
+
+            foreach (var style in styles)
+            {
+                var component = CreateComponent("style", "") as Styling.StyleComponent;
+                if (component == null) continue;
+
+                // Document-level styles, so they apply to the whole tree rather than to the
+                // detached node the component itself sits on.
+                component.SetProperty("scope", ":root");
+                component.SetParent(Host);
+
+                if (!string.IsNullOrEmpty(style.Href)) component.SetProperty("source", style.Href);
+                else component.SetText(style.Code);
             }
 
             foreach (var script in scripts)
@@ -279,6 +317,7 @@ namespace ReactUnity
             Refs.Clear();
             foreach (var dr in DetachedRoots) dr.Destroy(false);
             DetachedRoots.Clear();
+            MountedProxies.Clear();
             Dispatcher?.Dispose();
             Globals?.Dispose();
             foreach (var item in Disposables) item?.Invoke();

@@ -157,7 +157,13 @@ namespace Yoga
             get => Native.YGNodeStyleGetFlexBasis(_ygNode);
             set
             {
-                if (value.Unit == YogaUnit.Percent)
+                if (YogaValue.IsKeyword(value.Unit))
+                {
+                    if (value.Unit == YogaUnit.MaxContent) Native.YGNodeStyleSetFlexBasisMaxContent(_ygNode);
+                    else if (value.Unit == YogaUnit.FitContent) Native.YGNodeStyleSetFlexBasisFitContent(_ygNode);
+                    else Native.YGNodeStyleSetFlexBasisStretch(_ygNode);
+                }
+                else if (value.Unit == YogaUnit.Percent)
                 {
                     Native.YGNodeStyleSetFlexBasisPercent(_ygNode, value.Value);
                 }
@@ -177,7 +183,13 @@ namespace Yoga
             get => Native.YGNodeStyleGetWidth(_ygNode);
             set
             {
-                if (value.Unit == YogaUnit.Percent)
+                if (YogaValue.IsKeyword(value.Unit))
+                {
+                    if (value.Unit == YogaUnit.MaxContent) Native.YGNodeStyleSetWidthMaxContent(_ygNode);
+                    else if (value.Unit == YogaUnit.FitContent) Native.YGNodeStyleSetWidthFitContent(_ygNode);
+                    else Native.YGNodeStyleSetWidthStretch(_ygNode);
+                }
+                else if (value.Unit == YogaUnit.Percent)
                 {
                     Native.YGNodeStyleSetWidthPercent(_ygNode, value.Value);
                 }
@@ -197,7 +209,13 @@ namespace Yoga
             get => Native.YGNodeStyleGetHeight(_ygNode);
             set
             {
-                if (value.Unit == YogaUnit.Percent)
+                if (YogaValue.IsKeyword(value.Unit))
+                {
+                    if (value.Unit == YogaUnit.MaxContent) Native.YGNodeStyleSetHeightMaxContent(_ygNode);
+                    else if (value.Unit == YogaUnit.FitContent) Native.YGNodeStyleSetHeightFitContent(_ygNode);
+                    else Native.YGNodeStyleSetHeightStretch(_ygNode);
+                }
+                else if (value.Unit == YogaUnit.Percent)
                 {
                     Native.YGNodeStyleSetHeightPercent(_ygNode, value.Value);
                 }
@@ -217,7 +235,13 @@ namespace Yoga
             get => Native.YGNodeStyleGetMaxWidth(_ygNode);
             set
             {
-                if (value.Unit == YogaUnit.Percent)
+                if (YogaValue.IsKeyword(value.Unit))
+                {
+                    if (value.Unit == YogaUnit.MaxContent) Native.YGNodeStyleSetMaxWidthMaxContent(_ygNode);
+                    else if (value.Unit == YogaUnit.FitContent) Native.YGNodeStyleSetMaxWidthFitContent(_ygNode);
+                    else Native.YGNodeStyleSetMaxWidthStretch(_ygNode);
+                }
+                else if (value.Unit == YogaUnit.Percent)
                 {
                     Native.YGNodeStyleSetMaxWidthPercent(_ygNode, value.Value);
                 }
@@ -237,7 +261,13 @@ namespace Yoga
             get => Native.YGNodeStyleGetMaxHeight(_ygNode);
             set
             {
-                if (value.Unit == YogaUnit.Percent)
+                if (YogaValue.IsKeyword(value.Unit))
+                {
+                    if (value.Unit == YogaUnit.MaxContent) Native.YGNodeStyleSetMaxHeightMaxContent(_ygNode);
+                    else if (value.Unit == YogaUnit.FitContent) Native.YGNodeStyleSetMaxHeightFitContent(_ygNode);
+                    else Native.YGNodeStyleSetMaxHeightStretch(_ygNode);
+                }
+                else if (value.Unit == YogaUnit.Percent)
                 {
                     Native.YGNodeStyleSetMaxHeightPercent(_ygNode, value.Value);
                 }
@@ -257,7 +287,13 @@ namespace Yoga
             get => Native.YGNodeStyleGetMinWidth(_ygNode);
             set
             {
-                if (value.Unit == YogaUnit.Percent)
+                if (YogaValue.IsKeyword(value.Unit))
+                {
+                    if (value.Unit == YogaUnit.MaxContent) Native.YGNodeStyleSetMinWidthMaxContent(_ygNode);
+                    else if (value.Unit == YogaUnit.FitContent) Native.YGNodeStyleSetMinWidthFitContent(_ygNode);
+                    else Native.YGNodeStyleSetMinWidthStretch(_ygNode);
+                }
+                else if (value.Unit == YogaUnit.Percent)
                 {
                     Native.YGNodeStyleSetMinWidthPercent(_ygNode, value.Value);
                 }
@@ -277,7 +313,13 @@ namespace Yoga
             get => Native.YGNodeStyleGetMinHeight(_ygNode);
             set
             {
-                if (value.Unit == YogaUnit.Percent)
+                if (YogaValue.IsKeyword(value.Unit))
+                {
+                    if (value.Unit == YogaUnit.MaxContent) Native.YGNodeStyleSetMinHeightMaxContent(_ygNode);
+                    else if (value.Unit == YogaUnit.FitContent) Native.YGNodeStyleSetMinHeightFitContent(_ygNode);
+                    else Native.YGNodeStyleSetMinHeightStretch(_ygNode);
+                }
+                else if (value.Unit == YogaUnit.Percent)
                 {
                     Native.YGNodeStyleSetMinHeightPercent(_ygNode, value.Value);
                 }
@@ -335,6 +377,8 @@ namespace Yoga
         public float LayoutBottom => Native.YGNodeLayoutGetBottom(_ygNode);
         public float LayoutWidth => Native.YGNodeLayoutGetWidth(_ygNode);
         public float LayoutHeight => Native.YGNodeLayoutGetHeight(_ygNode);
+        public float LayoutGetPadding(YogaEdge edge) => Native.YGNodeLayoutGetPadding(_ygNode, edge);
+        public float LayoutGetBorder(YogaEdge edge) => Native.YGNodeLayoutGetBorder(_ygNode, edge);
         public YogaDirection LayoutDirection => Native.YGNodeLayoutGetDirection(_ygNode);
         public bool LayoutHadOverflow => Native.YGNodeLayoutGetHadOverflow(_ygNode);
 

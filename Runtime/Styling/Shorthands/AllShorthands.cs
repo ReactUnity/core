@@ -23,6 +23,7 @@ namespace ReactUnity.Styling.Shorthands
         internal static readonly StyleShorthand BorderLeft = new BorderShorthand("border-left", BorderShorthand.BorderSide.Left);
         internal static readonly StyleShorthand Flex = new FlexShorthand("flex");
         internal static readonly StyleShorthand FlexFlow = new FlexFlowShorthand("flex-flow");
+        internal static readonly StyleShorthand Container = new ContainerShorthand("container");
         internal static readonly StyleShorthand Font = new FontShorthand("font");
         internal static readonly StyleShorthand Background = new BackgroundShorthand("background");
         internal static readonly StyleShorthand BackgroundPosition = new BackgroundPositionShorthand("background-position", StyleProperties.backgroundPositionX, StyleProperties.backgroundPositionY);
@@ -31,12 +32,35 @@ namespace ReactUnity.Styling.Shorthands
         internal static readonly StyleShorthand MaskPosition = new BackgroundPositionShorthand("mask-position", StyleProperties.maskPositionX, StyleProperties.maskPositionY);
         internal static readonly StyleShorthand MaskRepeat = new BackgroundRepeatShorthand("mask-repeat");
         internal static readonly StyleShorthand TextStroke = new TextStrokeShorthand("text-stroke");
+        internal static readonly StyleShorthand TextDecoration = new TextDecorationShorthand("text-decoration");
         internal static readonly StyleShorthand Transition = new TransitionShorthand("transition");
         internal static readonly StyleShorthand Motion = new MotionShorthand("motion");
         internal static readonly StyleShorthand Animation = new AnimationShorthand("animation");
         internal static readonly StyleShorthand Audio = new AudioShorthand("audio");
         internal static readonly StyleShorthand Transform = new TransformShorthand("transform");
         internal static readonly StyleShorthand Gap = new XYShorthand<YogaValue>("gap", LayoutProperties.RowGap, LayoutProperties.ColumnGap);
+        internal static readonly StyleShorthand Overflow = new OverflowShorthand("overflow");
+        internal static readonly StyleShorthand ScrollbarColor = new ScrollbarColorShorthand("scrollbar-color");
+        internal static readonly StyleShorthand ScrollbarWidth = new ScrollbarWidthShorthand("scrollbar-width");
+        internal static readonly StyleShorthand ScrollTimeline = new TimelineShorthand("scroll-timeline", StyleProperties.scrollTimelineName, StyleProperties.scrollTimelineAxis);
+        internal static readonly StyleShorthand ViewTimeline = new TimelineShorthand("view-timeline", StyleProperties.viewTimelineName, StyleProperties.viewTimelineAxis);
+        internal static readonly StyleShorthand AnimationRange = new AnimationRangeShorthand("animation-range");
+
+        // The two-value logical shorthands. `padding-inline: 4px 8px` is start then end, and Yoga
+        // decides which side each is once it knows the direction the node inherits.
+        internal static readonly StyleShorthand PaddingInline = new XYShorthand<YogaValue>("padding-inline", LayoutProperties.PaddingStart, LayoutProperties.PaddingEnd);
+        internal static readonly StyleShorthand PaddingBlock = new XYShorthand<YogaValue>("padding-block", LayoutProperties.PaddingTop, LayoutProperties.PaddingBottom);
+        internal static readonly StyleShorthand MarginInline = new XYShorthand<YogaValue>("margin-inline", LayoutProperties.MarginStart, LayoutProperties.MarginEnd);
+        internal static readonly StyleShorthand MarginBlock = new XYShorthand<YogaValue>("margin-block", LayoutProperties.MarginTop, LayoutProperties.MarginBottom);
+        internal static readonly StyleShorthand InsetInline = new XYShorthand<YogaValue>("inset-inline", LayoutProperties.Start, LayoutProperties.End);
+        internal static readonly StyleShorthand InsetBlock = new XYShorthand<YogaValue>("inset-block", LayoutProperties.Top, LayoutProperties.Bottom);
+        internal static readonly StyleShorthand BorderInlineWidth = new XYShorthand<float>("border-inline-width", LayoutProperties.BorderStartWidth, LayoutProperties.BorderEndWidth);
+        internal static readonly StyleShorthand BorderBlockWidth = new XYShorthand<float>("border-block-width", LayoutProperties.BorderTopWidth, LayoutProperties.BorderBottomWidth);
+
+        // Yoga has no justify-items or justify-self, so two of these set their align property alone.
+        internal static readonly StyleShorthand PlaceContent = new PlaceShorthand("place-content", LayoutProperties.AlignContent, LayoutProperties.JustifyContent);
+        internal static readonly StyleShorthand PlaceItems = new PlaceShorthand("place-items", LayoutProperties.AlignItems);
+        internal static readonly StyleShorthand PlaceSelf = new PlaceShorthand("place-self", LayoutProperties.AlignSelf);
 
         internal static readonly Dictionary<string, StyleShorthand> Map = new Dictionary<string, StyleShorthand>(StringComparer.InvariantCultureIgnoreCase)
         {
@@ -57,6 +81,7 @@ namespace ReactUnity.Styling.Shorthands
             { "borderImage", BorderImage },
             { "flex", Flex },
             { "flexFlow", FlexFlow },
+            { "container", Container },
             { "font", Font },
             { "background", Background },
             { "backgroundPosition", BackgroundPosition },
@@ -71,6 +96,28 @@ namespace ReactUnity.Styling.Shorthands
             { "audio", Audio },
             { "transform", Transform },
             { "gap", Gap },
+            { "overflow", Overflow },
+            { "scrollbarColor", ScrollbarColor },
+            { "scrollbarWidth", ScrollbarWidth },
+            { "scrollbar-color", ScrollbarColor },
+            { "scrollbar-width", ScrollbarWidth },
+            { "scrollTimeline", ScrollTimeline },
+            { "scroll-timeline", ScrollTimeline },
+            { "viewTimeline", ViewTimeline },
+            { "view-timeline", ViewTimeline },
+            { "animationRange", AnimationRange },
+            { "animation-range", AnimationRange },
+            { "paddingInline", PaddingInline },
+            { "paddingBlock", PaddingBlock },
+            { "marginInline", MarginInline },
+            { "marginBlock", MarginBlock },
+            { "insetInline", InsetInline },
+            { "insetBlock", InsetBlock },
+            { "borderInlineWidth", BorderInlineWidth },
+            { "borderBlockWidth", BorderBlockWidth },
+            { "placeContent", PlaceContent },
+            { "placeItems", PlaceItems },
+            { "placeSelf", PlaceSelf },
 
             { "border-width", BorderWidth },
             { "border-color", BorderColor },
@@ -87,6 +134,18 @@ namespace ReactUnity.Styling.Shorthands
             { "mask-position", MaskPosition },
             { "mask-repeat", MaskRepeat },
             { "text-stroke", TextStroke },
+            { "text-decoration", TextDecoration },
+            { "padding-inline", PaddingInline },
+            { "padding-block", PaddingBlock },
+            { "margin-inline", MarginInline },
+            { "margin-block", MarginBlock },
+            { "inset-inline", InsetInline },
+            { "inset-block", InsetBlock },
+            { "border-inline-width", BorderInlineWidth },
+            { "border-block-width", BorderBlockWidth },
+            { "place-content", PlaceContent },
+            { "place-items", PlaceItems },
+            { "place-self", PlaceSelf },
         };
 
         internal static StyleShorthand GetShorthand(string name)

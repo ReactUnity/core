@@ -10,6 +10,8 @@ namespace ReactUnity.UIToolkit
         public override float ScrollWidth => Element.contentRect.width;
         public override float ScrollHeight => Element.contentRect.height;
 
+        public override bool IsScrollContainer => true;
+
         public override float ScrollLeft
         {
             get => Element.scrollOffset.x;

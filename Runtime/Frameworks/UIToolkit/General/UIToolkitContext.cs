@@ -71,6 +71,8 @@ namespace ReactUnity.UIToolkit
             {
                 { "active", typeof(ActiveStateHandler) },
                 { "focus", typeof(FocusStateHandler) },
+                { "focus-within", typeof(FocusWithinStateHandler) },
+                { "focus-visible", typeof(FocusVisibleStateHandler) },
                 { "hover", typeof(HoverStateHandler) },
             };
 

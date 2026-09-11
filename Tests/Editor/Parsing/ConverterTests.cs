@@ -306,6 +306,50 @@ namespace ReactUnity.Tests.Editor
         [TestCase("hsva(240 51% 72% / 74.5%)", "5a5ab8be")]
         [TestCase("hsl(2, 57%, 40%)", "a0302cff")]
         [TestCase("rgba(112 189 153 / var(--tw-bg-opacity))", null)]
+        // Reference values come from a browser. oklch(63.7% 0.237 25.331) is Tailwind's red-500.
+        [TestCase("oklch(63.7% 0.237 25.331)", "fb2c36ff")]
+        [TestCase("oklch(0.637 0.237 25.331)", "fb2c36ff")]
+        [TestCase("oklch(0.637, 0.237, 25.331)", "fb2c36ff")]
+        [TestCase("oklch(0.637 59.25% 25.331)", "fb2c36ff")]
+        [TestCase("oklch(0 0 0)", "000000ff")]
+        [TestCase("oklch(1 0 0)", "ffffffff")]
+        [TestCase("oklch(0.7 0.1 200)", "40b1b7ff")]
+        [TestCase("oklch(0.7 0.1 200deg)", "40b1b7ff")]
+        [TestCase("oklch(0.7 0.1 0.5turn)", "4bb3a1ff")]
+        [TestCase("oklch(0.7 none 200)", "9e9e9eff")]
+        [TestCase("oklch(0.5 0.2 30 / 0.5)", "ba0d0180")]
+        [TestCase("oklch(0.5 0.2 30 / 50%)", "ba0d0180")]
+        [TestCase("oklch(0.7 0.1 var(--hue))", null)]
+        [TestCase("oklch(0.7 0.1)", null)]
+        [TestCase("oklab(0.5 0.1 -0.1)", "81459aff")]
+        // The same red-500, given in oklab instead of oklch.
+        [TestCase("oklab(0.637 0.2142 0.1014)", "fb2c36ff")]
+        // CIE lab()/lch(). Lightness is 0..100 here rather than 0..1, so a percentage is itself.
+        // CSS Color 4 publishes red as lab(54.29% 80.8 69.89) and lch(54.29% 106.84 40.86).
+        [TestCase("lab(54.2905 80.8049 69.891)", "ff0000ff")]
+        [TestCase("lab(54.29% 80.8 69.89)", "ff0000ff")]
+        [TestCase("lab(50 40 -30)", "a55babff")]
+        [TestCase("lab(50, 40, -30)", "a55babff")]
+        // The a/b axes take 125 as their 100%, and lch()'s chroma takes 150.
+        [TestCase("lab(50 32% -24%)", "a55babff")]
+        [TestCase("lab(100 0 0)", "ffffffff")]
+        [TestCase("lab(0 0 0)", "000000ff")]
+        [TestCase("lab(50 none none)", "777777ff")]
+        [TestCase("lab(50 40 -30 / 50%)", "a55bab80")]
+        [TestCase("lab(50 40)", null)]
+        [TestCase("lab(50 40 var(--b))", null)]
+        [TestCase("lch(54.2905 106.8372 40.8577)", "ff0000ff")]
+        [TestCase("lch(50 50 180)", "008c75ff")]
+        [TestCase("lch(50 33.3333% 180)", "008c75ff")]
+        [TestCase("lch(70 30 0.5turn)", "66baaaff")]
+        // Tailwind's red-500 and green-400 again, this time through CIE Lab, so the two
+        // families are pinned to the same two colors.
+        [TestCase("lab(55.5764 75.1391 49.157)", "fb2c36ff")]
+        [TestCase("lch(78.4347 76.1655 148.4604)", "05df72ff")]
+        // A keyword is case-insensitive, which is how Tailwind writes `currentcolor`.
+        [TestCase("TRANSPARENT", "00000000")]
+        [TestCase("Clear", "00000000")]
+        [TestCase("RED", "ff0000ff")]
         public void ColorConverter(object input, object expected)
         {
             var converted = AllConverters.ColorConverter.TryGetConstantValue<Color>(input, out var c);
@@ -314,6 +358,131 @@ namespace ReactUnity.Tests.Editor
             else Assert.AreEqual(expected, null);
         }
 
+        // Reference values come from a browser, except where noted.
+        [TestCase("color-mix(in srgb, red, blue)", "800080ff")]
+        [TestCase("color-mix(in srgb, red 25%, blue)", "4000bfff")]
+        [TestCase("color-mix(in srgb, 25% red, blue)", "4000bfff")]
+        [TestCase("color-mix(in srgb, red, blue 75%)", "4000bfff")]
+        [TestCase("color-mix(in srgb-linear, red, blue)", "bc00bcff")]
+        [TestCase("color-mix(in hsl, red, blue)", "ff00ffff")]
+        [TestCase("color-mix(in oklab, red, blue)", "8c53a2ff")]
+        [TestCase("color-mix(in oklab, red 30%, blue)", "5d4bc8ff")]
+        [TestCase("color-mix(in oklab, red, white)", "ffa191ff")]
+        [TestCase("color-mix(in oklch, red, blue)", "ba00c2ff")]
+        [TestCase("color-mix(in oklch shorter hue, red, blue)", "ba00c2ff")]
+        [TestCase("color-mix(in oklch longer hue, red, blue)", "009300ff")]
+        // Mixing with a transparent color must not drag the result towards black.
+        [TestCase("color-mix(in srgb, red 50%, transparent)", "ff000080")]
+        [TestCase("color-mix(in srgb, red, rgba(0, 0, 255, 0))", "ff000080")]
+        // Percentages summing under 100% scale the alpha by that sum.
+        [TestCase("color-mix(in srgb, red 20%, blue 20%)", "80008066")]
+        [TestCase("color-mix(in srgb, rgb(255, 0, 0), rgb(0, 0, 255))", "800080ff")]
+        [TestCase("color-mix(in srgb, oklch(0 0 0), oklch(1 0 0))", "808080ff")]
+        // Invalid: unknown space, missing space, both percentages zero, wrong argument count.
+        [TestCase("color-mix(in cielab, red, blue)", null)]
+        [TestCase("color-mix(red, blue)", null)]
+        [TestCase("color-mix(in srgb, red 0%, blue 0%)", null)]
+        [TestCase("color-mix(in srgb, red)", null)]
+        [TestCase("color-mix(in srgb, red, notacolor)", null)]
+        // A hue method is only meaningful in a polar space.
+        [TestCase("color-mix(in oklab longer hue, red, blue)", null)]
+        // Tailwind v4's opacity utilities, verbatim. Its published hex for red-500 is #fb2c36 and
+        // for green-400 #05df72, so these also pin the oklch conversion to Tailwind's own palette.
+        [TestCase("color-mix(in srgb, oklch(63.7% 0.237 25.331) 50%, transparent)", "fb2c3680")]
+        [TestCase("color-mix(in srgb, oklch(79.2% 0.209 151.711) 25%, transparent)", "05df7240")]
+        [TestCase("color-mix(in oklab, oklch(63.7% 0.237 25.331) 50%, transparent)", "fb2c3680")]
+        // CIE lab and lch as interpolation spaces. The first two are CSS Color 5's own worked
+        // examples, which publish lch(79.7256% 40.448 84.771) and lch(49.4429% 40.483 162.5452).
+        [TestCase("color-mix(in lch, peru 40%, palegoldenrod)", "dfc279ff")]
+        [TestCase("color-mix(in lch, teal 65%, olive)", "14865fff")]
+        [TestCase("color-mix(in lab, red, blue)", "c10088ff")]
+        [TestCase("color-mix(in lab, red 25%, blue)", "9100c2ff")]
+        [TestCase("color-mix(in lab, white, black)", "777777ff")]
+        [TestCase("color-mix(in lab, red 50%, transparent)", "ff000080")]
+        [TestCase("color-mix(in lch, red, blue)", "f50086ff")]
+        [TestCase("color-mix(in lch shorter hue, red, blue)", "f50086ff")]
+        [TestCase("color-mix(in lch longer hue, red, blue)", "008240ff")]
+        // lab has no hue channel, so a hue method is a syntax error there.
+        [TestCase("color-mix(in lab longer hue, red, blue)", null)]
+        [TestCase("color-mix(in lab, lch(54.2905 106.8372 40.8577) 50%, transparent)", "ff000080")]
+        public void ColorMixConverter(object input, object expected)
+        {
+            var converted = AllConverters.ColorConverter.TryGetConstantValue<Color>(input, out var c);
+
+            if (converted) Assert.AreEqual(expected, ColorUtility.ToHtmlStringRGBA(c).ToLowerInvariant());
+            else Assert.AreEqual(expected, null);
+        }
+
+        [Test]
+        public void ColorMixResolvesVariablesLazily()
+        {
+            var (collection, style) = TestHelpers.CreateStyle();
+
+            collection["--brand"] = "blue";
+            collection["color"] = "color-mix(in srgb, red, var(--brand))";
+
+            Assert.AreEqual("800080ff", ColorUtility.ToHtmlStringRGBA(style.color).ToLowerInvariant());
+        }
+
+        [Test]
+        public void OklchResolvesVariablesLazily()
+        {
+            var (collection, style) = TestHelpers.CreateStyle();
+
+            collection["--hue"] = "25.331";
+            collection["color"] = "oklch(0.637 0.237 var(--hue))";
+
+            Assert.AreEqual("fb2c36ff", ColorUtility.ToHtmlStringRGBA(style.color).ToLowerInvariant());
+        }
+
+        // The shape a Tailwind v4 theme uses: the palette lives in variables holding oklch().
+        [Test]
+        public void OklchWorksThroughAVariableHoldingTheWholeColor()
+        {
+            var (collection, style) = TestHelpers.CreateStyle();
+
+            collection["--color-blue-600"] = "oklch(54.6% 0.245 262.881)";
+            collection["color"] = "var(--color-blue-600)";
+
+            Assert.AreEqual("155dfcff", ColorUtility.ToHtmlStringRGBA(style.color).ToLowerInvariant());
+        }
+
+        [Test]
+        public void ColorMixTakesAVariableHoldingTheWholeColor()
+        {
+            var (collection, style) = TestHelpers.CreateStyle();
+
+            collection["--color-red-500"] = "oklch(63.7% 0.237 25.331)";
+            collection["color"] = "color-mix(in oklab, var(--color-red-500) 50%, transparent)";
+
+            Assert.AreEqual("fb2c3680", ColorUtility.ToHtmlStringRGBA(style.color).ToLowerInvariant());
+        }
+
+
+        [Test]
+        public void CurrentColorIsCaseInsensitive()
+        {
+            var (collection, style) = TestHelpers.CreateStyle();
+
+            // Lowercase is the spelling in the spec, and the one Tailwind's `ring-*` utilities and
+            // `var(--tw-shadow-color, currentcolor)` fallbacks are written in.
+            collection["color"] = "red";
+            collection["box-shadow"] = "0 0 0 2px currentcolor";
+
+            Assert.AreEqual(1, style.boxShadow.Count);
+            Assert.AreEqual(Color.red, style.boxShadow.Get(0, default).color);
+        }
+
+        [Test]
+        public void ColorMixTakesCurrentColor()
+        {
+            var (collection, style) = TestHelpers.CreateStyle();
+
+            collection["color"] = "red";
+            collection["background-color"] = "color-mix(in oklab, currentcolor 50%, transparent)";
+
+            Assert.AreEqual("ff000080", ColorUtility.ToHtmlStringRGBA(style.backgroundColor).ToLowerInvariant());
+        }
 
         [Test]
         public void NoneAndDefaultWorksForSupportingTypes()
@@ -326,7 +495,7 @@ namespace ReactUnity.Tests.Editor
             collection["object-fit"] = "none";
             collection["cursor"] = "none";
 
-            Assert.AreEqual(YogaDisplay.None, style.GetStyleValue(LayoutProperties.Display));
+            Assert.AreEqual(DisplayType.None, style.GetStyleValue(LayoutProperties.Display));
             Assert.AreEqual(PointerEvents.None, style.pointerEvents);
             Assert.AreEqual(Appearance.None, style.appearance);
             Assert.AreEqual(ObjectFit.None, style.objectFit);

@@ -1,6 +1,4 @@
-using System;
 using System.Collections.Generic;
-using System.Linq;
 using ReactUnity.Styling;
 using ReactUnity.Types;
 using ReactUnity.UGUI.Shapes;
@@ -27,7 +25,6 @@ namespace ReactUnity.UGUI.Internal
 
         private UGUIComponent Component;
         private UGUIContext Context;
-        private Action<RectTransform> SetContainer;
 
         private RawImage bgImage;
         public RawImage BgImage => bgImage ?? (bgImage = EnsureBackgroundRoot().GetComponent<RawImage>());
@@ -46,12 +43,9 @@ namespace ReactUnity.UGUI.Internal
 
         private WebRect rootGraphic;
         private Mask rootMask;
-        private RectTransform maskRoot;
 
         public List<WebShadow> ShadowGraphics { get; private set; }
         public List<WebBackgroundImage> BackgroundGraphics { get; private set; }
-        public List<WebBackgroundImage> MaskGraphics { get; private set; }
-        public WebBackgroundImage LastMask => MaskGraphics == null || MaskGraphics.Count == 0 ? null : MaskGraphics[MaskGraphics.Count - 1];
 
         private WebOutlineSizes borderSize;
         public WebOutlineSizes BorderSize
@@ -133,14 +127,11 @@ namespace ReactUnity.UGUI.Internal
             }
         }
 
-        private BackgroundBlendMode blendMode;
-        public BackgroundBlendMode BlendMode
+        private bool pixelated;
+        private ICssValueList<BackgroundBlendMode> blendModes = CssValueList<BackgroundBlendMode>.Empty;
+        public ICssValueList<BackgroundBlendMode> BlendModes
         {
-            set
-            {
-                blendMode = value;
-                UpdateBgColor();
-            }
+            set => blendModes = value ?? CssValueList<BackgroundBlendMode>.Empty;
         }
 
         private Color bgColor;
@@ -165,7 +156,7 @@ namespace ReactUnity.UGUI.Internal
         }
 
 
-        public static BorderAndBackground Create(GameObject go, UGUIComponent comp, Action<RectTransform> setContainer)
+        public static BorderAndBackground Create(GameObject go, UGUIComponent comp)
         {
             var cmp = go.GetComponent<BorderAndBackground>();
             if (!cmp) cmp = go.AddComponent<BorderAndBackground>();
@@ -174,7 +165,6 @@ namespace ReactUnity.UGUI.Internal
             cmp.Component = comp;
             cmp.Context = comp.Context;
 
-            cmp.SetContainer = setContainer;
 
             return cmp;
         }
@@ -222,6 +212,7 @@ namespace ReactUnity.UGUI.Internal
 
             BackdropFilter.IsBackdrop = true;
             BackdropFilter.MaskRoot = transform;
+            if (BackdropSurface.Required) BackdropFilter.Surface = Context.BackdropSurface;
 
             FullStretch(backdrop, Root, backgroundRoot ? backgroundRoot.GetSiblingIndex() : 1);
 
@@ -298,23 +289,24 @@ namespace ReactUnity.UGUI.Internal
 
         private void UpdateBgColor()
         {
-            var hasBlend = blendMode == BackgroundBlendMode.Normal || blendMode == BackgroundBlendMode.Color;
             var hasColor = bgColor.a > 0;
             var hasTarget = hasColor || pointerEvents == PointerEvents.All;
 
-            var enabled = hasColor || hasTarget;
+            if (!hasTarget && !bgImage) return;
 
-            if (!enabled && !bgImage) return;
-
+            // Always painted now. It used to be cleared whenever a blend mode was set, because the
+            // colour was being fed to the image as a tint instead -- but it is the bottom of the
+            // stack, and a layer blending against it needs it underneath as well as in the blend.
             var bg = BgImage;
-            bg.color = hasBlend ? bgColor : Color.clear;
+            bg.color = bgColor;
             bg.raycastTarget = hasTarget;
-            bg.enabled = hasBlend || hasTarget;
+            bg.enabled = hasTarget;
         }
 
         public void UpdateStyle(NodeStyle style)
         {
-            blendMode = style.backgroundBlendMode;
+            blendModes = style.backgroundBlendMode;
+            pixelated = style.imageRendering == ImageRendering.Pixelated || style.imageRendering == ImageRendering.CrispEdges;
             bgColor = style.backgroundColor;
             pointerEvents = style.pointerEvents;
             UpdateBgColor();
@@ -330,8 +322,6 @@ namespace ReactUnity.UGUI.Internal
 
             BorderStyles = new WebOutlineStyles(style.borderTopStyle, style.borderRightStyle, style.borderBottomStyle, style.borderLeftStyle);
 
-            SetMask(style.maskImage, style.maskPositionX, style.maskPositionY, style.maskSize, style.maskRepeatX, style.maskRepeatY);
-
             var borderImageSource = style.borderImageSource;
 
             if (borderImageSource != null && borderImageSource != ImageDefinition.NoImage)
@@ -342,7 +332,8 @@ namespace ReactUnity.UGUI.Internal
                 img.Width = style.borderImageWidth;
                 img.Repeat = style.borderImageRepeat;
                 img.Outset = style.borderImageOutset;
-                img.SetVerticesDirty();
+                // No blanket dirty: each setter above rebuilds the mesh when its own value moves,
+                // and this block runs on every frame the element is visited.
                 if (!img.gameObject.activeSelf) img.gameObject.SetActive(true);
             }
             else if (borderImage)
@@ -494,7 +485,11 @@ namespace ReactUnity.UGUI.Internal
             for (int i = 0; i < len; i++)
             {
                 var sd = BackgroundGraphics[len - 1 - i];
-                sd.SetBackgroundColorAndImage(color, images?.Get(i), blendMode);
+                // CSS puts the first image on top and the background colour at the bottom, so the
+                // last layer is the one whose backdrop is the colour itself. Everything above it
+                // blends with the layers below instead, which only the render target holds.
+                sd.Pixelated = pixelated;
+                sd.SetBackgroundColorAndImage(color, images?.Get(i), blendModes.Get(i), i < len - 1);
                 sd.BackgroundRepeatX = repeatXs.Get(i);
                 sd.BackgroundRepeatY = repeatYs.Get(i);
                 sd.BackgroundPosition = new YogaValue2(positionsX.Get(i), positionsY.Get(i));
@@ -560,114 +555,6 @@ namespace ReactUnity.UGUI.Internal
             }
         }
 
-        private void SetMask(
-            ICssValueList<ImageDefinition> images,
-            ICssValueList<YogaValue> positionsX,
-            ICssValueList<YogaValue> positionsY,
-            ICssValueList<BackgroundSize> sizes,
-            ICssValueList<BackgroundRepeat> repeatXs,
-            ICssValueList<BackgroundRepeat> repeatYs
-        )
-        {
-            var validCount = images.Count;
-
-            if (MaskGraphics == null)
-            {
-                if (validCount > 0) MaskGraphics = new List<WebBackgroundImage>();
-                else return;
-            }
-
-            var diff = MaskGraphics.Count - validCount;
-
-            if (diff > 0)
-            {
-                for (int i = diff - 1; i >= 0; i--)
-                {
-                    DestroyLastMask();
-                }
-            }
-            else if (diff < 0)
-            {
-
-                for (int i = -diff - 1; i >= 0; i--)
-                {
-                    CreateMask();
-                }
-            }
-
-            var len = MaskGraphics.Count;
-            for (int i = 0; i < len; i++)
-            {
-                var sd = MaskGraphics[len - 1 - i];
-                sd.SetBackgroundColorAndImage(Color.white, images.Get(i));
-                sd.BackgroundRepeatX = repeatXs.Get(i);
-                sd.BackgroundRepeatY = repeatYs.Get(i);
-                sd.BackgroundPosition = new YogaValue2(positionsX.Get(i), positionsY.Get(i));
-                sd.BackgroundSize = sizes.Get(i);
-            }
-        }
-
-        private void CreateMask()
-        {
-            if (MaskGraphics.Count == 0)
-            {
-                if (maskRoot == null)
-                {
-                    var mr = Context.CreateNativeObject("[MaskRoot]", typeof(RectTransform), typeof(WebBackgroundImage), typeof(Mask));
-                    maskRoot = mr.transform as RectTransform;
-                    var children = Component.RectTransform.OfType<RectTransform>().ToList();
-                    FullStretch(maskRoot, Component.RectTransform);
-                    foreach (var item in children) item.SetParent(maskRoot);
-
-                    if (Component.RectTransform == Component.Container) SetContainer(maskRoot);
-                }
-
-                var mask = maskRoot.GetComponent<Mask>();
-                mask.showMaskGraphic = false;
-                var img = maskRoot.GetComponent<WebBackgroundImage>();
-                img.color = Color.clear;
-                img.Context = Context;
-                mask.enabled = img.enabled = true;
-
-                MaskGraphics.Add(img);
-            }
-            else
-            {
-                var sd = Context.CreateNativeObject("[Mask]", typeof(RectTransform), typeof(WebBackgroundImage), typeof(Mask));
-                var mask = sd.GetComponent<Mask>();
-                mask.showMaskGraphic = false;
-                var img = sd.GetComponent<WebBackgroundImage>();
-                img.color = Color.clear;
-                img.Context = Context;
-
-                var last = MaskGraphics[MaskGraphics.Count - 1];
-
-                FullStretch(sd.transform as RectTransform, last.rectTransform.parent as RectTransform);
-                FullStretch(last.rectTransform, sd.transform as RectTransform);
-                MaskGraphics.Add(img);
-            }
-        }
-
-        private void DestroyLastMask()
-        {
-            var i = MaskGraphics.Count - 1;
-            var sd = MaskGraphics[i];
-            MaskGraphics.RemoveAt(i);
-
-            if (i == 0)
-            {
-                var mask = maskRoot.GetComponent<Mask>();
-                var img = maskRoot.GetComponent<WebBackgroundImage>();
-                mask.enabled = img.enabled = false;
-            }
-            else
-            {
-                var child = MaskGraphics[i - 1];
-                child.rectTransform.SetParent(sd.transform.parent);
-                DestroyImmediate(sd.gameObject);
-            }
-        }
-
         private void CreateShadow()
         {
             var sd = Context.CreateNativeObject("[Shadow]", typeof(RectTransform), typeof(WebShadow));
@@ -684,6 +571,9 @@ namespace ReactUnity.UGUI.Internal
             var img = sd.GetComponent<WebBackgroundImage>();
             img.color = Color.clear;
             img.Context = Context;
+            // Only a layer blending with the layers below it ever uses this, and it decides that
+            // for itself -- here it is only told where to go when it does.
+            if (BackdropSurface.Required) img.Surface = Context.BackdropSurface;
             BackgroundGraphics.Add(img);
             FullStretch(sd.transform as RectTransform, BackgroundRoot);
         }

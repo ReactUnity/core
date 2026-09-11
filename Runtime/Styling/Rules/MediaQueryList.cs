@@ -49,7 +49,29 @@ namespace ReactUnity.Styling.Rules
             Context = context;
             Provider = provider;
             this.media = media;
-            Root = Parse(media);
+            Root = Parse(media, context);
+        }
+
+        /// <summary>
+        /// Works the match out again against the provider, if anything is listening; a query that
+        /// nobody listens to is evaluated when it is read. For when a <c>@custom-media</c> this query
+        /// names was added or removed, which the provider knows nothing about.
+        /// </summary>
+        public void Refresh()
+        {
+            if (ListenerCount > 0) Reevaluate(Provider);
+        }
+
+        /// <summary>
+        /// The condition of a <c>@custom-media</c> rule: a media query list, or the constants
+        /// <c>true</c> and <c>false</c>.
+        /// </summary>
+        internal static MediaNode ParseNode(string media, ReactContext context)
+        {
+            var trimmed = (media ?? "").Trim();
+            if (trimmed.Equals("true", StringComparison.OrdinalIgnoreCase)) return ConstantMediaNode.Always;
+            if (trimmed.Equals("false", StringComparison.OrdinalIgnoreCase)) return ConstantMediaNode.Never;
+            return Parse(trimmed, context);
         }
 
         public void addEventListener(string type, object listener)
@@ -91,7 +113,7 @@ namespace ReactUnity.Styling.Rules
             eventTarget.DispatchEvent("change", Context);
         }
 
-        private static MediaNode Parse(string media)
+        private static MediaNode Parse(string media, ReactContext context)
         {
             var normalized = media.Replace("<=", " $lte ").Replace(">=", " $gte ").Replace("<", " $lt ").Replace(">", " $gt ").Replace("=", " $eq ")
                 .Replace("(", " ( ").Replace(")", " ) ").Replace(":", " : ");
@@ -103,7 +125,7 @@ namespace ReactUnity.Styling.Rules
             for (int i = 0; i < splits.Count; i++)
             {
                 var split = splits[i];
-                var parsed = ParseInner(split, 0);
+                var parsed = ParseInner(split, 0, context);
 
                 children.Add(parsed);
             }
@@ -111,13 +133,13 @@ namespace ReactUnity.Styling.Rules
             return new CombinedMediaNode(children, false);
         }
 
-        private static MediaNode ParseInner(string media, int depth)
+        private static MediaNode ParseInner(string media, int depth, ReactContext context)
         {
             var splits = ParserHelpers.SplitWhitespace(media);
 
             if (splits.Count == 1 && media.FastStartsWith("(") && media.FastEndsWith(")"))
             {
-                return ParseInner(new Regex("\\)$").Replace(new Regex("^\\(").Replace(media, ""), ""), depth + 1);
+                return ParseInner(new Regex("\\)$").Replace(new Regex("^\\(").Replace(media, ""), ""), depth + 1, context);
             }
 
             var allowFeatures = depth > 0;
@@ -129,8 +151,11 @@ namespace ReactUnity.Styling.Rules
             if (first == "not")
             {
                 splits.RemoveAt(0);
-                return new NegatedMediaNode(ParseInner(string.Join(" ", splits), depth));
+                return new NegatedMediaNode(ParseInner(string.Join(" ", splits), depth, context));
             }
+
+            // A @custom-media name, looked up when the query is evaluated so that the order of the sheets does not matter.
+            if (splits.Count == 1 && first.FastStartsWith("--")) return new CustomMediaNode(first, context);
 
             if (splits.Count == 1)
             {
@@ -220,7 +245,7 @@ namespace ReactUnity.Styling.Rules
                 {
                     var current = splits[i];
 
-                    var item = ParseInner(splits[i - 1], depth);
+                    var item = ParseInner(splits[i - 1], depth, context);
                     childList.Add(item);
 
                     if (conjunction != null && current != conjunction)
@@ -232,7 +257,7 @@ namespace ReactUnity.Styling.Rules
                 }
 
                 if (conjunction != "and" && conjunction != "or") return ConstantMediaNode.Never;
-                childList.Add(ParseInner(splits[splits.Count - 1], depth));
+                childList.Add(ParseInner(splits[splits.Count - 1], depth, context));
 
                 return new CombinedMediaNode(childList, conjunction == "and");
             }

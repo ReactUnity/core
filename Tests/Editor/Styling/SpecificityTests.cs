@@ -186,6 +186,29 @@ namespace ReactUnity.Tests.Editor.Renderer
         }
 
         [EditorInjectableTest(Script = BaseScript, Style = BaseStyle, SkipIfExisting = true)]
+        public IEnumerator StructuralPseudoClassesWeighAsClasses()
+        {
+            var text = Text("#v1v1t1");
+
+            // (0,2,1) against (0,2,0): the pseudo-class counts as a class, so the tag decides.
+            var ss = InsertStyle(@"
+                text.t1class:first-child { color: blue; }
+                .vv1class .t1class { color: red; }
+            ");
+            yield return null;
+            Assert.AreEqual(Color.blue, text.ComputedStyle.color);
+            RemoveStyle(ss);
+
+            ss = InsertStyle(@"
+                text.t1class:nth-child(1) { color: blue; }
+                .vv1class .t1class { color: red; }
+            ");
+            yield return null;
+            Assert.AreEqual(Color.blue, text.ComputedStyle.color);
+            RemoveStyle(ss);
+        }
+
+        [EditorInjectableTest(Script = BaseScript, Style = BaseStyle, SkipIfExisting = true)]
         public IEnumerator ImportanceOfInlineStyles()
         {
             var text = Text("#v1v1t2");
@@ -222,6 +245,44 @@ namespace ReactUnity.Tests.Editor.Renderer
 
             yield return null;
             Assert.AreEqual(Color.blue, text.ComputedStyle.color);
+        }
+
+        [EditorInjectableTest(Script = BaseScript, Style = BaseStyle, SkipIfExisting = true)]
+        public IEnumerator LargeImportanceOffsetsStillWin()
+        {
+            var text = Text("#v1v1t2");
+
+            // 128 is where the offset term used to carry out of an int and lose to everything,
+            // the user agent sheet at offset -1 included.
+            var ss = InsertStyle(@"#v1v1t2 { color: red !important; }");
+            var ss1 = InsertStyle(@"#v1v1t2 { color: lime; }", 128);
+            yield return null;
+            Assert.AreEqual(Color.green, text.ComputedStyle.color);
+            RemoveStyle(ss);
+            RemoveStyle(ss1);
+
+            ss = InsertStyle(@"#v1v1 #v1v1t2 { color: red !important; }");
+            ss1 = InsertStyle(@"text { color: lime; }", 1000);
+            yield return null;
+            Assert.AreEqual(Color.green, text.ComputedStyle.color);
+            RemoveStyle(ss);
+            RemoveStyle(ss1);
+
+            // A bigger offset outranks a smaller one even when both are past that ceiling.
+            ss = InsertStyle(@"#v1v1t2 { color: red; }", 1000);
+            ss1 = InsertStyle(@"text { color: lime; }", 2000);
+            yield return null;
+            Assert.AreEqual(Color.green, text.ComputedStyle.color);
+            RemoveStyle(ss);
+            RemoveStyle(ss1);
+
+            // And the whole int range a caller can pass keeps its order.
+            ss = InsertStyle(@"#v1v1t2 { color: red; }", int.MaxValue);
+            ss1 = InsertStyle(@"#v1v1t2 { color: lime !important; }", int.MinValue);
+            yield return null;
+            Assert.AreEqual(Color.red, text.ComputedStyle.color);
+            RemoveStyle(ss);
+            RemoveStyle(ss1);
         }
     }
 }

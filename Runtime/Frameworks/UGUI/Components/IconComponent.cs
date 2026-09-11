@@ -10,8 +10,8 @@ namespace ReactUnity.UGUI
     {
         public TextMeshProUGUI Text { get; private set; }
 
-        public float Width => LayoutUtility.GetPreferredWidth(RectTransform);
-        public float Height => LayoutUtility.GetPreferredHeight(RectTransform);
+        public float Width => LayoutUtility.GetPreferredWidth(Text.rectTransform);
+        public float Height => LayoutUtility.GetPreferredHeight(Text.rectTransform);
 
         public TextMeasurer Measurer { get; }
 
@@ -25,8 +25,9 @@ namespace ReactUnity.UGUI
 
         public IconComponent(string text, UGUIContext context, string tag) : base(context, tag, false)
         {
-            Text = AddComponent<TextMeshProUGUI>();
+            Text = CreateGraphicChild<TextMeshProUGUI>("[Text]");
             Measurer = AddComponent<TextMeasurer>();
+            Measurer.Text = Text;
             Measurer.Layout = Layout;
             Measurer.Context = context;
             Layout.SetMeasureFunction(Measurer.Measure);

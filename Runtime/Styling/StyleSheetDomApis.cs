@@ -1,6 +1,7 @@
 using System;
 using System.Linq;
 using ExCSS;
+using ReactUnity.Styling.Rules;
 
 namespace ReactUnity.Styling
 {

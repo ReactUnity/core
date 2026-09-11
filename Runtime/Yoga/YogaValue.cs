@@ -39,7 +39,7 @@ namespace Yoga
 
         public bool Equals(YogaValue other)
         {
-            return Unit == other.Unit && (Value.Equals(other.Value) || Unit == YogaUnit.Undefined || Unit == YogaUnit.Auto);
+            return Unit == other.Unit && (Value.Equals(other.Value) || Unit == YogaUnit.Undefined || Unit == YogaUnit.Auto || IsKeyword(Unit));
         }
 
         public override bool Equals(object obj)
@@ -80,6 +80,26 @@ namespace Yoga
             {
                 value = value,
                 unit = YogaConstants.IsUndefined(value) ? YogaUnit.Undefined : YogaUnit.Percent
+            };
+        }
+
+        // The value stays undefined so these round-trip through the native getters, which report a
+        // keyword unit with no number, and so nothing that interpolates or resolves a length treats
+        // one as a zero.
+        public static YogaValue MaxContent() => Keyword(YogaUnit.MaxContent);
+        public static YogaValue FitContent() => Keyword(YogaUnit.FitContent);
+        public static YogaValue Stretch() => Keyword(YogaUnit.Stretch);
+
+        /// <summary>Whether the unit is a sizing keyword, which carries no <see cref="Value"/>.</summary>
+        public static bool IsKeyword(YogaUnit unit) =>
+            unit == YogaUnit.MaxContent || unit == YogaUnit.FitContent || unit == YogaUnit.Stretch;
+
+        private static YogaValue Keyword(YogaUnit unit)
+        {
+            return new YogaValue
+            {
+                value = YogaConstants.Undefined,
+                unit = unit
             };
         }
 

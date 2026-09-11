@@ -1,9 +1,28 @@
 {
-  "extends": "@reactunity/scripts",
+  "compileOnSave": false,
   "compilerOptions": {
+    "target": "ES2022",
+    // Unity's JS engines, not a browser: no DOM. ES2022 for Object.hasOwn, which all three
+    // engines implement.
+    "lib": ["ES2022"],
+    "module": "ESNext",
+    "moduleResolution": "Bundler",
+    "jsx": "react-jsx",
+    // Types only: the runtime JSX comes from react, which is what this re-exports.
     "jsxImportSource": "@reactunity/renderer/ugui",
-    "types": ["@reactunity/scripts/main"]
+    // vite/client declares the asset imports and import.meta.env, in place of the
+    // @reactunity/scripts/main declarations this used to pull in.
+    "types": ["vite/client"],
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "isolatedModules": true,
+    "noEmit": true,
+    "resolveJsonModule": true,
+    "skipLibCheck": true,
+    "strict": true,
+    "strictNullChecks": false,
+    "noImplicitAny": false
   },
-  "files": ["./src/index.ts"],
-  "include": ["src"]
+  "include": ["src", "vite.config.mts"]
 }

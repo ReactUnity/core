@@ -1,4 +1,4 @@
-#if !REACT_DISABLE_QUICKJS && REACT_QUICKJS_AVAILABLE
+﻿#if !REACT_DISABLE_QUICKJS && REACT_QUICKJS_AVAILABLE
 #define REACT_QUICKJS
 #endif
 
@@ -21,6 +21,9 @@ namespace ReactUnity.Scripting
         public object NativeEngine => Runtime;
         public EngineCapabilities Capabilities { get; } = EngineCapabilities.None
 #if !UNITY_EDITOR && UNITY_WEBGL
+            // ModuleResolution included: there is no QuickJS here, but the jslib implements the
+            // same asynchronous loader hooks, so QuickJSModuleLoader resolves and fetches a graph
+            // exactly as it does on desktop and the browser links and evaluates it.
             | EngineCapabilities.Fetch
             | EngineCapabilities.XHR
             | EngineCapabilities.Encoding
@@ -30,6 +33,7 @@ namespace ReactUnity.Scripting
             | EngineCapabilities.AbortController
             | EngineCapabilities.QueueMicrotask
 #endif
+            | EngineCapabilities.ModuleResolution
             | EngineCapabilities.None;
 
         private Action<IJavaScriptEngine> OnInitialize;
@@ -43,6 +47,8 @@ namespace ReactUnity.Scripting
 
         public ScriptFunction ObjectKeys { get; private set; }
         public QuickJSApiBridge ApiBridge { get; private set; }
+
+        private QuickJSModuleLoader ModuleLoader;
 
         private bool Initialized;
 
@@ -65,13 +71,10 @@ namespace ReactUnity.Scripting
             Runtime.OnInitialized += Runtime_OnInitialized;
             Runtime.Initialize(new ScriptRuntimeArgs
             {
-                withDebugServer = debug,
-                waitingForDebugger = awaitDebugger,
                 fileSystem = new DefaultFileSystem(logger),
                 asyncManager = new DefaultAsyncManager(),
                 logger = logger,
                 binder = InvokeReflectBinding,
-                debugServerPort = 9222,
                 byteBufferAllocator = new QuickJS.IO.ByteBufferPooledAllocator(),
                 pathResolver = new PathResolver(),
                 apiBridge = ApiBridge,
@@ -86,7 +89,7 @@ namespace ReactUnity.Scripting
                 bindingLogger = new DefaultBindingLogger(LogLevel.Error),
             });
             bm.Collect();
-            bm.Generate(TypeBindingFlags.None);
+            bm.Bind();
             bm.Report();
         }
 
@@ -94,6 +97,16 @@ namespace ReactUnity.Scripting
         private void Runtime_OnInitialized(ScriptRuntime runtime)
         {
             MainContext = Runtime.GetMainContext();
+
+            // Replaces the file-system loader AddModuleResolvers installed, and has to be in
+            // place before anything executes: it is what makes an `import` of an http url, and
+            // therefore dynamic import(), work at all.
+            if (Context != null)
+            {
+                ModuleLoader = new QuickJSModuleLoader(Context);
+                ModuleLoader.Install(runtime);
+            }
+
             TypeDB = MainContext.GetTypeDB();
             ObjectCache = MainContext.GetObjectCache();
 
@@ -127,8 +140,20 @@ namespace ReactUnity.Scripting
         {
             if (documentType == JavascriptDocumentType.Module)
             {
+                // Registered under the url its own specifiers resolve against, so a chunk importing
+                // the entry back finds the module already here.
+                fileName = ModuleUrl.Canonical(fileName);
+
+                // Not awaited: anything this module imports is fetched by QuickJSModuleLoader,
+                // which needs the frames a blocking import would be holding.
+                if (ModuleLoader != null) MainContext.EvalModuleAsync(code, fileName ?? "module");
                 // Module scope, so `void 0;` is not needed to keep the result marshalable.
-                MainContext.EvalModule<object>(code, fileName ?? "module");
+                else MainContext.EvalModule<object>(code, fileName ?? "module");
+
+                // Draining the queue the graph just filled is enough to finish a module that
+                // needs nothing from the loader - which is every bundle, so those still evaluate
+                // before this returns. One waiting on a request cannot, and finishes over the
+                // next few Update()s instead.
                 Runtime.ExecutePendingJob();
                 return;
             }
@@ -226,8 +251,19 @@ namespace ReactUnity.Scripting
             ObjectCache = null;
             OnInitialize = null;
 
+            // Before the runtime, and it has to be: a module load still in flight holds a load
+            // handle and the graph's promise, so leaving one unsettled means JSB_FreeRuntime finds
+            // live objects -- and its host callback, a UnityWebRequest that has not come back yet,
+            // would settle into freed memory once it does.
+            ModuleLoader?.Close();
+
             Runtime?.Shutdown();
             Runtime = null;
+
+            // After the runtime, never before: the engine holds the pointer the loader's GCHandle
+            // backs and would hand it to a trampoline again.
+            ModuleLoader?.Dispose();
+            ModuleLoader = null;
         }
 
         public IEnumerable<object> TraverseScriptArray(object obj)

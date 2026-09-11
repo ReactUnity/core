@@ -32,6 +32,24 @@ namespace ReactUnity.Tests
             Assert.AreEqual(23, tmp.fontSize);
         }
 
+        // A prop that is present and undefined is ordinary in React, and reached the batch as a
+        // JSON null -- which the props reader treated as an object and threw reading.
+        [UGUITest(Script = @"
+            function App() {
+                return <view id='test' style={undefined}>
+                    Hello world
+                </view>;
+            }
+")]
+        public IEnumerator AnUndefinedInlineStyleIsNotAnError()
+        {
+            yield return null;
+
+            Assert.NotNull(Q("#test"), "the tree should have been built");
+            var tmp = Canvas.GetComponentInChildren<TMPro.TextMeshProUGUI>();
+            Assert.AreEqual("Hello world", tmp.text);
+        }
+
         [UGUITest(Script = @"
             function App() {
                 return <view id='test' style='font-size: 23px'>

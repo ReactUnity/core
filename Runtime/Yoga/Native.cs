@@ -279,6 +279,15 @@ namespace Yoga
         public static extern void YGNodeStyleSetFlexBasisAuto(YGNodeHandle node);
 
         [DllImport(DllName, ExactSpelling = true, CallingConvention = CallingConvention.Cdecl)]
+        public static extern void YGNodeStyleSetFlexBasisMaxContent(YGNodeHandle node);
+
+        [DllImport(DllName, ExactSpelling = true, CallingConvention = CallingConvention.Cdecl)]
+        public static extern void YGNodeStyleSetFlexBasisFitContent(YGNodeHandle node);
+
+        [DllImport(DllName, ExactSpelling = true, CallingConvention = CallingConvention.Cdecl)]
+        public static extern void YGNodeStyleSetFlexBasisStretch(YGNodeHandle node);
+
+        [DllImport(DllName, ExactSpelling = true, CallingConvention = CallingConvention.Cdecl)]
         public static extern YogaValue YGNodeStyleGetFlexBasis(YGNodeHandle node);
 
 
@@ -342,6 +351,15 @@ namespace Yoga
         public static extern void YGNodeStyleSetWidthAuto(YGNodeHandle node);
 
         [DllImport(DllName, ExactSpelling = true, CallingConvention = CallingConvention.Cdecl)]
+        public static extern void YGNodeStyleSetWidthMaxContent(YGNodeHandle node);
+
+        [DllImport(DllName, ExactSpelling = true, CallingConvention = CallingConvention.Cdecl)]
+        public static extern void YGNodeStyleSetWidthFitContent(YGNodeHandle node);
+
+        [DllImport(DllName, ExactSpelling = true, CallingConvention = CallingConvention.Cdecl)]
+        public static extern void YGNodeStyleSetWidthStretch(YGNodeHandle node);
+
+        [DllImport(DllName, ExactSpelling = true, CallingConvention = CallingConvention.Cdecl)]
         public static extern YogaValue YGNodeStyleGetWidth(YGNodeHandle node);
 
         [DllImport(DllName, ExactSpelling = true, CallingConvention = CallingConvention.Cdecl)]
@@ -354,6 +372,15 @@ namespace Yoga
         public static extern void YGNodeStyleSetHeightAuto(YGNodeHandle node);
 
         [DllImport(DllName, ExactSpelling = true, CallingConvention = CallingConvention.Cdecl)]
+        public static extern void YGNodeStyleSetHeightMaxContent(YGNodeHandle node);
+
+        [DllImport(DllName, ExactSpelling = true, CallingConvention = CallingConvention.Cdecl)]
+        public static extern void YGNodeStyleSetHeightFitContent(YGNodeHandle node);
+
+        [DllImport(DllName, ExactSpelling = true, CallingConvention = CallingConvention.Cdecl)]
+        public static extern void YGNodeStyleSetHeightStretch(YGNodeHandle node);
+
+        [DllImport(DllName, ExactSpelling = true, CallingConvention = CallingConvention.Cdecl)]
         public static extern YogaValue YGNodeStyleGetHeight(YGNodeHandle node);
 
         [DllImport(DllName, ExactSpelling = true, CallingConvention = CallingConvention.Cdecl)]
@@ -361,6 +388,15 @@ namespace Yoga
 
         [DllImport(DllName, ExactSpelling = true, CallingConvention = CallingConvention.Cdecl)]
         public static extern void YGNodeStyleSetMinWidthPercent(YGNodeHandle node, float minWidth);
+
+        [DllImport(DllName, ExactSpelling = true, CallingConvention = CallingConvention.Cdecl)]
+        public static extern void YGNodeStyleSetMinWidthMaxContent(YGNodeHandle node);
+
+        [DllImport(DllName, ExactSpelling = true, CallingConvention = CallingConvention.Cdecl)]
+        public static extern void YGNodeStyleSetMinWidthFitContent(YGNodeHandle node);
+
+        [DllImport(DllName, ExactSpelling = true, CallingConvention = CallingConvention.Cdecl)]
+        public static extern void YGNodeStyleSetMinWidthStretch(YGNodeHandle node);
 
         [DllImport(DllName, ExactSpelling = true, CallingConvention = CallingConvention.Cdecl)]
         public static extern YogaValue YGNodeStyleGetMinWidth(YGNodeHandle node);
@@ -372,6 +408,15 @@ namespace Yoga
         public static extern void YGNodeStyleSetMinHeightPercent(YGNodeHandle node, float minHeight);
 
         [DllImport(DllName, ExactSpelling = true, CallingConvention = CallingConvention.Cdecl)]
+        public static extern void YGNodeStyleSetMinHeightMaxContent(YGNodeHandle node);
+
+        [DllImport(DllName, ExactSpelling = true, CallingConvention = CallingConvention.Cdecl)]
+        public static extern void YGNodeStyleSetMinHeightFitContent(YGNodeHandle node);
+
+        [DllImport(DllName, ExactSpelling = true, CallingConvention = CallingConvention.Cdecl)]
+        public static extern void YGNodeStyleSetMinHeightStretch(YGNodeHandle node);
+
+        [DllImport(DllName, ExactSpelling = true, CallingConvention = CallingConvention.Cdecl)]
         public static extern YogaValue YGNodeStyleGetMinHeight(YGNodeHandle node);
 
         [DllImport(DllName, ExactSpelling = true, CallingConvention = CallingConvention.Cdecl)]
@@ -381,6 +426,15 @@ namespace Yoga
         public static extern void YGNodeStyleSetMaxWidthPercent(YGNodeHandle node, float maxWidth);
 
         [DllImport(DllName, ExactSpelling = true, CallingConvention = CallingConvention.Cdecl)]
+        public static extern void YGNodeStyleSetMaxWidthMaxContent(YGNodeHandle node);
+
+        [DllImport(DllName, ExactSpelling = true, CallingConvention = CallingConvention.Cdecl)]
+        public static extern void YGNodeStyleSetMaxWidthFitContent(YGNodeHandle node);
+
+        [DllImport(DllName, ExactSpelling = true, CallingConvention = CallingConvention.Cdecl)]
+        public static extern void YGNodeStyleSetMaxWidthStretch(YGNodeHandle node);
+
+        [DllImport(DllName, ExactSpelling = true, CallingConvention = CallingConvention.Cdecl)]
         public static extern YogaValue YGNodeStyleGetMaxWidth(YGNodeHandle node);
 
         [DllImport(DllName, ExactSpelling = true, CallingConvention = CallingConvention.Cdecl)]
@@ -388,6 +442,15 @@ namespace Yoga
 
         [DllImport(DllName, ExactSpelling = true, CallingConvention = CallingConvention.Cdecl)]
         public static extern void YGNodeStyleSetMaxHeightPercent(YGNodeHandle node, float maxHeight);
+
+        [DllImport(DllName, ExactSpelling = true, CallingConvention = CallingConvention.Cdecl)]
+        public static extern void YGNodeStyleSetMaxHeightMaxContent(YGNodeHandle node);
+
+        [DllImport(DllName, ExactSpelling = true, CallingConvention = CallingConvention.Cdecl)]
+        public static extern void YGNodeStyleSetMaxHeightFitContent(YGNodeHandle node);
+
+        [DllImport(DllName, ExactSpelling = true, CallingConvention = CallingConvention.Cdecl)]
+        public static extern void YGNodeStyleSetMaxHeightStretch(YGNodeHandle node);
 
         [DllImport(DllName, ExactSpelling = true, CallingConvention = CallingConvention.Cdecl)]
         public static extern YogaValue YGNodeStyleGetMaxHeight(YGNodeHandle node);

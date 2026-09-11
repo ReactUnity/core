@@ -67,7 +67,7 @@ namespace ReactUnity.Tests
 
             var view = Host.Children[1] as UGUIComponent;
 
-            var tmp = view.GameObject.GetComponent<TMPro.TextMeshProUGUI>();
+            var tmp = view.GameObject.GetComponentInChildren<TMPro.TextMeshProUGUI>();
             Assert.AreEqual("bogus", tmp.text);
         }
 
@@ -84,7 +84,7 @@ namespace ReactUnity.Tests
 
             var textCmp = Host.Children[0] as UGUIComponent;
 
-            var tmp = textCmp.GameObject.GetComponent<TMPro.TextMeshProUGUI>();
+            var tmp = textCmp.GameObject.GetComponentInChildren<TMPro.TextMeshProUGUI>();
             Assert.AreEqual("bogus", tmp.text);
         }
         #endregion
@@ -102,7 +102,7 @@ namespace ReactUnity.Tests
 
             Bridge.setText(text, "bogus");
 
-            var tmp = text.GameObject.GetComponent<TMPro.TextMeshProUGUI>();
+            var tmp = text.GameObject.GetComponentInChildren<TMPro.TextMeshProUGUI>();
             Assert.AreEqual("bogus", tmp.text);
         }
 
@@ -146,7 +146,7 @@ namespace ReactUnity.Tests
 
             var text = Bridge.createText("bogus", Host) as TextComponent;
 
-            var tmp = text.GameObject.GetComponent<TMPro.TextMeshProUGUI>();
+            var tmp = text.GameObject.GetComponentInChildren<TMPro.TextMeshProUGUI>();
             Assert.AreEqual("bogus", tmp.text);
             Assert.AreEqual("_text", text.Tag);
         }
@@ -167,7 +167,7 @@ namespace ReactUnity.Tests
 
             var text = Bridge.createElement("text", "text-content", Host) as TextComponent;
 
-            var tmp = text.GameObject.GetComponent<TMPro.TextMeshProUGUI>();
+            var tmp = text.GameObject.GetComponentInChildren<TMPro.TextMeshProUGUI>();
             Assert.AreEqual("text-content", tmp.text);
             Assert.AreEqual("text", text.Tag);
         }

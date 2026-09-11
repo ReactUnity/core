@@ -45,10 +45,11 @@ namespace ReactUnity.Scripting
 
         Uri ResolveUrl(string referrer, string specifier)
         {
-            // Relative to the importing module first. The source url only stands in when the
-            // referrer is not one itself, which is the root of a module added from source.
-            if (Uri.TryCreate(referrer, UriKind.Absolute, out var baseUri) &&
-                Uri.TryCreate(baseUri, specifier, out var resolved)) return resolved;
+            // Relative to the importing module first. A referrer with no url of its own -- a
+            // bundle loaded out of Resources, whose name is a resource path -- gets one from
+            // ModuleUrl, so a relative specifier resolves there too.
+            var baseUri = ModuleUrl.Base(referrer);
+            if (baseUri != null && Uri.TryCreate(baseUri, specifier, out var resolved)) return resolved;
 
             try
             {
@@ -69,6 +70,19 @@ namespace ReactUnity.Scripting
             }
 
             var url = resolved.Key;
+
+            if (Uri.TryCreate(url, UriKind.Absolute, out var uri) && ModuleUrl.IsResource(uri))
+            {
+                // Reading a resource is synchronous, but settling the completion inline would run
+                // a link pass inside the evaluation that asked for the module. Deferred a frame,
+                // like the request below, so the engine is between jobs when the graph advances.
+                context.Dispatcher.OnceUpdate(() => {
+                    var source = ModuleUrl.ReadResource(uri);
+                    if (source == null) completion.SetError($"Failed to load module '{url}': no such resource");
+                    else completion.SetSource(source);
+                });
+                return;
+            }
 
             context.Dispatcher.StartDeferred(ScriptSource.WatchWebRequest(
                 UnityWebRequest.Get(url),

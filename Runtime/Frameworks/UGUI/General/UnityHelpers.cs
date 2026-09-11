@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 namespace ReactUnity.UGUI
 {
@@ -43,6 +44,21 @@ namespace ReactUnity.UGUI
                     SetLayersRecursively(child.transform, layer);
                 }
             }
+        }
+
+        /// <summary>
+        /// How many wheel ticks a scroll delta is. Only the input module knows, and they disagree: the
+        /// legacy one reports one per tick and the input system's six, either being configurable.
+        /// </summary>
+        public static Vector2 WheelTicks(Vector2 delta)
+        {
+#if UNITY_2023_2_OR_NEWER
+            var module = EventSystem.current?.currentInputModule;
+            if (module != null) return module.ConvertPointerEventScrollDeltaToTicks(delta);
+#endif
+            // Without a module to ask, a delta is one per tick -- what the legacy one reports, and what
+            // every module reported before the conversion above existed.
+            return delta;
         }
     }
 }

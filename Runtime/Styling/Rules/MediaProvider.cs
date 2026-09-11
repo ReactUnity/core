@@ -46,6 +46,11 @@ namespace ReactUnity.Styling.Rules
         Dictionary<string, string> values;
         HashSet<string> types;
 
+        // Features set through SetValue are the user's; a seed never overrides one. A seeded
+        // feature remembers the value it replaced so that it can be handed back.
+        private readonly HashSet<string> explicitValues = new HashSet<string>();
+        private readonly Dictionary<string, string> seeds = new Dictionary<string, string>();
+
         public event Action<IMediaProvider> OnUpdate;
         private bool SuspendUpdates;
         private bool HasUpdates;
@@ -358,13 +363,22 @@ namespace ReactUnity.Styling.Rules
 
         public static DefaultMediaProvider CreateMediaProvider(string type, string framework, bool isEditor)
         {
-            return new DefaultMediaProvider(type, null,
-                new Dictionary<string, string>(StringComparer.InvariantCultureIgnoreCase) {
-                    { "framework", framework },
+            string skin = null;
 #if UNITY_EDITOR
-                    { "skin", UnityEditor.EditorGUIUtility.isProSkin ? "dark" : "light" },
+            skin = UnityEditor.EditorGUIUtility.isProSkin ? "dark" : "light";
 #endif
-                },
+
+            var values = new Dictionary<string, string>(StringComparer.InvariantCultureIgnoreCase) {
+                { "framework", framework },
+                // What `(prefers-color-scheme: dark)` and `(prefers-reduced-motion: reduce)` read. Unity
+                // has no OS-level signal for either, so outside the Editor these are defaults an app
+                // changes with SetValue.
+                { "prefers-color-scheme", skin ?? "light" },
+                { "prefers-reduced-motion", "no-preference" },
+            };
+            if (skin != null) values["skin"] = skin;
+
+            return new DefaultMediaProvider(type, null, values,
                 new HashSet<string>(StringComparer.InvariantCultureIgnoreCase)
                 {
                     type,
@@ -382,6 +396,11 @@ namespace ReactUnity.Styling.Rules
             this.numbers = numbers ?? new Dictionary<string, float>();
             this.values = values ?? new Dictionary<string, string>();
             this.types = types ?? new HashSet<string>();
+
+            // The pointer setters only write when the value changes, so a platform whose real
+            // value is the default would otherwise leave these features undefined.
+            foreach (var feature in new[] { "hover", "any-hover", "pointer", "any-pointer" })
+                if (!this.values.ContainsKey(feature)) this.values[feature] = "none";
 
             SetUpdatesSuspended(true);
             InitConstants();
@@ -412,6 +431,32 @@ namespace ReactUnity.Styling.Rules
 
         public void SetValue(string property, string value)
         {
+            explicitValues.Add(property);
+            seeds.Remove(property);
+            values[property] = value;
+            ValueChanged();
+        }
+
+        /// <summary>
+        /// A default for a feature the user has not set through <see cref="SetValue"/>. A null
+        /// value withdraws the seed and restores what the feature held before it.
+        /// </summary>
+        public void SeedValue(string property, string value)
+        {
+            if (explicitValues.Contains(property)) return;
+
+            if (value == null)
+            {
+                if (!seeds.TryGetValue(property, out var previous)) return;
+                seeds.Remove(property);
+                if (previous == null) values.Remove(property);
+                else values[property] = previous;
+                ValueChanged();
+                return;
+            }
+
+            if (values.TryGetValue(property, out var current) && current == value) return;
+            if (!seeds.ContainsKey(property)) seeds[property] = current;
             values[property] = value;
             ValueChanged();
         }
@@ -444,7 +489,7 @@ namespace ReactUnity.Styling.Rules
             values["install-mode"] = Application.installMode.ToString().ToLowerInvariant();
 
             if (Application.isConsolePlatform) types.Add("console");
-            if (Application.isMobilePlatform) types.Add("console");
+            if (Application.isMobilePlatform) types.Add("mobile");
             if (Application.isBatchMode) types.Add("batch");
             if (Application.isPlaying) types.Add("playing");
             if (Application.isEditor) types.Add("editing");
@@ -554,7 +599,7 @@ namespace ReactUnity.Styling.Rules
                 CurrentPointerAccuracy = PointerAccuracy.Fine;
 
                 var acc = new List<PointerAccuracy> { PointerAccuracy.Fine };
-                if (Input.touchSupported || Input.stylusTouchSupported) acc.Add(PointerAccuracy.Fine);
+                if (Input.touchSupported || Input.stylusTouchSupported) acc.Add(PointerAccuracy.Coarse);
                 AnyPointerAccuracy = acc;
 
                 AnyPointerHover = CurrentPointerHover = true;
