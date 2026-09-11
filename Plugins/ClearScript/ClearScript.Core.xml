@@ -2019,6 +2019,15 @@
             <see cref="P:Microsoft.ClearScript.CustomAttributeLoader.Default">default custom attribute loader</see>.
             </remarks>
         </member>
+        <member name="P:Microsoft.ClearScript.HostSettings.DisableInteropAssemblyConstruction">
+            <summary>
+            Enables or disables interop assembly construction.
+            </summary>
+            <remarks>
+            Setting this property to <c>true</c> disables the construction of interop assemblies
+            at runtime. It is effective only on .NET Framework.
+            </remarks>
+        </member>
         <member name="T:Microsoft.ClearScript.HostTypeCollection">
             <summary>
             Represents a scriptable collection of host types.
@@ -2174,10 +2183,10 @@
         </member>
         <member name="P:Microsoft.ClearScript.IScriptEngine.AccessContext">
             <summary>
-            Allows script code to access non-host resources.
+            Allows script code to access non-public resources.
             </summary>
             <remarks>
-            By setting this property to a type you declare that script code running in the current
+            By setting this property to a type, you declare that script code running in the current
             script engine is to be treated as if it were part of that type's implementation. Doing
             so does not expose any host resources to script code, but it affects which host
             resources are importable and which members of exposed resources are accessible.
@@ -2328,6 +2337,31 @@
             </para>
             </remarks>
         </member>
+        <member name="P:Microsoft.ClearScript.IScriptEngine.MarshalEnumAsUnderlyingType">
+            <summary>
+            Controls whether enumerations are converted to their underlying integral type when passed to script code.
+            </summary>
+            <remarks>
+            When this property is set to <c>true</c>, the script engine converts enumerations to
+            their underlying types when passing them to script code. This conversion is lossy and
+            could break host method binding, property assignment, and other scenarios that rely on
+            enumeration type identity. It is recommended that you use this property in conjunction
+            with <see cref="P:Microsoft.ClearScript.IScriptEngine.AcceptEnumAsUnderlyingType"/>.
+            </remarks>
+        </member>
+        <member name="P:Microsoft.ClearScript.IScriptEngine.AcceptEnumAsUnderlyingType">
+            <summary>
+            Controls whether scripts can pass integral values to enumeration-typed host properties or parameters.
+            </summary>
+            <remarks>
+            When this property is set to <c>true</c>, the script engine accepts integral values for
+            enumeration-typed host properties and parameters. Note that the default method binding
+            algorithm cannot support this property; it must be used in conjunction with
+            <see cref="P:Microsoft.ClearScript.IScriptEngine.DisableDynamicBinding"/> or <see cref="P:Microsoft.ClearScript.IScriptEngine.UseReflectionBindFallback"/>. The
+            script engine makes no attempt to validate integral values passed from script code
+            against the defined members of the target enumeration type.
+            </remarks>
+        </member>
         <member name="P:Microsoft.ClearScript.IScriptEngine.EnableAutoHostVariables">
             <summary>
             Enables or disables automatic host variable tunneling for by-reference arguments to script functions and delegates.
@@ -2372,12 +2406,12 @@
             to <c>null</c> or its closest equivalent in the script language. Other useful
             possibilities include
             <c><see cref="F:Microsoft.ClearScript.Undefined.Value">Undefined.Value</see></c> and
-            <c><see href="https://microsoft.github.io/ClearScript/Reference/html/F_Microsoft_ClearScript_Windows_Nothing_Value.htm">Nothing.Value</see></c>.
+            <c><see href="https://clearscript.clearfoundry.net/Reference/html/F_Microsoft_ClearScript_Windows_Nothing_Value.htm">Nothing.Value</see></c>.
             </para>
             <para>
             Note that <c><see cref="F:Microsoft.ClearScript.ScriptMemberFlags.WrapNullResult"/></c>,
             <c><see cref="P:Microsoft.ClearScript.IScriptEngine.EnableNullResultWrapping"/></c>, and
-            <c><see href="https://microsoft.github.io/ClearScript/Reference/html/T_Microsoft_ClearScript_Windows_WindowsScriptEngineFlags.htm">MarshalNullAsDispatch</see></c>
+            <c><see href="https://clearscript.clearfoundry.net/Reference/html/T_Microsoft_ClearScript_Windows_WindowsScriptEngineFlags.htm">MarshalNullAsDispatch</see></c>
             all take precedence over this property.
             </para>
             </remarks>
@@ -3823,6 +3857,11 @@
             Gets the JavaScript object's attributes.
             </summary>
         </member>
+        <member name="M:Microsoft.ClearScript.JavaScript.IJavaScriptObject.Update">
+            <summary>
+            Updates the JavaScript object's attributes.
+            </summary>
+        </member>
         <member name="T:Microsoft.ClearScript.JavaScript.ITypedArray">
             <summary>
             Defines properties and methods common to all JavaScript
@@ -4115,6 +4154,26 @@
             Indicates that the object is a rejected
             <see href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise">promise</see>.
             This attribute has no meaning if <c><see cref="F:Microsoft.ClearScript.JavaScript.JavaScriptObjectFlags.Pending"/></c> is present.
+            </summary>
+        </member>
+        <member name="F:Microsoft.ClearScript.JavaScript.JavaScriptObjectFlags.Iterable">
+            <summary>
+            Indicates that the object supports iteration.
+            </summary>
+        </member>
+        <member name="F:Microsoft.ClearScript.JavaScript.JavaScriptObjectFlags.AsyncIterable">
+            <summary>
+            Indicates that the object supports asynchronous iteration.
+            </summary>
+        </member>
+        <member name="F:Microsoft.ClearScript.JavaScript.JavaScriptObjectFlags.Disposable">
+            <summary>
+            Indicates that the object supports disposal.
+            </summary>
+        </member>
+        <member name="F:Microsoft.ClearScript.JavaScript.JavaScriptObjectFlags.AsyncDisposable">
+            <summary>
+            Indicates that the object supports asynchronous disposal.
             </summary>
         </member>
         <member name="T:Microsoft.ClearScript.JavaScript.JavaScriptObjectKind">
@@ -4487,6 +4546,12 @@
             <inheritdoc/>
         </member>
         <member name="P:Microsoft.ClearScript.ScriptEngine.UseReflectionBindFallback">
+            <inheritdoc/>
+        </member>
+        <member name="P:Microsoft.ClearScript.ScriptEngine.MarshalEnumAsUnderlyingType">
+            <inheritdoc/>
+        </member>
+        <member name="P:Microsoft.ClearScript.ScriptEngine.AcceptEnumAsUnderlyingType">
             <inheritdoc/>
         </member>
         <member name="P:Microsoft.ClearScript.ScriptEngine.EnableAutoHostVariables">
@@ -5002,6 +5067,9 @@
             <inheritdoc/>
         </member>
         <member name="M:Microsoft.ClearScript.ScriptObject.Dispose">
+            <inheritdoc/>
+        </member>
+        <member name="M:Microsoft.ClearScript.ScriptObject.DisposeAsync">
             <inheritdoc/>
         </member>
         <member name="T:Microsoft.ClearScript.ScriptUsageAttribute">
