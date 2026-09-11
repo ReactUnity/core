@@ -35,11 +35,7 @@ namespace QuickJS
         {
             if (_inbox.Count != 0)
             {
-#if JSB_UNITYLESS
                 Console.WriteLine("worker: not cleaned up");
-#else
-                UnityEngine.Debug.LogError("worker: not cleaned up");
-#endif
             }
         }
 #endif
@@ -146,7 +142,7 @@ namespace QuickJS
                     JSContext ctx = context;
                     var globalObject = context.GetGlobalObject();
                     var onmessage = JSApi.JS_GetPropertyStr(context, globalObject, "onmessage");
-                    var callable = JSApi.JS_IsFunction(ctx, onmessage) == 1;
+                    var callable = JSApi.JS_IsFunction(ctx, onmessage);
 
                     for (int i = 0, count = list.Count; i < count; i++)
                     {
@@ -239,7 +235,7 @@ namespace QuickJS
                     }
                     else
                     {
-                        if (JSApi.JS_IsFunction(ctx, onmessage) == 1)
+                        if (JSApi.JS_IsFunction(ctx, onmessage))
                         {
                             // read object => jsvalue
                             JSValue data;

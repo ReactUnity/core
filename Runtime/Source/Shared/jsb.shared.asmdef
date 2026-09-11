@@ -18,11 +18,6 @@
             "name": "Unity",
             "expression": "",
             "define": "JSB_RUNTIME_REFLECT_BINDING"
-        },
-        {
-            "name": "Unity",
-            "expression": "",
-            "define": "JSB_UNITYLESS"
         }
     ],
     "noEngineReferences": true

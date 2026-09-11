@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
@@ -17,71 +17,48 @@ namespace QuickJS.Native
     using int64_t = Int64;
     using uint64_t = UInt64;
 
-#if UNITY_EDITOR_WIN || UNITY_STANDALONE_WIN || JSB_UNITYLESS || (UNITY_WSA && !UNITY_EDITOR)
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-#endif
     public delegate int JSInterruptHandler(JSRuntime rt, IntPtr opaque);
 
-    /* is_handled = TRUE means that the rejection is handled */
-#if UNITY_EDITOR_WIN || UNITY_STANDALONE_WIN || JSB_UNITYLESS || (UNITY_WSA && !UNITY_EDITOR)
+    /// <summary>Called with is_handled true when the rejection is already handled.</summary>
+    // Bellard's passed JS_BOOL here, so declaring it Int32 was right; ng passes a C bool,
+    // one byte, and this is a reverse P/Invoke -- reading four would take three undefined
+    // bytes off the register and report handled rejections as unhandled. check-signatures.py
+    // reads DllImports only, so callback parameters like this one are checked by hand.
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-#endif
-    public delegate void JSHostPromiseRejectionTracker(JSContext ctx, JSValueConst promise, JSValueConst reason, JS_BOOL is_handled, IntPtr opaque);
+    public delegate void JSHostPromiseRejectionTracker(JSContext ctx, JSValueConst promise, JSValueConst reason,
+        [MarshalAs(UnmanagedType.U1)] bool is_handled, IntPtr opaque);
 
-#if UNITY_EDITOR_WIN || UNITY_STANDALONE_WIN || JSB_UNITYLESS || (UNITY_WSA && !UNITY_EDITOR)
+    // Both module names arrive as raw pointers, not marshalled strings: LPStr is the ANSI code
+    // page and the engine hands out UTF-8, so a module path outside ASCII came back mangled.
+    // Decode with JSApi.GetString(IntPtr). The returned name must be engine-owned memory, which
+    // is what JSContext.NewCString allocates.
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-#endif
-    public unsafe delegate IntPtr JSModuleNormalizeFunc(JSContext ctx, [MarshalAs(UnmanagedType.LPStr)] string module_base_name, [MarshalAs(UnmanagedType.LPStr)] string module_name, IntPtr opaque);
+    public unsafe delegate IntPtr JSModuleNormalizeFunc(JSContext ctx, IntPtr module_base_name, IntPtr module_name, IntPtr opaque);
 
-#if UNITY_EDITOR_WIN || UNITY_STANDALONE_WIN || JSB_UNITYLESS || (UNITY_WSA && !UNITY_EDITOR)
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-#endif
-    public delegate JSModuleDef JSModuleLoaderFunc(JSContext ctx, [MarshalAs(UnmanagedType.LPStr)] string module_name, IntPtr opaque);
+    public delegate JSModuleDef JSModuleLoaderFunc(JSContext ctx, IntPtr module_name, IntPtr opaque);
 
-#if UNITY_EDITOR_WIN || UNITY_STANDALONE_WIN || JSB_UNITYLESS || (UNITY_WSA && !UNITY_EDITOR)
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-#endif
     public delegate void JSGCObjectFinalizer(JSRuntime rt, JSPayloadHeader header);
 
-#if UNITY_EDITOR_WIN || UNITY_STANDALONE_WIN || JSB_UNITYLESS || (UNITY_WSA && !UNITY_EDITOR)
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-#endif
     public delegate JSValue JSCFunction(JSContext ctx, JSValueConst this_obj, int argc, [MarshalAs(UnmanagedType.LPArray, SizeParamIndex = 2)] JSValueConst[] argv);
 
-#if UNITY_EDITOR_WIN || UNITY_STANDALONE_WIN || JSB_UNITYLESS || (UNITY_WSA && !UNITY_EDITOR)
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-#endif
     public delegate JSValue JSCFunctionMagic(JSContext ctx, JSValueConst this_obj, int argc, [MarshalAs(UnmanagedType.LPArray, SizeParamIndex = 2)] JSValueConst[] argv, int magic);
 
-#if UNITY_EDITOR_WIN || UNITY_STANDALONE_WIN || JSB_UNITYLESS || (UNITY_WSA && !UNITY_EDITOR)
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-#endif
     public delegate JSValue JSSetterCFunction(JSContext ctx, JSValueConst this_val, JSValueConst val);
 
-#if UNITY_EDITOR_WIN || UNITY_STANDALONE_WIN || JSB_UNITYLESS || (UNITY_WSA && !UNITY_EDITOR)
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-#endif
     public delegate JSValue JSSetterCFunctionMagic(JSContext ctx, JSValueConst this_val, JSValueConst val, int magic);
 
-#if UNITY_EDITOR_WIN || UNITY_STANDALONE_WIN || JSB_UNITYLESS || (UNITY_WSA && !UNITY_EDITOR)
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-#endif
     public delegate JSValue JSGetterCFunction(JSContext ctx, JSValueConst this_val);
 
-#if UNITY_EDITOR_WIN || UNITY_STANDALONE_WIN || JSB_UNITYLESS || (UNITY_WSA && !UNITY_EDITOR)
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-#endif
     public delegate JSValue JSGetterCFunctionMagic(JSContext ctx, JSValueConst this_val, int magic);
-
-#if UNITY_EDITOR_WIN || UNITY_STANDALONE_WIN || JSB_UNITYLESS || (UNITY_WSA && !UNITY_EDITOR)
-        [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-#endif
-    public delegate void JSLogCFunction(int level, [MarshalAs(UnmanagedType.LPStr)] string line);
-
-#if UNITY_EDITOR_WIN || UNITY_STANDALONE_WIN || JSB_UNITYLESS || (UNITY_WSA && !UNITY_EDITOR)
-        [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-#endif
-    public delegate void JSWaitingForDebuggerCFunction(JSContext ctx);
 
     public partial class JSApi
     {
@@ -89,28 +66,21 @@ namespace QuickJS.Native
         public const int CS_JSB_VERSION = 0xa; // expected dll version
         public static readonly int SO_JSB_VERSION; // actual dll version
 
-#if JSB_NO_BIGNUM || ((UNITY_WSA || UNITY_WEBGL) && !UNITY_EDITOR) || JSB_WITH_V8_BACKEND
-        public const bool IsOperatorOverloadingSupported = false;
-#else
-        public const bool IsOperatorOverloadingSupported = true;
-#endif
-
 #if (UNITY_IPHONE || UNITY_WEBGL) && !UNITY_EDITOR
 	    public const string JSBDLL = "__Internal";
 #else
-#if JSB_WITH_V8_BACKEND
-        public const string JSBDLL = "v8-bridge";
-#else
         public const string JSBDLL = "quickjs";
 #endif
-#endif
 
-        public const int JS_TAG_FIRST = -11; /* first negative tag */
-        public const int JS_TAG_BIG_DECIMAL = -11;
-        public const int JS_TAG_BIG_INT = -10;
-        public const int JS_TAG_BIG_FLOAT = -9;
+        // Transcribed from quickjs-ng's own enum, not carried over: ng dropped BigDecimal
+        // and BigFloat and added STRING_ROPE and SHORT_BIG_INT, which moved five of these.
+        // SHORT_BIG_INT took 7 -- the slot FLOAT64 used to hold -- so a stale copy of this
+        // block reads every double as a bigint.
+        public const int JS_TAG_FIRST = -9; /* first negative tag */
+        public const int JS_TAG_BIG_INT = -9;
         public const int JS_TAG_SYMBOL = -8;
         public const int JS_TAG_STRING = -7;
+        public const int JS_TAG_STRING_ROPE = -6; /* lazily concatenated string */
         public const int JS_TAG_MODULE = -3; /* used internally */
         public const int JS_TAG_FUNCTION_BYTECODE = -2; /* used internally */
         public const int JS_TAG_OBJECT = -1;
@@ -119,18 +89,23 @@ namespace QuickJS.Native
         public const int JS_TAG_BOOL = 1;
         public const int JS_TAG_NULL = 2;
         public const int JS_TAG_UNDEFINED = 3;
+        public const int JS_TAG_UNINITIALIZED = 4;
+        public const int JS_TAG_CATCH_OFFSET = 5;
         public const int JS_TAG_EXCEPTION = 6;
-        public const int JS_TAG_FLOAT64 = 7;
+        public const int JS_TAG_SHORT_BIG_INT = 7;
+        public const int JS_TAG_FLOAT64 = 8;
 
-        // #define JS_WRITE_OBJ_BYTECODE (1 << 0) /* allow function/module */
         public const int JS_WRITE_OBJ_BYTECODE = 1 << 0; /* allow function/module */
-        public const int JS_WRITE_OBJ_BSWAP = 1 << 1; /* byte swapped output */
+        public const int JS_WRITE_OBJ_BSWAP = 0; /* obsolete in ng, handled transparently */
         public const int JS_WRITE_OBJ_SAB = 1 << 2; /* allow SharedArrayBuffer */
         public const int JS_WRITE_OBJ_REFERENCE = 1 << 3; /* allow object references to
                                                              encode arbitrary object
                                                              graph */
+        public const int JS_WRITE_OBJ_STRIP_SOURCE = 1 << 4; /* do not write source code information */
+        public const int JS_WRITE_OBJ_STRIP_DEBUG = 1 << 5; /* do not write debug information */
+
         public const int JS_READ_OBJ_BYTECODE = 1 << 0; /* allow function/module */
-        public const int JS_READ_OBJ_ROM_DATA = 1 << 1; /* avoid duplicating 'buf' data */
+        public const int JS_READ_OBJ_ROM_DATA = 0; /* obsolete in ng, broken by ICs */
         public const int JS_READ_OBJ_SAB = 1 << 2; /* allow SharedArrayBuffer */
         public const int JS_READ_OBJ_REFERENCE = 1 << 3; /* allow object references */
 
@@ -156,6 +131,14 @@ namespace QuickJS.Native
             return CS_JSB_VERSION == SO_JSB_VERSION;
         }
 
+        /// <summary>Caps the C stack the engine will use before raising a JS "stack overflow",
+        /// rather than running on until the thread's real stack is gone.</summary>
+        ///
+        /// Beware `stack_size` of 0: the engine reads it as *no limit*, not as a default.
+        /// See <see cref="ScriptRuntime.MaxStackSize"/> for why this is not set by default.
+        [DllImport(JSBDLL, CallingConvention = CallingConvention.Cdecl)]
+        public static extern void JS_SetMaxStackSize(JSRuntime rt, size_t stack_size);
+
         [DllImport(JSBDLL, CallingConvention = CallingConvention.Cdecl)]
         private static extern JSRuntime JSB_NewRuntime(IntPtr class_finalizer);
 
@@ -163,9 +146,7 @@ namespace QuickJS.Native
         {
             if (class_finalizer != null)
             {
-#if JSB_UNITYLESS || (UNITY_WSA && !UNITY_EDITOR)
                 GCHandle.Alloc(class_finalizer);
-#endif
                 var fn = Marshal.GetFunctionPointerForDelegate(class_finalizer);
                 return JSB_NewRuntime(fn);
             }
@@ -207,9 +188,7 @@ namespace QuickJS.Native
 
         public static void JS_SetHostPromiseRejectionTracker(JSRuntime rt, JSHostPromiseRejectionTracker cb, IntPtr opaque)
         {
-#if JSB_UNITYLESS || (UNITY_WSA && !UNITY_EDITOR)
             GCHandle.Alloc(cb);
-#endif
             var fn = Marshal.GetFunctionPointerForDelegate(cb);
             JS_SetHostPromiseRejectionTracker(rt, fn, opaque);
         }
@@ -235,15 +214,13 @@ namespace QuickJS.Native
         [DllImport(JSBDLL, CallingConvention = CallingConvention.Cdecl)]
         public static extern JSValue JS_GetPropertyUint32(JSContext ctx, JSValueConst this_obj, uint32_t idx);
 
+        /// <summary>Adds a reference; caller must FreeValue.</summary>
+        // ng exports JS_GetProperty itself, and its body is exactly what the wrapper this
+        // replaced spelled out: JS_GetPropertyInternal(ctx, obj, prop, obj, false)
+        // (quickjs.c:9266). JS_GetPropertyInternal is no longer public, so this is the
+        // binding, not a convenience over one.
         [DllImport(JSBDLL, CallingConvention = CallingConvention.Cdecl)]
-        public static extern JSValue JS_GetPropertyInternal(JSContext ctx, JSValueConst obj, JSAtom prop,
-            JSValueConst receiver, JS_BOOL throw_ref_error);
-
-        // 增引用, 需要 FreeValue
-        public static JSValue JS_GetProperty(JSContext ctx, JSValueConst this_obj, JSAtom prop)
-        {
-            return JS_GetPropertyInternal(ctx, this_obj, prop, this_obj, 0);
-        }
+        public static extern JSValue JS_GetProperty(JSContext ctx, JSValueConst this_obj, JSAtom prop);
 
         [DllImport(JSBDLL, CallingConvention = CallingConvention.Cdecl)]
         public static extern JSValue JS_GetPropertyStr(JSContext ctx, JSValueConst this_obj,
@@ -291,8 +268,11 @@ namespace QuickJS.Native
         [DllImport(JSBDLL, CallingConvention = CallingConvention.Cdecl)]
         public static extern JSValue JS_GetException(JSContext ctx);
 
+        // ng also dropped the JSContext parameter, which shifts the JSValue into the
+        // wrong register slot -- an arity change that links clean and answers wrong.
         [DllImport(JSBDLL, CallingConvention = CallingConvention.Cdecl)]
-        public static extern JS_BOOL JS_IsError(JSContext ctx, JSValueConst val);
+        [return: MarshalAs(UnmanagedType.U1)]
+        public static extern bool JS_IsError(JSValueConst val);
 
         [DllImport(JSBDLL, CallingConvention = CallingConvention.Cdecl)]
         public static extern unsafe JSValue JSB_ThrowError(JSContext ctx, byte* buf, size_t buf_len);
@@ -315,9 +295,6 @@ namespace QuickJS.Native
 
         [DllImport(JSBDLL, CallingConvention = CallingConvention.Cdecl)]
         public static extern JSValue JSB_NewEmptyString(JSContext ctx);
-
-        [DllImport(JSBDLL, CallingConvention = CallingConvention.Cdecl)]
-        public static extern unsafe JSValue JS_NewString(JSContext ctx, byte* str);
 
         [DllImport(JSBDLL, CallingConvention = CallingConvention.Cdecl)]
         public static extern unsafe JSValue JS_NewStringLen(JSContext ctx, byte* buf, size_t buf_len);
@@ -386,22 +363,23 @@ namespace QuickJS.Native
         public static extern JSValue JS_NewObject(JSContext ctx);
 
         [DllImport(JSBDLL, CallingConvention = CallingConvention.Cdecl)]
-        public static extern JS_BOOL JS_IsFunction(JSContext ctx, JSValueConst val);
+        [return: MarshalAs(UnmanagedType.U1)]
+        public static extern bool JS_IsFunction(JSContext ctx, JSValueConst val);
 
-        /// <summary>
-        /// return 1:true 0:false 
-        /// </summary>
         [DllImport(JSBDLL, CallingConvention = CallingConvention.Cdecl)]
-        public static extern JS_BOOL JS_IsConstructor(JSContext ctx, JSValueConst val);
+        [return: MarshalAs(UnmanagedType.U1)]
+        public static extern bool JS_IsConstructor(JSContext ctx, JSValueConst val);
 
         [DllImport(JSBDLL, CallingConvention = CallingConvention.Cdecl)]
         public static extern JSValue JS_NewArray(JSContext ctx);
 
         /// <summary>
-        /// return -1 if exception (proxy case) or TRUE/FALSE
+        /// True for a real Array. Unlike Bellard's, ng never reports the proxy exception
+        /// case, so there is no -1 to test for any more.
         /// </summary>
         [DllImport(JSBDLL, CallingConvention = CallingConvention.Cdecl)]
-        public static extern int JS_IsArray(JSContext ctx, JSValueConst val);
+        [return: MarshalAs(UnmanagedType.U1)]
+        public static extern bool JS_IsArray(JSValueConst val);
 
         [DllImport(JSBDLL, CallingConvention = CallingConvention.Cdecl)]
         public static extern IntPtr JS_GetContextOpaque(JSContext ctx);
@@ -418,36 +396,28 @@ namespace QuickJS.Native
 
         public static JSValue JSB_NewGetter(JSContext ctx, JSGetterCFunctionMagic func, JSAtom atom, int magic)
         {
-#if JSB_UNITYLESS || (UNITY_WSA && !UNITY_EDITOR)
             GCHandle.Alloc(func);
-#endif
             var fn = Marshal.GetFunctionPointerForDelegate(func);
             return JSB_NewCFunctionMagic(ctx, fn, atom, 0, JSCFunctionEnum.JS_CFUNC_getter_magic, magic);
         }
 
         public static JSValue JSB_NewSetter(JSContext ctx, JSSetterCFunctionMagic func, JSAtom atom, int magic)
         {
-#if JSB_UNITYLESS || (UNITY_WSA && !UNITY_EDITOR)
             GCHandle.Alloc(func);
-#endif
             var fn = Marshal.GetFunctionPointerForDelegate(func);
             return JSB_NewCFunctionMagic(ctx, fn, atom, 1, JSCFunctionEnum.JS_CFUNC_setter_magic, magic);
         }
 
         public static JSValue JSB_NewConstructor(JSContext ctx, JSCFunctionMagic func, JSAtom atom, int magic)
         {
-#if JSB_UNITYLESS || (UNITY_WSA && !UNITY_EDITOR)
             GCHandle.Alloc(func);
-#endif
             var fn = Marshal.GetFunctionPointerForDelegate(func);
             return JSB_NewCFunctionMagic(ctx, fn, atom, 0, JSCFunctionEnum.JS_CFUNC_constructor_magic, magic);
         }
 
         public static JSValue JSB_NewCFunctionMagic(JSContext ctx, JSCFunctionMagic func, JSAtom atom, int length, int magic)
         {
-#if JSB_UNITYLESS || (UNITY_WSA && !UNITY_EDITOR)
             GCHandle.Alloc(func);
-#endif
             var fn = Marshal.GetFunctionPointerForDelegate(func);
             return JSB_NewCFunctionMagic(ctx, fn, atom, length, JSCFunctionEnum.JS_CFUNC_generic_magic, magic);
         }
@@ -458,9 +428,7 @@ namespace QuickJS.Native
             {
                 return JS_UNDEFINED;
             }
-#if JSB_UNITYLESS || (UNITY_WSA && !UNITY_EDITOR)
             GCHandle.Alloc(func);
-#endif
             var fn = Marshal.GetFunctionPointerForDelegate(func);
             return JSB_NewCFunction(ctx, fn, atom, 0, JSCFunctionEnum.JS_CFUNC_getter, 0);
         }
@@ -471,36 +439,30 @@ namespace QuickJS.Native
             {
                 return JS_UNDEFINED;
             }
-#if JSB_UNITYLESS || (UNITY_WSA && !UNITY_EDITOR)
             GCHandle.Alloc(func);
-#endif
             var fn = Marshal.GetFunctionPointerForDelegate(func);
             return JSB_NewCFunction(ctx, fn, atom, 1, JSCFunctionEnum.JS_CFUNC_setter, 0);
         }
 
         public static JSValue JSB_NewCFunction(JSContext ctx, JSCFunction func, JSAtom atom, int length)
         {
-#if JSB_UNITYLESS || (UNITY_WSA && !UNITY_EDITOR)
             GCHandle.Alloc(func);
-#endif
             var fn = Marshal.GetFunctionPointerForDelegate(func);
             return JSB_NewCFunction(ctx, fn, atom, length, JSCFunctionEnum.JS_CFUNC_generic, 0);
         }
 
+        /// <summary>Returns -1 on exception.</summary>
         [DllImport(JSBDLL, CallingConvention = CallingConvention.Cdecl)]
-        public static extern void JS_SetConstructor(JSContext ctx, JSValueConst func_obj, JSValueConst proto);
+        public static extern int JS_SetConstructor(JSContext ctx, JSValueConst func_obj, JSValueConst proto);
 
-        /* return -1 in case of exception or TRUE or FALSE. Warning: 'val' is
-           freed by the function. 'flags' is a bitmask of JS_PROP_NO_ADD,
-           JS_PROP_THROW or JS_PROP_THROW_STRICT. If JS_PROP_NO_ADD is set,
-           the new property is not added and an error is raised. */
+        /// <summary>
+        /// Returns -1 on exception, else TRUE/FALSE. Frees <paramref name="val"/>.
+        /// </summary>
+        // Same story as JS_GetProperty: ng's JS_SetProperty is
+        // JS_SetPropertyInternal(..., JS_PROP_THROW) (quickjs.c:10807), which is what the
+        // wrapper this replaced passed.
         [DllImport(JSBDLL, CallingConvention = CallingConvention.Cdecl)]
-        public static extern int JS_SetPropertyInternal(JSContext ctx, JSValueConst this_obj, JSAtom prop, JSValue val, int flags);
-
-        public static int JS_SetProperty(JSContext ctx, JSValueConst this_obj, JSAtom prop, JSValue val)
-        {
-            return JS_SetPropertyInternal(ctx, this_obj, prop, val, (int)JSPropFlags.JS_PROP_THROW);
-        }
+        public static extern int JS_SetProperty(JSContext ctx, JSValueConst this_obj, JSAtom prop, JSValue val);
 
         public static bool IsDebugMode()
         {
@@ -572,13 +534,12 @@ namespace QuickJS.Native
         [DllImport(JSBDLL, CallingConvention = CallingConvention.Cdecl)]
         public static extern int JS_ExecutePendingJob(JSRuntime rt, out JSContext pctx);
 
-#if JSB_WITH_V8_BACKEND
-        //TODO unity-jsb: [IMPORTANT] implement it in v8-bridge later
-        public static int JS_IsJobPending(JSRuntime rt, out JSContext pctx) { return 0; }
-#else
+        // The `out JSContext pctx` this used to declare was never in any QuickJS header,
+        // Bellard's included -- the callee ignored the second register and the caller read
+        // back whatever the uninitialised local held.
         [DllImport(JSBDLL, CallingConvention = CallingConvention.Cdecl)]
-        public static extern int JS_IsJobPending(JSRuntime rt, out JSContext pctx);
-#endif
+        [return: MarshalAs(UnmanagedType.U1)]
+        public static extern bool JS_IsJobPending(JSRuntime rt);
 
         [DllImport(JSBDLL, CallingConvention = CallingConvention.Cdecl)]
         public static extern int JS_ToBool(JSContext ctx, JSValueConst val);
@@ -771,34 +732,9 @@ namespace QuickJS.Native
         public static readonly JSAtom JS_ATOM_String = JSB_ATOM_String();
 
         [DllImport(JSBDLL, CallingConvention = CallingConvention.Cdecl)]
-        public static extern JSAtom JSB_ATOM_Function();
-
-        public static readonly JSAtom JS_ATOM_Function = JSB_ATOM_Function();
-
-        [DllImport(JSBDLL, CallingConvention = CallingConvention.Cdecl)]
         public static extern JSAtom JSB_ATOM_Error();
 
         public static readonly JSAtom JS_ATOM_Error = JSB_ATOM_Error();
-
-#if JSB_NO_BIGNUM || ((UNITY_WSA || UNITY_WEBGL) && !UNITY_EDITOR)
-        public static void JS_AddIntrinsicOperators(JSContext ctx) {}
-        public static readonly JSAtom JS_ATOM_Operators;
-        public static readonly JSAtom JS_ATOM_Symbol_operatorSet;
-#else 
-        [DllImport(JSBDLL, CallingConvention = CallingConvention.Cdecl)]
-        public static extern void JS_AddIntrinsicOperators(JSContext ctx);
-
-        [DllImport(JSBDLL, CallingConvention = CallingConvention.Cdecl)]
-        public static extern JSAtom JSB_ATOM_Operators();
-
-        public static readonly JSAtom JS_ATOM_Operators = JSB_ATOM_Operators();
-
-        [DllImport(JSBDLL, CallingConvention = CallingConvention.Cdecl)]
-        public static extern JSAtom JSB_ATOM_Symbol_operatorSet();
-
-        // only available CONFIG_BIGNUM
-        public static readonly JSAtom JS_ATOM_Symbol_operatorSet = JSB_ATOM_Symbol_operatorSet();
-#endif
 
         [DllImport(JSBDLL, CallingConvention = CallingConvention.Cdecl)]
         public static extern JSAtom JSB_ATOM_name();
@@ -810,15 +746,9 @@ namespace QuickJS.Native
 
         public static readonly JSAtom JS_ATOM_message = JSB_ATOM_message();
 
-        [DllImport(JSBDLL, CallingConvention = CallingConvention.Cdecl)]
-        public static extern JSAtom JSB_ATOM_fileName();
-
-        public static readonly JSAtom JS_ATOM_fileName = JSB_ATOM_fileName();
-
-        [DllImport(JSBDLL, CallingConvention = CallingConvention.Cdecl)]
-        public static extern JSAtom JSB_ATOM_lineNumber();
-
-        public static readonly JSAtom JS_ATOM_lineNumber = JSB_ATOM_lineNumber();
+        // fileName and lineNumber are gone: Bellard's build_backtrace defined both on the
+        // Error object, ng keeps only the Function.prototype getters (quickjs.c:43389).
+        // The location lives in the `stack` string now -- see JSContext.FormatException.
 
         [DllImport(JSBDLL, CallingConvention = CallingConvention.Cdecl)]
         public static extern JSAtom JSB_ATOM_length();
@@ -858,7 +788,7 @@ namespace QuickJS.Native
         #region string
 
         [DllImport(JSBDLL, CallingConvention = CallingConvention.Cdecl)]
-        public static extern IntPtr JS_ToCStringLen2(JSContext ctx, out size_t len, [In] JSValue val, [MarshalAs(UnmanagedType.Bool)] bool cesu8);
+        public static extern IntPtr JS_ToCStringLen2(JSContext ctx, out size_t len, [In] JSValue val, [MarshalAs(UnmanagedType.U1)] bool cesu8);
 
         public static IntPtr JS_ToCStringLen(JSContext ctx, out size_t len, JSValue val)
         {
@@ -893,53 +823,6 @@ namespace QuickJS.Native
 
         #region diagnostics
 
-#if JSB_WITH_V8_BACKEND
-        [DllImport(JSBDLL, CallingConvention = CallingConvention.Cdecl)]
-        public static extern unsafe void JS_OpenDebugger(JSContext ctx, int port);
-        [DllImport(JSBDLL, CallingConvention = CallingConvention.Cdecl)]
-        public static extern unsafe JS_BOOL JS_IsDebuggerConnected(JSContext ctx);
-        [DllImport(JSBDLL, CallingConvention = CallingConvention.Cdecl)]
-        public static extern unsafe JS_BOOL JS_IsDebuggerOpen(JSContext ctx);
-        [DllImport(JSBDLL, CallingConvention = CallingConvention.Cdecl)]
-        public static extern unsafe void JS_CloseDebugger(JSContext ctx);
-
-        [DllImport(JSBDLL, CallingConvention = CallingConvention.Cdecl)]
-        private static extern unsafe void JS_SetLogFunc(JSContext ctx, IntPtr func);
-        public static void JS_SetLogFunc(JSContext ctx, JSLogCFunction cb)
-        {
-#if JSB_UNITYLESS || (UNITY_WSA && !UNITY_EDITOR)
-            GCHandle.Alloc(cb);
-#endif
-            var fn = Marshal.GetFunctionPointerForDelegate(cb);
-            JS_SetLogFunc(ctx, fn);
-        }
-
-        [DllImport(JSBDLL, CallingConvention = CallingConvention.Cdecl)]
-        private static extern unsafe void JS_SetWaitingForDebuggerFunc(JSContext ctx, IntPtr func);
-        public static void JS_SetWaitingForDebuggerFunc(JSContext ctx, JSWaitingForDebuggerCFunction cb)
-        {
-            if (cb != null)
-            {
-#if JSB_UNITYLESS || (UNITY_WSA && !UNITY_EDITOR)
-                GCHandle.Alloc(cb);
-#endif
-                var fn = Marshal.GetFunctionPointerForDelegate(cb);
-                JS_SetWaitingForDebuggerFunc(ctx, fn);
-            }
-            else
-            {
-                JS_SetWaitingForDebuggerFunc(ctx, IntPtr.Zero);
-            }
-        }
-#else 
-        public static void JS_OpenDebugger(JSContext ctx, int port) { }
-        public static JS_BOOL JS_IsDebuggerConnected(JSContext ctx) { return 0; }
-        public static JS_BOOL JS_IsDebuggerOpen(JSContext ctx) { return 0; }
-        public static void JS_CloseDebugger(JSContext ctx) { }
-        public static void JS_SetLogFunc(JSContext ctx, JSLogCFunction cb) { }
-        public static void JS_SetWaitingForDebuggerFunc(JSContext ctx, JSWaitingForDebuggerCFunction cb) { }
-#endif // end JSB_WITH_V8_BACKEND
-
         [DllImport(JSBDLL, CallingConvention = CallingConvention.Cdecl)]
         public static extern unsafe void JS_ComputeMemoryUsage(JSRuntime rt, JSMemoryUsage* s);
 
@@ -948,9 +831,7 @@ namespace QuickJS.Native
 
         public static void JS_SetInterruptHandler(JSRuntime rt, JSInterruptHandler cb, IntPtr opaque)
         {
-#if JSB_UNITYLESS || (UNITY_WSA && !UNITY_EDITOR)
             GCHandle.Alloc(cb);
-#endif
             var fn = Marshal.GetFunctionPointerForDelegate(cb);
             JS_SetInterruptHandler(rt, fn, opaque);
         }

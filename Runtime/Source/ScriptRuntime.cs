@@ -15,6 +15,33 @@ namespace QuickJS
 
     public partial class ScriptRuntime
     {
+        /// <summary>How much C stack a script may use before the engine raises a catchable JS
+        /// "stack overflow", set before the runtime is created. Zero leaves quickjs-ng's own
+        /// limit alone, which on Unity's main thread means no working limit at all.</summary>
+        ///
+        /// It defaults to 768 KB rather than to ng's behaviour, because ng's default cannot fire
+        /// here: it is 1 MB (JS_DEFAULT_STACK_SIZE) and it measures against the stack of whichever
+        /// thread created the runtime - Unity's main thread, already deep in Unity's own frames and
+        /// deeper still inside a coroutine, where less than 1 MB is left. So a deeply recursive
+        /// script exhausts the real stack first, Mono notices at the managed-to-native boundary,
+        /// and the StackOverflowException that follows cannot be caught: it takes the player or the
+        /// Editor with it. Under a limit the thread can actually reach, the same script raises an
+        /// ordinary RangeError that a caller can catch and a console can show.
+        ///
+        /// The asymmetry is why this is on by default. A cap too high for its platform simply never
+        /// fires, which is no worse than having none. A cap too low costs recursion that would have
+        /// completed - but only in the window between the cap and the stack that was really there,
+        /// which is 768 KB to about 1 MB on the editors measured (6000.5.9f1, main thread inside a
+        /// PlayMode coroutine: 768 KB raises cleanly, 1 MB does not raise at all). Trading that
+        /// window for a crash that cannot be caught or reported is worth it for a UI framework.
+        ///
+        /// Raise it if you have deliberately deep code and know your thread's stack; lower it if
+        /// you want the guard to fire on a platform with a smaller main-thread stack, where 768 KB
+        /// may sit above the real headroom and so never trip. Zero restores ng's unusable default.
+        /// Note that zero is a local sentinel meaning "do not call", never a value to forward - ng
+        /// reads a zero stack_size as *unlimited*, which is worse still.
+        public static int MaxStackSize = 768 * 1024;
+
         private class ScriptContextRef
         {
             public int next;
@@ -28,7 +55,6 @@ namespace QuickJS
         /// <summary>
         /// this event will be raised after debugger connected if debug server is used, otherwise it will be raised immediately after OnInitialized
         /// </summary>
-        public event Action<ScriptRuntime> OnDebuggerConnected;
         public event Action<int> OnAfterDestroy;
         public event Action OnUpdate;
         public event Action<ScriptContext, string> OnScriptReloading;
@@ -316,18 +342,6 @@ namespace QuickJS
             }
         }
 
-        [MonoPInvokeCallback(typeof(JSWaitingForDebuggerCFunction))]
-        private static void _RunIfWaitingForDebugger(JSContext ctx)
-        {
-            var runtime = ScriptEngine.GetRuntime(ctx);
-            if (runtime != null)
-            {
-                // wait only once
-                JSApi.JS_SetWaitingForDebuggerFunc(ctx, null);
-                runtime.RaiseDebuggerConnectedEvent();
-            }
-        }
-
         // 通用析构函数
         [MonoPInvokeCallback(typeof(JSGCObjectFinalizer))]
         public static void class_finalizer(JSRuntime rt, JSPayloadHeader header)
@@ -357,9 +371,6 @@ namespace QuickJS
                 throw new NullReferenceException(nameof(fileSystem));
             }
 
-#if !JSB_WITH_V8_BACKEND
-            args.withDebugServer = false;
-#endif
             args.asyncManager.Initialize(_mainThreadId);
 
             _isValid = true;
@@ -370,6 +381,9 @@ namespace QuickJS
             _logger?.Write(LogLevel.Info, "initializing script runtime: {0}", _runtimeId);
 #endif
             _rt = JSApi.JSB_NewRuntime(class_finalizer);
+            // Before anything can evaluate. Guarded because zero means "leave ng's limit alone";
+            // forwarding it would ask ng for an unlimited stack.
+            if (MaxStackSize > 0) JSApi.JS_SetMaxStackSize(_rt, (size_t)MaxStackSize);
             JSApi.JS_SetHostPromiseRejectionTracker(_rt, JSNative.PromiseRejectionTracker, IntPtr.Zero);
 #if UNITY_EDITOR
             JSApi.JS_SetInterruptHandler(_rt, _InterruptHandler, IntPtr.Zero);
@@ -380,10 +394,8 @@ namespace QuickJS
             }
 #endif
             JSApi.JSB_SetRuntimeOpaque(_rt, (IntPtr)_runtimeId);
-#if !JSB_WITH_V8_BACKEND
             JSApi.JS_SetModuleLoaderFunc(_rt, module_normalize, module_loader, IntPtr.Zero);
-#endif
-            CreateContext(args.apiBridge, args.withDebugServer, args.debugServerPort);
+            CreateContext(args.apiBridge);
             _pathResolver = args.pathResolver;
             _asyncManager = args.asyncManager;
             _byteBufferAllocator = args.byteBufferAllocator;
@@ -393,14 +405,6 @@ namespace QuickJS
             _objectCollection = new ObjectCollection();
             _timerManager = args.timerManager ?? new DefaultTimerManager(_logger);
             _typeDB = new TypeDB(this, _mainContext);
-#if !JSB_UNITYLESS
-            _typeDB.AddType(typeof(Unity.JSBehaviour), JSApi.JS_UNDEFINED);
-            _typeDB.AddType(typeof(Unity.JSScriptableObject), JSApi.JS_UNDEFINED);
-#endif
-#if !JSB_UNITYLESS && UNITY_EDITOR
-            _typeDB.AddType(Values.FindType("QuickJS.Unity.JSEditorWindow"), JSApi.JS_UNDEFINED);
-            _typeDB.AddType(Values.FindType("QuickJS.Unity.JSBehaviourInspector"), JSApi.JS_UNDEFINED);
-#endif
 
             // await Task.Run(() => runner.OnBind(this, register));
             try
@@ -423,31 +427,11 @@ namespace QuickJS
             AddStaticModule("jsb", ScriptContext.Bind);
             // FindModuleResolver<StaticModuleResolver>().Warmup(_mainContext);
 
-#if !JSB_UNITYLESS
-            //TODO may be changed in the future
-            var plover = UnityEngine.Resources.Load<UnityEngine.TextAsset>("plover.js");
-            if (plover != null)
-            {
-                _mainContext.EvalSource(plover.text, "plover.js");
-            }
-            else
-            {
-                _logger?.Write(LogLevel.Error, "failed to load plover.js from Resources");
-            }
-#endif
 
-            if (!args.withDebugServer || !args.waitingForDebugger || args.debugServerPort <= 0 || JSApi.JS_IsDebuggerConnected(_mainContext) == 1)
-            {
-                RaiseDebuggerConnectedEvent();
-            }
-            else
-            {
-                _logger?.Write(LogLevel.Info, "[EXPERIMENTAL] Waiting for debugger...");
-                JSApi.JS_SetWaitingForDebuggerFunc((JSContext)_mainContext, _RunIfWaitingForDebugger);
-            }
+            RaiseInitialized();
         }
 
-        private void RaiseDebuggerConnectedEvent()
+        private void RaiseInitialized()
         {
             if (!_isInitialized)
             {
@@ -455,7 +439,6 @@ namespace QuickJS
                 OnInitializing?.Invoke(this);
                 OnInitialized?.Invoke(this);
             }
-            OnDebuggerConnected?.Invoke(this);
         }
 
         [MonoPInvokeCallback(typeof(JSInterruptHandler))]
@@ -567,7 +550,7 @@ namespace QuickJS
             return _objectCollection.RemoveObject(handle);
         }
 
-        private ScriptContext CreateContext(Experimental.IJSApiBridge apiBridge, bool withDebugServer, int debugServerPort)
+        private ScriptContext CreateContext(Experimental.IJSApiBridge apiBridge)
         {
             ScriptContextRef freeEntry;
             int slotIndex;
@@ -586,7 +569,7 @@ namespace QuickJS
                 freeEntry.next = -1;
             }
 
-            var context = new ScriptContext(this, slotIndex + 1, apiBridge, withDebugServer, debugServerPort);
+            var context = new ScriptContext(this, slotIndex + 1, apiBridge);
 
             freeEntry.target = context;
             if (_mainContext == null)
@@ -884,9 +867,7 @@ namespace QuickJS
 
                 if (err >= 0)
                 {
-                    var hasPending = JSApi.JS_IsJobPending(_rt, out ctx);
-
-                    if (hasPending == 0)
+                    if (!JSApi.JS_IsJobPending(_rt))
                     {
                         break;
                     }
@@ -1018,10 +999,8 @@ namespace QuickJS
             GC.WaitForPendingFinalizers();
             ExecutePendingActions(true);
 
-#if !JSB_WITH_V8_BACKEND
             //TODO unity-jsb: jsvalue's gc finalizer can't be certainly invoked when the jsvalue hasn't any reference, we just do not calling cache.Destroy normally for now.
             _objectCache.Destroy();
-#endif
 
             //
             GC.Collect();
@@ -1061,10 +1040,6 @@ namespace QuickJS
                 _logger?.Write(LogLevel.Assert, "gc object leaks");
             }
 
-#if JSB_WITH_V8_BACKEND
-            //TODO unity-jsb: jsvalue's gc finalizer can't be certainly invoked when the jsvalue hasn't any reference, we just do not calling cache.Destroy normally for now.
-            _objectCache.Destroy();
-#endif
             var id = _runtimeId;
             _runtimeId = -1;
             _rt = JSRuntime.Null;

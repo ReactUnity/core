@@ -2,7 +2,6 @@
 using System.IO;
 using System.Collections.Generic;
 using System.Reflection;
-using System.Linq;
 using System.Runtime.CompilerServices;
 
 namespace QuickJS.Binding
@@ -81,33 +80,6 @@ namespace QuickJS.Binding
         {
             this.csBindName = bindingManager.GetBindName(bStatic, csName);
             this.jsName = jsName;
-        }
-    }
-
-    public class OperatorBindingInfo : MethodBaseBindingInfo<MethodInfo>
-    {
-        public int length; // 参数数
-        public string csName; // CS原始方法名 (op_xxx)
-        public string cs_op; // 绑定代码中的运算符
-        public MethodInfo methodInfo;
-        public bool isExtension;
-
-        // regName: js 中的重载运算符
-        public OperatorBindingInfo(BindingManager bindingManager, MethodInfo methodInfo, bool isExtension, bool bStatic, string csName, string jsName, string cs_op, int length)
-        {
-            this.methodInfo = methodInfo;
-            this.isExtension = isExtension;
-            this.length = length;
-            this.csName = csName;
-            this.jsName = jsName;
-            this.cs_op = cs_op;
-            this.csBindName = bindingManager.GetBindName(bStatic, csName + "_qjs");
-            if (methodInfo.DeclaringType.GetMethods().Count(m => m.IsSpecialName && m.Name.StartsWith("op_") && m.Name == methodInfo.Name) > 1)
-            {
-                this.csBindName += "_m";
-            }
-
-            this.Add(methodInfo, isExtension); //NOTE: 旧代码, 待更替
         }
     }
 

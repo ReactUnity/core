@@ -18,7 +18,6 @@ namespace QuickJS.Binding
         private Type _type;
         private JSHotfixAttribute _hotfix;
         private string _typeNaming;
-        private bool _enableOperatorOverloading = true;
         private bool _disposable;
         private Native.JSCFunctionMagic _csConstructorOverride = null;
 
@@ -68,8 +67,6 @@ namespace QuickJS.Binding
 
         private Dictionary<MemberInfo, string> _memberNameAlias = new Dictionary<MemberInfo, string>();
 
-        public bool enableOperatorOverloading => _enableOperatorOverloading;
-
         public Type type => _type;
 
         public Native.JSCFunctionMagic csConstructorOverride => _csConstructorOverride;
@@ -81,12 +78,6 @@ namespace QuickJS.Binding
             {
                 bindingFlags = TypeBindingFlags.Default & ~TypeBindingFlags.BindingCode;
             }
-        }
-
-        public TypeTransform EnableOperatorOverloading(bool value)
-        {
-            _enableOperatorOverloading = value;
-            return this;
         }
 
         /// <summary>

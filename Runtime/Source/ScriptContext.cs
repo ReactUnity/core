@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -29,12 +29,20 @@ namespace QuickJS
         private Regex _stRegex;
 
         private JSValue _globalObject;
-        private JSValue _operatorCreate;
         private JSValue _proxyConstructor;
         private JSValue _objectConstructor;
         private JSValue _numberConstructor;
         private JSValue _stringConstructor;
-        private JSValue _functionConstructor;
+        private JSValue _moduleRejectHandler;
+        private JSValue _moduleFulfillHandler;
+        private struct PendingModule
+        {
+            public string Source;
+            public string FileName;
+        }
+
+        private readonly Queue<PendingModule> _moduleEvalQueue = new Queue<PendingModule>();
+        private bool _moduleGraphInFlight;
 
         private bool _isReloading;
         private List<string> _waitForReloadModules;
@@ -45,30 +53,14 @@ namespace QuickJS
         // id = context slot index + 1
         public int id { get { return _contextId; } }
 
-        [MonoPInvokeCallback(typeof(JSLogCFunction))]
-        private static void _JSLog(int level, string line)
-        {
-#if !JSB_UNITYLESS
-            UnityEngine.Debug.LogFormat("[RAW] {0}", line);
-#endif
-        }
-
-        public ScriptContext(ScriptRuntime runtime, int contextId, Experimental.IJSApiBridge apiBridge, bool withDebugServer, int debugServerPort)
+        public ScriptContext(ScriptRuntime runtime, int contextId, Experimental.IJSApiBridge apiBridge)
         {
             _isValid = true;
             _runtime = runtime;
             _apiBridge = apiBridge ?? new Experimental.DefaultJSApiBridgeImpl();
             _contextId = contextId;
             _ctx = JSApi.JS_NewContext(_runtime);
-            //TODO will be removed later
-            JSApi.JS_SetLogFunc(_ctx, _JSLog);
-            if (withDebugServer && debugServerPort > 0)
-            {
-                JSApi.JS_OpenDebugger(_ctx, debugServerPort);
-                runtime.GetLogger()?.Write(LogLevel.Info, string.Format("[EXPERIMENTAL] Debugger is now available with this URL (Windows x64 only): devtools://devtools/bundled/inspector.html?v8only=true&ws=127.0.0.1:{0}/1", debugServerPort));
-            }
             JSApi.JS_SetContextOpaque(_ctx, (IntPtr)_contextId);
-            JSApi.JS_AddIntrinsicOperators(_ctx);
             _atoms = new AtomCache(_ctx);
             _moduleIdList = new List<string>();
             _stringCache = new JSStringCache(_ctx);
@@ -80,43 +72,8 @@ namespace QuickJS
             _numberConstructor = JSApi.JS_GetProperty(_ctx, _globalObject, JSApi.JS_ATOM_Number);
             _proxyConstructor = JSApi.JS_GetProperty(_ctx, _globalObject, JSApi.JS_ATOM_Proxy);
             _stringConstructor = JSApi.JS_GetProperty(_ctx, _globalObject, JSApi.JS_ATOM_String);
-            _functionConstructor = JSApi.JS_GetProperty(_ctx, _globalObject, JSApi.JS_ATOM_Function);
-            _operatorCreate = JSApi.JS_UNDEFINED;
-
-            if (JSApi.IsOperatorOverloadingSupported && JSApi.JS_ATOM_Operators.IsValid)
-            {
-                var operators = JSApi.JS_GetProperty(_ctx, _globalObject, JSApi.JS_ATOM_Operators);
-                if (!operators.IsNullish())
-                {
-                    if (operators.IsException())
-                    {
-                        _ctx.print_exception();
-                    }
-                    else
-                    {
-                        var create = JSApi.JS_GetProperty(_ctx, operators, GetAtom("create"));
-                        JSApi.JS_FreeValue(_ctx, operators);
-                        if (create.IsException())
-                        {
-                            _ctx.print_exception();
-                        }
-                        else
-                        {
-                            if (JSApi.JS_IsFunction(_ctx, create) == 1)
-                            {
-                                _operatorCreate = create;
-
-                                // Function.prototype[Symbol.operatorSet] = Operators.create();
-                                CreateDefaultOperators(_functionConstructor);
-                            }
-                            else
-                            {
-                                JSApi.JS_FreeValue(_ctx, create);
-                            }
-                        }
-                    }
-                }
-            }
+            _moduleRejectHandler = JSApi.JS_UNDEFINED;
+            _moduleFulfillHandler = JSApi.JS_UNDEFINED;
         }
 
         public void ReleaseTypeRegister(TypeRegister register)
@@ -136,23 +93,6 @@ namespace QuickJS
             }
 
             return _currentTypeRegister;
-        }
-
-        private unsafe void CreateDefaultOperators(JSValue constructor)
-        {
-            if (!_operatorCreate.IsNullish())
-            {
-                var rval = JSApi.JS_Call(_ctx, _operatorCreate);
-                if (rval.IsException())
-                {
-                    var ex = _ctx.GetExceptionString();
-                    GetLogger()?.Write(LogLevel.Error, ex);
-                }
-                else
-                {
-                    JSApi.JS_DefinePropertyValue(_ctx, constructor, JSApi.JS_ATOM_Symbol_operatorSet, rval);
-                }
-            }
         }
 
         public bool IsValid()
@@ -228,9 +168,9 @@ namespace QuickJS
             JSApi.JS_FreeValue(_ctx, _objectConstructor);
             JSApi.JS_FreeValue(_ctx, _numberConstructor);
             JSApi.JS_FreeValue(_ctx, _stringConstructor);
-            JSApi.JS_FreeValue(_ctx, _functionConstructor);
+            JSApi.JS_FreeValue(_ctx, _moduleRejectHandler);
+            JSApi.JS_FreeValue(_ctx, _moduleFulfillHandler);
             JSApi.JS_FreeValue(_ctx, _globalObject);
-            JSApi.JS_FreeValue(_ctx, _operatorCreate);
 
             JSApi.JS_FreeValue(_ctx, _moduleCache);
             JSApi.JS_FreeValue(_ctx, _mainModule);
@@ -272,11 +212,6 @@ namespace QuickJS
             return JSApi.JS_DupValue(_ctx, _stringConstructor);
         }
 
-        public JSValue GetFunctionConstructor()
-        {
-            return JSApi.JS_DupValue(_ctx, _functionConstructor);
-        }
-
         ///<summary>
         /// 获取 number.constructor (增加引用计数)
         ///</summary>
@@ -315,14 +250,6 @@ namespace QuickJS
             }
 
             return false;
-        }
-
-        ///<summary>
-        /// 获取 operator.create (增加引用计数)
-        ///</summary>
-        public JSValue GetOperatorCreate()
-        {
-            return JSApi.JS_DupValue(_ctx, _operatorCreate);
         }
 
         //TODO: 改为消耗 exports_obj 计数
@@ -371,7 +298,7 @@ namespace QuickJS
                 if (LoadModuleCache(parent_module_id, out parent_mod_obj))
                 {
                     var children_obj = JSApi.JS_GetProperty(_ctx, parent_mod_obj, GetAtom("children"));
-                    if (JSApi.JS_IsArray(_ctx, children_obj) == 1)
+                    if (JSApi.JS_IsArray(children_obj))
                     {
                         var lengthVal = JSApi.JS_GetProperty(_ctx, children_obj, JSApi.JS_ATOM_length);
                         if (lengthVal.IsNumber())
@@ -392,59 +319,6 @@ namespace QuickJS
             return module_obj;
         }
 
-#if !JSB_UNITYLESS
-        public unsafe bool TrySetScriptRef(ref Unity.JSScriptRef scriptRef, JSValue ctor)
-        {
-            string[] scriptRefValue = null;
-            var sourceString = @"(function (cache, ctor) {
-                for (let mod_id in cache) {
-                    let mod_obj = cache[mod_id];
-                    let exports = mod_obj['exports'];
-                    if (typeof exports === 'object') {
-                        for (let member_id in exports) {
-                            let member_obj = exports[member_id];
-                            if (typeof member_obj === 'function' && member_obj == ctor) {
-                                return [mod_id, member_id];
-                            }
-                        }
-                    }
-                }
-                return null;
-            })";
-            var scriptRefFinder = ScriptRuntime.EvalSource(_ctx, sourceString, "eval", false);
-            if (scriptRefFinder.IsException())
-            {
-                _ctx.print_exception();
-                return false;
-            }
-            var argv = stackalloc JSValue[2]
-            {
-                JSApi.JS_DupValue(_ctx, _moduleCache),
-                JSApi.JS_DupValue(_ctx, ctor),
-            };
-            var retVal = JSApi.JS_Call(_ctx, scriptRefFinder, JSApi.JS_UNDEFINED, 2, argv);
-            JSApi.JS_FreeValue(_ctx, scriptRefFinder);
-            JSApi.JS_FreeValue(_ctx, argv[0]);
-            JSApi.JS_FreeValue(_ctx, argv[1]);
-            if (retVal.IsException())
-            {
-                _ctx.print_exception();
-                return false;
-            }
-            if (Values.js_get_primitive(_ctx, retVal, out scriptRefValue) && scriptRefValue != null && scriptRefValue.Length >= 2)
-            {
-                if (!string.IsNullOrEmpty(scriptRefValue[1]))
-                {
-                    JSApi.JS_FreeValue(_ctx, retVal);
-                    scriptRef.modulePath = scriptRefValue[0];
-                    scriptRef.className = scriptRefValue[1];
-                    return true;
-                }
-            }
-            JSApi.JS_FreeValue(_ctx, retVal);
-            return false;
-        }
-#endif
 
         public bool LoadModuleCacheExports(string module_id, string key, out JSValue value)
         {
@@ -529,12 +403,6 @@ namespace QuickJS
             OnScriptReloaded?.Invoke(this, resolved_id);
         }
 
-#if !JSB_UNITYLESS
-        public bool CheckModuleId(Unity.JSScriptRef scriptRef, string resolved_id)
-        {
-            return _runtime.ResolveModuleId(this, "", scriptRef.modulePath) == resolved_id;
-        }
-#endif
 
         public bool TryGetModuleForReloading(string resolved_id, out JSValue module_obj)
         {
@@ -569,7 +437,7 @@ namespace QuickJS
             // callee is the function <'require'> of current module
             var callee = JSApi.JS_GetActiveFunction(ctx);
 
-            if (JSApi.JS_IsFunction(ctx, callee) != 1)
+            if (!JSApi.JS_IsFunction(ctx, callee))
             {
                 return ctx.ThrowInternalError("require != function");
             }
@@ -661,7 +529,7 @@ namespace QuickJS
                     if (bytecodeFunc.IsFunctionByteCode())
                     {
                         var func_val = JSApi.JS_EvalFunction(ctx, bytecodeFunc); // it's CallFree (bytecodeFunc)
-                        if (JSApi.JS_IsFunction(ctx, func_val) != 1)
+                        if (!JSApi.JS_IsFunction(ctx, func_val))
                         {
                             JSApi.JS_FreeValue(ctx, func_val);
                             JSApi.JS_FreeValue(ctx, RequireArgNum, require_argv);
@@ -703,16 +571,7 @@ namespace QuickJS
                 fixed (byte* resolved_id_ptr = resolved_id_bytes)
                 {
                     var input_len = (size_t)(input_bytes.Length - 1);
-#if JSB_WITH_V8_BACKEND
-                    JSValue func_val;
-                    var filename_bytes = TextUtils.GetNullTerminatedBytes(filename.Replace('/', '\\')); // normalize for v8 debug protocol
-                    fixed (byte* filename_ptr = filename_bytes)
-                    {
-                        func_val = JSApi.JS_EvalSource(ctx, input_ptr, input_len, filename_ptr);
-                    }
-#else
                     var func_val = JSApi.JS_EvalSource(ctx, input_ptr, input_len, resolved_id_ptr);
-#endif
 
                     if (func_val.IsException())
                     {
@@ -720,7 +579,7 @@ namespace QuickJS
                         return func_val;
                     }
 
-                    if (JSApi.JS_IsFunction(ctx, func_val) == 1)
+                    if (JSApi.JS_IsFunction(ctx, func_val))
                     {
                         var rval = JSApi.JS_Call(ctx, func_val, JSApi.JS_UNDEFINED, RequireArgNum, require_argv);
                         if (rval.IsException())
@@ -791,7 +650,6 @@ namespace QuickJS
             ns_jsb.AddFunction("AddModule", _add_module, 2);
             ns_jsb.AddFunction("Now", _now, 0);
             ns_jsb.AddFunction("IsStaticBinding", _IsStaticBinding, 0);
-            ns_jsb.AddConstValue("isOperatorOverloadingSupported", JSApi.IsOperatorOverloadingSupported);
             ns_jsb.AddConstValue("engine", JSApi.JSBDLL);
             ns_jsb.AddConstValue("version", JSApi.SO_JSB_VERSION);
             ns_jsb.AddConstValue("pluginVersion", JSApi.VERSION);
@@ -839,6 +697,152 @@ namespace QuickJS
         {
             var bytes = System.Text.Encoding.UTF8.GetBytes(source);
             return (T)EvalSource(bytes, fileName, typeof(T), true);
+        }
+
+        /// Evaluates as an ES module whose imports are fetched by the runtime's async module
+        /// loader, so a specifier can name something the host has to go and get.
+        ///
+        /// Returns as soon as the graph has been started, which is the point of it - nothing has
+        /// evaluated yet. A graph that needs nothing from the loader still finishes on the job
+        /// queue, so pump the runtime after; one that is waiting on a request finishes over the
+        /// following updates instead, and reports a failure through the logger.
+        ///
+        /// Requires an AsyncModuleLoader to be installed. Without one the engine has no way to
+        /// answer a request and the graph rejects.
+        ///
+        /// Graphs are evaluated one at a time, in the order they were handed over. A document's
+        /// module scripts run in document order in a browser, and the entry point relies on it:
+        /// Vite's React preamble is an inline module that has to install its refresh hooks before
+        /// the app module it precedes is evaluated. Started concurrently they race, and the app
+        /// loses often enough to fail with "@vitejs/plugin-react can't detect preamble".
+        ///
+        /// Only host-initiated roots queue here. A dynamic `import()` inside JS is resolved by the
+        /// engine through the loader and never reaches this method, so nothing an evaluating graph
+        /// awaits can be stuck behind it.
+        public void EvalModuleAsync(string source, string fileName)
+        {
+            if (_moduleGraphInFlight)
+            {
+                _moduleEvalQueue.Enqueue(new PendingModule { Source = source, FileName = fileName });
+                return;
+            }
+
+            _moduleGraphInFlight = true;
+            try
+            {
+                EvalModuleAsyncNow(source, fileName);
+            }
+            catch
+            {
+                // A root that never started settles nothing, so release the queue before the
+                // parse error goes up to the caller.
+                _OnModuleGraphSettled();
+                throw;
+            }
+        }
+
+        /// Starts the next queued graph, if the one that just settled was not the last.
+        private void _OnModuleGraphSettled()
+        {
+            _moduleGraphInFlight = false;
+
+            while (!_moduleGraphInFlight && _moduleEvalQueue.Count > 0)
+            {
+                var next = _moduleEvalQueue.Dequeue();
+                _moduleGraphInFlight = true;
+                try
+                {
+                    EvalModuleAsyncNow(next.Source, next.FileName);
+                }
+                catch (Exception ex)
+                {
+                    // One bad root must not strand the ones behind it.
+                    _moduleGraphInFlight = false;
+                    ScriptEngine.GetLogger(_ctx)?.Write(LogLevel.Error, "failed to evaluate module '{0}': {1}", next.FileName, ex.Message);
+                }
+            }
+        }
+
+        private unsafe void EvalModuleAsyncNow(string source, string fileName)
+        {
+            var input_bytes = TextUtils.GetNullTerminatedBytes(source);
+            var fn_bytes = TextUtils.GetNullTerminatedBytes(fileName);
+
+            fixed (byte* input_ptr = input_bytes)
+            fixed (byte* fn_ptr = fn_bytes)
+            {
+                var promise = JSApi.JS_EvalModuleAsync(_ctx, input_ptr, (size_t)(input_bytes.Length - 1), fn_ptr);
+
+                if (JSApi.JS_IsException(promise))
+                {
+                    // A parse error in the root, which is the only failure that surfaces here:
+                    // everything past compiling the root settles the promise instead.
+                    var ex = _ctx.GetExceptionString();
+                    JSApi.JS_FreeValue(_ctx, promise);
+                    throw new JSException(ex, fileName);
+                }
+
+                _WatchModuleGraph(promise);
+                JSApi.JS_FreeValue(_ctx, promise);
+            }
+        }
+
+        /// Reports a graph that failed after EvalModuleAsync returned, which is the only place it
+        /// can be reported at all.
+        // This names the failure as a module-graph one; it does not replace the tracker's
+        // "unhandled promise rejection". Measured, not assumed: a rejected Vite graph logs both,
+        // because the promises the graph rejects inside itself are separate from the one attached
+        // to here.
+        private unsafe void _WatchModuleGraph(JSValue promise)
+        {
+            var then = JSApi.JS_GetProperty(_ctx, promise, GetAtom("then"));
+
+            if (JSApi.JS_IsFunction(_ctx, then))
+            {
+                // One handler per context, not one per module: JSB_NewCFunction roots the
+                // delegate for good, so a fresh one per graph leaks a GCHandle on every hot
+                // reload.
+                if (_moduleRejectHandler.IsUndefined())
+                {
+                    _moduleRejectHandler = JSApi.JSB_NewCFunction(_ctx, _module_graph_rejected, GetAtom("onRejected"), 1);
+                    _moduleFulfillHandler = JSApi.JSB_NewCFunction(_ctx, _module_graph_fulfilled, GetAtom("onFulfilled"), 1);
+                }
+
+                var argv = stackalloc JSValue[2];
+                argv[0] = _moduleFulfillHandler;
+                argv[1] = _moduleRejectHandler;
+
+                var rval = JSApi.JS_Call(_ctx, then, promise, 2, argv);
+                if (rval.IsException()) _ctx.print_exception();
+
+                JSApi.JS_FreeValue(_ctx, rval);
+                JSApi.JS_FreeValue(_ctx, then);
+                return;
+            }
+
+            JSApi.JS_FreeValue(_ctx, then);
+
+            // Nothing to settle against, so the queue would stall behind this graph.
+            _OnModuleGraphSettled();
+        }
+
+        [MonoPInvokeCallback(typeof(JSCFunction))]
+        private static JSValue _module_graph_rejected(JSContext ctx, JSValue this_obj, int argc, JSValue[] argv)
+        {
+            var reason = argc > 0 ? ctx.FormatException(argv[0]) : "(no reason given)";
+            ScriptEngine.GetLogger(ctx)?.Write(LogLevel.Error, "failed to load module graph: {0}", reason);
+            ScriptEngine.GetContext(ctx)?._OnModuleGraphSettled();
+            return JSApi.JS_UNDEFINED;
+        }
+
+        // One shared handler for every graph, like the reject one above and for the same reason.
+        // It carries no per-graph state because it needs none: exactly one graph is ever in
+        // flight, so "a graph settled" is all the queue has to know.
+        [MonoPInvokeCallback(typeof(JSCFunction))]
+        private static JSValue _module_graph_fulfilled(JSContext ctx, JSValue this_obj, int argc, JSValue[] argv)
+        {
+            ScriptEngine.GetContext(ctx)?._OnModuleGraphSettled();
+            return JSApi.JS_UNDEFINED;
         }
 
         public void EvalSource(byte[] source, string fileName)

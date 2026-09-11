@@ -246,7 +246,7 @@ namespace QuickJS
             {
                 var make_dynamic = argc >= 2 && JSApi.JS_ToBool(ctx, argv[1]) == 1;
 
-                if (JSApi.JS_IsFunction(ctx, argv[0]) == 1)
+                if (JSApi.JS_IsFunction(ctx, argv[0]))
                 {
                     return JSApi.JS_DupValue(ctx, argv[0]);
                 }
@@ -356,7 +356,7 @@ namespace QuickJS
             {
                 return ctx.ThrowInternalError("array expected");
             }
-            if (JSApi.JS_IsArray(ctx, argv[0]) == 1)
+            if (JSApi.JS_IsArray(argv[0]))
             {
                 return JSApi.JS_DupValue(ctx, argv[0]);
             }
@@ -545,7 +545,7 @@ namespace QuickJS
             {
                 return ctx.ThrowInternalError("type_name, func_name, func expected");
             }
-            if (!argv[0].IsString() || !argv[1].IsString() || JSApi.JS_IsFunction(ctx, argv[2]) != 1)
+            if (!argv[0].IsString() || !argv[1].IsString() || !JSApi.JS_IsFunction(ctx, argv[2]))
             {
                 return ctx.ThrowInternalError("type_name, func_name expected");
             }
@@ -595,7 +595,7 @@ namespace QuickJS
             {
                 return ctx.ThrowInternalError("type_name, func_name, func expected");
             }
-            if (!argv[0].IsString() || !argv[1].IsString() || JSApi.JS_IsFunction(ctx, argv[2]) != 1)
+            if (!argv[0].IsString() || !argv[1].IsString() || !JSApi.JS_IsFunction(ctx, argv[2]))
             {
                 return ctx.ThrowInternalError("type_name, func_name expected");
             }

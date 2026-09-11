@@ -58,7 +58,11 @@ namespace QuickJS.Native
 
         public bool IsString()
         {
-            return tag == JSApi.JS_TAG_STRING;
+            // A rope is a string whose concatenation ng has not performed yet, and `a + b`
+            // produces one, so this is reachable from any script. ng's own JS_IsString
+            // tests both tags (quickjs.h:819); testing only JS_TAG_STRING silently
+            // classifies every concatenated string as a non-string.
+            return tag == JSApi.JS_TAG_STRING || tag == JSApi.JS_TAG_STRING_ROPE;
         }
 
         public bool IsSymbol()
@@ -117,6 +121,7 @@ namespace QuickJS.Native
             {
                 case JSApi.JS_TAG_SYMBOL: return string.Format("Symbol:{0:X}", (ulong)u.ptr);
                 case JSApi.JS_TAG_STRING: return string.Format("String:{0:X}", (ulong)u.ptr);
+                case JSApi.JS_TAG_STRING_ROPE: return string.Format("StringRope:{0:X}", (ulong)u.ptr);
                 default: return string.Format("Reference:{0:X}", (ulong)u.ptr);
             }
         }

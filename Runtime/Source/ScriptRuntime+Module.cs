@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
@@ -29,7 +29,7 @@ namespace QuickJS
         [MonoPInvokeCallback(typeof(JSCFunction))]
         public static unsafe JSValue module_define(JSContext ctx, JSValue this_obj, int argc, JSValue[] argv)
         {
-            if (argc != 3 || !argv[0].IsString() || JSApi.JS_IsArray(ctx, argv[1]) != 1 || JSApi.JS_IsFunction(ctx, argv[2]) != 1)
+            if (argc != 3 || !argv[0].IsString() || !JSApi.JS_IsArray(argv[1]) || !JSApi.JS_IsFunction(ctx, argv[2]))
             {
                 return ctx.ThrowInternalError("unsupported 'define' invocation");
             }
@@ -88,7 +88,7 @@ namespace QuickJS
                     if (bytecodeFunc.IsFunctionByteCode())
                     {
                         var func_val = JSApi.JS_EvalFunction(ctx, bytecodeFunc); // it's CallFree (bytecodeFunc)
-                        if (JSApi.JS_IsFunction(ctx, func_val) != 1)
+                        if (!JSApi.JS_IsFunction(ctx, func_val))
                         {
                             JSApi.JS_FreeValue(ctx, func_val);
                             return ctx.ThrowInternalError("failed to eval bytecode module");
@@ -114,7 +114,6 @@ namespace QuickJS
 
                 if (bModule)
                 {
-#if !JSB_WITH_V8_BACKEND
                     // Compile before running so import.meta can be filled in. QuickJS only
                     // populates it for modules that came through module_loader, which leaves
                     // import.meta.url undefined on a module evaluated directly from source.
@@ -125,23 +124,19 @@ namespace QuickJS
 
                     // JS_EvalFunction takes ownership of mod_val.
                     return JSApi.JS_EvalFunction(ctx, mod_val);
-#else
-                    return JSApi.JS_EvalModule(ctx, input_ptr, input_len, fn_ptr);
-#endif
                 }
                 return JSApi.JS_EvalSource(ctx, input_ptr, input_len, fn_ptr);
 
             }
         }
 
-#if !JSB_WITH_V8_BACKEND
         [MonoPInvokeCallback(typeof(JSModuleNormalizeFunc))]
-        public static IntPtr module_normalize(JSContext ctx, string module_base_name, string module_name, IntPtr opaque)
+        public static IntPtr module_normalize(JSContext ctx, IntPtr module_base_name, IntPtr module_name, IntPtr opaque)
         {
             try
             {
                 var runtime = ScriptEngine.GetRuntime(ctx);
-                var resolve_to = runtime.ResolveFilePath(module_base_name, module_name);
+                var resolve_to = runtime.ResolveFilePath(JSApi.GetString(module_base_name), JSApi.GetString(module_name));
                 return ctx.NewCString(resolve_to);
             }
             catch (Exception exception)
@@ -152,9 +147,9 @@ namespace QuickJS
         }
 
         [MonoPInvokeCallback(typeof(JSModuleLoaderFunc))]
-        public static unsafe JSModuleDef module_loader(JSContext ctx, string module_name, IntPtr opaque)
+        public static unsafe JSModuleDef module_loader(JSContext ctx, IntPtr module_name_ptr, IntPtr opaque)
         {
-            // Debug.LogFormat("module_loader: {0}", module_name);
+            var module_name = JSApi.GetString(module_name_ptr);
             var runtime = ScriptEngine.GetRuntime(ctx);
             var fileSystem = runtime._fileSystem;
             if (!fileSystem.Exists(module_name))
@@ -244,6 +239,5 @@ namespace QuickJS
             JSApi.JS_DefinePropertyValue(ctx, meta, context.GetAtom("main"), JSApi.JS_NewBool(ctx, false));
             JSApi.JS_FreeValue(ctx, meta);
         }
-#endif
     }
 }

@@ -6,8 +6,8 @@ namespace QuickJS.Utils
     {
         public object Deserialize(string json, Type type)
         {
-            // If inside Unity, use Unity's JSON utility even if JSB_UNITYLESS is defined
-#if JSB_UNITYLESS && !UNITY_2019_1_OR_NEWER
+            // Unity's own JsonUtility from 2019.1 on, System.Text.Json before that
+#if !UNITY_2019_1_OR_NEWER
 #if JSB_COMPATIBLE
             throw new NotImplementedException();
 #else
@@ -20,7 +20,7 @@ namespace QuickJS.Utils
 
         public string Serialize(object obj, bool prettyPrint)
         {
-#if JSB_UNITYLESS && !UNITY_2019_1_OR_NEWER
+#if !UNITY_2019_1_OR_NEWER
 #if JSB_COMPATIBLE
             throw new NotImplementedException();
 #else

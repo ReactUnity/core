@@ -12,7 +12,8 @@ declare global {
   type MacroSignature<C extends string = MacroArgCode> = `${C}` | `${C}${C}` | `${C}${C}${C}` | `${C}${C}${C}${C}`
     | `${C}${C}${C}${C}${C}` | `${C}${C}${C}${C}${C}${C}` | `${C}${C}${C}${C}${C}` | `${C}${C}${C}${C}${C}${C}${C}`;
 
-  type DynCallFn<T = void> = (...args: T extends void ? (number | Pointer<any>)[] : Parameters<T>) => void;
+  type DynCallFn<T = void> = (...args: T extends void ? (number | Pointer<any>)[] : Parameters<T>)
+    => T extends void ? any : ReturnType<T>;
 
   /**
    * This is not a real function, but a macro that is replaced by the compiler.

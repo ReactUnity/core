@@ -39,17 +39,8 @@ namespace QuickJS.Utils
                     IObjectCollectionEntry target;
                     if (entry.target.TryGetTarget(out target))
                     {
-#if JSB_DEBUG && !JSB_UNITYLESS
-                        UnityEngine.Debug.LogWarningFormat("releasing collection entry: {0}", target);
-#endif
                         target.OnCollectionReleased();
                     }
-#if JSB_DEBUG && !JSB_UNITYLESS
-                    else if (entry.next == -1)
-                    {
-                        UnityEngine.Debug.LogWarningFormat("null collection entry");
-                    }
-#endif
                 }
             }
         }
