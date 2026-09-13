@@ -48,8 +48,13 @@ namespace ReactUnity.Styling
                 return ModifiedProperties;
             }
 
-            value = Convert(value);
-            if (value == null) return null;
+            var converted = Convert(value);
+            if (converted == null)
+            {
+                StyleDiagnostics.Dropped(name, value);
+                return null;
+            }
+            value = converted;
 
             collection[this] = value;
             return ModifiedProperties;

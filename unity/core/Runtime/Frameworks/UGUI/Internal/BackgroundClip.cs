@@ -82,6 +82,7 @@ namespace ReactUnity.UGUI.Internal
         private readonly List<Graphic> registered = new List<Graphic>();
         private readonly List<TMP_Text> texts = new List<TMP_Text>();
         private readonly List<TMP_SubMeshUI> subMeshes = new List<TMP_SubMeshUI>();
+        private static readonly List<Canvas> canvasBuffer = new List<Canvas>();
         private UnityEngine.Events.UnityAction markDirty;
 
         private Rect lastRect;
@@ -391,17 +392,40 @@ namespace ReactUnity.UGUI.Internal
         /// and so the space every clip box is measured in.</summary>
         Matrix4x4 ComputeCanvasToLocal()
         {
-            var canvas = component.Context.RootCanvas;
+            var canvas = ShaderSpace();
             var space = canvas ? canvas.transform : component.RectTransform.parent;
             if (!space) return Matrix4x4.identity;
 
             var matrix = reference.worldToLocalMatrix * space.localToWorldMatrix;
 
             // How far a screen pixel reaches in that space, which is the width of every clip edge.
-            var scale = canvas ? Mathf.Max(canvas.scaleFactor, 0.01f) : 1f;
+            // The density is still the context's -- an offscreen surface is rendered for the screen
+            // it composites onto, so its own `scaleFactor` of 1 says nothing about how big a pixel is.
+            var root = component.Context.RootCanvas;
+            var scale = root ? Mathf.Max(root.scaleFactor, 0.01f) : 1f;
             pixel = matrix.MultiplyVector(Vector3.right).magnitude / scale;
 
             return matrix;
+        }
+
+        /// <summary>
+        /// The canvas whose local space UGUI hands a background shader as its vertex position: the
+        /// outermost one over the element, which is how UGUI's own <see cref="UnityEngine.UI.RectMask2D"/>
+        /// reads that space too. Not the context's root canvas -- an element under an
+        /// <c>isolation: isolate</c> or <c>filter</c> ancestor renders on the <c>[FilterSurface]</c>
+        /// canvas that <see cref="ElementFilter"/> parks at the scene root, and measuring against the
+        /// context's put the uv matrix out by the ratio of the two canvases' scales.
+        /// </summary>
+        Canvas ShaderSpace()
+        {
+            var t = component?.RectTransform;
+            if (!t) return component?.Context?.RootCanvas;
+
+            t.GetComponentsInParent(false, canvasBuffer);
+            for (int i = canvasBuffer.Count - 1; i >= 0; i--)
+                if (canvasBuffer[i].isActiveAndEnabled) return canvasBuffer[i];
+
+            return component.Context?.RootCanvas;
         }
 
         void EnsureTarget(int w, int h)

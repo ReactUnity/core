@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using Yoga;
 using ReactUnity.Styling.Converters;
 
 namespace ReactUnity.Styling.Computed
@@ -18,6 +19,15 @@ namespace ReactUnity.Styling.Computed
         public struct CalcValue
         {
             public float Value;
+
+            /// <summary>
+            /// Percentage points, carried apart from <see cref="Value"/> rather than resolved on
+            /// sight. Yoga has no calc(), but it does have a percentage unit -- so a calculation
+            /// that comes out as a pure percentage, which is every fraction utility a CSS framework
+            /// emits (`calc(1/2 * 100%)`), can be handed to it exactly.
+            /// </summary>
+            public float Percent;
+
             public bool HasUnit;
         }
 
@@ -56,15 +66,40 @@ namespace ReactUnity.Styling.Computed
             for (int i = 0; i < count; i++)
             {
                 var value = Values[i];
-                var computed = value?.ResolveValue(prop, style, converter);
+                // Resolved as a calc operand rather than as the property's own value, so that a
+                // var() holding `100%` arrives here as a percentage term and not as a bare number.
+                var computed = value?.ResolveValue(prop, style, Converter ?? converter);
                 if (computed == null) return null;
                 results.Add(computed);
             }
 
             var res = Evaluate(results, Operators, AllowUnitless, true);
+            return Materialize(res, Converter, prop, style, converter);
+        }
+
+        /// <summary>
+        /// What a finished calculation is worth: a percentage where nothing but percentages
+        /// survived, a plain length where nothing did, and nothing at all where both did -- there
+        /// is no Yoga value for `100% - 10px`, and a wrong number is worse than a dropped one.
+        /// </summary>
+        private static object Materialize(CalcValue? res, StyleConverterBase converter, IStyleProperty prop, NodeStyle style, IStyleConverter outerConverter)
+        {
             if (!res.HasValue) return null;
-            if (res.Value.HasUnit) return res.Value.Value;
-            return Suffixless(res.Value.Value, Converter).ResolveValue(prop, style, converter);
+            var val = res.Value;
+
+            if (val.Percent != 0)
+            {
+                if (val.Value != 0)
+                {
+                    StyleDiagnostics.Dropped(prop?.name ?? "calc()", $"calc({val.Percent}% + {val.Value}px)",
+                        "A calculation mixing a percentage with a length has no layout value to resolve to.");
+                    return null;
+                }
+                return YogaValue.Percent(val.Percent);
+            }
+
+            if (val.HasUnit) return val.Value;
+            return Suffixless(val.Value, converter).ResolveValue(prop, style, outerConverter);
         }
 
         /// <summary>
@@ -118,68 +153,63 @@ namespace ReactUnity.Styling.Computed
 
                 var res = Evaluate(constants, operators, allowUnitless, true);
                 if (!res.HasValue) return null;
-                if (res.Value.HasUnit) return new ComputedConstant(res.Value.Value);
-                return Suffixless(res.Value.Value, converter);
+                var val = res.Value;
+
+                if (val.Percent != 0)
+                {
+                    if (val.Value != 0) return null;
+                    return new ComputedConstant(YogaValue.Percent(val.Percent));
+                }
+
+                if (val.HasUnit) return new ComputedConstant(val.Value);
+                return Suffixless(val.Value, converter);
             }
 
             return new ComputedCalc(values, operators, converter);
         }
 
+        private static bool Read(object value, out CalcValue result)
+        {
+            if (value is float f)
+            {
+                result = new CalcValue { Value = f };
+                return true;
+            }
+
+            if (value is CalcValue cv)
+            {
+                result = cv;
+                return true;
+            }
+
+            result = default;
+            return false;
+        }
+
         private static CalcValue? Evaluate(IList<object> values, IList<CalcOperator> operators, bool allowUnitless, bool multiplyPass)
         {
             if (values.Count == 0) return null;
-
-            bool hasUnit;
-            float value;
-
-            if (values[0] is float f)
-            {
-                value = f;
-                hasUnit = false;
-            }
-            else if (values[0] is CalcValue cv)
-            {
-                value = cv.Value;
-                hasUnit = cv.HasUnit;
-            }
-            else return null;
+            if (!Read(values[0], out var acc)) return null;
 
             var nextObjects = new List<object>();
             var nextOps = new List<CalcOperator>();
 
             for (int i = 1; i < values.Count; i++)
             {
-                var cur = values[i];
                 var op = operators[i - 1];
-                bool curHasUnit;
-                float curValue;
-
-                if (cur is float ff)
-                {
-                    curValue = ff;
-                    curHasUnit = false;
-                }
-                else if (cur is CalcValue cvv)
-                {
-                    curValue = cvv.Value;
-                    curHasUnit = cvv.HasUnit;
-                }
-                else return null;
-
+                if (!Read(values[i], out var cur)) return null;
 
                 if (!multiplyPass)
                 {
                     switch (op)
                     {
                         case CalcOperator.Add:
-                            value += curValue;
-                            if (!allowUnitless && (hasUnit != curHasUnit)) return null;
-                            hasUnit = hasUnit && curHasUnit;
-                            break;
                         case CalcOperator.Subtract:
-                            value -= curValue;
-                            if (!allowUnitless && (hasUnit != curHasUnit)) return null;
-                            hasUnit = hasUnit && curHasUnit;
+                            var sign = op == CalcOperator.Add ? 1 : -1;
+                            acc.Value += sign * cur.Value;
+                            acc.Percent += sign * cur.Percent;
+                            if (!allowUnitless && (acc.HasUnit != cur.HasUnit)) return null;
+                            acc.HasUnit = acc.HasUnit && cur.HasUnit;
                             break;
                         case CalcOperator.None:
                         default:
@@ -188,29 +218,28 @@ namespace ReactUnity.Styling.Computed
                 }
                 else
                 {
-
                     switch (op)
                     {
                         case CalcOperator.Multiply:
-                            value *= curValue;
-                            if (!allowUnitless && hasUnit && curHasUnit) return null;
-                            hasUnit = hasUnit || curHasUnit;
+                            // One side has to be a plain number: a percentage of a percentage is not
+                            // a quantity, and neither is an area.
+                            if (acc.Percent != 0 && cur.Percent != 0) return null;
+                            if (!allowUnitless && acc.HasUnit && cur.HasUnit) return null;
+                            acc.Percent = acc.Percent * cur.Value + cur.Percent * acc.Value;
+                            acc.Value *= cur.Value;
+                            acc.HasUnit = acc.HasUnit || cur.HasUnit;
                             break;
                         case CalcOperator.Divide:
-                            if (curValue == 0) return null;
-                            value /= curValue;
-                            if (curHasUnit) return null;
-                            hasUnit = hasUnit || curHasUnit;
+                            if (cur.Value == 0) return null;
+                            if (cur.HasUnit || cur.Percent != 0) return null;
+                            acc.Value /= cur.Value;
+                            acc.Percent /= cur.Value;
                             break;
                         case CalcOperator.Add:
                         case CalcOperator.Subtract:
-                            nextObjects.Add(new CalcValue
-                            {
-                                Value = value,
-                                HasUnit = hasUnit,
-                            });
+                            nextObjects.Add(acc);
                             nextOps.Add(op);
-                            value = curValue;
+                            acc = cur;
                             break;
                         case CalcOperator.None:
                         default:
@@ -221,17 +250,20 @@ namespace ReactUnity.Styling.Computed
 
             if (multiplyPass)
             {
-                nextObjects.Add(new CalcValue
-                {
-                    Value = value,
-                    HasUnit = hasUnit,
-                });
+                nextObjects.Add(acc);
                 return Evaluate(nextObjects, nextOps, allowUnitless, false);
             }
 
-            if (!allowUnitless && !hasUnit) return null;
+            if (!allowUnitless && !acc.HasUnit) return null;
 
-            return new CalcValue { Value = value, HasUnit = hasUnit };
+            // CSS Values 4: a top-level calculation that comes out as NaN or an infinity takes the
+            // largest value the implementation supports instead. Left as they are, `infinity * 1px`
+            // -- which is what `rounded-full` compiles to -- turns into NaN the moment anything
+            // scales it, and a NaN radius paints no element at all.
+            acc.Value = FloatConverter.Finite(acc.Value);
+            acc.Percent = FloatConverter.Finite(acc.Percent);
+
+            return acc;
         }
     }
 }

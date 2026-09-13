@@ -357,6 +357,13 @@ view {
 }
 ```
 
+A calculation on a layout value — `width`, `left`, `flex-basis`, `translate` and the rest — has to come out
+as something Yoga can hold, which is a length or a percentage but never both. `width: calc(1/2 * 100%)` is
+`50%`, so every fraction utility a CSS framework emits lays out; `width: calc(100% - 2rem)` has no unit to
+resolve to and is dropped. `infinity` is the largest length the implementation supports rather than a real
+infinity, which is what makes `border-radius: calc(infinity * 1px)` a pill.
+
+
 `place-content`, `place-items` and `place-self` set the align and justify pair in one declaration. Yoga has no `justify-items` or `justify-self`, so the last two set their align property and only check that the second value is a keyword. The web spellings `start`, `end`, `self-start`, `self-end`, `left`, `right` and `normal` work on the align and justify longhands too.
 
 ### Display and the flex defaults {/*display-and-the-flex-defaults*/}

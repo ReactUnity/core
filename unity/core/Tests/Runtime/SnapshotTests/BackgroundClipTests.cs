@@ -60,25 +60,39 @@ namespace ReactUnity.Tests
         /// <summary>The page behind everything is light grey, so this is what the background painted.</summary>
         static bool IsRed(Color c) => c.r > 0.5f && c.g < 0.4f && c.b < 0.4f;
 
-        /// <summary>How much of a 200x100 box at the origin the background is still painting on.</summary>
-        static float RedCoverage()
+        /// <summary>Which pixels of a 200x100 box at the origin the background is still painting on.</summary>
+        static bool[] RedMask()
         {
             var tex = Capture();
-
-            var hits = 0;
-            var total = 0;
+            var mask = new bool[200 * 100];
 
             for (int x = 0; x < 200; x++)
-            {
                 for (int y = 0; y < 100; y++)
-                {
-                    total++;
-                    if (IsRed(tex.GetPixel(x, Screen.height - 1 - y))) hits++;
-                }
-            }
+                    mask[y * 200 + x] = IsRed(tex.GetPixel(x, Screen.height - 1 - y));
 
             Object.DestroyImmediate(tex);
-            return total == 0 ? 0 : (float) hits / total;
+            return mask;
+        }
+
+        /// <summary>How much of that box the background is still painting on.</summary>
+        static float RedCoverage()
+        {
+            var mask = RedMask();
+            var hits = 0;
+            for (int i = 0; i < mask.Length; i++) if (mask[i]) hits++;
+            return (float) hits / mask.Length;
+        }
+
+        /// <summary>
+        /// How much of the box two captures disagree about. A clip that landed somewhere else can
+        /// cover the same area as the right one -- what says it is the right one is covering the
+        /// same pixels.
+        /// </summary>
+        static float Disagreement(bool[] a, bool[] b)
+        {
+            var differ = 0;
+            for (int i = 0; i < a.Length; i++) if (a[i] != b[i]) differ++;
+            return (float) differ / a.Length;
         }
 
         [UGUITest(Script = BaseScript, Style = BaseStyle)]
@@ -363,6 +377,83 @@ namespace ReactUnity.Tests
             Debug.Log($"[clip padding-box, rounded] corner {corner}, centre {centre}");
             Assert.IsTrue(IsRed(centre), "the middle of the box is still painted");
             Assert.IsFalse(IsRed(corner), "the corner the border rounds off is not");
+        }
+
+        // The space a background shader gets its vertex position in is the outermost canvas over the
+        // element, and that is not always the context's. An `isolation: isolate` ancestor moves the
+        // subtree onto the `[FilterSurface]` canvas at the scene root, whose scale has nothing to do
+        // with the React canvas's -- so a uv matrix built from the wrong one put the coverage a
+        // hundred-odd times off its own glyphs, and the background survived nowhere.
+        const string NestedScript = @"
+            function App() {
+                return <view id='outer'><view id='test'>MMMM</view></view>;
+            }
+";
+
+        const string NestedStyle = @"
+            #outer {
+                position: absolute;
+                left: 0;
+                top: 0;
+                width: 200px;
+                height: 100px;
+            }
+            #test {
+                width: 200px;
+                height: 100px;
+                font-size: 64px;
+                color: transparent;
+                background-color: red;
+                background-clip: text;
+            }
+        ";
+
+        [UGUITest(Script = NestedScript, Style = NestedStyle)]
+        public IEnumerator TheClipHoldsUnderAnIsolatedAncestor()
+        {
+            yield return null;
+            yield return null;
+            yield return null;
+            var flat = RedMask();
+
+            Q("#outer").Style["isolation"] = "isolate";
+            yield return null;
+            yield return null;
+            yield return null;
+
+            Assert.NotNull(Q("#outer").GameObject.GetComponent<UGUI.Internal.ElementFilter>(),
+                "`isolation: isolate` should have put the subtree on a surface of its own");
+
+            var isolated = RedMask();
+            var off = Disagreement(flat, isolated);
+            Debug.Log($"[clip text, isolated ancestor] coverage {RedCoverage():P1} disagreement {off:P1}");
+
+            Assert.Greater(isolated.Length, 0);
+            Assert.Less(off, 0.02f,
+                "the surface's own canvas is the space the shader is handed, so the clip lands on the same glyphs it did without one");
+        }
+
+        // The same thing a `z-index` does, which gives the element a nested canvas rather than a
+        // detached one -- the outermost canvas is still the context's, so this is the case the
+        // original lookup got right and must go on getting right.
+        [UGUITest(Script = NestedScript, Style = NestedStyle)]
+        public IEnumerator TheClipHoldsUnderANestedCanvas()
+        {
+            yield return null;
+            yield return null;
+            yield return null;
+            var flat = RedMask();
+
+            Q("#outer").Style["zIndex"] = 3;
+            yield return null;
+            yield return null;
+            yield return null;
+
+            Assert.NotNull(Q("#outer").GameObject.GetComponent<Canvas>(), "`z-index` should have added a canvas");
+
+            var off = Disagreement(flat, RedMask());
+            Debug.Log($"[clip text, nested canvas] disagreement {off:P1}");
+            Assert.Less(off, 0.02f, "a nested canvas does not change the space the shader is given");
         }
 
         [UGUITest(Script = BaseScript, Style = BaseStyle)]

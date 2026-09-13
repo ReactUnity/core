@@ -27,6 +27,24 @@ namespace ReactUnity.Styling.Converters
             { "nan", float.NaN },
         };
 
+        /// <summary>
+        /// What <c>infinity</c> is worth once a value has to be a number: CSS Values 4 says the
+        /// largest the implementation supports, and browsers settle on about this. A real infinity
+        /// cannot be left in -- <c>calc(infinity * 1px)</c>, which is what a `rounded-full` utility
+        /// compiles to, becomes NaN the moment anything scales it, and a NaN radius paints nothing.
+        /// </summary>
+        public const float LargestValue = 33554428f;
+
+        /// <summary>
+        /// <paramref name="value"/> brought into the range a length can be. NaN goes to the top of
+        /// it rather than to zero, which is what CSS asks of a top-level calculation.
+        /// </summary>
+        public static float Finite(float value)
+        {
+            if (float.IsNaN(value)) return LargestValue;
+            return Mathf.Clamp(value, -LargestValue, LargestValue);
+        }
+
         static CultureInfo culture = new CultureInfo("en-US");
 
         internal Dictionary<string, float> SuffixMap;
@@ -60,7 +78,7 @@ namespace ReactUnity.Styling.Converters
             }
             if (AllowSuffixless && MathConstants.TryGetValue(value.Trim(), out var constant))
             {
-                result = new ComputedConstant(constant);
+                result = new ComputedConstant(Finite(constant));
                 return true;
             }
             return ParseVal(value, out result);
@@ -298,6 +316,10 @@ namespace ReactUnity.Styling.Converters
         public PerspectiveConverter()
         {
             SpecialValues = new Dictionary<string, float> { { "none", 0 } };
+
+            // A length and nothing else. The `%` came in with the length converter's units, and is
+            // the one of them with no distance here to be a fraction of.
+            SuffixMapper.Remove("%");
         }
     }
 
@@ -391,10 +413,7 @@ namespace ReactUnity.Styling.Converters
         {
             if (BaseConverter.TryConvert(value, out var floatResult))
             {
-                result = ComputedMapper.Create(floatResult, BaseConverter, (res) => {
-                    if (res is float f) return new ComputedCalc.CalcValue { Value = f, HasUnit = true };
-                    return null;
-                });
+                result = FromBase(floatResult);
                 return true;
             }
 
@@ -409,16 +428,31 @@ namespace ReactUnity.Styling.Converters
 
             if (BaseConverter.TryConvert(value, out var floatResult))
             {
-                result = ComputedMapper.Create(floatResult, BaseConverter, (res) => {
-                    if (res is float f) return new ComputedCalc.CalcValue { Value = f, HasUnit = true };
-                    return null;
-                });
+                result = FromBase(floatResult);
                 return true;
             }
 
             if (TryParseUnitless(value, out result)) return true;
 
             return base.ParseInternal(value, out result);
+        }
+
+        /// <summary>
+        /// One operand, as the base converter reads it. A percentage is kept as a percentage rather
+        /// than resolved on the spot: where the property is a layout value, `calc(1/2 * 100%)` has
+        /// an exact answer -- half of whatever the box turns out to be -- and resolving the `100%`
+        /// against a parent that has not been laid out yet threw that away.
+        /// </summary>
+        private IComputedValue FromBase(IComputedValue floatResult)
+        {
+            if (floatResult is ComputedPercentage pct)
+                return new ComputedConstant(new ComputedCalc.CalcValue { Percent = pct.Value, HasUnit = true });
+
+            return ComputedMapper.Create(floatResult, BaseConverter, (res) => {
+                if (res is ComputedCalc.CalcValue cv) return cv;
+                if (res is float f) return new ComputedCalc.CalcValue { Value = f, HasUnit = true };
+                return null;
+            });
         }
 
         private static bool TryParseUnitless(string value, out IComputedValue result)
