@@ -65,7 +65,7 @@ Shader "ReactUnity/PixelatedImage"
 
       #include "UnityCG.cginc"
       #include "UnityUI.cginc"
-      #include "TextClip.cginc"
+      #include "BackgroundClip.cginc"
 
       struct appdata_t
       {
@@ -112,7 +112,7 @@ Shader "ReactUnity/PixelatedImage"
 
         half4 color = i.color * (tex2D(_MainTex, uv) + _TextureSampleAdd);
 
-        color.a *= RuTextClip(i.worldPosition);
+        color.a *= RuBackgroundClip(i.worldPosition);
 
         #ifdef UNITY_UI_CLIP_RECT
           color.a *= UnityGet2DClipping(i.worldPosition.xy, _ClipRect);

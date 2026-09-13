@@ -1,6 +1,6 @@
 //
 // Types in assemblies: ReactUnity, ReactUnity.Editor, ReactUnity.UGUI, ReactUnity.UIToolkit
-// Generated 13/09/2026 04:37:05
+// Generated 13/09/2026 06:04:32
 //
 /* eslint-disable */
 
@@ -13009,8 +13009,20 @@ export declare namespace ReactUnity {
         ToString(): string;
         GetType(): System.Type;
       }
-      export class BackgroundTextClip {
+      export class BackgroundClipBox {
+        Clips: boolean;
+        Center: UnityEngine.Vector2;
+        HalfSize: UnityEngine.Vector2;
+        RadiusX: UnityEngine.Vector4;
+        RadiusY: UnityEngine.Vector4;
+        Equals(obj: any): boolean;
+        GetHashCode(): number;
+        ToString(): string;
+        GetType(): System.Type;
+      }
+      export class BackgroundClip {
         constructor();
+        NeedsCoverage: boolean;
         Coverage: UnityEngine.Texture;
         RenderCount: number;
         destroyCancellationToken: System.Threading.CancellationToken;
@@ -13026,9 +13038,9 @@ export declare namespace ReactUnity {
         tag: string;
         name: string;
         hideFlags: UnityEngine.HideFlags;
-        static Create(cmp: ReactUnity.UGUI.UGUIComponent, paintingArea: UnityEngine.RectTransform, owner: ReactUnity.UGUI.Internal.BorderAndBackground): ReactUnity.UGUI.Internal.BackgroundTextClip;
+        static Create(cmp: ReactUnity.UGUI.UGUIComponent, paintingArea: UnityEngine.RectTransform, owner: ReactUnity.UGUI.Internal.BorderAndBackground): ReactUnity.UGUI.Internal.BackgroundClip;
         Invalidate(): void;
-        static Bind(mat: UnityEngine.Material, clip: ReactUnity.UGUI.Internal.BackgroundTextClip): void;
+        static Bind(mat: UnityEngine.Material, clip: ReactUnity.UGUI.Internal.BackgroundClip, box: ReactUnity.Types.BackgroundBox): void;
         IsInvoking(): boolean;
         CancelInvoke(): void;
         Invoke(methodName: string, time: number): void;
@@ -13084,6 +13096,7 @@ export declare namespace ReactUnity {
         BackgroundRoot: UnityEngine.RectTransform;
         Backdrop: UnityEngine.RectTransform;
         ShadowRoot: UnityEngine.RectTransform;
+        InsetShadowRoot: UnityEngine.RectTransform;
         BgImage: UnityEngine.UI.RawImage;
         BackdropFilter: ReactUnity.UGUI.Shapes.WebFilter;
         BorderGraphic: ReactUnity.UGUI.Shapes.WebBorder;
@@ -13754,7 +13767,8 @@ export declare namespace ReactUnity {
         Size: UnityEngine.Vector2;
         Definition: ReactUnity.Types.ImageDefinition;
         Pixelated: boolean;
-        TextClip: ReactUnity.UGUI.Internal.BackgroundTextClip;
+        Clip: ReactUnity.UGUI.Internal.BackgroundClip;
+        ClipBox: ReactUnity.Types.BackgroundBox;
         BackgroundSize: ReactUnity.Types.BackgroundSize;
         BackgroundPosition: ReactUnity.Types.YogaValue2;
         BackgroundRepeatX: ReactUnity.Types.BackgroundRepeat;
@@ -13813,6 +13827,7 @@ export declare namespace ReactUnity {
         name: string;
         hideFlags: UnityEngine.HideFlags;
         Context: ReactUnity.ReactContext;
+        SetClip(value: ReactUnity.UGUI.Internal.BackgroundClip, box: ReactUnity.Types.BackgroundBox): void;
         SetBackgroundColorAndImage(tint: UnityEngine.Color, image: ReactUnity.Types.ImageDefinition, blendMode?: ReactUnity.Types.BackgroundBlendMode, blendsWithStack?: boolean): void;
         SetBackdrop(value: UnityEngine.Texture): void;
         DisableSpriteOptimizations(): void;

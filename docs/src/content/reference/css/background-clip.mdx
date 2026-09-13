@@ -7,15 +7,17 @@ Restricts the area an element's background is painted in. Three of its values ar
 <Sandpack>
 
 ```js
+const values = ['text', 'border-box', 'padding-box', 'content-box'];
+
 export default function App() {
-  const [clip, setClip] = React.useState('text');
+  const [index, setIndex] = React.useState(0);
 
   return <>
-    <button onClick={() => setClip(x => (x === 'text' ? 'border-box' : 'text'))}>
-      background-clip: {clip}
+    <button onClick={() => setIndex(x => (x + 1) % values.length)}>
+      background-clip: {values[index]}
     </button>
 
-    <view className="headline" style={{ backgroundClip: clip }}>GRADIENT</view>
+    <view className="headline" style={{ backgroundClip: values[index] }}>GRADIENT</view>
   </>;
 }
 ```
@@ -23,10 +25,13 @@ export default function App() {
 ```css active
 .headline {
   width: 320px;
-  height: 120px;
+  height: 140px;
   margin-top: 16px;
 
-  font-size: 72px;
+  padding: 16px;
+  border: 12px dashed rgba(0, 0, 0, 0.35);
+
+  font-size: 56px;
   text-align: center;
   color: transparent;
 
@@ -60,4 +65,5 @@ background: linear-gradient(gold, crimson) text;
 - Every glyph under the element counts, a child element's text included, and nothing else does: an element with no text and `background-clip: text` paints nothing at all.
 - It clips whatever the layer is -- a gradient, an image, a [blended](/reference/css/background-blend-mode) layer, the background colour -- and leaves borders, [`box-shadow`](/reference/css/box-shadow) and [`mask-image`](/reference/css/mask-image) alone, as CSS does.
 - The glyphs are rasterised into a coverage texture the size of the element, by a command buffer rather than a camera, and only when the text, its layout or that size changes. An element whose text is sitting still costs nothing per frame.
-- The three box keywords are accepted and round-trip, but do not differ from each other yet: each one paints the area the background already covers, which stops at the padding edge. On an element with no border that is the border box as well, so the divergence only shows under one.
+- `border-box` reaches under the border, so a dashed, dotted or semi-transparent one shows the background through it, and the outer [`border-radius`](/reference/css/border-radius) is what rounds it off. `padding-box` stops at the border's inner edge and `content-box` at the padding's, each with what that box has left of those corners.
+- The three boxes only differ on an element that has a border or padding to separate them; where they coincide, asking for one costs nothing.

@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using ReactUnity.Types;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Rendering;
@@ -6,28 +7,48 @@ using UnityEngine.UI;
 
 namespace ReactUnity.UGUI.Internal
 {
+    /// <summary>A rounded box a background layer can be cut to, in the element's own space.</summary>
+    public struct BackgroundClipBox
+    {
+        public bool Clips;
+        public Vector2 Center;
+        public Vector2 HalfSize;
+        public Vector4 RadiusX;
+        public Vector4 RadiusY;
+    }
+
     /// <summary>
-    /// Draws every glyph under an element into a coverage texture, which its background layers
-    /// multiply into their alpha -- <c>background-clip: text</c>.
+    /// Whatever the element's background layers are cut to that the mask cannot give them --
+    /// <c>background-clip</c>. The padding and content boxes are rounded boxes evaluated per
+    /// fragment; <c>text</c> is a coverage texture of the element's glyphs.
     /// </summary>
     /// <remarks>
+    /// The border box is not here: the mask on <c>[GraphicRoot]</c> is the border box, so a layer
+    /// taking CSS's default needs neither this component nor a shader that knows about it. That is
+    /// what keeps the common case free.
+    ///
     /// The glyphs are drawn with TextMeshPro's own material, so the coverage is the same
     /// rasterization the text itself gets: the same atlas, dilate and softness, antialiased edges
-    /// included. Only two things are taken off it -- the vertex colours, which carry
-    /// <c>color</c> and would empty the mask for the `transparent` this property is nearly always
-    /// paired with, and the underlay, since a <c>text-shadow</c> is not part of the glyph.
+    /// included. Only two things are taken off it -- the vertex colours, which carry <c>color</c>
+    /// and would empty the mask for the `transparent` this property is nearly always paired with,
+    /// and the underlay, since a <c>text-shadow</c> is not part of the glyph.
     ///
-    /// A stencil cannot do this. UGUI's <see cref="UnityEngine.UI.Mask"/> writes one bit per pixel,
-    /// which turns every antialiased glyph edge into a staircase -- the same reason
+    /// A stencil cannot do either job. UGUI's <see cref="UnityEngine.UI.Mask"/> writes one bit per
+    /// pixel, which turns every antialiased glyph edge into a staircase -- the same reason
     /// <see cref="ElementFilter"/> renders <c>mask-image</c> to a texture rather than clipping with
-    /// one. It is a command buffer rather than a camera here because there is nothing to frame: the
-    /// meshes and their materials are already in hand, so a camera would only cost its own ~1.4 ms.
+    /// one. The coverage is a command buffer rather than a camera because there is nothing to frame:
+    /// the meshes and their materials are already in hand, so a camera would only cost its own
+    /// ~1.4 ms.
     /// </remarks>
-    public class BackgroundTextClip : MonoBehaviour
+    public class BackgroundClip : MonoBehaviour
     {
         static readonly int TexId = Shader.PropertyToID("_ReactUnityTextClip");
-        static readonly int MatrixId = Shader.PropertyToID("_ReactUnityTextClipMatrix");
-        static readonly int BoundId = Shader.PropertyToID("_ReactUnityTextClipBound");
+        static readonly int TextMatrixId = Shader.PropertyToID("_ReactUnityTextClipMatrix");
+        static readonly int TextBoundId = Shader.PropertyToID("_ReactUnityTextClipBound");
+        static readonly int BoxMatrixId = Shader.PropertyToID("_ReactUnityBoxClipMatrix");
+        static readonly int BoxSizeId = Shader.PropertyToID("_ReactUnityBoxClipSize");
+        static readonly int BoxRadiusXId = Shader.PropertyToID("_ReactUnityBoxClipRadiusX");
+        static readonly int BoxRadiusYId = Shader.PropertyToID("_ReactUnityBoxClipRadiusY");
         static readonly int ScreenParamsId = Shader.PropertyToID("_ScreenParams");
 
         // Coverage only has to carry the softness of a glyph edge, so past this the texture is
@@ -66,6 +87,25 @@ namespace ReactUnity.UGUI.Internal
         private Rect lastRect;
         private bool dirty = true;
         private Matrix4x4 uvMatrix = Matrix4x4.identity;
+        private Matrix4x4 canvasToLocal = Matrix4x4.identity;
+        private float pixel = 1f;
+
+        private bool needsCoverage;
+
+        /// <summary>Whether any layer clips to the glyphs, which is what the coverage costs anything for.</summary>
+        public bool NeedsCoverage
+        {
+            get => needsCoverage;
+            set
+            {
+                if (needsCoverage == value) return;
+                needsCoverage = value;
+                // The target is the element's own and as big as it is, so a clip that has gone back
+                // to a box does not go on holding one.
+                if (value) dirty = true;
+                else Release();
+            }
+        }
 
         /// <summary>The coverage, or null until something has been drawn into it.</summary>
         public Texture Coverage => target;
@@ -73,10 +113,10 @@ namespace ReactUnity.UGUI.Internal
         /// <summary>How many coverage renders this clip has done. For tests.</summary>
         public int RenderCount { get; private set; }
 
-        public static BackgroundTextClip Create(UGUIComponent cmp, RectTransform paintingArea, BorderAndBackground owner)
+        public static BackgroundClip Create(UGUIComponent cmp, RectTransform paintingArea, BorderAndBackground owner)
         {
-            var clip = cmp.GameObject.GetComponent<BackgroundTextClip>();
-            if (!clip) clip = cmp.GameObject.AddComponent<BackgroundTextClip>();
+            var clip = cmp.GameObject.GetComponent<BackgroundClip>();
+            if (!clip) clip = cmp.GameObject.AddComponent<BackgroundClip>();
             clip.component = cmp;
             clip.owner = owner;
             clip.reference = paintingArea;
@@ -86,31 +126,46 @@ namespace ReactUnity.UGUI.Internal
 
         public void Invalidate() => dirty = true;
 
-        /// <summary>Points a background layer's material at the coverage, or takes it off one that
-        /// has stopped clipping.</summary>
-        public static void Bind(Material mat, BackgroundTextClip clip)
+        /// <summary>Points a background layer's material at the clip its box asks for, or takes the
+        /// last one off a layer that has gone back to the border box.</summary>
+        public static void Bind(Material mat, BackgroundClip clip, BackgroundBox box)
         {
             if (!mat) return;
+            if (!clip) box = BackgroundBox.BorderBox;
 
-            var coverage = clip ? clip.Coverage : null;
+            var coverage = box == BackgroundBox.Text ? clip.Coverage : null;
             mat.SetTexture(TexId, coverage);
-            mat.SetFloat(BoundId, coverage ? 1 : 0);
-            if (coverage) mat.SetMatrix(MatrixId, clip.uvMatrix);
+            mat.SetFloat(TextBoundId, coverage ? 1 : 0);
+            if (coverage) mat.SetMatrix(TextMatrixId, clip.uvMatrix);
+
+            var geo = default(BackgroundClipBox);
+            var boxed = clip && clip.owner && clip.owner.TryGetClipBox(box, out geo);
+            if (!boxed)
+            {
+                mat.SetVector(BoxSizeId, Vector4.zero);
+                return;
+            }
+
+            mat.SetMatrix(BoxMatrixId, Matrix4x4.Translate(new Vector3(-geo.Center.x, -geo.Center.y, 0)) * clip.canvasToLocal);
+            mat.SetVector(BoxSizeId, new Vector4(geo.HalfSize.x, geo.HalfSize.y, clip.pixel, 1));
+            mat.SetVector(BoxRadiusXId, geo.RadiusX);
+            mat.SetVector(BoxRadiusYId, geo.RadiusY);
         }
 
         void LateUpdate()
         {
             if (!reference) return;
 
-            if (PollDirty())
+            if (NeedsCoverage && PollDirty())
             {
                 dirty = false;
                 RenderCount++;
                 Render();
             }
 
+            canvasToLocal = ComputeCanvasToLocal();
             uvMatrix = ComputeUvMatrix();
-            if (owner) owner.PushTextClip(this);
+            if (owner) owner.PushClips(this);
         }
 
         /// <summary>
@@ -215,7 +270,7 @@ namespace ReactUnity.UGUI.Internal
             var pxHeight = Mathf.Clamp(Mathf.CeilToInt(rect.height * scale), 1, MaxDimension);
             EnsureTarget(pxWidth, pxHeight);
 
-            if (buffer == null) buffer = new CommandBuffer { name = "ReactUnity.BackgroundTextClip" };
+            if (buffer == null) buffer = new CommandBuffer { name = "ReactUnity.BackgroundClip" };
             buffer.Clear();
             buffer.SetRenderTarget(target);
             buffer.ClearRenderTarget(true, true, Color.clear);
@@ -324,16 +379,29 @@ namespace ReactUnity.UGUI.Internal
             var rect = reference.rect;
             if (rect.width <= 0 || rect.height <= 0) return Matrix4x4.identity;
 
-            var canvas = component.Context.RootCanvas;
-            var space = canvas ? canvas.transform : component.RectTransform.parent;
-            if (!space) return Matrix4x4.identity;
-
             var toUv = Matrix4x4.TRS(
                 new Vector3(-rect.xMin / rect.width, -rect.yMin / rect.height, 0),
                 Quaternion.identity,
                 new Vector3(1f / rect.width, 1f / rect.height, 1));
 
-            return toUv * reference.worldToLocalMatrix * space.localToWorldMatrix;
+            return toUv * canvasToLocal;
+        }
+
+        /// <summary>The same canvas space, to the painting area's own -- which is the border box,
+        /// and so the space every clip box is measured in.</summary>
+        Matrix4x4 ComputeCanvasToLocal()
+        {
+            var canvas = component.Context.RootCanvas;
+            var space = canvas ? canvas.transform : component.RectTransform.parent;
+            if (!space) return Matrix4x4.identity;
+
+            var matrix = reference.worldToLocalMatrix * space.localToWorldMatrix;
+
+            // How far a screen pixel reaches in that space, which is the width of every clip edge.
+            var scale = canvas ? Mathf.Max(canvas.scaleFactor, 0.01f) : 1f;
+            pixel = matrix.MultiplyVector(Vector3.right).magnitude / scale;
+
+            return matrix;
         }
 
         void EnsureTarget(int w, int h)

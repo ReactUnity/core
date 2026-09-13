@@ -1,4 +1,4 @@
-// Unity's default UI shader with `background-clip: text` compiled in. A background layer whose image
+// Unity's default UI shader with `background-clip` compiled in. A background layer whose image
 // brings no material of its own -- a plain sprite, or the background colour -- draws with this one
 // while it is clipped, because the clip has to live in whatever shader paints the layer and there is
 // no reaching into `UI/Default`. Everything else about it is the stock shader, so a layer that moves
@@ -58,7 +58,7 @@ Shader "ReactUnity/ClippedImage"
 
       #include "UnityCG.cginc"
       #include "UnityUI.cginc"
-      #include "TextClip.cginc"
+      #include "BackgroundClip.cginc"
 
       struct appdata_t
       {
@@ -99,7 +99,7 @@ Shader "ReactUnity/ClippedImage"
       {
         half4 color = i.color * (tex2D(_MainTex, i.texcoord) + _TextureSampleAdd);
 
-        color.a *= RuTextClip(i.worldPosition);
+        color.a *= RuBackgroundClip(i.worldPosition);
 
         #ifdef UNITY_UI_CLIP_RECT
           color.a *= UnityGet2DClipping(i.worldPosition.xy, _ClipRect);

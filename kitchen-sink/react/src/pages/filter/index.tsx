@@ -356,6 +356,28 @@ export function FilterPage() {
             <text className={styles.caption}>text, border-box</text>
           </view>
         </row>
+
+        <text className={styles.note}>
+          The other three values are boxes. `border-box` reaches under the border, which a dashed one shows through; `padding-box` stops at
+          the border's inner edge and `content-box` at the padding's, each with the corners that box has left it.
+        </text>
+
+        <row className={'gap-6 flex-wrap'}>
+          <view className={'items-center'}>
+            <view className={clsx(styles.clipBoxTile, styles.clipBoxBorder)} />
+            <text className={styles.caption}>border-box</text>
+          </view>
+
+          <view className={'items-center'}>
+            <view className={clsx(styles.clipBoxTile, styles.clipBoxPadding)} />
+            <text className={styles.caption}>padding-box</text>
+          </view>
+
+          <view className={'items-center'}>
+            <view className={clsx(styles.clipBoxTile, styles.clipBoxContent)} />
+            <text className={styles.caption}>content-box</text>
+          </view>
+        </row>
       </section>
 
       <section>

@@ -310,6 +310,28 @@
   background-clip: text, border-box;
 }
 
+/* A dashed border and a fat padding, so the three boxes are three visibly different areas. */
+.clipBoxTile {
+  width: 200px;
+  height: 90px;
+  padding: 14px;
+  border: 10px dashed rgba(15, 23, 42, 0.45);
+  border-radius: 14px;
+  background-image: linear-gradient(100deg, #f97316, #a855f7 55%, #38bdf8);
+}
+
+.clipBoxBorder {
+  background-clip: border-box;
+}
+
+.clipBoxPadding {
+  background-clip: padding-box;
+}
+
+.clipBoxContent {
+  background-clip: content-box;
+}
+
 /* Something with detail behind the panel, so the backdrop blur has anything to show. */
 .backdropHost {
   height: 200px;

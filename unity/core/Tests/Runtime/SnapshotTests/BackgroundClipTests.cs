@@ -37,8 +37,7 @@ namespace ReactUnity.Tests
 
         public BackgroundClipTests(JavascriptEngineType engineType) : base(engineType) { }
 
-        /// <summary>How much of a 200x100 box at the origin the background is still painting on.</summary>
-        static float RedCoverage()
+        static Texture2D Capture()
         {
             var cam = Camera.main;
             var rt = new RenderTexture(Screen.width, Screen.height, 24);
@@ -53,6 +52,19 @@ namespace ReactUnity.Tests
             tex.Apply();
             RenderTexture.active = prev;
 
+            rt.Release();
+            Object.DestroyImmediate(rt);
+            return tex;
+        }
+
+        /// <summary>The page behind everything is light grey, so this is what the background painted.</summary>
+        static bool IsRed(Color c) => c.r > 0.5f && c.g < 0.4f && c.b < 0.4f;
+
+        /// <summary>How much of a 200x100 box at the origin the background is still painting on.</summary>
+        static float RedCoverage()
+        {
+            var tex = Capture();
+
             var hits = 0;
             var total = 0;
 
@@ -61,14 +73,11 @@ namespace ReactUnity.Tests
                 for (int y = 0; y < 100; y++)
                 {
                     total++;
-                    var c = tex.GetPixel(x, Screen.height - 1 - y);
-                    if (c.r > 0.5f && c.g < 0.4f && c.b < 0.4f) hits++;
+                    if (IsRed(tex.GetPixel(x, Screen.height - 1 - y))) hits++;
                 }
             }
 
             Object.DestroyImmediate(tex);
-            rt.Release();
-            Object.DestroyImmediate(rt);
             return total == 0 ? 0 : (float) hits / total;
         }
 
@@ -184,18 +193,7 @@ namespace ReactUnity.Tests
             yield return null;
             yield return null;
 
-            var cam = Camera.main;
-            var rt = new RenderTexture(Screen.width, Screen.height, 24);
-            cam.targetTexture = rt;
-            cam.Render();
-            cam.targetTexture = null;
-
-            var prev = RenderTexture.active;
-            RenderTexture.active = rt;
-            var tex = new Texture2D(Screen.width, Screen.height, TextureFormat.RGBA32, false);
-            tex.ReadPixels(new Rect(0, 0, Screen.width, Screen.height), 0, 0);
-            tex.Apply();
-            RenderTexture.active = prev;
+            var tex = Capture();
 
             var painted = 0;
             var off = 0;
@@ -219,8 +217,6 @@ namespace ReactUnity.Tests
             }
 
             Object.DestroyImmediate(tex);
-            rt.Release();
-            Object.DestroyImmediate(rt);
 
             Debug.Log($"[clip vs text] painted {painted}px, {off}px off by more than 0.2, worst {worst:F3}, mean {sum / 20000:F4}");
 
@@ -236,7 +232,7 @@ namespace ReactUnity.Tests
             yield return null;
             yield return null;
 
-            var clip = View.GameObject.GetComponent<UGUI.Internal.BackgroundTextClip>();
+            var clip = View.GameObject.GetComponent<UGUI.Internal.BackgroundClip>();
             Assert.NotNull(clip, "asking for the clip should have built one");
 
             var idle = clip.RenderCount;
@@ -268,6 +264,118 @@ namespace ReactUnity.Tests
             var coverage = RedCoverage();
             Debug.Log($"[clip back to border-box] coverage {coverage:P1}");
             Assert.Greater(coverage, 0.95f, "dropping the clip should put the whole background back");
+        }
+
+        // A 200x100 border box with a 20px border and 10px of padding, so the three boxes are
+        // 200x100, 160x60 and 140x40 -- 100%, 48% and 28% of the area the coverage is counted over.
+        // The border is transparent so what the background does underneath it is visible at all.
+        const string BoxScript = @"
+            function App() {
+                return <view id='test' />;
+            }
+";
+
+        const string BoxStyle = @"
+            #test {
+                position: absolute;
+                left: 0;
+                top: 0;
+                width: 200px;
+                height: 100px;
+                border: 20px solid transparent;
+                padding: 10px;
+                background-color: red;
+            }
+        ";
+
+        [UGUITest(Script = BoxScript, Style = BoxStyle)]
+        public IEnumerator TheBorderBoxPaintsUnderTheBorder()
+        {
+            yield return null;
+            yield return null;
+            yield return null;
+
+            var coverage = RedCoverage();
+            Debug.Log($"[clip border-box] coverage {coverage:P1}");
+            Assert.Greater(coverage, 0.95f, "a background reaches under its own border, whatever the border is made of");
+        }
+
+        [UGUITest(Script = BoxScript, Style = BoxStyle)]
+        public IEnumerator ThePaddingBoxStopsAtTheBorder()
+        {
+            View.Style["backgroundClip"] = "padding-box";
+            yield return null;
+            yield return null;
+            yield return null;
+
+            var coverage = RedCoverage();
+            Debug.Log($"[clip padding-box] coverage {coverage:P1}");
+            Assert.AreEqual(0.48f, coverage, 0.02f, "160x60 of the 200x100 box, which is the padding box");
+        }
+
+        [UGUITest(Script = BoxScript, Style = BoxStyle)]
+        public IEnumerator TheContentBoxStopsAtThePadding()
+        {
+            View.Style["backgroundClip"] = "content-box";
+            yield return null;
+            yield return null;
+            yield return null;
+
+            var coverage = RedCoverage();
+            Debug.Log($"[clip content-box] coverage {coverage:P1}");
+            Assert.AreEqual(0.28f, coverage, 0.02f, "140x40 of the 200x100 box, which is the content box");
+        }
+
+        [UGUITest(Script = BoxScript, Style = BoxStyle)]
+        public IEnumerator EachLayerTakesItsOwnBox()
+        {
+            // The top layer stops at the content edge and the one under it does not, so the box is
+            // filled to the border edge with red only where both of them reach.
+            View.Style["backgroundColor"] = "transparent";
+            View.Style["backgroundImage"] = "linear-gradient(red, red), linear-gradient(lime, lime)";
+            View.Style["backgroundClip"] = "content-box, border-box";
+            yield return null;
+            yield return null;
+            yield return null;
+
+            var coverage = RedCoverage();
+            Debug.Log($"[clip per layer, boxes] red coverage {coverage:P1}");
+            Assert.AreEqual(0.28f, coverage, 0.02f, "the clipped layer keeps the content box and the layer below fills the rest");
+        }
+
+        [UGUITest(Script = BoxScript, Style = BoxStyle)]
+        public IEnumerator ABoxTakesTheCornersTheBorderLeavesIt()
+        {
+            View.Style["borderRadius"] = "40px";
+            View.Style["backgroundClip"] = "padding-box";
+            yield return null;
+            yield return null;
+            yield return null;
+
+            var tex = Capture();
+
+            // The padding box's top-left corner is a 20px arc centred on (40, 40), which (22, 22)
+            // sits 25px from -- outside the background, and inside the border box that was masked.
+            var corner = tex.GetPixel(22, Screen.height - 1 - 22);
+            var centre = tex.GetPixel(100, Screen.height - 1 - 50);
+            Object.DestroyImmediate(tex);
+
+            Debug.Log($"[clip padding-box, rounded] corner {corner}, centre {centre}");
+            Assert.IsTrue(IsRed(centre), "the middle of the box is still painted");
+            Assert.IsFalse(IsRed(corner), "the corner the border rounds off is not");
+        }
+
+        [UGUITest(Script = BaseScript, Style = BaseStyle)]
+        public IEnumerator ABoxThatIsTheBorderBoxCostsNothing()
+        {
+            View.Style["backgroundClip"] = "padding-box";
+            yield return null;
+            yield return null;
+            yield return null;
+
+            var coverage = RedCoverage();
+            Debug.Log($"[clip padding-box, no inset] coverage {coverage:P1}");
+            Assert.Greater(coverage, 0.95f, "with no border and no padding the three boxes are one box");
         }
     }
 }
