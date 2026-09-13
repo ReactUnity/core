@@ -324,6 +324,43 @@ export function FilterPage() {
       <section>
         <h2>
           <row>
+            Background clip
+            <icon.text_fields />
+          </row>
+        </h2>
+
+        <text className={styles.note}>
+          `background-clip: text` keeps a background layer only where the element's glyphs are. The glyphs still carry their own `color`, so
+          `transparent` is what leaves nothing but the background showing through them.
+        </text>
+
+        <row className={'gap-6 flex-wrap'}>
+          <view className={'items-center'}>
+            <view className={clsx(styles.clipTextTile, styles.clipTextGradient)}>
+              <text>Text</text>
+            </view>
+            <text className={styles.caption}>a gradient, cut to the glyphs</text>
+          </view>
+
+          <view className={'items-center'}>
+            <view className={clsx(styles.clipTextTile, styles.clipTextPattern)}>
+              <text>Text</text>
+            </view>
+            <text className={styles.caption}>a repeating layer, and the colour under it</text>
+          </view>
+
+          <view className={'items-center'}>
+            <view className={clsx(styles.clipTextTile, styles.clipTextLayers)}>
+              <text>Text</text>
+            </view>
+            <text className={styles.caption}>text, border-box</text>
+          </view>
+        </row>
+      </section>
+
+      <section>
+        <h2>
+          <row>
             Mask image
             <icon.gradient />
           </row>

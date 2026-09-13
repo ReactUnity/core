@@ -118,6 +118,7 @@ namespace ReactUnity.Styling
         public ICssValueList<BackgroundRepeat> backgroundRepeatX => GetStyleValue(StyleProperties.backgroundRepeatX);
         public ICssValueList<BackgroundRepeat> backgroundRepeatY => GetStyleValue(StyleProperties.backgroundRepeatY);
         public ICssValueList<BackgroundBlendMode> backgroundBlendMode => GetStyleValue(StyleProperties.backgroundBlendMode);
+        public ICssValueList<BackgroundBox> backgroundClip => GetStyleValue(StyleProperties.backgroundClip);
 
         public ICssValueList<ImageDefinition> maskImage => GetStyleValue(StyleProperties.maskImage);
         public ICssValueList<YogaValue> maskPositionX => GetStyleValue(StyleProperties.maskPositionX);

@@ -55,6 +55,26 @@ namespace ReactUnity.UGUI.Shapes
         [SerializeField]
         private bool BlendsWithStack;
 
+        private Internal.BackgroundTextClip textClip;
+
+        /// <summary>
+        /// The coverage this layer is clipped to, for <c>background-clip: text</c>, or null when it
+        /// is clipped to a box. A clipped layer needs a shader that knows about the coverage and a
+        /// material of its own to hold it -- a plain image has neither until it is asked for.
+        /// </summary>
+        public Internal.BackgroundTextClip TextClip
+        {
+            get => textClip;
+            set
+            {
+                if (textClip == value) return;
+                var had = textClip != null;
+                textClip = value;
+                if (had != (value != null)) RefreshMaterial();
+                SyncInstanceMaterial();
+            }
+        }
+
         [SerializeField]
         private BackgroundSize backgroundSize = BackgroundSize.Auto;
         public BackgroundSize BackgroundSize
@@ -167,17 +187,19 @@ namespace ReactUnity.UGUI.Shapes
                     baseMat = Definition.ModifyMaterial(Context, baseMat, szPoint);
                 }
 
-                if (!registered) return baseMat;
+                if (!registered && textClip == null) return baseMat;
 
                 // Everything above shares its materials -- the blend materials by mode, the gradient
-                // ones by gradient -- and a backdrop cannot be shared, so a reader gets a copy. A new
-                // base material also means a mask above us changed, and ours has to be rebuilt on it.
+                // ones by gradient -- and neither a backdrop nor a text clip can be shared, so a
+                // layer that reads one gets a copy. A new base material also means a mask above us
+                // changed, and ours has to be rebuilt on it.
                 if (!instanceMaterial || instanceBase != baseMat)
                 {
                     if (instanceMaterial) DestroyImmediate(instanceMaterial);
                     instanceMaterial = new Material(baseMat);
                     instanceBase = baseMat;
                     ApplyBackdrop(instanceMaterial);
+                    Internal.BackgroundTextClip.Bind(instanceMaterial, textClip);
                 }
 
                 return instanceMaterial;
@@ -273,6 +295,9 @@ namespace ReactUnity.UGUI.Shapes
             material = BlendMode != BackgroundBlendMode.Normal
                 ? ResourcesHelper.GetBackgroundBlendMaterial((int) BlendMode, BlendsWithStack)
                 : pixelated && own == null ? ResourcesHelper.PixelatedImageMaterial
+                // `UI/Default` has nowhere to put a text clip, so a plain layer that is being
+                // clipped borrows the one shader that is it plus the clip.
+                : textClip != null && own == null ? ResourcesHelper.ClippedImageMaterial
                 : own;
             SetMaterialDirty();
         }
@@ -330,15 +355,23 @@ namespace ReactUnity.UGUI.Shapes
             registered = wanted;
 
             if (wanted) surface.Register(this);
-            else
+            else if (surface) surface.Unregister(this);
+
+            SyncInstanceMaterial();
+        }
+
+        /// <summary>Drops the copy once neither a backdrop nor a text clip needs one, and the shared
+        /// material it was made from is what this layer goes back to drawing with.</summary>
+        void SyncInstanceMaterial()
+        {
+            if (!registered && textClip == null)
             {
-                surface.Unregister(this);
-                // Nothing reads it now, and the shared material it was copied from is what this
-                // layer goes back to drawing with.
                 if (instanceMaterial) DestroyImmediate(instanceMaterial);
                 instanceMaterial = null;
                 instanceBase = null;
             }
+
+            SetMaterialDirty();
         }
 
         #endregion

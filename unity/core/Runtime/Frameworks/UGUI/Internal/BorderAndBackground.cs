@@ -128,6 +128,10 @@ namespace ReactUnity.UGUI.Internal
         }
 
         private bool pixelated;
+        private ICssValueList<BackgroundBox> clips = CssValueList<BackgroundBox>.Empty;
+        private BackgroundTextClip textClip;
+        private Material fillMaterial;
+        private bool fillClipped;
         private ICssValueList<BackgroundBlendMode> blendModes = CssValueList<BackgroundBlendMode>.Empty;
         public ICssValueList<BackgroundBlendMode> BlendModes
         {
@@ -306,6 +310,7 @@ namespace ReactUnity.UGUI.Internal
         public void UpdateStyle(NodeStyle style)
         {
             blendModes = style.backgroundBlendMode;
+            clips = style.backgroundClip ?? CssValueList<BackgroundBox>.Empty;
             pixelated = style.imageRendering == ImageRendering.Pixelated || style.imageRendering == ImageRendering.CrispEdges;
             bgColor = style.backgroundColor;
             pointerEvents = style.pointerEvents;
@@ -314,6 +319,7 @@ namespace ReactUnity.UGUI.Internal
             var bgFilter = style.backdropFilter;
             if(bgFilter != null) SetBackdropFilter(bgFilter);
             SetBackground(bgColor, style.backgroundImage, style.backgroundPositionX, style.backgroundPositionY, style.backgroundSize, style.backgroundRepeatX, style.backgroundRepeatY);
+            UpdateTextClip();
             SetBoxShadow(style.boxShadow);
 
             UpdateOutline(style);
@@ -495,6 +501,92 @@ namespace ReactUnity.UGUI.Internal
                 sd.BackgroundPosition = new YogaValue2(positionsX.Get(i), positionsY.Get(i));
                 sd.BackgroundSize = sizes.Get(i);
             }
+        }
+
+        /// <summary>
+        /// Points whichever background layers are clipped to the element's text at the coverage that
+        /// carries it, building one for the element the first time something asks.
+        /// </summary>
+        /// <remarks>
+        /// CSS gives every layer its own clip and hands the background colour the last layer's, so a
+        /// gradient can be cut to the text while a colour under it still fills the box. The box
+        /// values all paint the area ReactUnity already paints -- the background is clipped and
+        /// rounded by the mask on <c>[GraphicRoot]</c>, which is what gives it its corners, and that
+        /// mask is the padding box.
+        /// </remarks>
+        private void UpdateTextClip()
+        {
+            var layers = BackgroundGraphics?.Count ?? 0;
+            var colorClipsToText = clips.Get(layers > 0 ? layers - 1 : 0) == BackgroundBox.Text;
+
+            var wanted = colorClipsToText;
+            for (int i = 0; i < layers && !wanted; i++) wanted = clips.Get(i) == BackgroundBox.Text;
+
+            if (wanted && !textClip) textClip = BackgroundTextClip.Create(Component, EnsureBackgroundRoot(), this);
+
+            for (int i = 0; i < layers; i++)
+            {
+                // The layers are built back to front, so the last one is the first CSS declared.
+                var sd = BackgroundGraphics[layers - 1 - i];
+                sd.TextClip = clips.Get(i) == BackgroundBox.Text ? textClip : null;
+            }
+
+            SetFillClipped(colorClipsToText);
+
+            if (!wanted && textClip)
+            {
+                Destroy(textClip);
+                textClip = null;
+            }
+        }
+
+        private void SetFillClipped(bool clipped)
+        {
+            if (fillClipped == clipped) return;
+            fillClipped = clipped;
+
+            if (clipped)
+            {
+                // Its own material rather than a shared one: the coverage is this element's, and a
+                // RawImage has no place to keep a copy the way a background layer does.
+                if (!fillMaterial) fillMaterial = new Material(Helpers.ResourcesHelper.ClippedImageShader);
+                BgImage.material = fillMaterial;
+            }
+            else
+            {
+                if (bgImage) bgImage.material = null;
+                BackgroundTextClip.Bind(fillMaterial, null);
+            }
+        }
+
+        /// <summary>
+        /// Hands the coverage to everything drawing through it, every frame. The uv matrix moves
+        /// with the element, and UGUI substitutes a stencil copy of a material under a mask which is
+        /// not the object the value was written to -- so neither can be set once and left.
+        /// </summary>
+        internal void PushTextClip(BackgroundTextClip clip)
+        {
+            if (fillClipped && bgImage)
+            {
+                BackgroundTextClip.Bind(fillMaterial, clip);
+                var drawn = bgImage.materialForRendering;
+                if (drawn && drawn != fillMaterial) BackgroundTextClip.Bind(drawn, clip);
+            }
+
+            if (BackgroundGraphics == null) return;
+
+            for (int i = 0; i < BackgroundGraphics.Count; i++)
+            {
+                var sd = BackgroundGraphics[i];
+                if (!sd || sd.TextClip != clip) continue;
+                BackgroundTextClip.Bind(sd.materialForRendering, clip);
+            }
+        }
+
+        private void OnDestroy()
+        {
+            if (fillMaterial) Destroy(fillMaterial);
+            fillMaterial = null;
         }
 
         private void SetBoxShadow(ICssValueList<BoxShadow> shadows)

@@ -193,4 +193,5 @@ export type AnimationPlayState = 'running' | 'paused';
 export type TimelineAxis = 'block' | 'inline' | 'x' | 'y';
 export type BackgroundSize = 'cover' | 'contain';
 export type BackgroundRepeat = 'repeat' | 'space' | 'round' | 'no-repeat';
+export type BackgroundClip = 'border-box' | 'padding-box' | 'content-box' | 'text';
 export type BorderImageRepeat = 'stretch' | 'repeat' | 'space' | 'round';

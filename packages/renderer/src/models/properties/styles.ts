@@ -4,6 +4,7 @@ import {
   AnimationFillMode,
   AnimationPlayState,
   Appearance,
+  BackgroundClip,
   BackgroundRepeat,
   BackgroundSize,
   BorderImageRepeat,
@@ -81,6 +82,7 @@ export interface RenderStyle {
   // One value per background image layer, repeating to cover them all -- so a comma-separated
   // list is as valid here as a single keyword.
   backgroundBlendMode?: MixBlendMode | SafeString;
+  backgroundClip?: BackgroundClip | SafeString;
   backgroundColor?: ColorAux;
   backgroundImage?: AssetReferenceOrHttp;
   backgroundPositionX?: YogaValueAux;

@@ -159,6 +159,8 @@ namespace ReactUnity.Styling
         public static readonly ValueListStyleProperty<BackgroundRepeat> backgroundRepeatX = new ValueListStyleProperty<BackgroundRepeat>("backgroundRepeatX", BackgroundRepeat.Repeat);
         public static readonly ValueListStyleProperty<BackgroundRepeat> backgroundRepeatY = new ValueListStyleProperty<BackgroundRepeat>("backgroundRepeatY", BackgroundRepeat.Repeat);
         public static readonly ValueListStyleProperty<BackgroundBlendMode> backgroundBlendMode = new ValueListStyleProperty<BackgroundBlendMode>("backgroundBlendMode", BackgroundBlendMode.Normal);
+        // One clip per layer, as CSS has it. The background colour takes the last layer's value.
+        public static readonly ValueListStyleProperty<BackgroundBox> backgroundClip = new ValueListStyleProperty<BackgroundBox>("backgroundClip", BackgroundBox.BorderBox);
 
         public static readonly ValueListStyleProperty<ImageDefinition> maskImage = new ValueListStyleProperty<ImageDefinition>("maskImage");
         public static readonly ValueListStyleProperty<YogaValue> maskPositionX = new ValueListStyleProperty<YogaValue>("maskPositionX");
@@ -326,6 +328,7 @@ namespace ReactUnity.Styling
             { "backgroundRepeatX", backgroundRepeatX },
             { "backgroundRepeatY", backgroundRepeatY },
             { "backgroundBlendMode", backgroundBlendMode },
+            { "backgroundClip", backgroundClip },
 
             { "maskImage", maskImage },
             { "maskPositionX", maskPositionX },
@@ -451,6 +454,7 @@ namespace ReactUnity.Styling
             { "background-repeat-x", backgroundRepeatX },
             { "background-repeat-y", backgroundRepeatY },
             { "background-blend-mode", backgroundBlendMode },
+            { "background-clip", backgroundClip },
             { "mask-image", maskImage },
             { "mask-position-x", maskPositionX },
             { "mask-position-y", maskPositionY },

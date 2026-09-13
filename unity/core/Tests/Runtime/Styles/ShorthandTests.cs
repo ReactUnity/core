@@ -142,6 +142,40 @@ namespace ReactUnity.Tests
             Assert.AreEqual(BackgroundRepeat.NoRepeat, rptY.Get(4));
         }
 
+        [UGUITest(Style = @"
+          #test {
+            background:
+              linear-gradient(red, blue) text,
+              url(res:ReactUnity/tests/sprites/star) padding-box content-box,
+              url(res:ReactUnity/tests/sprites/star);
+          }
+")]
+        public IEnumerator BackgroundClipInTheShorthand()
+        {
+            yield return null;
+
+            var clip = Q("#test").ComputedStyle.backgroundClip;
+
+            Assert.AreEqual(3, clip.Count);
+            Assert.AreEqual(BackgroundBox.Text, clip.Get(0));
+            // Two boxes are origin then clip, and only the clip is kept.
+            Assert.AreEqual(BackgroundBox.ContentBox, clip.Get(1));
+            Assert.AreEqual(BackgroundBox.BorderBox, clip.Get(2), "a layer that names no box gets the initial value");
+        }
+
+        [UGUITest(Style = @"
+          #test {
+            background-clip: text;
+            background: red;
+          }
+")]
+        public IEnumerator TheBackgroundShorthandResetsTheClip()
+        {
+            yield return null;
+
+            Assert.AreEqual(BackgroundBox.BorderBox, Q("#test").ComputedStyle.backgroundClip.Get(0));
+        }
+
 
         [UGUITest]
         public IEnumerator TransformShorthand()

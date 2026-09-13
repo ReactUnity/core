@@ -120,6 +120,10 @@
               "path": "/reference/css/background-blend-mode"
             },
             {
+              "title": "Background Clip",
+              "path": "/reference/css/background-clip"
+            },
+            {
               "title": "Background Color",
               "path": "/reference/css/background-color"
             },

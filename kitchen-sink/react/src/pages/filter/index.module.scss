@@ -275,6 +275,41 @@
   background-blend-mode: difference;
 }
 
+/* The subject of a text clip has to be text, and big and heavy enough that a gradient across it
+   reads -- a thin glyph is a few pixels of a layer. */
+.clipTextTile {
+  width: 200px;
+  height: 90px;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+
+  text {
+    font-size: 48px;
+    font-weight: bold;
+    color: transparent;
+  }
+}
+
+.clipTextGradient {
+  background-image: linear-gradient(100deg, #f97316, #a855f7 55%, #38bdf8);
+  background-clip: text;
+}
+
+/* One clip covers the colour too -- it takes the last value in the list. */
+.clipTextPattern {
+  background-color: #0ea5e9;
+  background-image: linear-gradient(45deg, #f97316 25%, transparent 25%, transparent 75%, #f97316 75%, #f97316);
+  background-size: 24px 24px;
+  background-clip: text;
+}
+
+/* One value per layer: the gradient is cut to the glyphs and the panel under it is not. */
+.clipTextLayers {
+  background-image: linear-gradient(100deg, #f97316, #a855f7 55%, #38bdf8), linear-gradient(#1e293b, #0f172a);
+  background-clip: text, border-box;
+}
+
 /* Something with detail behind the panel, so the backdrop blur has anything to show. */
 .backdropHost {
   height: 200px;

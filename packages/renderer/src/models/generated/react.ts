@@ -1,6 +1,6 @@
 //
 // Types in assemblies: ReactUnity, ReactUnity.Editor, ReactUnity.UGUI, ReactUnity.UIToolkit
-// Generated 12/09/2026 20:34:30
+// Generated 13/09/2026 04:37:05
 //
 /* eslint-disable */
 
@@ -4448,6 +4448,7 @@ export declare namespace ReactUnity {
       backgroundRepeatX: ReactUnity.Types.ICssValueList<ReactUnity.Types.BackgroundRepeat>;
       backgroundRepeatY: ReactUnity.Types.ICssValueList<ReactUnity.Types.BackgroundRepeat>;
       backgroundBlendMode: ReactUnity.Types.ICssValueList<ReactUnity.Types.BackgroundBlendMode>;
+      backgroundClip: ReactUnity.Types.ICssValueList<ReactUnity.Types.BackgroundBox>;
       maskImage: ReactUnity.Types.ICssValueList<ReactUnity.Types.ImageDefinition>;
       maskPositionX: ReactUnity.Types.ICssValueList<Yoga.YogaValue>;
       maskPositionY: ReactUnity.Types.ICssValueList<Yoga.YogaValue>;
@@ -4731,6 +4732,7 @@ export declare namespace ReactUnity {
       static backgroundRepeatX: ReactUnity.Styling.ValueListStyleProperty;
       static backgroundRepeatY: ReactUnity.Styling.ValueListStyleProperty;
       static backgroundBlendMode: ReactUnity.Styling.ValueListStyleProperty;
+      static backgroundClip: ReactUnity.Styling.ValueListStyleProperty;
       static maskImage: ReactUnity.Styling.ValueListStyleProperty;
       static maskPositionX: ReactUnity.Styling.ValueListStyleProperty;
       static maskPositionY: ReactUnity.Styling.ValueListStyleProperty;
@@ -6723,6 +6725,7 @@ export declare namespace ReactUnity {
       BorderBox = 0,
       ContentBox = 1,
       PaddingBox = 2,
+      Text = 3,
     }
     export enum BackgroundAttachment {
       Scroll = 0,
@@ -13006,6 +13009,74 @@ export declare namespace ReactUnity {
         ToString(): string;
         GetType(): System.Type;
       }
+      export class BackgroundTextClip {
+        constructor();
+        Coverage: UnityEngine.Texture;
+        RenderCount: number;
+        destroyCancellationToken: System.Threading.CancellationToken;
+        useGUILayout: boolean;
+        didStart: boolean;
+        didAwake: boolean;
+        runInEditMode: boolean;
+        enabled: boolean;
+        isActiveAndEnabled: boolean;
+        transform: UnityEngine.Transform;
+        transformHandle: UnityEngine.TransformHandle;
+        gameObject: UnityEngine.GameObject;
+        tag: string;
+        name: string;
+        hideFlags: UnityEngine.HideFlags;
+        static Create(cmp: ReactUnity.UGUI.UGUIComponent, paintingArea: UnityEngine.RectTransform, owner: ReactUnity.UGUI.Internal.BorderAndBackground): ReactUnity.UGUI.Internal.BackgroundTextClip;
+        Invalidate(): void;
+        static Bind(mat: UnityEngine.Material, clip: ReactUnity.UGUI.Internal.BackgroundTextClip): void;
+        IsInvoking(): boolean;
+        CancelInvoke(): void;
+        Invoke(methodName: string, time: number): void;
+        InvokeRepeating(methodName: string, time: number, repeatRate: number): void;
+        CancelInvoke(methodName: string): void;
+        IsInvoking(methodName: string): boolean;
+        StartCoroutine(methodName: string): UnityEngine.Coroutine;
+        StartCoroutine(methodName: string, value: any): UnityEngine.Coroutine;
+        StartCoroutine(routine: System.Collections.IEnumerator): UnityEngine.Coroutine;
+        StartCoroutine_Auto(routine: System.Collections.IEnumerator): UnityEngine.Coroutine;
+        StopCoroutine(routine: System.Collections.IEnumerator): void;
+        StopCoroutine(routine: UnityEngine.Coroutine): void;
+        StopCoroutine(methodName: string): void;
+        StopAllCoroutines(): void;
+        GetComponent(type: System.Type): UnityEngine.Component;
+        GetComponent(type: string): UnityEngine.Component;
+        GetComponentInChildren(t: System.Type, includeInactive: boolean): UnityEngine.Component;
+        GetComponentInChildren(t: System.Type): UnityEngine.Component;
+        GetComponentsInChildren(t: System.Type, includeInactive: boolean): UnityEngine.Component[];
+        GetComponentsInChildren(t: System.Type): UnityEngine.Component[];
+        GetComponentInParent(t: System.Type, includeInactive: boolean): UnityEngine.Component;
+        GetComponentInParent(t: System.Type): UnityEngine.Component;
+        GetComponentsInParent(t: System.Type, includeInactive: boolean): UnityEngine.Component[];
+        GetComponentsInParent(t: System.Type): UnityEngine.Component[];
+        GetComponents(type: System.Type): UnityEngine.Component[];
+        GetComponents(type: System.Type, results: UnityEngine.Component[]): void;
+        GetComponentIndex(): number;
+        CompareTag(tag: string): boolean;
+        CompareTag(tag: UnityEngine.TagHandle): boolean;
+        SendMessageUpwards(methodName: string, value: any, options: UnityEngine.SendMessageOptions): void;
+        SendMessageUpwards(methodName: string, value: any): void;
+        SendMessageUpwards(methodName: string): void;
+        SendMessageUpwards(methodName: string, options: UnityEngine.SendMessageOptions): void;
+        SendMessage(methodName: string, value: any): void;
+        SendMessage(methodName: string): void;
+        SendMessage(methodName: string, value: any, options: UnityEngine.SendMessageOptions): void;
+        SendMessage(methodName: string, options: UnityEngine.SendMessageOptions): void;
+        BroadcastMessage(methodName: string, parameter: any, options: UnityEngine.SendMessageOptions): void;
+        BroadcastMessage(methodName: string, parameter: any): void;
+        BroadcastMessage(methodName: string): void;
+        BroadcastMessage(methodName: string, options: UnityEngine.SendMessageOptions): void;
+        GetEntityId(): UnityEngine.EntityId;
+        GetInstanceID(): number;
+        GetHashCode(): number;
+        Equals(other: any): boolean;
+        ToString(): string;
+        GetType(): System.Type;
+      }
       export class BorderAndBackground {
         constructor();
         Root: UnityEngine.RectTransform;
@@ -13683,6 +13754,7 @@ export declare namespace ReactUnity {
         Size: UnityEngine.Vector2;
         Definition: ReactUnity.Types.ImageDefinition;
         Pixelated: boolean;
+        TextClip: ReactUnity.UGUI.Internal.BackgroundTextClip;
         BackgroundSize: ReactUnity.Types.BackgroundSize;
         BackgroundPosition: ReactUnity.Types.YogaValue2;
         BackgroundRepeatX: ReactUnity.Types.BackgroundRepeat;

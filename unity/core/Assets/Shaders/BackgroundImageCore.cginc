@@ -16,6 +16,7 @@
 #include "UnityUI.cginc"
 #include "CustomFunctions.hlsl"
 #include "ShaderSetup.cginc"
+#include "../../Resources/ReactUnity/shaders/TextClip.cginc"
 
 #ifdef RU_BG_BLEND
 #include "../../Resources/ReactUnity/shaders/BlendModes.cginc"
@@ -179,12 +180,17 @@ fixed4 frag(v2f i) : SV_Target
 
   res.a = as;
 
+  // Premultiplied here, so the clip has to take the colour down with the coverage.
+  res *= RuTextClip(i.worldPosition);
+
   #ifdef UNITY_UI_CLIP_RECT
     float clip2d = UnityGet2DClipping(i.worldPosition.xy, _ClipRect);
     res *= clip2d;
   #endif
 #else
   fixed4 res = mixAlpha(tex2D(_MainTex, txPos), i.color, 1);
+
+  res.a *= RuTextClip(i.worldPosition);
 
   #ifdef UNITY_UI_CLIP_RECT
     res.a *= UnityGet2DClipping(i.worldPosition.xy, _ClipRect);

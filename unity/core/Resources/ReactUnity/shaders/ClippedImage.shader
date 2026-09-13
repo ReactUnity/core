@@ -1,12 +1,9 @@
-// `image-rendering: pixelated`. Unity's default UI shader with one change: the sample is snapped to
-// the nearest texel centre, so an upscaled image shows its own pixels instead of a bilinear smear.
-//
-// Doing it here rather than by setting FilterMode on the texture is what keeps it a per-element
-// property: a Texture2D's filter mode belongs to the imported asset, so one element asking for
-// crisp edges would change every other element drawing the same image -- and, in the editor, keep
-// it changed. The snap also works on a sprite inside an atlas, since the uv it snaps is already
-// the atlas'.
-Shader "ReactUnity/PixelatedImage"
+// Unity's default UI shader with `background-clip: text` compiled in. A background layer whose image
+// brings no material of its own -- a plain sprite, or the background colour -- draws with this one
+// while it is clipped, because the clip has to live in whatever shader paints the layer and there is
+// no reaching into `UI/Default`. Everything else about it is the stock shader, so a layer that moves
+// on and off a text clip looks the same either way.
+Shader "ReactUnity/ClippedImage"
 {
   Properties
   {
@@ -48,10 +45,6 @@ Shader "ReactUnity/PixelatedImage"
     ZWrite Off
     ZTest[unity_GUIZTestMode]
     ColorMask[_ColorMask]
-    // Separate alpha blending, the way UGUI's own default UI shader does it: `SrcAlpha` on the
-    // alpha channel would square a translucent draw's coverage in a render target that started
-    // transparent, which is what a mask layer and the filter capture both are. Nothing on screen
-    // changes -- the back buffer's alpha is never read.
     Blend SrcAlpha OneMinusSrcAlpha, One OneMinusSrcAlpha
 
     Pass
@@ -86,7 +79,6 @@ Shader "ReactUnity/PixelatedImage"
 
       sampler2D _MainTex;
       float4 _MainTex_ST;
-      float4 _MainTex_TexelSize;
       fixed4 _Color;
       fixed4 _TextureSampleAdd;
       float4 _ClipRect;
@@ -105,12 +97,7 @@ Shader "ReactUnity/PixelatedImage"
 
       fixed4 frag(v2f i) : SV_Target
       {
-        // Nearest neighbour: land on the centre of the texel the uv falls in, which is the one a
-        // point-filtered sampler would have returned.
-        float2 texel = _MainTex_TexelSize.xy;
-        float2 uv = (floor(i.texcoord / texel) + 0.5) * texel;
-
-        half4 color = i.color * (tex2D(_MainTex, uv) + _TextureSampleAdd);
+        half4 color = i.color * (tex2D(_MainTex, i.texcoord) + _TextureSampleAdd);
 
         color.a *= RuTextClip(i.worldPosition);
 
