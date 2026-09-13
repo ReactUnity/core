@@ -1,0 +1,769 @@
+/*
+  Only what Tailwind cannot spell: keyframes, layered and conic gradients, clip-path shapes, masks,
+  blend modes and the perspective floor. Layout, spacing, colour and type on this page are utilities.
+
+  Four elements read the backdrop (`backdrop-filter`), which costs a camera render each -- see the
+  cost model in the backdrop-filter reference. A HUD is where that spend is worth it; a page that
+  wants twenty frosted panels does not.
+*/
+
+/* --- The screen ------------------------------------------------------------------------------ */
+
+.screen {
+  position: relative;
+  height: 640px;
+  overflow: hidden;
+  border-radius: 20px;
+  background-color: #04060e;
+  /* Isolated so the scanline layer blends with the scene and not with the page behind it. */
+  isolation: isolate;
+  box-shadow:
+    0 40px 80px -32px rgba(2, 6, 23, 0.95),
+    0 0 0 1px rgba(34, 211, 238, 0.2) inset;
+}
+
+/* Two nebulae, the ground glow and the base sky, as four layers of one background-image. */
+.sky {
+  position: absolute;
+  inset: 0;
+  background-image:
+    radial-gradient(ellipse 70% 60% at 20% 6%, rgba(56, 189, 248, 0.4), transparent 62%),
+    radial-gradient(ellipse 55% 45% at 84% 2%, rgba(232, 121, 249, 0.34), transparent 64%),
+    radial-gradient(ellipse 120% 55% at 50% 108%, rgba(13, 148, 136, 0.48), transparent 70%),
+    linear-gradient(180deg, #0a1024 0%, #05070f 55%, #04060e 100%);
+  animation: skyDrift 26s ease-in-out infinite alternate;
+}
+
+@keyframes skyDrift {
+  from {
+    scale: 1 1;
+    translate: -1% 0;
+  }
+
+  to {
+    scale: 1.08 1.06;
+    translate: 1% -1%;
+  }
+}
+
+/* Every star is a radial gradient whose first stop ends almost immediately, which is the cheapest
+   way to get a dot out of a gradient -- no sprite, no atlas. */
+.stars {
+  position: absolute;
+  inset: 0;
+  background-image:
+    radial-gradient(circle at 8% 14%, rgba(226, 232, 240, 0.9) 0%, transparent 0.45%),
+    radial-gradient(circle at 17% 31%, rgba(165, 243, 252, 0.8) 0%, transparent 0.3%),
+    radial-gradient(circle at 26% 9%, rgba(226, 232, 240, 0.7) 0%, transparent 0.35%),
+    radial-gradient(circle at 34% 22%, rgba(240, 171, 252, 0.8) 0%, transparent 0.3%),
+    radial-gradient(circle at 43% 6%, rgba(226, 232, 240, 0.85) 0%, transparent 0.4%),
+    radial-gradient(circle at 52% 27%, rgba(165, 243, 252, 0.7) 0%, transparent 0.28%),
+    radial-gradient(circle at 61% 12%, rgba(226, 232, 240, 0.9) 0%, transparent 0.42%),
+    radial-gradient(circle at 69% 33%, rgba(226, 232, 240, 0.6) 0%, transparent 0.3%),
+    radial-gradient(circle at 77% 18%, rgba(240, 171, 252, 0.75) 0%, transparent 0.35%),
+    radial-gradient(circle at 85% 8%, rgba(226, 232, 240, 0.8) 0%, transparent 0.4%),
+    radial-gradient(circle at 92% 26%, rgba(165, 243, 252, 0.85) 0%, transparent 0.32%),
+    radial-gradient(circle at 12% 41%, rgba(226, 232, 240, 0.55) 0%, transparent 0.26%),
+    radial-gradient(circle at 47% 44%, rgba(226, 232, 240, 0.5) 0%, transparent 0.24%),
+    radial-gradient(circle at 73% 47%, rgba(226, 232, 240, 0.6) 0%, transparent 0.28%);
+  animation: twinkle 4.5s ease-in-out infinite alternate;
+}
+
+@keyframes twinkle {
+  from {
+    opacity: 0.4;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+/* --- The floor -------------------------------------------------------------------------------
+   The grid is a flat pair of repeating gradients; the perspective is entirely the parent's, so the
+   tilt costs nothing to draw and the pulse inside it travels along the plane rather than the
+   screen -- a child's `translate` is in its parent's space, and its parent is the tilted one. */
+
+.horizon {
+  position: absolute;
+  inset: auto 0 0 0;
+  height: 54%;
+  perspective: 260px;
+  perspective-origin: center top;
+  pointer-events: none;
+}
+
+.floor {
+  width: 100%;
+  height: 100%;
+  transform: rotateX(68deg);
+  transform-origin: center top;
+  background-image:
+    repeating-linear-gradient(
+      to right,
+      rgba(34, 211, 238, 0.55) 0px,
+      rgba(34, 211, 238, 0.55) 1px,
+      transparent 1px,
+      transparent 46px
+    ),
+    repeating-linear-gradient(
+      to bottom,
+      rgba(34, 211, 238, 0.45) 0px,
+      rgba(34, 211, 238, 0.45) 1px,
+      transparent 1px,
+      transparent 46px
+    );
+  mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.15), black 32%, transparent 94%);
+}
+
+.floorPulse {
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: 3px;
+  background-image: linear-gradient(to right, transparent, rgba(103, 232, 249, 0.95) 50%, transparent);
+  animation: floorPulse 5s cubic-bezier(0.35, 0, 0.85, 1) infinite;
+}
+
+@keyframes floorPulse {
+  from {
+    translate: 0 0;
+    opacity: 0;
+  }
+
+  12% {
+    opacity: 1;
+  }
+
+  to {
+    translate: 0 340px;
+    opacity: 0;
+  }
+}
+
+/* --- Screen-wide overlays --------------------------------------------------------------------- */
+
+/* One period of travel, so the drift is seamless. `overlay` keeps the dark rows dark and the light
+   rows light instead of washing the scene out the way a plain alpha would. */
+.scanlines {
+  position: absolute;
+  inset: 0;
+  opacity: 0.55;
+  mix-blend-mode: overlay;
+  background-image: repeating-linear-gradient(
+    to bottom,
+    rgba(148, 163, 184, 0.16) 0px,
+    rgba(148, 163, 184, 0.16) 1px,
+    transparent 1px,
+    transparent 3px
+  );
+  animation: scanDrift 5s linear infinite;
+}
+
+@keyframes scanDrift {
+  from {
+    translate: 0 0;
+  }
+
+  to {
+    translate: 0 3px;
+  }
+}
+
+.vignette {
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(ellipse 78% 74% at 50% 46%, transparent 42%, rgba(2, 6, 23, 0.88) 100%);
+}
+
+/* Flashes red when the player is hit. `both` holds the last keyframe, so it stays invisible after. */
+.hurt {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  background-image: radial-gradient(ellipse 90% 85% at 50% 50%, transparent 38%, rgba(190, 18, 60, 0.75) 100%);
+  animation: hurtFlash 700ms ease-out both;
+}
+
+@keyframes hurtFlash {
+  from {
+    opacity: 0.95;
+  }
+
+  to {
+    opacity: 0;
+  }
+}
+
+/* --- Panel chrome ------------------------------------------------------------------------------
+   A bevelled corner wants `calc(100% - 14px)` in the polygon, and a calc() holding a percentage
+   resolves to nothing here -- the declaration is dropped and the panel is a plain rectangle with
+   no error anywhere. Corner brackets say the same thing in pixels, and unlike a bevel they do not
+   change shape with the panel. */
+
+.panel {
+  background-color: rgba(8, 13, 27, 0.62);
+  border: 1px solid rgba(103, 232, 249, 0.26);
+
+  /* The scroll views inside a panel, in the HUD's palette -- the default thumb is a light grey
+     slab that reads as a Unity control sitting on top of the art. */
+  ::-webkit-scrollbar {
+    width: 5px;
+    background-color: rgba(2, 6, 23, 0.55);
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background-color: rgba(103, 232, 249, 0.5);
+    border-radius: 2px;
+  }
+}
+
+/* Two panels read the backdrop, and each one costs a camera render. The rest are opaque enough not
+   to need it -- which is the trade every HUD makes, whether or not it says so. */
+.glass {
+  backdrop-filter: blur(7px) saturate(1.25);
+}
+
+.bracketTop {
+  position: absolute;
+  top: -1px;
+  left: -1px;
+  width: 18px;
+  height: 18px;
+  border-top: 2px solid rgba(103, 232, 249, 0.9);
+  border-left: 2px solid rgba(103, 232, 249, 0.9);
+}
+
+.bracketBottom {
+  position: absolute;
+  right: -1px;
+  bottom: -1px;
+  width: 18px;
+  height: 18px;
+  border-right: 2px solid rgba(103, 232, 249, 0.9);
+  border-bottom: 2px solid rgba(103, 232, 249, 0.9);
+}
+
+/* --- The portrait ------------------------------------------------------------------------------
+   A conic gradient masked down to a ring: the sweep is the fill, the mask is what turns the disc
+   into an annulus, and the hexagon inside it is a clip on the avatar itself. */
+
+.xpRing {
+  /* `closest-side`, or 100% is the distance to a corner and the whole annulus falls outside the box. */
+  mask-image: radial-gradient(circle closest-side, transparent 0%, transparent 78%, black 80%, black 100%);
+  animation: ringSpin 18s linear infinite;
+}
+
+@keyframes ringSpin {
+  from {
+    rotate: 0deg;
+  }
+
+  to {
+    rotate: 360deg;
+  }
+}
+
+.hex {
+  clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+}
+
+/* A band of light travelling across the portrait, cut to the same hexagon by the parent's clip. */
+.sheen {
+  position: absolute;
+  inset: -40% -120%;
+  background-image: linear-gradient(72deg, transparent 42%, rgba(255, 255, 255, 0.42) 50%, transparent 58%);
+  animation: sheenSweep 4.5s ease-in-out infinite;
+}
+
+@keyframes sheenSweep {
+  from {
+    translate: -60% 0;
+  }
+
+  55%,
+  to {
+    translate: 60% 0;
+  }
+}
+
+/* --- Bars --------------------------------------------------------------------------------------
+   Every bar is three layers: the well, a lagging ghost that shows what was just lost, and the fill.
+   The ghost is the same width with a slower transition and a delay, which is the whole trick. */
+
+.well {
+  background-color: rgba(2, 6, 23, 0.85);
+  box-shadow:
+    0 0 0 1px rgba(148, 163, 184, 0.22) inset,
+    0 2px 6px rgba(0, 0, 0, 0.6) inset;
+}
+
+.barFill {
+  transition: width 260ms cubic-bezier(0.2, 0.8, 0.3, 1);
+}
+
+.barGhost {
+  transition: width 900ms ease-out 320ms;
+}
+
+/* The notches every bar carries, so a length reads as a number. */
+.ticks {
+  position: absolute;
+  inset: 0;
+  background-image: repeating-linear-gradient(
+    to right,
+    transparent 0px,
+    transparent 9px,
+    rgba(2, 6, 23, 0.55) 9px,
+    rgba(2, 6, 23, 0.55) 10px
+  );
+}
+
+/* A highlight that runs along a filled bar. Kept to the boss bar and the orbs -- one per screen is
+   a detail, one per bar is a disco. */
+.sweep {
+  position: absolute;
+  inset: 0;
+  background-image: linear-gradient(to right, transparent 20%, rgba(255, 255, 255, 0.45) 50%, transparent 80%);
+  mask-image: linear-gradient(to right, transparent, black 40%, black 60%, transparent);
+  animation: sweepAcross 2.6s ease-in-out infinite;
+}
+
+@keyframes sweepAcross {
+  from {
+    translate: -100% 0;
+  }
+
+  to {
+    translate: 100% 0;
+  }
+}
+
+/* The boss bar's two gradients, blended rather than stacked: the second is a sheet of light the
+   first is lit through, which no single gradient produces. */
+.bossFill {
+  background-image:
+    linear-gradient(to right, #f43f5e, #fb923c 55%, #fbbf24),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.55), rgba(0, 0, 0, 0.45));
+  background-blend-mode: overlay;
+  transition: width 420ms cubic-bezier(0.2, 0.8, 0.3, 1);
+}
+
+/* --- Orbs --------------------------------------------------------------------------------------
+   The fill is a plain block clipped to the circle by the orb; the wave is a rounded square turning
+   at its top edge, which is the oldest liquid trick there is. */
+
+.orb {
+  border-radius: 50%;
+  background-color: rgba(2, 6, 23, 0.9);
+  box-shadow:
+    0 0 0 2px rgba(15, 23, 42, 0.9),
+    0 0 0 3px rgba(103, 232, 249, 0.35),
+    0 6px 18px -6px rgba(0, 0, 0, 0.9),
+    0 -10px 22px -12px rgba(255, 255, 255, 0.5) inset;
+}
+
+/* The liquid is a rectangle; the circle comes from clipping it. `overflow: hidden` would not do --
+   that clips to the element's box, which is square whatever the border radius says. */
+.orbClip {
+  position: absolute;
+  inset: 0;
+  clip-path: circle(50%);
+}
+
+.orbFill {
+  position: absolute;
+  inset: auto 0 0 0;
+  transition: height 320ms cubic-bezier(0.2, 0.8, 0.3, 1);
+}
+
+.orbWave {
+  position: absolute;
+  left: -30%;
+  right: -30%;
+  top: -14px;
+  height: 28px;
+  border-radius: 44%;
+  opacity: 0.85;
+  animation: orbWave 7s linear infinite;
+}
+
+.orbWaveSlow {
+  animation-duration: 11s;
+  animation-direction: reverse;
+  opacity: 0.5;
+}
+
+@keyframes orbWave {
+  from {
+    rotate: 0deg;
+  }
+
+  to {
+    rotate: 360deg;
+  }
+}
+
+/* The glass: a highlight above and a rim below, painted over the liquid. */
+.orbGlass {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background-image:
+    radial-gradient(ellipse 60% 40% at 32% 24%, rgba(255, 255, 255, 0.4), transparent 60%),
+    radial-gradient(ellipse 110% 80% at 50% 120%, rgba(255, 255, 255, 0.18), transparent 55%);
+}
+
+/* --- The action bar ----------------------------------------------------------------------------
+   A cooldown is an opaque block whose height animates to nothing, and the slot listens for the
+   animation ending rather than running a timer of its own. */
+
+.slot {
+  /* Rounded clipping, which the rectangular mask behind `overflow: hidden` cannot give the
+     cooldown block and the cast flash. */
+  clip-path: inset(0 round 10px);
+  background-image: linear-gradient(160deg, rgba(30, 41, 59, 0.95), rgba(2, 6, 23, 0.95));
+  box-shadow:
+    0 0 0 1px rgba(148, 163, 184, 0.28) inset,
+    0 4px 10px -4px rgba(0, 0, 0, 0.9);
+  transition:
+    box-shadow 160ms ease-out,
+    translate 120ms ease-out;
+}
+
+.slot:hover {
+  box-shadow:
+    0 0 0 1px rgba(103, 232, 249, 0.85) inset,
+    0 0 18px -2px rgba(34, 211, 238, 0.65);
+  translate: 0 -3px;
+}
+
+.slot:active {
+  translate: 0 1px;
+}
+
+.slotUlt {
+  background-image: repeating-linear-gradient(
+    135deg,
+    rgba(251, 191, 36, 0.22) 0px,
+    rgba(251, 191, 36, 0.22) 8px,
+    rgba(2, 6, 23, 0.95) 8px,
+    rgba(2, 6, 23, 0.95) 16px
+  );
+}
+
+.cooldown {
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: 100%;
+  background-color: rgba(2, 6, 23, 0.78);
+  animation-name: cooldownDrain;
+  animation-timing-function: linear;
+  animation-fill-mode: forwards;
+}
+
+@keyframes cooldownDrain {
+  from {
+    height: 100%;
+  }
+
+  to {
+    height: 0%;
+  }
+}
+
+/* The ring that says a slot is armed. One static conic gradient, spun -- regenerating the gradient
+   every frame would be the expensive way to do the same thing. Every stop here is a percentage:
+   ReactUnity drops a conic gradient whose stops are angles, and the whole declaration with it.
+   No mask: the slot is drawn over it and opaque, so all that is left of the disc is a 3px rim. */
+.armed {
+  position: absolute;
+  inset: -3px;
+  border-radius: 12px;
+  background-image: conic-gradient(from 0deg, transparent 0%, rgba(103, 232, 249, 0.9) 20%, transparent 40%, transparent 100%);
+  animation: ringSpin 1.6s linear infinite;
+}
+
+/* Runs once when a skill fires. */
+.slotFlash {
+  position: absolute;
+  inset: 0;
+  background-color: rgba(165, 243, 252, 0.85);
+  animation: slotFlash 380ms ease-out both;
+}
+
+@keyframes slotFlash {
+  from {
+    opacity: 0.9;
+    scale: 1;
+  }
+
+  to {
+    opacity: 0;
+    scale: 1.5;
+  }
+}
+
+/* --- The minimap -------------------------------------------------------------------------------
+   A conic gradient turning behind a stack of rings, under a circular clip. */
+
+.minimap {
+  clip-path: circle(50%);
+  background-image:
+    repeating-radial-gradient(circle at center, transparent 0px, transparent 21px, rgba(34, 211, 238, 0.22) 21px, rgba(34, 211, 238, 0.22) 22px),
+    radial-gradient(circle at 62% 34%, rgba(34, 197, 94, 0.2), transparent 45%),
+    linear-gradient(150deg, rgba(15, 23, 42, 0.95), rgba(2, 6, 23, 0.95));
+}
+
+.radar {
+  position: absolute;
+  inset: 0;
+  background-image: conic-gradient(from 0deg, rgba(34, 211, 238, 0.55) 0%, transparent 15%, transparent 100%);
+  animation: ringSpin 3.6s linear infinite;
+}
+
+.blip {
+  position: absolute;
+  width: 7px;
+  height: 7px;
+  /* Centred on its own coordinate, rather than hanging down and to the right of it. */
+  translate: -50% -50%;
+  border-radius: 3.5px;
+  animation: blipPulse 1.8s ease-out infinite;
+}
+
+@keyframes blipPulse {
+  from {
+    scale: 0.6;
+    opacity: 1;
+  }
+
+  to {
+    scale: 1.8;
+    opacity: 0.15;
+  }
+}
+
+/* --- Buffs -------------------------------------------------------------------------------------
+   The timer is a block draining from the bottom of the icon. Infinite, because a demo wants a
+   timer that is always running and nothing here consumes the number. */
+
+.buffDrain {
+  position: absolute;
+  inset: auto 0 0 0;
+  background-color: rgba(2, 6, 23, 0.7);
+  animation-name: buffDrain;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+}
+
+@keyframes buffDrain {
+  from {
+    height: 0%;
+  }
+
+  to {
+    height: 100%;
+  }
+}
+
+/* --- Floating combat text ----------------------------------------------------------------------
+   `drop-shadow` rather than `text-shadow`, so the glow follows the glyphs' outline and not their
+   box. Removal is React's; the rise is CSS's. */
+
+.floater {
+  position: absolute;
+  filter: drop-shadow(0 0 6px rgba(0, 0, 0, 0.9));
+  animation: floatUp 1100ms cubic-bezier(0.15, 0.9, 0.3, 1) both;
+}
+
+@keyframes floatUp {
+  from {
+    translate: 0 0;
+    scale: 0.6;
+    opacity: 0;
+  }
+
+  22% {
+    scale: 1.25;
+    opacity: 1;
+  }
+
+  40% {
+    scale: 1;
+  }
+
+  to {
+    translate: 0 -90px;
+    opacity: 0;
+  }
+}
+
+.floaterCrit {
+  animation-duration: 1400ms;
+  filter: drop-shadow(0 0 10px rgba(251, 191, 36, 0.9));
+}
+
+/* --- Rarity ------------------------------------------------------------------------------------
+   One class per tier, since the border, the glow and the corner wedge all move together. */
+
+.rarity {
+  background-image: linear-gradient(160deg, rgba(30, 41, 59, 0.9), rgba(2, 6, 23, 0.92));
+  transition:
+    box-shadow 160ms ease-out,
+    scale 140ms ease-out;
+}
+
+.rarity:hover {
+  scale: 1.08;
+}
+
+.rarityCommon {
+  box-shadow: 0 0 0 1px rgba(148, 163, 184, 0.45) inset;
+}
+
+.rarityUncommon {
+  box-shadow:
+    0 0 0 1px rgba(74, 222, 128, 0.6) inset,
+    0 0 10px -4px rgba(74, 222, 128, 0.8);
+}
+
+.rarityRare {
+  box-shadow:
+    0 0 0 1px rgba(56, 189, 248, 0.7) inset,
+    0 0 12px -4px rgba(56, 189, 248, 0.9);
+}
+
+.rarityEpic {
+  box-shadow:
+    0 0 0 1px rgba(192, 132, 252, 0.8) inset,
+    0 0 14px -3px rgba(192, 132, 252, 0.9);
+}
+
+.rarityLegendary {
+  box-shadow:
+    0 0 0 1px rgba(251, 191, 36, 0.85) inset,
+    0 0 16px -2px rgba(251, 191, 36, 0.9);
+}
+
+/* The only tier that moves on its own, because there is one of it. */
+.rarityMythic {
+  box-shadow:
+    0 0 0 1px rgba(251, 113, 133, 0.9) inset,
+    0 0 18px -2px rgba(244, 63, 94, 0.95);
+  animation: mythicPulse 2.4s ease-in-out infinite alternate;
+}
+
+@keyframes mythicPulse {
+  from {
+    box-shadow:
+      0 0 0 1px rgba(251, 113, 133, 0.9) inset,
+      0 0 10px -4px rgba(244, 63, 94, 0.7);
+  }
+
+  to {
+    box-shadow:
+      0 0 0 1px rgba(253, 164, 175, 1) inset,
+      0 0 22px 0 rgba(244, 63, 94, 1);
+  }
+}
+
+.emptySlot {
+  background-color: rgba(2, 6, 23, 0.5);
+  box-shadow: 0 0 0 1px rgba(148, 163, 184, 0.14) inset;
+}
+
+/* The wedge in the corner of a slot that holds something. */
+.corner {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  width: 12px;
+  height: 12px;
+  clip-path: polygon(100% 0, 100% 100%, 0 100%);
+}
+
+/* --- Tooltip -----------------------------------------------------------------------------------
+   `@starting-style` is the style it has on the frame it appears, so the transition has somewhere
+   to come from. Without it an inserted element is simply already there. */
+
+.tooltip {
+  /* Denser than the panels behind it -- it has to be readable over whatever it is covering, and
+     it is not one of the two elements that can afford a backdrop read. */
+  background-color: rgba(2, 6, 23, 0.93);
+  opacity: 1;
+  translate: 0 0;
+  transition:
+    opacity 160ms ease-out,
+    translate 160ms ease-out;
+
+  @starting-style {
+    opacity: 0;
+    translate: 8px 0;
+  }
+}
+
+/* --- The log -----------------------------------------------------------------------------------
+   Newest line first, so the mask fades the oldest ones out at the bottom edge rather than cutting
+   them -- which a scroll on its own cannot do. */
+
+.logMask {
+  mask-image: linear-gradient(to bottom, black, black 58%, transparent);
+}
+
+.logLine {
+  opacity: 1;
+  translate: 0 0;
+  transition:
+    opacity 220ms ease-out,
+    translate 220ms ease-out;
+
+  @starting-style {
+    opacity: 0;
+    translate: -12px 0;
+  }
+}
+
+/* --- The tabbed panel --------------------------------------------------------------------------
+   The underline is one element that slides between tabs, so the movement is a transition on
+   translate rather than three elements fading past each other. */
+
+.tabInk {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 33.3333%;
+  height: 2px;
+  background-image: linear-gradient(to right, transparent, #22d3ee, transparent);
+  transition: translate 240ms cubic-bezier(0.2, 0.8, 0.3, 1);
+}
+
+.statBar {
+  transition: width 500ms cubic-bezier(0.2, 0.8, 0.3, 1);
+}
+
+/* --- Toast -------------------------------------------------------------------------------------- */
+
+.toast {
+  opacity: 1;
+  scale: 1;
+  transition:
+    opacity 260ms ease-out,
+    scale 260ms cubic-bezier(0.2, 1.4, 0.4, 1);
+
+  @starting-style {
+    opacity: 0;
+    scale: 0.85;
+  }
+}
+
+/* --- The frame's own title ---------------------------------------------------------------------
+   `background-clip: text` paints the gradient through the glyphs; the stroke keeps it legible
+   against whatever the scene puts behind it. */
+
+.title {
+  background-image: linear-gradient(100deg, #67e8f9, #f0abfc 55%, #fcd34d);
+  background-clip: text;
+  color: transparent;
+  text-stroke: 1px rgba(2, 6, 23, 0.55);
+  letter-spacing: 4px;
+}

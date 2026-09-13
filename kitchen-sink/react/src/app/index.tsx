@@ -33,6 +33,7 @@ const pages = [
   { path: 'redux', label: 'Redux', Icon: icon.storage },
   { path: 'style-playground', label: 'Style Playground', Icon: icon.science },
   { path: 'game', label: 'Game UI', Icon: icon.sports_esports },
+  { path: 'game-hud', label: 'Game HUD', Icon: icon.videogame_asset },
 ];
 
 function NavItem({ path, label, Icon }: (typeof pages)[number]) {

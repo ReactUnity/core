@@ -5,6 +5,7 @@ import BgPatternsPage from '#src/pages/bg-patterns/index.tsx';
 import ContainerQueriesPage from '#src/pages/container-queries/index.tsx';
 import FilterPage from '#src/pages/filter/index.tsx';
 import { GamePage } from '#src/pages/game/index.tsx';
+import GameHudPage from '#src/pages/game-hud/index.tsx';
 import HomePage from '#src/pages/home/index.tsx';
 import ImagesPage from '#src/pages/images/index.tsx';
 import InteropPage from '#src/pages/interop/index.tsx';
@@ -44,6 +45,7 @@ export function AppRoutes() {
       <Route path={'redux'} element={<Redux />} />
       <Route path={'style-playground'} element={<StylePlayground />} />
       <Route path={'game'} element={<GamePage />} />
+      <Route path={'game-hud'} element={<GameHudPage />} />
 
       <Route
         path={'tailwind'}
