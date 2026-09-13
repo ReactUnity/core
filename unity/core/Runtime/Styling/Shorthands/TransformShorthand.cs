@@ -31,7 +31,9 @@ namespace ReactUnity.Styling.Shorthands
         {
             // TODO: handle computed variables
 
-            var calls = ParserHelpers.SplitWhitespace(value?.ToString());
+            // Not split on whitespace: CSS makes the space between two calls optional and a minifier
+            // drops it, so `rotateX(35deg)rotateY(-30deg)` came out as one token naming no function.
+            var calls = ParserHelpers.SplitFunctionList(value?.ToString());
             var count = calls.Count;
 
             var translate = YogaValue2.Zero;

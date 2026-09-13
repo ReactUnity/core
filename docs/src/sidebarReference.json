@@ -220,6 +220,10 @@
               "path": "/reference/css/overflow"
             },
             {
+              "title": "Perspective",
+              "path": "/reference/css/perspective"
+            },
+            {
               "title": "Pointer Events",
               "path": "/reference/css/pointer-events"
             },

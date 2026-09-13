@@ -110,7 +110,10 @@ namespace ReactUnity.UGUI.Behaviours
                 -translate.Y.GetPointValue(Layout.LayoutHeight, 0));
             var visible = Layout.Display != YogaDisplay.None;
 
-            var z = translateZ.Unit == YogaUnit.Point ? translateZ.Value : 0;
+            // CSS points +z at the viewer where a canvas points it away, the same flip a rotation
+            // gets -- so a `translateZ` that should come nearer does, once a `perspective` above
+            // it can show the difference.
+            var z = translateZ.Unit == YogaUnit.Point ? -translateZ.Value : 0;
 
             var posX = Layout.LayoutLeft + pivotDiff.x * Layout.LayoutWidth;
             var posY = -Layout.LayoutTop + pivotDiff.y * Layout.LayoutHeight;

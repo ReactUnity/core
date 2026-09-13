@@ -76,6 +76,11 @@ namespace ReactUnity.Styling
         public YogaValue translateZ => GetStyleValue(StyleProperties.translateZ);
         public Vector3 scale => GetStyleValue(StyleProperties.scale);
         public Vector3 rotate => GetStyleValue(StyleProperties.rotate);
+        // Negative is not a value CSS accepts, and a projection from behind the viewer is not one
+        // anything could draw, so it reads as `none` rather than turning the subtree inside out.
+        public float perspective => Mathf.Max(0, GetStyleValue(StyleProperties.perspective));
+        public YogaValue2 perspectiveOrigin => GetStyleValue(StyleProperties.perspectiveOrigin);
+        public BackfaceVisibility backfaceVisibility => GetStyleValue(StyleProperties.backfaceVisibility);
         public FontReference fontFamily => GetStyleValue(StyleProperties.fontFamily);
         public Color color => GetStyleValue(StyleProperties.color);
         public FontWeight fontWeight => GetStyleValue(StyleProperties.fontWeight);

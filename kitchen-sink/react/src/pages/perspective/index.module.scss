@@ -1,0 +1,182 @@
+.host {
+  align-items: stretch;
+}
+
+.note {
+  margin-bottom: 12px;
+  font-size: 14px;
+  color: #475569;
+  white-space: normal;
+}
+
+.caption {
+  margin-top: 6px;
+  font-size: 12px;
+  color: #64748b;
+}
+
+/* The box the projection is measured against, drawn so you can see what a card leans out of.
+   Nothing clips here -- the capture grows to hold whatever the projection throws outside it. */
+.stage {
+  width: 170px;
+  height: 150px;
+  align-items: center;
+  justify-content: center;
+  border: 1px dashed #cbd5e1;
+  border-radius: 8px;
+}
+
+.near {
+  perspective: 320px;
+}
+
+.originLeftTop {
+  perspective-origin: left top;
+}
+.originCenterTop {
+  perspective-origin: center top;
+}
+.originCenter {
+  perspective-origin: center;
+}
+.originLeftBottom {
+  perspective-origin: left bottom;
+}
+.originRightBottom {
+  perspective-origin: right bottom;
+}
+
+/* A gradient rather than a flat fill, so the foreshortening has something to compress. */
+.card {
+  width: 110px;
+  height: 110px;
+  align-items: center;
+  justify-content: center;
+  border-radius: 12px;
+  background-image: linear-gradient(135deg, #f97316, #db2777);
+  color: white;
+  font-size: 30px;
+}
+
+.turned {
+  transform: rotateY(50deg);
+}
+
+.tilted {
+  transform: rotateX(35deg) rotateY(-30deg);
+}
+
+/* Past a quarter turn, so what you are looking at is the back of it. */
+.reversed {
+  transform: rotateY(160deg);
+}
+
+.culled {
+  backface-visibility: hidden;
+}
+
+/* --- The flip ---------------------------------------------------------- */
+
+.flipScene {
+  width: 170px;
+  height: 210px;
+  perspective: 800px;
+}
+
+.flipper {
+  width: 100%;
+  height: 100%;
+  transition: transform 500ms ease-in-out;
+}
+
+.flipped {
+  transform: rotateY(180deg);
+}
+
+.face {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  align-items: center;
+  justify-content: center;
+  border-radius: 14px;
+  color: white;
+  font-size: 26px;
+
+  /* Without this the far face draws straight through the near one, mirrored. */
+  backface-visibility: hidden;
+}
+
+.front {
+  background-image: linear-gradient(160deg, #2563eb, #0ea5e9);
+}
+
+/* Turned half a turn to start with, so it is facing away until the flipper turns it round. */
+.back {
+  background-image: linear-gradient(160deg, #059669, #65a30d);
+  transform: rotateY(180deg);
+}
+
+.asideNote {
+  width: 240px;
+  padding: 14px;
+  border-radius: 10px;
+  background-color: #f1f5f9;
+  color: #475569;
+  font-size: 14px;
+  white-space: normal;
+}
+
+/* --- Depth ------------------------------------------------------------- */
+
+/* One stage for all three tiles, so this is one projection rather than three -- and the three
+   depths are measured against the same viewer, which is the only way they compare. */
+.depthStage {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 40px;
+  height: 190px;
+  perspective: 500px;
+}
+
+.tile {
+  width: 90px;
+  height: 90px;
+  align-items: center;
+  justify-content: center;
+  border-radius: 12px;
+  background-color: #6366f1;
+  color: white;
+  font-size: 20px;
+}
+
+.tileNear {
+  transform: translateZ(60px);
+  background-color: #4338ca;
+}
+
+.tileFar {
+  transform: translateZ(-60px);
+  background-color: #a5b4fc;
+}
+
+/* --- Interaction ------------------------------------------------------- */
+
+.liveScene {
+  perspective: 700px;
+  align-items: center;
+}
+
+.liveStage {
+  width: 340px;
+  padding: 20px;
+  gap: 10px;
+  align-items: stretch;
+  border-radius: 12px;
+  background-color: #f8fafc;
+  border: 1px solid #e2e8f0;
+  transform: rotateY(-28deg);
+}

@@ -289,6 +289,18 @@ namespace ReactUnity.Styling.Converters
         public override string StringifyTyped(float value) => value + "px";
     }
 
+    /// <summary>
+    /// <c>perspective</c>, which is a length or <c>none</c>. A distance of zero is no projection at
+    /// all, so <c>none</c> is worth exactly that and the reader only has one case to check.
+    /// </summary>
+    public class PerspectiveConverter : LengthConverter
+    {
+        public PerspectiveConverter()
+        {
+            SpecialValues = new Dictionary<string, float> { { "none", 0 } };
+        }
+    }
+
     public class FontSizeConverter : FloatConverter
     {
         public FontSizeConverter() : base(

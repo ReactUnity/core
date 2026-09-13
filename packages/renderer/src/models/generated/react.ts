@@ -1,6 +1,6 @@
 //
 // Types in assemblies: ReactUnity, ReactUnity.Editor, ReactUnity.UGUI, ReactUnity.UIToolkit
-// Generated 13/09/2026 06:04:32
+// Generated 13/09/2026 14:43:45
 //
 /* eslint-disable */
 
@@ -4408,6 +4408,9 @@ export declare namespace ReactUnity {
       translateZ: Yoga.YogaValue;
       scale: UnityEngine.Vector3;
       rotate: UnityEngine.Vector3;
+      perspective: number;
+      perspectiveOrigin: ReactUnity.Types.YogaValue2;
+      backfaceVisibility: ReactUnity.Types.BackfaceVisibility;
       fontFamily: ReactUnity.Types.FontReference;
       color: UnityEngine.Color;
       fontWeight: any; // TMPro.FontWeight
@@ -4691,6 +4694,9 @@ export declare namespace ReactUnity {
       static translateZ: ReactUnity.Styling.StyleProperty;
       static scale: ReactUnity.Styling.StyleProperty;
       static rotate: ReactUnity.Styling.StyleProperty;
+      static perspective: ReactUnity.Styling.StyleProperty;
+      static perspectiveOrigin: ReactUnity.Styling.StyleProperty;
+      static backfaceVisibility: ReactUnity.Styling.StyleProperty;
       static fontFamily: ReactUnity.Styling.StyleProperty;
       static color: ReactUnity.Styling.StyleProperty;
       static fontWeight: ReactUnity.Styling.StyleProperty;
@@ -5660,6 +5666,7 @@ export declare namespace ReactUnity {
         static FloatConverter: ReactUnity.Styling.Converters.StyleConverterBase;
         static AngleConverter: ReactUnity.Styling.Converters.StyleConverterBase;
         static LengthConverter: ReactUnity.Styling.Converters.StyleConverterBase;
+        static PerspectiveConverter: ReactUnity.Styling.Converters.StyleConverterBase;
         static FontSizeConverter: ReactUnity.Styling.Converters.StyleConverterBase;
         static LineHeightConverter: ReactUnity.Styling.Converters.StyleConverterBase;
         static DurationConverter: ReactUnity.Styling.Converters.StyleConverterBase;
@@ -5961,6 +5968,20 @@ export declare namespace ReactUnity {
         AllowSuffixless: boolean;
         CalcConverter: ReactUnity.Styling.Converters.CalcConverter;
         static UnitValueMap: System.Collections.Generic.Dictionary;
+        StringifyTyped(value: number): string;
+        StringifyInternal(value: any): string;
+        CanHandleKeyword(keyword: ReactUnity.Styling.CssKeyword): boolean;
+        Convert(value: any): ReactUnity.Styling.Computed.IComputedValue;
+        Stringify(value: any): string;
+        Equals(obj: any): boolean;
+        GetHashCode(): number;
+        GetType(): System.Type;
+        ToString(): string;
+      }
+      export class PerspectiveConverter {
+        constructor();
+        AllowSuffixless: boolean;
+        CalcConverter: ReactUnity.Styling.Converters.CalcConverter;
         StringifyTyped(value: number): string;
         StringifyInternal(value: any): string;
         CanHandleKeyword(keyword: ReactUnity.Styling.CssKeyword): boolean;
@@ -6692,6 +6713,10 @@ export declare namespace ReactUnity {
       GetHashCode(): number;
       GetType(): System.Type;
       ToString(): string;
+    }
+    export enum BackfaceVisibility {
+      Visible = 0,
+      Hidden = 1,
     }
     export class BackgroundSize {
       constructor(keyword: ReactUnity.Types.BackgroundSizeKeyword);
@@ -7824,6 +7849,7 @@ export declare namespace ReactUnity {
       BorderAndBackground: ReactUnity.UGUI.Internal.BorderAndBackground;
       OverflowMask: ReactUnity.UGUI.Internal.MaskAndImage;
       ElementFilter: ReactUnity.UGUI.Internal.ElementFilter;
+      BackfaceCuller: ReactUnity.UGUI.Behaviours.BackfaceCuller;
       Selectable: UnityEngine.UI.Selectable;
       CanvasGroup: UnityEngine.CanvasGroup;
       Canvas: UnityEngine.Canvas;
@@ -7925,6 +7951,7 @@ export declare namespace ReactUnity {
       BorderAndBackground: ReactUnity.UGUI.Internal.BorderAndBackground;
       OverflowMask: ReactUnity.UGUI.Internal.MaskAndImage;
       ElementFilter: ReactUnity.UGUI.Internal.ElementFilter;
+      BackfaceCuller: ReactUnity.UGUI.Behaviours.BackfaceCuller;
       Selectable: UnityEngine.UI.Selectable;
       CanvasGroup: UnityEngine.CanvasGroup;
       Canvas: UnityEngine.Canvas;
@@ -8028,6 +8055,7 @@ export declare namespace ReactUnity {
       BorderAndBackground: ReactUnity.UGUI.Internal.BorderAndBackground;
       OverflowMask: ReactUnity.UGUI.Internal.MaskAndImage;
       ElementFilter: ReactUnity.UGUI.Internal.ElementFilter;
+      BackfaceCuller: ReactUnity.UGUI.Behaviours.BackfaceCuller;
       Selectable: UnityEngine.UI.Selectable;
       CanvasGroup: UnityEngine.CanvasGroup;
       Canvas: UnityEngine.Canvas;
@@ -8133,6 +8161,7 @@ export declare namespace ReactUnity {
       BorderAndBackground: ReactUnity.UGUI.Internal.BorderAndBackground;
       OverflowMask: ReactUnity.UGUI.Internal.MaskAndImage;
       ElementFilter: ReactUnity.UGUI.Internal.ElementFilter;
+      BackfaceCuller: ReactUnity.UGUI.Behaviours.BackfaceCuller;
       Selectable: UnityEngine.UI.Selectable;
       CanvasGroup: UnityEngine.CanvasGroup;
       Canvas: UnityEngine.Canvas;
@@ -8234,6 +8263,7 @@ export declare namespace ReactUnity {
       BorderAndBackground: ReactUnity.UGUI.Internal.BorderAndBackground;
       OverflowMask: ReactUnity.UGUI.Internal.MaskAndImage;
       ElementFilter: ReactUnity.UGUI.Internal.ElementFilter;
+      BackfaceCuller: ReactUnity.UGUI.Behaviours.BackfaceCuller;
       Selectable: UnityEngine.UI.Selectable;
       CanvasGroup: UnityEngine.CanvasGroup;
       Canvas: UnityEngine.Canvas;
@@ -8332,6 +8362,7 @@ export declare namespace ReactUnity {
       BorderAndBackground: ReactUnity.UGUI.Internal.BorderAndBackground;
       OverflowMask: ReactUnity.UGUI.Internal.MaskAndImage;
       ElementFilter: ReactUnity.UGUI.Internal.ElementFilter;
+      BackfaceCuller: ReactUnity.UGUI.Behaviours.BackfaceCuller;
       Selectable: UnityEngine.UI.Selectable;
       CanvasGroup: UnityEngine.CanvasGroup;
       Canvas: UnityEngine.Canvas;
@@ -8432,6 +8463,7 @@ export declare namespace ReactUnity {
       BorderAndBackground: ReactUnity.UGUI.Internal.BorderAndBackground;
       OverflowMask: ReactUnity.UGUI.Internal.MaskAndImage;
       ElementFilter: ReactUnity.UGUI.Internal.ElementFilter;
+      BackfaceCuller: ReactUnity.UGUI.Behaviours.BackfaceCuller;
       Selectable: UnityEngine.UI.Selectable;
       CanvasGroup: UnityEngine.CanvasGroup;
       Canvas: UnityEngine.Canvas;
@@ -8535,6 +8567,7 @@ export declare namespace ReactUnity {
       BorderAndBackground: ReactUnity.UGUI.Internal.BorderAndBackground;
       OverflowMask: ReactUnity.UGUI.Internal.MaskAndImage;
       ElementFilter: ReactUnity.UGUI.Internal.ElementFilter;
+      BackfaceCuller: ReactUnity.UGUI.Behaviours.BackfaceCuller;
       Selectable: UnityEngine.UI.Selectable;
       CanvasGroup: UnityEngine.CanvasGroup;
       Canvas: UnityEngine.Canvas;
@@ -8638,6 +8671,7 @@ export declare namespace ReactUnity {
       BorderAndBackground: ReactUnity.UGUI.Internal.BorderAndBackground;
       OverflowMask: ReactUnity.UGUI.Internal.MaskAndImage;
       ElementFilter: ReactUnity.UGUI.Internal.ElementFilter;
+      BackfaceCuller: ReactUnity.UGUI.Behaviours.BackfaceCuller;
       Selectable: UnityEngine.UI.Selectable;
       CanvasGroup: UnityEngine.CanvasGroup;
       Canvas: UnityEngine.Canvas;
@@ -8746,6 +8780,7 @@ export declare namespace ReactUnity {
       BorderAndBackground: ReactUnity.UGUI.Internal.BorderAndBackground;
       OverflowMask: ReactUnity.UGUI.Internal.MaskAndImage;
       ElementFilter: ReactUnity.UGUI.Internal.ElementFilter;
+      BackfaceCuller: ReactUnity.UGUI.Behaviours.BackfaceCuller;
       Selectable: UnityEngine.UI.Selectable;
       CanvasGroup: UnityEngine.CanvasGroup;
       Canvas: UnityEngine.Canvas;
@@ -8846,6 +8881,7 @@ export declare namespace ReactUnity {
       BorderAndBackground: ReactUnity.UGUI.Internal.BorderAndBackground;
       OverflowMask: ReactUnity.UGUI.Internal.MaskAndImage;
       ElementFilter: ReactUnity.UGUI.Internal.ElementFilter;
+      BackfaceCuller: ReactUnity.UGUI.Behaviours.BackfaceCuller;
       Selectable: UnityEngine.UI.Selectable;
       CanvasGroup: UnityEngine.CanvasGroup;
       Canvas: UnityEngine.Canvas;
@@ -8950,6 +8986,7 @@ export declare namespace ReactUnity {
       BorderAndBackground: ReactUnity.UGUI.Internal.BorderAndBackground;
       OverflowMask: ReactUnity.UGUI.Internal.MaskAndImage;
       ElementFilter: ReactUnity.UGUI.Internal.ElementFilter;
+      BackfaceCuller: ReactUnity.UGUI.Behaviours.BackfaceCuller;
       Selectable: UnityEngine.UI.Selectable;
       CanvasGroup: UnityEngine.CanvasGroup;
       Canvas: UnityEngine.Canvas;
@@ -9051,6 +9088,7 @@ export declare namespace ReactUnity {
       BorderAndBackground: ReactUnity.UGUI.Internal.BorderAndBackground;
       OverflowMask: ReactUnity.UGUI.Internal.MaskAndImage;
       ElementFilter: ReactUnity.UGUI.Internal.ElementFilter;
+      BackfaceCuller: ReactUnity.UGUI.Behaviours.BackfaceCuller;
       Selectable: UnityEngine.UI.Selectable;
       CanvasGroup: UnityEngine.CanvasGroup;
       Canvas: UnityEngine.Canvas;
@@ -9151,6 +9189,7 @@ export declare namespace ReactUnity {
       BorderAndBackground: ReactUnity.UGUI.Internal.BorderAndBackground;
       OverflowMask: ReactUnity.UGUI.Internal.MaskAndImage;
       ElementFilter: ReactUnity.UGUI.Internal.ElementFilter;
+      BackfaceCuller: ReactUnity.UGUI.Behaviours.BackfaceCuller;
       Selectable: UnityEngine.UI.Selectable;
       CanvasGroup: UnityEngine.CanvasGroup;
       Canvas: UnityEngine.Canvas;
@@ -9251,6 +9290,7 @@ export declare namespace ReactUnity {
       BorderAndBackground: ReactUnity.UGUI.Internal.BorderAndBackground;
       OverflowMask: ReactUnity.UGUI.Internal.MaskAndImage;
       ElementFilter: ReactUnity.UGUI.Internal.ElementFilter;
+      BackfaceCuller: ReactUnity.UGUI.Behaviours.BackfaceCuller;
       Selectable: UnityEngine.UI.Selectable;
       CanvasGroup: UnityEngine.CanvasGroup;
       Canvas: UnityEngine.Canvas;
@@ -9354,6 +9394,7 @@ export declare namespace ReactUnity {
       BorderAndBackground: ReactUnity.UGUI.Internal.BorderAndBackground;
       OverflowMask: ReactUnity.UGUI.Internal.MaskAndImage;
       ElementFilter: ReactUnity.UGUI.Internal.ElementFilter;
+      BackfaceCuller: ReactUnity.UGUI.Behaviours.BackfaceCuller;
       Selectable: UnityEngine.UI.Selectable;
       CanvasGroup: UnityEngine.CanvasGroup;
       Canvas: UnityEngine.Canvas;
@@ -9462,6 +9503,7 @@ export declare namespace ReactUnity {
       BorderAndBackground: ReactUnity.UGUI.Internal.BorderAndBackground;
       OverflowMask: ReactUnity.UGUI.Internal.MaskAndImage;
       ElementFilter: ReactUnity.UGUI.Internal.ElementFilter;
+      BackfaceCuller: ReactUnity.UGUI.Behaviours.BackfaceCuller;
       Selectable: UnityEngine.UI.Selectable;
       CanvasGroup: UnityEngine.CanvasGroup;
       Canvas: UnityEngine.Canvas;
@@ -9562,6 +9604,7 @@ export declare namespace ReactUnity {
       BorderAndBackground: ReactUnity.UGUI.Internal.BorderAndBackground;
       OverflowMask: ReactUnity.UGUI.Internal.MaskAndImage;
       ElementFilter: ReactUnity.UGUI.Internal.ElementFilter;
+      BackfaceCuller: ReactUnity.UGUI.Behaviours.BackfaceCuller;
       Selectable: UnityEngine.UI.Selectable;
       CanvasGroup: UnityEngine.CanvasGroup;
       Canvas: UnityEngine.Canvas;
@@ -9659,6 +9702,7 @@ export declare namespace ReactUnity {
       BorderAndBackground: ReactUnity.UGUI.Internal.BorderAndBackground;
       OverflowMask: ReactUnity.UGUI.Internal.MaskAndImage;
       ElementFilter: ReactUnity.UGUI.Internal.ElementFilter;
+      BackfaceCuller: ReactUnity.UGUI.Behaviours.BackfaceCuller;
       Selectable: UnityEngine.UI.Selectable;
       CanvasGroup: UnityEngine.CanvasGroup;
       Canvas: UnityEngine.Canvas;
@@ -9756,6 +9800,7 @@ export declare namespace ReactUnity {
       BorderAndBackground: ReactUnity.UGUI.Internal.BorderAndBackground;
       OverflowMask: ReactUnity.UGUI.Internal.MaskAndImage;
       ElementFilter: ReactUnity.UGUI.Internal.ElementFilter;
+      BackfaceCuller: ReactUnity.UGUI.Behaviours.BackfaceCuller;
       Selectable: UnityEngine.UI.Selectable;
       CanvasGroup: UnityEngine.CanvasGroup;
       Canvas: UnityEngine.Canvas;
@@ -9859,6 +9904,7 @@ export declare namespace ReactUnity {
       BorderAndBackground: ReactUnity.UGUI.Internal.BorderAndBackground;
       OverflowMask: ReactUnity.UGUI.Internal.MaskAndImage;
       ElementFilter: ReactUnity.UGUI.Internal.ElementFilter;
+      BackfaceCuller: ReactUnity.UGUI.Behaviours.BackfaceCuller;
       Selectable: UnityEngine.UI.Selectable;
       CanvasGroup: UnityEngine.CanvasGroup;
       Canvas: UnityEngine.Canvas;
@@ -9959,6 +10005,7 @@ export declare namespace ReactUnity {
       BorderAndBackground: ReactUnity.UGUI.Internal.BorderAndBackground;
       OverflowMask: ReactUnity.UGUI.Internal.MaskAndImage;
       ElementFilter: ReactUnity.UGUI.Internal.ElementFilter;
+      BackfaceCuller: ReactUnity.UGUI.Behaviours.BackfaceCuller;
       Selectable: UnityEngine.UI.Selectable;
       CanvasGroup: UnityEngine.CanvasGroup;
       Canvas: UnityEngine.Canvas;
@@ -10064,6 +10111,7 @@ export declare namespace ReactUnity {
       BorderAndBackground: ReactUnity.UGUI.Internal.BorderAndBackground;
       OverflowMask: ReactUnity.UGUI.Internal.MaskAndImage;
       ElementFilter: ReactUnity.UGUI.Internal.ElementFilter;
+      BackfaceCuller: ReactUnity.UGUI.Behaviours.BackfaceCuller;
       Selectable: UnityEngine.UI.Selectable;
       CanvasGroup: UnityEngine.CanvasGroup;
       Canvas: UnityEngine.Canvas;
@@ -10170,6 +10218,7 @@ export declare namespace ReactUnity {
       BorderAndBackground: ReactUnity.UGUI.Internal.BorderAndBackground;
       OverflowMask: ReactUnity.UGUI.Internal.MaskAndImage;
       ElementFilter: ReactUnity.UGUI.Internal.ElementFilter;
+      BackfaceCuller: ReactUnity.UGUI.Behaviours.BackfaceCuller;
       Selectable: UnityEngine.UI.Selectable;
       CanvasGroup: UnityEngine.CanvasGroup;
       Canvas: UnityEngine.Canvas;
@@ -10274,6 +10323,7 @@ export declare namespace ReactUnity {
       BorderAndBackground: ReactUnity.UGUI.Internal.BorderAndBackground;
       OverflowMask: ReactUnity.UGUI.Internal.MaskAndImage;
       ElementFilter: ReactUnity.UGUI.Internal.ElementFilter;
+      BackfaceCuller: ReactUnity.UGUI.Behaviours.BackfaceCuller;
       Selectable: UnityEngine.UI.Selectable;
       CanvasGroup: UnityEngine.CanvasGroup;
       Canvas: UnityEngine.Canvas;
@@ -10372,6 +10422,7 @@ export declare namespace ReactUnity {
       BorderAndBackground: ReactUnity.UGUI.Internal.BorderAndBackground;
       OverflowMask: ReactUnity.UGUI.Internal.MaskAndImage;
       ElementFilter: ReactUnity.UGUI.Internal.ElementFilter;
+      BackfaceCuller: ReactUnity.UGUI.Behaviours.BackfaceCuller;
       Selectable: UnityEngine.UI.Selectable;
       CanvasGroup: UnityEngine.CanvasGroup;
       Canvas: UnityEngine.Canvas;
@@ -10475,6 +10526,7 @@ export declare namespace ReactUnity {
       BorderAndBackground: ReactUnity.UGUI.Internal.BorderAndBackground;
       OverflowMask: ReactUnity.UGUI.Internal.MaskAndImage;
       ElementFilter: ReactUnity.UGUI.Internal.ElementFilter;
+      BackfaceCuller: ReactUnity.UGUI.Behaviours.BackfaceCuller;
       Selectable: UnityEngine.UI.Selectable;
       CanvasGroup: UnityEngine.CanvasGroup;
       Canvas: UnityEngine.Canvas;
@@ -10765,6 +10817,71 @@ export declare namespace ReactUnity {
       ToString(): string;
     }
     export namespace Behaviours {
+      export class BackfaceCuller {
+        constructor();
+        Component: ReactUnity.UGUI.UGUIComponent;
+        IsBackFacing: boolean;
+        destroyCancellationToken: System.Threading.CancellationToken;
+        useGUILayout: boolean;
+        didStart: boolean;
+        didAwake: boolean;
+        runInEditMode: boolean;
+        enabled: boolean;
+        isActiveAndEnabled: boolean;
+        transform: UnityEngine.Transform;
+        transformHandle: UnityEngine.TransformHandle;
+        gameObject: UnityEngine.GameObject;
+        tag: string;
+        name: string;
+        hideFlags: UnityEngine.HideFlags;
+        IsInvoking(): boolean;
+        CancelInvoke(): void;
+        Invoke(methodName: string, time: number): void;
+        InvokeRepeating(methodName: string, time: number, repeatRate: number): void;
+        CancelInvoke(methodName: string): void;
+        IsInvoking(methodName: string): boolean;
+        StartCoroutine(methodName: string): UnityEngine.Coroutine;
+        StartCoroutine(methodName: string, value: any): UnityEngine.Coroutine;
+        StartCoroutine(routine: System.Collections.IEnumerator): UnityEngine.Coroutine;
+        StartCoroutine_Auto(routine: System.Collections.IEnumerator): UnityEngine.Coroutine;
+        StopCoroutine(routine: System.Collections.IEnumerator): void;
+        StopCoroutine(routine: UnityEngine.Coroutine): void;
+        StopCoroutine(methodName: string): void;
+        StopAllCoroutines(): void;
+        GetComponent(type: System.Type): UnityEngine.Component;
+        GetComponent(type: string): UnityEngine.Component;
+        GetComponentInChildren(t: System.Type, includeInactive: boolean): UnityEngine.Component;
+        GetComponentInChildren(t: System.Type): UnityEngine.Component;
+        GetComponentsInChildren(t: System.Type, includeInactive: boolean): UnityEngine.Component[];
+        GetComponentsInChildren(t: System.Type): UnityEngine.Component[];
+        GetComponentInParent(t: System.Type, includeInactive: boolean): UnityEngine.Component;
+        GetComponentInParent(t: System.Type): UnityEngine.Component;
+        GetComponentsInParent(t: System.Type, includeInactive: boolean): UnityEngine.Component[];
+        GetComponentsInParent(t: System.Type): UnityEngine.Component[];
+        GetComponents(type: System.Type): UnityEngine.Component[];
+        GetComponents(type: System.Type, results: UnityEngine.Component[]): void;
+        GetComponentIndex(): number;
+        CompareTag(tag: string): boolean;
+        CompareTag(tag: UnityEngine.TagHandle): boolean;
+        SendMessageUpwards(methodName: string, value: any, options: UnityEngine.SendMessageOptions): void;
+        SendMessageUpwards(methodName: string, value: any): void;
+        SendMessageUpwards(methodName: string): void;
+        SendMessageUpwards(methodName: string, options: UnityEngine.SendMessageOptions): void;
+        SendMessage(methodName: string, value: any): void;
+        SendMessage(methodName: string): void;
+        SendMessage(methodName: string, value: any, options: UnityEngine.SendMessageOptions): void;
+        SendMessage(methodName: string, options: UnityEngine.SendMessageOptions): void;
+        BroadcastMessage(methodName: string, parameter: any, options: UnityEngine.SendMessageOptions): void;
+        BroadcastMessage(methodName: string, parameter: any): void;
+        BroadcastMessage(methodName: string): void;
+        BroadcastMessage(methodName: string, options: UnityEngine.SendMessageOptions): void;
+        GetEntityId(): UnityEngine.EntityId;
+        GetInstanceID(): number;
+        GetHashCode(): number;
+        Equals(other: any): boolean;
+        ToString(): string;
+        GetType(): System.Type;
+      }
       export class CustomViewportRaycaster {
         constructor();
         eventCamera: UnityEngine.Camera;
@@ -13249,6 +13366,8 @@ export declare namespace ReactUnity {
         BlendMode: ReactUnity.Types.BackgroundBlendMode;
         Isolated: boolean;
         ClipShape: ReactUnity.Types.ClipPath;
+        Perspective: number;
+        PerspectiveOrigin: ReactUnity.Types.YogaValue2;
         HasMask: boolean;
         RenderCount: number;
         BackdropRenderer: UnityEngine.CanvasRenderer;

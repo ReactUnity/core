@@ -26,13 +26,15 @@ namespace ReactUnity.Tests
 
             Assert.AreEqual(0, View.GameObject.transform.localPosition.z);
 
+            // A canvas grows z away from the viewer where CSS grows it towards, so the two signs are
+            // opposite -- a positive `translate-z` comes nearer, as it does on the web.
             View.Style["translate-z"] = 10;
             yield return null;
-            Assert.AreEqual(10, View.GameObject.transform.localPosition.z);
+            Assert.AreEqual(-10, View.GameObject.transform.localPosition.z);
 
             View.Style["translate-z"] = -5;
             yield return null;
-            Assert.AreEqual(-5, View.GameObject.transform.localPosition.z);
+            Assert.AreEqual(5, View.GameObject.transform.localPosition.z);
         }
     }
 }

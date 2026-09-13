@@ -85,6 +85,9 @@ namespace ReactUnity.Styling
         public static readonly StyleProperty<YogaValue> translateZ = new StyleProperty<YogaValue>("translateZ", YogaValue.Point(0), true);
         public static readonly StyleProperty<Vector3> scale = new StyleProperty<Vector3>("scale", Vector3.one, true, false, AllConverters.ScaleConverter);
         public static readonly StyleProperty<Vector3> rotate = new StyleProperty<Vector3>("rotate", Vector3.zero, true, converter: AllConverters.RotateConverter);
+        public static readonly StyleProperty<float> perspective = new StyleProperty<float>("perspective", 0f, true, false, AllConverters.PerspectiveConverter);
+        public static readonly StyleProperty<YogaValue2> perspectiveOrigin = new StyleProperty<YogaValue2>("perspectiveOrigin", YogaValue2.Center, true);
+        public static readonly StyleProperty<BackfaceVisibility> backfaceVisibility = new StyleProperty<BackfaceVisibility>("backfaceVisibility", BackfaceVisibility.Visible);
         public static readonly StyleProperty<FontReference> fontFamily = new StyleProperty<FontReference>("fontFamily", FontReference.None, false, true);
         public static readonly StyleProperty<Color> color = new StyleProperty<Color>("color", ComputedCurrentColor.Instance, true, false);
         public static readonly StyleProperty<FontWeight> fontWeight = new StyleProperty<FontWeight>("fontWeight", FontWeight.Regular, false, true);
@@ -282,6 +285,9 @@ namespace ReactUnity.Styling
             { "translateZ", translateZ },
             { "scale", scale },
             { "rotate", rotate },
+            { "perspective", perspective },
+            { "perspectiveOrigin", perspectiveOrigin },
+            { "backfaceVisibility", backfaceVisibility },
             { "fontFamily", fontFamily },
             { "color", color },
             { "fontWeight", fontWeight },
@@ -499,6 +505,8 @@ namespace ReactUnity.Styling
             { "outline-style", outlineStyle },
             { "box-shadow", boxShadow },
             { "transform-origin", transformOrigin },
+            { "perspective-origin", perspectiveOrigin },
+            { "backface-visibility", backfaceVisibility },
             { "translate-z", translateZ },
             { "font-family", fontFamily },
             { "font-weight", fontWeight },

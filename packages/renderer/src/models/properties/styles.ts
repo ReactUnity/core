@@ -4,6 +4,7 @@ import {
   AnimationFillMode,
   AnimationPlayState,
   Appearance,
+  BackfaceVisibility,
   BackgroundClip,
   BackgroundRepeat,
   BackgroundSize,
@@ -157,6 +158,9 @@ export interface RenderStyle {
   translateZ?: YogaValueAux;
   scale?: Vector2Aux;
   rotate?: Vector3Aux;
+  perspective?: YogaValueAux;
+  perspectiveOrigin?: YogaValue2Aux;
+  backfaceVisibility?: BackfaceVisibility;
 
   stateDuration?: number;
 

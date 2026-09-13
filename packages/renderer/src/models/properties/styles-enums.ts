@@ -86,6 +86,10 @@ export type ImageRendering = 'auto' | 'smooth' | 'high-quality' | 'crisp-edges' 
 // `mix-blend-mode` cannot reach the backdrop behind it.
 export type Isolation = 'auto' | 'isolate';
 
+// `hidden` stops an element drawing once a rotation has turned its back to the viewer, which is
+// what lets the two faces of a flipping card share a slot.
+export type BackfaceVisibility = 'visible' | 'hidden';
+
 // Whether a scroll the element is asked to make -- `scrollTop`, `scrollTo`, a snap -- animates
 // instead of jumping. A wheel or a drag has its own smoothing either way.
 export type ScrollBehavior = 'auto' | 'smooth';

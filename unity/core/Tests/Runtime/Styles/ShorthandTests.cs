@@ -204,5 +204,21 @@ namespace ReactUnity.Tests
                 Quaternion.Euler(20, 0, 0) * Quaternion.Euler(0, 30, 0) * Quaternion.Euler(0, 0, 40);
             Assert.AreEqual(expectedRotation.eulerAngles, rotate);
         }
+
+        // The space between two calls is optional in CSS, and every minifier drops it -- so a built
+        // stylesheet arrives with the calls run together and has to parse the same way.
+        [UGUITest]
+        public IEnumerator TransformCallsNeedNoSpaceBetweenThem()
+        {
+            var cmp = Q("#test");
+
+            cmp.Style["transform"] = "rotateX(35deg)rotateY(-30deg)translateX(12px)scale(2)";
+            yield return null;
+
+            var expected = Quaternion.Euler(35, 0, 0) * Quaternion.Euler(0, -30, 0);
+            Assert.AreEqual(expected.eulerAngles, cmp.ComputedStyle.rotate);
+            Assert.AreEqual(12, cmp.ComputedStyle.translate.X.Value);
+            Assert.AreEqual(new Vector3(2, 2, 1), cmp.ComputedStyle.scale);
+        }
     }
 }

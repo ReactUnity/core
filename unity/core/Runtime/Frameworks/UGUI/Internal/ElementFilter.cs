@@ -83,6 +83,24 @@ namespace ReactUnity.UGUI.Internal
         const float BleedPerBlurUnit = 2f;
         const int MaxDimension = 4096;
 
+        // The clearance the clip planes are given either side of what the subtree reaches, so nothing
+        // coplanar with one is caught by it.
+        const float ProjectionSlack = 8f;
+
+        // A corner at or past the eye has no projection -- the divide flips it through infinity --
+        // so it is dropped rather than dragging the capture region out to nothing.
+        const float MinProjectionW = 0.01f;
+
+        // And a cap on what a near-vertical child can ask the capture to grow by, since the divide
+        // grows without bound as it approaches the eye. Past this the lean is clipped, which is far
+        // better than a texture clamped to MaxDimension and stretched back over the whole box.
+        const float MaxProjectionBleed = 2000f;
+
+        // The growth is rounded up to this rather than to the pixel. A lean that moves every frame
+        // would otherwise resize the capture every frame, and the render texture is reallocated
+        // whenever its dimensions change -- so a card mid-flip would throw one away per frame.
+        const float ProjectionBleedStep = 16f;
+
         // Where the offscreen surfaces are parked, and how far apart. Every camera has the same
         // culling mask, so two surfaces sharing a spot would each capture the other's subtree --
         // the gap has to be wider than a camera's far plane. Slots are reused as filters go away,
@@ -174,8 +192,54 @@ namespace ReactUnity.UGUI.Internal
             }
         }
 
+        private float perspective;
+        /// <summary>
+        /// The <c>perspective</c> distance the subtree is projected through, in the element's own
+        /// units. Zero is <c>none</c>, which is the flat capture everything else gets.
+        /// </summary>
+        public float Perspective
+        {
+            get => perspective;
+            set
+            {
+                if (perspective == value) return;
+                var was = perspective;
+                perspective = value;
+                dirty = true;
+
+                // A camera keeps whatever projection matrix it was last handed, so dropping back to
+                // `none` has to give it back rather than simply stop writing one.
+                if (was > 0 && value <= 0 && offscreenCamera)
+                {
+                    offscreenCamera.orthographic = true;
+                    offscreenCamera.ResetProjectionMatrix();
+                }
+            }
+        }
+
+        private YogaValue2 perspectiveOrigin = YogaValue2.Center;
+        /// <summary>Where on the element's box the viewer stands, which is the point the projection
+        /// converges on. Y is measured from the top, as <c>transform-origin</c> is.</summary>
+        public YogaValue2 PerspectiveOrigin
+        {
+            get => perspectiveOrigin;
+            set
+            {
+                if (perspectiveOrigin == value) return;
+                perspectiveOrigin = value;
+                dirty = true;
+            }
+        }
+
         /// <summary>Whether anything here needs the offscreen pass to keep running.</summary>
         public bool HasMask => maskLayers.Count > 0;
+
+        // The subtree as the projection has to measure it: every descendant's corners, and how near
+        // and far the nearest and furthest of them end up. Kept between the two halves of a render.
+        private readonly List<RectTransform> projected = new List<RectTransform>();
+        private readonly Vector3[] cornerBuffer = new Vector3[4];
+        private float projectedNear;
+        private float projectedFar;
 
         private readonly List<Graphic> graphics = new List<Graphic>();
         private readonly List<Graphic> maskGraphics = new List<Graphic>();
@@ -765,6 +829,10 @@ namespace ReactUnity.UGUI.Internal
             var mBottom = Mathf.Ceil(Mathf.Max(blurBleed, shadowBleed + offset.y));
             var mTop = Mathf.Ceil(Mathf.Max(blurBleed, shadowBleed - offset.y));
 
+            // A projection throws a leaning child outside its parent's box, so the capture has to
+            // reach wherever it lands -- past the filter region on any side that asks for more.
+            if (perspective > 0) MeasureProjection(rect, ref mLeft, ref mRight, ref mBottom, ref mTop);
+
             // An odd difference would put the frame's centre on a half pixel, and half a pixel of
             // offset moves 2.75% of text pixels -- which reads as shimmer on anything animating.
             if (Mathf.Abs(mRight - mLeft) % 2f != 0f) mRight += 1f;
@@ -793,13 +861,21 @@ namespace ReactUnity.UGUI.Internal
             // be taken from somewhere inside the element instead of around it. Taking the element's
             // rotation frames it square-on, which is what leaves the capture transform-free.
             var worldCentre = self.TransformPoint(rect.center + new Vector2((mRight - mLeft) * 0.5f, (mTop - mBottom) * 0.5f));
-            offscreenCamera.transform.SetPositionAndRotation(worldCentre - self.forward * 100f, self.rotation);
+
             // Both of these are already in RT terms, so they follow the element's scale through
             // pxWidth/pxHeight and keep the frame exactly as square as the texture is.
-            offscreenCamera.orthographicSize = pxHeight / scale / 2f;
-            offscreenCamera.aspect = (float) pxWidth / pxHeight;
-            offscreenCamera.nearClipPlane = 0.01f;
-            offscreenCamera.farClipPlane = 1000f;
+            var halfW = pxWidth / scale / 2f;
+            var halfH = pxHeight / scale / 2f;
+
+            if (perspective > 0) FrameProjected(rect, worldCentre, halfW, halfH);
+            else
+            {
+                offscreenCamera.transform.SetPositionAndRotation(worldCentre - self.forward * 100f, self.rotation);
+                offscreenCamera.orthographicSize = halfH;
+                offscreenCamera.aspect = halfW / halfH;
+                offscreenCamera.nearClipPlane = 0.01f;
+                offscreenCamera.farClipPlane = 1000f;
+            }
 
             // Anything blending inside this capture blends with the capture, not with the screen --
             // which is what makes `isolation: isolate` contain a blend, and what built-in gets from
@@ -825,6 +901,130 @@ namespace ReactUnity.UGUI.Internal
             RenderMask(pxWidth, pxHeight, width, height, margins);
             ApplyToComposite(target, margins, width, height);
         }
+
+        /// <summary>
+        /// Aims the camera as a <c>perspective</c> asks: the viewer's own distance in front of the
+        /// element's plane, standing over the point <c>perspective-origin</c> names.
+        /// </summary>
+        /// <remarks>
+        /// The frame is off-axis whenever that point is not the capture's centre, so the projection
+        /// is built by hand rather than from a field of view -- a symmetric frustum would put the
+        /// vanishing point back in the middle, which is the one thing perspective-origin moves.
+        /// Distances are world units and still match CSS's, because the element's own scale reaches
+        /// the subtree's x and y but never its z: both sides of the divide are scaled alike.
+        /// </remarks>
+        void FrameProjected(Rect rect, Vector3 worldCentre, float halfW, float halfH)
+        {
+            var originWorld = self.TransformPoint(OriginPoint(rect));
+
+            offscreenCamera.orthographic = false;
+            offscreenCamera.transform.SetPositionAndRotation(originWorld - self.forward * perspective, self.rotation);
+
+            // How far off the camera's axis the capture sits, measured on the element's own plane.
+            var delta = worldCentre - originWorld;
+            var dx = Vector3.Dot(delta, self.right);
+            var dy = Vector3.Dot(delta, self.up);
+
+            // Clipped to the slab the subtree actually occupies, which leaves a band tight around the
+            // element's own plane however far back the eye stands -- nothing before `near` is drawn,
+            // so a distant camera does not reach into the slot it happens to be standing in. Capping
+            // the band at one slot's stride is what keeps it out of the next one. The near/far ratio
+            // this leaves is also what keeps the depth buffer exact across it.
+            var near = Mathf.Max(perspective * MinProjectionW, projectedNear);
+            var far = Mathf.Clamp(projectedFar, near + ProjectionSlack, near + SlotStride);
+            offscreenCamera.nearClipPlane = near;
+            offscreenCamera.farClipPlane = far;
+
+            // The frustum is given at the near plane; everything above is on the element's plane,
+            // one similar triangle away.
+            var k = near / perspective;
+            offscreenCamera.projectionMatrix = Matrix4x4.Frustum(
+                (dx - halfW) * k, (dx + halfW) * k,
+                (dy - halfH) * k, (dy + halfH) * k,
+                near, far);
+        }
+
+        /// <summary>
+        /// Grows the capture region to hold whatever the projection throws outside the element's own
+        /// box, and records how near and far the subtree reaches so the camera can be clipped to it.
+        /// </summary>
+        /// <remarks>
+        /// Every descendant corner is projected rather than the subtree's flat bounds: a rotation
+        /// leaves the four corners of one child at four different depths, so a box taken before the
+        /// divide would come out the wrong size on all four sides.
+        /// </remarks>
+        void MeasureProjection(Rect rect, ref float mLeft, ref float mRight, ref float mBottom, ref float mTop)
+        {
+            projected.Clear();
+            self.GetComponentsInChildren(true, projected);
+
+            var origin = OriginPoint(rect);
+            var min = rect.min;
+            var max = rect.max;
+
+            // Seeded on the element's own plane, which is where it sits whatever its subtree does.
+            var nearest = 0f;
+            var furthest = 0f;
+            var plane = self.position;
+            var forward = self.forward;
+
+            for (int i = 0; i < projected.Count; i++)
+            {
+                var child = projected[i];
+                if (child == self) continue;
+
+                child.GetWorldCorners(cornerBuffer);
+                for (int c = 0; c < 4; c++)
+                {
+                    // Depth is measured in world units against the element's plane, where the camera
+                    // stands; the point itself in the element's own units, where the rect is.
+                    var depth = Vector3.Dot(cornerBuffer[c] - plane, forward);
+                    if (depth < nearest) nearest = depth;
+                    if (depth > furthest) furthest = depth;
+
+                    // A canvas grows z away from the viewer, so nearer is negative and the divisor
+                    // shrinks -- which is the magnification something leaning towards us picks up.
+                    var w = 1f + depth / perspective;
+                    if (w < MinProjectionW) continue;
+
+                    var local = self.InverseTransformPoint(cornerBuffer[c]);
+                    var point = new Vector2(
+                        origin.x + (local.x - origin.x) / w,
+                        origin.y + (local.y - origin.y) / w);
+                    min = Vector2.Min(min, point);
+                    max = Vector2.Max(max, point);
+                }
+            }
+
+            projectedNear = perspective + nearest - ProjectionSlack;
+            projectedFar = perspective + furthest + ProjectionSlack;
+
+            mLeft = Grow(mLeft, rect.xMin - min.x);
+            mRight = Grow(mRight, max.x - rect.xMax);
+            mBottom = Grow(mBottom, rect.yMin - min.y);
+            mTop = Grow(mTop, max.y - rect.yMax);
+        }
+
+        static float Grow(float margin, float wanted)
+        {
+            if (wanted <= margin) return margin;
+
+            var stepped = Mathf.Ceil(wanted / ProjectionBleedStep) * ProjectionBleedStep;
+            return Mathf.Min(stepped, Mathf.Max(margin, MaxProjectionBleed));
+        }
+
+        /// <summary><c>perspective-origin</c> as a point in the element's own rect, y measured from
+        /// the top as CSS measures it.</summary>
+        Vector2 OriginPoint(Rect rect)
+        {
+            return new Vector2(
+                rect.xMin + Offset(perspectiveOrigin.X, rect.width),
+                rect.yMax - Offset(perspectiveOrigin.Y, rect.height));
+        }
+
+        static float Offset(YogaValue value, float size) =>
+            value.Unit == YogaUnit.Percent ? size * value.Value / 100f :
+            value.Unit == YogaUnit.Point ? value.Value : size / 2f;
 
         /// <summary>
         /// Gives every element that reads a backdrop from inside this capture the capture as it

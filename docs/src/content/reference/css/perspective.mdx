@@ -1,0 +1,110 @@
+---
+title: Perspective
+---
+
+Gives an element's children depth, so a rotation in 3D draws as one — near edges larger, far edges smaller, converging on a vanishing point. Check out the [MDN](https://developer.mozilla.org/en-US/docs/Web/CSS/perspective) for how to use.
+
+`perspective` is set on the **parent** and read by its children. It is the distance the viewer stands in front of the element's plane: smaller numbers are a stronger, wider-angle projection, and `none` (the default) is no projection at all.
+
+<Sandpack>
+
+```js
+export default function App() {
+  return <>
+    <view className="stage flat">
+      <view className="card" />
+    </view>
+    <view className="stage near">
+      <view className="card" />
+    </view>
+    <view className="stage far">
+      <view className="card" />
+    </view>
+  </>;
+}
+```
+
+```css active
+:root {
+  flex-direction: row;
+  gap: 30px;
+  padding: 40px;
+  justify-content: center;
+  align-items: center;
+  background-color: #eef1f4;
+}
+
+.stage {
+  width: 160px;
+  height: 160px;
+  align-items: center;
+  justify-content: center;
+}
+
+.card {
+  width: 120px;
+  height: 120px;
+  background-color: coral;
+  border-radius: 10px;
+  transform: rotateY(50deg);
+}
+
+.flat { perspective: none; }
+.near { perspective: 250px; }
+.far  { perspective: 900px; }
+```
+
+</Sandpack>
+
+## Perspective origin {/*perspective-origin*/}
+
+`perspective-origin` is where that viewer stands over the element's own box, which is the point the projection converges on. It takes the same values [`transform-origin`](/reference/css/transform-origin) does — a pair of lengths, percentages or the keywords `left`, `right`, `top`, `bottom` and `center` — and defaults to `center center`.
+
+Moving it is what tilts the whole scene: with the viewer over the left edge, everything the projection magnifies leans away to the right.
+
+```css
+.stage {
+  perspective: 400px;
+  perspective-origin: left center;
+}
+```
+
+## Backface visibility {/*backface-visibility*/}
+
+`backface-visibility: hidden` stops an element drawing once a rotation has turned its back to the viewer. It needs no `perspective` — the facing is a question about the rotation alone — and it is what lets the two faces of a flipping card share one slot:
+
+```css
+.face {
+  position: absolute;
+  inset: 0;
+  backface-visibility: hidden;
+}
+
+.face.back { transform: rotateY(180deg); }
+
+.card:hover { transform: rotateY(180deg); }
+```
+
+An element mirrored by an odd number of negative scales — `scaleX(-1)` on its own, say — is showing its back too, as on the web.
+
+## What to know {/*what-to-know*/}
+
+`perspective` and `backface-visibility` are implemented for the UGUI renderer only. They do nothing under UIToolkit.
+
+**There is no `transform-style`, and no need for one.** Children here always keep their own depth, which is what `preserve-3d` means; CSS's default `flat` — which would flatten a subtree into its parent's plane before projecting it — has no equivalent and cannot be asked for.
+
+**The `perspective()` transform function is still not supported**, only the property. See [`transform`](/reference/css/transform) for what that shorthand can and cannot hold.
+
+**A positive `translate-z` comes towards the viewer**, as on the web, and so draws larger under a perspective. Nothing shows the difference without one, which is why this was the wrong way round before 0.25.
+
+Rotations compose down the tree the way they do in a browser: a `rotateY` on a parent and another on a child both apply, and the one `perspective` above them projects the result. Only one perspective applies to any element — the nearest ancestor that set one.
+
+### Cost {/*cost*/}
+
+`perspective` renders the element's subtree off screen through a camera of its own, the same machinery [`filter`](/reference/css/filter) uses, and composites the result back in place. That has three consequences worth knowing:
+
+- It costs an extra camera render on any frame the subtree moves — about 1.4 ms, largely regardless of what is being drawn. A still subtree holds its last capture and costs nothing.
+- The element becomes a stacking context, and its subtree is drawn as one image. It stays interactive: pointer events are mapped back through that image, so buttons and inputs inside keep working.
+- The capture grows to hold whatever the projection throws outside the element's box, so a card leaning out of its stage is not clipped. Past a couple of thousand pixels of lean it is — which only a child nearly touching the eye can reach.
+
+Both `perspective` and `perspective-origin` are animatable, so they work in `transition` and `@keyframes`.

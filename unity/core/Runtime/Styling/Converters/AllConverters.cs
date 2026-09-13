@@ -17,6 +17,7 @@ namespace ReactUnity.Styling.Converters
         static public StyleConverterBase FloatConverter = new FloatConverter();
         static public StyleConverterBase AngleConverter = new AngleConverter();
         static public StyleConverterBase LengthConverter = new LengthConverter();
+        static public StyleConverterBase PerspectiveConverter = new PerspectiveConverter();
         static public StyleConverterBase FontSizeConverter = new FontSizeConverter();
         static public StyleConverterBase LineHeightConverter = new LineHeightConverter();
         static public StyleConverterBase DurationConverter = new DurationConverter();
