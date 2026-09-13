@@ -29,8 +29,6 @@ namespace ReactUnity.Styling.Shorthands
 
         protected override List<IStyleProperty> ModifyInternal(IDictionary<IStyleProperty, object> collection, object value)
         {
-            // TODO: handle computed variables
-
             // Not split on whitespace: CSS makes the space between two calls optional and a minifier
             // drops it, so `rotateX(35deg)rotateY(-30deg)` came out as one token naming no function.
             var calls = ParserHelpers.SplitFunctionList(value?.ToString());
@@ -148,12 +146,14 @@ namespace ReactUnity.Styling.Shorthands
                         break;
                     case "scale":
                         if (argCount > 2) continue;
-                        xArg = AllConverters.FloatConverter.TryGetConstantValue(args[0], 0f);
+                        // Falls back to 1, not 0: an argument that cannot be read leaves the axis
+                        // alone, where 0 collapsed the element to nothing. The other spellings agree.
+                        xArg = AllConverters.FloatConverter.TryGetConstantValue(args[0], 1f);
                         if (xArg is float xs) scale = new Vector3(scale.x * xs, scale.y, scale.z);
 
                         if (argCount > 1)
                         {
-                            yArg = AllConverters.FloatConverter.TryGetConstantValue(args[1], 0f);
+                            yArg = AllConverters.FloatConverter.TryGetConstantValue(args[1], 1f);
                             if (yArg is float ys) scale = new Vector3(scale.x, scale.y * ys, scale.z);
                         }
                         else if (xArg is float ys) scale = new Vector3(scale.x, scale.y * ys, scale.z);

@@ -14,6 +14,7 @@ export default function App() {
     <view className="tile a" />
     <view className="tile b" />
     <view className="tile c" />
+    <view className="tile d" />
   </>;
 }
 ```
@@ -25,6 +26,8 @@ export default function App() {
   padding: 40px;
   justify-content: center;
   background-color: #eef1f4;
+  --tilt: 15deg;
+  --lift: -12px;
 }
 
 .tile {
@@ -37,6 +40,7 @@ export default function App() {
 .a { transform: rotate(20deg); }
 .b { transform: scale(1.3) translateY(-10px); }
 .c { transform: rotateX(55deg) rotate(15deg); }
+.d { transform: rotate(var(--tilt)) translateY(var(--lift)); }
 ```
 
 </Sandpack>
@@ -54,6 +58,6 @@ export default function App() {
 ## Notes {/*notes*/}
 
 - **The order of the functions does not matter.** Repeats of the same kind combine -- two `translateX()` add up, two `scale()` multiply, two rotations compose -- but the three groups are then applied in a fixed order, scale first, then rotation, then translation. A browser applies the list left to right, so `translateX(50px) rotate(45deg)` and `rotate(45deg) translateX(50px)` differ there and are the same thing here.
-- **`var()` does not work inside a function.** Each argument is read as a constant while the shorthand is parsed, and a custom property is not one yet at that point; it falls back to the function's default. Set [`translate`](/reference/css/translate), [`rotate`](/reference/css/rotate) or [`scale`](/reference/css/scale) directly when a value comes from a variable -- those are ordinary properties and resolve `var()` normally.
+- **`var()` works anywhere in the value**, including inside a function's arguments. The substitution is textual and happens before the list is read, so a variable can hold an argument (`translateX(var(--x))`), both arguments and the comma between them, several whole functions, or even the function's name. The value is re-read whenever one of the variables it names changes. As in CSS, a variable that is unset and has no fallback makes the whole declaration invalid rather than just its own function, so the element keeps no part of the transform.
 - `transition: transform 300ms` works, and covers the four properties the shorthand writes. What is interpolated is each of them separately, though, not the transform list the way CSS defines it -- notably a rotation travels through its Euler angles, so an animation between two three-axis rotations takes a different path than it would in a browser.
 - `translate-z` takes a length only; a percentage is read as `0`. A positive value comes *towards* the viewer, as on the web, so it draws larger under a [`perspective`](/reference/css/perspective) and moves the element along Unity's negative Z axis -- which is what puts one element in front of another in a world-space canvas. For ordering within a screen-space canvas use [`z-index`](/reference/css/z-index).
