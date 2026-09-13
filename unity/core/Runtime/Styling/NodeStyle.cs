@@ -46,6 +46,8 @@ namespace ReactUnity.Styling
         public ScrollSnapType scrollSnapType => GetStyleValue(StyleProperties.scrollSnapType);
         public ScrollSnapAlign scrollSnapAlign => GetStyleValue(StyleProperties.scrollSnapAlign);
         public ScrollSnapStop scrollSnapStop => GetStyleValue(StyleProperties.scrollSnapStop);
+        public OverscrollBehavior overscrollBehaviorX => GetStyleValue(StyleProperties.overscrollBehaviorX);
+        public OverscrollBehavior overscrollBehaviorY => GetStyleValue(StyleProperties.overscrollBehaviorY);
         public YogaValue scrollPaddingTop => GetStyleValue(StyleProperties.scrollPaddingTop);
         public YogaValue scrollPaddingRight => GetStyleValue<YogaValue>(ResolveLogical(StyleProperties.scrollPaddingRight));
         public YogaValue scrollPaddingBottom => GetStyleValue(StyleProperties.scrollPaddingBottom);

@@ -177,3 +177,51 @@
   font-size: 13px;
   font-weight: bold;
 }
+
+/* --- overscroll-behavior ----------------------------------------------------------------------
+   A list inside a page, which is the shape the property exists for: what the inner one cannot take
+   is the outer one's unless it says otherwise. Both are set inline from the page's toggles. */
+
+.page {
+  height: 260px;
+  border-radius: 12px;
+  background-color: #f1f5f9;
+  border-width: 2px;
+  border-color: #e2e8f0;
+}
+
+.band {
+  height: 72px;
+  flex-shrink: 0;
+  justify-content: center;
+  padding-inline: 16px;
+}
+
+.bandTall {
+  height: 160px;
+}
+
+.bandLabel {
+  color: #64748b;
+  font-size: 13px;
+}
+
+.mail {
+  height: 140px;
+  flex-shrink: 0;
+  margin-inline: 12px;
+  border-radius: 10px;
+  background-color: white;
+  border-width: 1px;
+  border-color: #e2e8f0;
+  overscroll-behavior: contain;
+}
+
+.mailRow {
+  height: 44px;
+  flex-shrink: 0;
+  justify-content: center;
+  padding-inline: 14px;
+  border-bottom-width: 1px;
+  border-bottom-color: #f1f5f9;
+}

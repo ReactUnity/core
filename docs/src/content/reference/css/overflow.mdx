@@ -71,4 +71,5 @@ button.on {
 - **Clipping is not per-axis.** It is a rect mask, which clips both directions -- so `overflow-x: hidden` on a plain element clips the vertical overflow too. The web's "one axis clipped, the other scrolling" is only available on a [`<scroll>`](/reference/components/scroll), below.
 - On a `<scroll>`, hiding one axis is how you ask it to scroll in the other direction only: `overflow-x: hidden` leaves a vertical scroll view, `overflow-y: hidden` a horizontal one. Hiding both, or hiding neither, scrolls both ways.
 - Layout sees one overflow for both axes, since that is all Yoga has, and it is the strongest of the three declarations: `scroll` on either axis beats `hidden`, which beats `visible`.
+- A scroll a `<scroll>` has no room left for goes on to the scroll box above it. [`overscroll-behavior`](/reference/css/overscroll-behavior) is how one keeps it to itself.
 - Scrollbars are drawn over the content. `scrollbar-gutter: stable` reserves room for them instead, and `scrollbar-color` and `scrollbar-width` style them -- see [`<scroll>`](/reference/components/scroll) for those and for the `::scrollbar` pseudo-elements.

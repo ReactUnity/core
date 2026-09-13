@@ -44,6 +44,7 @@ namespace ReactUnity.UGUI
         public ScrollComponent(UGUIContext ctx) : base(ctx, "scroll")
         {
             ScrollRect = AddComponent<SmoothScrollRect>();
+            ScrollRect.Component = this;
 
             var viewport = ctx.CreateNativeObject("[ScrollViewport]", typeof(RectTransform), typeof(RectMask2D)).GetComponent<RectTransform>();
             viewport.SetParent(RectTransform, false);
@@ -82,8 +83,7 @@ namespace ReactUnity.UGUI
             ScrollRect.scrollSensitivity = 100;
             ScrollRect.horizontalScrollbarVisibility = ScrollbarVisibility.AutoHide;
             ScrollRect.verticalScrollbarVisibility = ScrollbarVisibility.AutoHide;
-            ScrollRect.elasticity = 0;
-            ScrollRect.movementType = MovementType.Clamped;
+            RefreshMovementType();
             ScrollRect.FindSnapTarget = FindSnapTarget;
         }
 
@@ -158,6 +158,22 @@ namespace ReactUnity.UGUI
 
         private ScrollSnapType snapType = ScrollSnapType.None;
 
+        /// How far past its end the `elasticity` prop lets the content be pulled, before
+        /// `overscroll-behavior` has had its say.
+        private float elasticity;
+
+        // `overscroll-behavior: none` asks for no overscroll affordance at all, where `contain` keeps
+        // one. Unity has a single elasticity for both axes, so either axis asking takes the bounce away.
+        private void RefreshMovementType()
+        {
+            var style = ComputedStyle;
+            var bounces = elasticity > 0 && (style == null ||
+                (style.overscrollBehaviorX != OverscrollBehavior.None && style.overscrollBehaviorY != OverscrollBehavior.None));
+
+            ScrollRect.movementType = bounces ? MovementType.Elastic : MovementType.Clamped;
+            ScrollRect.elasticity = bounces ? elasticity : 0;
+        }
+
         // `scroll-behavior` and `scroll-snap-type` describe the scroll box, so they are pushed to it
         // here; `scroll-snap-align` describes what it holds, and is read off the children as they snap.
         private void RefreshScrolling()
@@ -166,6 +182,9 @@ namespace ReactUnity.UGUI
             if (style == null) return;
 
             ScrollRect.SmoothBehavior = style.scrollBehavior == ScrollBehavior.Smooth;
+            ScrollRect.OverscrollX = style.overscrollBehaviorX;
+            ScrollRect.OverscrollY = style.overscrollBehaviorY;
+            RefreshMovementType();
 
             var type = style.scrollSnapType;
             if (type == snapType) return;
@@ -228,9 +247,8 @@ namespace ReactUnity.UGUI
             switch (propertyName)
             {
                 case "elasticity":
-                    var el = AllConverters.FloatConverter.TryGetConstantValue(value, 0f);
-                    ScrollRect.movementType = el > 0 ? MovementType.Elastic : MovementType.Clamped;
-                    ScrollRect.elasticity = el;
+                    elasticity = AllConverters.FloatConverter.TryGetConstantValue(value, 0f);
+                    RefreshMovementType();
                     break;
                 case "smoothness":
                     var sm = AllConverters.FloatConverter.TryGetConstantValue(value, 0.12f);
@@ -277,6 +295,8 @@ namespace ReactUnity.UGUI
             // arrived yet, so `scroll-behavior` still reads as whatever the last one asked for.
             ScrollRect.ScrollTo(0, 0, 0);
             snapType = ScrollSnapType.None;
+            elasticity = 0;
+            RefreshMovementType();
             SetupContents();
 
             return true;

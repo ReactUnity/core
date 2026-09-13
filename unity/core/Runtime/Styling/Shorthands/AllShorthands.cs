@@ -60,6 +60,7 @@ namespace ReactUnity.Styling.Shorthands
         internal static readonly StyleShorthand BorderBlockColor = new XYShorthand<UnityEngine.Color>("border-block-color", StyleProperties.borderTopColor, StyleProperties.borderBottomColor);
         internal static readonly StyleShorthand BorderInlineStyle = new XYShorthand<Types.BorderStyle>("border-inline-style", StyleProperties.borderInlineStartStyle, StyleProperties.borderInlineEndStyle);
         internal static readonly StyleShorthand BorderBlockStyle = new XYShorthand<Types.BorderStyle>("border-block-style", StyleProperties.borderTopStyle, StyleProperties.borderBottomStyle);
+        internal static readonly StyleShorthand OverscrollBehavior = new XYShorthand<Types.OverscrollBehavior>("overscroll-behavior", StyleProperties.overscrollBehaviorX, StyleProperties.overscrollBehaviorY);
         internal static readonly StyleShorthand ScrollPadding = new FourDirectionalShorthand("scroll-padding", FourDirectionalShorthand.PropertyType.ScrollPadding);
         internal static readonly StyleShorthand ScrollMargin = new FourDirectionalShorthand("scroll-margin", FourDirectionalShorthand.PropertyType.ScrollMargin);
         internal static readonly StyleShorthand ScrollPaddingInline = new XYShorthand<YogaValue>("scroll-padding-inline", StyleProperties.scrollPaddingInlineStart, StyleProperties.scrollPaddingInlineEnd);
@@ -129,6 +130,7 @@ namespace ReactUnity.Styling.Shorthands
             { "borderBlockColor", BorderBlockColor },
             { "borderInlineStyle", BorderInlineStyle },
             { "borderBlockStyle", BorderBlockStyle },
+            { "overscrollBehavior", OverscrollBehavior },
             { "scrollPadding", ScrollPadding },
             { "scrollMargin", ScrollMargin },
             { "scrollPaddingInline", ScrollPaddingInline },
@@ -167,6 +169,7 @@ namespace ReactUnity.Styling.Shorthands
             { "border-block-color", BorderBlockColor },
             { "border-inline-style", BorderInlineStyle },
             { "border-block-style", BorderBlockStyle },
+            { "overscroll-behavior", OverscrollBehavior },
             { "scroll-padding", ScrollPadding },
             { "scroll-margin", ScrollMargin },
             { "scroll-padding-inline", ScrollPaddingInline },

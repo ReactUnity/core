@@ -108,6 +108,10 @@ export type ScrollSnapAlign = ScrollSnapAlignment | `${ScrollSnapAlignment} ${Sc
 // `always` means a gesture may not carry past this target on its way to one further along.
 export type ScrollSnapStop = 'normal' | 'always';
 
+// What a scroll box does with a scroll it has no room left to take. `auto` hands it to the box
+// above, `contain` keeps it here but leaves any overscroll effect, and `none` drops that too.
+export type OverscrollBehavior = 'auto' | 'contain' | 'none';
+
 export type CursorType =
   | 'auto'
   | 'default'

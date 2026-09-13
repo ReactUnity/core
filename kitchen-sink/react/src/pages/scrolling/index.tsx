@@ -33,17 +33,28 @@ const stops = [
   ['Bottom', 1400],
 ] as const;
 
+const overscrolls = [
+  ['auto', 'The list hands what it cannot take to the page behind it.'],
+  ['contain', 'The scroll stops at the end of the list. The bounce, if there is one, stays.'],
+  ['none', 'The scroll stops and there is no bounce either.'],
+] as const;
+
+const mail = ['Inbox', 'Drafts', 'Sent', 'Archive', 'Spam', 'Trash', 'Snoozed', 'Starred', 'Muted', 'Scheduled'];
+
 export default function ScrollingPage() {
   const [type, setType] = useState<(typeof types)[number][0]>('x mandatory');
   const [align, setAlign] = useState<(typeof aligns)[number][0]>('center');
   const [smooth, setSmooth] = useState(true);
   const [padded, setPadded] = useState(true);
   const [alwaysStop, setAlwaysStop] = useState(false);
+  const [overscroll, setOverscroll] = useState<(typeof overscrolls)[number][0]>('auto');
+  const [bouncy, setBouncy] = useState(true);
 
   const reader = useRef<ReactUnity.UGUI.ScrollComponent>(null);
 
   const activeType = types.find(([key]) => key === type)!;
   const activeAlign = aligns.find(([key]) => key === align)!;
+  const activeOverscroll = overscrolls.find(([key]) => key === overscroll)!;
 
   return (
     <view className={styles.host}>
@@ -200,6 +211,63 @@ export default function ScrollingPage() {
             </text>
           ))}
         </scroll>
+      </section>
+
+      <section>
+        <h2>
+          <row>
+            Where a scroll goes when it runs out
+            <icon.unfold_more />
+          </row>
+        </h2>
+
+        <text className={styles.note}>
+          A scroll box that has reached its end hands the rest of the gesture to the box above it, the way a page does on the web.
+          `overscroll-behavior` is how one keeps the scroll to itself instead. Scroll the list to its bottom and keep going — with `auto`
+          the page behind it carries on, with the other two it stops there.
+        </text>
+
+        <view className={styles.toggles}>
+          {overscrolls.map(([key]) => (
+            <button key={key} className={clsx(styles.toggle, overscroll === key && styles.toggleOn)} onClick={() => setOverscroll(key)}>
+              {key}
+            </button>
+          ))}
+
+          <button className={clsx(styles.toggle, bouncy && styles.toggleOn)} onClick={() => setBouncy((x) => !x)}>
+            elasticity: {bouncy ? '0.1' : '0'}
+          </button>
+        </view>
+
+        <text className={styles.code}>.list &#123; overscroll-behavior: {overscroll} &#125;</text>
+
+        <scroll className={styles.page}>
+          <view className={styles.band}>
+            <text className={styles.bandLabel}>Above the list</text>
+          </view>
+
+          <scroll className={styles.mail} elasticity={bouncy ? 0.1 : 0} style={{ overscrollBehavior: overscroll }}>
+            {mail.map((row) => (
+              <view key={row} className={styles.mailRow}>
+                <text className={styles.rowLabel}>{row}</text>
+              </view>
+            ))}
+          </scroll>
+
+          <view className={styles.band}>
+            <text className={styles.bandLabel}>Below the list</text>
+          </view>
+
+          <view className={clsx(styles.band, styles.bandTall)}>
+            <text className={styles.bandLabel}>The end of the page</text>
+          </view>
+        </scroll>
+
+        <text className={styles.note}>
+          {activeOverscroll[1]} The two axes are separate — `overscroll-behavior-x` and `-y`, or one shorthand taking both with x first —
+          and the axis a gesture runs along is the one that decides. A gesture stays with whichever box took it, so dragging the list to its
+          end does not then start dragging the page.
+        </text>
       </section>
     </view>
   );

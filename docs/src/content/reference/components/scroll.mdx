@@ -31,10 +31,13 @@ of a tick and scales with it.
 exactly. A wheel scroll has no destination, so it is a follow rather than a fixed animation: turning the wheel again
 moves the target and the motion carries on instead of restarting. A scroll that *is* given a destination -- `ScrollTo`,
 `ScrollTop`, a snap -- takes the time it was given instead.
-`elasticity` above 0 lets the content be pulled past its end and spring back. `direction` fixes which
+`elasticity` above 0 lets the content be pulled past its end and spring back, unless
+[`overscroll-behavior: none`](/reference/css/overscroll-behavior) has taken that away. `direction` fixes which
 way the view scrolls, and `alwaysShow` keeps the named scrollbars from auto-hiding.
 
-Scrolling to a position, animating that scroll and resting on the items inside are
+A view that has reached its end hands the rest of the scroll to the view above it;
+[`overscroll-behavior`](/reference/css/overscroll-behavior) is how one keeps it. Scrolling to a position,
+animating that scroll and resting on the items inside are
 [`scroll-behavior`](/reference/css/scroll-behavior) and [`scroll-snap`](/reference/css/scroll-snap).
 
 ## Scrollbars {/*scrollbars*/}

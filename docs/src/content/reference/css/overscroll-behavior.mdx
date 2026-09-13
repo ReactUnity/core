@@ -1,0 +1,112 @@
+---
+title: Overscroll Behavior
+---
+
+Decides what a scroll box does with a scroll it has no room left to take: hand it to the box above, or keep it. Check out the [MDN](https://developer.mozilla.org/en-US/docs/Web/CSS/overscroll-behavior) for how to use.
+
+Scrolling a list that is already at its end used to stop there, whatever it was inside. It now carries on in the nearest scroll box above it, the way a page does on the web -- and this property is how a box asks to keep a scroll to itself instead.
+
+<Sandpack>
+
+```js
+export default function App() {
+  const [behavior, setBehavior] = React.useState('auto');
+
+  return <>
+    <view className="controls">
+      {['auto', 'contain'].map(value => (
+        <button key={value} onClick={() => setBehavior(value)}
+          className={behavior === value ? 'on' : ''}>
+          {value}
+        </button>
+      ))}
+    </view>
+
+    <scroll className="page">
+      <view className="band">Scroll the inner list to its end, then keep going.</view>
+
+      <scroll className="list" style={{ overscrollBehavior: behavior }}>
+        {Array.from({ length: 12 }, (_, i) => (
+          <view key={i} className="row">Item {i + 1}</view>
+        ))}
+      </scroll>
+
+      <view className="band">With `auto` the page below moves once the list runs out.</view>
+      <view className="band tall">The end of the page.</view>
+    </scroll>
+  </>;
+}
+```
+
+```css active
+.page {
+  width: 300px;
+  height: 220px;
+  padding: 12px;
+  border-radius: 12px;
+  background-color: #f1f5f9;
+}
+
+.list {
+  height: 120px;
+  flex-shrink: 0;
+  padding: 8px;
+  border-radius: 8px;
+  background-color: white;
+
+  overscroll-behavior: contain;
+}
+
+.row {
+  padding: 6px;
+  flex-shrink: 0;
+  color: #475569;
+}
+
+.band {
+  padding: 14px 6px;
+  flex-shrink: 0;
+  color: #64748b;
+}
+
+.tall { height: 140px; }
+
+.controls {
+  flex-direction: row;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.controls .on { background-color: #6366f1; color: white; }
+```
+
+</Sandpack>
+
+## Values {/*values*/}
+
+- `auto` (default) -- a scroll this box cannot take goes on to the box above it.
+- `contain` -- it stops here. Any overscroll effect the box has of its own still plays.
+- `none` -- it stops here and there is no overscroll effect either.
+
+## Longhands {/*longhands*/}
+
+The shorthand takes one value for both axes or two, `x` first, as `overflow` does:
+
+```css
+.list {
+  overscroll-behavior: none contain;
+}
+```
+
+The axis a gesture runs along is the one that decides, so a contained `y` does not trap a sideways scroll:
+
+- `overscroll-behavior-x` and `overscroll-behavior-y`
+- `overscroll-behavior-inline` and `overscroll-behavior-block` -- the same two properties under their logical names. There are no vertical writing modes here, so `inline` is always the horizontal axis and `block` the vertical one.
+
+## Notes {/*notes*/}
+
+- Only a `<scroll>` reads this. It has nothing to do on an element that does not scroll.
+- A gesture stays with whichever box took it: dragging a list down to its end and on past it does not then start dragging the page, which is the latching a browser does. A wheel is a separate event each time, so the next tick is handed on.
+- Chaining walks the element tree rather than the transform hierarchy, so a [`filter`](/reference/css/filter) or a [`perspective`](/reference/css/perspective) in between does not break it.
+- The difference between `contain` and `none` is the local overscroll effect, which here is `<scroll>`'s `elasticity` prop -- how far past its end the content can be pulled. `none` takes it away. Under `auto` the bounce is what a box does when there is nothing above to hand the scroll to, rather than something it absorbs the scroll into first.
+- The outermost scroll box has nothing above it, so a scroll it cannot take simply stops.

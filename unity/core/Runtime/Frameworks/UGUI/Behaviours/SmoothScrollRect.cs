@@ -1,5 +1,7 @@
 using System;
 using System.Collections;
+using ReactUnity.Helpers;
+using ReactUnity.Types;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -19,6 +21,19 @@ namespace ReactUnity.UGUI.Behaviours
         /// <summary>How long one of those takes. Longer than the wheel's, which follows a live gesture.</summary>
         public float BehaviorSmoothness { get; set; } = 0.3f;
 
+        /// <summary><c>overscroll-behavior-x</c>: whether a sideways scroll this rect has no room for
+        /// goes on to the box above it.</summary>
+        public OverscrollBehavior OverscrollX { get; set; } = OverscrollBehavior.Auto;
+
+        /// <summary><c>overscroll-behavior-y</c>, the same for the other axis.</summary>
+        public OverscrollBehavior OverscrollY { get; set; } = OverscrollBehavior.Auto;
+
+        /// <summary>
+        /// The element this rect scrolls. Chaining walks the element tree rather than the transforms,
+        /// which a <c>filter</c> or a <c>perspective</c> above this one has reparented elsewhere.
+        /// </summary>
+        public ScrollComponent Component { get; internal set; }
+
         /// <summary>
         /// Where the scroll should come to rest, given where the gesture set off from and where it is
         /// heading, in <see cref="ScrollLeft"/> and <see cref="ScrollTop"/> points -- or null when
@@ -35,6 +50,18 @@ namespace ReactUnity.UGUI.Behaviours
         private bool dragging;
         private bool snapPending;
         private bool snapInstantly;
+
+        /// The box this drag was handed to, once it was. A gesture stays with whichever box took it,
+        /// rather than coming back the moment that one reaches its own end.
+        private SmoothScrollRect chainedTo;
+
+        /// Where this box stood when the drag began, which is what says whether it has moved at all --
+        /// a slow drag covers less than a pixel a frame without being stuck.
+        private Vector2 dragOrigin;
+
+        /// Where the pointer was then, in the same space the base class measures it in, so the two can
+        /// be compared: what the gesture asked for against what the box took.
+        private Vector2 dragStartCursor;
 
         /// Where the gesture now settling set off from, which is all `scroll-snap-stop: always` needs:
         /// a snap point counts as passed over when it lies between this and where the scroll is headed.
@@ -103,6 +130,7 @@ namespace ReactUnity.UGUI.Behaviours
 
             // A tick counts from where the scroll is already headed, not from how far it has got, so
             // that a flurry of them adds up to the sum of its ticks as it would in a browser.
+            var from = SmoothCoroutine != null ? targetPosition : positionBefore;
             if (SmoothCoroutine != null) normalizedPosition = targetPosition;
 
             base.OnScroll(data);
@@ -112,8 +140,62 @@ namespace ReactUnity.UGUI.Behaviours
             data.scrollDelta = incoming;
 
             normalizedPosition = positionBefore;
+
+            // Nothing of this tick fitted, so `overscroll-behavior: auto` hands the whole of it up.
+            if (Reached(Inside(target) - Inside(from)) && Chains(delta))
+            {
+                Above()?.OnScroll(data);
+                return;
+            }
+
             FollowTo(target);
             RequestSnap();
+        }
+
+        /// <summary>
+        /// The part of <paramref name="position"/> inside the rect's own range, which is what counts as
+        /// taken. An elastic box pulled past its end has taken nothing: the bounce is what it does when
+        /// the box above refuses the scroll, not something to absorb it instead of chaining.
+        /// </summary>
+        private static Vector2 Inside(Vector2 position) =>
+            new Vector2(Mathf.Clamp01(position.x), Mathf.Clamp01(position.y));
+
+        /// <summary>
+        /// Whether a scroll this rect could not take goes on to the box above it. The axis the gesture
+        /// runs along is the one that decides, so a contained y does not trap a sideways scroll.
+        /// </summary>
+        private bool Chains(Vector2 travel)
+        {
+            var onX = horizontal && Mathf.Abs(travel.x) >= Mathf.Abs(travel.y);
+            var onY = vertical && Mathf.Abs(travel.y) >= Mathf.Abs(travel.x);
+
+            if (onX && OverscrollX == OverscrollBehavior.Auto) return true;
+            if (onY && OverscrollY == OverscrollBehavior.Auto) return true;
+
+            // Neither: the gesture runs along an axis this box does not scroll at all, so it is not
+            // the one to decide whether the box above sees it.
+            return !onX && !onY;
+        }
+
+        /// <summary>
+        /// How far the gesture has asked this box to move since the drag began, in the points the base
+        /// class works in -- it carries the content along with the pointer one for one, so the pointer's
+        /// own travel is the whole of the ask.
+        /// </summary>
+        private Vector2 Asked(PointerEventData eventData)
+        {
+            if (!RectTransformUtility.ScreenPointToLocalPointInRectangle(
+                viewRect, eventData.position, eventData.pressEventCamera, out var cursor)) return Vector2.zero;
+
+            return cursor - dragStartCursor;
+        }
+
+        /// <summary>The scroll box this one is inside, if any.</summary>
+        private SmoothScrollRect Above()
+        {
+            if (Component?.Parent == null) return null;
+            var above = ComponentHelpers.NearestScrollContainer(Component.Parent) as ScrollComponent;
+            return above?.ScrollRect;
         }
 
         /// <summary>
@@ -194,14 +276,60 @@ namespace ReactUnity.UGUI.Behaviours
             smoothVelocity = Vector2.zero;
 
             dragging = true;
+            chainedTo = null;
+            dragOrigin = normalizedPosition;
+            RectTransformUtility.ScreenPointToLocalPointInRectangle(
+                viewRect, eventData.position, eventData.pressEventCamera, out dragStartCursor);
             snapOrigin = new Vector2(ScrollLeft, ScrollTop);
             base.OnBeginDrag(eventData);
+        }
+
+        public override void OnDrag(PointerEventData eventData)
+        {
+            if (chainedTo)
+            {
+                chainedTo.OnDrag(eventData);
+                return;
+            }
+
+            base.OnDrag(eventData);
+
+            // A pointer the base class refused is not one to hand on either.
+            if (eventData.button != PointerEventData.InputButton.Left || !IsActive()) return;
+
+            // The first drag arrives in the same frame as the begin, with the pointer still where that
+            // recorded it -- so this box has been asked for nothing yet, and one asked for nothing has
+            // not failed to take it. Handing over here would give every gesture to the box above.
+            var asked = Asked(eventData);
+            if (Mathf.Abs(asked.x) < 1f && Mathf.Abs(asked.y) < 1f) return;
+
+            // Measured from where the gesture began, so a box that has moved at all keeps the rest of
+            // it -- the latching a browser does, rather than handing the gesture over at every end.
+            if (!Reached(Inside(normalizedPosition) - Inside(dragOrigin))) return;
+            if (!Chains(eventData.position - eventData.pressPosition)) return;
+
+            var above = Above();
+            if (!above) return;
+
+            // The handover is a fresh gesture for the box above, so it measures from here and there is
+            // no jump: what this one could not use is simply not counted.
+            chainedTo = above;
+            above.OnBeginDrag(eventData);
         }
 
         public override void OnEndDrag(PointerEventData eventData)
         {
             base.OnEndDrag(eventData);
             dragging = false;
+
+            if (chainedTo)
+            {
+                var target = chainedTo;
+                chainedTo = null;
+                target.OnEndDrag(eventData);
+                return;
+            }
+
             RequestSnap();
         }
 

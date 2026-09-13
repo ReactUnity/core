@@ -29,6 +29,10 @@ namespace ReactUnity.Styling
         public static readonly StyleProperty<ScrollbarGutter> scrollbarGutter = new StyleProperty<ScrollbarGutter>("scrollbarGutter", ScrollbarGutter.Auto, false, false, AllConverters.ScrollbarGutterConverter);
         public static readonly StyleProperty<ScrollBehavior> scrollBehavior = new StyleProperty<ScrollBehavior>("scrollBehavior", ScrollBehavior.Auto);
         public static readonly StyleProperty<ScrollSnapType> scrollSnapType = new StyleProperty<ScrollSnapType>("scrollSnapType", ScrollSnapType.None, false, false, AllConverters.ScrollSnapTypeConverter);
+        // `overscroll-behavior` is per axis, and the logical pair is an alias rather than a property of
+        // its own: there are no vertical writing modes here, so inline is always x and block always y.
+        public static readonly StyleProperty<OverscrollBehavior> overscrollBehaviorX = new StyleProperty<OverscrollBehavior>("overscrollBehaviorX", OverscrollBehavior.Auto);
+        public static readonly StyleProperty<OverscrollBehavior> overscrollBehaviorY = new StyleProperty<OverscrollBehavior>("overscrollBehaviorY", OverscrollBehavior.Auto);
         public static readonly StyleProperty<ScrollSnapAlign> scrollSnapAlign = new StyleProperty<ScrollSnapAlign>("scrollSnapAlign", ScrollSnapAlign.None, false, false, AllConverters.ScrollSnapAlignConverter);
         public static readonly StyleProperty<ScrollSnapStop> scrollSnapStop = new StyleProperty<ScrollSnapStop>("scrollSnapStop", ScrollSnapStop.Normal);
         // `scroll-padding` insets the snapport of a scroll container -- the box a snap target is lined
@@ -233,6 +237,10 @@ namespace ReactUnity.Styling
             { "scrollbarGutter", scrollbarGutter },
             { "scrollBehavior", scrollBehavior },
             { "scrollSnapType", scrollSnapType },
+            { "overscrollBehaviorX", overscrollBehaviorX },
+            { "overscrollBehaviorY", overscrollBehaviorY },
+            { "overscrollBehaviorInline", overscrollBehaviorX },
+            { "overscrollBehaviorBlock", overscrollBehaviorY },
             { "scrollSnapAlign", scrollSnapAlign },
             { "scrollSnapStop", scrollSnapStop },
             { "scrollPaddingTop", scrollPaddingTop },
@@ -434,6 +442,10 @@ namespace ReactUnity.Styling
             { "scrollbar-gutter", scrollbarGutter },
             { "scroll-behavior", scrollBehavior },
             { "scroll-snap-type", scrollSnapType },
+            { "overscroll-behavior-x", overscrollBehaviorX },
+            { "overscroll-behavior-y", overscrollBehaviorY },
+            { "overscroll-behavior-inline", overscrollBehaviorX },
+            { "overscroll-behavior-block", overscrollBehaviorY },
             { "scroll-snap-align", scrollSnapAlign },
             { "scroll-snap-stop", scrollSnapStop },
             { "scroll-padding-top", scrollPaddingTop },

@@ -1,6 +1,6 @@
 //
 // Types in assemblies: ReactUnity, ReactUnity.Editor, ReactUnity.UGUI, ReactUnity.UIToolkit
-// Generated 13/09/2026 14:43:45
+// Generated 13/09/2026 15:53:47
 //
 /* eslint-disable */
 
@@ -4378,6 +4378,8 @@ export declare namespace ReactUnity {
       scrollSnapType: ReactUnity.Types.ScrollSnapType;
       scrollSnapAlign: ReactUnity.Types.ScrollSnapAlign;
       scrollSnapStop: ReactUnity.Types.ScrollSnapStop;
+      overscrollBehaviorX: ReactUnity.Types.OverscrollBehavior;
+      overscrollBehaviorY: ReactUnity.Types.OverscrollBehavior;
       scrollPaddingTop: Yoga.YogaValue;
       scrollPaddingRight: Yoga.YogaValue;
       scrollPaddingBottom: Yoga.YogaValue;
@@ -4651,6 +4653,8 @@ export declare namespace ReactUnity {
       static scrollbarGutter: ReactUnity.Styling.StyleProperty;
       static scrollBehavior: ReactUnity.Styling.StyleProperty;
       static scrollSnapType: ReactUnity.Styling.StyleProperty;
+      static overscrollBehaviorX: ReactUnity.Styling.StyleProperty;
+      static overscrollBehaviorY: ReactUnity.Styling.StyleProperty;
       static scrollSnapAlign: ReactUnity.Styling.StyleProperty;
       static scrollSnapStop: ReactUnity.Styling.StyleProperty;
       static scrollPaddingTop: ReactUnity.Styling.StyleProperty;
@@ -7357,6 +7361,11 @@ export declare namespace ReactUnity {
       Cover = 2,
       None = 3,
       ScaleDown = 4,
+    }
+    export enum OverscrollBehavior {
+      Auto = 0,
+      Contain = 1,
+      None = 2,
     }
     export enum PointerEvents {
       Auto = 0,
@@ -11444,6 +11453,9 @@ export declare namespace ReactUnity {
         constructor();
         Smoothness: number;
         SmoothBehavior: boolean;
+        OverscrollX: ReactUnity.Types.OverscrollBehavior;
+        OverscrollY: ReactUnity.Types.OverscrollBehavior;
+        Component: ReactUnity.UGUI.ScrollComponent;
         BehaviorSmoothness: number;
         FindSnapTarget?: ((arg1: UnityEngine.Vector2, arg2: UnityEngine.Vector2) => UnityEngine.Vector2 | undefined);
         WheelDirectionTransposed: boolean;
@@ -11497,6 +11509,7 @@ export declare namespace ReactUnity {
         hideFlags: UnityEngine.HideFlags;
         OnScroll(data: UnityEngine.EventSystems.PointerEventData): void;
         OnBeginDrag(eventData: UnityEngine.EventSystems.PointerEventData): void;
+        OnDrag(eventData: UnityEngine.EventSystems.PointerEventData): void;
         OnEndDrag(eventData: UnityEngine.EventSystems.PointerEventData): void;
         RequestSnap(instant?: boolean): void;
         ScrollBy(left?: number | undefined, top?: number | undefined, smoothness?: number | undefined): void;
@@ -11507,7 +11520,6 @@ export declare namespace ReactUnity {
         IsActive(): boolean;
         StopMovement(): void;
         OnInitializePotentialDrag(eventData: UnityEngine.EventSystems.PointerEventData): void;
-        OnDrag(eventData: UnityEngine.EventSystems.PointerEventData): void;
         CalculateLayoutInputHorizontal(): void;
         CalculateLayoutInputVertical(): void;
         SetLayoutHorizontal(): void;

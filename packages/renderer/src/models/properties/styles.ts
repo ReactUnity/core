@@ -22,6 +22,7 @@ import {
   MixBlendMode,
   NavigationMode,
   ObjectFit,
+  OverscrollBehavior,
   PointerEvents,
   ScrollBehavior,
   ScrollSnapAlign,
@@ -60,6 +61,12 @@ export interface RenderStyle {
   scrollSnapType?: ScrollSnapType;
   scrollSnapAlign?: ScrollSnapAlign;
   scrollSnapStop?: ScrollSnapStop;
+
+  // No vertical writing modes here, so the logical pair names the same two axes: inline is x.
+  overscrollBehaviorX?: OverscrollBehavior;
+  overscrollBehaviorY?: OverscrollBehavior;
+  overscrollBehaviorInline?: OverscrollBehavior;
+  overscrollBehaviorBlock?: OverscrollBehavior;
 
   scrollPaddingTop?: YogaValueAux;
   scrollPaddingRight?: YogaValueAux;
@@ -258,6 +265,7 @@ export interface RenderStyle {
   viewTimeline?: SafeString;
   animationRange?: SafeString;
   scrollbarGutter?: 'auto' | 'stable' | 'stable both-edges';
+  overscrollBehavior?: OverscrollBehavior | `${OverscrollBehavior} ${OverscrollBehavior}`;
   container?: SafeString;
   paddingInline?: SafeString | number;
   paddingBlock?: SafeString | number;
