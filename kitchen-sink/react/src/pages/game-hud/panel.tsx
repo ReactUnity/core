@@ -131,7 +131,7 @@ function Skills() {
             {/* Rank is invented from the position in the list, which is what a mock is for. */}
             <view className={'flex-row gap-0.5'}>
               {Array.from({ length: 5 }, (_, r) => (
-                <view key={r} className={clsx('h-1 flex-1 rounded-[1px]', r <= 4 - (i % 5) ? 'bg-cyan-400' : 'bg-slate-700')} />
+                <view key={r} className={clsx('h-1 flex-1 rounded-full', r <= 4 - (i % 5) ? 'bg-cyan-400' : 'bg-slate-700')} />
               ))}
             </view>
           </view>
@@ -172,7 +172,7 @@ function Codex() {
                   <text className={'font-mono text-[10px] text-slate-400'}>{`${objective.done}/${objective.total}`}</text>
                 </view>
 
-                <view className={clsx(styles.well, 'h-1 overflow-hidden rounded-[1px]')}>
+                <view className={clsx(styles.well, 'h-1 overflow-hidden rounded-full')}>
                   <view
                     className={clsx(styles.statBar, 'h-full', objective.done >= objective.total ? 'bg-emerald-400' : 'bg-amber-400')}
                     style={{ width: `${(objective.done / objective.total) * 100}%` }}
@@ -194,7 +194,7 @@ function Codex() {
               <text className={'font-mono text-[10px] text-slate-200'}>{stat.value}</text>
             </view>
 
-            <view className={clsx(styles.well, 'h-1 overflow-hidden rounded-[1px]')}>
+            <view className={clsx(styles.well, 'h-1 overflow-hidden rounded-full')}>
               <view className={clsx(styles.statBar, 'h-full', stat.tint)} style={{ width: `${(stat.value / stat.max) * 100}%` }} />
             </view>
           </view>

@@ -287,12 +287,17 @@ namespace ReactUnity.Styling
                 }
             }
 
-#if UNITY_EDITOR
             if (value != null && !typeof(T).IsAssignableFrom(value.GetType()) && !typeof(T).IsEnum)
             {
+#if UNITY_EDITOR
                 Debug.LogError($"Error while converting {value} from type {value.GetType()} to {typeof(T)}");
-            }
 #endif
+                // The property is left at its default rather than the cast being taken: a converter
+                // that answered with the wrong type is a bug, and not one worth a torn-down frame.
+                value = prop.defaultValue;
+                if (value is IComputedValue mismatched) value = mismatched.ResolveValue(prop, this, converter);
+                if (value != null && !typeof(T).IsAssignableFrom(value.GetType())) value = null;
+            }
 
             if (value == null && typeof(T).IsValueType) return default(T);
 

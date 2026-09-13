@@ -1,3 +1,4 @@
+import { icon } from '@reactunity/renderer';
 import { useNavigate } from 'react-router';
 import styles from './index.module.scss';
 
@@ -27,6 +28,30 @@ export const HomePage = () => {
           </button>
         </view>
       </view>
+
+      <section>
+        <h2>New</h2>
+
+        <view className={'flex-row items-center gap-5 rounded-xl bg-slate-900 p-6 ring-1 ring-cyan-400/40'}>
+          <icon.videogame_asset className={'text-5xl text-cyan-300'} />
+
+          <view className={'flex-1 gap-2'}>
+            <view className={'flex-row items-center gap-2'}>
+              <text className={'text-xl font-bold text-white'}>Game HUD</text>
+              <text className={'rounded-full bg-cyan-400/15 px-2 py-0.5 font-mono text-[10px] tracking-widest text-cyan-300'}>NEW</text>
+            </view>
+
+            <text className={'text-slate-300 leading-relaxed'}>
+              A mock ARPG heads-up display with no sprites and no atlas behind it. Conic gradients, clip-path shapes, masks, blend modes, a
+              perspective floor and animation events, all from CSS — the heaviest page here for the styling engine.
+            </text>
+          </view>
+
+          <button className={'bg-cyan-600 px-5 py-3 text-white transition-colors hover:bg-cyan-500'} onClick={() => nav('game-hud')}>
+            Open
+          </button>
+        </view>
+      </section>
 
       <section>
         <h2>Rich text</h2>

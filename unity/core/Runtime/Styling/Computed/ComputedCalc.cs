@@ -168,6 +168,17 @@ namespace ReactUnity.Styling.Computed
             return new ComputedCalc(values, operators, converter);
         }
 
+        /// <summary>
+        /// A length or a percentage as a calculation term. This is what a sub-expression that has
+        /// already been worked out comes back as, so it has to be an operand again as it stands.
+        /// </summary>
+        internal static CalcValue? FromYoga(YogaValue value)
+        {
+            if (value.Unit == YogaUnit.Point) return new CalcValue { Value = value.Value, HasUnit = true };
+            if (value.Unit == YogaUnit.Percent) return new CalcValue { Percent = value.Value, HasUnit = true };
+            return null;
+        }
+
         private static bool Read(object value, out CalcValue result)
         {
             if (value is float f)
@@ -180,6 +191,19 @@ namespace ReactUnity.Styling.Computed
             {
                 result = cv;
                 return true;
+            }
+
+            // A parenthesised group is folded before the calculation around it is, and a group that
+            // came out as a percentage was folded to a YogaValue -- which is every negative fraction
+            // utility, `calc(calc(1 / 2 * 100%) * -1)`.
+            if (value is YogaValue yoga)
+            {
+                var read = FromYoga(yoga);
+                if (read.HasValue)
+                {
+                    result = read.Value;
+                    return true;
+                }
             }
 
             result = default;

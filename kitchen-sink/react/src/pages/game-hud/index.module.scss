@@ -195,10 +195,10 @@
 }
 
 /* --- Panel chrome ------------------------------------------------------------------------------
-   A bevelled corner wants `calc(100% - 14px)` in the polygon, and a calc() holding a percentage
-   resolves to nothing here -- the declaration is dropped and the panel is a plain rectangle with
-   no error anywhere. Corner brackets say the same thing in pixels, and unlike a bevel they do not
-   change shape with the panel. */
+   A bevelled corner wants `calc(100% - 14px)` in the polygon, and a calc() mixing a percentage
+   with a length resolves to nothing here -- the declaration is dropped and the panel is a plain
+   rectangle. Corner brackets say the same thing in pixels, and unlike a bevel they do not change
+   shape with the panel. */
 
 .panel {
   background-color: rgba(8, 13, 27, 0.62);
@@ -373,16 +373,20 @@
 .orbFill {
   position: absolute;
   inset: auto 0 0 0;
+  /* Each wave is far bigger than the liquid and rides its top edge; this cuts away the rest. */
+  clip-path: inset(0);
   transition: height 320ms cubic-bezier(0.2, 0.8, 0.3, 1);
 }
 
+/* The surface: a rounded square turning just under the top edge. Nearly round on purpose -- what
+   crosses the edge is an arc a few pixels deep, where a long thin bar turns into a propeller. */
 .orbWave {
   position: absolute;
-  left: -30%;
-  right: -30%;
-  top: -14px;
-  height: 28px;
-  border-radius: 44%;
+  top: 8px;
+  right: -46px;
+  left: -46px;
+  height: 168px;
+  border-radius: 30%;
   opacity: 0.85;
   animation: orbWave 7s linear infinite;
 }
@@ -421,6 +425,9 @@
   /* Rounded clipping, which the rectangular mask behind `overflow: hidden` cannot give the
      cooldown block and the cast flash. */
   clip-path: inset(0 round 10px);
+  /* The page's base `button` rule paints a light slab; the stripes on the ultimate slot are thin
+     enough to show it through. */
+  background-color: transparent;
   background-image: linear-gradient(160deg, rgba(30, 41, 59, 0.95), rgba(2, 6, 23, 0.95));
   box-shadow:
     0 0 0 1px rgba(148, 163, 184, 0.28) inset,
@@ -471,15 +478,20 @@
   }
 }
 
-/* The ring that says a slot is armed. One static conic gradient, spun -- regenerating the gradient
-   every frame would be the expensive way to do the same thing. Every stop here is a percentage:
-   ReactUnity drops a conic gradient whose stops are angles, and the whole declaration with it.
-   No mask: the slot is drawn over it and opaque, so all that is left of the disc is a 3px rim. */
+/* The ring that says a slot is armed: one static conic gradient, spun -- regenerating the gradient
+   every frame would be the expensive way to do the same thing. The spin is on the inner disc and
+   the frame clips it, because a rotating square sweeps its corners well outside the slot. */
 .armed {
   position: absolute;
   inset: -3px;
-  border-radius: 12px;
-  background-image: conic-gradient(from 0deg, transparent 0%, rgba(103, 232, 249, 0.9) 20%, transparent 40%, transparent 100%);
+  clip-path: inset(0 round 12px);
+}
+
+.armedSpin {
+  position: absolute;
+  /* Wide enough that the square still covers the frame at 45 degrees. */
+  inset: -13px;
+  background-image: conic-gradient(from 0deg, transparent 0deg, rgba(103, 232, 249, 0.9) 72deg, transparent 144deg, transparent 360deg);
   animation: ringSpin 1.6s linear infinite;
 }
 
@@ -517,7 +529,7 @@
 .radar {
   position: absolute;
   inset: 0;
-  background-image: conic-gradient(from 0deg, rgba(34, 211, 238, 0.55) 0%, transparent 15%, transparent 100%);
+  background-image: conic-gradient(from 0deg, rgba(34, 211, 238, 0.55) 0deg, transparent 55deg, transparent 360deg);
   animation: ringSpin 3.6s linear infinite;
 }
 
@@ -527,7 +539,7 @@
   height: 7px;
   /* Centred on its own coordinate, rather than hanging down and to the right of it. */
   translate: -50% -50%;
-  border-radius: 3.5px;
+  border-radius: 50%;
   animation: blipPulse 1.8s ease-out infinite;
 }
 
@@ -675,8 +687,7 @@
 /* The wedge in the corner of a slot that holds something. */
 .corner {
   position: absolute;
-  right: 0;
-  bottom: 0;
+  inset: auto 0 0 auto;
   width: 12px;
   height: 12px;
   clip-path: polygon(100% 0, 100% 100%, 0 100%);
@@ -731,7 +742,7 @@
   position: absolute;
   bottom: 0;
   left: 0;
-  width: 33.3333%;
+  width: calc(100% / 3);
   height: 2px;
   background-image: linear-gradient(to right, transparent, #22d3ee, transparent);
   transition: translate 240ms cubic-bezier(0.2, 0.8, 0.3, 1);

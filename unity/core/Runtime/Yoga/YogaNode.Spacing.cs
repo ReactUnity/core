@@ -42,6 +42,8 @@ namespace Yoga
         {
             if (value.Unit == YogaUnit.Percent)
                 Native.YGNodeStyleSetPositionPercent(_ygNode, edge, value.Value);
+            else if (value.Unit == YogaUnit.Auto)
+                Native.YGNodeStyleSetPositionAuto(_ygNode, edge);
             else
                 Native.YGNodeStyleSetPosition(_ygNode, edge, value.Value);
         }

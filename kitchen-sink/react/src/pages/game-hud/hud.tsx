@@ -25,9 +25,7 @@ export function Meter({ value, fill, ghost, className }: { value: number; fill: 
   const width = `${Math.max(0, Math.min(1, value)) * 100}%`;
 
   return (
-    // Well under half the height, and never `rounded-full`: a radius near half the shorter side
-    // draws a chevron here rather than a pill cap.
-    <view className={clsx(styles.well, 'relative h-2.5 overflow-hidden rounded-[3px]', className)}>
+    <view className={clsx(styles.well, 'relative h-2.5 overflow-hidden rounded-full', className)}>
       <view className={clsx(styles.barGhost, ghost, 'absolute inset-y-0 left-0')} style={{ width }} />
       <view className={clsx(styles.barFill, fill, 'absolute inset-y-0 left-0')} style={{ width }} />
       <view className={styles.ticks} />
@@ -36,18 +34,17 @@ export function Meter({ value, fill, ghost, className }: { value: number; fill: 
 }
 
 export function Portrait({ hp, mp, xp, shield }: { hp: number; mp: number; xp: number; shield: number }) {
-  const filled = `${(xp * 100).toFixed(2)}%`;
+  const sweep = `${(xp * 360).toFixed(1)}deg`;
 
   return (
     <Frame className={'absolute top-4 left-4 w-[272px]'} glass>
       <view className={'flex-row gap-3 p-3'}>
         <view className={'relative size-[68px] shrink-0 items-center justify-center'}>
-          {/* A conic gradient for the sweep, a radial mask to make it a ring rather than a disc.
-              The stops are percentages because an angle stop takes the whole gradient down with it. */}
+          {/* A conic gradient for the sweep, a radial mask to make it a ring rather than a disc. */}
           <view
-            className={clsx(styles.xpRing, 'absolute inset-0 rounded-[34px]')}
+            className={clsx(styles.xpRing, 'absolute inset-0 rounded-full')}
             style={{
-              backgroundImage: `conic-gradient(from 0deg, #22d3ee 0%, #a5f3fc ${filled}, rgba(148, 163, 184, 0.22) ${filled}, rgba(148, 163, 184, 0.22) 100%)`,
+              backgroundImage: `conic-gradient(from 0deg, #22d3ee 0deg, #a5f3fc ${sweep}, rgba(148, 163, 184, 0.22) ${sweep}, rgba(148, 163, 184, 0.22) 360deg)`,
             }}
           />
 
@@ -110,35 +107,28 @@ export function BuffBar() {
   );
 }
 
-/**
- * Centred by a full-width row rather than `left-1/2 -translate-x-1/2`. Both of those are a calc()
- * over a percentage, and ReactUnity resolves one of those to nothing -- so the bar would sit at 0
- * and nothing would say why. Every fraction utility Tailwind emits is the same shape.
- */
 export function BossBar({ hp }: { hp: number }) {
   return (
-    <view className={'absolute inset-x-0 top-4 items-center'}>
-      <view className={'w-[360px] items-center gap-1'}>
-        <view className={'flex-row items-center gap-2'}>
-          {Array.from({ length: boss.tier }, (_, i) => (
-            <icon.star key={i} className={'text-sm text-amber-400'} />
-          ))}
-          <text className={'text-base font-bold tracking-[3px] text-rose-200'}>{boss.name}</text>
-          <text className={'font-mono text-[10px] tracking-widest text-rose-400/80'}>{boss.epithet}</text>
-        </view>
+    <view className={'absolute top-4 left-1/2 w-[360px] -translate-x-1/2 items-center gap-1'}>
+      <view className={'flex-row items-center gap-2'}>
+        {Array.from({ length: boss.tier }, (_, i) => (
+          <icon.star key={i} className={'text-sm text-amber-400'} />
+        ))}
+        <text className={'text-base font-bold tracking-[3px] text-rose-200'}>{boss.name}</text>
+        <text className={'font-mono text-[10px] tracking-widest text-rose-400/80'}>{boss.epithet}</text>
+      </view>
 
-        <view className={clsx(styles.well, 'relative h-4 w-full overflow-hidden rounded-sm')}>
-          <view className={clsx(styles.barGhost, 'absolute inset-y-0 left-0 bg-rose-100/50')} style={{ width: `${hp * 100}%` }} />
-          <view className={clsx(styles.bossFill, 'absolute inset-y-0 left-0')} style={{ width: `${hp * 100}%` }}>
-            <view className={styles.sweep} />
-          </view>
-          <view className={styles.ticks} />
+      <view className={clsx(styles.well, 'relative h-4 w-full overflow-hidden rounded-sm')}>
+        <view className={clsx(styles.barGhost, 'absolute inset-y-0 left-0 bg-rose-100/50')} style={{ width: `${hp * 100}%` }} />
+        <view className={clsx(styles.bossFill, 'absolute inset-y-0 left-0')} style={{ width: `${hp * 100}%` }}>
+          <view className={styles.sweep} />
         </view>
+        <view className={styles.ticks} />
+      </view>
 
-        <view className={'flex-row justify-between self-stretch'}>
-          <text className={'font-mono text-[10px] text-slate-400'}>{`${(hp * 100).toFixed(1)}%`}</text>
-          <text className={'font-mono text-[10px] text-slate-400'}>{`${grouped(Math.round(hp * BOSS_POOL))} / ${grouped(BOSS_POOL)}`}</text>
-        </view>
+      <view className={'flex-row justify-between self-stretch'}>
+        <text className={'font-mono text-[10px] text-slate-400'}>{`${(hp * 100).toFixed(1)}%`}</text>
+        <text className={'font-mono text-[10px] text-slate-400'}>{`${grouped(Math.round(hp * BOSS_POOL))} / ${grouped(BOSS_POOL)}`}</text>
       </view>
     </view>
   );
@@ -146,7 +136,7 @@ export function BossBar({ hp }: { hp: number }) {
 
 export function Minimap() {
   return (
-    <view className={'absolute top-4 right-4 size-[148px] rounded-[74px] ring-1 ring-cyan-400/40'}>
+    <view className={'absolute top-4 right-4 size-[148px] rounded-full ring-1 ring-cyan-400/40'}>
       {/* The clip is on the map, so the sweep and the blips inside it are cut to the same circle. */}
       <view className={clsx(styles.minimap, 'absolute inset-0')}>
         <view className={styles.radar} />
@@ -168,7 +158,7 @@ export function Minimap() {
 
       {/* Inside the dial: below it is where the gear panel starts, and the name is wider than 148px. */}
       <view className={'absolute inset-x-0 bottom-2 items-center'}>
-        <text className={'rounded-[4px] bg-slate-950/85 px-2 py-0.5 font-mono text-[9px] tracking-widest text-cyan-200/90'}>
+        <text className={'rounded-full bg-slate-950/85 px-2 py-0.5 font-mono text-[9px] tracking-widest text-cyan-200/90'}>
           {player.zone}
         </text>
       </view>
@@ -210,7 +200,11 @@ export function ActionBar({ cooldowns, flashes, onCast, onCooldownEnd, onFlashEn
 
         return (
           <view key={skill.id} className={'relative'}>
-            {!cooling && <view className={styles.armed} />}
+            {!cooling && (
+              <view className={styles.armed}>
+                <view className={styles.armedSpin} />
+              </view>
+            )}
 
             <button
               onClick={() => onCast(skill)}

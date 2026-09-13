@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Text;
 using ReactUnity.Styling.Computed;
+using Yoga;
 using UnityEngine;
 
 namespace ReactUnity.Styling.Converters
@@ -104,7 +105,34 @@ namespace ReactUnity.Styling.Converters
                     break;
             }
 
+            // What a calculation that came out as a length or a percentage is worth here, which is
+            // the same answer the unit written out gets. A converter with no percentage in it says
+            // so by having no mapping for one, and the declaration is dropped.
+            if (value is YogaValue yoga)
+            {
+                if (yoga.Unit == YogaUnit.Point) return Constant(yoga.Value, out result);
+                if (yoga.Unit == YogaUnit.Percent) return WithSuffix(yoga.Value, "%", out result);
+
+                result = null;
+                return false;
+            }
+
             return base.ConvertInternal(value, out result);
+        }
+
+        /// <summary>A number written with a unit, as this converter reads that unit.</summary>
+        private bool WithSuffix(float value, string suffix, out IComputedValue result)
+        {
+            if (SuffixMapper.TryGetValue(suffix, out var mapper))
+            {
+                result = StylingUtils.CreateComputed(mapper(value));
+                return true;
+            }
+
+            if (SuffixMap.TryGetValue(suffix, out var multiplier)) return Constant(value * multiplier, out result);
+
+            result = null;
+            return false;
         }
 
         /// <summary>
@@ -150,20 +178,7 @@ namespace ReactUnity.Styling.Converters
                     return true;
                 }
 
-                if (SuffixMapper.TryGetValue(suffix, out var mapper))
-                {
-                    result = StylingUtils.CreateComputed(mapper(res));
-                    return true;
-                }
-
-                if (!SuffixMap.TryGetValue(suffix, out var multiplier))
-                {
-                    result = null;
-                    return false;
-                }
-
-                result = new ComputedConstant(res * multiplier);
-                return true;
+                return WithSuffix(res, suffix, out result);
             }
 
             result = null;
@@ -451,6 +466,9 @@ namespace ReactUnity.Styling.Converters
             return ComputedMapper.Create(floatResult, BaseConverter, (res) => {
                 if (res is ComputedCalc.CalcValue cv) return cv;
                 if (res is float f) return new ComputedCalc.CalcValue { Value = f, HasUnit = true };
+                // A nested calc() is read by the base converter and answers with what it worked out,
+                // which for `calc(calc(1 / 2 * 100%) * -1)` is a percentage.
+                if (res is YogaValue yoga) return ComputedCalc.FromYoga(yoga);
                 return null;
             });
         }

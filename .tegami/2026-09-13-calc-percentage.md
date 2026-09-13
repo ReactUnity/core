@@ -15,6 +15,15 @@ carried through the arithmetic rather than resolved on sight, which is what used
 the parent it was resolved against had not been laid out yet, so the declaration came out as nothing at
 all.
 
+It survives a sub-expression too, parenthesised or a nested `calc()` — `calc(calc(1 / 2 * 100%) * -1)`,
+which is what a framework emits for every *negative* fraction utility. A group is worked out before the
+calculation around it, and the length or percentage it came out as is an operand again exactly as it
+stands, rather than something the arithmetic around it could not read.
+
+On a property Yoga does not hold as a percentage -- `border-left-width`, `scroll-margin-left` -- a
+calculated percentage now resolves to the same number the percentage written out gets, rather than
+reaching the property as a value of the wrong type.
+
 A calculation mixing a percentage with a length, `calc(100% - 2rem)`, is still dropped. Yoga has one unit
 per value and no calc of its own, so there is nothing to hand it.
 

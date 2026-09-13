@@ -17,7 +17,7 @@ const shown = [
   ['backdrop-filter', 'Two panels frost what is behind them. Each one costs a camera render, which is why only two do.'],
   ['@starting-style', 'Log lines, the tooltip and the toast have a style for the frame they appear on, so they can transition in.'],
   ['Animation events', 'A cooldown is an animated height; the slot clears itself from onAnimationEnd rather than running a timer.'],
-  ['background-clip: text', 'The wordmark above the screen paints its gradient through the glyphs, over a dark stroke.'],
+  ['background-clip: text', 'The watermark in the corner paints its gradient through the glyphs, over a dark stroke.'],
 ];
 
 export function GameHudPage() {
@@ -177,14 +177,6 @@ export function GameHudPage() {
         and sweep below is CSS. Drive it with the action bar or the buttons under the screen.
       </text>
 
-      {/* The wordmark sits above the screen rather than inside it: `background-clip: text` measures
-          itself against the root canvas, and the screen's `isolation: isolate` puts its subtree on a
-          canvas of its own, which leaves the glyph coverage sampled 130x too small. */}
-      <view className={'mb-2 flex-row items-baseline justify-between'}>
-        <text className={clsx(styles.title, 'text-3xl font-bold')}>AETHERFALL</text>
-        <text className={'font-mono text-[11px] tracking-widest text-slate-400'}>PATCH 2.4.1 — WARDEN IX</text>
-      </view>
-
       <view className={styles.screen}>
         {/* The scene, back to front. None of it takes a click. */}
         <view className={'absolute inset-0'} style={{ pointerEvents: 'none' }}>
@@ -214,32 +206,36 @@ export function GameHudPage() {
         <CombatLog lines={lines} />
 
         {!!toast && (
-          <view className={'absolute inset-x-0 top-[96px] items-center'}>
-            <view key={toast.id} className={clsx(styles.toast, 'rounded-md bg-slate-950/85 px-4 py-2 ring-1 ring-cyan-400/50')}>
-              <text className={clsx('font-mono text-[11px] tracking-widest', toast.tint)}>{toast.text}</text>
-            </view>
+          <view
+            key={toast.id}
+            className={clsx(
+              styles.toast,
+              'absolute top-[96px] left-1/2 -translate-x-1/2 rounded-md bg-slate-950/85 px-4 py-2 ring-1 ring-cyan-400/50',
+            )}
+          >
+            <text className={clsx('font-mono text-[11px] tracking-widest', toast.tint)}>{toast.text}</text>
           </view>
         )}
 
-        <view className={'absolute inset-x-0 bottom-4 items-center'}>
-          <view className={'flex-row items-end gap-4'}>
-            <Orb value={hp} fill={'bg-rose-600'} wave={'bg-rose-400'} tint={'text-rose-50'} />
+        <view className={'absolute bottom-4 left-1/2 flex-row -translate-x-1/2 items-end gap-4'}>
+          <Orb value={hp} fill={'bg-rose-600'} wave={'bg-rose-400'} tint={'text-rose-50'} />
 
-            <Frame glass>
-              <view className={'gap-1.5 p-2'}>
-                <ActionBar cooldowns={cooldowns} flashes={flashes} onCast={cast} onCooldownEnd={endCooldown} onFlashEnd={endFlash} />
+          <Frame glass>
+            <view className={'gap-1.5 p-2'}>
+              <ActionBar cooldowns={cooldowns} flashes={flashes} onCast={cast} onCooldownEnd={endCooldown} onFlashEnd={endFlash} />
 
-                <view className={'flex-row items-center gap-2'}>
-                  <text className={'font-mono text-[9px] tracking-widest text-slate-500'}>XP</text>
-                  <Meter className={'flex-1'} value={xp} fill={'bg-fuchsia-400'} ghost={'bg-fuchsia-200/50'} />
-                  <text className={'font-mono text-[9px] text-fuchsia-300'}>{`${(xp * 100).toFixed(1)}%`}</text>
-                </view>
+              <view className={'flex-row items-center gap-2'}>
+                <text className={'font-mono text-[9px] tracking-widest text-slate-500'}>XP</text>
+                <Meter className={'flex-1'} value={xp} fill={'bg-fuchsia-400'} ghost={'bg-fuchsia-200/50'} />
+                <text className={'font-mono text-[9px] text-fuchsia-300'}>{`${(xp * 100).toFixed(1)}%`}</text>
               </view>
-            </Frame>
+            </view>
+          </Frame>
 
-            <Orb value={mp} fill={'bg-sky-600'} wave={'bg-sky-400'} tint={'text-sky-50'} />
-          </view>
+          <Orb value={mp} fill={'bg-sky-600'} wave={'bg-sky-400'} tint={'text-sky-50'} />
         </view>
+
+        <text className={clsx(styles.title, 'absolute right-4 bottom-[104px] text-xl font-bold')}>AETHERFALL</text>
       </view>
 
       <view className={'mt-4 flex-row flex-wrap gap-2'}>
