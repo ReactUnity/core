@@ -25,6 +25,8 @@ const panels = [
   { title: 'Mandatory holds', body: 'Whatever the scroll is left at, the nearest snap point takes it.' },
 ];
 
+const rows = ['Inbox', 'Drafts', 'Sent', 'Archive', 'Spam', 'Trash', 'Snoozed', 'Starred'];
+
 const stops = [
   ['Top', 0],
   ['Middle', 700],
@@ -35,6 +37,8 @@ export default function ScrollingPage() {
   const [type, setType] = useState<(typeof types)[number][0]>('x mandatory');
   const [align, setAlign] = useState<(typeof aligns)[number][0]>('center');
   const [smooth, setSmooth] = useState(true);
+  const [padded, setPadded] = useState(true);
+  const [alwaysStop, setAlwaysStop] = useState(false);
 
   const reader = useRef<ReactUnity.UGUI.ScrollComponent>(null);
 
@@ -113,6 +117,49 @@ export default function ScrollingPage() {
             </view>
           ))}
         </scroll>
+      </section>
+
+      <section>
+        <h2>
+          <row>
+            Clearing a pinned header
+            <icon.vertical_align_top />
+          </row>
+        </h2>
+
+        <text className={styles.note}>
+          `scroll-padding` insets the box a snap target is lined up against, so a `start`-aligned row lands below something pinned over the
+          top edge instead of under it. `scroll-snap-stop: always` is the other half: it keeps a fling from carrying past a row on its way
+          to one further down.
+        </text>
+
+        <view className={styles.toggles}>
+          <button className={clsx(styles.toggle, padded && styles.toggleOn)} onClick={() => setPadded((x) => !x)}>
+            scroll-padding-top: {padded ? '56px' : '0'}
+          </button>
+
+          <button className={clsx(styles.toggle, alwaysStop && styles.toggleOn)} onClick={() => setAlwaysStop((x) => !x)}>
+            scroll-snap-stop: {alwaysStop ? 'always' : 'normal'}
+          </button>
+        </view>
+
+        <view className={styles.stack}>
+          <scroll className={styles.list} style={{ scrollPaddingTop: padded ? '56px' : '0' }}>
+            {rows.map((row) => (
+              <view key={row} className={styles.row} style={{ scrollSnapStop: alwaysStop ? 'always' : 'normal' }}>
+                <text className={styles.rowLabel}>{row}</text>
+              </view>
+            ))}
+          </scroll>
+
+          <view className={styles.pinned}>
+            <text className={styles.pinnedLabel}>Pinned header</text>
+          </view>
+        </view>
+
+        <text className={styles.note}>
+          The rows carry `scroll-margin-top: 8px` too, which asks for the same gap from the item's side rather than the container's.
+        </text>
       </section>
 
       <section>

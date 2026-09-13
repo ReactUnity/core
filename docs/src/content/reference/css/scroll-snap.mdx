@@ -4,7 +4,7 @@ title: Scroll Snap
 
 Makes a scroll container come to rest on the items inside it rather than wherever the gesture left it. Check out the [MDN](https://developer.mozilla.org/en-US/docs/Web/CSS/scroll-snap-type) for how to use.
 
-Two properties do it together: `scroll-snap-type` on the scroll container says which axes snap, and `scroll-snap-align` on the items in it says where each one lines up.
+Two properties do it together: `scroll-snap-type` on the scroll container says which axes snap, and `scroll-snap-align` on the items in it says where each one lines up. Three more adjust the result -- `scroll-padding` on the container, `scroll-margin` and `scroll-snap-stop` on the items.
 
 <Sandpack>
 
@@ -100,10 +100,38 @@ One value covers both axes. Two are block first, as every logical pair is, so `s
 
 Any descendant of the scroll container can be a snap point, not only a direct child -- except one inside a nested scroll container, which belongs to that one instead.
 
+## `scroll-padding` {/*scroll-padding*/}
+
+Insets the snapport -- the box a snap target is lined up against -- inside the scroll container's own scrollport. A header pinned over the top edge is the usual reason to want one: without it a `start`-aligned item snaps under the header rather than below it.
+
+Set on the **scroll container**, as a length or a percentage of the scrollport on that axis. `auto` is read as none of it. The four physical edges, the two-value `scroll-padding-inline` and `scroll-padding-block`, their four logical longhands and the four-way `scroll-padding` shorthand all work.
+
+```css
+#list {
+  scroll-snap-type: y mandatory;
+  scroll-padding-top: 48px;
+}
+```
+
+## `scroll-margin` {/*scroll-margin*/}
+
+Outsets a target's snap area, which is its border box otherwise -- so an item can ask for a gap between itself and the snapport edge it meets.
+
+Set on the **snap target**, as a length. Percentages are not a value: the box being outset is the only thing they could resolve against. The same set of edges and shorthands as `scroll-padding`.
+
+## `scroll-snap-stop` {/*scroll-snap-stop*/}
+
+Whether a gesture may carry past this target on its way to one further along.
+
+- `normal` (default) -- a fling lands wherever it was aimed.
+- `always` -- the first such target the travel goes over is where the scroll has to come to rest.
+
+`always` holds whatever the strictness, so it stops a `proximity` container that would otherwise not have snapped at all. It applies to gestures -- a wheel, a drag -- and not to an asked-for scroll: setting `scrollTop` or calling `scrollTo` lands where it was sent.
+
 ## Notes {/*notes*/}
 
 - The scrollport is measured to the container's padding edge, so a `start` snap on the first item is the top of the travel rather than an offset that scrolls the padding away.
 - An item too far along to be reached snaps to the closest offset that shows it, which is how a `start`-aligned last item still counts as snapped at the end of the travel.
 - How near `proximity` has to be is left to the implementation by CSS; here it is half the scrollport.
 - A snap animates over the same duration a wheel scroll smooths over, or over [`scroll-behavior`](/reference/css/scroll-behavior)'s when that asks for `smooth`. A re-snap after a resize is instant, as CSS specifies.
-- `scroll-snap-stop`, `scroll-padding` and `scroll-margin` are not supported: the snap point is the item's border box, measured against the container's padding box.
+- The three properties above are read only by snapping. There is no `scrollIntoView` here and no scroll anchoring, which is everything else CSS uses them for.

@@ -30,6 +30,24 @@ namespace ReactUnity.Styling
         public static readonly StyleProperty<ScrollBehavior> scrollBehavior = new StyleProperty<ScrollBehavior>("scrollBehavior", ScrollBehavior.Auto);
         public static readonly StyleProperty<ScrollSnapType> scrollSnapType = new StyleProperty<ScrollSnapType>("scrollSnapType", ScrollSnapType.None, false, false, AllConverters.ScrollSnapTypeConverter);
         public static readonly StyleProperty<ScrollSnapAlign> scrollSnapAlign = new StyleProperty<ScrollSnapAlign>("scrollSnapAlign", ScrollSnapAlign.None, false, false, AllConverters.ScrollSnapAlignConverter);
+        public static readonly StyleProperty<ScrollSnapStop> scrollSnapStop = new StyleProperty<ScrollSnapStop>("scrollSnapStop", ScrollSnapStop.Normal);
+        // `scroll-padding` insets the snapport of a scroll container -- the box a snap target is lined
+        // up against -- so a sticky header's worth of it keeps the snapped item out from under the
+        // header. A percentage is of the scrollport on that axis, and `auto` is read as none of it.
+        public static readonly StyleProperty<YogaValue> scrollPaddingTop = new StyleProperty<YogaValue>("scrollPaddingTop", YogaValue.Undefined(), true);
+        public static readonly StyleProperty<YogaValue> scrollPaddingRight = new StyleProperty<YogaValue>("scrollPaddingRight", YogaValue.Undefined(), true);
+        public static readonly StyleProperty<YogaValue> scrollPaddingBottom = new StyleProperty<YogaValue>("scrollPaddingBottom", YogaValue.Undefined(), true);
+        public static readonly StyleProperty<YogaValue> scrollPaddingLeft = new StyleProperty<YogaValue>("scrollPaddingLeft", YogaValue.Undefined(), true);
+        public static readonly StyleProperty<YogaValue> scrollPaddingInlineStart = new StyleProperty<YogaValue>("scrollPaddingInlineStart", YogaValue.Undefined(), true);
+        public static readonly StyleProperty<YogaValue> scrollPaddingInlineEnd = new StyleProperty<YogaValue>("scrollPaddingInlineEnd", YogaValue.Undefined(), true);
+        // `scroll-margin` outsets the snap area of a target, which is its border box otherwise. Lengths
+        // only: a percentage has nothing to resolve against, since the box is the thing being outset.
+        public static readonly StyleProperty<float> scrollMarginTop = new StyleProperty<float>("scrollMarginTop", 0f, true, false, AllConverters.LengthConverter);
+        public static readonly StyleProperty<float> scrollMarginRight = new StyleProperty<float>("scrollMarginRight", 0f, true, false, AllConverters.LengthConverter);
+        public static readonly StyleProperty<float> scrollMarginBottom = new StyleProperty<float>("scrollMarginBottom", 0f, true, false, AllConverters.LengthConverter);
+        public static readonly StyleProperty<float> scrollMarginLeft = new StyleProperty<float>("scrollMarginLeft", 0f, true, false, AllConverters.LengthConverter);
+        public static readonly StyleProperty<float> scrollMarginInlineStart = new StyleProperty<float>("scrollMarginInlineStart", 0f, true, false, AllConverters.LengthConverter);
+        public static readonly StyleProperty<float> scrollMarginInlineEnd = new StyleProperty<float>("scrollMarginInlineEnd", 0f, true, false, AllConverters.LengthConverter);
         public static readonly StyleProperty<YogaValue2> borderTopLeftRadius = new StyleProperty<YogaValue2>("borderTopLeftRadius", YogaValue2.Zero, true, converter: AllConverters.BorderRadiusConverter);
         public static readonly StyleProperty<YogaValue2> borderTopRightRadius = new StyleProperty<YogaValue2>("borderTopRightRadius", YogaValue2.Zero, true, converter: AllConverters.BorderRadiusConverter);
         public static readonly StyleProperty<YogaValue2> borderBottomLeftRadius = new StyleProperty<YogaValue2>("borderBottomLeftRadius", YogaValue2.Zero, true, converter: AllConverters.BorderRadiusConverter);
@@ -42,6 +60,22 @@ namespace ReactUnity.Styling
         public static readonly StyleProperty<BorderStyle> borderRightStyle = new StyleProperty<BorderStyle>("borderRightStyle", BorderStyle.Solid, false);
         public static readonly StyleProperty<BorderStyle> borderTopStyle = new StyleProperty<BorderStyle>("borderTopStyle", BorderStyle.Solid, false);
         public static readonly StyleProperty<BorderStyle> borderBottomStyle = new StyleProperty<BorderStyle>("borderBottomStyle", BorderStyle.Solid, false);
+
+        // The inline-axis halves of the painted border properties. Unlike the block-axis spellings --
+        // which are plain aliases for top and bottom, since there is no `writing-mode` here -- these
+        // cannot be mapped to an edge while the sheet is parsed: which one they land on is the
+        // element's resolved `direction`. NodeStyle picks the edge, and a declared logical value wins
+        // over the physical property it covers, which is how Yoga already resolves Start against Left.
+        public static readonly StyleProperty<Color> borderInlineStartColor = new StyleProperty<Color>("borderInlineStartColor", Color.black, true);
+        public static readonly StyleProperty<Color> borderInlineEndColor = new StyleProperty<Color>("borderInlineEndColor", Color.black, true);
+        public static readonly StyleProperty<BorderStyle> borderInlineStartStyle = new StyleProperty<BorderStyle>("borderInlineStartStyle", BorderStyle.Solid, false);
+        public static readonly StyleProperty<BorderStyle> borderInlineEndStyle = new StyleProperty<BorderStyle>("borderInlineEndStyle", BorderStyle.Solid, false);
+        // A logical corner is named block edge first, so `start-end` is the block-start inline-end one
+        // -- top right in a left-to-right element, top left in a right-to-left one.
+        public static readonly StyleProperty<YogaValue2> borderStartStartRadius = new StyleProperty<YogaValue2>("borderStartStartRadius", YogaValue2.Zero, true, converter: AllConverters.BorderRadiusConverter);
+        public static readonly StyleProperty<YogaValue2> borderStartEndRadius = new StyleProperty<YogaValue2>("borderStartEndRadius", YogaValue2.Zero, true, converter: AllConverters.BorderRadiusConverter);
+        public static readonly StyleProperty<YogaValue2> borderEndStartRadius = new StyleProperty<YogaValue2>("borderEndStartRadius", YogaValue2.Zero, true, converter: AllConverters.BorderRadiusConverter);
+        public static readonly StyleProperty<YogaValue2> borderEndEndRadius = new StyleProperty<YogaValue2>("borderEndEndRadius", YogaValue2.Zero, true, converter: AllConverters.BorderRadiusConverter);
         public static readonly StyleProperty<float> outlineOffset = new StyleProperty<float>("outlineOffset", 0f, true);
         public static readonly StyleProperty<float> outlineWidth = new StyleProperty<float>("outlineWidth", 0f, true);
         public static readonly StyleProperty<Color> outlineColor = new StyleProperty<Color>("outlineColor", Color.black, true);
@@ -195,6 +229,23 @@ namespace ReactUnity.Styling
             { "scrollBehavior", scrollBehavior },
             { "scrollSnapType", scrollSnapType },
             { "scrollSnapAlign", scrollSnapAlign },
+            { "scrollSnapStop", scrollSnapStop },
+            { "scrollPaddingTop", scrollPaddingTop },
+            { "scrollPaddingRight", scrollPaddingRight },
+            { "scrollPaddingBottom", scrollPaddingBottom },
+            { "scrollPaddingLeft", scrollPaddingLeft },
+            { "scrollPaddingInlineStart", scrollPaddingInlineStart },
+            { "scrollPaddingInlineEnd", scrollPaddingInlineEnd },
+            { "scrollPaddingBlockStart", scrollPaddingTop },
+            { "scrollPaddingBlockEnd", scrollPaddingBottom },
+            { "scrollMarginTop", scrollMarginTop },
+            { "scrollMarginRight", scrollMarginRight },
+            { "scrollMarginBottom", scrollMarginBottom },
+            { "scrollMarginLeft", scrollMarginLeft },
+            { "scrollMarginInlineStart", scrollMarginInlineStart },
+            { "scrollMarginInlineEnd", scrollMarginInlineEnd },
+            { "scrollMarginBlockStart", scrollMarginTop },
+            { "scrollMarginBlockEnd", scrollMarginBottom },
             { "borderTopLeftRadius", borderTopLeftRadius },
             { "borderTopRightRadius", borderTopRightRadius },
             { "borderBottomLeftRadius", borderBottomLeftRadius },
@@ -207,6 +258,18 @@ namespace ReactUnity.Styling
             { "borderRightStyle", borderRightStyle},
             { "borderTopStyle", borderTopStyle},
             { "borderBottomStyle", borderBottomStyle},
+            { "borderInlineStartColor", borderInlineStartColor },
+            { "borderInlineEndColor", borderInlineEndColor },
+            { "borderBlockStartColor", borderTopColor },
+            { "borderBlockEndColor", borderBottomColor },
+            { "borderInlineStartStyle", borderInlineStartStyle },
+            { "borderInlineEndStyle", borderInlineEndStyle },
+            { "borderBlockStartStyle", borderTopStyle },
+            { "borderBlockEndStyle", borderBottomStyle },
+            { "borderStartStartRadius", borderStartStartRadius },
+            { "borderStartEndRadius", borderStartEndRadius },
+            { "borderEndStartRadius", borderEndStartRadius },
+            { "borderEndEndRadius", borderEndEndRadius },
             { "outlineOffset", outlineOffset },
             { "outlineWidth", outlineWidth },
             { "outlineColor", outlineColor },
@@ -363,6 +426,23 @@ namespace ReactUnity.Styling
             { "scroll-behavior", scrollBehavior },
             { "scroll-snap-type", scrollSnapType },
             { "scroll-snap-align", scrollSnapAlign },
+            { "scroll-snap-stop", scrollSnapStop },
+            { "scroll-padding-top", scrollPaddingTop },
+            { "scroll-padding-right", scrollPaddingRight },
+            { "scroll-padding-bottom", scrollPaddingBottom },
+            { "scroll-padding-left", scrollPaddingLeft },
+            { "scroll-padding-inline-start", scrollPaddingInlineStart },
+            { "scroll-padding-inline-end", scrollPaddingInlineEnd },
+            { "scroll-padding-block-start", scrollPaddingTop },
+            { "scroll-padding-block-end", scrollPaddingBottom },
+            { "scroll-margin-top", scrollMarginTop },
+            { "scroll-margin-right", scrollMarginRight },
+            { "scroll-margin-bottom", scrollMarginBottom },
+            { "scroll-margin-left", scrollMarginLeft },
+            { "scroll-margin-inline-start", scrollMarginInlineStart },
+            { "scroll-margin-inline-end", scrollMarginInlineEnd },
+            { "scroll-margin-block-start", scrollMarginTop },
+            { "scroll-margin-block-end", scrollMarginBottom },
             { "background-color", backgroundColor },
             { "background-image", backgroundImage },
             { "background-position-x", backgroundPositionX },
@@ -397,6 +477,18 @@ namespace ReactUnity.Styling
             { "border-right-style", borderRightStyle},
             { "border-top-style", borderTopStyle},
             { "border-bottom-style", borderBottomStyle},
+            { "border-inline-start-color", borderInlineStartColor },
+            { "border-inline-end-color", borderInlineEndColor },
+            { "border-block-start-color", borderTopColor },
+            { "border-block-end-color", borderBottomColor },
+            { "border-inline-start-style", borderInlineStartStyle },
+            { "border-inline-end-style", borderInlineEndStyle },
+            { "border-block-start-style", borderTopStyle },
+            { "border-block-end-style", borderBottomStyle },
+            { "border-start-start-radius", borderStartStartRadius },
+            { "border-start-end-radius", borderStartEndRadius },
+            { "border-end-start-radius", borderEndStartRadius },
+            { "border-end-end-radius", borderEndEndRadius },
             { "outline-offset", outlineOffset },
             { "outline-width", outlineWidth },
             { "outline-color", outlineColor },
@@ -432,6 +524,32 @@ namespace ReactUnity.Styling
             { "object-fit", objectFit },
             { "object-position", objectPosition },
             { "state-duration", stateDuration },
+        };
+
+        /// <summary>
+        /// The inline-axis logical property that stands in for each physical one, left-to-right first
+        /// and right-to-left second -- so the pair is already swapped for the caller and an index of
+        /// <c>isRtl ? 1 : 0</c> picks the one that applies. <see cref="NodeStyle.ResolveLogical"/> is
+        /// what reads it, and everything that wants the physical property has to go through there.
+        /// </summary>
+        /// <remarks>
+        /// Only the inline axis needs this. The block-axis spellings are aliases in the map above,
+        /// because with no <c>writing-mode</c> here block-start is always the top.
+        /// </remarks>
+        internal static readonly Dictionary<IStyleProperty, IStyleProperty[]> InlineCounterparts = new Dictionary<IStyleProperty, IStyleProperty[]>
+        {
+            { borderLeftColor, new IStyleProperty[] { borderInlineStartColor, borderInlineEndColor } },
+            { borderRightColor, new IStyleProperty[] { borderInlineEndColor, borderInlineStartColor } },
+            { borderLeftStyle, new IStyleProperty[] { borderInlineStartStyle, borderInlineEndStyle } },
+            { borderRightStyle, new IStyleProperty[] { borderInlineEndStyle, borderInlineStartStyle } },
+            { borderTopLeftRadius, new IStyleProperty[] { borderStartStartRadius, borderStartEndRadius } },
+            { borderTopRightRadius, new IStyleProperty[] { borderStartEndRadius, borderStartStartRadius } },
+            { borderBottomLeftRadius, new IStyleProperty[] { borderEndStartRadius, borderEndEndRadius } },
+            { borderBottomRightRadius, new IStyleProperty[] { borderEndEndRadius, borderEndStartRadius } },
+            { scrollPaddingLeft, new IStyleProperty[] { scrollPaddingInlineStart, scrollPaddingInlineEnd } },
+            { scrollPaddingRight, new IStyleProperty[] { scrollPaddingInlineEnd, scrollPaddingInlineStart } },
+            { scrollMarginLeft, new IStyleProperty[] { scrollMarginInlineStart, scrollMarginInlineEnd } },
+            { scrollMarginRight, new IStyleProperty[] { scrollMarginInlineEnd, scrollMarginInlineStart } },
         };
     }
 }

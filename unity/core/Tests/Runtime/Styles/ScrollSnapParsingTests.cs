@@ -28,6 +28,7 @@ namespace ReactUnity.Tests
         ScrollSnapType Type => Q("#test").ComputedStyle.scrollSnapType;
         ScrollSnapAlign Align => Q("#test").ComputedStyle.scrollSnapAlign;
         ScrollBehavior Behavior => Q("#test").ComputedStyle.scrollBehavior;
+        ScrollSnapStop Stop => Q("#test").ComputedStyle.scrollSnapStop;
 
         [UGUITest(Script = BaseScript)]
         public IEnumerator SnapTypeTakesAnAxisAndAnOptionalStrictness()
@@ -136,6 +137,80 @@ namespace ReactUnity.Tests
             InsertStyle(@"#test { scroll-behavior: auto; }");
             yield return null;
             Assert.AreEqual(ScrollBehavior.Auto, Behavior);
+        }
+
+        [UGUITest(Script = BaseScript)]
+        public IEnumerator ScrollSnapStopIsNormalOrAlways()
+        {
+            yield return null;
+            Assert.AreEqual(ScrollSnapStop.Normal, Stop);
+
+            InsertStyle(@"#test { scroll-snap-stop: always; }");
+            yield return null;
+            Assert.AreEqual(ScrollSnapStop.Always, Stop);
+
+            InsertStyle(@"#test { scroll-snap-stop: normal; }", 1);
+            yield return null;
+            Assert.AreEqual(ScrollSnapStop.Normal, Stop);
+        }
+
+        [UGUITest(Script = BaseScript)]
+        public IEnumerator ScrollPaddingAndMarginSpreadTheFourDirectionalWay()
+        {
+            yield return null;
+
+            InsertStyle(@"#test { scroll-padding: 1px 2px 3px 4px; scroll-margin: 5px 6px; }");
+            yield return null;
+
+            var style = Q("#test").ComputedStyle;
+            Assert.AreEqual(1, style.scrollPaddingTop.Value);
+            Assert.AreEqual(2, style.scrollPaddingRight.Value);
+            Assert.AreEqual(3, style.scrollPaddingBottom.Value);
+            Assert.AreEqual(4, style.scrollPaddingLeft.Value);
+
+            Assert.AreEqual(5, style.scrollMarginTop);
+            Assert.AreEqual(6, style.scrollMarginRight);
+            Assert.AreEqual(5, style.scrollMarginBottom);
+            Assert.AreEqual(6, style.scrollMarginLeft);
+        }
+
+        [UGUITest(Script = BaseScript)]
+        public IEnumerator ScrollPaddingTakesAPercentageAndReadsAutoAsNone()
+        {
+            yield return null;
+
+            InsertStyle(@"#test { scroll-padding-top: 25%; scroll-padding-left: auto; }");
+            yield return null;
+
+            var style = Q("#test").ComputedStyle;
+            Assert.AreEqual(Yoga.YogaUnit.Percent, style.scrollPaddingTop.Unit);
+            Assert.AreEqual(25, style.scrollPaddingTop.Value);
+            Assert.AreNotEqual(Yoga.YogaUnit.Point, style.scrollPaddingLeft.Unit);
+        }
+
+        [UGUITest(Script = NestedScript)]
+        public IEnumerator TheLogicalScrollInsetsFollowTheInheritedDirection()
+        {
+            yield return null;
+
+            InsertStyle(@"#test { scroll-padding-inline: 4px 8px; scroll-margin-inline-start: 6px; }");
+            yield return null;
+
+            var style = Q("#test").ComputedStyle;
+            Assert.AreEqual(4, style.scrollPaddingLeft.Value);
+            Assert.AreEqual(8, style.scrollPaddingRight.Value);
+            Assert.AreEqual(6, style.scrollMarginLeft);
+
+            // Set on an ancestor: `direction` is not inherited through this cascade, so resolving it
+            // is a walk up the tree rather than a lookup on the element.
+            InsertStyle(@":root { direction: rtl; }", 1);
+            yield return null;
+
+            style = Q("#test").ComputedStyle;
+            Assert.AreEqual(8, style.scrollPaddingLeft.Value);
+            Assert.AreEqual(4, style.scrollPaddingRight.Value);
+            Assert.AreEqual(6, style.scrollMarginRight);
+            Assert.AreEqual(0, style.scrollMarginLeft);
         }
 
         [UGUITest(Script = NestedScript)]

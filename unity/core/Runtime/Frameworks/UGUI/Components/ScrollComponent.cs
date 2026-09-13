@@ -182,8 +182,8 @@ namespace ReactUnity.UGUI
             if (snapType.Mandatory) ScrollRect.RequestSnap(true);
         }
 
-        private Vector2? FindSnapTarget(Vector2 current) =>
-            ScrollSnapping.TryResolve(this, current, out var target) ? target : (Vector2?) null;
+        private Vector2? FindSnapTarget(Vector2 origin, Vector2 current) =>
+            ScrollSnapping.TryResolve(this, origin, current, out var target) ? target : (Vector2?) null;
 
         // `overflow-x: hidden` beside a scrolling y axis is how CSS asks for one direction. Both hidden
         // or both scrolling stays Both, which is what an `overflow: hidden` scroll view always was.

@@ -11,6 +11,14 @@ Alternatively, each corner can be set separately with the following properties:
 - `border-bottom-right-radius`
 - `border-bottom-left-radius`
 
+The logical corners follow the element's [`direction`](/reference/css#logical-properties) and are
+named block edge first, so `border-start-end-radius` is the top right one in a left-to-right element:
+
+- `border-start-start-radius`
+- `border-start-end-radius`
+- `border-end-start-radius`
+- `border-end-end-radius`
+
 <Sandpack>
 
 ```js

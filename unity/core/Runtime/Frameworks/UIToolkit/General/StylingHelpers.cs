@@ -168,15 +168,19 @@ namespace ReactUnity.UIToolkit
             else return StyleKeyword.Null;
         }
 
+        // Both of these ask for a physical corner or edge, which a logical declaration may stand in
+        // for -- so the property that answers is whichever one ResolveLogical hands back.
         public static StyleLength GetStyleBorderRadius(NodeStyle style, StyleProperty<YogaValue2> prop)
         {
-            if (style.HasValue(prop)) return YogaValueToStyleLength(style.GetStyleValue<YogaValue2>(prop).X);
+            var resolved = style.ResolveLogical(prop);
+            if (style.HasValue(resolved)) return YogaValueToStyleLength(style.GetStyleValue<YogaValue2>(resolved).X);
             else return StyleKeyword.Null;
         }
 
         public static StyleColor GetStyleBorderColor(NodeStyle style, StyleProperty<Color> prop)
         {
-            if (style.HasValue(prop)) return style.GetStyleValue<Color>(prop);
+            var resolved = style.ResolveLogical(prop);
+            if (style.HasValue(resolved)) return style.GetStyleValue<Color>(resolved);
             else return StyleKeyword.Null;
         }
 

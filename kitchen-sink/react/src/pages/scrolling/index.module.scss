@@ -124,3 +124,56 @@
   color: #475569;
   white-space: normal;
 }
+
+/* --- scroll-padding, scroll-margin and scroll-snap-stop ---------------------------------------
+   The header is pinned over the list rather than inside it, so nothing but `scroll-padding` can
+   keep a `start`-aligned row from snapping underneath it. `scroll-padding-top` is set inline from
+   the page's toggle; the rows ask for their own 8px on top of it. */
+
+.stack {
+  position: relative;
+}
+
+.list {
+  height: 220px;
+  border-radius: 12px;
+  background-color: #f8fafc;
+  border-width: 2px;
+  border-color: #e2e8f0;
+  scroll-snap-type: y mandatory;
+}
+
+.row {
+  height: 72px;
+  flex-shrink: 0;
+  justify-content: center;
+  padding-inline: 16px;
+  border-bottom-width: 1px;
+  border-bottom-color: #e2e8f0;
+  scroll-snap-align: start;
+  scroll-margin-top: 8px;
+}
+
+.rowLabel {
+  color: #0f172a;
+  font-size: 16px;
+}
+
+.pinned {
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  right: 2px;
+  height: 48px;
+  justify-content: center;
+  padding-inline: 16px;
+  border-start-start-radius: 10px;
+  border-start-end-radius: 10px;
+  background-color: rgba(99, 102, 241, 0.92);
+}
+
+.pinnedLabel {
+  color: #eef2ff;
+  font-size: 13px;
+  font-weight: bold;
+}

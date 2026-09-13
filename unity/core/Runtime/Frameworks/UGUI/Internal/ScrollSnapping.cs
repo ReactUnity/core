@@ -22,26 +22,42 @@ namespace ReactUnity.UGUI.Internal
         /// and <see cref="ScrollComponent.ScrollTop"/> are measured in. False when nothing snaps, or when
         /// the snap point is the one it is already at.
         /// </summary>
-        internal static bool TryResolve(ScrollComponent scroller, Vector2 current, out Vector2 target)
+        /// <param name="origin">
+        /// Where the gesture that is settling started from, which only <c>scroll-snap-stop: always</c>
+        /// needs: whether a snap point was passed over is a question about the travel, not the
+        /// destination. Equal to <paramref name="current"/> when nothing was travelling.
+        /// </param>
+        internal static bool TryResolve(ScrollComponent scroller, Vector2 origin, Vector2 current, out Vector2 target)
         {
             target = current;
 
-            var type = scroller.ComputedStyle?.scrollSnapType ?? ScrollSnapType.None;
+            var style = scroller.ComputedStyle;
+            var type = style?.scrollSnapType ?? ScrollSnapType.None;
             var port = scroller.Layout;
             var rect = scroller.ScrollRect;
             if (port == null || !rect || type.Axis == ScrollSnapAxis.None) return false;
 
-            // The snapport is the scrollport's padding edge, which is also where a Yoga position of zero
-            // lands -- so the first child of a padded container is snapped at offset zero rather than
-            // scrolled until it touches the border. There is no `scroll-padding` to inset it further by.
+            // The scrollport is the padding edge, which is also where a Yoga position of zero lands --
+            // so the first child of a padded container is snapped at offset zero rather than scrolled
+            // until it touches the border.
             var left = Inset(port, YogaEdge.Left);
             var top = Inset(port, YogaEdge.Top);
+            var portWidth = scroller.ClientWidth - left - Inset(port, YogaEdge.Right);
+            var portHeight = scroller.ClientHeight - top - Inset(port, YogaEdge.Bottom);
+
+            // `scroll-padding` insets the snapport inside that, which is what keeps a snapped item clear
+            // of anything pinned over the container's edge. A percentage is of the scrollport.
+            var padLeft = Pad(style?.scrollPaddingLeft, portWidth);
+            var padRight = Pad(style?.scrollPaddingRight, portWidth);
+            var padTop = Pad(style?.scrollPaddingTop, portHeight);
+            var padBottom = Pad(style?.scrollPaddingBottom, portHeight);
 
             var x = new Axis
             {
                 Enabled = type.Snaps(true) && rect.horizontal,
-                PortStart = left,
-                PortSize = scroller.ClientWidth - left - Inset(port, YogaEdge.Right),
+                PortStart = left + padLeft,
+                PortSize = Mathf.Max(0, portWidth - padLeft - padRight),
+                Origin = origin.x,
                 Current = current.x,
                 Max = scroller.ScrollWidth - scroller.ClientWidth,
             };
@@ -49,8 +65,9 @@ namespace ReactUnity.UGUI.Internal
             var y = new Axis
             {
                 Enabled = type.Snaps(false) && rect.vertical,
-                PortStart = top,
-                PortSize = scroller.ClientHeight - top - Inset(port, YogaEdge.Bottom),
+                PortStart = top + padTop,
+                PortSize = Mathf.Max(0, portHeight - padTop - padBottom),
+                Origin = origin.y,
                 Current = current.y,
                 Max = scroller.ScrollHeight - scroller.ClientHeight,
             };
@@ -90,9 +107,20 @@ namespace ReactUnity.UGUI.Internal
                 var childTop = offset.y + layout.LayoutTop;
                 if (float.IsNaN(childLeft) || float.IsNaN(childTop)) continue;
 
-                var align = child.ComputedStyle?.scrollSnapAlign ?? ScrollSnapAlign.None;
-                x.Consider(align.Inline, childLeft, layout.LayoutWidth);
-                y.Consider(align.Block, childTop, layout.LayoutHeight);
+                var style = child.ComputedStyle;
+                var align = style?.scrollSnapAlign ?? ScrollSnapAlign.None;
+
+                if (align != ScrollSnapAlign.None)
+                {
+                    // The snap area is the border box outset by `scroll-margin`, so a target can ask for
+                    // a gap between itself and the snapport edge it lines up with.
+                    var marginLeft = style.scrollMarginLeft;
+                    var marginTop = style.scrollMarginTop;
+                    var stop = style.scrollSnapStop;
+
+                    x.Consider(align.Inline, childLeft - marginLeft, layout.LayoutWidth + marginLeft + style.scrollMarginRight, stop);
+                    y.Consider(align.Block, childTop - marginTop, layout.LayoutHeight + marginTop + style.scrollMarginBottom, stop);
+                }
 
                 // A nested scroll container carries its contents with it, so those are its own snap
                 // targets rather than this one's.
@@ -109,12 +137,23 @@ namespace ReactUnity.UGUI.Internal
             return (float.IsNaN(border) ? 0 : border) + (float.IsNaN(padding) ? 0 : padding);
         }
 
+        /// <summary>One <c>scroll-padding</c> edge in points. <c>auto</c> is read as none of it.</summary>
+        private static float Pad(YogaValue? value, float portSize)
+        {
+            if (!value.HasValue) return 0;
+            var padding = value.Value;
+            if (padding.Unit == YogaUnit.Point) return Mathf.Max(0, padding.Value);
+            if (padding.Unit == YogaUnit.Percent) return Mathf.Max(0, padding.Value * 0.01f * portSize);
+            return 0;
+        }
+
         /// <summary>One axis of the search: the snapport on it, and the best candidate found so far.</summary>
         private struct Axis
         {
             public bool Enabled;
             public float PortStart;
             public float PortSize;
+            public float Origin;
             public float Current;
             public float Max;
 
@@ -122,7 +161,11 @@ namespace ReactUnity.UGUI.Internal
             private float best;
             private float distance;
 
-            public void Consider(ScrollSnapAlignment align, float start, float size)
+            private bool foundStop;
+            private float bestStop;
+            private float stopDistance;
+
+            public void Consider(ScrollSnapAlignment align, float start, float size, ScrollSnapStop stop)
             {
                 if (!Enabled || align == ScrollSnapAlignment.None) return;
                 if (float.IsNaN(size)) return;
@@ -137,15 +180,35 @@ namespace ReactUnity.UGUI.Internal
                 wanted = Mathf.Clamp(wanted, 0, Mathf.Max(0, Max));
 
                 var d = Mathf.Abs(wanted - Current);
-                if (found && d >= distance) return;
+                if (!found || d < distance)
+                {
+                    found = true;
+                    best = wanted;
+                    distance = d;
+                }
 
-                found = true;
-                best = wanted;
-                distance = d;
+                if (stop != ScrollSnapStop.Always) return;
+
+                // A gesture may not carry past this one, so of the `always` points it went over, the
+                // first is the one it has to stop at -- that is the nearest to where it set off.
+                var travel = Current - Origin;
+                var passed = wanted - Origin;
+                if (travel == 0 || passed * travel <= 0) return;
+
+                var stopped = Mathf.Abs(passed);
+                if (foundStop && stopped >= stopDistance) return;
+
+                foundStop = true;
+                bestStop = wanted;
+                stopDistance = stopped;
             }
 
             public float Resolve(bool mandatory)
             {
+                // Taken whatever the strictness: `always` is about not being passed over, so it holds a
+                // proximity container that would otherwise not have snapped at all.
+                if (foundStop && stopDistance < Mathf.Abs(best - Origin)) return bestStop;
+
                 if (!found) return Current;
                 if (!mandatory && distance > PortSize * ProximityRatio) return Current;
                 return best;

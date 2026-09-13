@@ -239,6 +239,16 @@ namespace ReactUnity.Styling
             { "border-block-start-width", BorderTopWidth },
             { "border-block-end-width", BorderBottomWidth },
 
+            // The logical sizing properties are plain aliases, unlike the edges above: which axis is
+            // inline is `writing-mode`'s to decide and not `direction`'s, so with no writing-mode here
+            // the inline axis is always horizontal. `direction: rtl` does not swap these.
+            { "inline-size", Width },
+            { "block-size", Height },
+            { "min-inline-size", MinWidth },
+            { "min-block-size", MinHeight },
+            { "max-inline-size", MaxWidth },
+            { "max-block-size", MaxHeight },
+
             { "paddingInlineStart", PaddingStart },
             { "paddingInlineEnd", PaddingEnd },
             { "paddingBlockStart", PaddingTop },
@@ -255,6 +265,13 @@ namespace ReactUnity.Styling
             { "borderInlineEndWidth", BorderEndWidth },
             { "borderBlockStartWidth", BorderTopWidth },
             { "borderBlockEndWidth", BorderBottomWidth },
+
+            { "inlineSize", Width },
+            { "blockSize", Height },
+            { "minInlineSize", MinWidth },
+            { "minBlockSize", MinHeight },
+            { "maxInlineSize", MaxWidth },
+            { "maxBlockSize", MaxHeight },
         };
     }
 }

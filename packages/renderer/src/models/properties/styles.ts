@@ -23,6 +23,7 @@ import {
   PointerEvents,
   ScrollBehavior,
   ScrollSnapAlign,
+  ScrollSnapStop,
   ScrollSnapType,
   TextAlign,
   TextOverflowModes,
@@ -51,11 +52,31 @@ export interface RenderStyle {
   appearance?: Appearance;
   navigation?: NavigationMode;
 
-  // `scroll-snap-type` and `scroll-behavior` describe a scroll container, `scroll-snap-align` one
-  // of the items in it.
+  // `scroll-snap-type`, `scroll-behavior` and `scroll-padding` describe a scroll container;
+  // `scroll-snap-align`, `scroll-margin` and `scroll-snap-stop` describe one of the items in it.
   scrollBehavior?: ScrollBehavior;
   scrollSnapType?: ScrollSnapType;
   scrollSnapAlign?: ScrollSnapAlign;
+  scrollSnapStop?: ScrollSnapStop;
+
+  scrollPaddingTop?: YogaValueAux;
+  scrollPaddingRight?: YogaValueAux;
+  scrollPaddingBottom?: YogaValueAux;
+  scrollPaddingLeft?: YogaValueAux;
+  scrollPaddingInlineStart?: YogaValueAux;
+  scrollPaddingInlineEnd?: YogaValueAux;
+  scrollPaddingBlockStart?: YogaValueAux;
+  scrollPaddingBlockEnd?: YogaValueAux;
+
+  // Lengths only: the box a scroll margin outsets is the only thing a percentage could be of.
+  scrollMarginTop?: number;
+  scrollMarginRight?: number;
+  scrollMarginBottom?: number;
+  scrollMarginLeft?: number;
+  scrollMarginInlineStart?: number;
+  scrollMarginInlineEnd?: number;
+  scrollMarginBlockStart?: number;
+  scrollMarginBlockEnd?: number;
 
   // One value per background image layer, repeating to cover them all -- so a comma-separated
   // list is as valid here as a single keyword.
@@ -95,6 +116,24 @@ export interface RenderStyle {
   borderRightStyle?: BorderStyle;
   borderBottomStyle?: BorderStyle;
   borderLeftStyle?: BorderStyle;
+
+  // The logical spellings of the three above. The inline pair follows the element's `direction` and
+  // wins over the physical edge it covers; the block pair is always top and bottom. A logical corner
+  // is named block edge first, so `startEnd` is the top right one in a left-to-right element.
+  borderStartStartRadius?: Array2Aux<YogaValueAux>;
+  borderStartEndRadius?: Array2Aux<YogaValueAux>;
+  borderEndStartRadius?: Array2Aux<YogaValueAux>;
+  borderEndEndRadius?: Array2Aux<YogaValueAux>;
+
+  borderInlineStartColor?: ColorAux;
+  borderInlineEndColor?: ColorAux;
+  borderBlockStartColor?: ColorAux;
+  borderBlockEndColor?: ColorAux;
+
+  borderInlineStartStyle?: BorderStyle;
+  borderInlineEndStyle?: BorderStyle;
+  borderBlockStartStyle?: BorderStyle;
+  borderBlockEndStyle?: BorderStyle;
 
   borderImageSource?: AssetReferenceOrHttp;
   borderImageSlice?: YogaValueAux;

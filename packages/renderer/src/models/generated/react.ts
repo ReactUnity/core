@@ -1,6 +1,6 @@
 //
 // Types in assemblies: ReactUnity, ReactUnity.Editor, ReactUnity.UGUI, ReactUnity.UIToolkit
-// Generated 10/09/2026 08:39:02
+// Generated 12/09/2026 20:34:30
 //
 /* eslint-disable */
 
@@ -4377,6 +4377,15 @@ export declare namespace ReactUnity {
       scrollBehavior: ReactUnity.Types.ScrollBehavior;
       scrollSnapType: ReactUnity.Types.ScrollSnapType;
       scrollSnapAlign: ReactUnity.Types.ScrollSnapAlign;
+      scrollSnapStop: ReactUnity.Types.ScrollSnapStop;
+      scrollPaddingTop: Yoga.YogaValue;
+      scrollPaddingRight: Yoga.YogaValue;
+      scrollPaddingBottom: Yoga.YogaValue;
+      scrollPaddingLeft: Yoga.YogaValue;
+      scrollMarginTop: number;
+      scrollMarginRight: number;
+      scrollMarginBottom: number;
+      scrollMarginLeft: number;
       borderTopLeftRadius: ReactUnity.Types.YogaValue2;
       borderTopRightRadius: ReactUnity.Types.YogaValue2;
       borderBottomLeftRadius: ReactUnity.Types.YogaValue2;
@@ -4487,6 +4496,7 @@ export declare namespace ReactUnity {
       SetStyleValue(prop: ReactUnity.Styling.IStyleProperty, value: any): void;
       MarkChangesSeen(): void;
       HasValue(prop: ReactUnity.Styling.IStyleProperty): boolean;
+      ResolveLogical(prop: ReactUnity.Styling.IStyleProperty): ReactUnity.Styling.IStyleProperty;
       Equals(obj: any): boolean;
       GetHashCode(): number;
       GetType(): System.Type;
@@ -4638,6 +4648,19 @@ export declare namespace ReactUnity {
       static scrollBehavior: ReactUnity.Styling.StyleProperty;
       static scrollSnapType: ReactUnity.Styling.StyleProperty;
       static scrollSnapAlign: ReactUnity.Styling.StyleProperty;
+      static scrollSnapStop: ReactUnity.Styling.StyleProperty;
+      static scrollPaddingTop: ReactUnity.Styling.StyleProperty;
+      static scrollPaddingRight: ReactUnity.Styling.StyleProperty;
+      static scrollPaddingBottom: ReactUnity.Styling.StyleProperty;
+      static scrollPaddingLeft: ReactUnity.Styling.StyleProperty;
+      static scrollPaddingInlineStart: ReactUnity.Styling.StyleProperty;
+      static scrollPaddingInlineEnd: ReactUnity.Styling.StyleProperty;
+      static scrollMarginTop: ReactUnity.Styling.StyleProperty;
+      static scrollMarginRight: ReactUnity.Styling.StyleProperty;
+      static scrollMarginBottom: ReactUnity.Styling.StyleProperty;
+      static scrollMarginLeft: ReactUnity.Styling.StyleProperty;
+      static scrollMarginInlineStart: ReactUnity.Styling.StyleProperty;
+      static scrollMarginInlineEnd: ReactUnity.Styling.StyleProperty;
       static borderTopLeftRadius: ReactUnity.Styling.StyleProperty;
       static borderTopRightRadius: ReactUnity.Styling.StyleProperty;
       static borderBottomLeftRadius: ReactUnity.Styling.StyleProperty;
@@ -4650,6 +4673,14 @@ export declare namespace ReactUnity {
       static borderRightStyle: ReactUnity.Styling.StyleProperty;
       static borderTopStyle: ReactUnity.Styling.StyleProperty;
       static borderBottomStyle: ReactUnity.Styling.StyleProperty;
+      static borderInlineStartColor: ReactUnity.Styling.StyleProperty;
+      static borderInlineEndColor: ReactUnity.Styling.StyleProperty;
+      static borderInlineStartStyle: ReactUnity.Styling.StyleProperty;
+      static borderInlineEndStyle: ReactUnity.Styling.StyleProperty;
+      static borderStartStartRadius: ReactUnity.Styling.StyleProperty;
+      static borderStartEndRadius: ReactUnity.Styling.StyleProperty;
+      static borderEndStartRadius: ReactUnity.Styling.StyleProperty;
+      static borderEndEndRadius: ReactUnity.Styling.StyleProperty;
       static outlineOffset: ReactUnity.Styling.StyleProperty;
       static outlineWidth: ReactUnity.Styling.StyleProperty;
       static outlineColor: ReactUnity.Styling.StyleProperty;
@@ -6303,6 +6334,7 @@ export declare namespace ReactUnity {
       export class RuleHelpers {
         static ImportantSpecifity: number;
         static LayerSpecifityStep: number;
+        static ImportanceSpecifityStep: number;
         static MaxLayerRank: number;
         static SplitSelectorRegex: System.Text.RegularExpressions.Regex;
         static KnownPseudoElements: System.Collections.Generic.HashSet;
@@ -7339,6 +7371,10 @@ export declare namespace ReactUnity {
       GetHashCode(): number;
       ToString(): string;
       GetType(): System.Type;
+    }
+    export enum ScrollSnapStop {
+      Normal = 0,
+      Always = 1,
     }
     export enum ScrollSnapAxis {
       None = 0,
@@ -11289,7 +11325,7 @@ export declare namespace ReactUnity {
         Smoothness: number;
         SmoothBehavior: boolean;
         BehaviorSmoothness: number;
-        FindSnapTarget?: ((arg: UnityEngine.Vector2) => UnityEngine.Vector2 | undefined);
+        FindSnapTarget?: ((arg1: UnityEngine.Vector2, arg2: UnityEngine.Vector2) => UnityEngine.Vector2 | undefined);
         WheelDirectionTransposed: boolean;
         ClientWidth: number;
         ClientHeight: number;

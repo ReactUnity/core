@@ -56,6 +56,16 @@ namespace ReactUnity.Styling.Shorthands
         internal static readonly StyleShorthand InsetBlock = new XYShorthand<YogaValue>("inset-block", LayoutProperties.Top, LayoutProperties.Bottom);
         internal static readonly StyleShorthand BorderInlineWidth = new XYShorthand<float>("border-inline-width", LayoutProperties.BorderStartWidth, LayoutProperties.BorderEndWidth);
         internal static readonly StyleShorthand BorderBlockWidth = new XYShorthand<float>("border-block-width", LayoutProperties.BorderTopWidth, LayoutProperties.BorderBottomWidth);
+        internal static readonly StyleShorthand BorderInlineColor = new XYShorthand<UnityEngine.Color>("border-inline-color", StyleProperties.borderInlineStartColor, StyleProperties.borderInlineEndColor);
+        internal static readonly StyleShorthand BorderBlockColor = new XYShorthand<UnityEngine.Color>("border-block-color", StyleProperties.borderTopColor, StyleProperties.borderBottomColor);
+        internal static readonly StyleShorthand BorderInlineStyle = new XYShorthand<Types.BorderStyle>("border-inline-style", StyleProperties.borderInlineStartStyle, StyleProperties.borderInlineEndStyle);
+        internal static readonly StyleShorthand BorderBlockStyle = new XYShorthand<Types.BorderStyle>("border-block-style", StyleProperties.borderTopStyle, StyleProperties.borderBottomStyle);
+        internal static readonly StyleShorthand ScrollPadding = new FourDirectionalShorthand("scroll-padding", FourDirectionalShorthand.PropertyType.ScrollPadding);
+        internal static readonly StyleShorthand ScrollMargin = new FourDirectionalShorthand("scroll-margin", FourDirectionalShorthand.PropertyType.ScrollMargin);
+        internal static readonly StyleShorthand ScrollPaddingInline = new XYShorthand<YogaValue>("scroll-padding-inline", StyleProperties.scrollPaddingInlineStart, StyleProperties.scrollPaddingInlineEnd);
+        internal static readonly StyleShorthand ScrollPaddingBlock = new XYShorthand<YogaValue>("scroll-padding-block", StyleProperties.scrollPaddingTop, StyleProperties.scrollPaddingBottom);
+        internal static readonly StyleShorthand ScrollMarginInline = new XYShorthand<float>("scroll-margin-inline", StyleProperties.scrollMarginInlineStart, StyleProperties.scrollMarginInlineEnd);
+        internal static readonly StyleShorthand ScrollMarginBlock = new XYShorthand<float>("scroll-margin-block", StyleProperties.scrollMarginTop, StyleProperties.scrollMarginBottom);
 
         // Yoga has no justify-items or justify-self, so two of these set their align property alone.
         internal static readonly StyleShorthand PlaceContent = new PlaceShorthand("place-content", LayoutProperties.AlignContent, LayoutProperties.JustifyContent);
@@ -115,6 +125,16 @@ namespace ReactUnity.Styling.Shorthands
             { "insetBlock", InsetBlock },
             { "borderInlineWidth", BorderInlineWidth },
             { "borderBlockWidth", BorderBlockWidth },
+            { "borderInlineColor", BorderInlineColor },
+            { "borderBlockColor", BorderBlockColor },
+            { "borderInlineStyle", BorderInlineStyle },
+            { "borderBlockStyle", BorderBlockStyle },
+            { "scrollPadding", ScrollPadding },
+            { "scrollMargin", ScrollMargin },
+            { "scrollPaddingInline", ScrollPaddingInline },
+            { "scrollPaddingBlock", ScrollPaddingBlock },
+            { "scrollMarginInline", ScrollMarginInline },
+            { "scrollMarginBlock", ScrollMarginBlock },
             { "placeContent", PlaceContent },
             { "placeItems", PlaceItems },
             { "placeSelf", PlaceSelf },
@@ -143,6 +163,16 @@ namespace ReactUnity.Styling.Shorthands
             { "inset-block", InsetBlock },
             { "border-inline-width", BorderInlineWidth },
             { "border-block-width", BorderBlockWidth },
+            { "border-inline-color", BorderInlineColor },
+            { "border-block-color", BorderBlockColor },
+            { "border-inline-style", BorderInlineStyle },
+            { "border-block-style", BorderBlockStyle },
+            { "scroll-padding", ScrollPadding },
+            { "scroll-margin", ScrollMargin },
+            { "scroll-padding-inline", ScrollPaddingInline },
+            { "scroll-padding-block", ScrollPaddingBlock },
+            { "scroll-margin-inline", ScrollMarginInline },
+            { "scroll-margin-block", ScrollMarginBlock },
             { "place-content", PlaceContent },
             { "place-items", PlaceItems },
             { "place-self", PlaceSelf },

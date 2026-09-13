@@ -20,11 +20,12 @@ namespace ReactUnity.UGUI.Behaviours
         public float BehaviorSmoothness { get; set; } = 0.3f;
 
         /// <summary>
-        /// Where the scroll should come to rest, given where it is heading, in <see cref="ScrollLeft"/>
-        /// and <see cref="ScrollTop"/> points -- or null when nothing snaps. A rect cannot answer this
-        /// itself, the snap targets being elements, so the component fills it in.
+        /// Where the scroll should come to rest, given where the gesture set off from and where it is
+        /// heading, in <see cref="ScrollLeft"/> and <see cref="ScrollTop"/> points -- or null when
+        /// nothing snaps. A rect cannot answer this itself, the snap targets being elements, so the
+        /// component fills it in.
         /// </summary>
-        public Func<Vector2, Vector2?> FindSnapTarget { get; set; }
+        public Func<Vector2, Vector2, Vector2?> FindSnapTarget { get; set; }
 
         private Coroutine SmoothCoroutine;
         private Vector2 targetPosition;
@@ -34,6 +35,10 @@ namespace ReactUnity.UGUI.Behaviours
         private bool dragging;
         private bool snapPending;
         private bool snapInstantly;
+
+        /// Where the gesture now settling set off from, which is all `scroll-snap-stop: always` needs:
+        /// a snap point counts as passed over when it lies between this and where the scroll is headed.
+        private Vector2 snapOrigin;
 
         /// How fast the running animation is moving, in normalized position per second.
         private Vector2 smoothVelocity;
@@ -91,6 +96,10 @@ namespace ReactUnity.UGUI.Behaviours
             data.scrollDelta = delta;
 
             var positionBefore = normalizedPosition;
+
+            // The first tick of a burst is where this gesture set off from; the ones that pile on top
+            // of a running scroll are the same gesture carrying on.
+            if (SmoothCoroutine == null) snapOrigin = new Vector2(ScrollLeft, ScrollTop);
 
             // A tick counts from where the scroll is already headed, not from how far it has got, so
             // that a flurry of them adds up to the sum of its ticks as it would in a browser.
@@ -185,6 +194,7 @@ namespace ReactUnity.UGUI.Behaviours
             smoothVelocity = Vector2.zero;
 
             dragging = true;
+            snapOrigin = new Vector2(ScrollLeft, ScrollTop);
             base.OnBeginDrag(eventData);
         }
 
@@ -203,6 +213,10 @@ namespace ReactUnity.UGUI.Behaviours
         {
             snapPending = true;
             snapInstantly = instant;
+
+            // A layout change asked for this rather than the user, so there is no travel a
+            // `scroll-snap-stop: always` target could have been passed over by.
+            if (instant) snapOrigin = new Vector2(ScrollLeft, ScrollTop);
         }
 
         protected override void LateUpdate()
@@ -220,7 +234,7 @@ namespace ReactUnity.UGUI.Behaviours
 
             snapPending = false;
 
-            var target = FindSnapTarget(Projected());
+            var target = FindSnapTarget(snapOrigin, Projected());
             if (!target.HasValue) return;
 
             // The inertia the base class would have coasted on is spent: this is the rest position now.
@@ -273,6 +287,9 @@ namespace ReactUnity.UGUI.Behaviours
             // A scroll that lands off a snap point is snapped from there, the way CSS re-snaps after
             // any scrolling operation and not only after a gesture. The snap resolves to where it
             // already is when this was the snap, so it costs a search rather than a second animation.
+            // It starts from where it was sent, so `scroll-snap-stop` cannot cut an asked-for scroll
+            // short at an item it passes on the way.
+            snapOrigin = new Vector2(sl, st);
             RequestSnap();
         }
 

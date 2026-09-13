@@ -101,6 +101,9 @@ export type ScrollSnapAlignment = 'none' | 'start' | 'end' | 'center';
 // One alignment per axis, block first, or one covering both.
 export type ScrollSnapAlign = ScrollSnapAlignment | `${ScrollSnapAlignment} ${ScrollSnapAlignment}`;
 
+// `always` means a gesture may not carry past this target on its way to one further along.
+export type ScrollSnapStop = 'normal' | 'always';
+
 export type CursorType =
   | 'auto'
   | 'default'

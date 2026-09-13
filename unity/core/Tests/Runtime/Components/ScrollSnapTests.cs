@@ -2,6 +2,7 @@ using System.Collections;
 using NUnit.Framework;
 using ReactUnity.Scripting;
 using ReactUnity.UGUI;
+using UnityEngine;
 
 namespace ReactUnity.Tests
 {
@@ -177,6 +178,112 @@ namespace ReactUnity.Tests
             Scroll.ScrollTop = 20;
             yield return null;
             Assert.AreEqual(0, Scroll.ScrollTop, 1);
+        }
+
+        [UGUITest(Script = BaseScript, Style = BaseStyle)]
+        public IEnumerator ScrollPaddingInsetsTheSnapportFurther()
+        {
+            InsertStyle(@"
+                #sc { scroll-snap-type: y mandatory; scroll-padding-top: 30px; }
+                #i2 { scroll-snap-align: start; }
+            ");
+            yield return null;
+            SnapInstantly();
+
+            // The third item's top is 200 into the content, and the snapport starts 30 below the
+            // scrollport -- so lining the two up leaves the item 30 down from the container's edge.
+            Scroll.ScrollTop = 150;
+            yield return null;
+            Assert.AreEqual(170, Scroll.ScrollTop, 1);
+        }
+
+        [UGUITest(Script = BaseScript, Style = BaseStyle)]
+        public IEnumerator ScrollMarginOutsetsTheSnapArea()
+        {
+            InsertStyle(@"
+                #sc { scroll-snap-type: y mandatory; }
+                #i2 { scroll-snap-align: start; scroll-margin-top: 20px; }
+            ");
+            yield return null;
+            SnapInstantly();
+
+            // The snap area starts 20 above the item's box, so the scroll rests 20 short of it.
+            Scroll.ScrollTop = 150;
+            yield return null;
+            Assert.AreEqual(180, Scroll.ScrollTop, 1);
+        }
+
+        [UGUITest(Script = BaseScript, Style = BaseStyle)]
+        public IEnumerator ScrollPaddingTakesAPercentageOfTheScrollport()
+        {
+            InsertStyle(@"
+                #sc { scroll-snap-type: y mandatory; scroll-padding-top: 25%; }
+                #i2 { scroll-snap-align: start; }
+            ");
+            yield return null;
+            SnapInstantly();
+
+            // A quarter of the 200 tall port is 50.
+            Scroll.ScrollTop = 150;
+            yield return null;
+            Assert.AreEqual(150, Scroll.ScrollTop, 1);
+        }
+
+        [UGUITest(Script = BaseScript, Style = BaseStyle)]
+        public IEnumerator AFlingMayNotCarryPastAnAlwaysStop()
+        {
+            InsertStyle(@"
+                #sc { scroll-snap-type: y mandatory; }
+                .item { scroll-snap-align: start; }
+            ");
+            yield return null;
+            SnapInstantly();
+
+            // Three ticks carry the fling well past the second item on their own.
+            Wheel(3);
+            yield return null;
+            Assert.Greater(Scroll.ScrollTop, 100, "the fling is aimed at something further down");
+
+            Scroll.ScrollTop = 0;
+            yield return null;
+
+            // Which it may not do once that item says so: the first `always` point the travel goes
+            // over is where it has to come to rest, not the one it was aimed at.
+            InsertStyle("#i1 { scroll-snap-stop: always; }", 1);
+            yield return null;
+
+            Wheel(3);
+            yield return null;
+            Assert.AreEqual(100, Scroll.ScrollTop, 1);
+        }
+
+        [UGUITest(Script = BaseScript, Style = BaseStyle)]
+        public IEnumerator AnAskedForScrollIsNotHeldByAnAlwaysStop()
+        {
+            InsertStyle(@"
+                #sc { scroll-snap-type: y mandatory; }
+                .item { scroll-snap-align: start; }
+                #i1 { scroll-snap-stop: always; }
+            ");
+            yield return null;
+            SnapInstantly();
+
+            // Assigning a position is not a gesture, so nothing was travelled over and the scroll
+            // lands where it was sent.
+            Scroll.ScrollTop = 300;
+            yield return null;
+            Assert.AreEqual(300, Scroll.ScrollTop, 1);
+        }
+
+        /// Scroll down by <paramref name="ticks"/> ticks, which the wheel reports as a negative delta.
+        private void Wheel(float ticks)
+        {
+            var module = UnityEngine.EventSystems.EventSystem.current?.currentInputModule;
+            var perUnit = module == null ? 1f : module.ConvertPointerEventScrollDeltaToTicks(Vector2.one).y;
+            if (Mathf.Approximately(perUnit, 0)) perUnit = 1f;
+
+            Scroll.ScrollRect.OnScroll(new UnityEngine.EventSystems.PointerEventData(UnityEngine.EventSystems.EventSystem.current)
+            { scrollDelta = new Vector2(0, -ticks / perUnit) });
         }
 
         [UGUITest(Script = BaseScript, Style = BaseStyle, RealTimer = true)]

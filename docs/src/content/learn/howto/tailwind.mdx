@@ -149,6 +149,13 @@ one difference from a browser is that ReactUnity does not apply size containment
 own size may still depend on its contents; see [container queries](/reference/rules/container-queries).
 
 The utilities v4 writes as logical properties work too, `px-*`, `py-*`, `mx-*`, `my-*`, `inset-x-*`,
-`border-x-*`, `ps-*`, `ms-*`, `start-*` and `space-x-*` among them. They follow `direction`, which
-is inherited — see [logical properties](/reference/css#logical-properties).
+`border-x-*`, `ps-*`, `ms-*`, `start-*` and `space-x-*` among them — including the ones that paint
+rather than lay out: `border-s-<color>`, `border-x-<color>` and `rounded-s-*`. They follow
+`direction`, which is inherited — see [logical properties](/reference/css#logical-properties).
+`inline-*`, `block-*` and their `min-`/`max-` forms work as well, as aliases for the width and height
+utilities: with no writing modes here the inline axis is always the horizontal one.
+
+The scroll utilities are all there too — `snap-x`/`snap-y`/`snap-mandatory`,
+`snap-start`/`snap-center`/`snap-end`, `snap-always` and the `scroll-p*` and `scroll-m*` families.
+See [scroll snap](/reference/css/scroll-snap).
 
