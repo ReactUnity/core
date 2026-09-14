@@ -583,7 +583,14 @@ namespace ReactUnity.UGUI.Internal
 
             if (composite)
             {
-                if (compositeBlends && BackdropSurface.Required) component.Context.BackdropSurface.Unregister(this);
+                // Asked for rather than made, like the inner backdrops: taking a registration out
+                // has no reason to put a register in, and during a context teardown -- which is
+                // where this runs -- there is no host to hang one on and the property is null.
+                if (compositeBlends && BackdropSurface.Required)
+                {
+                    var surface = component?.Context?.ExistingBackdropSurface;
+                    if (surface) surface.Unregister(this);
+                }
                 Destroy(composite.gameObject);
             }
             if (offscreenCanvas) Destroy(offscreenCanvas.gameObject);

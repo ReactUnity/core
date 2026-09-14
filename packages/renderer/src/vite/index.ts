@@ -59,8 +59,9 @@ export function reactUnity(options: ReactUnityOptions = {}): PluginOption[] {
   return [reactOptions === false ? null : react(reactOptions), reactUnityConfig(options), reactUnityClean(options)];
 }
 
-// Lightning CSS's `Features.LightDark`. The package is Vite's dependency rather than ours, so the
-// flag is spelled out; it has held this value since the feature was added.
+// Lightning CSS's `Features`. The package is Vite's dependency rather than ours, so the flags are
+// spelled out; both have held these values since the features were added.
+const LIGHTNINGCSS_LOGICAL_PROPERTIES = 1 << 19;
 const LIGHTNINGCSS_LIGHT_DARK = 1 << 20;
 
 function reactUnityConfig(options: ReactUnityOptions): Plugin {
@@ -115,10 +116,14 @@ function reactUnityConfig(options: ReactUnityOptions): Plugin {
       // Naming an old target is what makes Lightning CSS lower them on the way out.
       if (config.build?.cssTarget === undefined) build.cssTarget = ['chrome87'];
 
-      // light-dark() is the one thing that target lowers which ReactUnity reads itself, and the
-      // lowered form only works next to a color-scheme declaration in the same sheet.
+      // Two things that target lowers which ReactUnity reads itself. light-dark()'s lowered form
+      // only works next to a color-scheme declaration in the same sheet; a logical property becomes
+      // a `:-webkit-any(:lang(ae),:lang(ar),...)` pair naming every RTL language, which parses here
+      // as a custom state and so never matches -- where `border-start-start-radius` is resolved
+      // against the element's own direction. Only the radii reach that lowering at chrome87, the
+      // rest of the logical properties being older than it.
       if (config.css?.lightningcss?.exclude === undefined) {
-        patch.css = { lightningcss: { exclude: LIGHTNINGCSS_LIGHT_DARK } };
+        patch.css = { lightningcss: { exclude: LIGHTNINGCSS_LIGHT_DARK | LIGHTNINGCSS_LOGICAL_PROPERTIES } };
       }
 
       // Vite's own emptying would take the .meta files with it, and warns about an outDir
