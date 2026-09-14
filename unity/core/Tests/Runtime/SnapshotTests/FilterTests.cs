@@ -911,6 +911,116 @@ namespace ReactUnity.Tests
             Assert.Less(SampleAt(300, 160).a, 0.05f, "and should have faded out well inside its 36px region");
         }
 
+        const string PackScript = @"
+            function App() {
+                return <view id='row'>
+                    <view id='a'>Alpha</view>
+                    <view id='b'>Beta</view>
+                    <view id='c'>Gamma</view>
+                    <view id='d'>Delta</view>
+                </view>;
+            }
+";
+
+        const string PackStyle = @"
+            #row { display: flex; }
+            #row view {
+                width: 120px;
+                margin: 10px;
+                color: black;
+                font-size: 22px;
+                align-items: center;
+                justify-content: center;
+            }
+            #a { height: 90px; background-color: red; filter: blur(4px); }
+            #b { height: 130px; background-color: lime; filter: invert(1); }
+            #c { height: 70px; background-color: blue; filter: grayscale(1); }
+            #d { height: 110px; background-color: orange; filter: drop-shadow(6px 6px 8px black); }
+        ";
+
+        static Color32[] CaptureScreen()
+        {
+            var cam = Camera.main;
+            var rt = new RenderTexture(Screen.width, Screen.height, 24);
+            cam.targetTexture = rt;
+            cam.Render();
+            cam.targetTexture = null;
+
+            var prev = RenderTexture.active;
+            RenderTexture.active = rt;
+            var tex = new Texture2D(Screen.width, Screen.height, TextureFormat.RGBA32, false);
+            tex.ReadPixels(new Rect(0, 0, Screen.width, Screen.height), 0, 0);
+            tex.Apply();
+            RenderTexture.active = prev;
+
+            var pixels = tex.GetPixels32();
+            Object.DestroyImmediate(tex);
+            rt.Release();
+            Object.DestroyImmediate(rt);
+            return pixels;
+        }
+
+        /// <summary>
+        /// Packing many captures into one render is only worth having if it draws what a camera each
+        /// would have drawn, so the same page is taken both ways and the two are compared. Nothing
+        /// else here covers it: every other fixture has one filter, and one filter is never packed.
+        /// </summary>
+        [UGUITest(Script = PackScript, Style = PackStyle)]
+        public IEnumerator PackedCapturesMatchSoloOnes()
+        {
+            for (int i = 0; i < 4; i++) yield return null;
+
+            var filters = new List<ElementFilter>();
+            foreach (var id in new[] { "#a", "#b", "#c", "#d" })
+            {
+                var filter = Q(id).ElementFilter;
+                Assert.NotNull(filter, $"{id} should have been captured");
+                filters.Add(filter);
+            }
+
+            var packedBefore = FilterBatch.PackedCount;
+            foreach (var filter in filters) filter.Invalidate();
+            yield return null;
+            yield return null;
+
+            Assert.GreaterOrEqual(FilterBatch.PackedCount - packedBefore, filters.Count,
+                "four siblings standing square should have shared one render");
+            var packed = CaptureScreen();
+
+            FilterBatch.Enabled = false;
+            try
+            {
+                foreach (var filter in filters) filter.Invalidate();
+                yield return null;
+                yield return null;
+
+                var solo = CaptureScreen();
+                Assert.AreEqual(packed.Length, solo.Length);
+
+                int worst = 0, worstAt = -1, differing = 0;
+                for (int i = 0; i < packed.Length; i++)
+                {
+                    Color32 p = packed[i], s = solo[i];
+                    var d = Mathf.Max(Mathf.Max(Mathf.Abs(p.r - s.r), Mathf.Abs(p.g - s.g)),
+                                      Mathf.Max(Mathf.Abs(p.b - s.b), Mathf.Abs(p.a - s.a)));
+                    if (d > 0) differing++;
+                    if (d > worst) { worst = d; worstAt = i; }
+                }
+
+                Debug.Log($"[FILTER packed] worst channel difference {worst} at index {worstAt}, " +
+                    $"{differing}/{packed.Length} pixels differ");
+
+                // A whole pixel apart would mean the cell landed off the grid, which is what moves
+                // glyph edges; the one step allowed here is the blend's own rounding.
+                Assert.LessOrEqual(worst, 1, "a packed capture should come out where a solo one did");
+                Assert.Less(differing, packed.Length / 100, "the two should agree on almost every pixel");
+            }
+            finally
+            {
+                FilterBatch.Enabled = true;
+            }
+        }
+
         [UGUITest(Script = BaseScript, Style = BaseStyle)]
         public IEnumerator FilterIsRemovedWhenUnset()
         {

@@ -157,6 +157,8 @@ An ancestor's `overflow: hidden` clips the filtered result, as it does on the we
 
 Very large blur radii cost more than small ones: the radius decides how many blur passes run, up to four.
 
+What a capture costs is mostly the offscreen render itself rather than its size, so many filters on a page are captured together into one render instead of one each. Three things opt an element out of that and give it a render of its own: a `perspective`, a rotation, and a `backdrop-filter` or `mix-blend-mode` anywhere inside it.
+
 Most functions are a value the composited image is drawn with, so changing one only redraws that image. `blur()`, `drop-shadow()` and `chromatic-aberration()` are the exceptions -- each widens the area that has to be captured, so changing one re-renders the element's subtree. Aberration only re-renders when its *whole-pixel* margin changes, so moving one through a few pixels re-renders a few times rather than on every frame.
 
 That accounting is the whole cost: re-applying an element's style no longer touches its background, rounding or text when none of them moved, so an animation on a colour op holds its capture for as long as the subtree itself is still.

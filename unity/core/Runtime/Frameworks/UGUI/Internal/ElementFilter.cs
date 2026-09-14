@@ -279,6 +279,16 @@ namespace ReactUnity.UGUI.Internal
         /// <summary>How many offscreen renders this filter has done. For tests.</summary>
         public int RenderCount { get; private set; }
 
+        // Where the capture is framed, and how far the batch moved the surface to pack it. The
+        // subtree count is what separates the element's own graphics from the mask layers appended
+        // after them, which live on another surface entirely and would blow the cell up.
+        private Vector3 captureCentre;
+        private Vector3 batchShift;
+        private readonly List<bool> batchChanged = new List<bool>();
+        private int subtreeGraphics;
+        private int capturePxWidth;
+        private int capturePxHeight;
+
         public static ElementFilter Create(UGUIComponent cmp, FilterDefinition definition, BackgroundBlendMode blendMode, bool isolated, ClipPath clipShape)
         {
             var filter = cmp.GameObject.AddComponent<ElementFilter>();
@@ -770,6 +780,7 @@ namespace ReactUnity.UGUI.Internal
             // the canvas re-batches without any graphic going dirty.
             graphics.Clear();
             self.GetComponentsInChildren(true, graphics);
+            subtreeGraphics = graphics.Count;
 
             // The mask layers hang off their own surface rather than the subtree, so they have to be
             // appended by hand -- through a second list, since the List overload clears what it is
@@ -848,17 +859,21 @@ namespace ReactUnity.UGUI.Internal
                 Render();
             }
 
-            // UGUI substitutes a stencil copy of the material under an ancestor mask, and that copy
-            // is not what the values below were written to -- so they are pushed again to whatever
-            // is actually being drawn, every time UGUI rebuilds it.
-            if (recapture || uniformsDirty)
-            {
-                uniformsDirty = false;
-                PrepareClip();
-                SetUniforms(compositeMaterial);
-                var drawn = composite.materialForRendering;
-                if (drawn && drawn != compositeMaterial) SetUniforms(drawn);
-            }
+            if (recapture || uniformsDirty) PushUniforms();
+        }
+
+        /// <summary>
+        /// Hands the composite what it is drawn with. UGUI substitutes a stencil copy of the material
+        /// under an ancestor mask, and that copy is not what the values were written to -- so they go
+        /// to whatever is actually being drawn as well, every time UGUI rebuilds it.
+        /// </summary>
+        void PushUniforms()
+        {
+            uniformsDirty = false;
+            PrepareClip();
+            SetUniforms(compositeMaterial);
+            var drawn = composite.materialForRendering;
+            if (drawn && drawn != compositeMaterial) SetUniforms(drawn);
         }
 
         void Render()
@@ -931,34 +946,179 @@ namespace ReactUnity.UGUI.Internal
                 offscreenCamera.farClipPlane = 1000f;
             }
 
+            capturePxWidth = pxWidth;
+            capturePxHeight = pxHeight;
+            captureCentre = worldCentre;
+            batchShift = Vector3.zero;
+
+            var margins = new Vector4(mLeft, mRight, mBottom, mTop);
+
+            // Packed with the others if it can be: the render is what costs, and one render serves
+            // as many captures as fit in a texture. The camera above stays aimed either way -- the
+            // raycaster reads it to put pointer events back into the subtree.
+            if (Batchable() && TryPack(halfW, halfH, scale, margins, width, height)) return;
+
+            CaptureAlone(margins, width, height);
+        }
+
+        /// <summary>Whether this capture can share a render. A <c>perspective</c> wants a frustum of
+        /// its own, a rotation wants the camera turned with it, and a reader inside wants the camera
+        /// to render the subtree again with part of it hidden.</summary>
+        bool Batchable()
+        {
+            if (!FilterBatch.Enabled) return false;
+            if (perspective > 0) return false;
+            if (self.rotation != Quaternion.identity) return false;
+            return !HasInnerReaders();
+        }
+
+        bool HasInnerReaders()
+        {
+            if (!BackdropSurface.Required) return false;
+            var surface = component?.Context?.ExistingBackdropSurface;
+            if (!surface) return false;
+            surface.CollectFor(this, innerReaders);
+            return innerReaders.Count > 0;
+        }
+
+        /// <summary>
+        /// Offers the capture to the batch, with a cell big enough to hold whatever the subtree
+        /// draws outside the element. Each filter's own camera used to crop that away for nothing;
+        /// packed together it would land on a neighbour, so the cell carries it and only the capture
+        /// region is copied back out.
+        /// </summary>
+        bool TryPack(float halfW, float halfH, float scale, Vector4 margins, float width, float height)
+        {
+            var minX = captureCentre.x - halfW;
+            var maxX = captureCentre.x + halfW;
+            var minY = captureCentre.y - halfH;
+            var maxY = captureCentre.y + halfH;
+
+            for (int i = 0; i < subtreeGraphics && i < graphics.Count; i++)
+            {
+                var g = graphics[i];
+                if (!g || !g.isActiveAndEnabled) continue;
+
+                g.rectTransform.GetWorldCorners(cornerBuffer);
+                for (int c = 0; c < 4; c++)
+                {
+                    var pt = cornerBuffer[c];
+                    if (pt.x < minX) minX = pt.x;
+                    if (pt.x > maxX) maxX = pt.x;
+                    if (pt.y < minY) minY = pt.y;
+                    if (pt.y > maxY) maxY = pt.y;
+                }
+            }
+
+            // Whole pixels on every side, so the capture sits on the atlas's own grid exactly as
+            // it sat on a texture of its own -- half a pixel of drift here moves 2.75% of glyph
+            // pixels, which is the shimmer the capture size is rounded to avoid in the first place.
+            var padLeft = Mathf.CeilToInt((captureCentre.x - halfW - minX) * scale);
+            var padRight = Mathf.CeilToInt((maxX - captureCentre.x - halfW) * scale);
+            var padBottom = Mathf.CeilToInt((captureCentre.y - halfH - minY) * scale);
+            var padTop = Mathf.CeilToInt((maxY - captureCentre.y - halfH) * scale);
+
+            var cell = new Vector2Int(padLeft + capturePxWidth + padRight, padBottom + capturePxHeight + padTop);
+
+            FilterBatch.Enqueue(this, NestingDepth(), new Vector2Int(capturePxWidth, capturePxHeight),
+                cell, new Vector2Int(padLeft, padBottom), margins, width, height);
+            return true;
+        }
+
+        /// <summary>How many filters this one sits inside, counted from the composite because that is
+        /// what stayed in the page -- the subtree itself went offscreen.</summary>
+        int NestingDepth()
+        {
+            var depth = 0;
+            for (var t = composite ? composite.transform.parent : null; t; t = t.parent)
+                if (t.GetComponent<ElementFilter>()) depth++;
+            return depth;
+        }
+
+        internal RenderTexture CaptureTarget => target;
+        internal float CaptureScale => ScaleFactor;
+        internal int CaptureLayerMask => offscreenCamera ? offscreenCamera.cullingMask : 0;
+
+        /// <summary>Slides the surface so the capture is framed at <paramref name="centre"/>, which
+        /// is the cell the batch gave it. The camera rides along, for the raycaster's sake.</summary>
+        internal void MoveCaptureTo(Vector3 centre)
+        {
+            // Moving the surface marks the subtree as moved, and the poll reads exactly that to know
+            // it did. So what each flag was is kept and put back below, rather than cleared into a
+            // missed frame for anything that moved the element after its own poll ran.
+            batchChanged.Clear();
+            batchChanged.Add(self.hasChanged);
+            for (int i = 0; i < subtreeGraphics && i < graphics.Count; i++)
+                batchChanged.Add(graphics[i] && graphics[i].transform.hasChanged);
+
+            batchShift = centre - captureCentre;
+            offscreenCanvas.transform.position += batchShift;
+            offscreenCamera.transform.SetPositionAndRotation(centre - self.forward * 100f, self.rotation);
+        }
+
+        /// <summary>
+        /// Puts the surface back in its own slot. It has to go back every frame: the slots are what
+        /// keep one surface out of another's camera, and on the shared plane a filter rendering
+        /// alone would otherwise find its neighbours in frame.
+        /// </summary>
+        internal void RestoreSlot()
+        {
+            if (batchShift == Vector3.zero) return;
+
+            offscreenCanvas.transform.position -= batchShift;
+            offscreenCamera.transform.SetPositionAndRotation(captureCentre - self.forward * 100f, self.rotation);
+            batchShift = Vector3.zero;
+
+            if (batchChanged.Count == 0) return;
+
+            self.hasChanged = batchChanged[0];
+            for (int i = 0; i < subtreeGraphics && i < graphics.Count && i + 1 < batchChanged.Count; i++)
+                if (graphics[i]) graphics[i].transform.hasChanged = batchChanged[i + 1];
+            batchChanged.Clear();
+        }
+
+        /// <summary>The capture on a camera of its own, for anything the batch cannot take.</summary>
+        internal void CaptureAlone(Vector4 margins, float width, float height)
+        {
             // Anything blending inside this capture blends with the capture, not with the screen --
             // which is what makes `isolation: isolate` contain a blend, and what built-in gets from
             // a GrabPass copying whatever target is current. Taken now, with the camera already
             // framed, so each reader's backdrop is the same view its own draw will land in.
-            RenderInnerBackdrops(pxWidth, pxHeight);
+            RenderInnerBackdrops(capturePxWidth, capturePxHeight);
 
             offscreenCamera.targetTexture = target;
             using (ReactUnity.Helpers.ReactProfiling.FilterCapture.Auto()) offscreenCamera.Render();
 
+            CompleteCapture(margins, width, height);
+        }
+
+        /// <summary>Everything the chain does to a capture once it exists, whoever took it.</summary>
+        internal void CompleteCapture(Vector4 margins, float width, float height)
+        {
+            var hasShadow = definition.DropShadowColor.a > 0;
+
             using (ReactUnity.Helpers.ReactProfiling.FilterBlur.Auto())
             {
-            if (definition.Blur > 0) Blur(target, target, definition.Blur, width, height);
+                if (definition.Blur > 0) Blur(target, target, definition.Blur, width, height);
 
-            if (hasShadow)
-            {
-                // Cast from the element after its own blur, so a blurred element throws a blurred
-                // shadow -- the order `blur() drop-shadow()` gives on the web. Only alpha is read
-                // back out, so the colour the silhouette carries does not matter.
-                if (definition.DropShadowBlur > 0) Blur(target, shadow, definition.DropShadowBlur, width, height);
-                else Graphics.Blit(target, shadow);
-            }
+                if (hasShadow)
+                {
+                    // Cast from the element after its own blur, so a blurred element throws a blurred
+                    // shadow -- the order `blur() drop-shadow()` gives on the web. Only alpha is read
+                    // back out, so the colour the silhouette carries does not matter.
+                    if (definition.DropShadowBlur > 0) Blur(target, shadow, definition.DropShadowBlur, width, height);
+                    else Graphics.Blit(target, shadow);
+                }
             }
 
-            var margins = new Vector4(mLeft, mRight, mBottom, mTop);
             using (ReactUnity.Helpers.ReactProfiling.FilterMask.Auto())
-                RenderMask(pxWidth, pxHeight, width, height, margins);
+                RenderMask(capturePxWidth, capturePxHeight, width, height, margins);
             using (ReactUnity.Helpers.ReactProfiling.FilterComposite.Auto())
                 ApplyToComposite(target, margins, width, height);
+
+            // A batched capture lands after the element's own LateUpdate has already pushed, so what
+            // ApplyToComposite worked out here goes out now or it is drawn with a frame late.
+            PushUniforms();
         }
 
         /// <summary>
