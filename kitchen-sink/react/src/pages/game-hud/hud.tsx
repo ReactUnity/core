@@ -61,7 +61,7 @@ export function Portrait({ hp, mp, xp, shield }: { hp: number; mp: number; xp: n
         <view className={'flex-1 gap-1.5'}>
           <view className={'flex-row items-baseline gap-2'}>
             <text className={'text-sm font-bold tracking-wide text-slate-100'}>{player.name}</text>
-            <text className={'font-mono text-[10px] text-cyan-400/80'}>{`⟨${player.guild}⟩`}</text>
+            <text className={'font-mono text-[10px] text-cyan-400/80'}>{`[${player.guild}]`}</text>
           </view>
 
           <view className={'flex-row items-center gap-1'}>
@@ -217,10 +217,12 @@ export function ActionBar({ cooldowns, flashes, onCast, onCooldownEnd, onFlashEn
               <text className={'absolute right-1 bottom-0.5 font-mono text-[10px] font-bold text-slate-400'}>{skill.hotkey}</text>
 
               {/* Nothing counts the seconds here: the block drains for the skill's own duration and
-                  the slot clears itself when the animation reports that it ended. */}
+                  the slot clears itself when the animation reports that it ended. The key is what
+                  restarts the animation, and it is prefixed because both of these get the same
+                  nonce from one cast -- two siblings under one key is a duplicate to React. */}
               {!!cooling && (
                 <view
-                  key={cooling}
+                  key={`cooldown-${cooling}`}
                   className={styles.cooldown}
                   style={{ animationDuration: `${skill.cooldown}s` }}
                   onAnimationEnd={() => onCooldownEnd(skill.id)}
@@ -229,7 +231,7 @@ export function ActionBar({ cooldowns, flashes, onCast, onCooldownEnd, onFlashEn
 
               {/* Cleared the same way the cooldown is, or every cast would leave a spent one behind. */}
               {!!flashes[skill.id] && (
-                <view key={flashes[skill.id]} className={styles.slotFlash} onAnimationEnd={() => onFlashEnd(skill.id)} />
+                <view key={`flash-${flashes[skill.id]}`} className={styles.slotFlash} onAnimationEnd={() => onFlashEnd(skill.id)} />
               )}
             </button>
           </view>

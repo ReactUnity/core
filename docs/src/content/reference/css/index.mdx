@@ -374,8 +374,9 @@ infinity, which is what makes `border-radius: calc(infinity * 1px)` a pill.
 Every element lays out with flexbox, and `display` picks the defaults a browser would give it. An
 element with no `display`, or with `display: block`, stacks its children the way a block does, and
 `display: flex` lays them out in a row. Either way `flex-direction`, `gap`, `align-items` and the rest
-work on it. `inline-block` and `flow-root` read as `block`, `inline-flex` as `flex`, and `none` and
-`contents` do what they do on the web.
+work on it. `inline`, `inline-block` and `flow-root` read as `block`, `inline-flex` as `flex`, and
+`none` and `contents` do what they do on the web. There is no inline formatting for the inline
+spellings to differ in, so each is the block value it reduces to rather than a dropped declaration.
 
 `flex-shrink` defaults to 1 as on the web, so an item gives up space before it overflows, and the
 `flex` shorthand fills in the web's values: `flex: 1` is `1 1 0%`, `flex: auto` is `1 1 auto` and
@@ -449,6 +450,24 @@ is off.
 `font-style` is one property carrying italic, bold and the letter casing as well as the two lines, so
 the shorthand sets only the components you name: `text-decoration: red` leaves the line as it is,
 where CSS would reset it to `none`.
+
+### The root element {/*the-root-element*/}
+
+`:root` is the element ReactUnity renders into, the one everything else is under. `:host` names the
+same element -- there are no shadow trees here for the two to tell apart -- so a stylesheet written
+for the web works either way, and `:root, :host { ... }`, which is how Tailwind opens its theme
+block, applies once.
+
+```css
+:root, :host { --brand: #4f46e5; }
+:host(.dark) { background-color: #0f172a; }
+```
+
+`:host(...)` matches the root only when the root also matches its argument, and the argument weighs
+what it would on its own. The root is an ordinary element in this: give it a class from C# with
+`context.Host.ClassList.Add("dark")` and the rules naming it restyle. `:host-context()` has nothing
+to ask -- it is about the host's ancestors, and the root has none -- so it is read as a custom state
+like any other unknown pseudo-class.
 
 ### Custom states {/*custom-states*/}
 

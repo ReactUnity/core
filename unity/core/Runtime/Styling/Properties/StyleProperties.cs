@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using Yoga;
 
@@ -80,8 +80,8 @@ namespace ReactUnity.Styling
         public static readonly StyleProperty<YogaValue2> borderStartEndRadius = new StyleProperty<YogaValue2>("borderStartEndRadius", YogaValue2.Zero, true, converter: AllConverters.BorderRadiusConverter);
         public static readonly StyleProperty<YogaValue2> borderEndStartRadius = new StyleProperty<YogaValue2>("borderEndStartRadius", YogaValue2.Zero, true, converter: AllConverters.BorderRadiusConverter);
         public static readonly StyleProperty<YogaValue2> borderEndEndRadius = new StyleProperty<YogaValue2>("borderEndEndRadius", YogaValue2.Zero, true, converter: AllConverters.BorderRadiusConverter);
-        public static readonly StyleProperty<float> outlineOffset = new StyleProperty<float>("outlineOffset", 0f, true);
-        public static readonly StyleProperty<float> outlineWidth = new StyleProperty<float>("outlineWidth", 0f, true);
+        public static readonly StyleProperty<float> outlineOffset = new StyleProperty<float>("outlineOffset", 0f, true, false, AllConverters.LengthConverter);
+        public static readonly StyleProperty<float> outlineWidth = new StyleProperty<float>("outlineWidth", 0f, true, false, AllConverters.LengthConverter);
         public static readonly StyleProperty<Color> outlineColor = new StyleProperty<Color>("outlineColor", Color.black, true);
         public static readonly StyleProperty<BorderStyle> outlineStyle = new StyleProperty<BorderStyle>("outlineStyle", BorderStyle.Solid, false);
         public static readonly StyleProperty<YogaValue2> transformOrigin = new StyleProperty<YogaValue2>("transformOrigin", YogaValue2.Center, true);
@@ -130,7 +130,7 @@ namespace ReactUnity.Styling
             { "stable", WhiteSpace.Normal },
         }));
         public static readonly StyleProperty<int> maxLines = new StyleProperty<int>("maxLines", (int) short.MaxValue, true, true);
-        public static readonly StyleProperty<float> textStrokeWidth = new StyleProperty<float>("textStrokeWidth", 0f, true, true);
+        public static readonly StyleProperty<float> textStrokeWidth = new StyleProperty<float>("textStrokeWidth", 0f, true, true, AllConverters.FontSizeConverter);
         public static readonly StyleProperty<Color> textStrokeColor = new StyleProperty<Color>("textStrokeColor", ComputedCurrentColor.Instance, true, true);
         // Inherited, where the web's is not: the line itself rides on `fontStyle`, which is
         // inherited, so a non-inherited colour would draw nested text's underline in the wrong one.
@@ -216,8 +216,8 @@ namespace ReactUnity.Styling
         public static readonly StyleProperty<string> timelineScope = new StyleProperty<string>("timelineScope", null, false, false, AllConverters.TimelineScopeConverter);
 
         public static readonly ValueListStyleProperty<AudioReference> audioClip = new ValueListStyleProperty<AudioReference>("audioClip");
-        public static readonly ValueListStyleProperty<int> audioIterationCount = new ValueListStyleProperty<int>("audioIterationCount", 1);
-        public static readonly ValueListStyleProperty<float> audioDelay = new ValueListStyleProperty<float>("audioDelay");
+        public static readonly ValueListStyleProperty<int> audioIterationCount = new ValueListStyleProperty<int>("audioIterationCount", 1, baseConverter: AllConverters.IterationCountConverter);
+        public static readonly ValueListStyleProperty<float> audioDelay = new ValueListStyleProperty<float>("audioDelay", baseConverter: AllConverters.DurationConverter);
         public static readonly ValueListStyleProperty<float> audioVolume = new ValueListStyleProperty<float>("audioVolume", 1f, true, baseConverter: AllConverters.PercentageConverter);
         public static readonly ValueListStyleProperty<float> audioPitch = new ValueListStyleProperty<float>("audioPitch", 1f);
 

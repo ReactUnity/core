@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -71,6 +71,8 @@ namespace ReactUnity.Styling.Rules
             { "after", RuleSelectorPartType.After },
             { "empty", RuleSelectorPartType.Empty },
             { "root", RuleSelectorPartType.Root },
+            // No shadow tree to be inside of, so the host is the root and the two select the same element.
+            { "host", RuleSelectorPartType.Root },
             { "scope", RuleSelectorPartType.Scope },
             { "blank", RuleSelectorPartType.Blank },
             { "enabled", RuleSelectorPartType.Enabled },
@@ -161,6 +163,24 @@ namespace ReactUnity.Styling.Rules
                         else if (nm == "is" || nm == "where") list.Add(new RuleSelectorPart() { Type = RuleSelectorPartType.MatchesAny, Negated = negated, Parameter = SelectorListParameter.Parse(paran, nm == "where") });
                         // The standard spelling of a custom state, which a bare unknown pseudo-class also is here.
                         else if (nm == "state") list.Add(new RuleSelectorPart() { Type = RuleSelectorPartType.State, Name = "state", Negated = negated, Parameter = paran.Trim() });
+                        // `:host(x)` is the root only when it also matches x. It stays one part so a negation
+                        // applies to the pair, and `:root` is appended rather than prefixed so that a tag in the
+                        // argument keeps the start of its compound.
+                        else if (nm == "host" && parenOpened)
+                        {
+                            var rooted = new StringBuilder();
+
+                            foreach (var arg in SplitSelectorList(paran))
+                            {
+                                var branch = arg.Trim();
+                                if (branch.Length == 0) continue;
+
+                                if (rooted.Length > 0) rooted.Append(',');
+                                rooted.Append(branch).Append(":root");
+                            }
+
+                            list.Add(new RuleSelectorPart() { Type = RuleSelectorPartType.MatchesAny, Negated = negated, Parameter = SelectorListParameter.Parse(rooted.ToString(), false) });
+                        }
                         else if (BasicPartTypes.TryGetValue(nm, out var partType)) list.Add(new RuleSelectorPart() { Type = partType, Negated = negated });
                         else if (NthPartTypes.TryGetValue(nm, out var nthType)) list.Add(new RuleSelectorPart()
                         {

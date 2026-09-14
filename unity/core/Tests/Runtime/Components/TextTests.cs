@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using NUnit.Framework;
 using ReactUnity.Scripting;
 using ReactUnity.UGUI;
@@ -65,6 +65,15 @@ namespace ReactUnity.Tests
             yield return null;
             Assert.AreEqual(0.4f, Text.Text.outlineWidth);
             Assert.AreEqual(new Color32(0, 0, 255, 255), Text.Text.outlineColor);
+
+            // The longhand reads its width the way the shorthand does, units included.
+            InsertStyle(@"text { text-stroke: 1px red; }");
+            yield return null;
+            Assert.AreEqual(1f, Text.Text.outlineWidth);
+
+            InsertStyle(@"text { text-stroke-width: 0.25px; }");
+            yield return null;
+            Assert.AreEqual(0.25f, Text.Text.outlineWidth);
         }
 
         [UGUITest(Script = BaseScript, Style = BaseStyle)]

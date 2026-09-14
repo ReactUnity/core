@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
@@ -539,7 +539,14 @@ namespace ReactUnity
 
         public void MarkForStyleResolvingWithSiblings(bool recursive)
         {
-            if (Parent == null) return;
+            // The host has no parent to find siblings through, but it is still an element with children:
+            // `:root.dark` has to see the class the host just gained, and `:first-child` among the
+            // top-level elements has to see one of them arrive. Returning here left both as they started.
+            if (Parent == null)
+            {
+                MarkForStyleResolving(recursive);
+                return;
+            }
 
             if (Parent.Children == null)
             {

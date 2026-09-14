@@ -39,6 +39,7 @@ namespace ReactUnity.Styling
         // The web's other spellings of the two layouts that exist here: a block stacks, a flex box is a row.
         public static readonly StyleConverterBase DisplayConverter = new EnumConverter(typeof(DisplayType), false, true, new Dictionary<string, object>
         {
+            { "inline", DisplayType.Block },
             { "inlineblock", DisplayType.Block },
             { "flowroot", DisplayType.Block },
             { "inlineflex", DisplayType.Flex },

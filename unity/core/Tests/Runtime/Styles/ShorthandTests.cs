@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using Yoga;
 using NUnit.Framework;
 using ReactUnity.Scripting;
@@ -219,6 +219,32 @@ namespace ReactUnity.Tests
             Assert.AreEqual(expected.eulerAngles, cmp.ComputedStyle.rotate);
             Assert.AreEqual(12, cmp.ComputedStyle.translate.X.Value);
             Assert.AreEqual(new Vector3(2, 2, 1), cmp.ComputedStyle.scale);
+        }
+
+        // The shorthand reads its own lengths, so a unit on one used to work only there. These are the
+        // longhands Tailwind writes: `outline` compiles to outline-style and outline-width, never both.
+        [UGUITest]
+        public IEnumerator OutlineLengthsTakeUnits()
+        {
+            var cmp = Q("#test");
+
+            cmp.Style["outline"] = "2px solid red";
+            yield return null;
+            Assert.AreEqual(2, cmp.ComputedStyle.outlineWidth);
+            Assert.AreEqual(Color.red, cmp.ComputedStyle.outlineColor);
+
+            cmp.Style["outline-width"] = "3px";
+            cmp.Style["outline-offset"] = "0.5cm";
+            yield return null;
+            Assert.AreEqual(3, cmp.ComputedStyle.outlineWidth);
+            Assert.AreEqual(18.9f, cmp.ComputedStyle.outlineOffset, 0.01f);
+
+            // A length is still a length when it is computed, and a bare number is still pixels.
+            cmp.Style["outline-width"] = "calc(2px * 2 + 1px)";
+            cmp.Style["outline-offset"] = "4";
+            yield return null;
+            Assert.AreEqual(5, cmp.ComputedStyle.outlineWidth);
+            Assert.AreEqual(4, cmp.ComputedStyle.outlineOffset);
         }
     }
 }
