@@ -15,6 +15,11 @@
 # Asset meta data should only be ignored when the corresponding asset is also ignored
 !/[Aa]ssets/**/*.meta
 
+# `capture_game_view` writes a screenshot under Assets/ so the Editor imports what it wrote, and the
+# rule above then un-ignores the folder's own meta. Neither is source, and both have reached a commit.
+/[Aa]ssets/[Ll]ogs/
+/[Aa]ssets/[Ll]ogs.meta
+
 # Uncomment this line if you wish to ignore the asset store tools plugin
 # /[Aa]ssets/AssetStoreTools*
 
