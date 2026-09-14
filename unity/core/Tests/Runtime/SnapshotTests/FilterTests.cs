@@ -1140,6 +1140,153 @@ namespace ReactUnity.Tests
             Assert.LessOrEqual(worst, 1, "a backdrop that was kept should draw what rendering it again would");
         }
 
+        // A reader drawn straight to the screen is served by the page's own pass, one camera render
+        // each. The three elements around the panel stand under it, beside it, and over it.
+        const string PageScript = @"
+            function App() {
+                return <view id='page'>
+                    <view id='under'></view>
+                    <view id='aside'></view>
+                    <view id='panel'></view>
+                    <view id='over'></view>
+                </view>;
+            }
+";
+
+        const string PageStyle = @"
+            #page {
+                width: 400px;
+                height: 400px;
+                background-color: #202020;
+            }
+
+            #under {
+                position: absolute;
+                left: 0;
+                top: 0;
+                width: 200px;
+                height: 200px;
+                background-color: #00ff00;
+            }
+
+            #aside {
+                position: absolute;
+                left: 260px;
+                top: 0;
+                width: 100px;
+                height: 100px;
+                background-color: #ff00ff;
+            }
+
+            #panel {
+                position: absolute;
+                left: 0;
+                top: 40px;
+                width: 200px;
+                height: 120px;
+                backdrop-filter: blur(4px);
+            }
+
+            #over {
+                position: absolute;
+                left: 0;
+                top: 60px;
+                width: 200px;
+                height: 40px;
+                background-color: blue;
+            }
+        ";
+
+        private BackdropSurface PageBackdrops => UGUIContext.ExistingBackdropSurface;
+
+        [UGUITest(Script = PageScript, Style = PageStyle)]
+        public IEnumerator AnOnScreenBackdropIsKeptWhenOnlyWhatIsOverItMoves()
+        {
+            for (int i = 0; i < 5; i++) yield return null;
+
+            Assert.NotNull(PageBackdrops, "the panel should have registered a backdrop reader");
+            var backdrops = PageBackdrops.RenderCount;
+            Assert.Greater(backdrops, 0, "the panel should have had a backdrop rendered");
+
+            Q("#over").Style["translate"] = "0px 10px";
+            for (int i = 0; i < 3; i++) yield return null;
+
+            Debug.Log($"[PAGE cache over] backdrops {backdrops} -> {PageBackdrops.RenderCount}");
+            Assert.AreEqual(backdrops, PageBackdrops.RenderCount,
+                "what is painted over the panel cannot reach its backdrop, so it should have kept it");
+        }
+
+        [UGUITest(Script = PageScript, Style = PageStyle)]
+        public IEnumerator AnOnScreenBackdropIsRetakenWhenWhatIsUnderItMoves()
+        {
+            for (int i = 0; i < 5; i++) yield return null;
+
+            var backdrops = PageBackdrops.RenderCount;
+
+            Q("#under").Style["translate"] = "0px 10px";
+            for (int i = 0; i < 3; i++) yield return null;
+
+            Debug.Log($"[PAGE cache under] backdrops {backdrops} -> {PageBackdrops.RenderCount}");
+            Assert.Greater(PageBackdrops.RenderCount, backdrops,
+                "the panel reads what is under it, so that moving has to be taken again");
+        }
+
+        [UGUITest(Script = PageScript, Style = PageStyle)]
+        public IEnumerator AnOnScreenBackdropIsKeptWhenSomethingElsewhereMoves()
+        {
+            for (int i = 0; i < 5; i++) yield return null;
+
+            var backdrops = PageBackdrops.RenderCount;
+
+            // Painted before the panel, so paint order alone would hold it back -- but it stands
+            // clear of the panel on screen, and a backdrop is only what lands under the element.
+            Q("#aside").Style["translate"] = "0px 10px";
+            for (int i = 0; i < 3; i++) yield return null;
+
+            Debug.Log($"[PAGE cache aside] backdrops {backdrops} -> {PageBackdrops.RenderCount}");
+            Assert.AreEqual(backdrops, PageBackdrops.RenderCount,
+                "something moving where the panel does not read should not cost it a render");
+        }
+
+        [UGUITest(Script = PageScript, Style = PageStyle)]
+        public IEnumerator AKeptOnScreenBackdropDrawsWhatAFreshOneWould()
+        {
+            for (int i = 0; i < 5; i++) yield return null;
+
+            // Settle on a kept backdrop: both moves below are ones the panel cannot read.
+            Q("#over").Style["translate"] = "0px 10px";
+            Q("#aside").Style["translate"] = "0px 10px";
+            for (int i = 0; i < 3; i++) yield return null;
+            var kept = CaptureScreen();
+
+            BackdropSurface.CacheEnabled = false;
+            Color32[] fresh;
+            try
+            {
+                for (int i = 0; i < 3; i++) yield return null;
+                fresh = CaptureScreen();
+            }
+            finally
+            {
+                BackdropSurface.CacheEnabled = true;
+            }
+
+            Assert.AreEqual(kept.Length, fresh.Length);
+
+            int worst = 0, differing = 0;
+            for (int i = 0; i < kept.Length; i++)
+            {
+                Color32 k = kept[i], f = fresh[i];
+                var d = Mathf.Max(Mathf.Max(Mathf.Abs(k.r - f.r), Mathf.Abs(k.g - f.g)),
+                                  Mathf.Max(Mathf.Abs(k.b - f.b), Mathf.Abs(k.a - f.a)));
+                if (d > 0) differing++;
+                if (d > worst) worst = d;
+            }
+
+            Debug.Log($"[PAGE cache pixels] worst channel difference {worst}, {differing}/{kept.Length} pixels differ");
+            Assert.LessOrEqual(worst, 1, "a backdrop that was kept should draw what rendering it again would");
+        }
+
         [UGUITest(Script = BaseScript, Style = BaseStyle)]
         public IEnumerator FilterIsRemovedWhenUnset()
         {

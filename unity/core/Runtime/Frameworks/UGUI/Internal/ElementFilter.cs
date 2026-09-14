@@ -717,6 +717,10 @@ namespace ReactUnity.UGUI.Internal
 
         public CanvasRenderer BackdropRenderer => composite ? composite.canvasRenderer : null;
 
+        // The backdrop here serves `mix-blend-mode`, which blends the composite with what is under
+        // it pixel for pixel. The filter's own blur is applied to the capture, not to this.
+        public float BackdropBleed => 0f;
+
         public void SetBackdrop(Texture backdrop)
         {
             // Only the blend shader has the property; a mode flipped back to `normal` unregisters,
@@ -1115,6 +1119,10 @@ namespace ReactUnity.UGUI.Internal
         /// <summary>Everything the chain does to a capture once it exists, whoever took it.</summary>
         internal void CompleteCapture(Vector4 margins, float width, float height)
         {
+            // The composite has not moved and nothing about it rebuilt, but the texture it draws
+            // holds different pixels -- which only the page's own backdrops have to be told about.
+            component.Context.ExistingBackdropSurface?.NoteRepaint(composite);
+
             var hasShadow = definition.DropShadowColor.a > 0;
 
             using (ReactUnity.Helpers.ReactProfiling.FilterBlur.Auto())

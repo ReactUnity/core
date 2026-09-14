@@ -337,6 +337,10 @@ namespace ReactUnity.UGUI.Shapes
 
         public CanvasRenderer BackdropRenderer => canvasRenderer;
 
+        // A stacked `background-blend-mode` blends with the backdrop where it stands and nowhere
+        // else, so it reads the element's own rect and not a pixel more.
+        public float BackdropBleed => 0f;
+
         public void SetBackdrop(Texture value)
         {
             backdrop = value;

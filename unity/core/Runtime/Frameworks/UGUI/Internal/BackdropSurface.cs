@@ -14,6 +14,10 @@ namespace ReactUnity.UGUI.Internal
         /// <summary>Hands over the backdrop for this frame, or null to fall back to whatever the
         /// pipeline offers.</summary>
         void SetBackdrop(Texture backdrop);
+
+        /// <summary>How far outside its own rect, in screen pixels, the element reads the backdrop.
+        /// Only a blur does, and only that far.</summary>
+        float BackdropBleed { get; }
     }
 
     /// <summary>
@@ -264,8 +268,23 @@ namespace ReactUnity.UGUI.Internal
 
         private readonly List<IBackdropReader> readers = new List<IBackdropReader>();
         private readonly List<IBackdropReader> onScreen = new List<IBackdropReader>();
+        private readonly List<int> indices = new List<int>();
+        private readonly List<bool> stale = new List<bool>();
+        private readonly HashSet<IBackdropReader> missed = new HashSet<IBackdropReader>();
         private readonly BackdropPass pass = new BackdropPass();
+        private readonly BackdropWatch watch = new BackdropWatch();
         private bool bound;
+
+        /// <summary>Whether a backdrop may be kept between frames. Off renders every reader every
+        /// frame, which is what this did before there was anything watching the page. For tests.</summary>
+        internal static bool CacheEnabled = true;
+
+        /// <summary>How many backdrops this pass has rendered for the page. For tests.</summary>
+        public int RenderCount => pass.RenderCount;
+
+        /// <summary>Something rewrote the pixels a graphic on the page draws, which no rebuild and
+        /// no movement would have reported. A filter re-capturing is what raises this.</summary>
+        public void NoteRepaint(UnityEngine.UI.Graphic graphic) => watch.NoteRepaint(graphic);
 
         public void Register(IBackdropReader reader)
         {
@@ -333,7 +352,28 @@ namespace ReactUnity.UGUI.Internal
                 return;
             }
 
-            pass.Render(cam, Context.RootCanvas.transform, onScreen, cam.pixelWidth, cam.pixelHeight);
+            var root = Context.RootCanvas.transform;
+            watch.Poll(root, cam);
+            watch.IndexReaders(onScreen, indices);
+
+            var frame = new Rect(0, 0, cam.pixelWidth, cam.pixelHeight);
+
+            stale.Clear();
+            for (int i = 0; i < onScreen.Count; i++)
+            {
+                // A reader the frame does not reach is never sampled, so whatever it is holding --
+                // an old surface, or none at all -- costs nothing to leave it with. What it does
+                // cost is the changes it was not there for, so it is taken again on its way back.
+                var rect = watch.ReaderRect(cam, onScreen[i]);
+                var seen = rect.Overlaps(frame);
+
+                if (!seen) missed.Add(onScreen[i]);
+
+                stale.Add(!CacheEnabled ||
+                    (seen && (missed.Remove(onScreen[i]) || watch.Stale(indices[i], rect))));
+            }
+
+            pass.Render(cam, root, onScreen, cam.pixelWidth, cam.pixelHeight, stale);
             bound = true;
         }
 
@@ -345,6 +385,8 @@ namespace ReactUnity.UGUI.Internal
 
             for (int i = 0; i < readers.Count; i++) readers[i]?.SetBackdrop(null);
             pass.Release();
+            watch.Reset();
+            missed.Clear();
         }
 
         void OnDisable() => Clear();
