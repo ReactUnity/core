@@ -56,6 +56,24 @@ function NavItem({ path, label, Icon }: (typeof pages)[number]) {
   );
 }
 
+/**
+ * Pages the reading column is wrong for. A HUD is a screen: boxed into the same 1024px the prose
+ * pages use, every panel, orb and ring on it is too small to read.
+ */
+const wide = new Set(['game-hud']);
+
+function Content() {
+  const full = wide.has(useLocation().pathname.replace(/^\//, ''));
+
+  return (
+    <scroll className={'flex-1'}>
+      <view className={clsx('mx-auto w-full shrink-0 items-stretch', full ? 'max-w-none p-2' : 'max-w-5xl p-10')}>
+        <AppRoutes />
+      </view>
+    </scroll>
+  );
+}
+
 function App() {
   return (
     // Translucent and blurred here rather than on the scroll below, so the Unity scene stays
@@ -72,11 +90,7 @@ function App() {
         ))}
       </scroll>
 
-      <scroll className={'flex-1'}>
-        <view className={'mx-auto w-full max-w-5xl shrink-0 items-stretch p-10'}>
-          <AppRoutes />
-        </view>
-      </scroll>
+      <Content />
     </view>
   );
 }

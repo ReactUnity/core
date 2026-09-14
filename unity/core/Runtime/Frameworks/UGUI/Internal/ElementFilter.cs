@@ -297,6 +297,11 @@ namespace ReactUnity.UGUI.Internal
             var compGo = ctx.CreateNativeObject("[Filter]", typeof(RectTransform), typeof(RawImage));
             composite = compGo.GetComponent<RawImage>();
             composite.raycastTarget = false;
+
+            // Off until the first Render below has a capture to show. A RawImage with no texture
+            // samples the white one, so an element whose filter is attached after this frame's
+            // LateUpdate drew as a solid white quad for the frame in between.
+            composite.enabled = false;
             var compRect = compGo.transform as RectTransform;
             compRect.SetParent(originalParent, false);
             compRect.SetSiblingIndex(originalIndex);
@@ -1130,6 +1135,7 @@ namespace ReactUnity.UGUI.Internal
             compRect.localScale = self.localScale;
 
             composite.texture = source;
+            composite.enabled = true;
 
             // The shader subtracts this from its uv, and the rect's y grows the other way.
             shadowOffsetUv = new Vector4(definition.DropShadowOffset.x / width, -definition.DropShadowOffset.y / height, 0, 0);

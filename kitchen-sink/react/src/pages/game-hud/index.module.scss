@@ -11,7 +11,11 @@
 
 .screen {
   position: relative;
-  height: 640px;
+  /* The page gives this one its whole width, so the height is what keeps it off a letterbox strip.
+     It does not shrink: the scroll above lays its content out against the viewport, and a default
+     flex-shrink took ~50px off this box rather than letting the page scroll. */
+  height: 820px;
+  flex-shrink: 0;
   overflow: hidden;
   border-radius: 20px;
   background-color: #04060e;

@@ -52,7 +52,7 @@ export function Panel({ tab, onTab, selected, onSelect, onHover }: PanelProps) {
 function Gear({ selected, onSelect, onHover }: Pick<PanelProps, 'selected' | 'onSelect' | 'onHover'>) {
   return (
     <view className={'flex-1 gap-2 p-2.5'}>
-      <scroll className={'h-[158px] flex-row flex-wrap content-start gap-1.5'}>
+      <scroll className={'flex-1 flex-row flex-wrap content-start gap-1.5'}>
         {inventory.map((item, i) => (
           <button
             // Position in the bag is the identity here: two stacks of the same thing are two slots.
@@ -87,14 +87,14 @@ function Gear({ selected, onSelect, onHover }: Pick<PanelProps, 'selected' | 'on
 function ItemCard({ item }: { item: Item }) {
   if (!item) {
     return (
-      <view className={'flex-1 items-center justify-center rounded-md bg-slate-950/50'}>
+      <view className={'shrink-0 items-center justify-center rounded-md bg-slate-950/50 py-8'}>
         <text className={'text-[11px] text-slate-600'}>Nothing selected</text>
       </view>
     );
   }
 
   return (
-    <view className={'flex-1 gap-1 rounded-md bg-slate-950/55 p-2.5 ring-1 ring-slate-700/70'}>
+    <view className={'shrink-0 gap-1 rounded-md bg-slate-950/55 p-2.5 ring-1 ring-slate-700/70'}>
       <view className={'flex-row items-center justify-between'}>
         <text className={clsx('text-[13px] font-bold', rarityText[item.rarity])}>{item.name}</text>
         {!!item.level && <text className={'font-mono text-[10px] text-amber-300'}>{item.level}</text>}
@@ -108,7 +108,7 @@ function ItemCard({ item }: { item: Item }) {
         </text>
       ))}
 
-      <text className={'mt-auto text-[10px] text-slate-500 italic'}>{item.flavor}</text>
+      <text className={'mt-1 text-[10px] text-slate-500 italic'}>{item.flavor}</text>
     </view>
   );
 }
