@@ -9,12 +9,13 @@ Sets the background color of a component.
 - Known color name: `red`, `limegreen`, `transparent`
 - Hex color: `#a5a5a5`, `#777`, `#00ff0033`
 - RGBA color: `rgba(23, 16, 168, 0.3)`, `rgb(23 16 168 / 30%)`
-- HSL color: `hsl(152, 37%, 59%)`, `hsla(152 37% 59% / 0.75)`
+- HSL color: `hsl(152, 37%, 59%)`, `hsla(152 37% 59% / 0.75)`, `hsl(152 37 59)`
 - OKLCh color: `oklch(63.7% 0.237 25.331)`, `oklch(0.5 0.2 30deg / 50%)`
 - OKLab color: `oklab(0.5 0.1 -0.1)`
 - LCh color: `lch(54.29% 106.84 40.86)`, `lch(70 30 0.5turn)`
 - Lab color: `lab(50 40 -30)`, `lab(50 40 -30 / 50%)`
 - Mixed color: `color-mix(in oklab, red 30%, blue)` — see below
+- Relative color: `rgb(from var(--brand) r g b / 50%)` — see below
 - CSS keywords: `inherit`
 
 Every component of these four is a number or a percentage, and one written as `none` is `0`. What
@@ -28,7 +29,10 @@ Every component of these four is a number or a percentage, and one written as `n
 | `lab()`    | `0`–`100`  | `125`                       |
 
 So `oklch(0.637 …)` and `oklch(63.7% …)` are the same lightness, while in `lch()` both `54.29` and
-`54.29%` mean `54.29`. Hue takes any angle unit.
+`54.29%` mean `54.29`. In `hsl()` and `hsv()` saturation and lightness run `0`–`100`, so the `%` may
+be left off: `hsl(152 37 59)` is `hsl(152 37% 59%)`. Hue takes any angle unit and wraps, so `512deg`
+is `152deg`. A component outside its range is clamped rather than making the declaration invalid, so
+`rgb(300 0 0)` is red and `hsl(0 150 50)` is a saturation of `100%`.
 
 `color-mix()` interpolates two colors in `srgb`, `srgb-linear`, `hsl`, `lab`, `lch`, `oklab` or
 `oklch`. Each percentage is optional and may be written on either side of its color; giving one
@@ -36,6 +40,34 @@ implies the other, and a pair summing to under `100%` scales the result's alpha 
 is premultiplied, so mixing with `transparent` fades the color instead of darkening it. In the polar
 spaces — `hsl`, `lch` and `oklch` — the hue may carry `shorter hue`, `longer hue`, `increasing hue`
 or `decreasing hue`, defaulting to `shorter`.
+
+### Relative colors {/*relative-colors*/}
+
+Every color function above also takes a `from <color>` origin, which is CSS Color 5's relative color
+syntax. The origin is converted into the function's own space, and each of its channels becomes a
+keyword the channel slots can use — on its own, or inside `calc()`:
+
+```css
+.button {
+  /* A hover shade of whatever the button's own color turns out to be */
+  background-color: oklch(from var(--brand) calc(l * 0.8) c h);
+  /* The same color at half opacity, without repeating it */
+  border-color: rgb(from var(--brand) r g b / 50%);
+  /* The complement */
+  outline-color: hsl(from var(--brand) calc(h + 180) s l);
+}
+```
+
+The keywords are `r g b` in `rgb()`, `h s l` in `hsl()`, `h s v` in `hsv()`, `l a b` in `lab()` and
+`oklab()`, `l c h` in `lch()` and `oklch()`, and `alpha` in all of them. Any of them may appear in
+any slot, so `rgb(from red b g r)` is blue. Each is worth what the slot would make of that number,
+so `r` is `0`–`255`, `hsl()`'s `s` is `0`–`100`, `oklch()`'s `l` is `0`–`1`, a hue is degrees and
+`alpha` is `0`–`1` — the ranges listed above.
+
+An omitted alpha is the origin's own rather than `1`, so `rgb(from <color> r g b)` is that color
+unchanged. The origin may be any color, including `currentColor`, a `var()`, a `color-mix()` or
+another relative color; one that is not a color makes the declaration invalid. Only the
+space-separated form is relative — `rgb(from red, r, g, b)` is not.
 
 A color outside the sRGB gamut is clamped per channel, which shifts the hue of a very saturated
 color. Naming an interpolation space that is not in the list above, such as `display-p3` or

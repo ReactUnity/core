@@ -294,16 +294,35 @@ namespace ReactUnity.Styling.Converters
 
         public delegate object ColorCallback(float v1, float v2, float v3, float v4);
 
-        public static bool ParseCommaSeparatedColor(string[] vals, ColorCallback callback, bool hsl, out IComputedValue result)
-        {
-            var cv = AllConverters.ColorValueConverter;
-            var pc = AllConverters.PercentageConverter;
+        /// <summary>The channel converters of `rgb()`: three 0..255 values and an alpha.</summary>
+        public static readonly List<StyleConverterBase> RgbConverters = new List<StyleConverterBase> {
+            AllConverters.ColorValueConverter,
+            AllConverters.ColorValueConverter,
+            AllConverters.ColorValueConverter,
+            AllConverters.PercentageConverter,
+        };
 
-            return ParseCommaSeparatedColor(
-                vals,
-                callback,
-                hsl ? new List<StyleConverterBase> { AllConverters.AngleConverter, pc, pc, pc } : new List<StyleConverterBase> { cv, cv, cv, pc },
-                out result);
+        /// <summary>The channel converters of `hsl()` and `hsv()`: an angle, two 0..100 values and an alpha.</summary>
+        public static readonly List<StyleConverterBase> HslConverters = new List<StyleConverterBase> {
+            AllConverters.AngleConverter,
+            AllConverters.HslPercentageConverter,
+            AllConverters.HslPercentageConverter,
+            AllConverters.PercentageConverter,
+        };
+
+        public static bool ParseCommaSeparatedColor(string[] vals, ColorCallback callback, bool hsl, out IComputedValue result)
+            => ParseCommaSeparatedColor(vals, callback, hsl ? HslConverters : RgbConverters, out result);
+
+        /// <summary>A channel written as `none` is a missing component, which resolves to zero.</summary>
+        public static string[] ReplaceNone(IList<string> vals)
+        {
+            var result = new string[vals.Count];
+            for (int i = 0; i < vals.Count; i++)
+            {
+                var val = vals[i]?.Trim();
+                result[i] = string.Equals(val, "none", StringComparison.OrdinalIgnoreCase) ? "0" : val;
+            }
+            return result;
         }
 
         /// <summary>
@@ -320,7 +339,7 @@ namespace ReactUnity.Styling.Converters
 
             return ComputedCompound.Create(
                 out result,
-                vals.OfType<object>().ToList(),
+                ReplaceNone(vals).OfType<object>().ToList(),
                 converters,
                 (resolved) => {
                     if (resolved[0] is float r && resolved[1] is float g && resolved[2] is float b)

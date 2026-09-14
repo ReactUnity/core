@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using ReactUnity.Styling.Converters;
+using UnityEngine;
 
 namespace ReactUnity.Styling.Functions
 {
@@ -43,28 +44,41 @@ namespace ReactUnity.Styling.Functions
 
         public object Call(string name, string[] args, string argsCombined, StyleConverterBase converter)
         {
-            if (!TryGetSpace(name, out var converters, out var callback)) return null;
+            if (!TryGetSpace(name, out var converters, out var callback, out var keywords, out var decompose)) return null;
+
+            if (RelativeColor.IsRelative(args))
+            {
+                if (RelativeColor.TryParse(args[0], keywords, converters, decompose, callback, out var relative)) return relative;
+                return null;
+            }
 
             if (args.Length == 1)
             {
                 var vals = ParserHelpers.ParseSpaceSeparatedColorArguments(args[0]);
-                if (ParserHelpers.ParseCommaSeparatedColor(ReplaceNone(vals), callback, converters, out var rs)) return rs;
+                if (ParserHelpers.ParseCommaSeparatedColor(vals.ToArray(), callback, converters, out var rs)) return rs;
             }
             else if (args.Length == 3 || args.Length == 4)
             {
-                var vals = new List<string>(args);
-                if (ParserHelpers.ParseCommaSeparatedColor(ReplaceNone(vals), callback, converters, out var rs)) return rs;
+                if (ParserHelpers.ParseCommaSeparatedColor(args, callback, converters, out var rs)) return rs;
             }
 
             return null;
         }
 
-        private static bool TryGetSpace(string name, out List<StyleConverterBase> converters, out ParserHelpers.ColorCallback callback)
+        private static bool TryGetSpace(
+            string name,
+            out List<StyleConverterBase> converters,
+            out ParserHelpers.ColorCallback callback,
+            out string[] keywords,
+            out Action<Color, float[]> decompose
+        )
         {
             if ("lab".Equals(name, StringComparison.OrdinalIgnoreCase))
             {
                 converters = LabConverters;
                 callback = (l, a, b, alpha) => ColorSpaces.LabToColor(l, a, b, alpha);
+                keywords = RelativeColor.LabKeywords;
+                decompose = RelativeColor.DecomposeLab;
                 return true;
             }
 
@@ -72,6 +86,8 @@ namespace ReactUnity.Styling.Functions
             {
                 converters = LchConverters;
                 callback = (l, c, h, alpha) => ColorSpaces.LchToColor(l, c, h, alpha);
+                keywords = RelativeColor.LchKeywords;
+                decompose = RelativeColor.DecomposeLch;
                 return true;
             }
 
@@ -79,6 +95,8 @@ namespace ReactUnity.Styling.Functions
             {
                 converters = OklabConverters;
                 callback = (l, a, b, alpha) => ColorSpaces.OklabToColor(l, a, b, alpha);
+                keywords = RelativeColor.LabKeywords;
+                decompose = RelativeColor.DecomposeOklab;
                 return true;
             }
 
@@ -86,24 +104,16 @@ namespace ReactUnity.Styling.Functions
             {
                 converters = OklchConverters;
                 callback = (l, c, h, alpha) => ColorSpaces.OklchToColor(l, c, h, alpha);
+                keywords = RelativeColor.LchKeywords;
+                decompose = RelativeColor.DecomposeOklch;
                 return true;
             }
 
             converters = null;
             callback = null;
+            keywords = null;
+            decompose = null;
             return false;
-        }
-
-        // A missing component in a non-relative color resolves to zero.
-        private static string[] ReplaceNone(List<string> vals)
-        {
-            var result = new string[vals.Count];
-            for (int i = 0; i < vals.Count; i++)
-            {
-                var val = vals[i].Trim();
-                result[i] = val.Equals("none", StringComparison.OrdinalIgnoreCase) ? "0" : val;
-            }
-            return result;
         }
 
         public bool CanHandleArguments(int count, string name, string[] args) => count == 1 || count == 3 || count == 4;

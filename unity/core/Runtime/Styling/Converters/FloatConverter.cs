@@ -213,6 +213,22 @@ namespace ReactUnity.Styling.Converters
     }
 
     /// <summary>
+    /// Saturation and lightness in hsl(), and the saturation and value of hsv(). CSS Color 4 puts
+    /// them on a 0..100 scale where a number and a percentage mean the same thing, so
+    /// `hsl(120 75 25)` is `75%` and `25%`.
+    /// </summary>
+    public class HslPercentageConverter : FloatConverter
+    {
+        public HslPercentageConverter() : base(new Dictionary<string, float>
+        {
+            { "%", 1f },
+        })
+        { }
+
+        public override string StringifyTyped(float value) => value + "%";
+    }
+
+    /// <summary>
     /// Chroma in oklch(), and the a/b axes in oklab(), where 100% means 0.4.
     /// </summary>
     public class OklchChromaConverter : FloatConverter

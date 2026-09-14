@@ -616,66 +616,92 @@
 }
 
 /* --- Rarity ------------------------------------------------------------------------------------
-   One class per tier, since the border, the glow and the corner wedge all move together. */
+   A tier is one colour and four numbers. The ring, the glow and the hover lift all read that colour
+   through `rgb(from ...)` and `hsl(from ...)`, so nothing spells the same three channels out four
+   times over and a new tier is a handful of custom properties rather than a rule of its own. */
 
 .rarity {
+  --tier: #94a3b8;
+  --ring: 0.45;
+  --halo: 0;
+  --reach: 0px;
+  --spread: -4px;
+
   background-image: linear-gradient(160deg, rgba(30, 41, 59, 0.9), rgba(2, 6, 23, 0.92));
+  box-shadow:
+    0 0 0 1px rgb(from var(--tier) r g b / var(--ring)) inset,
+    0 0 var(--reach) var(--spread) rgb(from var(--tier) r g b / var(--halo));
   transition:
     box-shadow 160ms ease-out,
     scale 140ms ease-out;
 }
 
+/* Lightening the tier is the one thing an alpha could not do: a translucent ring picks up the slot
+   behind it, where `l + 14%` is the same hue actually brighter. The glow keeps the tier's own step,
+   so a common slot answers the pointer without lighting up like a legendary one. */
 .rarity:hover {
   scale: 1.08;
+  box-shadow:
+    0 0 0 1px hsl(from var(--tier) h s calc(l + 14%)) inset,
+    0 0 calc(var(--reach) + 8px) var(--spread) rgb(from var(--tier) r g b / calc(var(--halo) + 0.1));
 }
 
 .rarityCommon {
-  box-shadow: 0 0 0 1px rgba(148, 163, 184, 0.45) inset;
+  --tier: #94a3b8;
 }
 
 .rarityUncommon {
-  box-shadow:
-    0 0 0 1px rgba(74, 222, 128, 0.6) inset,
-    0 0 10px -4px rgba(74, 222, 128, 0.8);
+  --tier: #4ade80;
+  --ring: 0.6;
+  --halo: 0.8;
+  --reach: 10px;
 }
 
 .rarityRare {
-  box-shadow:
-    0 0 0 1px rgba(56, 189, 248, 0.7) inset,
-    0 0 12px -4px rgba(56, 189, 248, 0.9);
+  --tier: #38bdf8;
+  --ring: 0.7;
+  --halo: 0.9;
+  --reach: 12px;
 }
 
 .rarityEpic {
-  box-shadow:
-    0 0 0 1px rgba(192, 132, 252, 0.8) inset,
-    0 0 14px -3px rgba(192, 132, 252, 0.9);
+  --tier: #c084fc;
+  --ring: 0.8;
+  --halo: 0.9;
+  --reach: 14px;
+  --spread: -3px;
 }
 
 .rarityLegendary {
-  box-shadow:
-    0 0 0 1px rgba(251, 191, 36, 0.85) inset,
-    0 0 16px -2px rgba(251, 191, 36, 0.9);
+  --tier: #fbbf24;
+  --ring: 0.85;
+  --halo: 0.9;
+  --reach: 16px;
+  --spread: -2px;
 }
 
 /* The only tier that moves on its own, because there is one of it. */
 .rarityMythic {
-  box-shadow:
-    0 0 0 1px rgba(251, 113, 133, 0.9) inset,
-    0 0 18px -2px rgba(244, 63, 94, 0.95);
+  --tier: #fb7185;
+  --ring: 0.9;
+  --halo: 0.95;
+  --reach: 18px;
+  --spread: -2px;
+
   animation: mythicPulse 2.4s ease-in-out infinite alternate;
 }
 
 @keyframes mythicPulse {
   from {
     box-shadow:
-      0 0 0 1px rgba(251, 113, 133, 0.9) inset,
-      0 0 10px -4px rgba(244, 63, 94, 0.7);
+      0 0 0 1px rgb(from var(--tier) r g b / 0.9) inset,
+      0 0 10px -4px rgb(from var(--tier) r g b / 0.7);
   }
 
   to {
     box-shadow:
-      0 0 0 1px rgba(253, 164, 175, 1) inset,
-      0 0 22px 0 rgba(244, 63, 94, 1);
+      0 0 0 1px hsl(from var(--tier) h s calc(l + 10%)) inset,
+      0 0 22px 0 rgb(from var(--tier) r g b / 1);
   }
 }
 

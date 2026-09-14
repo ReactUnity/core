@@ -109,6 +109,44 @@ namespace ReactUnity.Tests
             Assert.AreEqual(45, cmp.ComputedStyle.rotate.z, 0.001f, "the other one is untouched");
         }
 
+        // Relative color syntax through the real stylesheet parser, which is the only path the
+        // converter tests do not cover -- a `from` origin has to survive tokenization untouched.
+        [UGUITest(Script = BaseScript, Style = @"
+            :root {
+                --brand: #70bd99;
+            }
+            #test {
+                color: rgb(from var(--brand) r g b / 50%);
+            }
+")]
+        public IEnumerator ARelativeColorCanTakeAVariableAsItsOrigin()
+        {
+            yield return null;
+
+            var cmp = Q("#test") as UGUI.ContainerComponent;
+            var text = cmp.RectTransform.GetComponentInChildren<TMPro.TextMeshProUGUI>();
+
+            Assert.AreEqual("70bd9980", ColorUtility.ToHtmlStringRGBA(text.color).ToLowerInvariant());
+        }
+
+        [UGUITest(Script = BaseScript, Style = @"
+            :root {
+                color: red;
+            }
+            #test {
+                color: oklch(from currentColor calc(l * 0.5) c h);
+            }
+")]
+        public IEnumerator ARelativeColorCanTakeCurrentColorAsItsOrigin()
+        {
+            yield return null;
+
+            var cmp = Q("#test") as UGUI.ContainerComponent;
+            var text = cmp.RectTransform.GetComponentInChildren<TMPro.TextMeshProUGUI>();
+
+            Assert.AreEqual("890000ff", ColorUtility.ToHtmlStringRGBA(text.color).ToLowerInvariant());
+        }
+
         const string TransformTransitionScript = @"
             function App() {
                 const globals = ReactUnity.useGlobals();

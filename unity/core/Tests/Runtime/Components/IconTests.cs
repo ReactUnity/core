@@ -77,5 +77,22 @@ namespace ReactUnity.Tests
             yield return null;
             Assert.IsNotNull(Icon);
         }
+
+        // An icon is a glyph on the same stretched child a text is, so padding has to move it the
+        // same way -- the box grows by the padding whether or not the glyph is kept out of it.
+        [UGUITest(Script = BaseScript, Style = BaseStyle)]
+        public IEnumerator PaddingKeepsTheGlyphInTheContentBox()
+        {
+            Globals["icon"] = "search";
+            yield return null;
+
+            var glyph = Icon.Text.rectTransform;
+            InsertStyle(@"icon { padding: 3px 7px; }");
+            yield return null;
+            yield return null;
+
+            Assert.AreEqual(new UnityEngine.Vector2(7, 3), glyph.offsetMin);
+            Assert.AreEqual(new UnityEngine.Vector2(-7, -3), glyph.offsetMax);
+        }
     }
 }

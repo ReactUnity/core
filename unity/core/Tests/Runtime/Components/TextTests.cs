@@ -381,5 +381,33 @@ Line 6");
             Assert.AreEqual(Text.RectTransform, glyphs.parent);
             Assert.AreEqual(Text.RectTransform.childCount - 1, glyphs.GetSiblingIndex());
         }
+
+        // That child stretches over the whole element, so nothing keeps the glyphs out of the
+        // padding unless it is inset by it -- and the box is measured with the padding counted, so
+        // an uninset line ends short of its own edge and leaves the gap on one side.
+        [UGUITest(Script = BaseScript, Style = BaseStyle)]
+        public IEnumerator PaddingAndBorderKeepTheGlyphsInTheContentBox()
+        {
+            yield return null;
+            var glyphs = Text.Text.rectTransform;
+            Assert.AreEqual(Vector2.zero, glyphs.offsetMin);
+            Assert.AreEqual(Vector2.zero, glyphs.offsetMax);
+
+            InsertStyle(@"#text { padding: 4px 10px; }");
+            yield return null;
+            yield return null;
+            Assert.AreEqual(new Vector2(10, 4), glyphs.offsetMin);
+            Assert.AreEqual(new Vector2(-10, -4), glyphs.offsetMax);
+
+            // A border is outside the content box too, and the two insets add up.
+            InsertStyle(@"#text { border: 2px solid red; }");
+            yield return null;
+            yield return null;
+            Assert.AreEqual(new Vector2(12, 6), glyphs.offsetMin);
+            Assert.AreEqual(new Vector2(-12, -6), glyphs.offsetMax);
+
+            Assert.AreEqual(Text.RectTransform.rect.width - 24, glyphs.rect.width, 0.01f);
+            Assert.AreEqual(Text.RectTransform.rect.height - 12, glyphs.rect.height, 0.01f);
+        }
     }
 }

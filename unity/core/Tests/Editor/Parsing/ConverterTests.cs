@@ -1,6 +1,7 @@
 using NUnit.Framework;
 using ReactUnity.Styling;
 using ReactUnity.Styling.Animations;
+using ReactUnity.Styling.Computed;
 using ReactUnity.Styling.Converters;
 using ReactUnity.Types;
 using UnityEngine;
@@ -305,6 +306,20 @@ namespace ReactUnity.Tests.Editor
         [TestCase("hsv(240, 51%, 72%, 74.5%)", "5a5ab8be")]
         [TestCase("hsva(240 51% 72% / 74.5%)", "5a5ab8be")]
         [TestCase("hsl(2, 57%, 40%)", "a0302cff")]
+        // A bare saturation or lightness is the same 0..100 as a percentage, which is what CSS
+        // Color 4 says and what every framework that drops the `%` relies on.
+        [TestCase("hsl(152 37 59)", "70bd99ff")]
+        [TestCase("hsl(152, 37, 59)", "70bd99ff")]
+        [TestCase("hsl(0 100 50)", "ff0000ff")]
+        [TestCase("hsv(240 51 72)", "5a5ab8ff")]
+        // Out-of-range components are clamped rather than making the color invalid.
+        [TestCase("hsl(0 150 50)", "ff0000ff")]
+        [TestCase("hsl(0 100 -20)", "000000ff")]
+        [TestCase("rgb(300 0 0)", "ff0000ff")]
+        [TestCase("rgb(-20 0 0)", "000000ff")]
+        [TestCase("rgb(255 0 0 / 1.5)", "ff0000ff")]
+        // A hue is an angle, so it wraps rather than saturating.
+        [TestCase("hsl(512 100 50)", "00ff88ff")]
         [TestCase("rgba(112 189 153 / var(--tw-bg-opacity))", null)]
         // Reference values come from a browser. oklch(63.7% 0.237 25.331) is Tailwind's red-500.
         [TestCase("oklch(63.7% 0.237 25.331)", "fb2c36ff")]
@@ -471,6 +486,142 @@ namespace ReactUnity.Tests.Editor
 
             Assert.AreEqual(1, style.boxShadow.Count);
             Assert.AreEqual(Color.red, style.boxShadow.Get(0, default).color);
+        }
+
+        // Relative color syntax, CSS Color 5. Reference values come from a browser.
+        // The origin's channels round-trip through every space.
+        [TestCase("rgb(from red r g b)", "ff0000ff")]
+        [TestCase("rgb(from #70bd99 r g b)", "70bd99ff")]
+        [TestCase("hsl(from #70bd99 h s l)", "70bd99ff")]
+        [TestCase("hsv(from #70bd99 h s v)", "70bd99ff")]
+        [TestCase("lab(from #70bd99 l a b)", "70bd99ff")]
+        [TestCase("lch(from #70bd99 l c h)", "70bd99ff")]
+        [TestCase("oklab(from #70bd99 l a b)", "70bd99ff")]
+        [TestCase("oklch(from #70bd99 l c h)", "70bd99ff")]
+        // A channel may be replaced outright, and the keywords may appear in any slot.
+        [TestCase("rgb(from red 0 g b)", "000000ff")]
+        [TestCase("rgb(from red b g r)", "0000ffff")]
+        [TestCase("rgb(from red r g 255)", "ff00ffff")]
+        [TestCase("oklch(from red l 0 h)", "888888ff")]
+        [TestCase("lab(from red l 0 0)", "828282ff")]
+        // calc() over the channel keywords, which is what the syntax is for.
+        [TestCase("rgb(from red calc(r * 0.5) g b)", "800000ff")]
+        [TestCase("rgb(from red calc(r - 20%) g b)", "cc0000ff")]
+        [TestCase("rgb(from #70bd99 calc(r + 20) g b)", "84bd99ff")]
+        [TestCase("hsl(from red calc(h + 180) s l)", "00ffffff")]
+        [TestCase("hsl(from red h calc(s / 2) l)", "bf4040ff")]
+        [TestCase("hsl(from red h s calc(l + 25%))", "ff8080ff")]
+        [TestCase("oklch(from red calc(l * 0.5) c h)", "890000ff")]
+        [TestCase("oklch(from red l calc(c / 2) h)", "ca675aff")]
+        [TestCase("oklch(from red l c calc(h + 180))", "00a9dbff")]
+        [TestCase("oklch(from red calc(l + 20%) c h)", "ff6f59ff")]
+        [TestCase("lab(from red calc(l + 20) a b)", "ff6239ff")]
+        [TestCase("lch(from red l c calc(h + 180))", "00a3fbff")]
+        // A keyword carries the range CSS gives it, so a literal mixes with one as it would in a
+        // browser: red's `s` is 100, and `calc(s - 40)` is a saturation of 60%.
+        [TestCase("hsl(from red h calc(s - 40) l)", "cc3333ff")]
+        [TestCase("hsl(from red h 50 l)", "bf4040ff")]
+        [TestCase("rgb(from red calc(r - 55) g b)", "c80000ff")]
+        [TestCase("oklch(from red 0.5 c h)", "cf0000ff")]
+        [TestCase("oklch(from red l c 200)", "00aec5ff")]
+        // An out-of-range component is clamped rather than making the color invalid.
+        [TestCase("hsl(from red h calc(s + 50%) l)", "ff0000ff")]
+        [TestCase("oklch(from red calc(l * 4) c h)", "ffad92ff")]
+        [TestCase("rgb(from red calc(r * 2) g b)", "ff0000ff")]
+        // Alpha: given as a number or a percentage, computed from the origin's own, or omitted --
+        // in which case it is the origin's, not 1.
+        [TestCase("rgb(from red r g b / 50%)", "ff000080")]
+        [TestCase("rgb(from red r g b / 0.5)", "ff000080")]
+        [TestCase("rgb(from rgba(112 189 153 / 0.745) r g b)", "70bd99be")]
+        [TestCase("rgb(from rgba(112 189 153 / 0.745) r g b / 1)", "70bd99ff")]
+        [TestCase("oklch(from rgba(112 189 153 / 0.745) l c h)", "70bd99be")]
+        [TestCase("rgb(from red r g b / calc(alpha * 0.5))", "ff000080")]
+        [TestCase("hsl(from red h s l / calc(alpha / 2))", "ff000080")]
+        // `none` is a missing component, which is zero.
+        [TestCase("rgb(from red r none b)", "ff0000ff")]
+        [TestCase("oklch(from red l none h)", "888888ff")]
+        [TestCase("rgb(from red r g b / none)", "ff000000")]
+        // The keyword and the function name are case-insensitive, as every CSS keyword is.
+        [TestCase("RGB(FROM RED R G B)", "ff0000ff")]
+        // A relative color is a color, so it nests and composes.
+        [TestCase("rgb(from oklch(from red l c h) r g b)", "ff0000ff")]
+        [TestCase("rgb(from color-mix(in srgb, red, blue) r g b)", "800080ff")]
+        [TestCase("color-mix(in srgb, rgb(from red r g b) 50%, transparent)", "ff000080")]
+        // Invalid: an origin that is not a color, a missing or extra channel, a channel keyword
+        // that belongs to another function, and the comma form, which CSS does not define here.
+        [TestCase("rgb(from notacolor r g b)", null)]
+        [TestCase("rgb(from red r g)", null)]
+        [TestCase("rgb(from red r g b a)", null)]
+        [TestCase("rgb(from red l c h)", null)]
+        [TestCase("oklch(from red r g b)", null)]
+        [TestCase("rgb(from red, r, g, b)", null)]
+        [TestCase("rgb(from)", null)]
+        [TestCase("rgb(from red)", null)]
+        public void RelativeColorConverter(object input, object expected)
+        {
+            var converted = AllConverters.ColorConverter.TryGetConstantValue<Color>(input, out var c);
+
+            if (converted) Assert.AreEqual(expected, ColorUtility.ToHtmlStringRGBA(c).ToLowerInvariant());
+            else Assert.AreEqual(expected, null);
+        }
+
+        [Test]
+        public void RelativeColorTakesAVariableAsTheOrigin()
+        {
+            var (collection, style) = TestHelpers.CreateStyle();
+
+            collection["--brand"] = "#70bd99";
+            collection["color"] = "rgb(from var(--brand) r g b / 50%)";
+
+            Assert.AreEqual("70bd9980", ColorUtility.ToHtmlStringRGBA(style.color).ToLowerInvariant());
+        }
+
+        [Test]
+        public void RelativeColorTakesAVariableInsideAChannel()
+        {
+            var (collection, style) = TestHelpers.CreateStyle();
+
+            collection["--factor"] = "0.5";
+            collection["color"] = "rgb(from red calc(r * var(--factor)) g b)";
+
+            Assert.AreEqual("800000ff", ColorUtility.ToHtmlStringRGBA(style.color).ToLowerInvariant());
+        }
+
+        // The canonical use: a hover shade derived from whatever the element's own color turns out
+        // to be. The origin is only known per element, so the channels stay lazy until then.
+        [Test]
+        public void RelativeColorTakesCurrentColor()
+        {
+            var (collection, style) = TestHelpers.CreateStyle();
+
+            collection["color"] = "red";
+            collection["background-color"] = "oklch(from currentcolor calc(l * 0.5) c h)";
+
+            Assert.AreEqual("890000ff", ColorUtility.ToHtmlStringRGBA(style.backgroundColor).ToLowerInvariant());
+        }
+
+        // One rule is parsed once and resolved per element, so a lazy origin has to be decomposed
+        // on every resolve rather than leaving the first element's channels behind in the tree.
+        [Test]
+        public void RelativeColorRereadsTheOriginEachTime()
+        {
+            var computed = AllConverters.ColorConverter.Convert("rgb(from currentcolor r g b / 50%)");
+
+            var (first, firstStyle) = TestHelpers.CreateStyle();
+            first["color"] = "red";
+
+            var (second, secondStyle) = TestHelpers.CreateStyle();
+            second["color"] = "blue";
+
+            Assert.AreEqual("ff000080", ResolvedHex(computed, firstStyle));
+            Assert.AreEqual("0000ff80", ResolvedHex(computed, secondStyle));
+            Assert.AreEqual("ff000080", ResolvedHex(computed, firstStyle));
+        }
+
+        private static string ResolvedHex(IComputedValue computed, NodeStyle style)
+        {
+            var resolved = computed.ResolveValue(StyleProperties.backgroundColor, style, AllConverters.ColorConverter);
+            return ColorUtility.ToHtmlStringRGBA((Color) resolved).ToLowerInvariant();
         }
 
         [Test]

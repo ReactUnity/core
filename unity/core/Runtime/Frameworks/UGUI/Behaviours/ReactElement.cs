@@ -100,7 +100,11 @@ namespace ReactUnity.UGUI.Behaviours
             if (!Layout.HasNewLayout && !hasPositionUpdate && !sticky) return;
             if (float.IsNaN(Layout.LayoutWidth)) return;
 
-            if (Text) Text.isRightToLeftText = Layout.LayoutDirection == YogaDirection.RTL;
+            if (Text)
+            {
+                Text.isRightToLeftText = Layout.LayoutDirection == YogaDirection.RTL;
+                ResolveTextInsets();
+            }
 
             var pivotDiff = rt.pivot - Vector2.up;
 
@@ -209,6 +213,28 @@ namespace ReactUnity.UGUI.Behaviours
             SetPositionAndSizeImmediate(pos, size, z);
             currentMotion = null;
         }
+
+        /// <summary>
+        /// Keeps the glyph child inside the content box. It stretches over the whole element, so the
+        /// text would otherwise start at the border box's own edge -- and padding, which is measured
+        /// against, would show up as space on the far side of the line instead.
+        /// </summary>
+        private void ResolveTextInsets()
+        {
+            var left = Norm(Layout.LayoutPaddingLeft) + Norm(Layout.LayoutBorderLeft);
+            var right = Norm(Layout.LayoutPaddingRight) + Norm(Layout.LayoutBorderRight);
+            var top = Norm(Layout.LayoutPaddingTop) + Norm(Layout.LayoutBorderTop);
+            var bottom = Norm(Layout.LayoutPaddingBottom) + Norm(Layout.LayoutBorderBottom);
+
+            var trt = Text.rectTransform;
+            var min = new Vector2(left, bottom);
+            var max = new Vector2(-right, -top);
+
+            if (trt.offsetMin != min) trt.offsetMin = min;
+            if (trt.offsetMax != max) trt.offsetMax = max;
+        }
+
+        static float Norm(float value) => float.IsNaN(value) ? 0f : value;
 
         private IEnumerator Wait(float delay)
         {
