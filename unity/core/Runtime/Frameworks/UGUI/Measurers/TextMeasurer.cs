@@ -17,8 +17,8 @@ namespace ReactUnity.UGUI.Measurers
             set => tmpro = value;
         }
 
-        public YogaNode Layout;
-        public UGUIContext Context;
+        [NonSerialized] public YogaNode Layout;
+        [NonSerialized] public UGUIContext Context;
 
         private float preferredWidth = 0;
         private float preferredHeight = 0;

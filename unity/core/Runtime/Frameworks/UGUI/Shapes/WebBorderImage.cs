@@ -98,7 +98,7 @@ namespace ReactUnity.UGUI.Shapes
         private Texture2D texture;
         public override Texture mainTexture => texture;
 
-        public ReactContext Context;
+        [System.NonSerialized] public ReactContext Context;
 
         private ImageDefinition.ResolvedImage resolved = ImageDefinition.ResolvedImage.Default;
         private ImageDefinition.ResolvedImage Resolved

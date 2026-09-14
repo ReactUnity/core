@@ -225,7 +225,7 @@ namespace ReactUnity.UGUI.Internal
         /// pipeline has a GrabPass, and it is the one pipeline with no render pipeline asset.</summary>
         public static bool Required => GraphicsSettings.currentRenderPipeline != null;
 
-        public UGUIContext Context;
+        [System.NonSerialized] public UGUIContext Context;
 
         private readonly List<IBackdropReader> readers = new List<IBackdropReader>();
         private readonly List<IBackdropReader> onScreen = new List<IBackdropReader>();

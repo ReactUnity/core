@@ -9,8 +9,8 @@ namespace ReactUnity.UGUI.Behaviours
         private float CurrentHeight = -1;
         private RectTransform rt;
 
-        public YogaNode Layout;
-        public UGUIContext Context;
+        [System.NonSerialized] public YogaNode Layout;
+        [System.NonSerialized] public UGUIContext Context;
 
         public void Restart()
         {

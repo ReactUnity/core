@@ -247,7 +247,7 @@ namespace ReactUnity.Editor.Developer
                 "Assembly-CSharp-Editor",
             };
 
-            var defaultAssemblies = AppDomain.CurrentDomain.GetAssemblies().Where(x => assemblySet.Contains(x.GetName().Name)).ToList();
+            var defaultAssemblies = ReflectionHelpers.GetLoadedAssemblies().Where(x => assemblySet.Contains(x.GetName().Name)).ToList();
 
             var generator = new TypescriptModelsGenerator
             {

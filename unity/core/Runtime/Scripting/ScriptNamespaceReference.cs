@@ -70,7 +70,7 @@ namespace ReactUnity.Scripting
             // search in lookup assemblies
             var comparedPath = path.Replace("+", ".");
 
-            var assemblies = _allowedAssemblies.Length > 0 ? _allowedAssemblies : AppDomain.CurrentDomain.GetAssemblies();
+            var assemblies = _allowedAssemblies.Length > 0 ? _allowedAssemblies : ReflectionHelpers.GetLoadedAssemblies();
             foreach (var assembly in assemblies)
             {
                 type = assembly.GetType(path);
@@ -154,7 +154,7 @@ namespace ReactUnity.Scripting
                 result = result.Concat(GetKeysOfNamespaceInAssembly(assembly));
             }
 
-            var assemblies = _allowedAssemblies.Length > 0 ? _allowedAssemblies : AppDomain.CurrentDomain.GetAssemblies();
+            var assemblies = _allowedAssemblies.Length > 0 ? _allowedAssemblies : ReflectionHelpers.GetLoadedAssemblies();
             foreach (var assembly in assemblies)
             {
                 result = result.Concat(GetKeysOfNamespaceInAssembly(assembly));

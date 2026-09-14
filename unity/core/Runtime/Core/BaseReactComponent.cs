@@ -217,7 +217,9 @@ namespace ReactUnity
         protected void StyleChanged(IStyleProperty key, object value, ReactiveDictionary<IStyleProperty, object> style)
         {
             // Container type and name are not inherited, but every descendant's @container reads them.
-            MarkForStyleResolving(key == null || key.inherited || key == StyleProperties.containerType || key == StyleProperties.containerName);
+            // Keys are the StyleProperties singletons, so identity is the comparison.
+            MarkForStyleResolving(key == null || key.inherited
+                || ReferenceEquals(key, StyleProperties.containerType) || ReferenceEquals(key, StyleProperties.containerName));
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]

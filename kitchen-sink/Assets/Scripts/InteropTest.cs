@@ -10,10 +10,10 @@ namespace MyInterop
 {
     public class InteropTest : MonoBehaviour
     {
-        public ReactAction<string> OnKeyPress = new ReactAction<string>();
+        [NonSerialized] public ReactAction<string> OnKeyPress = new ReactAction<string>();
         IDisposable dispose;
 
-        public ReactiveValue<float> DeltaTime = new ReactiveValue<float>();
+        [NonSerialized] public ReactiveValue<float> DeltaTime = new ReactiveValue<float>();
 
         [Obsolete]
         public Action AddKeyPressListener(object callback) => OnKeyPress.AddListener(callback);

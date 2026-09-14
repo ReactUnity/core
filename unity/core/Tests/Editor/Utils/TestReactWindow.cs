@@ -12,7 +12,7 @@ namespace ReactUnity.Tests.Editor
         public const string WindowTitle = "Test React Window";
 
         public Func<ScriptSource> ScriptCallback;
-        public GlobalRecord Globals = new GlobalRecord();
+        [NonSerialized] public GlobalRecord Globals = new GlobalRecord();
         public override bool AutoRun => false;
 
         public override JavascriptEngineType EngineType { get; set; }

@@ -7,7 +7,7 @@ namespace ReactUnity.UGUI.Behaviours
 {
     public class PrefabTarget : MonoBehaviour, IPrefabTarget
     {
-        public PrefabComponent MountedTo;
+        [NonSerialized] public PrefabComponent MountedTo;
         public PrefabEvent OnMount;
         public PrefabEvent OnUnmount;
         public SetPropertyEvent OnSetProperty;

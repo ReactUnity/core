@@ -7,8 +7,8 @@ namespace ReactUnity.UGUI.Measurers
 {
     public class ImageMeasurer : MonoBehaviour, ILayoutSelfController
     {
-        public YogaNode Layout;
-        public UGUIContext Context;
+        [System.NonSerialized] public YogaNode Layout;
+        [System.NonSerialized] public UGUIContext Context;
 
         private ObjectFit fitMode;
         public ObjectFit FitMode

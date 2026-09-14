@@ -6,7 +6,7 @@ namespace ReactUnity.UGUI.StateHandlers
 {
     public class CursorHandler : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     {
-        public ReactContext Context;
+        [System.NonSerialized] public ReactContext Context;
         public IReactComponent Component;
 
         private ICssValueList<Types.Cursor> cursor;

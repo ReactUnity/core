@@ -27,7 +27,7 @@ namespace ReactUnity.UGUI.Shapes
         }
 
 
-        public ReactContext Context;
+        [System.NonSerialized] public ReactContext Context;
 
         private bool pixelated;
 

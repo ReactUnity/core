@@ -14,6 +14,7 @@ using EnginePrototypeTable = System.Runtime.CompilerServices.ConditionalWeakTabl
 
 namespace ReactUnity.Reactive
 {
+    [Serializable]
     [UnityEngine.Scripting.Preserve]
     public class ReactiveDictionary<TKey, T> : IDictionary<TKey, T>, IDisposable, IReactive<Dictionary<TKey, T>>
     {
@@ -272,8 +273,10 @@ namespace ReactUnity.Reactive
     }
 
 
+    [Serializable]
     public class ReactiveRecord<T> : ReactiveDictionary<string, T> { }
 
+    [Serializable]
     public class ReactiveObjectRecord : ReactiveRecord<object>
 #if REACT_CLEARSCRIPT
         , IPropertyBag

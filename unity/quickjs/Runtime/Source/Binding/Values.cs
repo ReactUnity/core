@@ -29,8 +29,8 @@ namespace QuickJS.Binding
         public static Type FindType(string type_name)
         {
             Type type = null; //Assembly.GetExecutingAssembly().GetType(type_name);
-            var assemblies = AppDomain.CurrentDomain.GetAssemblies();
-            for (int i = 0, count = assemblies.Length; i < count; i++)
+            var assemblies = Utils.AssemblyUtils.GetLoadedAssemblies();
+            for (int i = 0, count = assemblies.Count; i < count; i++)
             {
                 var assembly = assemblies[i];
                 if (!assembly.IsDynamic)
