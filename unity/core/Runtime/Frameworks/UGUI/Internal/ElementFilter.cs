@@ -134,6 +134,14 @@ namespace ReactUnity.UGUI.Internal
         private readonly List<WebBackgroundImage> maskLayers = new List<WebBackgroundImage>();
         private bool maskLuminance;
 
+        // What the mask that is already rendered was rendered for. Nothing in the subtree reaches
+        // it, so a capture taken because a child moved keeps the mask it has.
+        private bool maskDirty = true;
+        private Vector4 maskMargins;
+        private Vector2 maskRegionSize;
+        private Vector2 maskBoxSize;
+        private UnityEngine.Events.UnityAction markMaskDirty;
+
         // The elements that read a backdrop from inside this capture, and their surfaces. Owned here
         // rather than by the context's BackdropSurface because only this knows when the capture is
         // taken, and the backdrops have to exist by then.
@@ -286,6 +294,7 @@ namespace ReactUnity.UGUI.Internal
         void Attach()
         {
             markDirty = Invalidate;
+            markMaskDirty = InvalidateMask;
             self = transform as RectTransform;
             originalParent = self.parent;
             originalIndex = self.GetSiblingIndex();
@@ -493,8 +502,12 @@ namespace ReactUnity.UGUI.Internal
             rt.sizeDelta = Vector2.zero;
             rt.anchoredPosition = Vector2.zero;
 
+            layer.RegisterDirtyVerticesCallback(markMaskDirty);
+            layer.RegisterDirtyMaterialCallback(markMaskDirty);
+
             maskLayers.Add(layer);
             dirty = true;
+            maskDirty = true;
         }
 
         void DestroyLastMaskLayer()
@@ -502,8 +515,14 @@ namespace ReactUnity.UGUI.Internal
             var i = maskLayers.Count - 1;
             var layer = maskLayers[i];
             maskLayers.RemoveAt(i);
-            if (layer) DestroyImmediate(layer.gameObject);
+            if (layer)
+            {
+                layer.UnregisterDirtyVerticesCallback(markMaskDirty);
+                layer.UnregisterDirtyMaterialCallback(markMaskDirty);
+                DestroyImmediate(layer.gameObject);
+            }
             dirty = true;
+            maskDirty = true;
         }
 
         void ClearMask()
@@ -531,20 +550,38 @@ namespace ReactUnity.UGUI.Internal
         {
             if (!maskCanvas || maskLayers.Count == 0) return;
 
+            var regionSize = new Vector2(width, height);
+            var boxSize = self.rect.size;
+
+            // The mask is the layers drawn into the filter region, and the subtree is not in it --
+            // so a capture taken because a child moved re-uses the mask already rendered. Worth the
+            // bookkeeping because the render is a URP camera entry, which costs the same whatever
+            // it draws.
+            if (!maskDirty && maskTarget && maskTarget.width == pxWidth && maskTarget.height == pxHeight
+                && maskMargins == margins && maskRegionSize == regionSize && maskBoxSize == boxSize) return;
+
             if (!maskTarget || maskTarget.width != pxWidth || maskTarget.height != pxHeight)
             {
                 Release(ref maskTarget);
                 maskTarget = Allocate(pxWidth, pxHeight, 24);
             }
 
-            maskRegion.sizeDelta = new Vector2(width, height);
-            maskBox.sizeDelta = self.rect.size;
+            maskRegion.sizeDelta = regionSize;
+            maskBox.sizeDelta = boxSize;
             // The box sits off the region's centre by however lopsided the filter region is.
             maskBox.anchoredPosition = new Vector2((margins.x - margins.y) * 0.5f, (margins.z - margins.w) * 0.5f);
 
             maskCamera.orthographicSize = height / 2f;
             maskCamera.aspect = (float) pxWidth / pxHeight;
             maskCamera.targetTexture = maskTarget;
+
+            // Cleared before the render, not after: a layer rebuilt during it raises its callback
+            // from in there, and that has to survive into the next frame rather than be wiped here.
+            maskDirty = false;
+            maskMargins = margins;
+            maskRegionSize = regionSize;
+            maskBoxSize = boxSize;
+
             maskCamera.Render();
         }
 
@@ -684,6 +721,10 @@ namespace ReactUnity.UGUI.Internal
         /// </summary>
         public void Invalidate() => dirty = true;
 
+        /// <summary>A mask layer's own pixels changed -- an animated mask-position, or an image that
+        /// has just loaded. The capture is unaffected; only the mask has to be taken again.</summary>
+        void InvalidateMask() => maskDirty = true;
+
         /// <summary>
         /// True when anything that could alter the captured pixels has moved since the last render.
         /// Missing a change here shows a stale frame, so this errs towards re-rendering: a graphic
@@ -798,7 +839,8 @@ namespace ReactUnity.UGUI.Internal
         {
             if (definition == null || !composite) return;
 
-            var recapture = PollDirty();
+            bool recapture;
+            using (ReactUnity.Helpers.ReactProfiling.FilterPoll.Auto()) recapture = PollDirty();
             if (recapture)
             {
                 dirty = false;
@@ -896,8 +938,10 @@ namespace ReactUnity.UGUI.Internal
             RenderInnerBackdrops(pxWidth, pxHeight);
 
             offscreenCamera.targetTexture = target;
-            offscreenCamera.Render();
+            using (ReactUnity.Helpers.ReactProfiling.FilterCapture.Auto()) offscreenCamera.Render();
 
+            using (ReactUnity.Helpers.ReactProfiling.FilterBlur.Auto())
+            {
             if (definition.Blur > 0) Blur(target, target, definition.Blur, width, height);
 
             if (hasShadow)
@@ -908,10 +952,13 @@ namespace ReactUnity.UGUI.Internal
                 if (definition.DropShadowBlur > 0) Blur(target, shadow, definition.DropShadowBlur, width, height);
                 else Graphics.Blit(target, shadow);
             }
+            }
 
             var margins = new Vector4(mLeft, mRight, mBottom, mTop);
-            RenderMask(pxWidth, pxHeight, width, height, margins);
-            ApplyToComposite(target, margins, width, height);
+            using (ReactUnity.Helpers.ReactProfiling.FilterMask.Auto())
+                RenderMask(pxWidth, pxHeight, width, height, margins);
+            using (ReactUnity.Helpers.ReactProfiling.FilterComposite.Auto())
+                ApplyToComposite(target, margins, width, height);
         }
 
         /// <summary>
@@ -1053,7 +1100,8 @@ namespace ReactUnity.UGUI.Internal
             if (!surface) return;
 
             surface.CollectFor(this, innerReaders);
-            innerBackdrops.Render(offscreenCamera, offscreenCanvas.transform, innerReaders, pxWidth, pxHeight);
+            using (ReactUnity.Helpers.ReactProfiling.FilterInnerBackdrops.Auto())
+                innerBackdrops.Render(offscreenCamera, offscreenCanvas.transform, innerReaders, pxWidth, pxHeight);
         }
 
         /// <summary>
