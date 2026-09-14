@@ -147,6 +147,8 @@ namespace ReactUnity.UGUI.Internal
         // taken, and the backdrops have to exist by then.
         private readonly BackdropPass innerBackdrops = new BackdropPass();
         private readonly List<IBackdropReader> innerReaders = new List<IBackdropReader>();
+        private readonly List<bool> innerStale = new List<bool>();
+        private Matrix4x4 backdropFraming;
 
         private RawImage composite;
         private Material compositeMaterial;
@@ -279,6 +281,9 @@ namespace ReactUnity.UGUI.Internal
         /// <summary>How many offscreen renders this filter has done. For tests.</summary>
         public int RenderCount { get; private set; }
 
+        /// <summary>How many backdrops this filter has rendered for the readers inside it. For tests.</summary>
+        public int InnerBackdropRenderCount => innerBackdrops.RenderCount;
+
         // Where the capture is framed, and how far the batch moved the surface to pack it. The
         // subtree count is what separates the element's own graphics from the mask layers appended
         // after them, which live on another surface entirely and would blow the cell up.
@@ -286,6 +291,11 @@ namespace ReactUnity.UGUI.Internal
         private Vector3 batchShift;
         private readonly List<bool> batchChanged = new List<bool>();
         private int subtreeGraphics;
+
+        // How early in paint order the subtree has changed since the last capture read it. A
+        // reader's backdrop is what was painted before it, so a change after one cannot reach it,
+        // and that reader keeps the surface it has. -1 is "somewhere, or everywhere".
+        private int dirtyFrom = int.MaxValue;
         private int capturePxWidth;
         private int capturePxHeight;
 
@@ -729,7 +739,11 @@ namespace ReactUnity.UGUI.Internal
         /// <summary>
         /// Renders on the next frame even if nothing looks like it changed.
         /// </summary>
-        public void Invalidate() => dirty = true;
+        public void Invalidate()
+        {
+            dirty = true;
+            dirtyFrom = -1;
+        }
 
         /// <summary>A mask layer's own pixels changed -- an animated mask-position, or an image that
         /// has just loaded. The capture is unaffected; only the mask has to be taken again.</summary>
@@ -774,6 +788,7 @@ namespace ReactUnity.UGUI.Internal
             {
                 self.hasChanged = false;
                 dirty = true;
+                dirtyFrom = -1;
             }
 
             // A rebuild raises the callbacks below, but moving a child only sets its transform --
@@ -808,6 +823,10 @@ namespace ReactUnity.UGUI.Internal
                 if (!t.hasChanged) continue;
                 t.hasChanged = false;
                 dirty = true;
+
+                // The mask layers are appended past the subtree and are drawn on a surface of their
+                // own, so one changing is not something any backdrop here could have seen.
+                if (i < subtreeGraphics && i < dirtyFrom) dirtyFrom = i;
             }
 
             return dirty;
@@ -825,6 +844,7 @@ namespace ReactUnity.UGUI.Internal
             registered.Clear();
             registered.AddRange(graphics);
             dirty = true;
+            dirtyFrom = -1;
 
             for (int i = 0; i < registered.Count; i++)
             {
@@ -1260,8 +1280,34 @@ namespace ReactUnity.UGUI.Internal
             if (!surface) return;
 
             surface.CollectFor(this, innerReaders);
+
+            // Everything the capture is framed by, in one matrix. A surface taken through another
+            // one holds a different part of the world at the same uv -- and uv is how a backdrop is
+            // read -- so a camera that has moved, turned or resized keeps none of them.
+            var framing = offscreenCamera.projectionMatrix * offscreenCamera.worldToCameraMatrix;
+            var reframed = !framing.Equals(backdropFraming);
+            backdropFraming = framing;
+
+            innerStale.Clear();
+            for (int i = 0; i < innerReaders.Count; i++)
+                innerStale.Add(reframed || dirtyFrom < PaintIndexOf(innerReaders[i]));
+            dirtyFrom = int.MaxValue;
+
             using (ReactUnity.Helpers.ReactProfiling.FilterInnerBackdrops.Auto())
-                innerBackdrops.Render(offscreenCamera, offscreenCanvas.transform, innerReaders, pxWidth, pxHeight);
+                innerBackdrops.Render(offscreenCamera, offscreenCanvas.transform, innerReaders, pxWidth, pxHeight, innerStale);
+        }
+
+        /// <summary>Where a reader sits in the subtree's paint order. A reader the list does not
+        /// account for is treated as painted last, so any change at all is taken to reach it.</summary>
+        int PaintIndexOf(IBackdropReader reader)
+        {
+            var t = reader?.BackdropRenderer ? reader.BackdropRenderer.transform : null;
+            if (!t) return int.MaxValue;
+
+            for (int i = 0; i < subtreeGraphics && i < graphics.Count; i++)
+                if (graphics[i] && graphics[i].transform == t) return i;
+
+            return int.MaxValue;
         }
 
         /// <summary>

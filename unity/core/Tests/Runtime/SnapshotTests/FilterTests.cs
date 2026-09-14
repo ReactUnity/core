@@ -1021,6 +1021,125 @@ namespace ReactUnity.Tests
             }
         }
 
+        // A reader inside a filter is served by the filter's own camera, one render each, and that
+        // render is the whole cost. What it draws is everything painted before the reader -- so the
+        // three elements here stand under it, as it, and over it.
+        const string InnerScript = @"
+            function App() {
+                return <view id='host'>
+                    <view id='under'></view>
+                    <view id='panel'></view>
+                    <view id='over'></view>
+                </view>;
+            }
+";
+
+        const string InnerStyle = @"
+            #host {
+                width: 200px;
+                height: 200px;
+                background-color: red;
+                filter: brightness(1.2);
+            }
+
+            #under {
+                position: absolute;
+                left: 0;
+                top: 0;
+                width: 100px;
+                height: 200px;
+                background-color: #00ff00;
+            }
+
+            #panel {
+                position: absolute;
+                left: 0;
+                top: 0;
+                width: 200px;
+                height: 100px;
+                backdrop-filter: blur(8px);
+            }
+
+            #over {
+                position: absolute;
+                left: 0;
+                top: 150px;
+                width: 200px;
+                height: 50px;
+                background-color: blue;
+            }
+        ";
+
+        private ElementFilter InnerHost => Q("#host").ElementFilter;
+
+        [UGUITest(Script = InnerScript, Style = InnerStyle)]
+        public IEnumerator AnInnerBackdropIsKeptWhenOnlyWhatIsOverItMoves()
+        {
+            for (int i = 0; i < 5; i++) yield return null;
+
+            Assert.NotNull(InnerHost, "the host should have been captured");
+            var captures = InnerHost.RenderCount;
+            var backdrops = InnerHost.InnerBackdropRenderCount;
+            Assert.Greater(backdrops, 0, "the panel inside should have had a backdrop rendered");
+
+            Q("#over").Style["translate"] = "0px 20px";
+            for (int i = 0; i < 3; i++) yield return null;
+
+            Debug.Log($"[BACKDROP cache over] captures {captures} -> {InnerHost.RenderCount}, " +
+                $"backdrops {backdrops} -> {InnerHost.InnerBackdropRenderCount}");
+
+            Assert.Greater(InnerHost.RenderCount, captures, "moving a child should re-capture the subtree");
+            Assert.AreEqual(backdrops, InnerHost.InnerBackdropRenderCount,
+                "what is painted over the panel cannot reach its backdrop, so it should have kept it");
+        }
+
+        [UGUITest(Script = InnerScript, Style = InnerStyle)]
+        public IEnumerator AnInnerBackdropIsRetakenWhenWhatIsUnderItMoves()
+        {
+            for (int i = 0; i < 5; i++) yield return null;
+
+            var backdrops = InnerHost.InnerBackdropRenderCount;
+
+            Q("#under").Style["translate"] = "0px 20px";
+            for (int i = 0; i < 3; i++) yield return null;
+
+            Debug.Log($"[BACKDROP cache under] backdrops {backdrops} -> {InnerHost.InnerBackdropRenderCount}");
+            Assert.Greater(InnerHost.InnerBackdropRenderCount, backdrops,
+                "the panel reads what is under it, so that moving has to be taken again");
+        }
+
+        [UGUITest(Script = InnerScript, Style = InnerStyle)]
+        public IEnumerator AKeptInnerBackdropDrawsWhatAFreshOneWould()
+        {
+            for (int i = 0; i < 5; i++) yield return null;
+
+            // Settle on a kept backdrop: the move below is over the panel, so the capture is taken
+            // again while the backdrop underneath it is not.
+            Q("#over").Style["translate"] = "0px 20px";
+            for (int i = 0; i < 3; i++) yield return null;
+            var kept = CaptureScreen();
+
+            // And the same page with every backdrop taken again from scratch.
+            InnerHost.Invalidate();
+            for (int i = 0; i < 3; i++) yield return null;
+            var fresh = CaptureScreen();
+
+            Assert.AreEqual(kept.Length, fresh.Length);
+
+            int worst = 0, differing = 0;
+            for (int i = 0; i < kept.Length; i++)
+            {
+                Color32 k = kept[i], f = fresh[i];
+                var d = Mathf.Max(Mathf.Max(Mathf.Abs(k.r - f.r), Mathf.Abs(k.g - f.g)),
+                                  Mathf.Max(Mathf.Abs(k.b - f.b), Mathf.Abs(k.a - f.a)));
+                if (d > 0) differing++;
+                if (d > worst) worst = d;
+            }
+
+            Debug.Log($"[BACKDROP cache pixels] worst channel difference {worst}, {differing}/{kept.Length} pixels differ");
+            Assert.LessOrEqual(worst, 1, "a backdrop that was kept should draw what rendering it again would");
+        }
+
         [UGUITest(Script = BaseScript, Style = BaseStyle)]
         public IEnumerator FilterIsRemovedWhenUnset()
         {

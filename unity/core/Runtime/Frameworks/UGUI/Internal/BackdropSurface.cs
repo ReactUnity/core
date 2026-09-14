@@ -44,13 +44,22 @@ namespace ReactUnity.UGUI.Internal
         private readonly List<CanvasRenderer> dimmed = new List<CanvasRenderer>();
         private readonly List<float> alphas = new List<float>();
         private readonly List<CanvasRenderer> buffer = new List<CanvasRenderer>();
+        private readonly List<IBackdropReader> held = new List<IBackdropReader>();
+
+        /// <summary>How many surfaces this pass has rendered, ever. For tests.</summary>
+        public int RenderCount { get; private set; }
 
         /// <summary>
         /// Renders one surface per reader, in the order given, and hands each reader its own.
         /// </summary>
         /// <param name="root">The canvas the readers live under, which bounds how far up the frame
         /// is taken apart. A reader outside it gets nothing and falls back to the pipeline.</param>
-        public void Render(Camera cam, Transform root, List<IBackdropReader> readers, int width, int height)
+        /// <param name="stale">Which readers have had something change behind them since last time.
+        /// The rest keep the surface they were given, which is the whole point of asking: a render
+        /// apiece is the cost here, and a backdrop only moves when what is painted before it does.
+        /// Null renders every one of them.</param>
+        public void Render(Camera cam, Transform root, List<IBackdropReader> readers, int width, int height,
+            List<bool> stale = null)
         {
             if (!cam || !root || readers.Count == 0)
             {
@@ -59,10 +68,18 @@ namespace ReactUnity.UGUI.Internal
             }
 
             EnsureSurfaces(readers.Count, width, height);
+            var reusable = Reusable(readers);
             var target = cam.targetTexture;
 
             for (int r = 0; r < readers.Count; r++)
             {
+                // Nothing behind it moved, and it is still holding the surface it was given.
+                if (reusable && stale != null && r < stale.Count && !stale[r])
+                {
+                    readers[r].SetBackdrop(surfaces[r]);
+                    continue;
+                }
+
                 if (!Hide(readers[r].BackdropRenderer.transform, root))
                 {
                     readers[r].SetBackdrop(null);
@@ -75,6 +92,7 @@ namespace ReactUnity.UGUI.Internal
                 {
                     cam.targetTexture = surfaces[r];
                     cam.Render();
+                    RenderCount++;
                 }
                 finally
                 {
@@ -85,6 +103,21 @@ namespace ReactUnity.UGUI.Internal
                 // Bound as we go, so the next reader's render finds this one's result in place.
                 readers[r].SetBackdrop(surfaces[r]);
             }
+
+            held.Clear();
+            held.AddRange(readers);
+        }
+
+        /// <summary>
+        /// Whether the surfaces still belong to the readers holding them. They are matched by
+        /// position, so a reader appearing, going, or changing places invalidates the lot.
+        /// </summary>
+        bool Reusable(List<IBackdropReader> readers)
+        {
+            if (held.Count != readers.Count) return false;
+            for (int i = 0; i < held.Count; i++) if (!ReferenceEquals(held[i], readers[i])) return false;
+            for (int i = 0; i < surfaces.Count; i++) if (!surfaces[i] || !surfaces[i].IsCreated()) return false;
+            return true;
         }
 
         /// <summary>
@@ -148,6 +181,7 @@ namespace ReactUnity.UGUI.Internal
                 if (i < count && rt && rt.width == w && rt.height == h) continue;
                 Free(rt);
                 surfaces.RemoveAt(i);
+                held.Clear();
             }
 
             while (surfaces.Count < count)
@@ -163,6 +197,7 @@ namespace ReactUnity.UGUI.Internal
         {
             for (int i = 0; i < surfaces.Count; i++) Free(surfaces[i]);
             surfaces.Clear();
+            held.Clear();
         }
 
         static void Free(RenderTexture rt)
