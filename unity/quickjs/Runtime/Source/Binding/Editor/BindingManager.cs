@@ -1984,6 +1984,17 @@ namespace QuickJS.Binding
             list.Add(filename);
         }
 
+        /// <summary>Binds what Collect() found into another runtime's callback.</summary>
+        ///
+        /// Collect() is a reflection pass over every assembly in the domain and its answer does not
+        /// depend on a runtime; only the callback does. Re-binding a collected manager is what lets
+        /// a second ScriptRuntime skip it -- see QuickJSEngine.InvokeReflectBinding.
+        public void Bind(IBindingCallback bindingCallback)
+        {
+            _bindingCallback = bindingCallback;
+            Bind();
+        }
+
         /// <summary>
         /// Feeds everything Collect() found to the binding callback, generating no source.
         /// This is the reflect-binding path; Generate() is the codegen one.

@@ -90,7 +90,7 @@ namespace ReactUnity.Editor.Renderer
 
         public virtual void Run(VisualElement root = null)
         {
-            if (HostElement != null) OnDestroy();
+            if (HostElement != null) Clear();
             HostElement = new ReactUnityEditorElement(GetScript(), GetGlobals(), Timer,
                 DefaultMediaProvider.CreateMediaProvider("window", "uitoolkit", true),
                 EngineType, DebugEnabled, AwaitDebugger, false, AdvancedOptions);
@@ -109,16 +109,22 @@ namespace ReactUnity.Editor.Renderer
             };
         }
 
-        protected virtual void OnDestroy()
+        /// <summary>Takes the rendered element down, leaving the window itself open.</summary>
+        public void Clear()
         {
             HostElement?.RemoveFromHierarchy();
             HostElement?.Destroy();
             HostElement = null;
         }
 
+        protected virtual void OnDestroy()
+        {
+            Clear();
+        }
+
         public virtual void Restart(VisualElement root = null)
         {
-            OnDestroy();
+            Clear();
             Run(root);
         }
 

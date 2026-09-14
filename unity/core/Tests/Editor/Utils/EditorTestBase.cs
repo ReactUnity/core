@@ -37,7 +37,7 @@ namespace ReactUnity.Tests.Editor
 #endif
     public abstract class EditorTestBase
     {
-        protected TestReactWindow Window => EditorWindow.GetWindow<TestReactWindow>();
+        protected TestReactWindow Window => TestReactWindow.Existing;
         protected ReactUnityEditorElement Component => Window?.HostElement;
         protected ReactContext Context => Component?.Context;
         protected EditorContext EditorContext => Context as EditorContext;
@@ -80,8 +80,9 @@ namespace ReactUnity.Tests.Editor
         [OneTimeTearDown]
         public void TearDownFixture()
         {
-            if (EditorWindow.HasOpenInstances<TestReactWindow>())
-                if (Window != null) Window.Close();
+            // Between fixtures only. Within one the window is reused and restarted per test, which
+            // is most of what the Editor suite used to spend its time on.
+            if (Window) Window.Close();
         }
 
         public void IgnoreForEngine(JavascriptEngineType engine)

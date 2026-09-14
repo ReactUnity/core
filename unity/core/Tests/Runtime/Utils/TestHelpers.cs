@@ -74,17 +74,27 @@ namespace ReactUnity.Tests
             }
             else
             {
-                var injectableText = Resources.Load<TextAsset>("ReactUnity/tests/injectable/index");
-                var injectedText = injectableText.text.Replace("/*INJECT_CODE*/", transformed);
+                var harness = Resources.Load<TextAsset>("ReactUnity/tests/injectable/harness");
 
                 yield return new ScriptSource
                 {
                     UseDevServer = ScriptSource.DevServerType.Never,
-                    SourceText = injectedText,
+                    SourceText = harness.text.Replace("/*INJECT_CODE*/", transformed),
                     Type = ScriptSourceType.Raw,
                 };
             }
         }
+
+        private static string injectableBundle;
+
+        /// <summary>The React and ReactUnity build the harness picks up off globalThis.</summary>
+        ///
+        /// Run on its own before the harness rather than spliced into it, because it is the same
+        /// 200 KB for every test in the suite and an engine that can hold a parse can only do so
+        /// for a text that does not change -- which is also why it is read off the asset once and
+        /// kept.
+        public static string InjectableBundle =>
+            injectableBundle = injectableBundle ?? Resources.Load<TextAsset>("ReactUnity/tests/injectable/index").text;
 
         #region Test Debug Toggle
 #if UNITY_EDITOR && REACT_UNITY_DEVELOPER

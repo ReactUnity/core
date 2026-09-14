@@ -995,15 +995,15 @@ namespace QuickJS
             _typeDB.Destroy();
 
             // execute all pending actions (enqueued in gc thread) before ObjectCahce disposing
-            GC.Collect();
-            GC.WaitForPendingFinalizers();
             ExecutePendingActions(true);
 
-            //TODO unity-jsb: jsvalue's gc finalizer can't be certainly invoked when the jsvalue hasn't any reference, we just do not calling cache.Destroy normally for now.
+            // This is what frees the JSValues: both weak maps dispose every entry still alive as
+            // they clear, which reaches the referenced wrappers a collection never could.
             _objectCache.Destroy();
 
-            //
-            GC.Collect();
+            // So all that is left is the wrappers an earlier collection already queued. Forcing two
+            // blocking gen2 collections here instead was 67 ms of main thread per teardown on a
+            // small heap and far worse on a grown one -- half the wall clock of a 1562-test run.
             GC.WaitForPendingFinalizers();
             ExecutePendingActions(true);
 

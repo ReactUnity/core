@@ -26,12 +26,19 @@ namespace ReactUnity.Tests
             var cmp = canvas?.GetComponentInChildren<ReactRendererBase>();
             if (cmp?.Context != null && SkipIfExisting) yield break;
 
+            // Before the scene, not after: resetting it destroys roots the last test left behind --
+            // a filter's offscreen surface, a portal's target -- and a context that is still ticking
+            // would walk into them on the next frame.
+            if (cmp) cmp.enabled = false;
+
             yield return base.BeforeTest(test);
 
             var engineType = TestHelpers.GetEngineTypeOfTest(test);
 
             var script = GetScript();
-            while (script.MoveNext()) yield return null;
+            // Only the null steps are worth a frame: stopping on the source itself, rather than
+            // driving the enumerator to its end, takes a whole frame out of every test.
+            while (script.MoveNext() && script.Current == null) yield return null;
 
             var ru = CreateReactUnity(engineType, script.Current);
             ru.Timer = RealTimer ? null : new ControlledTimer();
@@ -50,6 +57,16 @@ namespace ReactUnity.Tests
             var canvas = GameObject.Find("REACT_CANVAS");
             Debug.Assert(canvas != null, "The scene must include a canvas object named as REACT_CANVAS");
             var ru = canvas.GetComponentInChildren<ReactRendererBase>();
+
+            // A reset scene hands back the previous test's renderer, where a reload used to build a
+            // new one, so everything a test can leave on it is put back here. Disabling runs its
+            // Clean(); the listeners are added per test and would otherwise pile up until the first
+            // test's closure answered for every later one; and Globals is what fixtures write to,
+            // so `Globals["cardWidth"] = 150` at the end of one test used to die with the scene.
+            ru.enabled = false;
+            ru.AdvancedOptions.BeforeStart.RemoveAllListeners();
+            ru.AdvancedOptions.AfterStart.RemoveAllListeners();
+            ru.Globals.ClearWithoutNotify();
 
             ru.EngineType = engineType;
             ru.Source = script;

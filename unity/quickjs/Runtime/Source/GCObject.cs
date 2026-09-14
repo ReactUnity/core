@@ -33,7 +33,12 @@ namespace QuickJS
             if (context != null)
             {
                 _context = null;
-                OnDisposing(context);
+
+                // A finalizer that runs after the context is gone has nothing to free: the value
+                // it holds died with the runtime. Asking anyway reached a guard that logged
+                // "enqueue pending action after the runtime shutdown" as an error, which in a
+                // Unity test run fails whichever test the GC thread happened to interrupt.
+                if (context.IsValid()) OnDisposing(context);
             }
         }
 
