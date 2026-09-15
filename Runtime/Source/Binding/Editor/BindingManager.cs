@@ -317,8 +317,8 @@ namespace QuickJS.Binding
 
         private void Initialize()
         {
-            var assemblies = AppDomain.CurrentDomain.GetAssemblies();
-            for (var i = 0; i < assemblies.Length; i++)
+            var assemblies = Utils.AssemblyUtils.GetLoadedAssemblies();
+            for (var i = 0; i < assemblies.Count; i++)
             {
                 var assembly = assemblies[i];
                 if (!assembly.IsDynamic && IsAssemblyReferencedTo(assembly, typeof(IBindingProcess).Assembly))
@@ -471,7 +471,7 @@ namespace QuickJS.Binding
             {
                 var typeBindingInfo = new TypeBindingInfo(this, type, typeTransform);
                 _exportedTypes.Add(type, typeBindingInfo);
-                Info($"AddExportedType: {type} Assembly: {type.Assembly} Location: {type.Assembly.Location}");
+                Info($"AddExportedType: {type} Assembly: {type.Assembly} Location: {Utils.AssemblyUtils.GetLocation(type.Assembly)}");
 
                 var baseType = type.BaseType;
                 if (baseType != null && !IsExportingBlocked(baseType))
@@ -1599,8 +1599,8 @@ namespace QuickJS.Binding
             OnPreCollectAssemblies();
             AddAssemblies(false, prefs.explicitAssemblies.ToArray());
             AddAssemblies(true, prefs.implicitAssemblies.ToArray());
-            var assemblies = AppDomain.CurrentDomain.GetAssemblies();
-            for (var i = 0; i < assemblies.Length; i++)
+            var assemblies = Utils.AssemblyUtils.GetLoadedAssemblies();
+            for (var i = 0; i < assemblies.Count; i++)
             {
                 var assembly = assemblies[i];
                 if (!assembly.IsDynamic && !IsAssemblyBlocked(assembly))
@@ -1715,11 +1715,12 @@ namespace QuickJS.Binding
         {
             try
             {
-                if (string.IsNullOrEmpty(assembly.Location))
+                var location = Utils.AssemblyUtils.GetLocation(assembly);
+                if (string.IsNullOrEmpty(location))
                 {
                     return false;
                 }
-                var fileInfo = new FileInfo(assembly.Location);
+                var fileInfo = new FileInfo(location);
                 if (fileInfo.DirectoryName.EndsWith("/Editor/Data/Managed"))
                 {
                     return true;
@@ -1731,7 +1732,7 @@ namespace QuickJS.Binding
             }
             catch (Exception ex)
             {
-                _bindingLogger?.LogError($"{assembly} {assembly.Location} {ex}");
+                _bindingLogger?.LogError($"{assembly} {Utils.AssemblyUtils.GetLocation(assembly)} {ex}");
                 return false;
             }
 
@@ -1843,7 +1844,7 @@ namespace QuickJS.Binding
                 var types = assembly.GetExportedTypes();
 
                 Info("info: {0}", assembly);
-                Info("location: {0}", assembly.Location);
+                Info("location: {0}", Utils.AssemblyUtils.GetLocation(assembly));
                 Info("types: {0}", types.Length);
                 _logWriter?.AddTabLevel();
                 foreach (var type in types)
@@ -1982,6 +1983,17 @@ namespace QuickJS.Binding
                 list = _outputFiles[outDir] = new List<string>();
             }
             list.Add(filename);
+        }
+
+        /// <summary>Binds what Collect() found into another runtime's callback.</summary>
+        ///
+        /// Collect() is a reflection pass over every assembly in the domain and its answer does not
+        /// depend on a runtime; only the callback does. Re-binding a collected manager is what lets
+        /// a second ScriptRuntime skip it -- see QuickJSEngine.InvokeReflectBinding.
+        public void Bind(IBindingCallback bindingCallback)
+        {
+            _bindingCallback = bindingCallback;
+            Bind();
         }
 
         /// <summary>

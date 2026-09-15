@@ -32,10 +32,10 @@ namespace QuickJS.Binding
 
         public static BindAction StaticBind = (runtime) =>
         {
-            var assemblies = AppDomain.CurrentDomain.GetAssemblies();
+            var assemblies = Utils.AssemblyUtils.GetLoadedAssemblies();
             var typeName = $"{Values.NamespaceOfStaticBinder}.{Values.ClassNameOfStaticBinder}";
             Type type = null;
-            for (var i = assemblies.Length - 1; i >= 0; --i)
+            for (var i = assemblies.Count - 1; i >= 0; --i)
             {
                 var assembly = assemblies[i];
                 if (!assembly.IsDynamic)
