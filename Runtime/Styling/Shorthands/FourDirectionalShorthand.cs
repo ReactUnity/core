@@ -18,6 +18,8 @@ namespace ReactUnity.Styling.Shorthands
             BorderColor = 5,
             BorderStyle = 6,
             BorderRadius = 7,
+            ScrollPadding = 8,
+            ScrollMargin = 9,
         }
 
 
@@ -102,6 +104,26 @@ namespace ReactUnity.Styling.Shorthands
                         StyleProperties.borderBottomLeftRadius,
                     };
                     Converter = AllConverters.BorderRadiusConverter;
+                    break;
+                case PropertyType.ScrollPadding:
+                    ModifiedProperties = new List<IStyleProperty>
+                    {
+                        StyleProperties.scrollPaddingTop,
+                        StyleProperties.scrollPaddingRight,
+                        StyleProperties.scrollPaddingBottom,
+                        StyleProperties.scrollPaddingLeft,
+                    };
+                    Converter = AllConverters.YogaValueConverter;
+                    break;
+                case PropertyType.ScrollMargin:
+                    ModifiedProperties = new List<IStyleProperty>
+                    {
+                        StyleProperties.scrollMarginTop,
+                        StyleProperties.scrollMarginRight,
+                        StyleProperties.scrollMarginBottom,
+                        StyleProperties.scrollMarginLeft,
+                    };
+                    Converter = AllConverters.LengthConverter;
                     break;
                 default:
                     break;

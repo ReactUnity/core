@@ -105,8 +105,50 @@ namespace ReactUnity.Scripting
                 return;
             }
 
-            Engine.Execute(code);
+            ExecuteScript(code);
         }
+
+        /// <summary>Runs a classic script, reusing the parse of one that has run before.</summary>
+        ///
+        /// Jint parses on every Execute, and for anything large the parse is nearly all of it -- the
+        /// test suite's 200 KB injectable bundle costs ~200 ms to parse against ~26 ms to run. A
+        /// Prepared&lt;Script&gt; is an immutable AST with no engine in it, so the same text run
+        /// again -- one bundle shared by every test here, or an app re-run by a restart -- can be
+        /// parsed once for the life of the domain. Preparation is asked to do nothing beyond
+        /// parsing: constant folding and static analysis would make the first parse dearer than the
+        /// one they replace, which is all a script run once would ever see.
+        private void ExecuteScript(string code)
+        {
+            if (code.Length < PreparedThreshold)
+            {
+                Engine.Execute(code);
+                return;
+            }
+
+            if (!preparedScripts.TryGetValue(code, out var prepared))
+            {
+                // Each entry holds an AST of the script that produced it, so the cache is a handful
+                // of scripts deep and dropped wholesale rather than aged.
+                if (preparedScripts.Count >= PreparedCapacity) preparedScripts.Clear();
+                prepared = Jint.Engine.PrepareScript(code, options: ParseOnly);
+                preparedScripts[code] = prepared;
+            }
+
+            Engine.Execute(prepared);
+        }
+
+        private const int PreparedThreshold = 16 * 1024;
+        private const int PreparedCapacity = 4;
+
+        private static readonly ScriptPreparationOptions ParseOnly = new ScriptPreparationOptions
+        {
+            FoldConstants = false,
+            StaticAnalysis = false,
+            CollectReferencedGlobals = false,
+        };
+
+        private static readonly Dictionary<string, Prepared<Acornima.Ast.Script>> preparedScripts =
+            new Dictionary<string, Prepared<Acornima.Ast.Script>>();
 
         private void StartModule(string code, string fileName)
         {

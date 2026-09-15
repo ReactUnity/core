@@ -27,7 +27,7 @@ namespace ReactUnity.UGUI.Shapes
         }
 
 
-        public ReactContext Context;
+        [System.NonSerialized] public ReactContext Context;
 
         private bool pixelated;
 
@@ -54,6 +54,32 @@ namespace ReactUnity.UGUI.Shapes
         // flat background colour, which only the shader that reads the render target can see.
         [SerializeField]
         private bool BlendsWithStack;
+
+        private Internal.BackgroundClip clip;
+        private BackgroundBox clipBox;
+
+        /// <summary>The element's <c>background-clip</c>, and which of its boxes this layer takes.</summary>
+        public Internal.BackgroundClip Clip => clip;
+        public BackgroundBox ClipBox => clipBox;
+
+        /// <summary>
+        /// Anything but the border box needs a shader that knows about the clip and a material of
+        /// its own to hold it -- a plain image has neither until it is asked for. The border box is
+        /// what the mask above already cuts every layer to, so it costs nothing.
+        /// </summary>
+        public void SetClip(Internal.BackgroundClip value, BackgroundBox box)
+        {
+            if (clip == value && clipBox == box) return;
+
+            var had = Clipped;
+            clip = value;
+            clipBox = box;
+
+            if (had != Clipped) RefreshMaterial();
+            SyncInstanceMaterial();
+        }
+
+        private bool Clipped => clip && clipBox != BackgroundBox.BorderBox;
 
         [SerializeField]
         private BackgroundSize backgroundSize = BackgroundSize.Auto;
@@ -167,17 +193,19 @@ namespace ReactUnity.UGUI.Shapes
                     baseMat = Definition.ModifyMaterial(Context, baseMat, szPoint);
                 }
 
-                if (!registered) return baseMat;
+                if (!registered && !Clipped) return baseMat;
 
                 // Everything above shares its materials -- the blend materials by mode, the gradient
-                // ones by gradient -- and a backdrop cannot be shared, so a reader gets a copy. A new
-                // base material also means a mask above us changed, and ours has to be rebuilt on it.
+                // ones by gradient -- and neither a backdrop nor a clip can be shared, so a layer
+                // that reads one gets a copy. A new base material also means a mask above us
+                // changed, and ours has to be rebuilt on it.
                 if (!instanceMaterial || instanceBase != baseMat)
                 {
                     if (instanceMaterial) DestroyImmediate(instanceMaterial);
                     instanceMaterial = new Material(baseMat);
                     instanceBase = baseMat;
                     ApplyBackdrop(instanceMaterial);
+                    Internal.BackgroundClip.Bind(instanceMaterial, clip, clipBox);
                 }
 
                 return instanceMaterial;
@@ -273,6 +301,9 @@ namespace ReactUnity.UGUI.Shapes
             material = BlendMode != BackgroundBlendMode.Normal
                 ? ResourcesHelper.GetBackgroundBlendMaterial((int) BlendMode, BlendsWithStack)
                 : pixelated && own == null ? ResourcesHelper.PixelatedImageMaterial
+                // `UI/Default` has nowhere to put a clip, so a plain layer that is being clipped
+                // borrows the one shader that is it plus the clip.
+                : Clipped && own == null ? ResourcesHelper.ClippedImageMaterial
                 : own;
             SetMaterialDirty();
         }
@@ -306,6 +337,10 @@ namespace ReactUnity.UGUI.Shapes
 
         public CanvasRenderer BackdropRenderer => canvasRenderer;
 
+        // A stacked `background-blend-mode` blends with the backdrop where it stands and nowhere
+        // else, so it reads the element's own rect and not a pixel more.
+        public float BackdropBleed => 0f;
+
         public void SetBackdrop(Texture value)
         {
             backdrop = value;
@@ -330,15 +365,23 @@ namespace ReactUnity.UGUI.Shapes
             registered = wanted;
 
             if (wanted) surface.Register(this);
-            else
+            else if (surface) surface.Unregister(this);
+
+            SyncInstanceMaterial();
+        }
+
+        /// <summary>Drops the copy once neither a backdrop nor a clip needs one, and the shared material
+        /// it was made from is what this layer goes back to drawing with.</summary>
+        void SyncInstanceMaterial()
+        {
+            if (!registered && !Clipped)
             {
-                surface.Unregister(this);
-                // Nothing reads it now, and the shared material it was copied from is what this
-                // layer goes back to drawing with.
                 if (instanceMaterial) DestroyImmediate(instanceMaterial);
                 instanceMaterial = null;
                 instanceBase = null;
             }
+
+            SetMaterialDirty();
         }
 
         #endregion

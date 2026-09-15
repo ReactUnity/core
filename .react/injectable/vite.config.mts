@@ -29,7 +29,7 @@ const dropExtractedCss: Plugin = {
 // this build rather than bundling -- which is what lets the bundle itself be minified.
 export default defineConfig({
   // No JSX here any more: src/index.ts only hands the bundled libraries to the harness.
-  plugins: [reactUnity({ react: false, preserve: ['rerender.js'] }), dropExtractedCss],
+  plugins: [reactUnity({ react: false, preserve: ['harness.js'] }), dropExtractedCss],
   // An app build substitutes this itself; a library build leaves it to the consumer, and
   // this one's consumer is a JS engine inside Unity with no process object to read. React's
   // package entries branch on it, so without this the harness throws before it renders.

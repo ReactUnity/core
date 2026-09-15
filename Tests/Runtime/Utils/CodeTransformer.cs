@@ -24,6 +24,10 @@ namespace ReactUnity.Tests
             });
         }
 
+        // Fixtures declare their snippet as a const and every test in one transforms the same
+        // string, so this is a few thousand Sucrase runs over a few dozen distinct inputs.
+        private static readonly Dictionary<string, string> transformed = new Dictionary<string, string>();
+
         public static IEnumerator<string> TransformCode(string code)
         {
             return Instance.Transform(code);
@@ -50,8 +54,14 @@ namespace ReactUnity.Tests
 
         public IEnumerator<string> Transform(string code)
         {
+            if (transformed.TryGetValue(code, out var cached))
+            {
+                yield return cached;
+                yield break;
+            }
+
             while (!Initialized) yield return null;
-            yield return TransformNow(code);
+            yield return transformed[code] = TransformNow(code);
         }
     }
 }

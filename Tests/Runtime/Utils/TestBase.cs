@@ -79,7 +79,9 @@ namespace ReactUnity.Tests
         [OneTimeSetUp]
         public void InitializeFixture()
         {
-            if (Context != null) GameObject.DestroyImmediate(Component);
+            // Disposes the previous fixture's context without taking the renderer with it -- the
+            // scene it lives in is reset rather than reloaded now, so nothing would put it back.
+            if (Context != null) Component.enabled = false;
         }
 
         public override void Setup()

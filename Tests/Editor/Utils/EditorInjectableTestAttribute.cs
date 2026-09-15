@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using ReactUnity.Scripting;
 
 namespace ReactUnity.Tests.Editor
 {
@@ -23,6 +24,12 @@ namespace ReactUnity.Tests.Editor
         public EditorInjectableTestAttribute() : base() { }
 
         public override IEnumerator<ScriptSource> GetScript() => TestHelpers.GetScriptSource(Script, Html, TransformCode);
+
+        public override void BeforeStart(ScriptContext ctx)
+        {
+            base.BeforeStart(ctx);
+            if (!Html) ctx.ExecuteScript(TestHelpers.InjectableBundle, "ReactUnity/tests/injectable");
+        }
 
         public override string GetStyle() => Style;
     }

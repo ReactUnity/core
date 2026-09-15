@@ -17,11 +17,13 @@ namespace ReactUnity.UGUI.Internal
         private RectTransform backgroundRoot;
         private RectTransform backdrop;
         private RectTransform shadowRoot;
+        private RectTransform insetShadowRoot;
         public RectTransform Root => EnsureRoot();
         public RectTransform BorderRoot => EnsureBorderRoot();
         public RectTransform BackgroundRoot => EnsureBackgroundRoot();
         public RectTransform Backdrop => EnsureBackdrop();
         public RectTransform ShadowRoot => EnsureShadowRoot();
+        public RectTransform InsetShadowRoot => EnsureInsetShadowRoot();
 
         private UGUIComponent Component;
         private UGUIContext Context;
@@ -43,6 +45,7 @@ namespace ReactUnity.UGUI.Internal
 
         private WebRect rootGraphic;
         private Mask rootMask;
+        private WebRect insetShadowGraphic;
 
         public List<WebShadow> ShadowGraphics { get; private set; }
         public List<WebBackgroundImage> BackgroundGraphics { get; private set; }
@@ -57,33 +60,25 @@ namespace ReactUnity.UGUI.Internal
 
                 var hasBorder = value.Top > 0 || value.Right > 0 || value.Bottom > 0 || value.Left > 0;
 
-                var min = new Vector2(-value.Left, -value.Bottom);
-                var max = new Vector2(value.Right, value.Top);
+                // The padding box: offsetMin pulls a rect in from the bottom left, offsetMax from
+                // the top right. `[GraphicRoot]`, and so everything the mask on it cuts, is the
+                // border box instead -- which is what `background-clip: border-box` means and what
+                // CSS makes the default, so the common case needs nothing else.
+                var min = new Vector2(value.Left, value.Bottom);
+                var max = new Vector2(-value.Right, -value.Top);
 
-                if (root)
+                if (insetShadowRoot)
                 {
-                    root.offsetMin = -min;
-                    root.offsetMax = -max;
-                }
-
-                if (backgroundRoot)
-                {
-                    backgroundRoot.offsetMin = min;
-                    backgroundRoot.offsetMax = max;
-                }
-
-                if (shadowRoot)
-                {
-                    shadowRoot.offsetMin = min;
-                    shadowRoot.offsetMax = max;
+                    insetShadowRoot.offsetMin = min;
+                    insetShadowRoot.offsetMax = max;
                 }
 
                 if (!borderRoot && !hasBorder) return;
 
                 var br = BorderRoot;
 
-                br.offsetMin = -min;
-                br.offsetMax = -max;
+                br.offsetMin = min;
+                br.offsetMax = max;
 
                 var bg = BorderGraphic;
                 bg.enabled = hasBorder;
@@ -128,6 +123,14 @@ namespace ReactUnity.UGUI.Internal
         }
 
         private bool pixelated;
+        private ICssValueList<BackgroundBox> clips = CssValueList<BackgroundBox>.Empty;
+        private BackgroundClip clip;
+        private Material fillMaterial;
+        private BackgroundBox fillClip = BackgroundBox.BorderBox;
+        private readonly YogaValue2[] borderRadius = new YogaValue2[4] { YogaValue2.Zero, YogaValue2.Zero, YogaValue2.Zero, YogaValue2.Zero };
+        private BackgroundClipBox paddingClipBox;
+        private BackgroundClipBox contentClipBox;
+        private int clipBoxFrame = -1;
         private ICssValueList<BackgroundBlendMode> blendModes = CssValueList<BackgroundBlendMode>.Empty;
         public ICssValueList<BackgroundBlendMode> BlendModes
         {
@@ -177,14 +180,12 @@ namespace ReactUnity.UGUI.Internal
 
             rootGraphic = rootObj.GetComponent<WebRect>();
             rootGraphic.raycastTarget = false;
-            if (borderGraphic) borderGraphic.InsetBorder = rootGraphic;
+            rootGraphic.Rounding = new WebRoundingProperties(borderRadius);
 
             rootMask = rootObj.AddComponent<Mask>();
             rootMask.showMaskGraphic = false;
             root = rootObj.transform as RectTransform;
             FullStretch(root, transform as RectTransform, 0);
-
-            BorderSize = BorderSize;
 
             return root;
         }
@@ -196,10 +197,43 @@ namespace ReactUnity.UGUI.Internal
             var sr = Context.CreateNativeObject("[Shadows]", typeof(RectTransform));
             shadowRoot = sr.transform as RectTransform;
             FullStretch(shadowRoot, Root, 0);
+            KeepInsetShadowsLast();
+
+            return shadowRoot;
+        }
+
+        /// <summary>
+        /// The padding box, masked, for the one thing CSS casts from that edge rather than the
+        /// border's -- an inset <c>box-shadow</c>, which the mask on <c>[GraphicRoot]</c> used to
+        /// cut back when that mask was the padding box itself.
+        /// </summary>
+        private RectTransform EnsureInsetShadowRoot()
+        {
+            if (insetShadowRoot) return insetShadowRoot;
+
+            var obj = Context.CreateNativeObject("[InsetShadows]", typeof(RectTransform), typeof(WebRect));
+
+            insetShadowGraphic = obj.GetComponent<WebRect>();
+            insetShadowGraphic.raycastTarget = false;
+            if (borderGraphic) borderGraphic.InsetBorder = insetShadowGraphic;
+
+            var mask = obj.AddComponent<Mask>();
+            mask.showMaskGraphic = false;
+
+            insetShadowRoot = obj.transform as RectTransform;
+            // Above the background, as CSS paints an inset shadow, and above nothing else here.
+            FullStretch(insetShadowRoot, Root);
 
             BorderSize = BorderSize;
 
-            return shadowRoot;
+            return insetShadowRoot;
+        }
+
+        /// <summary>The sibling indices below are written for a stack that has no inset shadows in
+        /// it, so the one node that has to stay on top is put back after each of them.</summary>
+        private void KeepInsetShadowsLast()
+        {
+            if (insetShadowRoot) insetShadowRoot.SetAsLastSibling();
         }
 
         private RectTransform EnsureBackdrop()
@@ -215,6 +249,7 @@ namespace ReactUnity.UGUI.Internal
             if (BackdropSurface.Required) BackdropFilter.Surface = Context.BackdropSurface;
 
             FullStretch(backdrop, Root, backgroundRoot ? backgroundRoot.GetSiblingIndex() : 1);
+            KeepInsetShadowsLast();
 
             return backdrop;
         }
@@ -229,8 +264,7 @@ namespace ReactUnity.UGUI.Internal
 
             backgroundRoot = bg.transform as RectTransform;
             FullStretch(backgroundRoot, Root, 2);
-
-            BorderSize = BorderSize;
+            KeepInsetShadowsLast();
 
             return backgroundRoot;
         }
@@ -241,7 +275,7 @@ namespace ReactUnity.UGUI.Internal
 
             var border = Context.CreateNativeObject("[Border]", typeof(RectTransform), typeof(WebBorder));
             borderGraphic = border.GetComponent<WebBorder>();
-            borderGraphic.InsetBorder = rootGraphic;
+            borderGraphic.InsetBorder = insetShadowGraphic;
 
             borderRoot = border.transform as RectTransform;
             FullStretch(borderRoot, transform as RectTransform, root != null ? 1 : 0);
@@ -306,6 +340,7 @@ namespace ReactUnity.UGUI.Internal
         public void UpdateStyle(NodeStyle style)
         {
             blendModes = style.backgroundBlendMode;
+            clips = style.backgroundClip ?? CssValueList<BackgroundBox>.Empty;
             pixelated = style.imageRendering == ImageRendering.Pixelated || style.imageRendering == ImageRendering.CrispEdges;
             bgColor = style.backgroundColor;
             pointerEvents = style.pointerEvents;
@@ -314,6 +349,7 @@ namespace ReactUnity.UGUI.Internal
             var bgFilter = style.backdropFilter;
             if(bgFilter != null) SetBackdropFilter(bgFilter);
             SetBackground(bgColor, style.backgroundImage, style.backgroundPositionX, style.backgroundPositionY, style.backgroundSize, style.backgroundRepeatX, style.backgroundRepeatY);
+            UpdateClips();
             SetBoxShadow(style.boxShadow);
 
             UpdateOutline(style);
@@ -346,6 +382,7 @@ namespace ReactUnity.UGUI.Internal
         public void UpdateLayout(YogaNode layout)
         {
             SetBorderSize(layout);
+            RefreshShadowRounding();
         }
 
         private void SetBorderSize(YogaNode layout)
@@ -398,7 +435,11 @@ namespace ReactUnity.UGUI.Internal
 
         private void SetBorderRadius(YogaValue2 tl, YogaValue2 tr, YogaValue2 br, YogaValue2 bl)
         {
-            var v = new YogaValue2[4] { tl, tr, br, bl };
+            borderRadius[0] = tl;
+            borderRadius[1] = tr;
+            borderRadius[2] = br;
+            borderRadius[3] = bl;
+            var v = borderRadius;
 
             if (!borderGraphic)
             {
@@ -412,17 +453,33 @@ namespace ReactUnity.UGUI.Internal
             if (outlineGraphic)
                 outlineGraphic.Rounding = new WebRoundingProperties(v);
 
-            if (ShadowGraphics != null)
-            {
-                for (int i = 0; i < ShadowGraphics.Count; i++)
-                {
-                    var g = ShadowGraphics[i];
+            // The mask is the border box, so it takes the radii as written. The padding edge's are
+            // the border's own inner rounding, which it pushes to `[InsetShadows]` for itself.
+            if (rootGraphic)
+                rootGraphic.Rounding = new WebRoundingProperties(v);
 
-                    g.Rounding = new WebRoundingProperties(v)
-                    {
-                        UniformResolution = new WebRoundingResolutionProperties(10),
-                    };
-                }
+            RefreshShadowRounding();
+        }
+
+        /// <summary>An outer shadow is cast by the border box and an inset one by the padding box,
+        /// so the two take different corners off the same <c>border-radius</c>.</summary>
+        private void RefreshShadowRounding()
+        {
+            if (ShadowGraphics == null) return;
+
+            var inner = borderGraphic ? borderGraphic.InnerRounding : null;
+
+            for (int i = 0; i < ShadowGraphics.Count; i++)
+            {
+                var g = ShadowGraphics[i];
+                var radii = g.Shadow != null && g.Shadow.Inset && inner != null
+                    ? new YogaValue2[4] { inner.TLRadius, inner.TRRadius, inner.BRRadius, inner.BLRadius }
+                    : borderRadius;
+
+                g.Rounding = new WebRoundingProperties(radii)
+                {
+                    UniformResolution = new WebRoundingResolutionProperties(10),
+                };
             }
         }
 
@@ -497,6 +554,168 @@ namespace ReactUnity.UGUI.Internal
             }
         }
 
+        /// <summary>
+        /// Gives each background layer the box or the coverage its <c>background-clip</c> asks for,
+        /// building one <see cref="BackgroundClip"/> for the element the first time anything does.
+        /// </summary>
+        /// <remarks>
+        /// CSS gives every layer its own clip and hands the background colour the last layer's, so a
+        /// gradient can be cut to the text while a colour under it still fills the box.
+        /// <c>border-box</c> is free -- it is the mask on <c>[GraphicRoot]</c>, which is also what
+        /// gives the background its corners -- and the other three cost a material of their own.
+        /// </remarks>
+        private void UpdateClips()
+        {
+            var layers = BackgroundGraphics?.Count ?? 0;
+            var fill = clips.Get(layers > 0 ? layers - 1 : 0);
+
+            var wanted = fill != BackgroundBox.BorderBox;
+            var text = fill == BackgroundBox.Text;
+
+            for (int i = 0; i < layers; i++)
+            {
+                var box = clips.Get(i);
+                wanted |= box != BackgroundBox.BorderBox;
+                text |= box == BackgroundBox.Text;
+            }
+
+            if (wanted && !clip) clip = BackgroundClip.Create(Component, EnsureBackgroundRoot(), this);
+            if (clip) clip.NeedsCoverage = text;
+
+            for (int i = 0; i < layers; i++)
+            {
+                // The layers are built back to front, so the last one is the first CSS declared.
+                BackgroundGraphics[layers - 1 - i].SetClip(clip, clips.Get(i));
+            }
+
+            SetFillClip(fill);
+
+            if (!wanted && clip)
+            {
+                Destroy(clip);
+                clip = null;
+            }
+        }
+
+        private void SetFillClip(BackgroundBox box)
+        {
+            if (fillClip == box) return;
+            fillClip = box;
+
+            if (box != BackgroundBox.BorderBox)
+            {
+                // Its own material rather than a shared one: the clip is this element's, and a
+                // RawImage has no place to keep a copy the way a background layer does.
+                if (!fillMaterial) fillMaterial = new Material(Helpers.ResourcesHelper.ClippedImageShader);
+                BgImage.material = fillMaterial;
+            }
+            else
+            {
+                if (bgImage) bgImage.material = null;
+                BackgroundClip.Bind(fillMaterial, null, BackgroundBox.BorderBox);
+            }
+        }
+
+        /// <summary>
+        /// Hands the clip to everything drawing through it, every frame. Both matrices move with the
+        /// element, and UGUI substitutes a stencil copy of a material under a mask which is not the
+        /// object the value was written to -- so neither can be set once and left.
+        /// </summary>
+        internal void PushClips(BackgroundClip source)
+        {
+            if (fillClip != BackgroundBox.BorderBox && bgImage)
+            {
+                BackgroundClip.Bind(fillMaterial, source, fillClip);
+                var drawn = bgImage.materialForRendering;
+                if (drawn && drawn != fillMaterial) BackgroundClip.Bind(drawn, source, fillClip);
+            }
+
+            if (BackgroundGraphics == null) return;
+
+            for (int i = 0; i < BackgroundGraphics.Count; i++)
+            {
+                var sd = BackgroundGraphics[i];
+                if (!sd || sd.Clip != source) continue;
+                BackgroundClip.Bind(sd.materialForRendering, source, sd.ClipBox);
+            }
+        }
+
+        /// <summary>The box a layer clipped to <paramref name="box"/> stops at, in the element's own
+        /// space. False for anything the mask already gives, which is every unbordered element.</summary>
+        internal bool TryGetClipBox(BackgroundBox box, out BackgroundClipBox value)
+        {
+            RefreshClipBoxes();
+
+            value = box == BackgroundBox.PaddingBox ? paddingClipBox
+                : box == BackgroundBox.ContentBox ? contentClipBox
+                : default;
+
+            return value.Clips;
+        }
+
+        /// <summary>
+        /// The padding and content boxes, their radii reduced the same way the border's own inner
+        /// ring reduces them so the two line up. Read off the Yoga node rather than the style: a
+        /// percentage padding has already been resolved against the parent by the time layout is
+        /// done, and a border width can have been rounded to fit.
+        /// </summary>
+        private void RefreshClipBoxes()
+        {
+            if (clipBoxFrame == Time.frameCount) return;
+            clipBoxFrame = Time.frameCount;
+
+            var full = (transform as RectTransform).rect.size;
+            var layout = Component?.Layout;
+
+            // Top, right, bottom, left, as every box offset in these shapes is packed.
+            var border = borderSize.Vector;
+            var padding = layout == null ? Vector4.zero : new Vector4(
+                Norm(layout.LayoutPaddingTop), Norm(layout.LayoutPaddingRight),
+                Norm(layout.LayoutPaddingBottom), Norm(layout.LayoutPaddingLeft));
+
+            var paddingSize = Inset(full, border);
+            var contentSize = Inset(paddingSize, padding);
+
+            var paddingRounding = new WebRoundingProperties(borderRadius).OffsetBorder(paddingSize, border);
+            var contentRounding = paddingRounding.OffsetBorder(contentSize, padding);
+
+            // Each OffsetBorder resolves against the box it came from, so the adjusted radii are
+            // only the ones the caller wants after both of them have run.
+            paddingRounding.UpdateAdjusted(paddingSize, paddingSize);
+            contentRounding.UpdateAdjusted(contentSize, contentSize);
+
+            paddingClipBox = MakeClipBox(border, paddingSize, paddingRounding);
+            contentClipBox = MakeClipBox(border + padding, contentSize, contentRounding);
+        }
+
+        static Vector2 Inset(Vector2 size, Vector4 by) => new Vector2(
+            Mathf.Max(0, size.x - by.y - by.w),
+            Mathf.Max(0, size.y - by.x - by.z));
+
+        static BackgroundClipBox MakeClipBox(Vector4 inset, Vector2 size, WebRoundingProperties rounding)
+        {
+            return new BackgroundClipBox
+            {
+                // Nothing to do when the box is the border box: the mask has already cut it, to the
+                // pixel, and an SDF edge over the top of that would only soften it.
+                Clips = inset.x > 0 || inset.y > 0 || inset.z > 0 || inset.w > 0,
+                // CSS's `top` is the box's upper edge, where y grows the other way here.
+                Center = new Vector2((inset.w - inset.y) / 2, (inset.z - inset.x) / 2),
+                HalfSize = size / 2,
+                RadiusX = new Vector4(rounding.AdjustedTLRadius.x, rounding.AdjustedTRRadius.x, rounding.AdjustedBRRadius.x, rounding.AdjustedBLRadius.x),
+                RadiusY = new Vector4(rounding.AdjustedTLRadius.y, rounding.AdjustedTRRadius.y, rounding.AdjustedBRRadius.y, rounding.AdjustedBLRadius.y),
+            };
+        }
+
+        /// <summary>Yoga reports an undefined edge as NaN, which would take the whole box with it.</summary>
+        static float Norm(float value) => float.IsNaN(value) ? 0f : value;
+
+        private void OnDestroy()
+        {
+            if (fillMaterial) Destroy(fillMaterial);
+            fillMaterial = null;
+        }
+
         private void SetBoxShadow(ICssValueList<BoxShadow> shadows)
         {
             var validCount = shadows.Count;
@@ -544,7 +763,7 @@ namespace ReactUnity.UGUI.Internal
 
                 if (shadow.inset)
                 {
-                    if (rt.parent != BackgroundRoot) FullStretch(rt, BackgroundRoot);
+                    if (rt.parent != InsetShadowRoot) FullStretch(rt, InsetShadowRoot);
                 }
                 else
                 {
@@ -553,6 +772,8 @@ namespace ReactUnity.UGUI.Internal
 
                 g.color = shadow.color;
             }
+
+            RefreshShadowRounding();
         }
 
         private void CreateShadow()

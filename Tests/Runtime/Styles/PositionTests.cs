@@ -253,5 +253,63 @@ namespace ReactUnity.Tests
             Assert.IsNull(Q("#test"));
             Assert.AreEqual(0, outer.Layout.Count);
         }
+
+        const string InsetScript = @"
+            function App() {
+                return <view id='box' style={{ width: 200, height: 200, position: 'relative' }}>
+                    <view id='corner' style={{ width: 40, height: 20, position: 'absolute' }} />
+                </view>;
+            }
+        ";
+
+        /// <summary>
+        /// `auto` on a position edge is no position at all, which leaves the edge opposite it in
+        /// charge. Read as the zero its value happens to hold, `inset: auto 0 0 auto` pinned the
+        /// box top-left -- the corner it was told to stay out of.
+        /// </summary>
+        [UGUITest(Script = InsetScript)]
+        public IEnumerator AnAutoInsetLeavesTheOppositeEdgeInCharge()
+        {
+            yield return null;
+            yield return null;
+
+            var corner = Q("#corner");
+            var box = Q("#box");
+
+            corner.Style["inset"] = "auto 0 0 auto";
+            yield return null;
+            yield return null;
+            AssertRectIn(new Rect(160, 180, 40, 20), corner, box);
+
+            corner.Style["inset"] = "0 auto auto 0";
+            yield return null;
+            yield return null;
+            AssertRectIn(new Rect(0, 0, 40, 20), corner, box);
+        }
+
+        // One edge at a time, so the whole shorthand is not what is being read.
+        [UGUITest(Script = InsetScript)]
+        public IEnumerator AnAutoEdgeOnItsOwnIsNotZero()
+        {
+            yield return null;
+            yield return null;
+
+            var corner = Q("#corner");
+            var box = Q("#box");
+
+            corner.Style["top"] = "auto";
+            corner.Style["bottom"] = "30px";
+            corner.Style["left"] = "auto";
+            corner.Style["right"] = "10px";
+            yield return null;
+            yield return null;
+            AssertRectIn(new Rect(150, 150, 40, 20), corner, box);
+
+            // And back: an edge that was `auto` takes a number again.
+            corner.Style["top"] = "5px";
+            yield return null;
+            yield return null;
+            AssertRectIn(new Rect(150, 5, 40, 20), corner, box);
+        }
     }
 }

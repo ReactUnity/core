@@ -45,20 +45,31 @@ namespace ReactUnity.Styling
         public ScrollBehavior scrollBehavior => GetStyleValue(StyleProperties.scrollBehavior);
         public ScrollSnapType scrollSnapType => GetStyleValue(StyleProperties.scrollSnapType);
         public ScrollSnapAlign scrollSnapAlign => GetStyleValue(StyleProperties.scrollSnapAlign);
-        public YogaValue2 borderTopLeftRadius => GetStyleValue(StyleProperties.borderTopLeftRadius);
-        public YogaValue2 borderTopRightRadius => GetStyleValue(StyleProperties.borderTopRightRadius);
-        public YogaValue2 borderBottomLeftRadius => GetStyleValue(StyleProperties.borderBottomLeftRadius);
-        public YogaValue2 borderBottomRightRadius => GetStyleValue(StyleProperties.borderBottomRightRadius);
+        public ScrollSnapStop scrollSnapStop => GetStyleValue(StyleProperties.scrollSnapStop);
+        public OverscrollBehavior overscrollBehaviorX => GetStyleValue(StyleProperties.overscrollBehaviorX);
+        public OverscrollBehavior overscrollBehaviorY => GetStyleValue(StyleProperties.overscrollBehaviorY);
+        public YogaValue scrollPaddingTop => GetStyleValue(StyleProperties.scrollPaddingTop);
+        public YogaValue scrollPaddingRight => GetStyleValue<YogaValue>(ResolveLogical(StyleProperties.scrollPaddingRight));
+        public YogaValue scrollPaddingBottom => GetStyleValue(StyleProperties.scrollPaddingBottom);
+        public YogaValue scrollPaddingLeft => GetStyleValue<YogaValue>(ResolveLogical(StyleProperties.scrollPaddingLeft));
+        public float scrollMarginTop => GetStyleValue(StyleProperties.scrollMarginTop);
+        public float scrollMarginRight => GetStyleValue<float>(ResolveLogical(StyleProperties.scrollMarginRight));
+        public float scrollMarginBottom => GetStyleValue(StyleProperties.scrollMarginBottom);
+        public float scrollMarginLeft => GetStyleValue<float>(ResolveLogical(StyleProperties.scrollMarginLeft));
+        public YogaValue2 borderTopLeftRadius => GetStyleValue<YogaValue2>(ResolveLogical(StyleProperties.borderTopLeftRadius));
+        public YogaValue2 borderTopRightRadius => GetStyleValue<YogaValue2>(ResolveLogical(StyleProperties.borderTopRightRadius));
+        public YogaValue2 borderBottomLeftRadius => GetStyleValue<YogaValue2>(ResolveLogical(StyleProperties.borderBottomLeftRadius));
+        public YogaValue2 borderBottomRightRadius => GetStyleValue<YogaValue2>(ResolveLogical(StyleProperties.borderBottomRightRadius));
         public float outlineOffset => GetStyleValue(StyleProperties.outlineOffset);
         public float outlineWidth => GetStyleValue(StyleProperties.outlineWidth);
         public Color outlineColor => GetStyleValue(StyleProperties.outlineColor);
         public BorderStyle outlineStyle => GetStyleValue(StyleProperties.outlineStyle);
-        public Color borderLeftColor => GetStyleValue(StyleProperties.borderLeftColor);
-        public Color borderRightColor => GetStyleValue(StyleProperties.borderRightColor);
+        public Color borderLeftColor => GetStyleValue<Color>(ResolveLogical(StyleProperties.borderLeftColor));
+        public Color borderRightColor => GetStyleValue<Color>(ResolveLogical(StyleProperties.borderRightColor));
         public Color borderTopColor => GetStyleValue(StyleProperties.borderTopColor);
         public Color borderBottomColor => GetStyleValue(StyleProperties.borderBottomColor);
-        public BorderStyle borderLeftStyle => GetStyleValue(StyleProperties.borderLeftStyle);
-        public BorderStyle borderRightStyle => GetStyleValue(StyleProperties.borderRightStyle);
+        public BorderStyle borderLeftStyle => GetStyleValue<BorderStyle>(ResolveLogical(StyleProperties.borderLeftStyle));
+        public BorderStyle borderRightStyle => GetStyleValue<BorderStyle>(ResolveLogical(StyleProperties.borderRightStyle));
         public BorderStyle borderTopStyle => GetStyleValue(StyleProperties.borderTopStyle);
         public BorderStyle borderBottomStyle => GetStyleValue(StyleProperties.borderBottomStyle);
         public ICssValueList<BoxShadow> boxShadow => GetStyleValue(StyleProperties.boxShadow);
@@ -67,6 +78,11 @@ namespace ReactUnity.Styling
         public YogaValue translateZ => GetStyleValue(StyleProperties.translateZ);
         public Vector3 scale => GetStyleValue(StyleProperties.scale);
         public Vector3 rotate => GetStyleValue(StyleProperties.rotate);
+        // Negative is not a value CSS accepts, and a projection from behind the viewer is not one
+        // anything could draw, so it reads as `none` rather than turning the subtree inside out.
+        public float perspective => Mathf.Max(0, GetStyleValue(StyleProperties.perspective));
+        public YogaValue2 perspectiveOrigin => GetStyleValue(StyleProperties.perspectiveOrigin);
+        public BackfaceVisibility backfaceVisibility => GetStyleValue(StyleProperties.backfaceVisibility);
         public FontReference fontFamily => GetStyleValue(StyleProperties.fontFamily);
         public Color color => GetStyleValue(StyleProperties.color);
         public FontWeight fontWeight => GetStyleValue(StyleProperties.fontWeight);
@@ -109,6 +125,7 @@ namespace ReactUnity.Styling
         public ICssValueList<BackgroundRepeat> backgroundRepeatX => GetStyleValue(StyleProperties.backgroundRepeatX);
         public ICssValueList<BackgroundRepeat> backgroundRepeatY => GetStyleValue(StyleProperties.backgroundRepeatY);
         public ICssValueList<BackgroundBlendMode> backgroundBlendMode => GetStyleValue(StyleProperties.backgroundBlendMode);
+        public ICssValueList<BackgroundBox> backgroundClip => GetStyleValue(StyleProperties.backgroundClip);
 
         public ICssValueList<ImageDefinition> maskImage => GetStyleValue(StyleProperties.maskImage);
         public ICssValueList<YogaValue> maskPositionX => GetStyleValue(StyleProperties.maskPositionX);
@@ -270,12 +287,17 @@ namespace ReactUnity.Styling
                 }
             }
 
-#if UNITY_EDITOR
             if (value != null && !typeof(T).IsAssignableFrom(value.GetType()) && !typeof(T).IsEnum)
             {
+#if UNITY_EDITOR
                 Debug.LogError($"Error while converting {value} from type {value.GetType()} to {typeof(T)}");
-            }
 #endif
+                // The property is left at its default rather than the cast being taken: a converter
+                // that answered with the wrong type is a bug, and not one worth a torn-down frame.
+                value = prop.defaultValue;
+                if (value is IComputedValue mismatched) value = mismatched.ResolveValue(prop, this, converter);
+                if (value != null && !typeof(T).IsAssignableFrom(value.GetType())) value = null;
+            }
 
             if (value == null && typeof(T).IsValueType) return default(T);
 
@@ -314,6 +336,44 @@ namespace ReactUnity.Styling
             return StyleMap.ContainsKey(prop.name) ||
                 CssHasValue(prop) ||
                 (Fallback != null && Fallback.HasValue(prop));
+        }
+
+        /// <summary>
+        /// The property to read in place of a physical one: the inline-axis logical property covering
+        /// the same edge, when that was declared. A logical declaration wins over the physical one it
+        /// covers whichever order they were written in, which is how Yoga already resolves its Start
+        /// edge against Left. Anything with no logical counterpart is returned as it came.
+        /// </summary>
+        public IStyleProperty ResolveLogical(IStyleProperty prop)
+        {
+            if (prop == null || !StyleProperties.InlineCounterparts.TryGetValue(prop, out var pair)) return prop;
+
+            // Neither spelling declared is the overwhelming majority, and it answers without having to
+            // resolve a direction at all.
+            if (!HasValue(pair[0]) && !HasValue(pair[1])) return prop;
+
+            var logical = pair[IsRtl ? 1 : 0];
+            return HasValue(logical) ? logical : prop;
+        }
+
+        /// <summary>Whether this element resolves to a right-to-left direction.</summary>
+        /// <remarks>
+        /// Walked up the cascade rather than read back off the Yoga node. <c>direction</c> is a layout
+        /// property, so it is not inherited on this side, and the node it is pushed to only reports a
+        /// resolved direction once a layout has run -- which would leave a border a pass behind the
+        /// rule that changed it. This is the walk Yoga does, one step earlier.
+        /// </remarks>
+        private bool IsRtl
+        {
+            get
+            {
+                for (var style = this; style != null; style = style.Parent)
+                {
+                    var dir = style.GetStyleValue(LayoutProperties.StyleDirection);
+                    if (dir != YogaDirection.Inherit) return dir == YogaDirection.RTL;
+                }
+                return false;
+            }
         }
 
         private bool CssTryGetValue(IStyleProperty prop, out object res)

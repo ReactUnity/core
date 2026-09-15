@@ -1,6 +1,8 @@
 #ifndef REACTUNITY_CLIPSHAPES_INCLUDED
 #define REACTUNITY_CLIPSHAPES_INCLUDED
 
+#include "RoundedBox.cginc"
+
 // `clip-path`, evaluated per fragment against the element's own box. Every shape is a signed
 // distance -- negative inside -- so one antialiased edge serves all of them, softened over exactly
 // one device pixel.
@@ -38,29 +40,7 @@ sampler2D _ClipMaskTex;
 // loop: a dynamically indexed uniform array is what would cost this shader its instruction budget.
 #define RU_CLIP_POINT(i) (((i) % 2 == 0) ? _ClipPoly[(i) / 2].xy : _ClipPoly[(i) / 2].zw)
 
-/// A box with elliptical corners. `p` is relative to the centre, `r` the radii of the corner it
-/// falls nearest -- picked by the caller, since which corner that is depends on CSS's order.
-float RuSdRoundBox(float2 p, float2 halfSize, float2 r)
-{
-  float2 a = abs(p);
-  float2 corner = halfSize - r;
-  float2 q = a - corner;
-
-  if (q.x > 0.0 && q.y > 0.0 && r.x > 0.0 && r.y > 0.0)
-  {
-    // f(q) = length(q / r) - 1 is zero on the ellipse; dividing by its gradient turns that into a
-    // distance, and reduces to |q| - R exactly when the radii are equal.
-    float2 u = q / r;
-    float k = length(u);
-    float g = length(u / r);
-    return g > 1e-9 ? (k - 1.0) * k / g : k - 1.0;
-  }
-
-  float2 d = a - halfSize;
-  return min(max(d.x, d.y), 0.0) + length(max(d, 0.0));
-}
-
-/// An ellipse centred on the origin. Same first-order approximation as the corners above -- exact
+/// An ellipse centred on the origin. Same first-order approximation the rounded corners use -- exact
 /// for a circle, and inside a pixel of exact for anything an antialiased edge is drawn from.
 float RuSdEllipse(float2 p, float2 r)
 {
@@ -137,11 +117,7 @@ float RuClipCoverage(float2 uv, float2 texel)
     float2 centre = (_ClipBox.zw + _ClipBox.xy) * 0.5;
     float2 rel = p - centre;
 
-    // CSS names the corners top-left first and clockwise, and `top` is +y here.
-    float2 r = rel.x < 0.0
-      ? (rel.y > 0.0 ? float2(_ClipRadiiX.x, _ClipRadiiY.x) : float2(_ClipRadiiX.w, _ClipRadiiY.w))
-      : (rel.y > 0.0 ? float2(_ClipRadiiX.y, _ClipRadiiY.y) : float2(_ClipRadiiX.z, _ClipRadiiY.z));
-
+    float2 r = RuBoxCornerRadius(rel, _ClipRadiiX, _ClipRadiiY);
     d = RuSdRoundBox(rel, halfSize, min(r, halfSize));
   }
   else if (_ClipKind == RU_CLIP_RING) d = RuSdPolygon(p);

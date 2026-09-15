@@ -77,9 +77,13 @@ namespace ReactUnity.Styling.Converters
                 return false;
             }
 
+            // A calc() is resolved by the length converter, which answers with a YogaValue of its
+            // own where the calculation came out as a percentage -- `calc(1/2 * 100%)`, which is
+            // what every fraction utility compiles to -- and a plain number otherwise.
             return ComputedMapper.Create(out result, value, AllConverters.LengthConverter,
                 (resolved) => {
                     if (resolved is float f) return YogaValue.Point(f);
+                    if (resolved is YogaValue yv) return yv;
                     return null;
                 });
         }

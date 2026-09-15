@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using Yoga;
 using NUnit.Framework;
 using ReactUnity.Scripting;
@@ -142,6 +142,40 @@ namespace ReactUnity.Tests
             Assert.AreEqual(BackgroundRepeat.NoRepeat, rptY.Get(4));
         }
 
+        [UGUITest(Style = @"
+          #test {
+            background:
+              linear-gradient(red, blue) text,
+              url(res:ReactUnity/tests/sprites/star) padding-box content-box,
+              url(res:ReactUnity/tests/sprites/star);
+          }
+")]
+        public IEnumerator BackgroundClipInTheShorthand()
+        {
+            yield return null;
+
+            var clip = Q("#test").ComputedStyle.backgroundClip;
+
+            Assert.AreEqual(3, clip.Count);
+            Assert.AreEqual(BackgroundBox.Text, clip.Get(0));
+            // Two boxes are origin then clip, and only the clip is kept.
+            Assert.AreEqual(BackgroundBox.ContentBox, clip.Get(1));
+            Assert.AreEqual(BackgroundBox.BorderBox, clip.Get(2), "a layer that names no box gets the initial value");
+        }
+
+        [UGUITest(Style = @"
+          #test {
+            background-clip: text;
+            background: red;
+          }
+")]
+        public IEnumerator TheBackgroundShorthandResetsTheClip()
+        {
+            yield return null;
+
+            Assert.AreEqual(BackgroundBox.BorderBox, Q("#test").ComputedStyle.backgroundClip.Get(0));
+        }
+
 
         [UGUITest]
         public IEnumerator TransformShorthand()
@@ -169,6 +203,48 @@ namespace ReactUnity.Tests
             var expectedRotation = Quaternion.identity * Quaternion.Euler(0, 0, 40) * Quaternion.AngleAxis(30, Vector3.up) *
                 Quaternion.Euler(20, 0, 0) * Quaternion.Euler(0, 30, 0) * Quaternion.Euler(0, 0, 40);
             Assert.AreEqual(expectedRotation.eulerAngles, rotate);
+        }
+
+        // The space between two calls is optional in CSS, and every minifier drops it -- so a built
+        // stylesheet arrives with the calls run together and has to parse the same way.
+        [UGUITest]
+        public IEnumerator TransformCallsNeedNoSpaceBetweenThem()
+        {
+            var cmp = Q("#test");
+
+            cmp.Style["transform"] = "rotateX(35deg)rotateY(-30deg)translateX(12px)scale(2)";
+            yield return null;
+
+            var expected = Quaternion.Euler(35, 0, 0) * Quaternion.Euler(0, -30, 0);
+            Assert.AreEqual(expected.eulerAngles, cmp.ComputedStyle.rotate);
+            Assert.AreEqual(12, cmp.ComputedStyle.translate.X.Value);
+            Assert.AreEqual(new Vector3(2, 2, 1), cmp.ComputedStyle.scale);
+        }
+
+        // The shorthand reads its own lengths, so a unit on one used to work only there. These are the
+        // longhands Tailwind writes: `outline` compiles to outline-style and outline-width, never both.
+        [UGUITest]
+        public IEnumerator OutlineLengthsTakeUnits()
+        {
+            var cmp = Q("#test");
+
+            cmp.Style["outline"] = "2px solid red";
+            yield return null;
+            Assert.AreEqual(2, cmp.ComputedStyle.outlineWidth);
+            Assert.AreEqual(Color.red, cmp.ComputedStyle.outlineColor);
+
+            cmp.Style["outline-width"] = "3px";
+            cmp.Style["outline-offset"] = "0.5cm";
+            yield return null;
+            Assert.AreEqual(3, cmp.ComputedStyle.outlineWidth);
+            Assert.AreEqual(18.9f, cmp.ComputedStyle.outlineOffset, 0.01f);
+
+            // A length is still a length when it is computed, and a bare number is still pixels.
+            cmp.Style["outline-width"] = "calc(2px * 2 + 1px)";
+            cmp.Style["outline-offset"] = "4";
+            yield return null;
+            Assert.AreEqual(5, cmp.ComputedStyle.outlineWidth);
+            Assert.AreEqual(4, cmp.ComputedStyle.outlineOffset);
         }
     }
 }

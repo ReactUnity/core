@@ -68,7 +68,8 @@ namespace ReactUnity.Styling.Functions
 
             if (args.Length - startIndex < 2) return null;
 
-            var colors = LinearGradientFunction.GetColorKeys(args, startIndex, false);
+            // A conic stop is an angle: `0deg`, `0.5turn`, and a percentage as a fraction of the turn.
+            var colors = LinearGradientFunction.GetColorKeys(args, startIndex, true);
 
             return ComputedCompound.Create(
                 new List<IComputedValue> { colors, at ?? new ComputedConstant(YogaValue2.Center), from ?? new ComputedConstant(0f) },

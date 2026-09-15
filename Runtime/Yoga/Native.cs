@@ -300,6 +300,9 @@ namespace Yoga
         public static extern void YGNodeStyleSetPositionPercent(YGNodeHandle node, YogaEdge edge, float position);
 
         [DllImport(DllName, ExactSpelling = true, CallingConvention = CallingConvention.Cdecl)]
+        public static extern void YGNodeStyleSetPositionAuto(YGNodeHandle node, YogaEdge edge);
+
+        [DllImport(DllName, ExactSpelling = true, CallingConvention = CallingConvention.Cdecl)]
         public static extern YogaValue YGNodeStyleGetPosition(YGNodeHandle node, YogaEdge edge);
 
         [DllImport(DllName, ExactSpelling = true, CallingConvention = CallingConvention.Cdecl)]

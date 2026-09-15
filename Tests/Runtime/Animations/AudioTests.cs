@@ -52,5 +52,25 @@ namespace ReactUnity.Tests
             Assert.AreEqual(1, st.audioVolume.Get(0, 1));
 
         }
+
+        // Each longhand reads what the shorthand reads it as: a delay is a duration and a count
+        // takes `infinite`, neither of which a plain number parser accepts.
+        [UGUITest]
+        public IEnumerator LonghandsReadWhatTheShorthandDoes()
+        {
+            var view = Q("#test");
+
+            view.Style.Set("audio-delay", "250ms, 3s");
+            view.Style.Set("audio-iteration-count", "infinite, 4");
+            view.Style.Set("audio-volume", "50%");
+            yield return null;
+
+            var st = view.ComputedStyle;
+            Assert.AreEqual(0.25f, st.audioDelay.Get(0));
+            Assert.AreEqual(3, st.audioDelay.Get(1));
+            Assert.AreEqual(-1, st.audioIterationCount.Get(0));
+            Assert.AreEqual(4, st.audioIterationCount.Get(1));
+            Assert.AreEqual(0.5f, st.audioVolume.Get(0));
+        }
     }
 }

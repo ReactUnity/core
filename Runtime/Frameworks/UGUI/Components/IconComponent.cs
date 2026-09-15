@@ -26,6 +26,8 @@ namespace ReactUnity.UGUI
         public IconComponent(string text, UGUIContext context, string tag) : base(context, tag, false)
         {
             Text = CreateGraphicChild<TextMeshProUGUI>("[Text]");
+            Component.Text = Text;
+
             Measurer = AddComponent<TextMeasurer>();
             Measurer.Text = Text;
             Measurer.Layout = Layout;

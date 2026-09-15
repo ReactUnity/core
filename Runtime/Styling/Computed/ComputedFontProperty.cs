@@ -74,6 +74,9 @@ namespace ReactUnity.Styling.Computed
                     {
                         var fi = tcFont.faceInfo;
 
+                        // characterLookupTable is deprecated for the Advanced Text Generator, which
+                        // does not need character data -- but nothing replaces it for reading metrics.
+#pragma warning disable 618
                         switch (Type)
                         {
                             case FontPropertyType.LineHeight:
@@ -96,6 +99,7 @@ namespace ReactUnity.Styling.Computed
                                 }
                                 break;
                         }
+#pragma warning restore 618
 
                         found = true;
                     }

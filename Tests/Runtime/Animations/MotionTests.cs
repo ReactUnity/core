@@ -64,11 +64,12 @@ namespace ReactUnity.Tests
 
             yield return AdvanceTime(0.5f);
             Assert.AreEqual(180, rt.rect.width);
-            Assert.AreEqual(2, rt.localPosition.z, 0.1);
+            // Negative because a canvas points z away from the viewer and CSS points it towards.
+            Assert.AreEqual(-2, rt.localPosition.z, 0.1);
 
             yield return AdvanceTime(1f);
             Assert.AreEqual(500, rt.rect.width);
-            Assert.AreEqual(10, rt.localPosition.z);
+            Assert.AreEqual(-10, rt.localPosition.z);
         }
 
 

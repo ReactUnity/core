@@ -245,6 +245,10 @@ namespace ReactUnity.Tests.Editor.Renderer
 
             yield return null;
             Assert.AreEqual(Color.blue, text.ComputedStyle.color);
+
+            // The fixture shares one context, and an inline colour outranks every sheet the
+            // tests after this one insert.
+            text.Style.Set("color", null);
         }
 
         [EditorInjectableTest(Script = BaseScript, Style = BaseStyle, SkipIfExisting = true)]

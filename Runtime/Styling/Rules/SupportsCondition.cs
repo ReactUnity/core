@@ -218,16 +218,23 @@ namespace ReactUnity.Styling.Rules
             var key = CssProperties.GetKey(name);
             if (key == null) return false;
 
+            StyleDiagnostics.BeginProbe();
+
             try
             {
                 // Modify returns null when the value does not convert, which is exactly the question
-                // @supports asks. The probe dictionary is discarded.
+                // @supports asks. The probe dictionary is discarded, and so is the diagnostic a
+                // dropped value would normally print -- nothing here is being applied.
                 var probe = new Dictionary<IStyleProperty, object>();
                 return key.Modify(probe, value) != null && probe.Count > 0;
             }
             catch
             {
                 return false;
+            }
+            finally
+            {
+                StyleDiagnostics.EndProbe();
             }
         }
 

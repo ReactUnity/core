@@ -28,7 +28,20 @@ namespace ReactUnity.Styling
             ModifiedProperties = new List<IStyleProperty>(1) { this };
         }
 
-        public IComputedValue Convert(object value) => converter.Convert(value);
+        public IComputedValue Convert(object value)
+        {
+            var converted = converter.Convert(value);
+
+            // A constant that is not this property's type gets one more pass through the converter.
+            // A calc() that came out as a percentage answers with a YogaValue, which is the value
+            // `width` wanted and a number `border-width` still has to resolve -- and the converter
+            // is shared between them, so only the property can tell those apart.
+            if (converted != null && StylingUtils.UnboxConstant(converted, out var unboxed) &&
+                unboxed != null && !type.IsAssignableFrom(unboxed.GetType()))
+                return converter.Convert(unboxed);
+
+            return converted;
+        }
         public string Stringify(object value) => converter.Stringify(value);
 
         public bool CanHandleKeyword(CssKeyword keyword) => true;
@@ -48,8 +61,13 @@ namespace ReactUnity.Styling
                 return ModifiedProperties;
             }
 
-            value = Convert(value);
-            if (value == null) return null;
+            var converted = Convert(value);
+            if (converted == null)
+            {
+                StyleDiagnostics.Dropped(name, value);
+                return null;
+            }
+            value = converted;
 
             collection[this] = value;
             return ModifiedProperties;

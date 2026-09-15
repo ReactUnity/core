@@ -10,8 +10,8 @@ namespace ReactUnity.UGUI.Behaviours
     /// <summary>Remaps events from selected viewport</summary>
     public class CustomViewportRaycaster : GraphicRaycaster
     {
-        private Canvas m_Canvas;
-        private Canvas canvas => m_Canvas ?? (m_Canvas = GetComponent<Canvas>());
+        private Canvas ownCanvas;
+        private Canvas canvas => ownCanvas ?? (ownCanvas = GetComponent<Canvas>());
         public RectTransform EventViewport;
 
         public override void Raycast(PointerEventData eventData, List<RaycastResult> resultAppendList)

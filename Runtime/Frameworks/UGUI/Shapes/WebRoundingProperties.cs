@@ -79,6 +79,20 @@ namespace ReactUnity.UGUI.Shapes
                 UniformResolution.ValueEquals(other.UniformResolution);
         }
 
+        /// <summary>
+        /// How much the radii on one edge have to give to fit along it, at most 1. An edge with no
+        /// radius on it has nothing to say, rather than a division by zero.
+        /// </summary>
+        private static float EdgeScale(float length, float sum) => sum <= 0 ? 1f : Mathf.Min(1f, length / sum);
+
+        /// <summary>One radius in pixels, never negative and never larger than a number can be
+        /// multiplied by -- an infinite radius scaled to fit is NaN, and a NaN corner paints nothing.</summary>
+        private static float Resolve(YogaValue value, float extent) =>
+            Mathf.Clamp(value.Unit == YogaUnit.Percent ? extent * value.Value / 100 : value.Value, 0, MaxRadius);
+
+        // Well past any box, and small enough that scaling it down to fit stays exact in a float.
+        private const float MaxRadius = 1 << 25;
+
         public void UpdateAdjusted(Vector2 size, Vector2 innerSize, WebOutlineSizes? outline = null, WebRoundingProperties matchRounding = null)
         {
             var ot = outline ?? DefaultOutlineSizes;
@@ -106,50 +120,40 @@ namespace ReactUnity.UGUI.Shapes
 
             // Horizontal border radii in pixel - tl,tr,br,bl
             var brx = new Vector4(
-                Mathf.Max(0, br[0].X.Unit == YogaUnit.Percent ? size.x * br[0].X.Value / 100 : (br[0].X.Value)),
-                Mathf.Max(0, br[1].X.Unit == YogaUnit.Percent ? size.x * br[1].X.Value / 100 : (br[1].X.Value)),
-                Mathf.Max(0, br[2].X.Unit == YogaUnit.Percent ? size.x * br[2].X.Value / 100 : (br[2].X.Value)),
-                Mathf.Max(0, br[3].X.Unit == YogaUnit.Percent ? size.x * br[3].X.Value / 100 : (br[3].X.Value))
+                Resolve(br[0].X, size.x), Resolve(br[1].X, size.x),
+                Resolve(br[2].X, size.x), Resolve(br[3].X, size.x)
             );
 
             // Vertical border radii in pixel - tl,tr,br,bl
             var bry = new Vector4(
-                Mathf.Max(0, br[0].Y.Unit == YogaUnit.Percent ? size.y * br[0].Y.Value / 100 : (br[0].Y.Value)),
-                Mathf.Max(0, br[1].Y.Unit == YogaUnit.Percent ? size.y * br[1].Y.Value / 100 : (br[1].Y.Value)),
-                Mathf.Max(0, br[2].Y.Unit == YogaUnit.Percent ? size.y * br[2].Y.Value / 100 : (br[2].Y.Value)),
-                Mathf.Max(0, br[3].Y.Unit == YogaUnit.Percent ? size.y * br[3].Y.Value / 100 : (br[3].Y.Value))
+                Resolve(br[0].Y, size.y), Resolve(br[1].Y, size.y),
+                Resolve(br[2].Y, size.y), Resolve(br[3].Y, size.y)
             );
 
-            // Total border radius in each edge - top, right, bottom, left
-            var sums = new Vector4(
-                Mathf.Max(size.x, brx.x + brx.y),
-                Mathf.Max(size.y, bry.y + bry.z),
-                Mathf.Max(size.x, brx.z + brx.w),
-                Mathf.Max(size.y, bry.w + bry.x)
-            );
-
-            // Pixel unit of each corner - tl,tr,br,bl
-            var pixelUnits = new Vector4(
-                Mathf.Min(sums.x == 0 ? 0 : size.x / sums.x, sums.w == 0 ? 0 : size.y / sums.w),
-                Mathf.Min(sums.x == 0 ? 0 : size.x / sums.x, sums.y == 0 ? 0 : size.y / sums.y),
-                Mathf.Min(sums.z == 0 ? 0 : size.x / sums.z, sums.y == 0 ? 0 : size.y / sums.y),
-                Mathf.Min(sums.z == 0 ? 0 : size.x / sums.z, sums.w == 0 ? 0 : size.y / sums.w)
+            // CSS Backgrounds 3 section 5.5: one factor for the whole box -- the smallest of
+            // (edge length / the two radii sitting on that edge) over the four edges -- applied to
+            // every radius, so an over-large `border-radius` shrinks the box's shape rather than
+            // each corner separately. Per corner, a pill asked for on an oblong kept the corners
+            // its shorter edge did not touch, which is what drew a chevron instead of a cap.
+            var scale = Mathf.Min(
+                Mathf.Min(EdgeScale(size.x, brx.x + brx.y), EdgeScale(size.y, bry.y + bry.z)),
+                Mathf.Min(EdgeScale(size.x, brx.z + brx.w), EdgeScale(size.y, bry.w + bry.x))
             );
 
             // Final sizes of corner border radii (horizontal)
             brx = new Vector4(
-                Mathf.Min(innerSize.x + ot.Left, brx.x * pixelUnits.x),
-                Mathf.Min(innerSize.x + ot.Right, brx.y * pixelUnits.y),
-                Mathf.Min(innerSize.x + ot.Right, brx.z * pixelUnits.z),
-                Mathf.Min(innerSize.x + ot.Left, brx.w * pixelUnits.w)
+                Mathf.Min(innerSize.x + ot.Left, brx.x * scale),
+                Mathf.Min(innerSize.x + ot.Right, brx.y * scale),
+                Mathf.Min(innerSize.x + ot.Right, brx.z * scale),
+                Mathf.Min(innerSize.x + ot.Left, brx.w * scale)
             );
 
             // Final sizes of corner border radii (vertical)
             bry = new Vector4(
-                Mathf.Min(innerSize.y + ot.Top, bry.x * pixelUnits.x),
-                Mathf.Min(innerSize.y + ot.Top, bry.y * pixelUnits.y),
-                Mathf.Min(innerSize.y + ot.Bottom, bry.z * pixelUnits.z),
-                Mathf.Min(innerSize.y + ot.Bottom, bry.w * pixelUnits.w)
+                Mathf.Min(innerSize.y + ot.Top, bry.x * scale),
+                Mathf.Min(innerSize.y + ot.Top, bry.y * scale),
+                Mathf.Min(innerSize.y + ot.Bottom, bry.z * scale),
+                Mathf.Min(innerSize.y + ot.Bottom, bry.w * scale)
             );
 
             // Average border radii

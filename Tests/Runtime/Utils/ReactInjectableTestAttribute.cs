@@ -23,6 +23,12 @@ namespace ReactUnity.Tests
 
         public override IEnumerator<ScriptSource> GetScript() => TestHelpers.GetScriptSource(Script, Html, TransformCode);
 
+        public override void BeforeStart(ScriptContext ctx)
+        {
+            base.BeforeStart(ctx);
+            if (!Html) ctx.ExecuteScript(TestHelpers.InjectableBundle, "ReactUnity/tests/injectable");
+        }
+
         public override void AfterStart(ScriptContext ctx)
         {
             base.AfterStart(ctx);

@@ -103,6 +103,9 @@ namespace ReactUnity.Styling.Converters
 
         public static Color OklabToColor(float l, float a, float b, float alpha)
         {
+            // Out-of-range components are clamped rather than rejected, which is what CSS Color 4
+            // asks of a specified color -- and what relative color arithmetic reaches constantly.
+            l = Mathf.Clamp01(l);
             OklabToLinearSrgbPrecise(l, a, b, out var lr, out var lg, out var lb);
 
             // Out-of-gamut OKLab is clamped per channel, which shifts hue on very saturated colors.
@@ -111,7 +114,7 @@ namespace ReactUnity.Styling.Converters
                 Mathf.Clamp01((float) LinearToSrgbPrecise(lr)),
                 Mathf.Clamp01((float) LinearToSrgbPrecise(lg)),
                 Mathf.Clamp01((float) LinearToSrgbPrecise(lb)),
-                alpha);
+                Mathf.Clamp01(alpha));
         }
 
         #endregion
@@ -126,7 +129,7 @@ namespace ReactUnity.Styling.Converters
 
         public static Color OklchToColor(float l, float c, float h, float alpha)
         {
-            LchToLab(c, h, out var a, out var b);
+            LchToLab(Mathf.Max(0, c), h, out var a, out var b);
             return OklabToColor(l, a, b, alpha);
         }
 
@@ -209,6 +212,8 @@ namespace ReactUnity.Styling.Converters
 
         public static Color LabToColor(float l, float a, float b, float alpha)
         {
+            l = Mathf.Clamp(l, 0, 100);
+
             var fy = (l + 16d) / 116d;
             var fx = a / 500d + fy;
             var fz = fy - b / 200d;
@@ -225,7 +230,7 @@ namespace ReactUnity.Styling.Converters
                 Mathf.Clamp01((float) LinearToSrgbPrecise(lr)),
                 Mathf.Clamp01((float) LinearToSrgbPrecise(lg)),
                 Mathf.Clamp01((float) LinearToSrgbPrecise(lb)),
-                alpha);
+                Mathf.Clamp01(alpha));
         }
 
         public static void ColorToLch(Color color, out float l, out float c, out float h)
@@ -236,7 +241,7 @@ namespace ReactUnity.Styling.Converters
 
         public static Color LchToColor(float l, float c, float h, float alpha)
         {
-            LchToLab(c, h, out var a, out var b);
+            LchToLab(Mathf.Max(0, c), h, out var a, out var b);
             return LabToColor(l, a, b, alpha);
         }
 
@@ -254,8 +259,8 @@ namespace ReactUnity.Styling.Converters
 
         public static Color HslToColor(float h, float s, float l, float alpha)
         {
-            HslToRgb(h, s, l, out var r, out var g, out var b);
-            return new Color(r, g, b, alpha);
+            HslToRgb(h, Mathf.Clamp01(s), Mathf.Clamp01(l), out var r, out var g, out var b);
+            return new Color(r, g, b, Mathf.Clamp01(alpha));
         }
 
         /// <summary>Hue is in degrees; saturation and lightness are 0..1.</summary>

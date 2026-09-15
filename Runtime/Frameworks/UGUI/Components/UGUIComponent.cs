@@ -21,6 +21,7 @@ namespace ReactUnity.UGUI
         public BorderAndBackground BorderAndBackground { get; protected set; }
         public MaskAndImage OverflowMask { get; protected set; }
         public ElementFilter ElementFilter { get; protected set; }
+        public BackfaceCuller BackfaceCuller { get; protected set; }
 
         private Selectable selectable;
         public Selectable Selectable
@@ -269,7 +270,7 @@ namespace ReactUnity.UGUI
         protected override void ApplyStylesSelf()
         {
             ResolveTransform();
-            ResolveOpacityAndInteractable();
+            ResolveBackface();
             SetZIndex();
             SetOverflow();
             SetCursor();
@@ -305,7 +306,14 @@ namespace ReactUnity.UGUI
             var clipShape = ComputedStyle.clipPath ?? ClipPath.None;
             var hasClip = clipShape.Kind != ClipPathKind.None;
 
-            if (!hasFilter && !hasBlend && !isolated && !stacksBackgroundBlends && !hasMask && !hasClip)
+            // And `perspective` rides it for the same reason: the projection applies to the subtree
+            // as one image, and an offscreen camera is what can take that image with a frustum
+            // instead of an orthographic frame. It is the only one of these the element's own
+            // children see rather than the element itself.
+            var perspective = ComputedStyle.perspective;
+            var projects = perspective > 0;
+
+            if (!hasFilter && !hasBlend && !isolated && !stacksBackgroundBlends && !hasMask && !hasClip && !projects)
             {
                 if (ElementFilter) ElementFilter.Detach();
                 ElementFilter = null;
@@ -322,6 +330,9 @@ namespace ReactUnity.UGUI
                 ElementFilter.Isolated = isolated;
                 ElementFilter.ClipShape = clipShape;
             }
+
+            ElementFilter.Perspective = perspective;
+            ElementFilter.PerspectiveOrigin = ComputedStyle.perspectiveOrigin;
 
             ElementFilter.SetMask(maskImages, ComputedStyle.maskPositionX, ComputedStyle.maskPositionY,
                 ComputedStyle.maskSize, ComputedStyle.maskRepeatX, ComputedStyle.maskRepeatY,
@@ -494,6 +505,31 @@ namespace ReactUnity.UGUI
             RectTransform.localRotation = StylingHelpers.RotationOf(style.rotate);
         }
 
+        /// <summary>
+        /// Sets up or tears down the watch <c>backface-visibility: hidden</c> needs, and is what the
+        /// watch calls back into once the element has turned over.
+        /// </summary>
+        internal void ResolveBackface()
+        {
+            var hidden = ComputedStyle.backfaceVisibility == BackfaceVisibility.Hidden;
+
+            if (!hidden)
+            {
+                // Immediate, so the one being torn down cannot reach its own LateUpdate and ask for
+                // a replacement on the way out.
+                if (BackfaceCuller) GameObject.DestroyImmediate(BackfaceCuller);
+                BackfaceCuller = null;
+            }
+            else if (!BackfaceCuller)
+            {
+                BackfaceCuller = AddComponent<BackfaceCuller>();
+                BackfaceCuller.Component = this;
+                BackfaceCuller.Recheck();
+            }
+
+            ResolveOpacityAndInteractable();
+        }
+
         protected void ResolveOpacityAndInteractable()
         {
             var opacity = ComputedStyle.opacity;
@@ -501,6 +537,15 @@ namespace ReactUnity.UGUI
             var none = Layout.Display == YogaDisplay.None;
             var interaction = ComputedStyle.pointerEvents;
             var isolated = ComputedStyle.isolation == Isolation.Isolate;
+
+            // A back face is not drawn and not hit either, so it goes out the same way `visibility:
+            // hidden` does -- taking the subtree with it, which is what `flat` children amount to and
+            // what the two faces of a card flip want.
+            if (BackfaceCuller && BackfaceCuller.IsBackFacing)
+            {
+                opacity = 0;
+                interaction = PointerEvents.None;
+            }
 
             if (!visibility || none) opacity = 0;
             if (none) interaction = PointerEvents.None;

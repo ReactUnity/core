@@ -58,6 +58,26 @@ namespace ReactUnity.Helpers
             }
         }
 
+        private static Shader clippedImageShader;
+        public static Shader ClippedImageShader => clippedImageShader = clippedImageShader ??
+            Resources.Load<Shader>("ReactUnity/shaders/ClippedImage");
+
+        private static Material clippedImageMaterial;
+
+        /// <summary>
+        /// The base a <c>background-clip: text</c> layer draws with when its image brings no material
+        /// of its own. Shared, because the coverage itself lives on the per-layer copy that
+        /// <see cref="UGUI.Shapes.WebBackgroundImage.materialForRendering"/> makes from this.
+        /// </summary>
+        public static Material ClippedImageMaterial
+        {
+            get
+            {
+                if (clippedImageMaterial) return clippedImageMaterial;
+                return clippedImageMaterial = new Material(ClippedImageShader);
+            }
+        }
+
         private static Texture2D borderTexture;
         public static Texture2D BorderTexture => borderTexture = borderTexture ??
             Resources.Load<Texture2D>("ReactUnity/sprites/border");

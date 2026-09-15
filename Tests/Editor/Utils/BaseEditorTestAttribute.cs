@@ -26,29 +26,30 @@ namespace ReactUnity.Tests.Editor
         {
             var engineType = TestHelpers.GetEngineTypeOfTest(test);
 
-            if (EditorWindow.HasOpenInstances<TestReactWindow>())
+            var existing = TestReactWindow.Existing;
+            if (existing && existing.Context != null && SkipIfExisting)
             {
-                var existingWindow = EditorWindow.GetWindow<TestReactWindow>();
-
-                if (existingWindow != null && SkipIfExisting)
-                {
-                    Window = existingWindow;
-                    yield return null;
-                    yield break;
-                }
-                else
-                {
-                    existingWindow.Close();
-                    yield return null;
-                }
+                Window = existing;
+                yield return null;
+                yield break;
             }
 
+            // The window is kept open for the whole fixture and restarted per test -- closing and
+            // reopening one cost more than everything else the Editor suite did. Nothing else takes
+            // the previous test's context down, so it goes here, before this test's script is even
+            // transformed.
+            if (existing) existing.Clear();
+
             var script = GetScript();
-            while (script.MoveNext()) yield return null;
+            // Only the null steps are worth a frame: stopping on the source itself, rather than
+            // driving the enumerator to its end, takes a whole frame out of every test.
+            while (script.MoveNext() && script.Current == null) yield return null;
 
             var window = Window = TestReactWindow.CreateWindow(() => script.Current, engineType);
 
             window.Timer = RealTimer ? null : new ControlledTimer();
+            // A reused window carries whatever the last test wrote here.
+            window.Globals.ClearWithoutNotify();
             window.Globals["test"] = test;
 
             window.DebugEnabled = TestHelpers.IsDebugEnabled;
@@ -78,7 +79,6 @@ namespace ReactUnity.Tests.Editor
 
         public IEnumerator AfterTest(ITest test)
         {
-            if (Window) Window.Close();
             yield return null;
         }
 

@@ -81,16 +81,28 @@ namespace ReactUnity.Scripting
             });
         }
 
+        private static BindingManager CollectedBindings;
+
+        /// <summary>Registers the C# type surface with a runtime, reusing the reflection pass.</summary>
+        ///
+        /// Collect() walks every type of every assembly in the domain -- ~140 ms here -- and Bind()
+        /// is the 0.2 ms that actually touches the runtime. The collected result says nothing about
+        /// which runtime it is for, so it is kept for the life of the domain: creating a second
+        /// engine used to pay the whole scan again, which is most of what a ReactUnity startup cost
+        /// and, with one engine per test, most of what the test suite cost. A domain reload drops
+        /// the static, which is the only moment the answer can change.
         public static void InvokeReflectBinding(ScriptRuntime runtime)
         {
-            var bm = new BindingManager(new Prefs { }, new BindingManager.Args
+            if (CollectedBindings == null)
             {
-                bindingCallback = new ReflectBindingCallback(runtime),
-                bindingLogger = new DefaultBindingLogger(LogLevel.Error),
-            });
-            bm.Collect();
-            bm.Bind();
-            bm.Report();
+                CollectedBindings = new BindingManager(new Prefs { }, new BindingManager.Args
+                {
+                    bindingLogger = new DefaultBindingLogger(LogLevel.Error),
+                });
+                CollectedBindings.Collect();
+            }
+
+            CollectedBindings.Bind(new ReflectBindingCallback(runtime));
         }
 
 

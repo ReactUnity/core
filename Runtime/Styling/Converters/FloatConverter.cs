@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Text;
 using ReactUnity.Styling.Computed;
+using Yoga;
 using UnityEngine;
 
 namespace ReactUnity.Styling.Converters
@@ -26,6 +27,24 @@ namespace ReactUnity.Styling.Converters
             { "-infinity", float.NegativeInfinity },
             { "nan", float.NaN },
         };
+
+        /// <summary>
+        /// What <c>infinity</c> is worth once a value has to be a number: CSS Values 4 says the
+        /// largest the implementation supports, and browsers settle on about this. A real infinity
+        /// cannot be left in -- <c>calc(infinity * 1px)</c>, which is what a `rounded-full` utility
+        /// compiles to, becomes NaN the moment anything scales it, and a NaN radius paints nothing.
+        /// </summary>
+        public const float LargestValue = 33554428f;
+
+        /// <summary>
+        /// <paramref name="value"/> brought into the range a length can be. NaN goes to the top of
+        /// it rather than to zero, which is what CSS asks of a top-level calculation.
+        /// </summary>
+        public static float Finite(float value)
+        {
+            if (float.IsNaN(value)) return LargestValue;
+            return Mathf.Clamp(value, -LargestValue, LargestValue);
+        }
 
         static CultureInfo culture = new CultureInfo("en-US");
 
@@ -60,7 +79,7 @@ namespace ReactUnity.Styling.Converters
             }
             if (AllowSuffixless && MathConstants.TryGetValue(value.Trim(), out var constant))
             {
-                result = new ComputedConstant(constant);
+                result = new ComputedConstant(Finite(constant));
                 return true;
             }
             return ParseVal(value, out result);
@@ -86,7 +105,34 @@ namespace ReactUnity.Styling.Converters
                     break;
             }
 
+            // What a calculation that came out as a length or a percentage is worth here, which is
+            // the same answer the unit written out gets. A converter with no percentage in it says
+            // so by having no mapping for one, and the declaration is dropped.
+            if (value is YogaValue yoga)
+            {
+                if (yoga.Unit == YogaUnit.Point) return Constant(yoga.Value, out result);
+                if (yoga.Unit == YogaUnit.Percent) return WithSuffix(yoga.Value, "%", out result);
+
+                result = null;
+                return false;
+            }
+
             return base.ConvertInternal(value, out result);
+        }
+
+        /// <summary>A number written with a unit, as this converter reads that unit.</summary>
+        private bool WithSuffix(float value, string suffix, out IComputedValue result)
+        {
+            if (SuffixMapper.TryGetValue(suffix, out var mapper))
+            {
+                result = StylingUtils.CreateComputed(mapper(value));
+                return true;
+            }
+
+            if (SuffixMap.TryGetValue(suffix, out var multiplier)) return Constant(value * multiplier, out result);
+
+            result = null;
+            return false;
         }
 
         /// <summary>
@@ -132,20 +178,7 @@ namespace ReactUnity.Styling.Converters
                     return true;
                 }
 
-                if (SuffixMapper.TryGetValue(suffix, out var mapper))
-                {
-                    result = StylingUtils.CreateComputed(mapper(res));
-                    return true;
-                }
-
-                if (!SuffixMap.TryGetValue(suffix, out var multiplier))
-                {
-                    result = null;
-                    return false;
-                }
-
-                result = new ComputedConstant(res * multiplier);
-                return true;
+                return WithSuffix(res, suffix, out result);
             }
 
             result = null;
@@ -177,6 +210,22 @@ namespace ReactUnity.Styling.Converters
             { "%", 2.55f },
         })
         { }
+    }
+
+    /// <summary>
+    /// Saturation and lightness in hsl(), and the saturation and value of hsv(). CSS Color 4 puts
+    /// them on a 0..100 scale where a number and a percentage mean the same thing, so
+    /// `hsl(120 75 25)` is `75%` and `25%`.
+    /// </summary>
+    public class HslPercentageConverter : FloatConverter
+    {
+        public HslPercentageConverter() : base(new Dictionary<string, float>
+        {
+            { "%", 1f },
+        })
+        { }
+
+        public override string StringifyTyped(float value) => value + "%";
     }
 
     /// <summary>
@@ -289,6 +338,22 @@ namespace ReactUnity.Styling.Converters
         public override string StringifyTyped(float value) => value + "px";
     }
 
+    /// <summary>
+    /// <c>perspective</c>, which is a length or <c>none</c>. A distance of zero is no projection at
+    /// all, so <c>none</c> is worth exactly that and the reader only has one case to check.
+    /// </summary>
+    public class PerspectiveConverter : LengthConverter
+    {
+        public PerspectiveConverter()
+        {
+            SpecialValues = new Dictionary<string, float> { { "none", 0 } };
+
+            // A length and nothing else. The `%` came in with the length converter's units, and is
+            // the one of them with no distance here to be a fraction of.
+            SuffixMapper.Remove("%");
+        }
+    }
+
     public class FontSizeConverter : FloatConverter
     {
         public FontSizeConverter() : base(
@@ -379,10 +444,7 @@ namespace ReactUnity.Styling.Converters
         {
             if (BaseConverter.TryConvert(value, out var floatResult))
             {
-                result = ComputedMapper.Create(floatResult, BaseConverter, (res) => {
-                    if (res is float f) return new ComputedCalc.CalcValue { Value = f, HasUnit = true };
-                    return null;
-                });
+                result = FromBase(floatResult);
                 return true;
             }
 
@@ -397,16 +459,34 @@ namespace ReactUnity.Styling.Converters
 
             if (BaseConverter.TryConvert(value, out var floatResult))
             {
-                result = ComputedMapper.Create(floatResult, BaseConverter, (res) => {
-                    if (res is float f) return new ComputedCalc.CalcValue { Value = f, HasUnit = true };
-                    return null;
-                });
+                result = FromBase(floatResult);
                 return true;
             }
 
             if (TryParseUnitless(value, out result)) return true;
 
             return base.ParseInternal(value, out result);
+        }
+
+        /// <summary>
+        /// One operand, as the base converter reads it. A percentage is kept as a percentage rather
+        /// than resolved on the spot: where the property is a layout value, `calc(1/2 * 100%)` has
+        /// an exact answer -- half of whatever the box turns out to be -- and resolving the `100%`
+        /// against a parent that has not been laid out yet threw that away.
+        /// </summary>
+        private IComputedValue FromBase(IComputedValue floatResult)
+        {
+            if (floatResult is ComputedPercentage pct)
+                return new ComputedConstant(new ComputedCalc.CalcValue { Percent = pct.Value, HasUnit = true });
+
+            return ComputedMapper.Create(floatResult, BaseConverter, (res) => {
+                if (res is ComputedCalc.CalcValue cv) return cv;
+                if (res is float f) return new ComputedCalc.CalcValue { Value = f, HasUnit = true };
+                // A nested calc() is read by the base converter and answers with what it worked out,
+                // which for `calc(calc(1 / 2 * 100%) * -1)` is a percentage.
+                if (res is YogaValue yoga) return ComputedCalc.FromYoga(yoga);
+                return null;
+            });
         }
 
         private static bool TryParseUnitless(string value, out IComputedValue result)

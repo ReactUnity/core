@@ -28,7 +28,7 @@ namespace ReactUnity.Helpers
 
         public void InitializeDefault()
         {
-            var assemblies = AppDomain.CurrentDomain.GetAssemblies();
+            var assemblies = ReflectionHelpers.GetLoadedAssemblies();
 
             Add("System", Engine.CreateNamespaceReference("System", typeof(object).Assembly));
             Add("UnityEngine", Engine.CreateNamespaceReference("UnityEngine", assemblies.Where(x => x.FullName.FastStartsWith("UnityEngine.")).ToArray()));

@@ -16,10 +16,13 @@ namespace ReactUnity.Styling.Computed
         {
             YogaValue size;
 
+            // A percentage of the parent's size on a node that has no parent is no size at all.
+            if (style == null) return null;
+
             if (ReferenceEquals(prop, LayoutProperties.Width) || ReferenceEquals(prop, LayoutProperties.MaxWidth) || ReferenceEquals(prop, LayoutProperties.MinWidth))
-                size = style.Parent.GetStyleValue(LayoutProperties.Width);
+                size = style.Parent?.GetStyleValue(LayoutProperties.Width) ?? YogaValue.Undefined();
             else if (ReferenceEquals(prop, LayoutProperties.Height) || ReferenceEquals(prop, LayoutProperties.MaxHeight) || ReferenceEquals(prop, LayoutProperties.MinHeight))
-                size = style.Parent.GetStyleValue(LayoutProperties.Height);
+                size = style.Parent?.GetStyleValue(LayoutProperties.Height) ?? YogaValue.Undefined();
             else if (
                 ReferenceEquals(prop, LayoutProperties.BorderWidth) ||
                 ReferenceEquals(prop, LayoutProperties.BorderLeftWidth) ||

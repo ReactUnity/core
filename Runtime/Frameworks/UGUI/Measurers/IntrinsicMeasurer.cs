@@ -8,7 +8,7 @@ namespace ReactUnity.UGUI.Measurers
     [DefaultExecutionOrder(-8)]
     public class IntrinsicMeasurer : UIBehaviour
     {
-        public YogaNode Layout;
+        [System.NonSerialized] public YogaNode Layout;
         private RectTransform rt;
 
 

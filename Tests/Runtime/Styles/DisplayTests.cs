@@ -25,6 +25,28 @@ namespace ReactUnity.Tests
 
         public DisplayTests(JavascriptEngineType engineType) : base(engineType) { }
 
+        // Every web spelling of a box that is not a flex row reads as a block. There is no inline
+        // formatting here for an outer display to matter in, and a block is what an element is anyway --
+        // so dropping these would leave the element where the mapping puts it, minus the override.
+        [UGUITest(Script = BaseScript, Style = BaseStyle)]
+        public IEnumerator TheWebsOtherDisplayValuesReadAsTheOneTheyReduceTo()
+        {
+            var cmp = Q("#row");
+            yield return null;
+            Assert.AreEqual(Types.DisplayType.Flex, cmp.ComputedStyle.GetStyleValue(Styling.LayoutProperties.Display));
+
+            foreach (var spelling in new[] { "inline", "inline-block", "flow-root", "block" })
+            {
+                cmp.Style["display"] = spelling;
+                yield return null;
+                Assert.AreEqual(Types.DisplayType.Block, cmp.ComputedStyle.GetStyleValue(Styling.LayoutProperties.Display), spelling);
+            }
+
+            cmp.Style["display"] = "inline-flex";
+            yield return null;
+            Assert.AreEqual(Types.DisplayType.Flex, cmp.ComputedStyle.GetStyleValue(Styling.LayoutProperties.Display));
+        }
+
         [UGUITest(Script = BaseScript, Style = BaseStyle)]
         public IEnumerator BlockStacksAndFlexIsARow()
         {

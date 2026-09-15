@@ -10,6 +10,7 @@ namespace ReactUnity.Styling.Shorthands
     internal class BackgroundShorthand : StyleShorthand
     {
         private static StyleConverterBase RepeatConverter = AllConverters.Get<BackgroundRepeat>();
+        private static StyleConverterBase BoxConverter = AllConverters.Get<BackgroundBox>();
 
         public override List<IStyleProperty> ModifiedProperties { get; } = new List<IStyleProperty>
         {
@@ -20,6 +21,7 @@ namespace ReactUnity.Styling.Shorthands
             StyleProperties.backgroundSize,
             StyleProperties.backgroundRepeatX,
             StyleProperties.backgroundRepeatY,
+            StyleProperties.backgroundClip,
         };
 
         public BackgroundShorthand(string name) : base(name) { }
@@ -47,6 +49,7 @@ namespace ReactUnity.Styling.Shorthands
             var sizes = new IComputedValue[count];
             var repeatXs = new IComputedValue[count];
             var repeatYs = new IComputedValue[count];
+            var clips = new IComputedValue[count];
 
             for (int ci = 0; ci < count; ci++)
             {
@@ -73,6 +76,7 @@ namespace ReactUnity.Styling.Shorthands
                 var repeatYSet = false;
 
                 var canSetSize = -1;
+                var boxCount = 0;
 
                 for (int i = 0; i < splits.Count; i++)
                 {
@@ -84,6 +88,19 @@ namespace ReactUnity.Styling.Shorthands
                         {
                             images[ci] = v;
                             imageSet = true;
+                            continue;
+                        }
+                    }
+
+                    // CSS spells origin and clip with the same keywords: one box sets both, two set
+                    // them in that order. Only the clip is kept -- `background-origin` is always the
+                    // painting area here, which is the thing the layer is positioned against.
+                    if (boxCount < 2)
+                    {
+                        if (BoxConverter.TryParse(split, out var bx))
+                        {
+                            boxCount++;
+                            clips[ci] = bx;
                             continue;
                         }
                     }
@@ -237,6 +254,7 @@ namespace ReactUnity.Styling.Shorthands
             collection[StyleProperties.backgroundSize] = StyleProperties.backgroundSize.Converter.FromList(sizes);
             collection[StyleProperties.backgroundRepeatX] = StyleProperties.backgroundRepeatX.Converter.FromList(repeatXs);
             collection[StyleProperties.backgroundRepeatY] = StyleProperties.backgroundRepeatY.Converter.FromList(repeatYs);
+            collection[StyleProperties.backgroundClip] = StyleProperties.backgroundClip.Converter.FromList(clips);
             return ModifiedProperties;
         }
     }

@@ -117,6 +117,13 @@ namespace ReactUnity.Types
         BorderBox = 0,
         ContentBox = 1,
         PaddingBox = 2,
+
+        /// <summary>
+        /// The element's own glyphs, rather than a box -- <c>background-clip: text</c>. Only a clip
+        /// can take this value; it is meaningless as a positioning area, which is the other thing
+        /// this enum is spelled for.
+        /// </summary>
+        Text = 3,
     }
 
     public enum BackgroundAttachment

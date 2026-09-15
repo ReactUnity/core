@@ -100,6 +100,10 @@ namespace ReactUnity.UGUI.Shapes
 
         public CanvasRenderer BackdropRenderer => canvasRenderer;
 
+        // The blur kernel is nine taps wide and strided in screen pixels, so it reaches four of
+        // them past the element in every direction and no further.
+        public float BackdropBleed => Definition != null ? Definition.Blur * 4f : 0f;
+
         public void SetBackdrop(Texture value)
         {
             backdrop = value;
