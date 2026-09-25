@@ -78,14 +78,15 @@ namespace ReactUnity.UGUI
         protected UGUIComponent(UGUIContext context, string tag = "", bool isContainer = true) : base(context, tag, isContainer)
         {
             RevertCalculator = new UGUIRevertCalculator(this);
-            GameObject = context.CreateNativeObject(DefaultName);
-            RectTransform = AddComponent<RectTransform>();
+            // Components passed to the constructor, since adding a RectTransform later replaces the Transform.
+            GameObject = context.CreateNativeObject(DefaultName, typeof(RectTransform), typeof(ReactElement));
+            RectTransform = (RectTransform) GameObject.transform;
 
             RectTransform.anchorMin = Vector2.up;
             RectTransform.anchorMax = Vector2.up;
             RectTransform.pivot = Vector2.up;
 
-            Component = AddComponent<ReactElement>();
+            Component = GameObject.GetComponent<ReactElement>();
             Component.Layout = Layout;
             Component.Component = this;
 

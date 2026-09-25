@@ -62,7 +62,7 @@ namespace ReactUnity.UGUI
             vpImage.raycastTarget = true;
             vpImage.color = Color.clear;
 
-            var content = ctx.CreateNativeObject("[ScrollContent]").AddComponent<RectTransform>();
+            var content = (RectTransform) ctx.CreateNativeObject("[ScrollContent]", typeof(RectTransform)).transform;
             Container = content;
             content.SetParent(viewport, false);
 
