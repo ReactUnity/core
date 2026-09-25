@@ -1,6 +1,6 @@
 using System;
 using System.Collections.Generic;
-using Newtonsoft.Json.Linq;
+using System.Globalization;
 using ReactUnity.Helpers;
 
 namespace ReactUnity
@@ -37,105 +37,89 @@ namespace ReactUnity
             return target;
         }
 
-        IEnumerator<KeyValuePair<string, object>> PropsEnumerator(JToken props)
+        IEnumerator<KeyValuePair<string, object>> PropsEnumerator(JsonObject props)
         {
-            foreach (JProperty child in props)
+            for (int i = 0; i < props.Count; i++)
             {
+                var child = props[i];
                 var val = child.Value;
-                object value = null;
+                object value;
 
-                if (child.Name == "style" || child.Name == "data")
+                if (child.Key == "style" || child.Key == "data")
                     value = MultiEnumerator(val, true);
                 else
                 {
-                    switch (val.Type)
+                    switch (val)
                     {
-                        case JTokenType.Integer:
-                            value = val.Value<int>();
-                            break;
-                        case JTokenType.Float:
-                            value = val.Value<float>();
-                            break;
-                        case JTokenType.Boolean:
-                            value = val.Value<bool>();
-                            break;
-                        case JTokenType.TimeSpan:
-                        case JTokenType.Guid:
-                        case JTokenType.Date:
-                        case JTokenType.Uri:
-                        case JTokenType.String:
-                            value = val.ToString();
-                            break;
-                        case JTokenType.Null:
-                        case JTokenType.Undefined:
-                        case JTokenType.Raw:
-                        case JTokenType.Bytes:
-                        case JTokenType.None:
-                        case JTokenType.Object:
-                        case JTokenType.Array:
-                        case JTokenType.Constructor:
-                        case JTokenType.Property:
-                        case JTokenType.Comment:
-                        default:
-                            break;
+                        case int n: value = n; break;
+                        case double d: value = (float) d; break;
+                        case bool b: value = b; break;
+                        case string s: value = s; break;
+                        default: value = null; break;
                     }
                 }
 
-                yield return new KeyValuePair<string, object>(child.Name, value);
+                yield return new KeyValuePair<string, object>(child.Key, value);
             }
         }
 
-        IEnumerator<KeyValuePair<string, object>> EventsEnumerator(JToken events, bool eventsAsObjects = false)
+        IEnumerator<KeyValuePair<string, object>> EventsEnumerator(JsonObject events, bool eventsAsObjects = false)
         {
-            foreach (JProperty child in events)
+            for (int i = 0; i < events.Count; i++)
             {
-                var ind = child.Value.Value<int>();
+                var ind = ToInt(events[i].Value);
                 var callback = ind <= 0 ? null :
                     (eventsAsObjects ?
                         GetEventAsObjectCallback.Call(ind) :
                         Callback.From(ind, this, allowIndexedCallbacks: true));
-                yield return new KeyValuePair<string, object>(child.Name, callback);
+                yield return new KeyValuePair<string, object>(events[i].Key, callback);
             }
         }
 
-        IEnumerator<KeyValuePair<string, object>> ObjectsEnumerator(JToken objs)
+        IEnumerator<KeyValuePair<string, object>> ObjectsEnumerator(JsonObject objs)
         {
-            foreach (JProperty child in objs)
+            for (int i = 0; i < objs.Count; i++)
             {
-                var ind = child.Value.Value<int>();
+                var ind = ToInt(objs[i].Value);
                 var obj = ind <= 0 ? null : GetObjectCallback.Call(ind);
-                yield return new KeyValuePair<string, object>(child.Name, obj);
+                yield return new KeyValuePair<string, object>(objs[i].Key, obj);
             }
         }
 
-        IEnumerator<KeyValuePair<string, object>> MultiEnumerator(JToken val, bool eventsAsObjects = false)
+        IEnumerator<KeyValuePair<string, object>> MultiEnumerator(object val, bool eventsAsObjects = false)
         {
-            // `style={undefined}` is a prop that is present and null, which arrives as a JSON null
-            // rather than an object -- and a null has no children to read.
-            if (val == null || val.Type == JTokenType.Null || val.Type == JTokenType.Undefined) yield break;
+            // `style={undefined}` is a prop that is present and null, so it has no buckets to read.
+            if (!(val is JsonObject obj)) yield break;
 
-            var events = val["e"];
-            var props = val["p"];
-            var objs = val["o"];
-
-            if (events != null)
+            if (obj["e"] is JsonObject events)
             {
                 var ee = EventsEnumerator(events, eventsAsObjects);
                 while (ee.MoveNext()) yield return ee.Current;
             }
 
-            if (props != null)
+            if (obj["p"] is JsonObject props)
             {
                 var pe = PropsEnumerator(props);
                 while (pe.MoveNext()) yield return pe.Current;
             }
 
-            if (objs != null)
+            if (obj["o"] is JsonObject objs)
             {
                 var oe = ObjectsEnumerator(objs);
                 while (oe.MoveNext()) yield return oe.Current;
             }
         }
+
+        static object At(List<object> cmd, int index) => index < cmd.Count ? cmd[index] : null;
+
+        static int ToInt(object value) => Convert.ToInt32(value, CultureInfo.InvariantCulture);
+
+        // A JSON null reads as "", which is what Newtonsoft gave, and what a pool key without `pool` relies on.
+        static string ToStr(object value) => value == null ? "" : Convert.ToString(value, CultureInfo.InvariantCulture);
+
+        static string StrAt(List<object> cmd, int index) => index < cmd.Count ? ToStr(cmd[index]) : null;
+
+        static string StrAt(JsonObject obj, string key) => obj.TryGetValue(key, out var value) ? ToStr(value) : null;
 
         public void FlushCommands(string serializedCommands = null)
         {
@@ -149,7 +133,7 @@ namespace ReactUnity
 
                     serializedCommands = CommandsCallback.Call().ToString();
                 }
-                var jo = JArray.Parse(serializedCommands);
+                var jo = (List<object>) JsonReader.Parse(serializedCommands);
 
                 // Temporarily hold a reference of all created items
                 // Otherwise, under stress, items may be disposed before this method completes
@@ -158,19 +142,17 @@ namespace ReactUnity
 
                 for (int i = 0; i < jo.Count; i++)
                 {
-                    var cmd = jo[i];
+                    var cmd = (List<object>) jo[i];
 
                     // Shorter commands serialization, but more obscure
-                    if (cmd[0].Type == JTokenType.Integer)
+                    if (cmd[0] is int key)
                     {
-                        var key = cmd[0].Value<int>();
-
                         if (key == 0)
                         {
-                            var refId = cmd[1].Value<int>();
-                            var type = cmd[2].ToString();
-                            var props = cmd[3];
-                            var poolKey = cmd[4]?.ToString();
+                            var refId = ToInt(cmd[1]);
+                            var type = StrAt(cmd, 2);
+                            var props = At(cmd, 3);
+                            var poolKey = StrAt(cmd, 4);
                             var el = ReactUnityBridge.Instance.createElement(type, null, Host, MultiEnumerator(props), poolKey);
                             if (refId > 0)
                             {
@@ -180,8 +162,8 @@ namespace ReactUnity
                         }
                         else if (key == 1)
                         {
-                            var refId = cmd[1].Value<int>();
-                            var children = cmd[2]?.ToString();
+                            var refId = ToInt(cmd[1]);
+                            var children = StrAt(cmd, 2);
                             var el = ReactUnityBridge.Instance.createText(children, Host);
                             if (refId > 0)
                             {
@@ -191,55 +173,46 @@ namespace ReactUnity
                         }
                         else if (key == 2)
                         {
-                            var parentRef = cmd[1].Value<int>();
-                            var childRef = cmd[2].Value<int>();
-                            var parent = GetRef(parentRef);
-                            var child = GetRef(childRef);
+                            var parent = GetRef(ToInt(cmd[1]));
+                            var child = GetRef(ToInt(cmd[2]));
                             ReactUnityBridge.Instance.appendChild(parent, child);
                         }
                         else if (key == 3)
                         {
-                            var parentRef = cmd[1].Value<int>();
-                            var childRef = cmd[2].Value<int>();
-                            var parent = GetRef(parentRef);
-                            var child = GetRef(childRef);
+                            var parent = GetRef(ToInt(cmd[1]));
+                            var child = GetRef(ToInt(cmd[2]));
                             ReactUnityBridge.Instance.removeChild(parent, child);
                         }
                         else if (key == 4)
                         {
-                            var parentRef = cmd[1].Value<int>();
-                            var childRef = cmd[2].Value<int>();
-                            var insertRef = cmd[3]?.Value<int>();
-                            var parent = GetRef(parentRef);
-                            var child = GetRef(childRef);
-                            if (insertRef.HasValue)
+                            var parent = GetRef(ToInt(cmd[1]));
+                            var child = GetRef(ToInt(cmd[2]));
+                            var insertRef = At(cmd, 3);
+                            if (insertRef != null)
                             {
-                                var insert = GetRef(insertRef.Value);
+                                var insert = GetRef(ToInt(insertRef));
                                 ReactUnityBridge.Instance.insertBefore(parent, child, insert);
                             }
                             else ReactUnityBridge.Instance.appendChild(parent, child);
                         }
                         else if (key == 5)
                         {
-                            var refId = cmd[1].Value<int>();
-                            var el = GetRef(refId);
-                            var type = cmd[2].ToString();
-                            var props = cmd[3];
+                            var el = GetRef(ToInt(cmd[1]));
+                            var type = StrAt(cmd, 2);
+                            var props = At(cmd, 3);
 
                             ReactUnityBridge.Instance.applyUpdate(el, MultiEnumerator(props), type);
                         }
                         else if (key == 6)
                         {
-                            var elRef = cmd[1].Value<int>();
-                            var el = GetRef(elRef);
-                            var text = cmd[2]?.ToString();
+                            var el = GetRef(ToInt(cmd[1]));
+                            var text = StrAt(cmd, 2);
                             ReactUnityBridge.Instance.setText(el, text);
                         }
                         else if (key == 7)
                         {
-                            var elRef = cmd[1].Value<int>();
-                            var el = GetRef(elRef);
-                            var hidden = cmd[2].Value<bool>();
+                            var el = GetRef(ToInt(cmd[1]));
+                            var hidden = Convert.ToBoolean(cmd[2], CultureInfo.InvariantCulture);
 
                             if (el is IReactComponent elr)
                                 elr?.ClassList.Toggle("react-unity__renderer__hidden", hidden);
@@ -251,14 +224,14 @@ namespace ReactUnity
                     }
                     else
                     {
-                        var key = cmd[0].ToString();
-                        var val = cmd[1];
+                        var legacyKey = ToStr(cmd[0]);
+                        var val = At(cmd, 1) as JsonObject ?? new JsonObject();
 
-                        if (key == "c")
+                        if (legacyKey == "c")
                         {
-                            var refId = val["r"].Value<int>();
-                            var type = val["t"].ToString();
-                            var poolKey = val["k"]?.ToString();
+                            var refId = ToInt(val["r"]);
+                            var type = StrAt(val, "t");
+                            var poolKey = StrAt(val, "k");
                             var el = ReactUnityBridge.Instance.createElement(type, null, Host, MultiEnumerator(val), poolKey);
                             if (refId > 0)
                             {
@@ -266,10 +239,10 @@ namespace ReactUnity
                                 recentCreatedElements.AddLast(el);
                             }
                         }
-                        else if (key == "t")
+                        else if (legacyKey == "t")
                         {
-                            var refId = val["r"].Value<int>();
-                            var children = val["c"].ToString();
+                            var refId = ToInt(val["r"]);
+                            var children = StrAt(val, "c");
                             var el = ReactUnityBridge.Instance.createText(children, Host);
                             if (refId > 0)
                             {
@@ -277,57 +250,47 @@ namespace ReactUnity
                                 recentCreatedElements.AddLast(el);
                             }
                         }
-                        else if (key == "a")
+                        else if (legacyKey == "a")
                         {
-                            var parentRef = val["p"].Value<int>();
-                            var childRef = val["c"].Value<int>();
-                            var parent = GetRef(parentRef);
-                            var child = GetRef(childRef);
+                            var parent = GetRef(ToInt(val["p"]));
+                            var child = GetRef(ToInt(val["c"]));
                             ReactUnityBridge.Instance.appendChild(parent, child);
                         }
-                        else if (key == "r")
+                        else if (legacyKey == "r")
                         {
-                            var parentRef = val["p"].Value<int>();
-                            var childRef = val["c"].Value<int>();
-                            var parent = GetRef(parentRef);
-                            var child = GetRef(childRef);
+                            var parent = GetRef(ToInt(val["p"]));
+                            var child = GetRef(ToInt(val["c"]));
                             ReactUnityBridge.Instance.removeChild(parent, child);
                         }
-                        else if (key == "i")
+                        else if (legacyKey == "i")
                         {
-                            var parentRef = val["p"].Value<int>();
-                            var childRef = val["c"].Value<int>();
-                            var insertRef = val["i"].Value<int>();
-                            var parent = GetRef(parentRef);
-                            var child = GetRef(childRef);
-                            var insert = GetRef(insertRef);
+                            var parent = GetRef(ToInt(val["p"]));
+                            var child = GetRef(ToInt(val["c"]));
+                            var insert = GetRef(ToInt(val["i"]));
                             ReactUnityBridge.Instance.insertBefore(parent, child, insert);
                         }
-                        else if (key == "u")
+                        else if (legacyKey == "u")
                         {
-                            var refId = val["r"].Value<int>();
-                            var el = GetRef(refId);
-                            var type = val["t"].ToString();
+                            var el = GetRef(ToInt(val["r"]));
+                            var type = StrAt(val, "t");
 
                             ReactUnityBridge.Instance.applyUpdate(el, MultiEnumerator(val), type);
                         }
-                        else if (key == "x")
+                        else if (legacyKey == "x")
                         {
-                            var elRef = val["r"].Value<int>();
-                            var el = GetRef(elRef);
-                            var text = val["c"]?.ToString();
+                            var el = GetRef(ToInt(val["r"]));
+                            var text = StrAt(val, "c");
                             ReactUnityBridge.Instance.setText(el, text);
                         }
-                        else if (key == "h")
+                        else if (legacyKey == "h")
                         {
-                            var elRef = val["r"].Value<int>();
-                            var el = GetRef(elRef);
-                            var hidden = val["h"].Value<bool>();
+                            var el = GetRef(ToInt(val["r"]));
+                            var hidden = Convert.ToBoolean(val["h"], CultureInfo.InvariantCulture);
 
                             if (el is IReactComponent elr)
                                 elr?.ClassList.Toggle("react-unity__renderer__hidden", hidden);
                         }
-                        else if (key == "o")
+                        else if (legacyKey == "o")
                         {
                             ReactUnityBridge.Instance.clearContainer(Host);
                         }
