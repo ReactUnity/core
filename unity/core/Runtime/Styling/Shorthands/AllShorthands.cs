@@ -73,7 +73,7 @@ namespace ReactUnity.Styling.Shorthands
         internal static readonly StyleShorthand PlaceItems = new PlaceShorthand("place-items", LayoutProperties.AlignItems);
         internal static readonly StyleShorthand PlaceSelf = new PlaceShorthand("place-self", LayoutProperties.AlignSelf);
 
-        internal static readonly Dictionary<string, StyleShorthand> Map = new Dictionary<string, StyleShorthand>(StringComparer.InvariantCultureIgnoreCase)
+        internal static readonly Dictionary<string, StyleShorthand> Map = new Dictionary<string, StyleShorthand>(StringComparer.OrdinalIgnoreCase)
         {
             { "all", All },
             { "margin", Margin },

@@ -51,7 +51,7 @@ namespace ReactUnity.Styling.Rules
         // so `[data-x="a b"]`, `:not(.a, .b)` and `:has(> .a .b)` reach ParseSelector in one piece.
         private const char InnerSpace = '\u0003';
 
-        private static readonly Dictionary<string, RuleSelectorPartType> NthPartTypes = new Dictionary<string, RuleSelectorPartType>(StringComparer.InvariantCultureIgnoreCase)
+        private static readonly Dictionary<string, RuleSelectorPartType> NthPartTypes = new Dictionary<string, RuleSelectorPartType>(StringComparer.OrdinalIgnoreCase)
         {
             { "nth-child", RuleSelectorPartType.NthChild },
             { "nth-last-child", RuleSelectorPartType.NthLastChild },
@@ -59,7 +59,7 @@ namespace ReactUnity.Styling.Rules
             { "nth-last-of-type", RuleSelectorPartType.NthLastOfType },
         };
 
-        private static Dictionary<string, RuleSelectorPartType> BasicPartTypes = new Dictionary<string, RuleSelectorPartType>(StringComparer.InvariantCultureIgnoreCase)
+        private static Dictionary<string, RuleSelectorPartType> BasicPartTypes = new Dictionary<string, RuleSelectorPartType>(StringComparer.OrdinalIgnoreCase)
         {
             { "first-child", RuleSelectorPartType.FirstChild },
             { "last-child", RuleSelectorPartType.LastChild },

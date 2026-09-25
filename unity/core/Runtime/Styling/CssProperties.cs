@@ -8,9 +8,9 @@ namespace ReactUnity.Styling
 {
     public static class CssProperties
     {
-        public static readonly Dictionary<string, IStyleProperty> PropertyMap = new Dictionary<string, IStyleProperty>(StringComparer.InvariantCultureIgnoreCase);
+        public static readonly Dictionary<string, IStyleProperty> PropertyMap = new Dictionary<string, IStyleProperty>(StringComparer.OrdinalIgnoreCase);
         public static readonly HashSet<IStyleProperty> TransitionableProperties = new HashSet<IStyleProperty>();
-        private static readonly Dictionary<string, VariableProperty> VariableProperties = new Dictionary<string, VariableProperty>(StringComparer.InvariantCultureIgnoreCase);
+        private static readonly Dictionary<string, VariableProperty> VariableProperties = new Dictionary<string, VariableProperty>(StringComparer.OrdinalIgnoreCase);
         public static readonly List<IStyleProperty> AllProperties;
 
         static CssProperties()

@@ -221,7 +221,7 @@ namespace ReactUnity.Styling
         public static readonly ValueListStyleProperty<float> audioVolume = new ValueListStyleProperty<float>("audioVolume", 1f, true, baseConverter: AllConverters.PercentageConverter);
         public static readonly ValueListStyleProperty<float> audioPitch = new ValueListStyleProperty<float>("audioPitch", 1f);
 
-        public static readonly Dictionary<string, IStyleProperty> PropertyMap = new Dictionary<string, IStyleProperty>(StringComparer.InvariantCultureIgnoreCase)
+        public static readonly Dictionary<string, IStyleProperty> PropertyMap = new Dictionary<string, IStyleProperty>(StringComparer.OrdinalIgnoreCase)
         {
             { "opacity", opacity },
             { "zIndex", zIndex },

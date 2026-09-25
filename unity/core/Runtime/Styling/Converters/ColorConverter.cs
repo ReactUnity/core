@@ -8,12 +8,12 @@ namespace ReactUnity.Styling.Converters
 {
     public class ColorConverter : TypedStyleConverterBase<Color>
     {
-        private static HashSet<string> DefaultAllowedFunctions = new HashSet<string>(StringComparer.InvariantCultureIgnoreCase) {
+        private static HashSet<string> DefaultAllowedFunctions = new HashSet<string>(StringComparer.OrdinalIgnoreCase) {
             "rgb", "rgba", "hsl", "hsla", "hsv", "hsva", "oklch", "oklab", "lch", "lab", "color-mix", "light-dark",
         };
         protected override HashSet<string> AllowedFunctions => DefaultAllowedFunctions;
 
-        static Dictionary<string, string> KnownColors = new Dictionary<string, string>(StringComparer.InvariantCultureIgnoreCase) {
+        static Dictionary<string, string> KnownColors = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase) {
             { "aliceblue", "#f0f8ff" },
             { "antiquewhite", "#faebd7" },
             { "aqua", "#00ffff" },

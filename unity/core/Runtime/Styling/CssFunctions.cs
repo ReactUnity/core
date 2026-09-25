@@ -27,7 +27,7 @@ namespace ReactUnity.Styling
         public static ICssFunction RadialGradient = new RadialGradientFunction();
         public static ICssFunction ConicGradient = new ConicGradientFunction();
 
-        private static Dictionary<string, ICssFunction> Functions = new Dictionary<string, ICssFunction>(StringComparer.InvariantCultureIgnoreCase)
+        private static Dictionary<string, ICssFunction> Functions = new Dictionary<string, ICssFunction>(StringComparer.OrdinalIgnoreCase)
         {
             { "calc", Calc },
             { "min", MinMax },
