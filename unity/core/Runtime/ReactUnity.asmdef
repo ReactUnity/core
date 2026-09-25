@@ -22,7 +22,6 @@
         "ExCSS.dll",
         "Jint.dll",
         "websocket-sharp.dll",
-        "Newtonsoft.Json.dll",
         "Acornima.dll"
     ],
     "autoReferenced": true,
