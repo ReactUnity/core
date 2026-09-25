@@ -145,6 +145,18 @@ namespace ReactUnity.UGUI
             if (markedForResolveInnerContent) ResolveInnerContent();
         }
 
+        public override bool Pool()
+        {
+            content = null;
+            innerContent = null;
+            SVGAttributes.Clear();
+            WatchedProperties.Clear();
+            markedForResolveInnerContent = false;
+            if (!base.Pool()) return false;
+            ResolvedContent = null;
+            return true;
+        }
+
         protected override void SetSource(object value)
         {
             if (!AllConverters.TextReferenceConverter.TryGetConstantValue(value, out TextReference reference))

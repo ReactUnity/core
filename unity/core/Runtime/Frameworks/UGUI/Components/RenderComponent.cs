@@ -44,6 +44,12 @@ namespace ReactUnity.UGUI
             }
         }
 
+        public override bool Pool()
+        {
+            SetCamera(null);
+            return base.Pool();
+        }
+
         protected override void SetSource(object value)
         {
             throw new Exception($"source property cannot be set on a render component");

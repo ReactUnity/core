@@ -16,7 +16,8 @@ namespace ReactUnity.Tests
         public bool AutoRender = true;
         public bool SkipIfExisting;
         public bool RealTimer;
-        public ReactContext.PoolingType Pooling = ReactContext.PoolingType.None;
+        // The runtime default, so the suite runs what a project gets without choosing.
+        public ReactContext.PoolingType Pooling = ReactContext.PoolingType.Basic;
 
         public BaseReactTestAttribute() : base() { }
 

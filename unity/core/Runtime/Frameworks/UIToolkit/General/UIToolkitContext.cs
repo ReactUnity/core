@@ -123,6 +123,9 @@ namespace ReactUnity.UIToolkit
             return textCreator(tag, text, this);
         }
 
+        // A VisualElement is cheap to build and each kind has its own native fields a reuse would have to reset.
+        protected override bool PoolsElements => false;
+
         protected override IReactComponent CreateDefaultComponentInternal(string tag, string text) => defaultCreator(tag, text, this);
 
         protected override IReactComponent CreateComponentInternal(string tag, string text)

@@ -284,14 +284,7 @@ namespace ReactUnity
                 InlineStylesheet = null;
             }
 
-            if (PoolStack != null)
-            {
-                Context.PoolComponent(this, PoolStack);
-            }
-            else
-            {
-                DestroySelf();
-            }
+            if (PoolStack == null || !Context.PoolComponent(this, PoolStack)) DestroySelf();
         }
 
         public virtual bool Pool()
@@ -304,6 +297,7 @@ namespace ReactUnity
             Style.ClearWithoutNotify();
             Data.ClearWithoutNotify();
             ClassList.ClearWithoutNotify();
+            CustomProperties?.Clear();
             name = null;
             Id = null;
 

@@ -114,12 +114,15 @@ namespace ReactUnity
 
         static int ToInt(object value) => Convert.ToInt32(value, CultureInfo.InvariantCulture);
 
-        // A JSON null reads as "", which is what Newtonsoft gave, and what a pool key without `pool` relies on.
+        // A JSON null reads as "", which is what Newtonsoft gave.
         static string ToStr(object value) => value == null ? "" : Convert.ToString(value, CultureInfo.InvariantCulture);
 
         static string StrAt(List<object> cmd, int index) => index < cmd.Count ? ToStr(cmd[index]) : null;
 
         static string StrAt(JsonObject obj, string key) => obj.TryGetValue(key, out var value) ? ToStr(value) : null;
+
+        // No `pool` prop is a null key, which the context resolves by its pooling type; `pool={false}` is "".
+        static string PoolKey(object value) => value == null ? null : ToStr(value);
 
         public void FlushCommands(string serializedCommands = null)
         {
@@ -152,7 +155,7 @@ namespace ReactUnity
                             var refId = ToInt(cmd[1]);
                             var type = StrAt(cmd, 2);
                             var props = At(cmd, 3);
-                            var poolKey = StrAt(cmd, 4);
+                            var poolKey = PoolKey(At(cmd, 4));
                             var el = ReactUnityBridge.Instance.createElement(type, null, Host, MultiEnumerator(props), poolKey);
                             if (refId > 0)
                             {
@@ -231,7 +234,7 @@ namespace ReactUnity
                         {
                             var refId = ToInt(val["r"]);
                             var type = StrAt(val, "t");
-                            var poolKey = StrAt(val, "k");
+                            var poolKey = PoolKey(val["k"]);
                             var el = ReactUnityBridge.Instance.createElement(type, null, Host, MultiEnumerator(val), poolKey);
                             if (refId > 0)
                             {

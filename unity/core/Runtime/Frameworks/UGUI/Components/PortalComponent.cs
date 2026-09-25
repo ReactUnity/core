@@ -11,6 +11,7 @@ namespace ReactUnity.UGUI
 
         Transform currentTarget;
         Camera currentCamera;
+        internal Camera EventCamera => currentCamera;
 
         public bool Detached { get; private set; }
         public YogaNode ReplacedLayout { get; } = new YogaNode();
@@ -181,7 +182,7 @@ namespace ReactUnity.UGUI
         {
             if (!base.Revive()) return false;
             RectTransform.SetParent(null, false);
-            SetCamera(currentCamera);
+            SetCamera(null);
             return true;
         }
     }

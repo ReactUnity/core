@@ -9,6 +9,9 @@ namespace ReactUnity.UGUI
         GameObject targetObject;
         bool shouldRender;
 
+        internal Camera Camera => currentCamera;
+        internal GameObject Target => targetObject;
+
         public ObjectComponent(UGUIContext context) : base(context, "object")
         {
         }
@@ -85,6 +88,13 @@ namespace ReactUnity.UGUI
                     base.SetProperty(propertyName, value);
                     break;
             }
+        }
+
+        public override bool Pool()
+        {
+            SetCamera(null);
+            SetTarget(null);
+            return base.Pool();
         }
 
         protected override void SetSource(object value)

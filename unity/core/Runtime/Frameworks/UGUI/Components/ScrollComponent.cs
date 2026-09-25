@@ -41,6 +41,10 @@ namespace ReactUnity.UGUI
             set => ScrollRect.ScrollTop = value;
         }
 
+        // Points per wheel tick, which is about what a browser scrolls for one.
+        const float DefaultSensitivity = 100;
+        const float DefaultSmoothness = 0.12f;
+
         public ScrollComponent(UGUIContext ctx) : base(ctx, "scroll")
         {
             ScrollRect = AddComponent<SmoothScrollRect>();
@@ -79,8 +83,7 @@ namespace ReactUnity.UGUI
 
             ScrollRect.viewport = viewport;
             ScrollRect.content = content;
-            // Points per wheel tick, which is about what a browser scrolls for one.
-            ScrollRect.scrollSensitivity = 100;
+            ScrollRect.scrollSensitivity = DefaultSensitivity;
             ScrollRect.horizontalScrollbarVisibility = ScrollbarVisibility.AutoHide;
             ScrollRect.verticalScrollbarVisibility = ScrollbarVisibility.AutoHide;
             RefreshMovementType();
@@ -251,7 +254,7 @@ namespace ReactUnity.UGUI
                     RefreshMovementType();
                     break;
                 case "smoothness":
-                    var sm = AllConverters.FloatConverter.TryGetConstantValue(value, 0.12f);
+                    var sm = AllConverters.FloatConverter.TryGetConstantValue(value, DefaultSmoothness);
                     ScrollRect.Smoothness = sm;
                     break;
                 case "direction":
@@ -264,7 +267,7 @@ namespace ReactUnity.UGUI
                     ScrollRect.verticalScrollbarVisibility = dir2.HasFlag(ScrollDirection.Vertical) ? ScrollbarVisibility.Permanent : ScrollbarVisibility.AutoHide;
                     break;
                 case "sensitivity":
-                    var fl = AllConverters.FloatConverter.TryGetConstantValue(value, 100f);
+                    var fl = AllConverters.FloatConverter.TryGetConstantValue(value, DefaultSensitivity);
                     ScrollRect.scrollSensitivity = fl;
                     break;
                 default:
@@ -297,6 +300,12 @@ namespace ReactUnity.UGUI
             snapType = ScrollSnapType.None;
             elasticity = 0;
             RefreshMovementType();
+            // The next style pass takes the direction from overflow again.
+            DirectionFromProp = false;
+            ScrollRect.horizontalScrollbarVisibility = ScrollbarVisibility.AutoHide;
+            ScrollRect.verticalScrollbarVisibility = ScrollbarVisibility.AutoHide;
+            ScrollRect.scrollSensitivity = DefaultSensitivity;
+            ScrollRect.Smoothness = DefaultSmoothness;
             SetupContents();
 
             return true;

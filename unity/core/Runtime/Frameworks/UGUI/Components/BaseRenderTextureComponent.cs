@@ -69,6 +69,13 @@ namespace ReactUnity.UGUI
             }
         }
 
+        public override bool Pool()
+        {
+            if (!base.Pool()) return false;
+            SetDimensions(1, 1);
+            return true;
+        }
+
         public void SetDimensions(int width, int height)
         {
             if (renderTexture && (renderTexture.height != height || renderTexture.width != width))

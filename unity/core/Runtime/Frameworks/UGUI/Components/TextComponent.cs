@@ -33,6 +33,8 @@ namespace ReactUnity.UGUI
         private bool TextSetByStyle = false;
         private bool TextCapitalized = false;
 
+        protected bool DefaultRichText;
+
         private Color lastAppliedColor;
         private TMP_FontAsset lastAppliedFontAsset;
 
@@ -75,6 +77,7 @@ namespace ReactUnity.UGUI
             Text = CreateGraphicChild<TextMeshProUGUI>("[Text]");
 #endif
             Component.Text = Text;
+            DefaultRichText = Text.richText;
 
             Measurer = AddComponent<TextMeasurer>();
             Measurer.Text = Text;
@@ -228,6 +231,13 @@ namespace ReactUnity.UGUI
             Text.fontMaterial = effect.GetModifiedMaterial();
         }
 
+        public override bool Revive()
+        {
+            if (!base.Revive()) return false;
+            Text.richText = DefaultRichText;
+            return true;
+        }
+
         protected override void DestroySelf()
         {
             base.DestroySelf();
@@ -347,7 +357,7 @@ namespace ReactUnity.UGUI
 
         public RichTextComponent(string text, UGUIContext context, string tag) : base(text, context, tag)
         {
-            Text.richText = true;
+            Text.richText = DefaultRichText = true;
         }
     }
 }

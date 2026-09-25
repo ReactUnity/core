@@ -114,6 +114,9 @@ namespace ReactUnity.UGUI
             if (!RectTransform) return false;
 
             RectTransform.SetParent(Context.OffscreenRoot, false);
+            GameObject.SetActive(true);
+            inheritedEventViewport = null;
+            EventViewport = null;
             return true;
         }
 

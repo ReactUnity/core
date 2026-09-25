@@ -65,15 +65,18 @@ namespace ReactUnity
                 options.Pooling != PoolingType.None, TextComponentPool,
                 poolKey ?? (options.Pooling != PoolingType.None ? "default" : ""));
 
+        /// <summary>Whether <see cref="PoolingType.All"/> reaches elements here, rather than only text and pseudo elements.</summary>
+        protected virtual bool PoolsElements => true;
+
         public IReactComponent CreateDefaultComponent(string tag, string text, string poolKey = null) =>
             CreateComponentWithPoolInternal(tag, text, CreateDefaultComponentInternal,
-                options.Pooling == PoolingType.All, DefaultComponentPool,
+                options.Pooling == PoolingType.All && PoolsElements, DefaultComponentPool,
                 poolKey ?? (options.Pooling == PoolingType.All ? "default" : ""));
 
         public IReactComponent CreateComponent(string tag, string text, string poolKey = null) =>
             CreateComponentWithPoolInternal(tag, text,
                 CreateComponentInternal,
-                options.Pooling == PoolingType.All, ComponentPool,
+                options.Pooling == PoolingType.All && PoolsElements, ComponentPool,
                 poolKey ?? (options.Pooling == PoolingType.All ? "default" : ""));
 
         public IReactComponent CreatePseudoComponent(string tag, string poolKey = null) =>
@@ -82,12 +85,19 @@ namespace ReactUnity
                 options.Pooling != PoolingType.None, PseudoComponentPool,
                 poolKey ?? (options.Pooling != PoolingType.None ? "default" : ""));
 
-        public void PoolComponent(IPoolableComponent cmp, Stack<IPoolableComponent> pool)
+        /// <returns>Whether the component went into the pool. One that did not still has to be destroyed.</returns>
+        public bool PoolComponent(IPoolableComponent cmp, Stack<IPoolableComponent> pool)
         {
+            // JS never reuses a refId, so the old one can only reach whoever gets this component next.
+            if (cmp.RefId > 0 && Refs.TryGetValue(cmp.RefId, out var old) && old.TryGetTarget(out var target) && target == cmp)
+                Refs.Remove(cmp.RefId);
+
             cmp.RefId = -1;
             cmp.InstanceId = -1;
-            if (cmp.Pool())
-                pool.Push(cmp);
+            // A disposing context destroys its detached roots after the host, so a pool here would outlive it.
+            if (IsDisposed || !cmp.Pool()) return false;
+            pool.Push(cmp);
+            return true;
         }
     }
 }

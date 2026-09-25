@@ -31,6 +31,13 @@ namespace ReactUnity.UGUI
             }
         }
 
+        public override bool Revive()
+        {
+            if (!base.Revive()) return false;
+            forQuery = null;
+            return true;
+        }
+
         private void OnClick(BaseEventData ev)
         {
             var activated = Activate();

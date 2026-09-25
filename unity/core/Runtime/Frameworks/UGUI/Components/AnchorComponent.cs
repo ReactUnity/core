@@ -50,6 +50,15 @@ namespace ReactUnity.UGUI
             }
         }
 
+        public override bool Revive()
+        {
+            if (!base.Revive()) return false;
+            disabled = false;
+            Url = "";
+            Target = "_blank";
+            return true;
+        }
+
         private void OnClick(BaseEventData ev)
         {
             if (Disabled) return;
