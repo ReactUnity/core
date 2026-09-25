@@ -60,6 +60,22 @@ Builds a development standalone player (`-executeMethod ReactUnity.Editor.Develo
 
 Not on CI by design — it needs a C++ toolchain and the IL2CPP module on the runner.
 
+## Benchmarks
+
+`ReactUnity.Tests.Performance` is not in the default assembly list, so neither CI nor a plain `test` runs it. [ScriptingBenchmarks](../../../unity/core/Tests/Performance/Base/ScriptingBenchmarks.cs) times the engine: a 1000-element React list, engine startup, plain JS, interop, and the main-thread stack headroom. Run it before and after an engine binary changes:
+
+```bash
+pnpm unity test tests --platform PlayMode --assemblies ReactUnity.Tests.Performance --filter ReactUnity.Tests.Performance.ScriptingBenchmarks
+```
+
+~40 s. Each test's samples are a `##performancetestresult2:` JSON line in its `<output>` in `Logs/unity/tests-PlayMode.xml`. A method name after the class matches nothing, because of the `(Auto)` fixture suffix. The medians on QuickJS `v0.17.0-reactunity.1` (6000.6, Windows Editor) are:
+
+- mounting the list 650 ms, updating it 90 ms, unmounting it 100 ms
+- Sucrase transform 170 ms, 20000 JS→C# calls 73 ms
+- React tree depth 32, plain JS recursion 152
+
+Unmounting was 5.8 s until `Destroy` stopped re-resolving the parent's whole subtree per removed child. A number that moves by that much is a bug, not noise.
+
 ## Rendering snapshots
 
 PlayMode compares captures against `unity/core/Tests/.snapshots/windows/` (committed, so local runs are meaningful). Two traps:
