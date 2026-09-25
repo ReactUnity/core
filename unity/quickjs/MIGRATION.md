@@ -682,8 +682,9 @@ utilities that `TSTypeNaming` and `TypeBindingInfo` need, so those moved to `Bin
   and tag values remain a reading exercise. Generating both from one description is still the real
   fix; failing that, a test asserting tags and arities match across backends.
 - **The fork is not upstream yet.** Half closed. The pin is now
-  `gkurt/quickjs` **v0.16.2-reactunity.3**, an annotated tag on `987f262` describing what the fork
-  adds and why, so the commit cannot be lost to a rebase or GC. The CMakeLists still pins the SHA
+  `gkurt/quickjs` **v0.17.0-reactunity.1**, an annotated tag on `3ece357` describing what the fork
+  adds and why, so the commit cannot be lost to a rebase or GC. It carries upstream 0.17.0 and the
+  fork's interpreter performance work on top of the loader. The CMakeLists still pins the SHA
   rather than the tag name, because a tag can be moved and a SHA cannot — the tag is for identity,
   not for resolution. The fork now has a `next` integration branch (its default), with the loader
   kept on its own topic branch so it can be offered upstream on its own; that PR has to coordinate

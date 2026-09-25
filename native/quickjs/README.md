@@ -36,10 +36,10 @@ cmake --build build --config Release --target shim-test && ./build/Release/shim-
 ```
 
 [shim_test.c](src/shim_test.c) links the shim against ng in-process and covers what a successful
-link cannot. It asserts all **241** atom accessors return the id ng itself uses and resolve to the
+link cannot. It asserts all **257** atom accessors return the id ng itself uses and resolve to the
 string in ng's own `quickjs-atom.h`. The shim generates its enum from that header with the same
 `DEF` trick `quickjs.c` uses, so the numbering is right by construction — but ng went from 224 atoms
-to 241, and "by construction" is an argument rather than a check; bad numbering surfaces as every
+to 241, then to 257 in 0.17 (inserted mid-table, which shifts every id after it), and "by construction" is an argument rather than a check; bad numbering surfaces as every
 atom-keyed property lookup silently addressing a different name. It also round-trips an object and a
 value payload, checks that a plain object reports none, that a negative size is rejected, and that
 the class finalizer fires. `ctest -C Release` runs it too.
@@ -50,7 +50,7 @@ way unity-jsb's patched Bellard did, so a `Debug` pass is the only remaining sig
 balanced its refcounts.
 
 If you extend it, sabotage it first — a test over a macro-generated table is easy to write
-vacuously. Flipping the expected id to `i + 2` must give 241 failures and exit 1.
+vacuously. Flipping the expected id to `i + 2` must give 257 failures and exit 1.
 
 ```bash
 python native/quickjs/check-exports.py
@@ -166,7 +166,7 @@ if the `.csproj` files are missing.
 ## What it links
 
 quickjs-ng is fetched by CMake, never vendored, and pinned to a **commit** — `QJS_COMMIT` in
-[CMakeLists.txt](CMakeLists.txt), tagged `v0.16.2-reactunity.2` on the fork so it cannot be lost to
+[CMakeLists.txt](CMakeLists.txt), tagged `v0.17.0-reactunity.1` on the fork so it cannot be lost to
 a rebase or GC. The SHA rather than the tag name is what is pinned, because a tag can be moved and a
 SHA cannot. It points at a fork because two things are not upstream yet: the asynchronous module
 loader (`JS_SetModuleLoaderFuncAsync`, `JS_FulfillModuleLoad`, `JS_RejectModuleLoad`,
@@ -189,7 +189,7 @@ most of what the C# layer wants is either `static inline` in `quickjs.h` or vari
 can reach neither; plus the bridge class and payload, which are genuinely unity-jsb's own.
 
 **The shim exports exactly the 27 functions the C# layer names** — no more, no fewer — plus one atom
-accessor per entry in ng's atom table. The 241 accessors come from one macro and cost nothing to
+accessor per entry in ng's atom table. The 257 accessors come from one macro and cost nothing to
 keep, so they are exempt from the "no more" half; `check-exports.py` enforces the rest.
 
 ### Ported to ng
@@ -294,3 +294,9 @@ tool for it — hand-writing importer YAML is not.
 
 unity-jsb built Windows with MinGW and only WSA with MSVC. Both follow the Win64 ABI for the
 16-byte `JSValue` return, so the switch to MSVC everywhere is safe.
+
+**MSVC is what bounds recursion depth on Windows.** Its `JS_CallInternal` frame is 4.5-5.4 KB
+where gcc's is 584 bytes, and it gets no computed-goto dispatch. Under `ScriptRuntime.MaxStackSize`
+(768 KB) that is about 150 plain JS frames, and a React tree about 32 levels deep, in the Editor.
+The fork does not `__forceinline` under MSVC for this reason: forcing it cost another fifth of the
+depth for 8% of speed. Building the Windows targets with clang-cl is the untried fix for both.
