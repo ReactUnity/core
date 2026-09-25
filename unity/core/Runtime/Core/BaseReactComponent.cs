@@ -263,9 +263,9 @@ namespace ReactUnity
             Entering = false;
             Leaving = false;
             Destroyed = true;
-            var pr = Parent;
+            // SetParent marks the parent for a resolve on its next update. Resolving it here as well
+            // re-resolved every remaining sibling per removal, so unmounting a list was quadratic.
             SetParent(null);
-            pr?.ResolveStyle(true);
 
             if (recursive && IsContainer)
             {
