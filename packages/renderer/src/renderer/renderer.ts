@@ -31,6 +31,7 @@ interface RenderOptions {
 }
 
 let renderCount = 0;
+let usesSyncReconciler = false;
 
 export function render(element: React.ReactNode, options: RenderOptions = {}) {
   renderCount++;
@@ -96,6 +97,7 @@ export function render(element: React.ReactNode, options: RenderOptions = {}) {
         () => {},
       );
     } else {
+      usesSyncReconciler = true;
       hostRoot = getSyncReconciler().createContainer(
         hostContainer,
         mode,
@@ -165,4 +167,21 @@ export const Renderer = {
 };
 
 export const batchedUpdates: ReturnType<typeof Reconciler>['batchedUpdates'] = (...args) => getAsyncReconciler().batchedUpdates(...args);
-export const flushSync: ReturnType<typeof Reconciler>['flushSync'] = (...args) => getAsyncReconciler().flushSync(...(args as []));
+type ReconcilerInstance = ReturnType<typeof Reconciler>;
+
+// react-reconciler 0.33 renamed flushSync to flushSyncFromReconciler, but its typings still declare both.
+function flushSyncOn<R>(rc: ReconcilerInstance, fn: () => R): R {
+  return typeof rc.flushSyncFromReconciler === 'function' ? rc.flushSyncFromReconciler(fn) : rc.flushSync(fn);
+}
+
+/**
+ * Runs `fn` and commits the updates it schedules before returning. Called with no function,
+ * commits whatever synchronous work is pending.
+ */
+export function flushSync(): void;
+export function flushSync<R>(fn: () => R): R;
+export function flushSync<R>(fn?: () => R): R | undefined {
+  // Each reconciler flushes only its own roots, so nest the sync one inside once it has any.
+  const inner = usesSyncReconciler ? () => flushSyncOn(getSyncReconciler(), () => fn?.()) : () => fn?.();
+  return flushSyncOn(getAsyncReconciler(), inner);
+}
