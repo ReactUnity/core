@@ -614,7 +614,9 @@ namespace ReactUnity.UGUI.Internal
         /// destroying the component -- OnDestroy also runs while the whole GameObject is going
         /// away, and reparenting a dying object is an error.
         /// </summary>
-        public void Detach()
+        /// <param name="immediate">For an element going back to the pool, which can be reused and
+        /// given a filter of its own before a deferred destroy would have run.</param>
+        public void Detach(bool immediate = false)
         {
             if (self && originalParent)
             {
@@ -623,7 +625,8 @@ namespace ReactUnity.UGUI.Internal
             }
             originalParent = null;
             if (composite) composite.enabled = false;
-            Destroy(this);
+            if (immediate) DestroyImmediate(this);
+            else Destroy(this);
         }
 
         void OnDestroy()

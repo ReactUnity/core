@@ -125,6 +125,11 @@ namespace ReactUnity.UGUI
             if (!base.Pool()) return false;
             if (!RectTransform) return false;
 
+            // The filter holds the element on its surface and a composite in the old parent, and would
+            // put the element back there on its next Detach -- whoever reuses it.
+            if (ElementFilter) ElementFilter.Detach(true);
+            ElementFilter = null;
+
             RectTransform.SetParent(Context.PoolRoot, false);
             return true;
         }

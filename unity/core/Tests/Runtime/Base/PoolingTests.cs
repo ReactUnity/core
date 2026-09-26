@@ -315,6 +315,67 @@ namespace ReactUnity.Tests
             Object.Destroy(camera.gameObject);
         }
 
+        static int CompositesUnder(Transform t)
+        {
+            var n = 0;
+            foreach (Transform child in t)
+                if (child.name == "[Filter]" && child.GetComponent<RawImage>().enabled) n++;
+            return n;
+        }
+
+        // A filter moves the subtree onto a surface of its own and leaves a composite in the parent,
+        // and Detach puts the element back where the filter found it -- the first owner's parent.
+        [UGUITest(Pooling = All, Script = Head + "<view><view pool='f' style={{ filter: 'grayscale(1)', width: 50, height: 50, backgroundColor: 'red' }} /></view>"
+            + Mid + "<button><view pool='f' /></button>" + Tail)]
+        public IEnumerator FilterIsDetachedBeforePooling()
+        {
+            for (int i = 0; i < 4; i++) yield return null;
+            var first = Q("view view");
+            Assert.IsNotNull(first.ElementFilter, "sanity: the first owner should be filtered");
+            var oldParent = Q("view").Container;
+            Assert.AreEqual(1, CompositesUnder(oldParent), "sanity: the composite stands in the parent");
+            yield return Remount();
+            for (int i = 0; i < 4; i++) yield return null;
+
+            var view = Reused<UGUIComponent>(first, "button view");
+            var button = Q("button");
+            Assert.IsNull(view.ElementFilter);
+            Assert.AreEqual(button.Container, view.RectTransform.parent, "the element should stay under its new parent");
+            Assert.AreEqual(0, CompositesUnder(oldParent), "the old composite should be gone with the filter");
+        }
+
+        [UGUITest(Pooling = All, Script = Head + "<view><view pool='f' style={{ filter: 'grayscale(1)', width: 50, height: 50, backgroundColor: 'red' }} /></view>"
+            + Mid + "<button><view pool='f' style={{ filter: 'invert(1)', width: 50, height: 50, backgroundColor: 'red' }} /></button>" + Tail)]
+        public IEnumerator AReusedFilterIsBuiltForItsNewParent()
+        {
+            for (int i = 0; i < 4; i++) yield return null;
+            var first = Q("view view");
+            yield return Remount();
+            for (int i = 0; i < 4; i++) yield return null;
+
+            var view = Reused<UGUIComponent>(first, "button view");
+            Assert.IsNotNull(view.ElementFilter);
+            Assert.AreEqual("[FilterSurface]", view.RectTransform.parent.name, "the element should be on a surface");
+            Assert.AreEqual(1, view.GameObject.GetComponents<UGUI.Internal.ElementFilter>().Length);
+            Assert.AreEqual(1, CompositesUnder(Q("button").Container), "the composite should stand in the new parent");
+        }
+
+        [UGUITest(Pooling = All, Script = Head + "<view pool style={{ backdropFilter: 'blur(4px)', outline: '2px solid red' }} />"
+            + Mid + "<view pool />" + Tail)]
+        public IEnumerator BackdropFilterAndOutlineAreRemoved()
+        {
+            yield return null;
+            var first = Q("view");
+            Assert.IsNotNull(first.GameObject.GetComponentInChildren<UGUI.Shapes.WebFilter>(), "sanity: the backdrop should be drawn");
+            Assert.IsNotNull(first.RectTransform.Find("[Outline]"), "sanity: the outline should be drawn");
+            yield return Remount();
+            yield return null;
+
+            var view = Reused<UGUIComponent>(first, "view");
+            Assert.IsNull(view.GameObject.GetComponentInChildren<UGUI.Shapes.WebFilter>(), "the old backdrop should not keep reading");
+            Assert.IsNull(view.RectTransform.Find("[Outline]"), "the old outline should not keep drawing");
+        }
+
         [UGUITest(Pooling = All, Script = Head + "<view id='a' />" + Mid + "<view />" + Tail)]
         public IEnumerator OmittedPoolKeyPoolsUnderAll()
         {

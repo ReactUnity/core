@@ -347,7 +347,9 @@ namespace ReactUnity.UGUI.Internal
             UpdateBgColor();
 
             var bgFilter = style.backdropFilter;
-            if(bgFilter != null) SetBackdropFilter(bgFilter);
+            if (bgFilter != null) SetBackdropFilter(bgFilter);
+            // Removed rather than left reading: the style can drop it, and a pooled element is reused.
+            else if (backdrop) RemoveGraphic(ref backdrop, ref backdropFilter);
             SetBackground(bgColor, style.backgroundImage, style.backgroundPositionX, style.backgroundPositionY, style.backgroundSize, style.backgroundRepeatX, style.backgroundRepeatY);
             UpdateClips();
             SetBoxShadow(style.boxShadow);
@@ -431,6 +433,14 @@ namespace ReactUnity.UGUI.Internal
                     Colors = new WebOutlineColors(outlineColor, outlineColor, outlineColor, outlineColor),
                 };
             }
+            else if (outlineRoot) RemoveGraphic(ref outlineRoot, ref outlineGraphic);
+        }
+
+        private static void RemoveGraphic<T>(ref RectTransform root, ref T graphic) where T : Graphic
+        {
+            DestroyImmediate(root.gameObject);
+            root = null;
+            graphic = null;
         }
 
         private void SetBorderRadius(YogaValue2 tl, YogaValue2 tr, YogaValue2 br, YogaValue2 bl)

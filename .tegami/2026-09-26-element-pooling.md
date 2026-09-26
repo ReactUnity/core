@@ -28,6 +28,12 @@ when it is unmounted, not when it is reused.
   context. Before, it was pooled and outlived the context.
 - A reused scrollbar has its `data-horizontal`/`data-vertical`/`data-direction` again, and an
   input no longer drives a scrollbar that went back to the pool.
+- A filtered element lets go of its filter when it is pooled. Its offscreen surface and the
+  composite it left in its old parent were kept, so whatever reused that parent showed a stale
+  capture. A reused element that no longer had a filter was also moved back under its first
+  owner's parent.
+- An element whose `backdrop-filter` or `outline` goes away, whether through a style change or
+  through reuse, stops drawing it. Both used to stay once set.
 - UIToolkit and Editor elements are no longer pooled under `All`. A `VisualElement` is cheap to
   build, and each kind has native fields a reuse would have to reset one by one. Text and pseudo
   elements are pooled as before.
