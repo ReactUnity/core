@@ -181,6 +181,7 @@ namespace ReactUnity.Styling
 
         public static readonly StyleProperty<ClipPath> clipPath = new StyleProperty<ClipPath>("clipPath", ClipPath.None, true, false, AllConverters.ClipPathConverter);
         public static readonly StyleProperty<ImageRendering> imageRendering = new StyleProperty<ImageRendering>("imageRendering", ImageRendering.Auto, false, true);
+        public static readonly StyleProperty<ShapeRendering> shapeRendering = new StyleProperty<ShapeRendering>("shapeRendering", ShapeRendering.Auto, false, true);
 
         public static readonly StyleProperty<FilterDefinition> filter = new StyleProperty<FilterDefinition>("filter");
         public static readonly StyleProperty<FilterDefinition> backdropFilter = new StyleProperty<FilterDefinition>("backdropFilter");
@@ -354,6 +355,7 @@ namespace ReactUnity.Styling
 
             { "clipPath", clipPath },
             { "imageRendering", imageRendering },
+            { "shapeRendering", shapeRendering },
 
             { "filter", filter },
             { "backdropFilter", backdropFilter },
@@ -485,6 +487,7 @@ namespace ReactUnity.Styling
             { "mask-type", maskMode },
             { "clip-path", clipPath },
             { "image-rendering", imageRendering },
+            { "shape-rendering", shapeRendering },
             { "backdrop-filter", backdropFilter },
             { "mix-blend-mode", mixBlendMode },
             { "border-top-left-radius", borderTopLeftRadius },

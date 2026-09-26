@@ -1,0 +1,65 @@
+---
+title: Shape Rendering
+---
+
+Trades edge quality for speed. Check out the [MDN](https://developer.mozilla.org/en-US/docs/Web/SVG/Reference/Attribute/shape-rendering) for how it is used in SVG.
+
+Here it decides how a [`clip-path`](/reference/css/clip-path) is cut. By default a curved or slanted clip renders the element off screen and composites it back through the shape, which gives an antialiased edge and costs a render target, plus a camera render whenever anything inside the clip changes. `optimizeSpeed` and `crispEdges` cut the same shape with the stencil instead, the way [`overflow: hidden`](/reference/css/overflow) is cut: no render at all, and an aliased edge.
+
+<Sandpack>
+
+```js
+export default function App() {
+  const [fast, setFast] = React.useState(true);
+
+  return <>
+    <button onClick={() => setFast(x => !x)}>
+      shape-rendering: {fast ? 'optimizeSpeed' : 'auto'}
+    </button>
+
+    <view className="orb" style={{ shapeRendering: fast ? 'optimizeSpeed' : 'auto' }}>
+      <view className="wave" />
+    </view>
+  </>;
+}
+```
+
+```css active
+.orb {
+  width: 160px;
+  height: 160px;
+  margin-top: 16px;
+  clip-path: circle(50%);
+  background-color: #0f172a;
+}
+
+.wave {
+  position: absolute;
+  inset: 40% -40px -40px;
+  border-radius: 30%;
+  background-color: #38bdf8;
+  animation: spin 6s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    rotate: 360deg;
+  }
+}
+```
+
+</Sandpack>
+
+## Values {/*values*/}
+
+- `auto` -- the default. A plain rectangle (an `inset()`, `rect()` or `xywh()` without `round`, or a bare geometry box) is cut with the stencil, since an axis-aligned edge loses nothing; anything else is rendered.
+- `optimizeSpeed` and `crispEdges` -- the same here: rounded boxes, circles, ellipses and polygons are cut with the stencil too.
+- `geometricPrecision` -- even a plain rectangle is rendered, so its edge is antialiased when it falls between pixels.
+
+## Notes {/*notes*/}
+
+- The property is inherited, as it is in SVG, so one declaration on a container covers every clip inside it.
+- A polygon, `path()` or `shape()` takes the stencil only as a single ring whose edges do not cross, of at most 256 points. Anything else is rendered whatever this says -- several contours, or a crossing ring, is where the fill rule matters, and the stencil cannot apply it.
+- The element still goes to the render when it needs one for another reason -- a [`filter`](/reference/css/filter), [`mix-blend-mode`](/reference/css/mix-blend-mode), [`mask-image`](/reference/css/mask-image), [`perspective`](/reference/css/perspective) or [`isolation: isolate`](/reference/css/isolation) -- or when it also has [`overflow: hidden`](/reference/css/overflow), whose mask would need the same slot. The clip then rides that render, antialiased.
+- A stencil clip does not isolate. A descendant's `mix-blend-mode` blends with whatever is behind the element, where on the web the clip's stacking context would contain it; add `isolation: isolate` to get that back, which also puts the clip back on the render.
+- Hit testing follows the shape either way: a pointer in a cut-away corner misses the element.

@@ -865,9 +865,9 @@ namespace ReactUnity.Tests
             }
 ";
 
-        // The Game HUD's orbs: a clipped fill inside a clipped frame, both captured.
+        // A clipped fill inside a clipped frame, both captured -- geometricPrecision keeps the boxes off the stencil.
         const string ClipOverClipStyle = BaseStyle + @"
-            #outer { clip-path: inset(0); }
+            #outer { clip-path: inset(0); shape-rendering: geometricPrecision; }
             #inner { clip-path: inset(0); }
         ";
 

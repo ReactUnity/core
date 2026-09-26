@@ -136,6 +136,7 @@ namespace ReactUnity.Styling
         public ICssValueList<MaskMode> maskMode => GetStyleValue(StyleProperties.maskMode);
 
         public ClipPath clipPath => GetStyleValue(StyleProperties.clipPath);
+        public ShapeRendering shapeRendering => GetStyleValue(StyleProperties.shapeRendering);
         public ImageRendering imageRendering => GetStyleValue(StyleProperties.imageRendering);
 
         public FilterDefinition filter => GetStyleValue(StyleProperties.filter);

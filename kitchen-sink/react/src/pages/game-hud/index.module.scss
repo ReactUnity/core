@@ -20,6 +20,8 @@
   background-color: #04060e;
   /* Isolated so the scanline layer blends with the scene and not with the page behind it. */
   isolation: isolate;
+  /* Inherited: every clip-path below is cut with the stencil, aliased, instead of an offscreen render. */
+  shape-rendering: optimizeSpeed;
   box-shadow:
     0 40px 80px -32px rgba(2, 6, 23, 0.95),
     0 0 0 1px rgba(34, 211, 238, 0.2) inset;

@@ -20,6 +20,7 @@ namespace ReactUnity.UGUI
         public ReactElement Component { get; private set; }
         public BorderAndBackground BorderAndBackground { get; protected set; }
         public MaskAndImage OverflowMask { get; protected set; }
+        internal ClipPathStencil ClipStencil { get; set; }
         public ElementFilter ElementFilter { get; protected set; }
         public BackfaceCuller BackfaceCuller { get; protected set; }
 
@@ -331,7 +332,14 @@ namespace ReactUnity.UGUI
             var perspective = ComputedStyle.perspective;
             var projects = perspective > 0;
 
-            if (!hasFilter && !hasBlend && (!isolated || IsolationIsMoot()) && !stacksBackgroundBlends && !hasMask && !hasClip && !projects)
+            var captures = hasFilter || hasBlend || (isolated && !IsolationIsMoot()) || stacksBackgroundBlends || hasMask || projects;
+
+            // A clip on its own can usually be cut with the stencil instead, which costs no render.
+            var stencilled = hasClip && !captures && !ClipsOverflow(ComputedStyle) && ClipPathStencil.CanCut(this, clipShape);
+            ClipPathStencil.Set(this, stencilled ? clipShape : null);
+            if (stencilled) hasClip = false;
+
+            if (!captures && !hasClip)
             {
                 if (ElementFilter) ElementFilter.Detach();
                 ElementFilter = null;
@@ -612,7 +620,12 @@ namespace ReactUnity.UGUI
             // Mask is not defined and there is no need for it
             if (!hasMask && mask == null) return;
 
-            if (mask == null) mask = OverflowMask = MaskAndImage.Create(GameObject, Context);
+            if (mask == null)
+            {
+                // The stencil clip holds the one graphic the mask needs; SetFilter moves the clip to the capture.
+                ClipPathStencil.Set(this, null);
+                mask = OverflowMask = MaskAndImage.Create(GameObject, Context);
+            }
 
             mask.SetEnabled(hasMask);
             mask.SetBorderRadius(computed.borderTopLeftRadius, computed.borderTopRightRadius, computed.borderBottomRightRadius, computed.borderBottomLeftRadius);

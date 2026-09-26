@@ -28,6 +28,7 @@ import {
   ScrollSnapAlign,
   ScrollSnapStop,
   ScrollSnapType,
+  ShapeRendering,
   TextAlign,
   TextOverflowModes,
   TextTransform,
@@ -174,6 +175,7 @@ export interface RenderStyle {
   // Inherited styles
   color?: ColorAux;
   imageRendering?: ImageRendering;
+  shapeRendering?: ShapeRendering;
   fontFamily?: AssetReference;
   fontWeight?: FontWeight;
   fontStyle?: FontStyles;

@@ -82,6 +82,10 @@ export type MaskMode = 'match-source' | 'alpha' | 'luminance';
 // `high-quality` mean `auto` -- there is no better filter to switch to.
 export type ImageRendering = 'auto' | 'smooth' | 'high-quality' | 'crisp-edges' | 'pixelated';
 
+// The two fast values let a curved `clip-path` be cut with the stencil, aliased, instead of an
+// offscreen render; `geometricPrecision` keeps even a plain box on the antialiased path.
+export type ShapeRendering = 'auto' | 'optimizeSpeed' | 'crispEdges' | 'geometricPrecision';
+
 // `isolate` makes the element a blending group of its own, so a descendant's
 // `mix-blend-mode` cannot reach the backdrop behind it.
 export type Isolation = 'auto' | 'isolate';

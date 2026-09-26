@@ -158,9 +158,10 @@ The box on its own is a shape -- the box itself -- so `clip-path: content-box` c
 - Lengths and percentages are kept as written and resolved against the box each frame, so a percentage shape follows the element as it resizes, and `calc()` works inside one. A `shape()`'s coordinates take `var()` as well.
 - A bare geometry box does not pick up the element's [`border-radius`](/reference/css/border-radius); it clips to a plain rectangle.
 - Two shapes of the same kind interpolate, so a shape can be animated or transitioned. A `path()` or a `shape()` interpolates with another whose commands line up one for one -- same command, same `to` or `by` -- which is the same rule CSS applies. Different kinds, a change of extent keyword, a change of vertex count, a change of geometry box and a change of fill rule are all discrete, again exactly as in CSS.
-- The edge is antialiased, so a diagonal or a curve comes out smooth rather than stepped.
+- The edge is antialiased, so a diagonal or a curve comes out smooth rather than stepped -- unless [`shape-rendering`](/reference/css/shape-rendering) says otherwise.
 - Clipping happens after [`filter`](/reference/css/filter) and before [`opacity`](/reference/css/opacity), which is the order CSS composites them in: a `drop-shadow()` is clipped along with the element that cast it.
 - Clipping puts the element through the same offscreen capture [`filter`](/reference/css/filter) and [`mix-blend-mode`](/reference/css/mix-blend-mode) use, so it also creates a stacking context the way [`isolation: isolate`](/reference/css/isolation) does.
+- A plain rectangle is the exception: it is cut with the stencil, as `overflow: hidden` is, which costs no render. [`shape-rendering: optimizeSpeed`](/reference/css/shape-rendering) extends that to every shape, trading the antialiased edge for it. A stencil clip does not isolate a descendant's `mix-blend-mode`.
 - `clip-path: none` is the initial value and costs nothing -- the capture is torn down and the element goes back to drawing in place.
 
 ### How a shape reaches the GPU {/*transport*/}

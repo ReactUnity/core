@@ -252,6 +252,10 @@
               "path": "/reference/css/scroll-snap"
             },
             {
+              "title": "Shape Rendering",
+              "path": "/reference/css/shape-rendering"
+            },
+            {
               "title": "Sorting Layer",
               "path": "/reference/css/sorting-layer"
             },

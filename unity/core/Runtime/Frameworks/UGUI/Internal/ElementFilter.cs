@@ -804,7 +804,7 @@ namespace ReactUnity.UGUI.Internal
             // A `clip-path` measured against the padding or content box follows the element's own
             // border and padding, neither of which changes the rect above -- so the box is polled
             // rather than waiting for something else to notice.
-            var box = ReferenceBox();
+            var box = ReferenceBox(self.rect, clipShape, component?.Layout);
             if (box != referenceBox)
             {
                 referenceBox = box;
@@ -1732,15 +1732,11 @@ namespace ReactUnity.UGUI.Internal
         /// values are: a percentage padding has already been resolved against the parent by the
         /// time layout is done, and a border width can have been rounded to fit.
         /// </remarks>
-        Rect ReferenceBox()
+        internal static Rect ReferenceBox(Rect rect, ClipPath shape, YogaNode layout)
         {
-            var rect = self.rect;
             var box = new Rect(0, 0, rect.width, rect.height);
 
-            var shape = clipShape;
             if (shape == null || shape.Box == ClipGeometryBox.BorderBox) return box;
-
-            var layout = component?.Layout;
             if (layout == null) return box;
 
             float left, right, top, bottom;
