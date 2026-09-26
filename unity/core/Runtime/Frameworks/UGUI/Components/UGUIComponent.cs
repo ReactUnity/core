@@ -292,6 +292,8 @@ namespace ReactUnity.UGUI
             ResolveTransform();
             // Opacity, and the back face a rotation may have turned towards the viewer.
             ResolveBackface();
+            // An isolated group is only skipped while it is opaque.
+            if (ComputedStyle.isolation == Isolation.Isolate) SetFilter();
         }
 
         protected void SetFilter()
@@ -329,7 +331,7 @@ namespace ReactUnity.UGUI
             var perspective = ComputedStyle.perspective;
             var projects = perspective > 0;
 
-            if (!hasFilter && !hasBlend && !isolated && !stacksBackgroundBlends && !hasMask && !hasClip && !projects)
+            if (!hasFilter && !hasBlend && (!isolated || IsolationIsMoot()) && !stacksBackgroundBlends && !hasMask && !hasClip && !projects)
             {
                 if (ElementFilter) ElementFilter.Detach();
                 ElementFilter = null;
@@ -353,6 +355,21 @@ namespace ReactUnity.UGUI
             ElementFilter.SetMask(maskImages, ComputedStyle.maskPositionX, ComputedStyle.maskPositionY,
                 ComputedStyle.maskSize, ComputedStyle.maskRepeatX, ComputedStyle.maskRepeatY,
                 ComputedStyle.maskMode.Get(0));
+        }
+
+        /// <summary>
+        /// Whether an isolated group would hold the same pixels as the page, so capturing it changes
+        /// nothing. Only a blending descendant can tell, and an opaque background under an overflow clip
+        /// already covers everything it can read. (A <c>backdrop-filter</c> reads through isolation anyway.)
+        /// </summary>
+        bool IsolationIsMoot()
+        {
+            var computed = ComputedStyle;
+            if (!ClipsOverflow(computed) || !computed.visibility || computed.opacity < 1 || computed.backgroundColor.a < 1) return false;
+
+            // The colour is clipped by the bottom layer's box, and the overflow clip is the padding box.
+            var clip = computed.backgroundClip.Get(Mathf.Max(0, (computed.backgroundImage?.Count ?? 0) - 1));
+            return clip == BackgroundBox.BorderBox || clip == BackgroundBox.PaddingBox;
         }
 
         /// <summary>
@@ -590,9 +607,7 @@ namespace ReactUnity.UGUI
         {
             var computed = ComputedStyle;
             var mask = OverflowMask;
-            // A mask clips both axes, so hiding one axis clips the other too -- the closest a RectMask2D gets.
-            var hasMask = StylingHelpers.GetStyleEnumCustom(computed, LayoutProperties.Overflow) == YogaOverflow.Hidden
-                || computed.overflowX == YogaOverflow.Hidden || computed.overflowY == YogaOverflow.Hidden;
+            var hasMask = ClipsOverflow(computed);
 
             // Mask is not defined and there is no need for it
             if (!hasMask && mask == null) return;
@@ -602,6 +617,11 @@ namespace ReactUnity.UGUI
             mask.SetEnabled(hasMask);
             mask.SetBorderRadius(computed.borderTopLeftRadius, computed.borderTopRightRadius, computed.borderBottomRightRadius, computed.borderBottomLeftRadius);
         }
+
+        // A mask clips both axes, so hiding one axis clips the other too -- the closest a RectMask2D gets.
+        static bool ClipsOverflow(NodeStyle computed) =>
+            StylingHelpers.GetStyleEnumCustom(computed, LayoutProperties.Overflow) == YogaOverflow.Hidden
+            || computed.overflowX == YogaOverflow.Hidden || computed.overflowY == YogaOverflow.Hidden;
 
         private void SetCursor()
         {

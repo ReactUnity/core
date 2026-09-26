@@ -64,3 +64,4 @@ The blobs still blend with each other where they overlap, because they are in th
 
 - `isolate` also stops the element inheriting its ancestors' [`opacity`](/reference/css/opacity) and [`pointer-events`](/reference/css/pointer-events). That is a ReactUnity addition with no equivalent on the web, and it is why this property was here before blending was.
 - Isolating renders the element off screen and composites it back, the same capture [`filter`](/reference/css/filter) and `mix-blend-mode` use -- so it costs a render target, and putting a filter on an element isolates it too.
+- An element with an opaque `background-color`, full `opacity` and `overflow: hidden` is not captured, because its group would hold the same pixels as the page: nothing inside it can blend past a background that already covers its whole box. It is still captured once any of the three stops being true. (`backdrop-filter` reads through isolation either way, as on the web.)

@@ -487,6 +487,64 @@ namespace ReactUnity.Tests
             Assert.Less(overlap.b, 0.2f);
         }
 
+        // An opaque, clipped group: whatever a descendant blends with inside it is the group's own
+        // background either way, so isolating it has nothing to change.
+        const string OpaqueGroupStyle = @"
+            #page, #group, #under {
+                position: absolute;
+                left: 0;
+                top: 0;
+                width: 200px;
+                height: 200px;
+            }
+            #page { background-color: red; }
+            #group { isolation: isolate; background-color: blue; overflow: hidden; }
+            #under { background-color: white; mix-blend-mode: difference; }
+            #over { display: none; }
+        ";
+
+        [UGUITest(Script = SiblingsScript, Style = OpaqueGroupStyle)]
+        public IEnumerator IsolatingAnOpaqueClippedGroupTakesNoCapture()
+        {
+            yield return null;
+            yield return null;
+            yield return null;
+
+            var group = Q("#group");
+            Assert.IsNull(group.ElementFilter, "an opaque clipped group holds what the page holds, so it needs no capture");
+
+            var c = SampleAt(100, 100);
+            Debug.Log($"[ISOLATION opaque group] {Describe(c)}");
+            Assert.Greater(c.r, 0.8f, "white minus the group's blue is yellow, isolated or not");
+            Assert.Greater(c.g, 0.8f);
+            Assert.Less(c.b, 0.2f);
+
+            // Each of these lets the page show through the group, which the capture is needed for.
+            group.Style["backgroundColor"] = "rgba(0, 0, 255, 0.5)";
+            yield return null;
+            yield return null;
+            Assert.NotNull(group.ElementFilter, "a translucent background lets the page into the group");
+            group.Style["backgroundColor"] = null;
+            yield return null;
+            yield return null;
+            Assert.IsNull(group.ElementFilter);
+
+            group.Style["overflow"] = "visible";
+            yield return null;
+            yield return null;
+            Assert.NotNull(group.ElementFilter, "without a clip a descendant can draw outside the background");
+            group.Style["overflow"] = null;
+            yield return null;
+            yield return null;
+            Assert.IsNull(group.ElementFilter);
+
+            // Opacity takes the compositor path, which has to look again too.
+            group.Style["opacity"] = "0.5";
+            yield return null;
+            yield return null;
+            Assert.NotNull(group.ElementFilter, "a faded group lets the page through its background");
+        }
+
         const string IsolatedOpacityScript = @"
             function App() {
                 return <>

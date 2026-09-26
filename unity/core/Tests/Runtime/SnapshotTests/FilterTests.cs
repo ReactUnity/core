@@ -1391,6 +1391,56 @@ namespace ReactUnity.Tests
             Assert.AreEqual(renders, PageBackdrops.RenderCount, "what moves under a grabbed panel costs no render");
         }
 
+        const string MaskedPageScript = @"
+            function App() {
+                return <view id='page'>
+                    <view id='under'></view>
+                    <view id='panel'></view>
+                    <view id='box'><view id='inner'></view></view>
+                </view>;
+            }
+";
+
+        const string MaskedPageStyle = PageStyle + @"
+            #box {
+                position: absolute;
+                left: 220px;
+                top: 200px;
+                width: 100px;
+                height: 100px;
+                background-color: #0000ff;
+            }
+
+            #inner {
+                width: 60px;
+                height: 60px;
+                background-color: #ffff00;
+            }
+        ";
+
+        [UGUITest(Script = MaskedPageScript, Style = MaskedPageStyle)]
+        public IEnumerator AMaskAddedToAGrabbedGraphicStillShowsWhatItClips()
+        {
+            RequireGrab();
+            var page = Q("#page").GameObject;
+            page.AddComponent<UnityEngine.UI.Image>().color = Color.black;
+            for (int i = 0; i < 5; i++) yield return null;
+
+            // The page's mask is drawn before the panel's copy and the box after it, so the unmask
+            // pass that follows the page's children has to wait for the box too. A mask on a graphic
+            // that already exists leaves the canvas the same shape, so the grab has to notice it some
+            // other way. (Overflow masks bring a graphic of their own.)
+            page.AddComponent<UnityEngine.UI.Mask>();
+            for (int i = 0; i < 3; i++) yield return null;
+
+            var c = SampleAt(250, 230);
+            Debug.Log($"[PAGE grab mask] {Describe(c)} renders {PageBackdrops.RenderCount}");
+            Assert.AreEqual(0, PageBackdrops.RenderCount, "the panel should still be grabbed");
+            Assert.Greater(c.r, 0.8f, "the clipped child should still be drawn");
+            Assert.Greater(c.g, 0.8f);
+            Assert.Less(c.b, 0.2f);
+        }
+
         [UGUITest(Script = PageScript, Style = PageStyle)]
         public IEnumerator AGrabbedBackdropDrawsWhatARenderedOneWould()
         {

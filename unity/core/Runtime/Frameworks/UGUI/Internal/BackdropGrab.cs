@@ -53,9 +53,21 @@ namespace ReactUnity.UGUI.Internal
     {
         public const int BaseQueue = 3000;
 
+        /// <summary>Set when a mask turned up on a sliced graphic, which the walk has to put after it.</summary>
+        internal static bool Stale;
+
         private Graphic graphic;
         private int slice = -1;
         private int popSlice = -1;
+        private bool afterMask;
+
+        /// <summary>
+        /// Whether this runs after the object's <see cref="Mask"/>, which sets its pop material from
+        /// its own modifier -- so a mask added later has the last word unless this is added again.
+        /// </summary>
+        internal bool AfterMask => afterMask;
+
+        void Awake() => afterMask = TryGetComponent<Mask>(out _);
 
         /// <summary>The slice this graphic is drawn in, or -1 to leave its material alone.</summary>
         public int Slice
@@ -94,13 +106,14 @@ namespace ReactUnity.UGUI.Internal
             if (slice < 0 || !baseMaterial) return baseMaterial;
 
             // Mask sets its pop material from its own GetModifiedMaterial, which has run by now.
-            if (popSlice >= 0 && (graphic || TryGetComponent(out graphic)))
+            if (graphic || TryGetComponent(out graphic))
             {
                 var cr = graphic.canvasRenderer;
+                if (!afterMask && TryGetComponent<Mask>(out _)) Stale = true;
                 for (int i = 0; i < cr.popMaterialCount; i++)
                 {
                     var pop = cr.GetPopMaterial(i);
-                    if (pop) cr.SetPopMaterial(QueueVariants.Get(pop, BaseQueue + popSlice), i);
+                    if (pop && popSlice >= 0) cr.SetPopMaterial(QueueVariants.Get(pop, BaseQueue + popSlice), i);
                 }
             }
 

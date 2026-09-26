@@ -62,6 +62,10 @@ namespace ReactUnity.UGUI.Internal
         private readonly List<CanvasRenderer> gone = new List<CanvasRenderer>();
         private readonly HashSet<BackdropSlice> visited = new HashSet<BackdropSlice>();
         private readonly List<BackdropSlice> masks = new List<BackdropSlice>();
+        // What the last walk saw, so an unchanged canvas is not walked again.
+        private readonly List<CanvasRenderer> walked = new List<CanvasRenderer>();
+        private readonly List<CanvasRenderer> walkedReaders = new List<CanvasRenderer>();
+        private readonly List<CanvasRenderer> bare = new List<CanvasRenderer>();
         private Camera grabCamera;
         private int purgeCountdown;
 
@@ -194,6 +198,7 @@ namespace ReactUnity.UGUI.Internal
 
             foreach (var s in slices.Values) if (s) s.Slice = -1;
             slices.Clear();
+            walked.Clear();
         }
 
         /// <summary>
@@ -210,9 +215,22 @@ namespace ReactUnity.UGUI.Internal
                 if (cr && cr.transform.IsChildOf(root) && !readerAt.ContainsKey(cr)) readerAt.Add(cr, r);
             }
 
+            if (--purgeCountdown <= 0)
+            {
+                purgeCountdown = 300;
+                QueueVariants.Purge();
+            }
+
             tail.Clear();
             root.GetComponentsInChildren(true, tail);
+            if (Unchanged(readers))
+            {
+                tail.Clear();
+                return;
+            }
+            BackdropSlice.Stale = false;
             visited.Clear();
+            bare.Clear();
 
             var slice = 0;
             masks.Clear();
@@ -228,14 +246,26 @@ namespace ReactUnity.UGUI.Internal
                         s = cr.gameObject.AddComponent<BackdropSlice>();
                     slices[cr] = s;
                 }
-                if (!s) continue;
+                if (!s)
+                {
+                    bare.Add(cr);
+                    continue;
+                }
+
+                var isMask = cr.TryGetComponent<UnityEngine.UI.Mask>(out _);
+                if (isMask && !s.AfterMask) s = Readd(cr, s);
 
                 s.Slice = slice;
                 visited.Add(s);
-                if (cr.popMaterialCount > 0 || cr.TryGetComponent<UnityEngine.UI.Mask>(out _)) masks.Add(s);
+                if (isMask) masks.Add(s);
                 else s.PopSlice = -1;
             }
             while (masks.Count > 0) PopMask(slice);
+
+            walked.Clear();
+            walked.AddRange(tail);
+            walkedReaders.Clear();
+            for (int r = 0; r < readers.Count; r++) walkedReaders.Add(readers[r].BackdropRenderer);
             tail.Clear();
 
             // A graphic that left the canvas -- into a filter's capture, usually -- is drawn by a camera
@@ -247,12 +277,35 @@ namespace ReactUnity.UGUI.Internal
                 else if (pair.Value && !visited.Contains(pair.Value)) { pair.Value.Slice = -1; gone.Add(pair.Key); }
             }
             for (int i = 0; i < gone.Count; i++) slices.Remove(gone[i]);
+        }
 
-            if (--purgeCountdown <= 0)
+        /// <summary>
+        /// Whether the walk would come out as it did last time: the same renderers in the same order, the
+        /// same readers, no graphic arrived on a bare renderer, and no mask appeared on a sliced one.
+        /// </summary>
+        bool Unchanged(List<IBackdropReader> readers)
+        {
+            if (BackdropSlice.Stale || walked.Count != tail.Count || walkedReaders.Count != readers.Count) return false;
+            for (int i = 0; i < tail.Count; i++) if (!ReferenceEquals(walked[i], tail[i])) return false;
+            for (int r = 0; r < readers.Count; r++) if (!ReferenceEquals(walkedReaders[r], readers[r].BackdropRenderer)) return false;
+
+            for (int i = 0; i < bare.Count; i++)
             {
-                purgeCountdown = 300;
-                QueueVariants.Purge();
+                if (!bare[i] || !bare[i].TryGetComponent<UnityEngine.UI.Graphic>(out _)) continue;
+                slices.Remove(bare[i]);
+                return false;
             }
+            return true;
+        }
+
+        BackdropSlice Readd(CanvasRenderer cr, BackdropSlice old)
+        {
+            old.Slice = -1;
+            // Immediately, since the component disallows a second copy.
+            Object.DestroyImmediate(old);
+            var s = cr.gameObject.AddComponent<BackdropSlice>();
+            slices[cr] = s;
+            return s;
         }
 
         // Slices only grow along the paint order, so a mask's subtree ends in the slice in effect when
