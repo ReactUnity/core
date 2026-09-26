@@ -740,6 +740,163 @@ namespace ReactUnity.Tests
             if (ownEventSystem) Object.DestroyImmediate(es.gameObject);
         }
 
+        // Screen point of an element's centre, offset from its top-left. Take it before filtering:
+        // afterwards the element hangs off a canvas parked far away.
+        Vector2 ScreenPointOf(string selector, float fromLeft = -1, float fromTop = -1)
+        {
+            var rt = Q(selector).RectTransform;
+            var r = rt.rect;
+            var local = new Vector3(fromLeft < 0 ? r.center.x : r.xMin + fromLeft, fromTop < 0 ? r.center.y : r.yMax - fromTop, 0);
+            return RectTransformUtility.WorldToScreenPoint(CanvasCmp.worldCamera, rt.TransformPoint(local));
+        }
+
+        static GameObject TopHit(EventSystem es, Vector2 point)
+        {
+            var results = new List<RaycastResult>();
+            es.RaycastAll(new PointerEventData(es) { position = point }, results);
+            return results.Count > 0 ? results[0].gameObject : null;
+        }
+
+        const string NestedScript = @"
+            function App() {
+                return <view id='page'>
+                    <button id='onpage'>Page</button>
+                    <view id='outer'>
+                        <view id='inner'>
+                            <button id='btn'>Inner</button>
+                        </view>
+                        <button id='side'>Side</button>
+                    </view>
+                </view>;
+            }
+";
+
+        // Offset from the page, so a point mapped straight into the outer capture lands elsewhere.
+        const string NestedStyle = @"
+            #page { display: flex; width: 800px; height: 500px; }
+            #outer { margin-top: 60px; width: 400px; height: 400px; background-color: white; }
+            #inner, #btn, #side, #onpage { width: 200px; height: 200px; flex-shrink: 0; }
+        ";
+
+        [UGUITest(Script = NestedScript, Style = NestedStyle)]
+        public IEnumerator ANestedFilterStillReceivesPointerEvents()
+        {
+            yield return null;
+            yield return null;
+
+            var ownEventSystem = !EventSystem.current;
+            var es = EventSystem.current ?? new GameObject("[FilterTestEventSystem]").AddComponent<EventSystem>();
+            var btn = Q("#btn").RectTransform;
+            var side = Q("#side").RectTransform;
+            var btnPoint = ScreenPointOf("#btn");
+            var sidePoint = ScreenPointOf("#side");
+            var onpage = Q("#onpage").RectTransform;
+            var pagePoint = ScreenPointOf("#onpage");
+
+            Q("#outer").Style["isolation"] = "isolate";
+            Q("#inner").Style["filter"] = "grayscale(1)";
+            for (int i = 0; i < 4; i++) yield return null;
+
+            Assert.NotNull(Q("#outer").ElementFilter, "sanity: the outer element should be isolated");
+            Assert.NotNull(Q("#inner").ElementFilter, "sanity: the inner element should be filtered");
+
+            // The inner filter's composite lives on the outer's surface, so its hits have to be
+            // mapped through both captures -- and must not claim points outside it.
+            var onBtn = TopHit(es, btnPoint);
+            var onSide = TopHit(es, sidePoint);
+            var onPage = TopHit(es, pagePoint);
+            Debug.Log($"[FILTER nested raycast] btn={onBtn?.name} side={onSide?.name} page={onPage?.name}");
+            Assert.IsTrue(onBtn && onBtn.transform.IsChildOf(btn), $"expected the inner button, hit {onBtn?.name}");
+            Assert.IsTrue(onSide && onSide.transform.IsChildOf(side), $"expected the side button, hit {onSide?.name}");
+            Assert.IsTrue(onPage && onPage.transform.IsChildOf(onpage), $"expected the page button, hit {onPage?.name}");
+
+            if (ownEventSystem) Object.DestroyImmediate(es.gameObject);
+        }
+
+        const string SiblingScript = @"
+            function App() {
+                return <view id='wrap'>
+                    <view id='a'><button id='abtn'>A</button></view>
+                    <view id='b'><button id='bbtn'>B</button></view>
+                </view>;
+            }
+";
+
+        const string SiblingStyle = @"
+            #wrap { width: 400px; height: 400px; }
+            #a, #b, #abtn, #bbtn { width: 200px; height: 200px; flex-shrink: 0; }
+            #b { position: absolute; left: 0; top: 100px; }
+        ";
+
+        [UGUITest(Script = SiblingScript, Style = SiblingStyle)]
+        public IEnumerator AFilterPaintedOverAnotherTakesTheHit()
+        {
+            yield return null;
+            yield return null;
+
+            var ownEventSystem = !EventSystem.current;
+            var es = EventSystem.current ?? new GameObject("[FilterTestEventSystem]").AddComponent<EventSystem>();
+            var bbtn = Q("#bbtn").RectTransform;
+            var overlap = ScreenPointOf("#bbtn", 100, 50);
+
+            var before = TopHit(es, overlap);
+            Assert.IsTrue(before && before.transform.IsChildOf(bbtn), $"sanity: B is painted over A, hit {before?.name}");
+
+            // A first, so a tie between the two would go to A's raycaster by registration order.
+            Q("#a").Style["filter"] = "grayscale(1)";
+            yield return null;
+            Q("#b").Style["filter"] = "grayscale(1)";
+            for (int i = 0; i < 4; i++) yield return null;
+
+            var after = TopHit(es, overlap);
+            Debug.Log($"[FILTER sibling raycast] before={before?.name} after={after?.name}");
+            Assert.IsTrue(after && after.transform.IsChildOf(bbtn), $"the filter painted on top should win, hit {after?.name}");
+
+            if (ownEventSystem) Object.DestroyImmediate(es.gameObject);
+        }
+
+        const string ClipOverClipScript = @"
+            function App() {
+                return <view id='outer'>
+                    <view id='inner'>
+                        <view id='test'></view>
+                    </view>
+                </view>;
+            }
+";
+
+        // The Game HUD's orbs: a clipped fill inside a clipped frame, both captured.
+        const string ClipOverClipStyle = BaseStyle + @"
+            #outer { clip-path: inset(0); }
+            #inner { clip-path: inset(0); }
+        ";
+
+        [UGUITest(Script = ClipOverClipScript, Style = ClipOverClipStyle)]
+        public IEnumerator AnOuterFilterShowsWhatItsInnerOneCaptures()
+        {
+            for (int i = 0; i < 4; i++) yield return null;
+
+            Assert.NotNull(Q("#outer").ElementFilter, "sanity: the outer element should be clipped");
+            Assert.NotNull(Q("#inner").ElementFilter, "sanity: the inner element should be clipped");
+
+            // Both capture on the first frame, so the inner has to go first or the outer copies
+            // an empty target.
+            var first = SampleCentre();
+            Debug.Log($"[FILTER clip over clip] {Describe(first)}");
+            Assert.Greater(first.r, 0.5f, "the outer filter should show the inner one's content");
+            Assert.Less(first.g, 0.3f);
+
+            // Only the inner one's subtree changes, so nothing tells the outer to re-capture but
+            // the inner capture itself.
+            View.Style["background-color"] = "lime";
+            for (int i = 0; i < 4; i++) yield return null;
+
+            var after = SampleCentre();
+            Debug.Log($"[FILTER clip over clip recolour] {Describe(after)}");
+            Assert.Greater(after.g, 0.7f, "the outer filter should re-capture when the inner one does");
+            Assert.Less(after.r, 0.3f);
+        }
+
         [UGUITest(Script = BaseScript, Style = BaseStyle)]
         public IEnumerator RotationTurnsTheFilteredResultToo()
         {

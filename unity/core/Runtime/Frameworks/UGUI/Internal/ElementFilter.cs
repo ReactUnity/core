@@ -110,6 +110,7 @@ namespace ReactUnity.UGUI.Internal
         static readonly Stack<int> freeSlots = new Stack<int>();
         static int nextSlot;
         private int slot = -1;
+        private Vector3 SlotPosition => new Vector3(0, 0, SlotBase + slot * SlotStride);
 
         private UGUIComponent component;
         private RectTransform self;
@@ -296,6 +297,7 @@ namespace ReactUnity.UGUI.Internal
         // reader's backdrop is what was painted before it, so a change after one cannot reach it,
         // and that reader keeps the surface it has. -1 is "somewhere, or everywhere".
         private int dirtyFrom = int.MaxValue;
+        private int queuedFrame = -1;
         private int capturePxWidth;
         private int capturePxHeight;
 
@@ -362,7 +364,7 @@ namespace ReactUnity.UGUI.Internal
 
             // Park the surface far from the scene, and in a slot of its own.
             slot = freeSlots.Count > 0 ? freeSlots.Pop() : nextSlot++;
-            canvasGo.transform.position = new Vector3(0, 0, SlotBase + slot * SlotStride);
+            canvasGo.transform.position = SlotPosition;
 
             // Events reach the subtree through the composite: the pointer lands on the composite's
             // rect, which is remapped into the offscreen camera's screen space and cast there.
@@ -870,12 +872,14 @@ namespace ReactUnity.UGUI.Internal
         /// couple of pixels re-captures a couple of times rather than on every frame.</summary>
         static float AberrationBleed(FilterDefinition d) => Mathf.Ceil(Mathf.Abs(d.ChromaticAberration));
 
-        void LateUpdate()
+        void LateUpdate() => Refresh(false);
+
+        void Refresh(bool force)
         {
             if (definition == null || !composite) return;
 
             bool recapture;
-            using (ReactUnity.Helpers.ReactProfiling.FilterPoll.Auto()) recapture = PollDirty();
+            using (ReactUnity.Helpers.ReactProfiling.FilterPoll.Auto()) recapture = PollDirty() || force;
             if (recapture)
             {
                 dirty = false;
@@ -884,6 +888,24 @@ namespace ReactUnity.UGUI.Internal
             }
 
             if (recapture || uniformsDirty) PushUniforms();
+        }
+
+        /// <summary>
+        /// A filter inside this one has re-captured. Its composite is still the same graphic
+        /// drawing the same texture, so nothing is dirtied -- but that texture now holds different
+        /// pixels, and this capture holds the old ones.
+        /// </summary>
+        void NoteInnerCapture(Graphic inner)
+        {
+            // Already queued, and the flush takes the deeper captures first.
+            if (queuedFrame == Time.frameCount) return;
+
+            var index = graphics.IndexOf(inner);
+            if (index < 0 || index < dirtyFrom) dirtyFrom = index;
+
+            // This frame's LateUpdate has been and gone, so the capture is queued now, for the pass
+            // after the inner one, rather than showing a frame-old copy of it.
+            Refresh(true);
         }
 
         /// <summary>
@@ -977,12 +999,16 @@ namespace ReactUnity.UGUI.Internal
 
             var margins = new Vector4(mLeft, mRight, mBottom, mTop);
 
+            // Queued either way: the flush takes captures deepest first, which is what lets one
+            // filter draw another's composite as it stands this frame rather than the last.
+            queuedFrame = Time.frameCount;
+
             // Packed with the others if it can be: the render is what costs, and one render serves
             // as many captures as fit in a texture. The camera above stays aimed either way -- the
             // raycaster reads it to put pointer events back into the subtree.
             if (Batchable() && TryPack(halfW, halfH, scale, margins, width, height)) return;
 
-            CaptureAlone(margins, width, height);
+            FilterBatch.EnqueueAlone(this, NestingDepth(), margins, width, height);
         }
 
         /// <summary>Whether this capture can share a render. A <c>perspective</c> wants a frustum of
@@ -1050,12 +1076,20 @@ namespace ReactUnity.UGUI.Internal
         }
 
         /// <summary>How many filters this one sits inside, counted from the composite because that is
-        /// what stayed in the page -- the subtree itself went offscreen.</summary>
+        /// what stayed in the page -- the subtree itself went offscreen. Each outer filter's subtree
+        /// is on a surface of its own too, so the walk carries on from that filter's composite; up
+        /// the transforms alone it stops at the first surface, and an inner filter came out level
+        /// with its outer one and was captured after it as often as not.</summary>
         int NestingDepth()
         {
             var depth = 0;
-            for (var t = composite ? composite.transform.parent : null; t; t = t.parent)
-                if (t.GetComponent<ElementFilter>()) depth++;
+            for (var t = composite ? composite.transform.parent : null; t && depth < 64;)
+            {
+                var outer = t.GetComponentInParent<ElementFilter>();
+                if (!outer || !outer.composite) break;
+                depth++;
+                t = outer.composite.transform.parent;
+            }
             return depth;
         }
 
@@ -1075,8 +1109,9 @@ namespace ReactUnity.UGUI.Internal
             for (int i = 0; i < subtreeGraphics && i < graphics.Count; i++)
                 batchChanged.Add(graphics[i] && graphics[i].transform.hasChanged);
 
+            // Set rather than offset, so a surface moved twice cannot end up anywhere but here.
             batchShift = centre - captureCentre;
-            offscreenCanvas.transform.position += batchShift;
+            offscreenCanvas.transform.position = SlotPosition + batchShift;
             offscreenCamera.transform.SetPositionAndRotation(centre - self.forward * 100f, self.rotation);
         }
 
@@ -1089,7 +1124,7 @@ namespace ReactUnity.UGUI.Internal
         {
             if (batchShift == Vector3.zero) return;
 
-            offscreenCanvas.transform.position -= batchShift;
+            offscreenCanvas.transform.position = SlotPosition;
             offscreenCamera.transform.SetPositionAndRotation(captureCentre - self.forward * 100f, self.rotation);
             batchShift = Vector3.zero;
 
@@ -1120,8 +1155,11 @@ namespace ReactUnity.UGUI.Internal
         internal void CompleteCapture(Vector4 margins, float width, float height)
         {
             // The composite has not moved and nothing about it rebuilt, but the texture it draws
-            // holds different pixels -- which only the page's own backdrops have to be told about.
+            // holds different pixels -- which the page's backdrops, and any filter this one is
+            // nested in, have to be told about.
             component.Context.ExistingBackdropSurface?.NoteRepaint(composite);
+            var outer = composite.transform.parent ? composite.transform.parent.GetComponentInParent<ElementFilter>() : null;
+            if (outer && outer != this) outer.NoteInnerCapture(composite);
 
             var hasShadow = definition.DropShadowColor.a > 0;
 

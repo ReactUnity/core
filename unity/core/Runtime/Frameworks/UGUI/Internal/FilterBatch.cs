@@ -34,6 +34,7 @@ namespace ReactUnity.UGUI.Internal
         {
             public ElementFilter Filter;
             public int Depth;
+            public bool Alone;
 
             // The capture, and the cell that has to hold the subtree around it.
             public int CaptureW, CaptureH;
@@ -48,6 +49,7 @@ namespace ReactUnity.UGUI.Internal
 
         static readonly List<Entry> pending = new List<Entry>();
         static readonly List<Entry> group = new List<Entry>();
+        static readonly List<Entry> solo = new List<Entry>();
         static Camera camera;
         static RenderTexture atlas;
         static FilterBatchDriver driver;
@@ -67,9 +69,7 @@ namespace ReactUnity.UGUI.Internal
         public static void Enqueue(ElementFilter filter, int depth, Vector2Int capture, Vector2Int cellSize,
             Vector2Int captureOffset, Vector4 margins, float width, float height)
         {
-            EnsureDriver();
-
-            pending.Add(new Entry
+            Add(new Entry
             {
                 Filter = filter,
                 Depth = depth,
@@ -84,6 +84,33 @@ namespace ReactUnity.UGUI.Internal
             });
         }
 
+        /// <summary>A capture that needs a camera of its own, taken in the same depth order as the
+        /// packed ones so that whatever it nests has been captured first.</summary>
+        public static void EnqueueAlone(ElementFilter filter, int depth, Vector4 margins, float width, float height)
+        {
+            Add(new Entry { Filter = filter, Depth = depth, Alone = true, Margins = margins, Width = width, Height = height });
+        }
+
+        /// <summary>
+        /// Queues a capture, replacing any the filter already has queued. The driver is made by the
+        /// first capture queued and has no LateUpdate until the frame after, so that frame's queue is
+        /// flushed with the next one's -- and a filter in one flush twice is moved into the atlas
+        /// twice and put back once, which strands its surface there.
+        /// </summary>
+        static void Add(Entry entry)
+        {
+            EnsureDriver();
+
+            for (int i = 0; i < pending.Count; i++)
+            {
+                if (pending[i].Filter != entry.Filter) continue;
+                pending[i] = entry;
+                return;
+            }
+
+            pending.Add(entry);
+        }
+
         /// <summary>
         /// Renders everything taken this frame and lets each filter finish. Nesting is what the
         /// passes are split on: a filter draws the composite of any filter inside it, so the inner
@@ -96,15 +123,26 @@ namespace ReactUnity.UGUI.Internal
             var deepest = 0;
             for (int i = 0; i < pending.Count; i++) deepest = Mathf.Max(deepest, pending[i].Depth);
 
-            for (int d = deepest; d >= 0; d--)
+            // A finished capture can queue the filter it is nested in, one level up, which is why
+            // the list is read again for every pass rather than grouped once.
+            try
             {
-                group.Clear();
-                for (int i = 0; i < pending.Count; i++)
-                    if (pending[i].Depth == d && pending[i].Filter) group.Add(pending[i]);
-                if (group.Count > 0) RenderGroup();
-            }
+                for (int d = deepest; d >= 0; d--)
+                {
+                    group.Clear();
+                    solo.Clear();
+                    for (int i = 0; i < pending.Count; i++)
+                        if (pending[i].Depth == d && pending[i].Filter) (pending[i].Alone ? solo : group).Add(pending[i]);
 
-            pending.Clear();
+                    if (group.Count > 0) RenderGroup();
+                    for (int i = 0; i < solo.Count; i++)
+                        if (solo[i].Filter) solo[i].Filter.CaptureAlone(solo[i].Margins, solo[i].Width, solo[i].Height);
+                }
+            }
+            finally
+            {
+                pending.Clear();
+            }
         }
 
         static void RenderGroup()

@@ -62,7 +62,7 @@ namespace ReactUnity.UGUI.Behaviours
                 // We dont really know in which display the event occured. We will process the event assuming it occured in our display.
             }
 
-            eventPosition = GetRemappedScreenPosition(eventPosition, currentEventCamera, EventViewport, baseCamera);
+            if (!TryRemap(ref eventPosition, currentEventCamera, baseCamera)) return;
             currentEventCamera = baseCamera;
 
             // Convert to view space
@@ -197,7 +197,18 @@ namespace ReactUnity.UGUI.Behaviours
             }
         }
 
-        public override Camera eventCamera
+        /// <summary>Takes a point from the event camera's screen to the one this canvas is cast in.
+        /// False drops the event.</summary>
+        protected virtual bool TryRemap(ref Vector3 eventPosition, Camera eventCamera, Camera targetCamera)
+        {
+            eventPosition = GetRemappedScreenPosition(eventPosition, eventCamera, EventViewport, targetCamera);
+            return true;
+        }
+
+        public override Camera eventCamera => ViewportCamera;
+
+        /// <summary>The camera the viewport is drawn by, which is the one a pointer over it is in.</summary>
+        protected Camera ViewportCamera
         {
             get
             {
