@@ -1,3 +1,124 @@
+## 0.25.1
+
+### `flushSync` works again
+
+`@reactunity/renderer`
+
+`flushSync` from `@reactunity/renderer` threw `TypeError: not a function` on every call. It called
+the reconciler's `flushSync`, which react-reconciler 0.33 renamed to `flushSyncFromReconciler`, and
+the reconciler's typings still declare the old name, so nothing caught it. It now commits the
+updates its callback schedules before it returns, including on roots rendered with
+`disableBatchRendering`.
+
+### QuickJS runs JavaScript about a third faster
+
+`com.reactunity.quickjs`
+
+The engine moves to quickjs-ng 0.17.0 plus the fork's interpreter work: inline caches on property
+access, cached global variable slots, fused compare-and-branch and faster Map, Set, JSON and string
+paths. Octane scores 1.33× the previous build on Windows and Linux. Inside Unity, parsing a large
+bundle is 1.4–1.7× faster and general JavaScript 1.2–1.5×. Rendering cost is unchanged, because
+building UGUI objects on the C# side dominates it.
+
+Recursion depth on Windows is slightly lower than before. The interpreter's frame on MSVC grew with
+this release, so the deepest React tree the Editor can commit at the default
+`ScriptRuntime.MaxStackSize` went from 36 levels to 32.
+
+### Unmounting a long list is no longer quadratic
+
+`com.reactunity.core`
+
+Removing an element re-resolved the styles of every sibling it left behind, on the spot, on top of
+the deferred resolve its removal already scheduled. Clearing a list of 1000 elements took 5.8 s;
+it now takes 100 ms. Styles still update on the parent's next update, the same way they already
+did when a child was added.
+
+### `PoolingType.All` pools elements under the default renderer, and a reused one starts clean
+
+`com.reactunity.core`
+
+Under `PoolingType.All`, the batched renderer (the default) never pooled an element. It sends the
+pool key of an element without a `pool` prop as `null`, and the command reader turned that into
+`""`, which means `pool={false}`. The unbatched renderer pooled them all along, so the two
+disagreed. A missing key now reaches the context as `null` and pools under `All` in both. `pool={false}`
+still opts an element out. `Basic`, the default, only pools text and pseudo elements and is
+unchanged.
+
+A reused element also used to keep every prop its previous owner set that the new one does not,
+because a create command carries only the props that are present. Styles were already reset. Props
+were not, so a reused element could still be hidden by `active={false}`, still checked or disabled,
+still pointing at another element's `href`, camera, prefab target, video, SVG content or icon set,
+or still limited by an input's `characterLimit` and `contentType`. Each UGUI element now puts its
+props back to what a new one has. An element with a camera, prefab target or video lets go of it
+when it is unmounted, not when it is reused.
+
+- A pooled element is dropped from the ref table, so its old ref id no longer resolves to whatever
+  element reuses it.
+- An element whose `Pool()` refuses it is destroyed. It used to be left in the scene.
+- Disposing a context no longer pools anything, so a portal under `All` is destroyed with its
+  context. Before, it was pooled and outlived the context.
+- A reused scrollbar has its `data-horizontal`/`data-vertical`/`data-direction` again, and an
+  input no longer drives a scrollbar that went back to the pool.
+- A filtered element lets go of its filter when it is pooled. Its offscreen surface and the
+  composite it left in its old parent were kept, so whatever reused that parent showed a stale
+  capture. A reused element that no longer had a filter was also moved back under its first
+  owner's parent.
+- An element whose `backdrop-filter` or `outline` goes away, whether through a style change or
+  through reuse, stops drawing it. Both used to stay once set.
+- UIToolkit and Editor elements are no longer pooled under `All`. A `VisualElement` is cheap to
+  build, and each kind has native fields a reuse would have to reset one by one. Text and pseudo
+  elements are pooled as before.
+
+### Newtonsoft.Json is no longer a dependency
+
+`com.reactunity.core`
+
+The renderer's command buffer is now read by a small JSON reader of ReactUnity's own instead of
+Newtonsoft's token tree, which parses it about four times as fast. Mounting a list of 1000 styled
+elements takes about 45 ms less, and updating it 16% less.
+
+A string prop that looks like a date now arrives as written. Newtonsoft turned it into a `DateTime`,
+so a prop like `"2026-09-26T10:00:00.000Z"` reached C# reformatted in the current culture.
+
+`com.unity.nuget.newtonsoft-json` is no longer pulled in by `com.reactunity.core`. A project that
+used Newtonsoft without depending on it itself needs to add it to its own manifest.
+
+### Pointer events and captures work through nested filters
+
+`com.reactunity.core`
+
+An element with `filter`, `clip-path`, `mask-image`, `isolation`, `mix-blend-mode` or `perspective`
+is drawn from an offscreen capture. When one of those sat inside another, several things went
+wrong, and a page built from many of them, like the kitchen-sink Game HUD, showed all of them:
+
+- **Clicks stopped reaching the page.** The inner filter's raycaster mapped the pointer straight
+  into the outer filter's camera instead of through the outer capture. It also reported that
+  offscreen camera as its event camera, which outranks the page camera, so its misplaced hits won
+  every click. A pointer now goes through each capture it is nested in, and the outermost filter
+  casts for everything inside it.
+- **Overlapping filters took each other's clicks.** Two filtered siblings tied, so which one got a
+  click came down to the order their raycasters registered in. The one painted on top now wins.
+- **Captures flickered.** The object that renders queued captures is created by the first one, so
+  on that frame a filter could be queued twice. It was moved into the shared render twice and
+  back once, left there, and drew into other elements' captures for a frame at a time.
+- **An outer filter could show nothing, or a stale copy, of an inner one.** Captures ran in an
+  order that only counted nesting up to the first surface, so an outer clip could be captured
+  before the fill inside it. And an inner filter that re-captured never told the outer one to
+  do the same. Inner captures now run first, and a finished one marks its outer filter for
+  re-capture.
+
+### Faster element creation
+
+`com.reactunity.core`
+
+The style system's name tables compared keys with the invariant culture, which under Mono builds a
+sort key on every hash, so looking up a property name cost about 13 µs. They compare ordinally now,
+which matches the same ASCII names, and an inline `style` prop applies in about half the time.
+
+UGUI elements are also created with their `RectTransform` in place, instead of adding one that
+replaces the `Transform` Unity started them with. Together these take about 80 ms off mounting a
+list of 1000 elements.
+
 ## 0.25.0
 
 ### Logical borders and sizing
