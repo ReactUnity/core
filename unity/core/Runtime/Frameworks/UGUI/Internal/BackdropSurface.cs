@@ -39,16 +39,22 @@ namespace ReactUnity.UGUI.Internal
     /// A render apiece is what the exactness costs: about 1.5 ms per reader in the editor, against
     /// the 0.16 ms a GrabPass takes to copy the target -- so the built-in pipeline keeps grabbing,
     /// and this is only for the pipelines that cannot. What it must not also cost is a canvas
-    /// rebuild, which is far more than the render; see <see cref="Hide"/>.
+    /// rebuild, which is far more than the render; see <see cref="HideFrom"/>.
     /// </remarks>
     public class BackdropPass
     {
         private readonly List<RenderTexture> surfaces = new List<RenderTexture>();
-        private readonly List<Transform> hidden = new List<Transform>();
-        private readonly List<CanvasRenderer> dimmed = new List<CanvasRenderer>();
+        // The canvas in paint order, and where the hidden tail of it starts.
+        private readonly List<CanvasRenderer> tail = new List<CanvasRenderer>();
         private readonly List<float> alphas = new List<float>();
-        private readonly List<CanvasRenderer> buffer = new List<CanvasRenderer>();
+        private int hiddenFrom;
         private readonly List<IBackdropReader> held = new List<IBackdropReader>();
+        // Which reader's surface each reader was handed, which is its own unless it shares one.
+        private readonly List<int> sources = new List<int>();
+        private readonly List<UnityEngine.UI.Graphic> order = new List<UnityEngine.UI.Graphic>();
+
+        /// <summary>Off gives every reader a render of its own. For tests.</summary>
+        internal static bool SharingEnabled = true;
 
         /// <summary>How many surfaces this pass has rendered, ever. For tests.</summary>
         public int RenderCount { get; private set; }
@@ -74,42 +80,124 @@ namespace ReactUnity.UGUI.Internal
             EnsureSurfaces(readers.Count, width, height);
             var reusable = Reusable(readers);
             var target = cam.targetTexture;
+            if (!reusable) sources.Clear();
+            while (sources.Count < readers.Count) sources.Add(sources.Count);
 
-            for (int r = 0; r < readers.Count; r++)
+            order.Clear();
+            tail.Clear();
+            hiddenFrom = 0;
+            var shareFrom = -1;
+
+            // Nothing may leave the page hidden: a throw anywhere in here would take the whole UI
+            // off the screen and leave it off.
+            try
             {
-                // Nothing behind it moved, and it is still holding the surface it was given.
-                if (reusable && stale != null && r < stale.Count && !stale[r])
+                for (int r = 0; r < readers.Count; r++)
                 {
+                    // Nothing behind it moved, and it is still holding the surface it was given.
+                    if (reusable && stale != null && r < stale.Count && !stale[r])
+                    {
+                        readers[r].SetBackdrop(surfaces[sources[r]]);
+                        continue;
+                    }
+
+                    // A surface taken earlier this call is this reader's backdrop too, where nothing
+                    // painted between the two readers lands on what this one reads.
+                    if (shareFrom >= 0 && SharingEnabled && !PaintedBetween(cam, root, readers[shareFrom], readers[r], width, height))
+                    {
+                        sources[r] = shareFrom;
+                        readers[r].SetBackdrop(surfaces[shareFrom]);
+                        continue;
+                    }
+
+                    if (!HideFrom(readers[r].BackdropRenderer, root))
+                    {
+                        readers[r].SetBackdrop(null);
+                        continue;
+                    }
+
+                    OffscreenRender.Begin();
+                    try
+                    {
+                        cam.targetTexture = surfaces[r];
+                        cam.Render();
+                        RenderCount++;
+                    }
+                    finally
+                    {
+                        OffscreenRender.End();
+                        cam.targetTexture = target;
+                    }
+
+                    // Bound as we go, so the next reader's render finds this one's result in place.
+                    sources[r] = r;
+                    shareFrom = r;
                     readers[r].SetBackdrop(surfaces[r]);
-                    continue;
                 }
-
-                if (!Hide(readers[r].BackdropRenderer.transform, root))
-                {
-                    readers[r].SetBackdrop(null);
-                    continue;
-                }
-
-                // Nothing may leave the page hidden: a throw between here and Unhide would take the
-                // whole UI off the screen and leave it off.
-                try
-                {
-                    cam.targetTexture = surfaces[r];
-                    cam.Render();
-                    RenderCount++;
-                }
-                finally
-                {
-                    Unhide();
-                    cam.targetTexture = target;
-                }
-
-                // Bound as we go, so the next reader's render finds this one's result in place.
-                readers[r].SetBackdrop(surfaces[r]);
             }
-
+            finally
+            {
+                Reveal(tail.Count);
+            }
+            order.Clear();
             held.Clear();
             held.AddRange(readers);
+        }
+
+        /// <summary>
+        /// Whether anything painted from <paramref name="from"/> up to <paramref name="to"/> lands on
+        /// what <paramref name="to"/> reads -- which is all that separates the two readers' backdrops.
+        /// Assumes a graphic draws inside its own rect, as <see cref="BackdropWatch"/> does.
+        /// </summary>
+        bool PaintedBetween(Camera cam, Transform root, IBackdropReader from, IBackdropReader to, int width, int height)
+        {
+            if (order.Count == 0) root.GetComponentsInChildren(false, order);
+
+            int start = -1, end = -1;
+            for (int i = 0; i < order.Count && end < 0; i++)
+            {
+                var cr = order[i].canvasRenderer;
+                if (start < 0 && ReferenceEquals(cr, from.BackdropRenderer)) start = i;
+                else if (start >= 0 && ReferenceEquals(cr, to.BackdropRenderer)) end = i;
+            }
+            if (start < 0 || end < 0) return true;
+
+            var viewProjection = cam.projectionMatrix * cam.worldToCameraMatrix;
+            var viewport = new Vector2(width, height);
+            var reads = ScreenRect(viewProjection, viewport, order[end].rectTransform);
+            var bleed = to.BackdropBleed;
+            if (bleed > 0) reads = Rect.MinMaxRect(reads.xMin - bleed, reads.yMin - bleed, reads.xMax + bleed, reads.yMax + bleed);
+
+            for (int i = start; i < end; i++)
+            {
+                var g = order[i];
+                if (!g.enabled) continue;
+                // A stencil-only mask graphic, which a reader's own clip usually is, draws no colour.
+                if (g.TryGetComponent<UnityEngine.UI.Mask>(out var mask) && mask.MaskEnabled() && !mask.showMaskGraphic) continue;
+                if (ScreenRect(viewProjection, viewport, g.rectTransform).Overlaps(reads)) return true;
+            }
+
+            return false;
+        }
+
+        static Rect ScreenRect(Matrix4x4 viewProjection, Vector2 viewport, RectTransform rt)
+        {
+            var m = viewProjection * rt.localToWorldMatrix;
+            var local = rt.rect;
+            var min = new Vector2(float.MaxValue, float.MaxValue);
+            var max = new Vector2(float.MinValue, float.MinValue);
+
+            for (int i = 0; i < 4; i++)
+            {
+                var clip = m * new Vector4((i & 1) == 0 ? local.xMin : local.xMax, (i & 2) == 0 ? local.yMin : local.yMax, 0, 1);
+                if (clip.w <= 0) return new Rect(0, 0, viewport.x, viewport.y);
+
+                var s = new Vector2((clip.x / clip.w * 0.5f + 0.5f) * viewport.x, (clip.y / clip.w * 0.5f + 0.5f) * viewport.y);
+                min = Vector2.Min(min, s);
+                max = Vector2.Max(max, s);
+            }
+
+            return Rect.MinMaxRect(min.x, min.y, max.x, max.y);
         }
 
         /// <summary>
@@ -125,10 +213,15 @@ namespace ReactUnity.UGUI.Internal
         }
 
         /// <summary>
-        /// Takes everything painted at or after <paramref name="reader"/> out of the frame, for one
-        /// render. False if the reader is not under this canvas, and nothing was touched.
+        /// Takes everything painted at or after <paramref name="reader"/> out of the frame, and puts
+        /// back whatever an earlier reader had taken out before it. False if the reader is not under
+        /// this canvas, and nothing was touched.
         /// </summary>
         /// <remarks>
+        /// Readers come in paint order, so what is hidden is always a tail of the canvas's depth-first
+        /// walk, and each reader only moves where that tail starts -- one pass over the canvas for the
+        /// lot rather than one per reader.
+        ///
         /// Zero alpha on the CanvasRenderers, rather than either of the two things that look like
         /// they are for exactly this. The <c>CanvasRenderer.cull</c> flag does not hold: RectMask2D
         /// re-derives cull for every maskable graphic it clips on each canvas update, and one of
@@ -139,41 +232,40 @@ namespace ReactUnity.UGUI.Internal
         /// the sample's scrolling page against 8.6 ms for this. Alpha moves no rect, so nothing is
         /// re-clipped and nothing is re-tessellated; the canvas only re-submits what it already has.
         /// </remarks>
-        bool Hide(Transform reader, Transform root)
+        bool HideFrom(CanvasRenderer reader, Transform root)
         {
-            if (!reader || !reader.IsChildOf(root) || reader == root) return false;
+            if (!reader || reader.transform == root || !reader.transform.IsChildOf(root)) return false;
 
-            // The reader's own subtree, then every later sibling on the way up to the canvas: the
-            // tail of a depth-first walk, in as few transforms as it can be written.
-            hidden.Clear();
-            hidden.Add(reader);
-            for (var t = reader; t != root; t = t.parent)
+            if (tail.Count == 0)
             {
-                var parent = t.parent;
-                for (int i = t.GetSiblingIndex() + 1; i < parent.childCount; i++) hidden.Add(parent.GetChild(i));
+                root.GetComponentsInChildren(true, tail);
+                alphas.Clear();
+                for (int i = 0; i < tail.Count; i++) alphas.Add(1f);
+                hiddenFrom = tail.Count;
             }
 
-            for (int i = 0; i < hidden.Count; i++)
+            var from = tail.IndexOf(reader);
+            if (from < 0) return false;
+
+            if (from > hiddenFrom) Reveal(from);
+
+            for (int i = from; i < hiddenFrom; i++)
             {
-                hidden[i].GetComponentsInChildren(true, buffer);
-                for (int k = 0; k < buffer.Count; k++)
-                {
-                    dimmed.Add(buffer[k]);
-                    alphas.Add(buffer[k].GetAlpha());
-                    buffer[k].SetAlpha(0);
-                }
+                if (!tail[i]) continue;
+                alphas[i] = tail[i].GetAlpha();
+                tail[i].SetAlpha(0);
             }
+            hiddenFrom = from;
 
             return true;
         }
 
-        void Unhide()
+        /// <summary>Puts back what is hidden before <paramref name="upTo"/>.</summary>
+        void Reveal(int upTo)
         {
-            for (int i = 0; i < dimmed.Count; i++) if (dimmed[i]) dimmed[i].SetAlpha(alphas[i]);
-            dimmed.Clear();
-            alphas.Clear();
+            for (int i = hiddenFrom; i < upTo && i < tail.Count; i++) if (tail[i]) tail[i].SetAlpha(alphas[i]);
+            hiddenFrom = Mathf.Max(hiddenFrom, Mathf.Min(upTo, tail.Count));
         }
-
         void EnsureSurfaces(int count, int width, int height)
         {
             var w = Mathf.Max(1, width);

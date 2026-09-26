@@ -149,7 +149,8 @@ namespace ReactUnity.UGUI.Internal
         private readonly BackdropPass innerBackdrops = new BackdropPass();
         private readonly List<IBackdropReader> innerReaders = new List<IBackdropReader>();
         private readonly List<bool> innerStale = new List<bool>();
-        private Matrix4x4 backdropFraming;
+        private readonly List<int> innerIndices = new List<int>();
+        private BackdropWatch innerWatch;
 
         private RawImage composite;
         private Material compositeMaterial;
@@ -291,12 +292,21 @@ namespace ReactUnity.UGUI.Internal
         private Vector3 captureCentre;
         private Vector3 batchShift;
         private readonly List<bool> batchChanged = new List<bool>();
-        private int subtreeGraphics;
 
-        // How early in paint order the subtree has changed since the last capture read it. A
-        // reader's backdrop is what was painted before it, so a change after one cannot reach it,
-        // and that reader keeps the surface it has. -1 is "somewhere, or everywhere".
-        private int dirtyFrom = int.MaxValue;
+        // The element moving or turning keeps the capture: the composite and the raycasting camera
+        // follow it from where they stood relative to it. Each graphic is judged by where it stands
+        // relative to the element, so the element's own motion does not read as a change inside.
+        private Vector3 lastScale;
+        private bool placementDirty;
+        private Vector4 placedMargins;
+        private Vector3 captureLocalCentre;
+        private Vector3 cameraLocalPosition;
+        private Quaternion cameraLocalRotation = Quaternion.identity;
+        private readonly List<Matrix4x4> placements = new List<Matrix4x4>();
+
+        // How far the surface is shifted to turn it about the element rather than its own origin.
+        private Vector3 unturn;
+        private int subtreeGraphics;
         private int queuedFrame = -1;
         private int capturePxWidth;
         private int capturePxHeight;
@@ -356,6 +366,7 @@ namespace ReactUnity.UGUI.Internal
             offscreenCamera.backgroundColor = Color.clear;
             offscreenCamera.cullingMask = 1 << canvasGo.layer;
             offscreenCamera.enabled = false;
+            Lighten(offscreenCamera);
             camGo.transform.SetParent(canvasGo.transform, false);
 
             // Collected under one object rather than left loose at the root, which is where a
@@ -389,6 +400,15 @@ namespace ReactUnity.UGUI.Internal
         /// there are no parent groups left to ignore, so without this an ancestor's opacity would
         /// quietly start applying to an element the moment it isolated.
         /// </summary>
+        /// <summary>What the batch's camera leaves off as well: a capture is an 8-bit texture of UI,
+        /// with no use for an HDR intermediate or an occlusion query.</summary>
+        internal static void Lighten(Camera cam)
+        {
+            cam.allowHDR = false;
+            cam.allowMSAA = false;
+            cam.useOcclusionCulling = false;
+        }
+
         void ApplyIsolation()
         {
             if (!composite) return;
@@ -480,6 +500,7 @@ namespace ReactUnity.UGUI.Internal
             maskCamera.backgroundColor = Color.clear;
             maskCamera.cullingMask = 1 << canvasGo.layer;
             maskCamera.enabled = false;
+            Lighten(maskCamera);
             maskCamera.nearClipPlane = 0.01f;
             maskCamera.farClipPlane = 1000f;
             camGo.transform.SetParent(canvasGo.transform, false);
@@ -675,6 +696,7 @@ namespace ReactUnity.UGUI.Internal
             for (int i = 0; i < innerReaders.Count; i++) innerReaders[i]?.SetBackdrop(null);
             innerReaders.Clear();
             innerBackdrops.Release();
+            innerWatch?.Reset();
         }
 
         static void Release(ref RenderTexture rt)
@@ -751,7 +773,6 @@ namespace ReactUnity.UGUI.Internal
         public void Invalidate()
         {
             dirty = true;
-            dirtyFrom = -1;
         }
 
         /// <summary>A mask layer's own pixels changed -- an animated mask-position, or an image that
@@ -791,13 +812,17 @@ namespace ReactUnity.UGUI.Internal
                 if (clipFilter) clipFilter.ClipBox = box;
             }
 
-            // Also the element itself: a `rotate` or `scale` on an element with no background of
-            // its own touches no graphic in the list below.
+            // Also the element itself. Its scale sets the capture's resolution; a move or a turn
+            // stays out of the capture and only carries the composite along.
             if (self.hasChanged)
             {
                 self.hasChanged = false;
-                dirty = true;
-                dirtyFrom = -1;
+                if (self.localScale != lastScale)
+                {
+                    lastScale = self.localScale;
+                    dirty = true;
+                }
+                else placementDirty = true;
             }
 
             // A rebuild raises the callbacks below, but moving a child only sets its transform --
@@ -831,14 +856,26 @@ namespace ReactUnity.UGUI.Internal
                 var t = graphics[i].transform;
                 if (!t.hasChanged) continue;
                 t.hasChanged = false;
-                dirty = true;
 
-                // The mask layers are appended past the subtree and are drawn on a surface of their
-                // own, so one changing is not something any backdrop here could have seen.
-                if (i < subtreeGraphics && i < dirtyFrom) dirtyFrom = i;
+                if (i < subtreeGraphics && i < placements.Count)
+                {
+                    var placed = PlacementOf(t);
+                    if (placed.Equals(placements[i])) continue;
+                    placements[i] = placed;
+                }
+                dirty = true;
             }
 
             return dirty;
+        }
+
+        /// <summary>Where a transform stands relative to the element, from local values alone --
+        /// the surfaces are parked far enough out that a world-space round trip loses precision.</summary>
+        Matrix4x4 PlacementOf(Transform t)
+        {
+            var m = Matrix4x4.identity;
+            for (; t && t != self; t = t.parent) m = Matrix4x4.TRS(t.localPosition, t.localRotation, t.localScale) * m;
+            return m;
         }
 
         void Reregister()
@@ -853,7 +890,9 @@ namespace ReactUnity.UGUI.Internal
             registered.Clear();
             registered.AddRange(graphics);
             dirty = true;
-            dirtyFrom = -1;
+
+            placements.Clear();
+            for (int i = 0; i < subtreeGraphics && i < graphics.Count; i++) placements.Add(PlacementOf(graphics[i].transform));
 
             for (int i = 0; i < registered.Count; i++)
             {
@@ -889,6 +928,8 @@ namespace ReactUnity.UGUI.Internal
                 RenderCount++;
                 Render();
             }
+            else if (placementDirty) Place();
+            placementDirty = false;
 
             if (recapture || uniformsDirty) PushUniforms();
         }
@@ -900,11 +941,11 @@ namespace ReactUnity.UGUI.Internal
         /// </summary>
         void NoteInnerCapture(Graphic inner)
         {
+            // Before the early out: a queued capture still takes its inner backdrops after this.
+            innerWatch?.NoteRepaint(inner);
+
             // Already queued, and the flush takes the deeper captures first.
             if (queuedFrame == Time.frameCount) return;
-
-            var index = graphics.IndexOf(inner);
-            if (index < 0 || index < dirtyFrom) dirtyFrom = index;
 
             // This frame's LateUpdate has been and gone, so the capture is queued now, for the pass
             // after the inner one, rather than showing a frame-old copy of it.
@@ -927,6 +968,8 @@ namespace ReactUnity.UGUI.Internal
 
         void Render()
         {
+            Unturn();
+
             var rect = self.rect;
             var scale = ScaleFactor;
             var hasShadow = definition.DropShadowColor.a > 0;
@@ -1000,6 +1043,10 @@ namespace ReactUnity.UGUI.Internal
             captureCentre = worldCentre;
             batchShift = Vector3.zero;
 
+            captureLocalCentre = self.InverseTransformPoint(worldCentre);
+            cameraLocalPosition = self.InverseTransformPoint(offscreenCamera.transform.position);
+            cameraLocalRotation = Quaternion.Inverse(self.rotation) * offscreenCamera.transform.rotation;
+
             var margins = new Vector4(mLeft, mRight, mBottom, mTop);
 
             // Queued either way: the flush takes captures deepest first, which is what lets one
@@ -1014,9 +1061,37 @@ namespace ReactUnity.UGUI.Internal
             FilterBatch.EnqueueAlone(this, NestingDepth(), margins, width, height);
         }
 
+        /// <summary>
+        /// Turns the surface against the element's own rotation, about the element, so the element
+        /// stands square in the world. The capture is square-on either way; standing square is what
+        /// lets it share the batch's unturned camera.
+        /// </summary>
+        void Unturn()
+        {
+            var surface = offscreenCanvas.transform;
+            var turn = Quaternion.Inverse(self.localRotation);
+            var local = Vector3.Scale(surface.lossyScale, self.localPosition);
+            var shift = local - turn * local;
+
+            if (surface.rotation == turn && shift == unturn) return;
+            unturn = shift;
+            surface.SetPositionAndRotation(SlotPosition + unturn + batchShift, turn);
+        }
+
+        /// <summary>The element moved or turned and nothing inside it changed, so the capture
+        /// stands: only the composite, and the camera raycasts are cast through, follow it.</summary>
+        void Place()
+        {
+            if (!composite.enabled) return;
+            PlaceComposite(placedMargins);
+            captureCentre = self.TransformPoint(captureLocalCentre);
+            offscreenCamera.transform.SetPositionAndRotation(
+                self.TransformPoint(cameraLocalPosition), self.rotation * cameraLocalRotation);
+        }
+
         /// <summary>Whether this capture can share a render. A <c>perspective</c> wants a frustum of
-        /// its own, a rotation wants the camera turned with it, and a reader inside wants the camera
-        /// to render the subtree again with part of it hidden.</summary>
+        /// its own, a rotation the surface could not cancel wants the camera turned with it, and a
+        /// reader inside wants the camera to render the subtree again with part of it hidden.</summary>
         bool Batchable()
         {
             if (!FilterBatch.Enabled) return false;
@@ -1114,7 +1189,7 @@ namespace ReactUnity.UGUI.Internal
 
             // Set rather than offset, so a surface moved twice cannot end up anywhere but here.
             batchShift = centre - captureCentre;
-            offscreenCanvas.transform.position = SlotPosition + batchShift;
+            offscreenCanvas.transform.position = SlotPosition + unturn + batchShift;
             offscreenCamera.transform.SetPositionAndRotation(centre - self.forward * 100f, self.rotation);
         }
 
@@ -1127,7 +1202,7 @@ namespace ReactUnity.UGUI.Internal
         {
             if (batchShift == Vector3.zero) return;
 
-            offscreenCanvas.transform.position = SlotPosition;
+            offscreenCanvas.transform.position = SlotPosition + unturn;
             offscreenCamera.transform.SetPositionAndRotation(captureCentre - self.forward * 100f, self.rotation);
             batchShift = Vector3.zero;
 
@@ -1329,34 +1404,30 @@ namespace ReactUnity.UGUI.Internal
             if (!surface) return;
 
             surface.CollectFor(this, innerReaders);
+            if (innerReaders.Count == 0)
+            {
+                innerBackdrops.Release();
+                innerWatch?.Reset();
+                return;
+            }
 
-            // Everything the capture is framed by, in one matrix. A surface taken through another
-            // one holds a different part of the world at the same uv -- and uv is how a backdrop is
-            // read -- so a camera that has moved, turned or resized keeps none of them.
-            var framing = offscreenCamera.projectionMatrix * offscreenCamera.worldToCameraMatrix;
-            var reframed = !framing.Equals(backdropFraming);
-            backdropFraming = framing;
+            // Watched the way the page is, so a reader keeps its surface unless something changed
+            // under its own rect -- a surface usually has one corner animating. Framed on the target
+            // first, which is the viewport the rects and the blur's reach are measured in.
+            innerWatch ??= new BackdropWatch();
+            var previous = offscreenCamera.targetTexture;
+            offscreenCamera.targetTexture = target;
+            innerWatch.Poll(offscreenCanvas.transform, offscreenCamera, false);
+            innerWatch.IndexReaders(innerReaders, innerIndices);
 
             innerStale.Clear();
             for (int i = 0; i < innerReaders.Count; i++)
-                innerStale.Add(reframed || dirtyFrom < PaintIndexOf(innerReaders[i]));
-            dirtyFrom = int.MaxValue;
+                innerStale.Add(!BackdropSurface.CacheEnabled ||
+                    innerWatch.Stale(innerIndices[i], innerWatch.ReaderRect(offscreenCamera, innerReaders[i])));
+            offscreenCamera.targetTexture = previous;
 
             using (ReactUnity.Helpers.ReactProfiling.FilterInnerBackdrops.Auto())
                 innerBackdrops.Render(offscreenCamera, offscreenCanvas.transform, innerReaders, pxWidth, pxHeight, innerStale);
-        }
-
-        /// <summary>Where a reader sits in the subtree's paint order. A reader the list does not
-        /// account for is treated as painted last, so any change at all is taken to reach it.</summary>
-        int PaintIndexOf(IBackdropReader reader)
-        {
-            var t = reader?.BackdropRenderer ? reader.BackdropRenderer.transform : null;
-            if (!t) return int.MaxValue;
-
-            for (int i = 0; i < subtreeGraphics && i < graphics.Count; i++)
-                if (graphics[i] && graphics[i].transform == t) return i;
-
-            return int.MaxValue;
         }
 
         /// <summary>
@@ -1417,25 +1488,9 @@ namespace ReactUnity.UGUI.Internal
         void ApplyToComposite(RenderTexture source, Vector4 margins, float width, float height)
         {
             var rect = self.rect;
-            var compRect = composite.transform as RectTransform;
-            float mLeft = margins.x, mRight = margins.y, mBottom = margins.z, mTop = margins.w;
+            float mLeft = margins.x, mBottom = margins.z;
 
-            // Match the element's slot, grown by the filter region so nothing is cut off at the edge.
-            compRect.anchorMin = self.anchorMin;
-            compRect.anchorMax = self.anchorMax;
-            compRect.sizeDelta = self.sizeDelta + new Vector2(mLeft + mRight, mBottom + mTop);
-
-            // Keep the pivot on the same point despite the wider rect: it is the origin the rotation
-            // and scale below turn about, and `transform-origin` has already moved it off centre.
-            var grown = rect.size + new Vector2(mLeft + mRight, mBottom + mTop);
-            compRect.pivot = new Vector2(
-                grown.x > 0 ? (self.pivot.x * rect.width + mLeft) / grown.x : 0.5f,
-                grown.y > 0 ? (self.pivot.y * rect.height + mBottom) / grown.y : 0.5f);
-            compRect.anchoredPosition = self.anchoredPosition;
-
-            // The capture left these out, so they apply to the filtered image here.
-            compRect.localRotation = self.localRotation;
-            compRect.localScale = self.localScale;
+            PlaceComposite(margins);
 
             composite.texture = source;
             composite.enabled = true;
@@ -1455,6 +1510,32 @@ namespace ReactUnity.UGUI.Internal
             // And how the raycast filter gets there, which is the same trip in points.
             clipFilter.BoxSize = rect.size;
             clipFilter.BoxOffset = new Vector2(mLeft, mBottom);
+        }
+
+        /// <summary>Puts the composite where the element stands, grown by the filter region.</summary>
+        void PlaceComposite(Vector4 margins)
+        {
+            placedMargins = margins;
+            var rect = self.rect;
+            var compRect = composite.transform as RectTransform;
+            float mLeft = margins.x, mRight = margins.y, mBottom = margins.z, mTop = margins.w;
+
+            // Match the element's slot, grown by the filter region so nothing is cut off at the edge.
+            compRect.anchorMin = self.anchorMin;
+            compRect.anchorMax = self.anchorMax;
+            compRect.sizeDelta = self.sizeDelta + new Vector2(mLeft + mRight, mBottom + mTop);
+
+            // Keep the pivot on the same point despite the wider rect: it is the origin the rotation
+            // and scale below turn about, and `transform-origin` has already moved it off centre.
+            var grown = rect.size + new Vector2(mLeft + mRight, mBottom + mTop);
+            compRect.pivot = new Vector2(
+                grown.x > 0 ? (self.pivot.x * rect.width + mLeft) / grown.x : 0.5f,
+                grown.y > 0 ? (self.pivot.y * rect.height + mBottom) / grown.y : 0.5f);
+            compRect.anchoredPosition = self.anchoredPosition;
+
+            // The capture left these out, so they apply to the filtered image here.
+            compRect.localRotation = self.localRotation;
+            compRect.localScale = self.localScale;
         }
 
         /// <summary>Writes the whole filter chain onto one material. Called for the composite's own

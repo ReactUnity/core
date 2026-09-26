@@ -100,6 +100,18 @@ namespace ReactUnity.Styling
 
         private bool shouldUpdate;
         private bool shouldUpdateWithLayout;
+        private bool shouldUpdateFully;
+
+        /// <summary>
+        /// True while <see cref="OnUpdate"/> announces a change to nothing but <c>translate</c>,
+        /// <c>rotate</c>, <c>scale</c>, <c>opacity</c> and layout properties -- which the element can
+        /// apply by moving, fading and laying out again, without restyling anything it draws.
+        /// </summary>
+        public bool CompositorOnly { get; private set; }
+
+        static bool IsCompositorProperty(IStyleProperty sp) =>
+            sp is ILayoutProperty || sp == StyleProperties.translate || sp == StyleProperties.rotate
+            || sp == StyleProperties.scale || sp == StyleProperties.opacity;
 
 
         public StyleState(ReactContext context)
@@ -156,9 +168,15 @@ namespace ReactUnity.Styling
             if (audioRunning) UpdateAudio();
             if (shouldUpdate)
             {
-                OnUpdate?.Invoke(Active, shouldUpdateWithLayout);
+                CompositorOnly = !shouldUpdateFully;
                 shouldUpdate = false;
-                shouldUpdateWithLayout = false;
+                try { OnUpdate?.Invoke(Active, shouldUpdateWithLayout); }
+                finally
+                {
+                    CompositorOnly = false;
+                    shouldUpdateWithLayout = false;
+                    shouldUpdateFully = false;
+                }
             }
         }
 
@@ -183,6 +201,7 @@ namespace ReactUnity.Styling
 
             shouldUpdate = false;
             shouldUpdateWithLayout = false;
+            shouldUpdateFully = false;
         }
 
         #region Transitions
@@ -359,7 +378,7 @@ namespace ReactUnity.Styling
                         activeValue = Interpolater.Interpolate(prevValue, curValue, ratio, easing.Get(i) ?? TimingFunctions.Default);
                     }
 
-                    updated = updated || (Active.GetRawStyleValue(sp) != activeValue);
+                    Track(sp, activeValue, ref updated);
                     hasLayout = hasLayout || sp.affectsLayout;
                     Active.SetStyleValue(sp, activeValue);
                 }
@@ -377,6 +396,16 @@ namespace ReactUnity.Styling
         }
 
         #endregion
+
+        /// <summary>Notes whether setting <paramref name="value"/> changes anything, and whether the change
+        /// is one only the compositor needs to hear about.</summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private void Track(IStyleProperty sp, object value, ref bool updated)
+        {
+            if (Active.GetRawStyleValue(sp) == value) return;
+            updated = true;
+            if (!IsCompositorProperty(sp)) shouldUpdateFully = true;
+        }
 
 
         #region Animations
@@ -558,7 +587,7 @@ namespace ReactUnity.Styling
                         if (sp == null) continue;
 
                         var unanimated = Current.GetRawStyleValue(sp);
-                        updated = updated || (Active.GetRawStyleValue(sp) != unanimated);
+                        Track(sp, unanimated, ref updated);
                         hasLayout = hasLayout || sp.affectsLayout;
                         Active.SetStyleValue(sp, unanimated);
                     }
@@ -656,7 +685,7 @@ namespace ReactUnity.Styling
                         else activeValue = highValue;
                     }
 
-                    updated = updated || (Active.GetRawStyleValue(sp) != activeValue);
+                    Track(sp, activeValue, ref updated);
                     hasLayout = hasLayout || sp.affectsLayout;
                     Active.SetStyleValue(sp, activeValue);
 

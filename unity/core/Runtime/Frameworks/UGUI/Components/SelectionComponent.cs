@@ -28,5 +28,7 @@ namespace ReactUnity.UGUI
         {
             if (Parent is InputComponent input) input.InputField.selectionColor = ComputedStyle.backgroundColor;
         }
+
+        protected override void ApplyCompositorStylesSelf() { }
     }
 }

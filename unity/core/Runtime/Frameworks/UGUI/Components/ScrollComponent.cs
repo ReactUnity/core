@@ -50,7 +50,7 @@ namespace ReactUnity.UGUI
             ScrollRect = AddComponent<SmoothScrollRect>();
             ScrollRect.Component = this;
 
-            var viewport = ctx.CreateNativeObject("[ScrollViewport]", typeof(RectTransform), typeof(RectMask2D)).GetComponent<RectTransform>();
+            var viewport = ctx.CreateNativeObject("[ScrollViewport]", typeof(RectTransform), typeof(Internal.CaptureRectMask2D)).GetComponent<RectTransform>();
             viewport.SetParent(RectTransform, false);
 
             viewport.anchorMin = Vector2.zero;

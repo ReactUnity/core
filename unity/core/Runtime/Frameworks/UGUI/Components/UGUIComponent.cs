@@ -287,6 +287,13 @@ namespace ReactUnity.UGUI
             SetFilter();
         }
 
+        protected override void ApplyCompositorStylesSelf()
+        {
+            ResolveTransform();
+            // Opacity, and the back face a rotation may have turned towards the viewer.
+            ResolveBackface();
+        }
+
         protected void SetFilter()
         {
             var filter = ComputedStyle.filter;

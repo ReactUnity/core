@@ -156,6 +156,8 @@ namespace ReactUnity
 
         private bool markedStyleResolve = true;
         private bool markedForStyleApply = true;
+        // False while every update since the last apply only changed layout, transform or opacity.
+        private bool markedForFullStyleApply = true;
         private bool markedForLayoutApply = true;
         private bool markedStyleResolveRecursive = true;
         private float stateUpdateTime;
@@ -202,7 +204,7 @@ namespace ReactUnity
             if (markedStyleResolve) ResolveStyle(markedStyleResolveRecursive);
 
             StyleState.Update();
-            if (markedForStyleApply) ApplyStyles();
+            if (markedForStyleApply) ApplyStyles(markedForFullStyleApply);
             if (markedForLayoutApply) ApplyLayoutStyles();
             ComputedStyle.MarkChangesSeen();
         }
@@ -233,6 +235,7 @@ namespace ReactUnity
         protected void MarkForStyleApply(bool hasLayout)
         {
             markedForStyleApply = true;
+            markedForFullStyleApply = true;
             markedForLayoutApply = markedForLayoutApply || hasLayout;
         }
 
@@ -306,6 +309,7 @@ namespace ReactUnity
             Destroyed = false;
             markedStyleResolve = true;
             markedForStyleApply = true;
+            markedForFullStyleApply = true;
             markedForLayoutApply = true;
             markedStyleResolveRecursive = true;
             UpdatedThisFrame = false;
@@ -600,13 +604,22 @@ namespace ReactUnity
         protected abstract void ApplyLayoutStylesSelf();
         public abstract bool UpdateOrder(int prev, int current);
 
-        public void ApplyStyles()
+        public void ApplyStyles() => ApplyStyles(true);
+
+        private void ApplyStyles(bool full)
         {
             markedForStyleApply = false;
+            markedForFullStyleApply = false;
             ApplyEnterLeave();
             if (Destroyed) return;
-            ApplyStylesSelf();
+            if (full) ApplyStylesSelf();
+            else ApplyCompositorStylesSelf();
         }
+
+        /// <summary>What an update that only moved <c>translate</c>, <c>rotate</c>, <c>scale</c>,
+        /// <c>opacity</c> or layout properties has to apply, besides the layout pass. Everything else in
+        /// the style is as it was last applied.</summary>
+        protected virtual void ApplyCompositorStylesSelf() => ApplyStylesSelf();
 
         private void ApplyEnterLeave()
         {
@@ -655,7 +668,12 @@ namespace ReactUnity
 
         private void OnStylesUpdated(NodeStyle obj, bool hasLayout)
         {
-            MarkForStyleApply(hasLayout);
+            if (!StyleState.CompositorOnly) MarkForStyleApply(hasLayout);
+            else
+            {
+                markedForStyleApply = true;
+                markedForLayoutApply = markedForLayoutApply || hasLayout;
+            }
         }
 
         protected void RefreshName() => ApplyName(ResolvedName);

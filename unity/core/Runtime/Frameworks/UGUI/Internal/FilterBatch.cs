@@ -125,6 +125,7 @@ namespace ReactUnity.UGUI.Internal
 
             // A finished capture can queue the filter it is nested in, one level up, which is why
             // the list is read again for every pass rather than grouped once.
+            OffscreenRender.Begin();
             try
             {
                 for (int d = deepest; d >= 0; d--)
@@ -142,6 +143,7 @@ namespace ReactUnity.UGUI.Internal
             finally
             {
                 pending.Clear();
+                OffscreenRender.End();
             }
         }
 
