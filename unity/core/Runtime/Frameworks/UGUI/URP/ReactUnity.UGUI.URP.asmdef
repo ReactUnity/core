@@ -1,0 +1,27 @@
+{
+    "name": "ReactUnity.UGUI.URP",
+    "rootNamespace": "ReactUnity.UGUI.URP",
+    "references": [
+        "GUID:347a20883bb61d74abf78fec0515bb21",
+        "Unity.RenderPipelines.Core.Runtime",
+        "Unity.RenderPipelines.Universal.Runtime"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": false,
+    "defineConstraints": [
+        "!REACT_DISABLE_UGUI",
+        "REACT_URP_17"
+    ],
+    "versionDefines": [
+        {
+            "name": "com.unity.render-pipelines.universal",
+            "expression": "17.0.0",
+            "define": "REACT_URP_17"
+        }
+    ],
+    "noEngineReferences": false
+}

@@ -1356,8 +1356,75 @@ namespace ReactUnity.Tests
 
         private BackdropSurface PageBackdrops => UGUIContext.ExistingBackdropSurface;
 
+        // The render cache only exists on the camera path; a grab never renders at all.
+        static IEnumerator WithoutGrab(IEnumerator test)
+        {
+            BackdropGrab.Enabled = false;
+            try
+            {
+                while (test.MoveNext()) yield return test.Current;
+            }
+            finally
+            {
+                BackdropGrab.Enabled = true;
+            }
+        }
+
+        static void RequireGrab()
+        {
+            if (BackdropGrab.Grabber == null) Assert.Ignore("the render pipeline offers no backdrop grab");
+        }
+
         [UGUITest(Script = PageScript, Style = PageStyle)]
-        public IEnumerator AnOnScreenBackdropIsKeptWhenOnlyWhatIsOverItMoves()
+        public IEnumerator AGrabbedBackdropTakesNoRenders()
+        {
+            RequireGrab();
+            for (int i = 0; i < 5; i++) yield return null;
+
+            Assert.NotNull(PageBackdrops, "the panel should have registered a backdrop reader");
+            var renders = PageBackdrops.RenderCount;
+            Q("#under").Style["translate"] = "0px 10px";
+            for (int i = 0; i < 3; i++) yield return null;
+
+            Debug.Log($"[PAGE grab] renders {renders} -> {PageBackdrops.RenderCount}");
+            Assert.AreEqual(0, renders, "a grab should serve the panel from the camera's own render");
+            Assert.AreEqual(renders, PageBackdrops.RenderCount, "what moves under a grabbed panel costs no render");
+        }
+
+        [UGUITest(Script = PageScript, Style = PageStyle)]
+        public IEnumerator AGrabbedBackdropDrawsWhatARenderedOneWould()
+        {
+            RequireGrab();
+            for (int i = 0; i < 5; i++) yield return null;
+            var grabbed = CaptureScreen();
+
+            Color32[] rendered = null;
+            yield return WithoutGrab(Capture());
+            IEnumerator Capture()
+            {
+                for (int i = 0; i < 3; i++) yield return null;
+                rendered = CaptureScreen();
+            }
+
+            Assert.AreEqual(grabbed.Length, rendered.Length);
+            int worst = 0, differing = 0;
+            for (int i = 0; i < grabbed.Length; i++)
+            {
+                Color32 g = grabbed[i], r = rendered[i];
+                var d = Mathf.Max(Mathf.Max(Mathf.Abs(g.r - r.r), Mathf.Abs(g.g - r.g)),
+                                  Mathf.Max(Mathf.Abs(g.b - r.b), Mathf.Abs(g.a - r.a)));
+                if (d > 0) differing++;
+                if (d > worst) worst = d;
+            }
+
+            Debug.Log($"[PAGE grab pixels] worst channel difference {worst}, {differing}/{grabbed.Length} pixels differ");
+            Assert.LessOrEqual(worst, 1, "a grabbed backdrop should draw what rendering it would");
+        }
+
+        [UGUITest(Script = PageScript, Style = PageStyle)]
+        public IEnumerator AnOnScreenBackdropIsKeptWhenOnlyWhatIsOverItMoves() => WithoutGrab(AnOnScreenBackdropIsKeptWhenOnlyWhatIsOverItMovesBody());
+
+        IEnumerator AnOnScreenBackdropIsKeptWhenOnlyWhatIsOverItMovesBody()
         {
             for (int i = 0; i < 5; i++) yield return null;
 
@@ -1374,7 +1441,9 @@ namespace ReactUnity.Tests
         }
 
         [UGUITest(Script = PageScript, Style = PageStyle)]
-        public IEnumerator AnOnScreenBackdropIsRetakenWhenWhatIsUnderItMoves()
+        public IEnumerator AnOnScreenBackdropIsRetakenWhenWhatIsUnderItMoves() => WithoutGrab(AnOnScreenBackdropIsRetakenWhenWhatIsUnderItMovesBody());
+
+        IEnumerator AnOnScreenBackdropIsRetakenWhenWhatIsUnderItMovesBody()
         {
             for (int i = 0; i < 5; i++) yield return null;
 
@@ -1389,7 +1458,9 @@ namespace ReactUnity.Tests
         }
 
         [UGUITest(Script = PageScript, Style = PageStyle)]
-        public IEnumerator AnOnScreenBackdropIsKeptWhenSomethingElsewhereMoves()
+        public IEnumerator AnOnScreenBackdropIsKeptWhenSomethingElsewhereMoves() => WithoutGrab(AnOnScreenBackdropIsKeptWhenSomethingElsewhereMovesBody());
+
+        IEnumerator AnOnScreenBackdropIsKeptWhenSomethingElsewhereMovesBody()
         {
             for (int i = 0; i < 5; i++) yield return null;
 
@@ -1406,7 +1477,9 @@ namespace ReactUnity.Tests
         }
 
         [UGUITest(Script = PageScript, Style = PageStyle)]
-        public IEnumerator AKeptOnScreenBackdropDrawsWhatAFreshOneWould()
+        public IEnumerator AKeptOnScreenBackdropDrawsWhatAFreshOneWould() => WithoutGrab(AKeptOnScreenBackdropDrawsWhatAFreshOneWouldBody());
+
+        IEnumerator AKeptOnScreenBackdropDrawsWhatAFreshOneWouldBody()
         {
             for (int i = 0; i < 5; i++) yield return null;
 

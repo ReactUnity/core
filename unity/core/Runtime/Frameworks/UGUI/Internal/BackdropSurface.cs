@@ -40,6 +40,9 @@ namespace ReactUnity.UGUI.Internal
     /// the 0.16 ms a GrabPass takes to copy the target -- so the built-in pipeline keeps grabbing,
     /// and this is only for the pipelines that cannot. What it must not also cost is a canvas
     /// rebuild, which is far more than the render; see <see cref="HideFrom"/>.
+    ///
+    /// Where the pipeline registers an <see cref="IBackdropGrabber"/> (URP 17 does), <see cref="Grab"/>
+    /// replaces all of that with a copy per reader from inside the camera's own render.
     /// </remarks>
     public class BackdropPass
     {
@@ -52,6 +55,15 @@ namespace ReactUnity.UGUI.Internal
         // Which reader's surface each reader was handed, which is its own unless it shares one.
         private readonly List<int> sources = new List<int>();
         private readonly List<UnityEngine.UI.Graphic> order = new List<UnityEngine.UI.Graphic>();
+
+        // The grab path: every graphic's slice, and the camera the grabber is drawing for.
+        private readonly Dictionary<CanvasRenderer, BackdropSlice> slices = new Dictionary<CanvasRenderer, BackdropSlice>();
+        private readonly Dictionary<CanvasRenderer, int> readerAt = new Dictionary<CanvasRenderer, int>();
+        private readonly List<CanvasRenderer> gone = new List<CanvasRenderer>();
+        private readonly HashSet<BackdropSlice> visited = new HashSet<BackdropSlice>();
+        private readonly List<BackdropSlice> masks = new List<BackdropSlice>();
+        private Camera grabCamera;
+        private int purgeCountdown;
 
         /// <summary>Off gives every reader a render of its own. For tests.</summary>
         internal static bool SharingEnabled = true;
@@ -71,6 +83,8 @@ namespace ReactUnity.UGUI.Internal
         public void Render(Camera cam, Transform root, List<IBackdropReader> readers, int width, int height,
             List<bool> stale = null)
         {
+            StopGrab();
+
             if (!cam || !root || readers.Count == 0)
             {
                 Release();
@@ -142,6 +156,112 @@ namespace ReactUnity.UGUI.Internal
             order.Clear();
             held.Clear();
             held.AddRange(readers);
+        }
+
+        /// <summary>
+        /// Serves every reader from a copy taken inside <paramref name="cam"/>'s own render, which is
+        /// what a GrabPass does -- so nothing is rendered again, and nothing has to be watched to avoid
+        /// it. False where the pipeline has no grabber, and the readers were not touched.
+        /// </summary>
+        public bool Grab(Camera cam, Transform root, List<IBackdropReader> readers, int width, int height)
+        {
+            var grabber = BackdropGrab.Enabled ? BackdropGrab.Grabber : null;
+            if (grabber == null || !cam || !root || readers.Count == 0 || !grabber.CanGrab(this, cam))
+            {
+                StopGrab();
+                return false;
+            }
+            if (grabCamera && grabCamera != cam) StopGrab();
+
+            EnsureSurfaces(readers.Count, width, height);
+            AssignSlices(root, readers);
+            grabber.Schedule(this, cam, root.gameObject.layer, surfaces, readers.Count);
+            grabCamera = cam;
+
+            for (int r = 0; r < readers.Count; r++)
+                readers[r].SetBackdrop(readers[r].BackdropRenderer && readerAt.ContainsKey(readers[r].BackdropRenderer) ? surfaces[r] : null);
+
+            held.Clear();
+            held.AddRange(readers);
+            return true;
+        }
+
+        /// <summary>Hands the canvas back to the camera and every material back to its graphic.</summary>
+        public void StopGrab()
+        {
+            if (grabCamera || slices.Count > 0) BackdropGrab.Grabber?.Cancel(this, grabCamera);
+            grabCamera = null;
+
+            foreach (var s in slices.Values) if (s) s.Slice = -1;
+            slices.Clear();
+        }
+
+        /// <summary>
+        /// Puts every graphic under <paramref name="root"/> in the slice of the last reader painted at or
+        /// before it: reader <c>r</c> starts slice <c>r + 1</c>, so it reads the copy of slice <c>r</c>.
+        /// </summary>
+        void AssignSlices(Transform root, List<IBackdropReader> readers)
+        {
+            // A reader outside the canvas gets no slice; its surface is copied and left unread.
+            readerAt.Clear();
+            for (int r = 0; r < readers.Count; r++)
+            {
+                var cr = readers[r].BackdropRenderer;
+                if (cr && cr.transform.IsChildOf(root) && !readerAt.ContainsKey(cr)) readerAt.Add(cr, r);
+            }
+
+            tail.Clear();
+            root.GetComponentsInChildren(true, tail);
+            visited.Clear();
+
+            var slice = 0;
+            masks.Clear();
+            for (int i = 0; i < tail.Count; i++)
+            {
+                var cr = tail[i];
+                while (masks.Count > 0 && !cr.transform.IsChildOf(masks[masks.Count - 1].transform)) PopMask(slice);
+                if (readerAt.TryGetValue(cr, out var r)) slice = Mathf.Max(slice, r + 1);
+
+                if (!slices.TryGetValue(cr, out var s))
+                {
+                    if (!cr.TryGetComponent(out s) && cr.TryGetComponent<UnityEngine.UI.Graphic>(out _))
+                        s = cr.gameObject.AddComponent<BackdropSlice>();
+                    slices[cr] = s;
+                }
+                if (!s) continue;
+
+                s.Slice = slice;
+                visited.Add(s);
+                if (cr.popMaterialCount > 0 || cr.TryGetComponent<UnityEngine.UI.Mask>(out _)) masks.Add(s);
+                else s.PopSlice = -1;
+            }
+            while (masks.Count > 0) PopMask(slice);
+            tail.Clear();
+
+            // A graphic that left the canvas -- into a filter's capture, usually -- is drawn by a camera
+            // of its own again, and gets its own material back.
+            gone.Clear();
+            foreach (var pair in slices)
+            {
+                if (!pair.Key) gone.Add(pair.Key);
+                else if (pair.Value && !visited.Contains(pair.Value)) { pair.Value.Slice = -1; gone.Add(pair.Key); }
+            }
+            for (int i = 0; i < gone.Count; i++) slices.Remove(gone[i]);
+
+            if (--purgeCountdown <= 0)
+            {
+                purgeCountdown = 300;
+                QueueVariants.Purge();
+            }
+        }
+
+        // Slices only grow along the paint order, so a mask's subtree ends in the slice in effect when
+        // the walk leaves it.
+        void PopMask(int slice)
+        {
+            var mask = masks[masks.Count - 1];
+            masks.RemoveAt(masks.Count - 1);
+            mask.PopSlice = mask.Slice >= 0 ? slice : -1;
         }
 
         /// <summary>
@@ -291,6 +411,7 @@ namespace ReactUnity.UGUI.Internal
         /// <summary>Drops the surfaces. Readers are unbound by whoever registered them.</summary>
         public void Release()
         {
+            StopGrab();
             for (int i = 0; i < surfaces.Count; i++) Free(surfaces[i]);
             surfaces.Clear();
             held.Clear();
@@ -445,6 +566,16 @@ namespace ReactUnity.UGUI.Internal
             }
 
             var root = Context.RootCanvas.transform;
+
+            // A grab costs a copy per reader, so there is nothing to save by watching the page.
+            if (pass.Grab(cam, root, onScreen, cam.pixelWidth, cam.pixelHeight))
+            {
+                watch.Reset();
+                missed.Clear();
+                bound = true;
+                return;
+            }
+
             watch.Poll(root, cam);
             watch.IndexReaders(onScreen, indices);
 

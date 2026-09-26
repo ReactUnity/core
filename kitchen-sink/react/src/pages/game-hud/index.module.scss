@@ -2,9 +2,8 @@
   Only what Tailwind cannot spell: keyframes, layered and conic gradients, clip-path shapes, masks,
   blend modes and the perspective floor. Layout, spacing, colour and type on this page are utilities.
 
-  Four elements read the backdrop (`backdrop-filter`), which costs a camera render each -- see the
-  cost model in the backdrop-filter reference. A HUD is where that spend is worth it; a page that
-  wants twenty frosted panels does not.
+  Four elements read the backdrop (`backdrop-filter`). Under URP that is a copy each, but one inside
+  a filter still costs a camera render -- see the cost model in the backdrop-filter reference.
 */
 
 /* --- The screen ------------------------------------------------------------------------------ */
