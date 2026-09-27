@@ -104,6 +104,7 @@ Rotations compose down the tree the way they do in a browser: a `rotateY` on a p
 `perspective` renders the element's subtree off screen through a camera of its own, the same machinery [`filter`](/reference/css/filter) uses, and composites the result back in place. That has three consequences worth knowing:
 
 - It costs an extra camera render on any frame the subtree moves — about 1.4 ms, largely regardless of what is being drawn. A still subtree holds its last capture and costs nothing.
+- A subtree that lies in one plane — a single tilted card, or a floor of tiles that all share one rotation — is cheaper. It is captured face-on and the projection is applied when compositing, so it can share one render with every other filter on the page. When that plane is nothing but one other element's `filter` or `mask-image` output, the perspective draws that image directly and adds no render of its own. A plane nearer the eye than half the `perspective` distance would need its capture magnified more than twice, so it takes its own render as before.
 - The element becomes a stacking context, and its subtree is drawn as one image. It stays interactive: pointer events are mapped back through that image, so buttons and inputs inside keep working.
 - The capture grows to hold whatever the projection throws outside the element's box, so a card leaning out of its stage is not clipped. Past a couple of thousand pixels of lean it is — which only a child nearly touching the eye can reach.
 

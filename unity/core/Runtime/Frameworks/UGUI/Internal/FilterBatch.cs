@@ -16,7 +16,8 @@ namespace ReactUnity.UGUI.Internal
     ///
     /// Two things decide who can share. The camera takes its element's rotation, which is what keeps
     /// a capture free of the element's own transform, so only the ones standing square can be framed
-    /// together -- and a <c>perspective</c> needs a frustum of its own besides. And a subtree is free
+    /// together -- and a <c>perspective</c> needs a frustum of its own besides, unless what it projects
+    /// is one flat plane, which is captured face-on and warped instead. And a subtree is free
     /// to draw outside the element's box, which each filter's own camera used to crop away for free;
     /// packed edge to edge that overflow would land on a neighbour, so a cell is sized to hold the
     /// subtree as well and only the capture region is copied out of it. The rest of the cell is
@@ -89,6 +90,13 @@ namespace ReactUnity.UGUI.Internal
         public static void EnqueueAlone(ElementFilter filter, int depth, Vector4 margins, float width, float height)
         {
             Add(new Entry { Filter = filter, Depth = depth, Alone = true, Margins = margins, Width = width, Height = height });
+        }
+
+        /// <summary>Drops a capture the filter queued earlier in the frame and no longer needs.</summary>
+        public static void Remove(ElementFilter filter)
+        {
+            for (int i = pending.Count - 1; i >= 0; i--)
+                if (pending[i].Filter == filter) pending.RemoveAt(i);
         }
 
         /// <summary>

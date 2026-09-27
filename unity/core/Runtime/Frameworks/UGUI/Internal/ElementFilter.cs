@@ -101,6 +101,18 @@ namespace ReactUnity.UGUI.Internal
         // whenever its dimensions change -- so a card mid-flip would throw one away per frame.
         const float ProjectionBleedStep = 16f;
 
+        // A plane the projection magnifies is captured denser, up to this; anything nearer the eye
+        // than 1/MaxFlatDensity of the distance goes through the frustum instead.
+        const float MaxFlatDensity = 2f;
+        const float FlatDensityStep = 0.25f;
+
+        // How far off one plane a graphic may stand, in the plane's units, and still count as on it.
+        const float PlaneEpsilon = 0.01f;
+
+        /// <summary>Off sends every projection through a frustum of its own. The flat path is meant to
+        /// match it, and the test that holds it to that needs both.</summary>
+        internal static bool FlatPlanes = true;
+
         // Where the offscreen surfaces are parked, and how far apart. Every camera has the same
         // culling mask, so two surfaces sharing a spot would each capture the other's subtree --
         // the gap has to be wider than a camera's far plane. Slots are reused as filters go away,
@@ -253,6 +265,36 @@ namespace ReactUnity.UGUI.Internal
         private float projectedNear;
         private float projectedFar;
 
+        // A subtree lying in one plane is only warped by the projection, so it is captured face-on
+        // with the batch and warped onto the composite. The plane is the first graphic's.
+        private bool flat;
+        private RectTransform planeRef;
+        private Matrix4x4 planeMatrix;
+        private Rect planeRegion;
+        private Vector2Int planePx;
+        private float planeDensity = 1f;
+        private Vector3 planePoint;
+        private Vector3 planeS;
+        private Vector3 planeT;
+        private readonly List<Vector2> planePolygon = new List<Vector2>();
+        static readonly List<Vector2> clipA = new List<Vector2>();
+        static readonly List<Vector2> clipB = new List<Vector2>();
+
+        // Every composite, so a plane can tell another filter's texture from content of its own.
+        static readonly Dictionary<Graphic, ElementFilter> composites = new Dictionary<Graphic, ElementFilter>();
+        private PlaneWarp warp;
+        private Quaternion captureRotation = Quaternion.identity;
+
+        // The bounds of what the plane holds, before any clipping, and the one filter whose composite
+        // is all it holds -- which this can draw straight onto its warp instead of capturing it.
+        private Rect planeBounds;
+        private ElementFilter planeOnly;
+        private ElementFilter passThrough;
+        private ElementFilter borrower;
+
+        /// <summary>Whether the last capture was of a flat plane the composite warps. For tests.</summary>
+        public bool CapturesFlat => flat;
+
         private readonly List<Graphic> graphics = new List<Graphic>();
         private readonly List<Graphic> maskGraphics = new List<Graphic>();
         private readonly List<Graphic> registered = new List<Graphic>();
@@ -338,6 +380,7 @@ namespace ReactUnity.UGUI.Internal
             var compGo = ctx.CreateNativeObject("[Filter]", typeof(RectTransform), typeof(RawImage));
             composite = compGo.GetComponent<RawImage>();
             composite.raycastTarget = false;
+            composites[composite] = this;
 
             // Off until the first Render below has a capture to show. A RawImage with no texture
             // samples the white one, so an element whose filter is attached after this frame's
@@ -668,6 +711,7 @@ namespace ReactUnity.UGUI.Internal
             }
 
             maskLayers.Clear();
+            composites.Remove(composite);
 
             if (composite)
             {
@@ -925,7 +969,6 @@ namespace ReactUnity.UGUI.Internal
             if (recapture)
             {
                 dirty = false;
-                RenderCount++;
                 Render();
             }
             else if (placementDirty) Place();
@@ -960,16 +1003,19 @@ namespace ReactUnity.UGUI.Internal
         void PushUniforms()
         {
             uniformsDirty = false;
-            PrepareClip();
-            SetUniforms(compositeMaterial);
+
+            // Drawing the inner filter's texture, so with its chain as well.
+            var source = passThrough ? passThrough : this;
+            if (!passThrough) PrepareClip();
+            source.SetUniforms(compositeMaterial);
             var drawn = composite.materialForRendering;
-            if (drawn && drawn != compositeMaterial) SetUniforms(drawn);
+            if (drawn && drawn != compositeMaterial) source.SetUniforms(drawn);
+
+            if (borrower && borrower.passThrough == this) borrower.PushUniforms();
         }
 
         void Render()
         {
-            Unturn();
-
             var rect = self.rect;
             var scale = ScaleFactor;
             var hasShadow = definition.DropShadowColor.a > 0;
@@ -1010,33 +1056,60 @@ namespace ReactUnity.UGUI.Internal
             var sy = Mathf.Abs(self.localScale.y);
             if (sx < 0.0001f || sy < 0.0001f) return;
 
+            // Judged against the frame the frustum would have drawn, which is the composite's rect.
+            flat = FindPlane(rect, new Rect(rect.xMin - mLeft, rect.yMin - mBottom, width, height), scale);
+            if (flat) SquarePlane();
+            else Unturn();
+
+            SetPassThrough(flat ? PassThroughSource() : null);
+            if (passThrough) planeRegion = planeBounds;
+
             // Whole device pixels: a fractional RT shifts glyph edges sub-pixel (measured: a half
             // pixel moves 2.75% of pixels), while an aligned one is bit-identical to drawing in place.
-            var pxWidth = Mathf.Clamp(Mathf.CeilToInt(width * sx * scale), 1, MaxDimension);
-            var pxHeight = Mathf.Clamp(Mathf.CeilToInt(height * sy * scale), 1, MaxDimension);
+            var pxWidth = flat ? planePx.x : Mathf.Clamp(Mathf.CeilToInt(width * sx * scale), 1, MaxDimension);
+            var pxHeight = flat ? planePx.y : Mathf.Clamp(Mathf.CeilToInt(height * sy * scale), 1, MaxDimension);
 
-            EnsureTarget(pxWidth, pxHeight, hasShadow);
+            if (!passThrough) EnsureTarget(pxWidth, pxHeight, hasShadow);
 
             // Aim in world space: the camera hangs off the surface canvas, not off the element, so
             // the element's own anchoredPosition would otherwise be left out and the capture would
             // be taken from somewhere inside the element instead of around it. Taking the element's
             // rotation frames it square-on, which is what leaves the capture transform-free.
-            var worldCentre = self.TransformPoint(rect.center + new Vector2((mRight - mLeft) * 0.5f, (mTop - mBottom) * 0.5f));
+            var worldCentre = flat
+                ? planeRef.TransformPoint(planeRegion.center)
+                : self.TransformPoint(rect.center + new Vector2((mRight - mLeft) * 0.5f, (mTop - mBottom) * 0.5f));
+            captureRotation = flat ? planeRef.rotation : self.rotation;
 
             // Both of these are already in RT terms, so they follow the element's scale through
             // pxWidth/pxHeight and keep the frame exactly as square as the texture is.
             var halfW = pxWidth / scale / 2f;
             var halfH = pxHeight / scale / 2f;
 
-            if (perspective > 0) FrameProjected(rect, worldCentre, halfW, halfH);
+            // With nothing to capture the camera only frames the plane, for the raycaster's sake.
+            if (passThrough)
+            {
+                halfW = planeRef.TransformVector(new Vector3(planeRegion.width, 0, 0)).magnitude / 2f;
+                halfH = planeRef.TransformVector(new Vector3(0, planeRegion.height, 0)).magnitude / 2f;
+            }
+
+            if (perspective > 0 && !flat) FrameProjected(rect, worldCentre, halfW, halfH);
             else
             {
-                offscreenCamera.transform.SetPositionAndRotation(worldCentre - self.forward * 100f, self.rotation);
+                // A camera keeps the projection matrix it was last handed, including a frustum.
+                if (!offscreenCamera.orthographic)
+                {
+                    offscreenCamera.orthographic = true;
+                    offscreenCamera.ResetProjectionMatrix();
+                }
+                offscreenCamera.transform.SetPositionAndRotation(worldCentre - captureRotation * Vector3.forward * 100f, captureRotation);
                 offscreenCamera.orthographicSize = halfH;
                 offscreenCamera.aspect = halfW / halfH;
                 offscreenCamera.nearClipPlane = 0.01f;
                 offscreenCamera.farClipPlane = 1000f;
             }
+
+            if (flat) Warp();
+            else if (warp) warp.Clear();
 
             capturePxWidth = pxWidth;
             capturePxHeight = pxHeight;
@@ -1049,9 +1122,21 @@ namespace ReactUnity.UGUI.Internal
 
             var margins = new Vector4(mLeft, mRight, mBottom, mTop);
 
+            if (passThrough)
+            {
+                // The inner capture already is the plane, so it goes onto the warp as it stands.
+                FilterBatch.Remove(this);
+                PlaceComposite(margins);
+                composite.texture = passThrough.target;
+                composite.enabled = true;
+                uniformsDirty = true;
+                return;
+            }
+
             // Queued either way: the flush takes captures deepest first, which is what lets one
             // filter draw another's composite as it stands this frame rather than the last.
             queuedFrame = Time.frameCount;
+            RenderCount++;
 
             // Packed with the others if it can be: the render is what costs, and one render serves
             // as many captures as fit in a texture. The camera above stays aimed either way -- the
@@ -1069,13 +1154,252 @@ namespace ReactUnity.UGUI.Internal
         void Unturn()
         {
             var surface = offscreenCanvas.transform;
+
+            // Back to full size, if a flat plane last had it scaled up.
+            var rescaled = surface.localScale != Vector3.one;
+            if (rescaled) surface.localScale = Vector3.one;
+
             var turn = Quaternion.Inverse(self.localRotation);
             var local = Vector3.Scale(surface.lossyScale, self.localPosition);
             var shift = local - turn * local;
 
-            if (surface.rotation == turn && shift == unturn) return;
+            if (!rescaled && surface.rotation == turn && shift == unturn) return;
             unturn = shift;
             surface.SetPositionAndRotation(SlotPosition + unturn + batchShift, turn);
+        }
+
+        /// <summary>
+        /// Whether everything the subtree draws lies in one plane. A projection only warps a plane,
+        /// so a face-on capture of it -- which the batch can take -- is all the composite needs.
+        /// </summary>
+        /// <remarks>
+        /// Measured from local values alone, like the placements, so the surface's own turn does not
+        /// enter into it. Only the part of the plane the frustum would have drawn is captured: what is
+        /// in front of the eye and projects inside <paramref name="frame"/>. Each of those limits is a
+        /// straight line on the plane, so that part is a convex polygon, and it is what the warp draws.
+        /// </remarks>
+        bool FindPlane(Rect rect, Rect frame, float scale)
+        {
+            planeRef = null;
+            if (!FlatPlanes || perspective <= 0 || !FlatEligible()) return false;
+
+            var toPlane = Matrix4x4.identity;
+            var min = new Vector2(float.MaxValue, float.MaxValue);
+            var max = new Vector2(float.MinValue, float.MinValue);
+
+            // Another filter's composite is already a texture at the plane's resolution, so a plane of
+            // nothing else gains nothing from a denser capture however far it is magnified.
+            var texturesOnly = true;
+            var count = 0;
+            planeOnly = null;
+
+            for (int i = 0; i < subtreeGraphics && i < graphics.Count; i++)
+            {
+                var g = graphics[i];
+                if (!g || !g.isActiveAndEnabled) continue;
+
+                var placed = PlacementOf(g.transform);
+                if (!planeRef)
+                {
+                    if (Mathf.Abs(placed.determinant) < 1e-9f) return RejectPlane();
+                    planeRef = g.rectTransform;
+                    planeMatrix = placed;
+                    toPlane = placed.inverse;
+                }
+
+                // Facing along the plane's normal, either way round, and with every corner on it.
+                var rel = toPlane * placed;
+                var normal = rel.MultiplyVector(Vector3.forward);
+                if (Mathf.Abs(normal.x) + Mathf.Abs(normal.y) > PlaneEpsilon * Mathf.Abs(normal.z)) return RejectPlane();
+
+                var r = g.rectTransform.rect;
+                for (int c = 0; c < 4; c++)
+                {
+                    var p = rel.MultiplyPoint3x4(new Vector3(c < 2 ? r.xMin : r.xMax, (c & 1) == 0 ? r.yMin : r.yMax, 0));
+                    if (Mathf.Abs(p.z) > PlaneEpsilon) return RejectPlane();
+                    min = Vector2.Min(min, p);
+                    max = Vector2.Max(max, p);
+                }
+
+                count++;
+                if (composites.TryGetValue(g, out var owner)) planeOnly = owner;
+                else texturesOnly = false;
+            }
+
+            if (!planeRef || max.x <= min.x || max.y <= min.y) return RejectPlane();
+            if (count != 1 || !texturesOnly) planeOnly = null;
+            planeBounds = Rect.MinMaxRect(min.x, min.y, max.x, max.y);
+
+            Vector3 Depthen(Vector4 v) => new Vector3(v.x, v.y, Depth(v));
+            planePoint = Depthen(planeMatrix.GetColumn(3));
+            planeS = Depthen(planeMatrix.GetColumn(0));
+            planeT = Depthen(planeMatrix.GetColumn(1));
+
+            // w = w0 + s * ws + t * wt, and each frame edge compares an affine X against its bound
+            // times w -- so all five limits are half-planes in (s, t).
+            var eye = OriginPoint(rect);
+            var k = 1f / perspective;
+            var w0 = 1f + k * planePoint.z;
+            var ws = k * planeS.z;
+            var wt = k * planeT.z;
+
+            clipA.Clear();
+            clipA.Add(new Vector2(min.x, min.y));
+            clipA.Add(new Vector2(min.x, max.y));
+            clipA.Add(new Vector2(max.x, max.y));
+            clipA.Add(new Vector2(max.x, min.y));
+
+            ClipPolygon(clipA, clipB, ws, wt, w0 - MinProjectionW);
+            ClipEdge(clipB, clipA, 0, frame.xMin - eye.x, 1f, eye, w0, ws, wt);
+            ClipEdge(clipA, clipB, 0, frame.xMax - eye.x, -1f, eye, w0, ws, wt);
+            ClipEdge(clipB, clipA, 1, frame.yMin - eye.y, 1f, eye, w0, ws, wt);
+            ClipEdge(clipA, clipB, 1, frame.yMax - eye.y, -1f, eye, w0, ws, wt);
+            if (clipB.Count < 3) return RejectPlane();
+
+            // Nearest the eye is the most magnified, and a vertex is always the extreme.
+            var minW = float.MaxValue;
+            min = new Vector2(float.MaxValue, float.MaxValue);
+            max = new Vector2(float.MinValue, float.MinValue);
+            for (int i = 0; i < clipB.Count; i++)
+            {
+                var p = clipB[i];
+                minW = Mathf.Min(minW, w0 + ws * p.x + wt * p.y);
+                min = Vector2.Min(min, p);
+                max = Vector2.Max(max, p);
+            }
+            if (max.x <= min.x || max.y <= min.y) return RejectPlane();
+            if (!texturesOnly && minW < 1f / MaxFlatDensity) return RejectPlane();
+
+            // Surface units per plane unit, which is the capture's resolution before any density.
+            var perUnit = new Vector2(
+                Vector3.Scale(self.localScale, planeMatrix.MultiplyVector(Vector3.right)).magnitude,
+                Vector3.Scale(self.localScale, planeMatrix.MultiplyVector(Vector3.up)).magnitude);
+            if (perUnit.x < 1e-6f || perUnit.y < 1e-6f) return RejectPlane();
+
+            var size = (max - min) * perUnit * scale;
+            var fit = Mathf.Min(MaxDimension / size.x, MaxDimension / size.y);
+            if (fit < 1f) return RejectPlane();
+
+            var density = texturesOnly ? 1f : Mathf.Clamp(Mathf.Ceil(1f / minW / FlatDensityStep) * FlatDensityStep, 1f, MaxFlatDensity);
+            density = Mathf.Min(density, fit);
+
+            planePx = new Vector2Int(Mathf.Max(1, Mathf.CeilToInt(size.x * density)), Mathf.Max(1, Mathf.CeilToInt(size.y * density)));
+            planeDensity = density;
+
+            // Widened to whole capture pixels about its centre, so the warp's uv and the capture agree.
+            var half = new Vector2(planePx.x / (density * scale * perUnit.x), planePx.y / (density * scale * perUnit.y)) * 0.5f;
+            var centre = (min + max) * 0.5f;
+            planeRegion = Rect.MinMaxRect(centre.x - half.x, centre.y - half.y, centre.x + half.x, centre.y + half.y);
+
+            planePolygon.Clear();
+            planePolygon.AddRange(clipB);
+            return true;
+        }
+
+        bool RejectPlane()
+        {
+            planeRef = null;
+            planeOnly = null;
+            return false;
+        }
+
+        /// <summary>
+        /// The inner filter whose composite is all the plane holds, when drawing that composite
+        /// straight onto the warp comes out as a capture of it would: no chain here to run, and
+        /// nothing between the two to fade, clip or blend it. That skips this capture entirely.
+        /// </summary>
+        ElementFilter PassThroughSource()
+        {
+            var inner = planeOnly;
+            if (!inner || !definition.Equals(FilterDefinition.Default) || blendMode != BackgroundBlendMode.Normal) return null;
+
+            var c = inner.composite;
+            if (!c || !c.enabled || !inner.target || c.color != Color.white || inner.compositeBlends) return null;
+            if (inner.warp && inner.warp.Warping) return null;
+
+            for (var t = c.transform; t; t = t.parent)
+            {
+                if (t.TryGetComponent<CanvasGroup>(out var group) && group.alpha < 1f) return null;
+                if (t.TryGetComponent<Mask>(out _) || t.TryGetComponent<RectMask2D>(out _)) return null;
+                if (t == self) break;
+            }
+            return inner;
+        }
+
+        void SetPassThrough(ElementFilter source)
+        {
+            if (passThrough != source)
+            {
+                if (passThrough && passThrough.borrower == this) passThrough.borrower = null;
+                passThrough = source;
+                uniformsDirty = true;
+            }
+            if (source) source.borrower = this;
+        }
+
+        /// <summary>Keeps what projects on the inner side of one frame edge, <c>sign * (X - eye - b * w) >= 0</c>
+        /// along <paramref name="axis"/>, with the bound <paramref name="b"/> measured from the eye.</summary>
+        void ClipEdge(List<Vector2> from, List<Vector2> to, int axis, float b, float sign, Vector2 eye, float w0, float ws, float wt)
+        {
+            ClipPolygon(from, to,
+                sign * (planeS[axis] - b * ws),
+                sign * (planeT[axis] - b * wt),
+                sign * (planePoint[axis] - eye[axis] - b * w0));
+        }
+
+        /// <summary>One Sutherland-Hodgman step: what of the polygon lies where a*s + b*t + c >= 0.</summary>
+        static void ClipPolygon(List<Vector2> from, List<Vector2> to, float a, float b, float c)
+        {
+            to.Clear();
+            for (int i = 0; i < from.Count; i++)
+            {
+                var cur = from[i];
+                var prev = from[(i + from.Count - 1) % from.Count];
+                var dc = a * cur.x + b * cur.y + c;
+                var dp = a * prev.x + b * prev.y + c;
+
+                if ((dc >= 0) != (dp >= 0)) to.Add(prev + (cur - prev) * (dp / (dp - dc)));
+                if (dc >= 0) to.Add(cur);
+            }
+        }
+
+        /// <summary>Only a chain that works pixel by pixel survives the warp; blur, shadow, mask and
+        /// clip are all laid out in the element's box, which the warped capture no longer is.</summary>
+        bool FlatEligible()
+        {
+            if (maskLayers.Count > 0 || (clipShape != null && clipShape.Kind != ClipPathKind.None)) return false;
+            var d = definition;
+            return d.Blur <= 0 && d.DropShadowColor.a <= 0 && d.Pixelate <= 0 && d.ScanlineIntensity <= 0 &&
+                d.ChromaticAberration == 0 && d.Grain <= 0;
+        }
+
+        /// <summary>Depth along the element's z, at its own scale, as the projection divides by it.</summary>
+        float Depth(Vector3 local) => local.z * self.localScale.z;
+
+        /// <summary>
+        /// Turns the surface so the plane stands square in the world, about the plane's centre, and
+        /// scales it up by the density the warp will magnify it by. Unturn undoes both.
+        /// </summary>
+        void SquarePlane()
+        {
+            var surface = offscreenCanvas.transform;
+            var turn = Quaternion.Inverse(Quaternion.Inverse(surface.rotation) * planeRef.rotation);
+            var scaled = Vector3.one * planeDensity;
+            var pivot = Vector3.Scale(scaled, surface.InverseTransformPoint(planeRef.TransformPoint(planeRegion.center)));
+            var shift = new Vector3(pivot.x, pivot.y, 0f) - turn * pivot;
+
+            if (surface.rotation == turn && surface.localScale == scaled && shift == unturn) return;
+            unturn = shift;
+            surface.localScale = scaled;
+            surface.SetPositionAndRotation(SlotPosition + unturn + batchShift, turn);
+        }
+
+        /// <summary>Hands the composite the plane, in the element's own space, to warp the capture onto.</summary>
+        void Warp()
+        {
+            if (!warp) warp = composite.gameObject.AddComponent<PlaneWarp>();
+
+            warp.Set(planePoint, planeS, planeT, planeRegion, planePolygon, OriginPoint(self.rect), perspective);
         }
 
         /// <summary>The element moved or turned and nothing inside it changed, so the capture
@@ -1089,14 +1413,13 @@ namespace ReactUnity.UGUI.Internal
                 self.TransformPoint(cameraLocalPosition), self.rotation * cameraLocalRotation);
         }
 
-        /// <summary>Whether this capture can share a render. A <c>perspective</c> wants a frustum of
-        /// its own, a rotation the surface could not cancel wants the camera turned with it, and a
+        /// <summary>Whether this capture can share a render. A <c>perspective</c> over anything but one
+        /// flat plane wants a frustum of its own, a rotation the surface could not cancel wants the camera turned with it, and a
         /// reader inside wants the camera to render the subtree again with part of it hidden.</summary>
         bool Batchable()
         {
             if (!FilterBatch.Enabled) return false;
-            if (perspective > 0) return false;
-            if (self.rotation != Quaternion.identity) return false;
+            if (!flat && (perspective > 0 || self.rotation != Quaternion.identity)) return false;
             return !HasInnerReaders();
         }
 
@@ -1190,7 +1513,7 @@ namespace ReactUnity.UGUI.Internal
             // Set rather than offset, so a surface moved twice cannot end up anywhere but here.
             batchShift = centre - captureCentre;
             offscreenCanvas.transform.position = SlotPosition + unturn + batchShift;
-            offscreenCamera.transform.SetPositionAndRotation(centre - self.forward * 100f, self.rotation);
+            offscreenCamera.transform.SetPositionAndRotation(centre - captureRotation * Vector3.forward * 100f, captureRotation);
         }
 
         /// <summary>
@@ -1203,7 +1526,7 @@ namespace ReactUnity.UGUI.Internal
             if (batchShift == Vector3.zero) return;
 
             offscreenCanvas.transform.position = SlotPosition + unturn;
-            offscreenCamera.transform.SetPositionAndRotation(captureCentre - self.forward * 100f, self.rotation);
+            offscreenCamera.transform.SetPositionAndRotation(captureCentre - captureRotation * Vector3.forward * 100f, captureRotation);
             batchShift = Vector3.zero;
 
             if (batchChanged.Count == 0) return;
@@ -1328,8 +1651,6 @@ namespace ReactUnity.UGUI.Internal
             // Seeded on the element's own plane, which is where it sits whatever its subtree does.
             var nearest = 0f;
             var furthest = 0f;
-            var plane = self.position;
-            var forward = self.forward;
 
             for (int i = 0; i < projected.Count; i++)
             {
@@ -1339,9 +1660,10 @@ namespace ReactUnity.UGUI.Internal
                 child.GetWorldCorners(cornerBuffer);
                 for (int c = 0; c < 4; c++)
                 {
-                    // Depth is measured in world units against the element's plane, where the camera
-                    // stands; the point itself in the element's own units, where the rect is.
-                    var depth = Vector3.Dot(cornerBuffer[c] - plane, forward);
+                    // Depth off the element's plane, where the camera stands, from local values: a
+                    // flat plane's surface is scaled up for its capture, and world units with it.
+                    var local = self.InverseTransformPoint(cornerBuffer[c]);
+                    var depth = Depth(local);
                     if (depth < nearest) nearest = depth;
                     if (depth > furthest) furthest = depth;
 
@@ -1350,7 +1672,6 @@ namespace ReactUnity.UGUI.Internal
                     var w = 1f + depth / perspective;
                     if (w < MinProjectionW) continue;
 
-                    var local = self.InverseTransformPoint(cornerBuffer[c]);
                     var point = new Vector2(
                         origin.x + (local.x - origin.x) / w,
                         origin.y + (local.y - origin.y) / w);

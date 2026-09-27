@@ -178,7 +178,15 @@ namespace ReactUnity.UGUI.Internal
             if (!Composite.Raycast(screen, viewer)) return false;
 
             var camera = CaptureCamera;
-            captured = GetRemappedScreenPosition(screen, viewer, EventViewport, camera);
+            if (Composite.TryGetComponent<PlaneWarp>(out var warp) && warp.Warping)
+            {
+                // A warped composite is no linear stretch of its capture, so the point goes back
+                // through the projection onto the plane the capture was taken of.
+                if (!RectTransformUtility.ScreenPointToLocalPointInRectangle(EventViewport, screen, viewer, out var local)
+                    || !warp.TryUnproject(local, out var uv)) return false;
+                captured = camera ? (Vector2) camera.ViewportToScreenPoint(uv) : uv;
+            }
+            else captured = GetRemappedScreenPosition(screen, viewer, EventViewport, camera);
             if (!camera) return true;
 
             var viewport = camera.ScreenToViewportPoint(captured);

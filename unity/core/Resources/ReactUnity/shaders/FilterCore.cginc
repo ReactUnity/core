@@ -17,7 +17,8 @@ int _BlendMode;
 struct appdata
 {
   float4 vertex : POSITION;
-  float2 uv : TEXCOORD0;
+  // A warped composite (PlaneWarp) carries uv/w in xy and 1/w in w; a plain one leaves w at 0.
+  float4 uv : TEXCOORD0;
   float4 color : COLOR;
   UNITY_VERTEX_INPUT_INSTANCE_ID
 };
@@ -25,7 +26,7 @@ struct appdata
 struct v2f
 {
   float4 vertex : SV_POSITION;
-  float2 uv : TEXCOORD0;
+  float4 uv : TEXCOORD0;
   float4 color : COLOR;
   float4 worldPosition : TEXCOORD1;
 #ifdef RU_HAS_BACKDROP
@@ -121,7 +122,8 @@ float RuMaskCoverage(float2 uv)
 
 float4 frag(v2f i) : SV_Target
 {
-  float2 uv = i.uv;
+  float2 captureUv = i.uv.w > 0 ? i.uv.xy / i.uv.w : i.uv.xy;
+  float2 uv = captureUv;
 
   if (_Pixelate > 0)
   {
@@ -193,13 +195,13 @@ float4 frag(v2f i) : SV_Target
   // The hash turns any change in phase into an unrelated field, so animating it resamples
   // the grain rather than sliding it.
   if (_Grain > 0)
-    color += (0.5 - rand(i.uv + _GrainPhase)) * _Grain;
+    color += (0.5 - rand(captureUv + _GrainPhase)) * _Grain;
 
   // Measured in texels down the capture, so the lines stay put as the element moves and a
   // phase animation rolls them the way a CRT's hum bar drifts.
   if (_ScanlineIntensity > 0 && _ScanlinePeriod > 0)
   {
-    float row = i.uv.y * _MainTex_TexelSize.w + _ScanlinePhase;
+    float row = captureUv.y * _MainTex_TexelSize.w + _ScanlinePhase;
     color *= 1.0 - _ScanlineIntensity * step(0.5, frac(row / _ScanlinePeriod));
   }
 
@@ -215,7 +217,7 @@ float4 frag(v2f i) : SV_Target
     // Nothing outside the capture casts a shadow. Without this the sampler's clamp would
     // smear the edge row of the silhouette across the strip the offset uncovers, which
     // shows through wherever the element is translucent.
-    float2 suv = i.uv - _ShadowOffset.xy;
+    float2 suv = captureUv - _ShadowOffset.xy;
     float2 within = step(0.0, suv) * step(suv, 1.0);
 
     float sa = tex2D(_ShadowTex, suv).a * _ShadowColor.a * within.x * within.y;
@@ -226,7 +228,7 @@ float4 frag(v2f i) : SV_Target
   // Clipping and masking land after the filter chain and before opacity, which is the order CSS
   // composites them in: the drop shadow is clipped along with the element that cast it, and
   // `opacity` fades what survives rather than being masked itself.
-  float coverage = RuClipCoverage(i.uv, _MainTex_TexelSize.xy) * RuMaskCoverage(i.uv);
+  float coverage = RuClipCoverage(captureUv, _MainTex_TexelSize.xy) * RuMaskCoverage(captureUv);
   rgb *= coverage;
   a *= coverage;
 
