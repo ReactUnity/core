@@ -29,6 +29,9 @@
  *      `:root,:host{...}`, how Tailwind v4 opens its theme block, lost the `:root` half too.
  *   9  a string source keeps its text instead of rebuilding it on every read, which made each
  *      rule's `StylesheetText` copy the entire sheet first -- quadratic in the sheet's size.
+ *  10  a parse allocates a third of what it did and takes half the time: a string source is
+ *      read directly, child lists and token arrays are made to size or not at all, and a plain
+ *      declaration skips the nesting look-ahead's second lex.
  *
  * Why a submodule rather than a ref in this file: the pin then lives in one place git already
  * tracks, and the source is at hand when a parser bug needs reading. Point the submodule back

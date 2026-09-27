@@ -1,6 +1,6 @@
 # ExCSS
 
-Built from [https://github.com/ReactUnity/ExCSS](https://github.com/ReactUnity/ExCSS) at `47a58bb70d6fc041ae141a840a6b48ce0fd9174e` (branch `reactunity`), the commit the
+Built from [https://github.com/ReactUnity/ExCSS](https://github.com/ReactUnity/ExCSS) at `9fe749b46099438cfb0a4bb7d43311b49421d5a1` (branch `reactunity`), the commit the
 `vendor/excss` submodule records, targeting `netstandard2.0`.
 
 This is a fork of [https://github.com/TylerBrinks/ExCSS](https://github.com/TylerBrinks/ExCSS), carrying the parser changes ReactUnity needs,
