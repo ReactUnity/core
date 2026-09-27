@@ -27,6 +27,8 @@ namespace ReactUnity.Reactive
             Change();
         }
         internal virtual void OnBeforeChange() { }
+        /// <summary>A change made without notifying, which a derived cache still has to drop.</summary>
+        internal virtual void OnSilentChange() { }
         internal virtual void OnAfterChange()
         {
             Change();
@@ -60,6 +62,7 @@ namespace ReactUnity.Reactive
         {
             var result = original.Add(item);
             if (!result) original.Remove(item);
+            OnSilentChange();
             return result;
         }
 
@@ -75,7 +78,11 @@ namespace ReactUnity.Reactive
             return RemoveWithoutNotify(item);
         }
 
-        public bool AddWithoutNotify(T item) => original.Add(item);
+        public bool AddWithoutNotify(T item)
+        {
+            OnSilentChange();
+            return original.Add(item);
+        }
 
         public bool Remove(T item)
         {
@@ -84,7 +91,11 @@ namespace ReactUnity.Reactive
             return removed;
         }
 
-        public bool RemoveWithoutNotify(T item) => original.Remove(item);
+        public bool RemoveWithoutNotify(T item)
+        {
+            OnSilentChange();
+            return original.Remove(item);
+        }
 
         public void Clear()
         {
@@ -99,7 +110,11 @@ namespace ReactUnity.Reactive
 
         #region Interface Implementations
 
-        public void ClearWithoutNotify() => original.Clear();
+        public void ClearWithoutNotify()
+        {
+            OnSilentChange();
+            original.Clear();
+        }
 
         public bool Contains(T item) => original.Contains(item);
 

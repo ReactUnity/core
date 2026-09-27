@@ -39,7 +39,8 @@ namespace ReactUnity
         public bool Destroyed { get; private set; }
         public string Tag { get; private set; } = "";
         public string TextContent => new TextContentVisitor().Get(this);
-        public Stack<IPoolableComponent> PoolStack { get; set; }
+        public PoolStack PoolStack { get; set; }
+        public string PoolHint { get; private set; }
 
         private bool isPseudoElement;
         public bool IsPseudoElement
@@ -318,6 +319,7 @@ namespace ReactUnity
             Style.ClearWithoutNotify();
             Data.ClearWithoutNotify();
             ClassList.ClearWithoutNotify();
+            PoolHint = null;
             CustomProperties?.Clear();
             name = null;
             Id = null;
@@ -487,7 +489,7 @@ namespace ReactUnity
                     return;
                 case "class":
                 case "className":
-                    ClassName = value?.ToString();
+                    ClassName = PoolHint = value?.ToString();
                     return;
                 case "style":
                     if (InlineStylesheet != null)

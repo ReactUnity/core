@@ -1,6 +1,6 @@
 //
 // Types in assemblies: ReactUnity, ReactUnity.Editor, ReactUnity.UGUI, ReactUnity.UIToolkit
-// Generated 13/09/2026 15:53:47
+// Generated 27/09/2026 05:57:37
 //
 /* eslint-disable */
 
@@ -32,7 +32,8 @@ export declare namespace ReactUnity {
     Destroyed: boolean;
     Tag: string;
     TextContent: string;
-    PoolStack: System.Collections.Generic.Stack<ReactUnity.IPoolableComponent>;
+    PoolStack: ReactUnity.PoolStack;
+    PoolHint: string;
     IsPseudoElement: boolean;
     ResolvedName: string;
     ClassName: string;
@@ -185,7 +186,8 @@ export declare namespace ReactUnity {
   export interface IGraphicComponent {
   }
   export interface IPoolableComponent {
-    PoolStack: System.Collections.Generic.Stack<ReactUnity.IPoolableComponent>;
+    PoolStack: ReactUnity.PoolStack;
+    PoolHint: string;
     Pool(): boolean;
     Revive(): boolean;
   }
@@ -241,7 +243,8 @@ export declare namespace ReactUnity {
     BeforeRules: ReactUnity.Styling.Rules.RuleTreeNode<ReactUnity.Styling.Rules.StyleData>[];
     AfterRules: ReactUnity.Styling.Rules.RuleTreeNode<ReactUnity.Styling.Rules.StyleData>[];
     Content: string;
-    PoolStack: System.Collections.Generic.Stack<ReactUnity.IPoolableComponent>;
+    PoolStack: ReactUnity.PoolStack;
+    PoolHint: string;
     ApplyLayoutStyles(): void;
     ResolveStyle(recursive?: boolean): void;
     Update(): void;
@@ -269,6 +272,16 @@ export declare namespace ReactUnity {
     SetEventListener(eventName: string, fun: ReactUnity.Helpers.Callback): void;
     AddEventListener(eventName: string, fun: ReactUnity.Helpers.Callback): (() => void);
     FireEvent(eventName: string, arg: any): void;
+    Equals(obj: any): boolean;
+    GetHashCode(): number;
+    GetType(): System.Type;
+    ToString(): string;
+  }
+  export class PoolStack {
+    constructor();
+    Count: number;
+    Push(cmp: ReactUnity.IPoolableComponent, hint?: string): void;
+    Pop(hint?: string): ReactUnity.IPoolableComponent;
     Equals(obj: any): boolean;
     GetHashCode(): number;
     GetType(): System.Type;
@@ -388,9 +401,9 @@ export declare namespace ReactUnity {
     FlushCommands(serializedCommands?: string): void;
     CreateText(tag?: string, text?: string, poolKey?: string): ReactUnity.ITextComponent;
     CreateDefaultComponent(tag: string, text: string, poolKey?: string): ReactUnity.IReactComponent;
-    CreateComponent(tag: string, text: string, poolKey?: string): ReactUnity.IReactComponent;
+    CreateComponent(tag: string, text: string, poolKey?: string, poolHint?: string): ReactUnity.IReactComponent;
     CreatePseudoComponent(tag: string, poolKey?: string): ReactUnity.IReactComponent;
-    PoolComponent(cmp: ReactUnity.IPoolableComponent, pool: System.Collections.Generic.Stack<ReactUnity.IPoolableComponent>): void;
+    PoolComponent(cmp: ReactUnity.IPoolableComponent, pool: ReactUnity.PoolStack): boolean;
     Equals(obj: any): boolean;
     GetHashCode(): number;
     GetType(): System.Type;
@@ -863,6 +876,7 @@ export declare namespace ReactUnity {
       GetResolvedStyles(component: ReactUnity.IReactComponent): any;
       CreateStyleDictionary(): Record<string, any>;
       Run(root?: UnityEngine.UIElements.VisualElement): void;
+      Clear(): void;
       Restart(root?: UnityEngine.UIElements.VisualElement): void;
       AddSelectionChange(cb: any): (() => void);
       AddPlayModeStateChange(cb: any): (() => void);
@@ -956,6 +970,7 @@ export declare namespace ReactUnity {
       InstallUnityPlugin(pluginName: string, callback?: (() => void)): void;
       UninstallUnityPlugin(pluginName: string, callback?: (() => void)): void;
       Run(root?: UnityEngine.UIElements.VisualElement): void;
+      Clear(): void;
       Restart(root?: UnityEngine.UIElements.VisualElement): void;
       AddSelectionChange(cb: any): (() => void);
       AddPlayModeStateChange(cb: any): (() => void);
@@ -1286,9 +1301,9 @@ export declare namespace ReactUnity {
         FlushCommands(serializedCommands?: string): void;
         CreateText(tag?: string, text?: string, poolKey?: string): ReactUnity.ITextComponent;
         CreateDefaultComponent(tag: string, text: string, poolKey?: string): ReactUnity.IReactComponent;
-        CreateComponent(tag: string, text: string, poolKey?: string): ReactUnity.IReactComponent;
+        CreateComponent(tag: string, text: string, poolKey?: string, poolHint?: string): ReactUnity.IReactComponent;
         CreatePseudoComponent(tag: string, poolKey?: string): ReactUnity.IReactComponent;
-        PoolComponent(cmp: ReactUnity.IPoolableComponent, pool: System.Collections.Generic.Stack<ReactUnity.IPoolableComponent>): void;
+        PoolComponent(cmp: ReactUnity.IPoolableComponent, pool: ReactUnity.PoolStack): boolean;
         Equals(obj: any): boolean;
         GetHashCode(): number;
         GetType(): System.Type;
@@ -1335,6 +1350,7 @@ export declare namespace ReactUnity {
         AdvancedOptions: ReactUnity.UIToolkit.ReactUnityElement_ReactAdvancedOptions;
         static ShowDefaultWindow(): void;
         Run(root?: UnityEngine.UIElements.VisualElement): void;
+        Clear(): void;
         Restart(root?: UnityEngine.UIElements.VisualElement): void;
         AddSelectionChange(cb: any): (() => void);
         AddPlayModeStateChange(cb: any): (() => void);
@@ -1452,6 +1468,7 @@ export declare namespace ReactUnity {
         hideFlags: UnityEngine.HideFlags;
         AdvancedOptions: ReactUnity.UIToolkit.ReactUnityElement_ReactAdvancedOptions;
         Run(root?: UnityEngine.UIElements.VisualElement): void;
+        Clear(): void;
         Restart(root?: UnityEngine.UIElements.VisualElement): void;
         AddSelectionChange(cb: any): (() => void);
         AddPlayModeStateChange(cb: any): (() => void);
@@ -1541,7 +1558,8 @@ export declare namespace ReactUnity {
         Destroyed: boolean;
         Tag: string;
         TextContent: string;
-        PoolStack: System.Collections.Generic.Stack<ReactUnity.IPoolableComponent>;
+        PoolStack: ReactUnity.PoolStack;
+        PoolHint: string;
         IsPseudoElement: boolean;
         ResolvedName: string;
         ClassName: string;
@@ -1830,7 +1848,8 @@ export declare namespace ReactUnity {
         Destroyed: boolean;
         Tag: string;
         TextContent: string;
-        PoolStack: System.Collections.Generic.Stack<ReactUnity.IPoolableComponent>;
+        PoolStack: ReactUnity.PoolStack;
+        PoolHint: string;
         IsPseudoElement: boolean;
         ResolvedName: string;
         ClassName: string;
@@ -1921,7 +1940,8 @@ export declare namespace ReactUnity {
         Destroyed: boolean;
         Tag: string;
         TextContent: string;
-        PoolStack: System.Collections.Generic.Stack<ReactUnity.IPoolableComponent>;
+        PoolStack: ReactUnity.PoolStack;
+        PoolHint: string;
         IsPseudoElement: boolean;
         ResolvedName: string;
         ClassName: string;
@@ -2015,7 +2035,8 @@ export declare namespace ReactUnity {
         Destroyed: boolean;
         Tag: string;
         TextContent: string;
-        PoolStack: System.Collections.Generic.Stack<ReactUnity.IPoolableComponent>;
+        PoolStack: ReactUnity.PoolStack;
+        PoolHint: string;
         IsPseudoElement: boolean;
         ResolvedName: string;
         ClassName: string;
@@ -2402,12 +2423,24 @@ export declare namespace ReactUnity {
       static FlushCommands: Unity.Profiling.ProfilerMarker;
       static ParseStyles: Unity.Profiling.ProfilerMarker;
       static ProcessStyles: Unity.Profiling.ProfilerMarker;
+      static ResolveStyle: Unity.Profiling.ProfilerMarker;
+      static MatchRules: Unity.Profiling.ProfilerMarker;
+      static StyleStateUpdate: Unity.Profiling.ProfilerMarker;
+      static ApplyStyles: Unity.Profiling.ProfilerMarker;
+      static ApplyLayoutStyles: Unity.Profiling.ProfilerMarker;
+      static FilterPoll: Unity.Profiling.ProfilerMarker;
+      static FilterCapture: Unity.Profiling.ProfilerMarker;
+      static FilterInnerBackdrops: Unity.Profiling.ProfilerMarker;
+      static FilterBlur: Unity.Profiling.ProfilerMarker;
+      static FilterMask: Unity.Profiling.ProfilerMarker;
+      static FilterComposite: Unity.Profiling.ProfilerMarker;
       Equals(obj: any): boolean;
       GetHashCode(): number;
       GetType(): System.Type;
       ToString(): string;
     }
     export class ReflectionHelpers {
+      static GetLoadedAssemblies(): System.Collections.Generic.IReadOnlyList;
       static FindType(fullName: string, ignoreCase?: boolean, searchAllAssemblies?: boolean): System.Type;
       Equals(obj: any): boolean;
       GetHashCode(): number;
@@ -4462,6 +4495,7 @@ export declare namespace ReactUnity {
       maskRepeatY: ReactUnity.Types.ICssValueList<ReactUnity.Types.BackgroundRepeat>;
       maskMode: ReactUnity.Types.ICssValueList<ReactUnity.Types.MaskMode>;
       clipPath: ReactUnity.Types.ClipPath;
+      shapeRendering: ReactUnity.Types.ShapeRendering;
       imageRendering: ReactUnity.Types.ImageRendering;
       filter: ReactUnity.Types.FilterDefinition;
       backdropFilter: ReactUnity.Types.FilterDefinition;
@@ -4752,6 +4786,7 @@ export declare namespace ReactUnity {
       static maskMode: ReactUnity.Styling.ValueListStyleProperty;
       static clipPath: ReactUnity.Styling.StyleProperty;
       static imageRendering: ReactUnity.Styling.StyleProperty;
+      static shapeRendering: ReactUnity.Styling.StyleProperty;
       static filter: ReactUnity.Styling.StyleProperty;
       static backdropFilter: ReactUnity.Styling.StyleProperty;
       static mixBlendMode: ReactUnity.Styling.StyleProperty;
@@ -4971,6 +5006,15 @@ export declare namespace ReactUnity {
       GetType(): System.Type;
       ToString(): string;
     }
+    export class StyleDiagnostics {
+      static BeginProbe(): void;
+      static EndProbe(): void;
+      static Dropped(property: string, value: any, reason?: string): void;
+      Equals(obj: any): boolean;
+      GetHashCode(): number;
+      GetType(): System.Type;
+      ToString(): string;
+    }
     export class StyleSheet {
       constructor(context: ReactUnity.Styling.StyleContext, style: string, importanceOffset?: number, scope?: ReactUnity.IReactComponent, media?: string);
       Attached: boolean;
@@ -5027,6 +5071,7 @@ export declare namespace ReactUnity {
       Current: ReactUnity.Styling.NodeStyle;
       Active: ReactUnity.Styling.NodeStyle;
       Parent: ReactUnity.Styling.StyleState;
+      CompositorOnly: boolean;
       SetCurrent(newStyle: ReactUnity.Styling.NodeStyle): void;
       Update(): void;
       Clear(): void;
@@ -5555,6 +5600,7 @@ export declare namespace ReactUnity {
       }
       export class ComputedCalc_CalcValue {
         Value: number;
+        Percent: number;
         HasUnit: boolean;
         Equals(obj: any): boolean;
         GetHashCode(): number;
@@ -5676,6 +5722,7 @@ export declare namespace ReactUnity {
         static DurationConverter: ReactUnity.Styling.Converters.StyleConverterBase;
         static PercentageConverter: ReactUnity.Styling.Converters.StyleConverterBase;
         static ColorValueConverter: ReactUnity.Styling.Converters.StyleConverterBase;
+        static HslPercentageConverter: ReactUnity.Styling.Converters.StyleConverterBase;
         static OklchChromaConverter: ReactUnity.Styling.Converters.StyleConverterBase;
         static LabLightnessConverter: ReactUnity.Styling.Converters.StyleConverterBase;
         static LabAxisConverter: ReactUnity.Styling.Converters.StyleConverterBase;
@@ -5873,6 +5920,8 @@ export declare namespace ReactUnity {
         constructor(suffixMap: Record<string, number>, suffixMapper?: Record<string, ((arg: number) => any)>, allowSuffixless?: boolean);
         AllowSuffixless: boolean;
         CalcConverter: ReactUnity.Styling.Converters.CalcConverter;
+        static LargestValue: number;
+        static Finite(value: number): number;
         StringifyTyped(value: number): string;
         StringifyInternal(value: any): string;
         CanHandleKeyword(keyword: ReactUnity.Styling.CssKeyword): boolean;
@@ -5898,6 +5947,20 @@ export declare namespace ReactUnity {
         ToString(): string;
       }
       export class ColorValueConverter {
+        constructor();
+        AllowSuffixless: boolean;
+        CalcConverter: ReactUnity.Styling.Converters.CalcConverter;
+        StringifyTyped(value: number): string;
+        StringifyInternal(value: any): string;
+        CanHandleKeyword(keyword: ReactUnity.Styling.CssKeyword): boolean;
+        Convert(value: any): ReactUnity.Styling.Computed.IComputedValue;
+        Stringify(value: any): string;
+        Equals(obj: any): boolean;
+        GetHashCode(): number;
+        GetType(): System.Type;
+        ToString(): string;
+      }
+      export class HslPercentageConverter {
         constructor();
         AllowSuffixless: boolean;
         CalcConverter: ReactUnity.Styling.Converters.CalcConverter;
@@ -6428,6 +6491,10 @@ export declare namespace ReactUnity {
       export class StyleTree {
         constructor();
         ContainsHasSelector: boolean;
+        ReadsSiblingPosition: boolean;
+        ReadsSiblingState: boolean;
+        ReadsSiblingsDeep: boolean;
+        ContainsEmptySelector: boolean;
         MediaQuery: ReactUnity.Styling.Rules.MediaQueryList;
         Scope: ReactUnity.IReactComponent;
         Layer: ReactUnity.Styling.Rules.CascadeLayer;
@@ -6467,6 +6534,10 @@ export declare namespace ReactUnity {
       export class RuleTree<T = any> {
         constructor();
         ContainsHasSelector: boolean;
+        ReadsSiblingPosition: boolean;
+        ReadsSiblingState: boolean;
+        ReadsSiblingsDeep: boolean;
+        ContainsEmptySelector: boolean;
         MediaQuery: ReactUnity.Styling.Rules.MediaQueryList;
         Scope: ReactUnity.IReactComponent;
         Layer: ReactUnity.Styling.Rules.CascadeLayer;
@@ -7448,6 +7519,12 @@ export declare namespace ReactUnity {
       GetType(): System.Type;
       ToString(): string;
     }
+    export enum ShapeRendering {
+      Auto = 0,
+      OptimizeSpeed = 1,
+      CrispEdges = 2,
+      GeometricPrecision = 3,
+    }
     export class SpriteReference {
       constructor(type: ReactUnity.Types.AssetReferenceType, value: any);
       constructor(url: ReactUnity.Types.Url);
@@ -7887,7 +7964,8 @@ export declare namespace ReactUnity {
       Destroyed: boolean;
       Tag: string;
       TextContent: string;
-      PoolStack: System.Collections.Generic.Stack<ReactUnity.IPoolableComponent>;
+      PoolStack: ReactUnity.PoolStack;
+      PoolHint: string;
       IsPseudoElement: boolean;
       ResolvedName: string;
       ClassName: string;
@@ -7908,9 +7986,9 @@ export declare namespace ReactUnity {
       ScrollHeight: number;
       IsScrollContainer: boolean;
       SetProperty(propertyName: string, value: any): void;
+      Revive(): boolean;
       Activate(): void;
       OpenUrl(target?: string): void;
-      Revive(): boolean;
       Pool(): boolean;
       AddEventListener(eventName: string, fun: ReactUnity.Helpers.Callback): (() => void);
       SetParent(newParent: ReactUnity.IContainerComponent, relativeTo?: ReactUnity.IReactComponent, insertAfter?: boolean): void;
@@ -7989,7 +8067,8 @@ export declare namespace ReactUnity {
       Destroyed: boolean;
       Tag: string;
       TextContent: string;
-      PoolStack: System.Collections.Generic.Stack<ReactUnity.IPoolableComponent>;
+      PoolStack: ReactUnity.PoolStack;
+      PoolHint: string;
       IsPseudoElement: boolean;
       ResolvedName: string;
       ClassName: string;
@@ -8093,7 +8172,8 @@ export declare namespace ReactUnity {
       Destroyed: boolean;
       Tag: string;
       TextContent: string;
-      PoolStack: System.Collections.Generic.Stack<ReactUnity.IPoolableComponent>;
+      PoolStack: ReactUnity.PoolStack;
+      PoolHint: string;
       IsPseudoElement: boolean;
       ResolvedName: string;
       ClassName: string;
@@ -8114,8 +8194,8 @@ export declare namespace ReactUnity {
       ScrollHeight: number;
       IsScrollContainer: boolean;
       SetProperty(propertyName: string, value: any): void;
-      SetDimensions(width: number, height: number): void;
       Pool(): boolean;
+      SetDimensions(width: number, height: number): void;
       Revive(): boolean;
       AddEventListener(eventName: string, fun: ReactUnity.Helpers.Callback): (() => void);
       SetParent(newParent: ReactUnity.IContainerComponent, relativeTo?: ReactUnity.IReactComponent, insertAfter?: boolean): void;
@@ -8199,7 +8279,8 @@ export declare namespace ReactUnity {
       Destroyed: boolean;
       Tag: string;
       TextContent: string;
-      PoolStack: System.Collections.Generic.Stack<ReactUnity.IPoolableComponent>;
+      PoolStack: ReactUnity.PoolStack;
+      PoolHint: string;
       IsPseudoElement: boolean;
       ResolvedName: string;
       ClassName: string;
@@ -8221,8 +8302,8 @@ export declare namespace ReactUnity {
       IsScrollContainer: boolean;
       SetText(text: string): void;
       SetProperty(property: string, value: any): void;
-      GetLinkInfo(eventData: UnityEngine.EventSystems.PointerEventData): string;
       Revive(): boolean;
+      GetLinkInfo(eventData: UnityEngine.EventSystems.PointerEventData): string;
       Pool(): boolean;
       AddEventListener(eventName: string, fun: ReactUnity.Helpers.Callback): (() => void);
       SetParent(newParent: ReactUnity.IContainerComponent, relativeTo?: ReactUnity.IReactComponent, insertAfter?: boolean): void;
@@ -8301,7 +8382,8 @@ export declare namespace ReactUnity {
       Destroyed: boolean;
       Tag: string;
       TextContent: string;
-      PoolStack: System.Collections.Generic.Stack<ReactUnity.IPoolableComponent>;
+      PoolStack: ReactUnity.PoolStack;
+      PoolHint: string;
       IsPseudoElement: boolean;
       ResolvedName: string;
       ClassName: string;
@@ -8400,7 +8482,8 @@ export declare namespace ReactUnity {
       Destroyed: boolean;
       Tag: string;
       TextContent: string;
-      PoolStack: System.Collections.Generic.Stack<ReactUnity.IPoolableComponent>;
+      PoolStack: ReactUnity.PoolStack;
+      PoolHint: string;
       IsPseudoElement: boolean;
       ResolvedName: string;
       ClassName: string;
@@ -8501,7 +8584,8 @@ export declare namespace ReactUnity {
       Destroyed: boolean;
       Tag: string;
       TextContent: string;
-      PoolStack: System.Collections.Generic.Stack<ReactUnity.IPoolableComponent>;
+      PoolStack: ReactUnity.PoolStack;
+      PoolHint: string;
       IsPseudoElement: boolean;
       ResolvedName: string;
       ClassName: string;
@@ -8605,7 +8689,8 @@ export declare namespace ReactUnity {
       Destroyed: boolean;
       Tag: string;
       TextContent: string;
-      PoolStack: System.Collections.Generic.Stack<ReactUnity.IPoolableComponent>;
+      PoolStack: ReactUnity.PoolStack;
+      PoolHint: string;
       IsPseudoElement: boolean;
       ResolvedName: string;
       ClassName: string;
@@ -8628,8 +8713,8 @@ export declare namespace ReactUnity {
       ApplyText(text: string): void;
       SetText(text: string): void;
       ApplySet(value: any): void;
-      SetProperty(propertyName: string, value: any): void;
       Revive(): boolean;
+      SetProperty(propertyName: string, value: any): void;
       Pool(): boolean;
       AddEventListener(eventName: string, fun: ReactUnity.Helpers.Callback): (() => void);
       SetParent(newParent: ReactUnity.IContainerComponent, relativeTo?: ReactUnity.IReactComponent, insertAfter?: boolean): void;
@@ -8709,7 +8794,8 @@ export declare namespace ReactUnity {
       Destroyed: boolean;
       Tag: string;
       TextContent: string;
-      PoolStack: System.Collections.Generic.Stack<ReactUnity.IPoolableComponent>;
+      PoolStack: ReactUnity.PoolStack;
+      PoolHint: string;
       IsPseudoElement: boolean;
       ResolvedName: string;
       ClassName: string;
@@ -8729,9 +8815,9 @@ export declare namespace ReactUnity {
       ScrollWidth: number;
       ScrollHeight: number;
       IsScrollContainer: boolean;
+      Revive(): boolean;
       SetProperty(propertyName: string, value: any): void;
       Pool(): boolean;
-      Revive(): boolean;
       AddEventListener(eventName: string, fun: ReactUnity.Helpers.Callback): (() => void);
       SetParent(newParent: ReactUnity.IContainerComponent, relativeTo?: ReactUnity.IReactComponent, insertAfter?: boolean): void;
       UpdateBackgroundGraphic(updateLayout: boolean, updateStyle: boolean): ReactUnity.UGUI.Internal.BorderAndBackground;
@@ -8818,7 +8904,8 @@ export declare namespace ReactUnity {
       Destroyed: boolean;
       Tag: string;
       TextContent: string;
-      PoolStack: System.Collections.Generic.Stack<ReactUnity.IPoolableComponent>;
+      PoolStack: ReactUnity.PoolStack;
+      PoolHint: string;
       IsPseudoElement: boolean;
       ResolvedName: string;
       ClassName: string;
@@ -8919,7 +9006,8 @@ export declare namespace ReactUnity {
       Destroyed: boolean;
       Tag: string;
       TextContent: string;
-      PoolStack: System.Collections.Generic.Stack<ReactUnity.IPoolableComponent>;
+      PoolStack: ReactUnity.PoolStack;
+      PoolHint: string;
       IsPseudoElement: boolean;
       ResolvedName: string;
       ClassName: string;
@@ -8940,8 +9028,8 @@ export declare namespace ReactUnity {
       ScrollHeight: number;
       IsScrollContainer: boolean;
       SetProperty(propertyName: string, value: any): void;
-      Activate(): boolean;
       Revive(): boolean;
+      Activate(): boolean;
       Pool(): boolean;
       AddEventListener(eventName: string, fun: ReactUnity.Helpers.Callback): (() => void);
       SetParent(newParent: ReactUnity.IContainerComponent, relativeTo?: ReactUnity.IReactComponent, insertAfter?: boolean): void;
@@ -9024,7 +9112,8 @@ export declare namespace ReactUnity {
       Destroyed: boolean;
       Tag: string;
       TextContent: string;
-      PoolStack: System.Collections.Generic.Stack<ReactUnity.IPoolableComponent>;
+      PoolStack: ReactUnity.PoolStack;
+      PoolHint: string;
       IsPseudoElement: boolean;
       ResolvedName: string;
       ClassName: string;
@@ -9046,8 +9135,8 @@ export declare namespace ReactUnity {
       IsScrollContainer: boolean;
       Update(): void;
       SetProperty(propertyName: string, value: any): void;
-      SetDimensions(width: number, height: number): void;
       Pool(): boolean;
+      SetDimensions(width: number, height: number): void;
       Revive(): boolean;
       AddEventListener(eventName: string, fun: ReactUnity.Helpers.Callback): (() => void);
       SetParent(newParent: ReactUnity.IContainerComponent, relativeTo?: ReactUnity.IReactComponent, insertAfter?: boolean): void;
@@ -9126,7 +9215,8 @@ export declare namespace ReactUnity {
       Destroyed: boolean;
       Tag: string;
       TextContent: string;
-      PoolStack: System.Collections.Generic.Stack<ReactUnity.IPoolableComponent>;
+      PoolStack: ReactUnity.PoolStack;
+      PoolHint: string;
       IsPseudoElement: boolean;
       ResolvedName: string;
       ClassName: string;
@@ -9227,7 +9317,8 @@ export declare namespace ReactUnity {
       Destroyed: boolean;
       Tag: string;
       TextContent: string;
-      PoolStack: System.Collections.Generic.Stack<ReactUnity.IPoolableComponent>;
+      PoolStack: ReactUnity.PoolStack;
+      PoolHint: string;
       IsPseudoElement: boolean;
       ResolvedName: string;
       ClassName: string;
@@ -9250,8 +9341,8 @@ export declare namespace ReactUnity {
       SetProperty(propertyName: string, value: any): void;
       SetCustomProperty(propertyName: string, value: any): void;
       AddEventListener(eventName: string, callback: ReactUnity.Helpers.Callback): (() => void);
-      Revive(): boolean;
       Pool(): boolean;
+      Revive(): boolean;
       SetParent(newParent: ReactUnity.IContainerComponent, relativeTo?: ReactUnity.IReactComponent, insertAfter?: boolean): void;
       UpdateBackgroundGraphic(updateLayout: boolean, updateStyle: boolean): ReactUnity.UGUI.Internal.BorderAndBackground;
       GetRelativePosition(x: number, y: number): UnityEngine.Vector2;
@@ -9328,7 +9419,8 @@ export declare namespace ReactUnity {
       Destroyed: boolean;
       Tag: string;
       TextContent: string;
-      PoolStack: System.Collections.Generic.Stack<ReactUnity.IPoolableComponent>;
+      PoolStack: ReactUnity.PoolStack;
+      PoolHint: string;
       IsPseudoElement: boolean;
       ResolvedName: string;
       ClassName: string;
@@ -9432,7 +9524,8 @@ export declare namespace ReactUnity {
       Destroyed: boolean;
       Tag: string;
       TextContent: string;
-      PoolStack: System.Collections.Generic.Stack<ReactUnity.IPoolableComponent>;
+      PoolStack: ReactUnity.PoolStack;
+      PoolHint: string;
       IsPseudoElement: boolean;
       ResolvedName: string;
       ClassName: string;
@@ -9453,8 +9546,8 @@ export declare namespace ReactUnity {
       ScrollHeight: number;
       IsScrollContainer: boolean;
       SetProperty(propertyName: string, value: any): void;
-      SetDimensions(width: number, height: number): void;
       Pool(): boolean;
+      SetDimensions(width: number, height: number): void;
       Revive(): boolean;
       AddEventListener(eventName: string, fun: ReactUnity.Helpers.Callback): (() => void);
       SetParent(newParent: ReactUnity.IContainerComponent, relativeTo?: ReactUnity.IReactComponent, insertAfter?: boolean): void;
@@ -9541,7 +9634,8 @@ export declare namespace ReactUnity {
       Destroyed: boolean;
       Tag: string;
       TextContent: string;
-      PoolStack: System.Collections.Generic.Stack<ReactUnity.IPoolableComponent>;
+      PoolStack: ReactUnity.PoolStack;
+      PoolHint: string;
       IsPseudoElement: boolean;
       ResolvedName: string;
       ClassName: string;
@@ -9642,7 +9736,8 @@ export declare namespace ReactUnity {
       Destroyed: boolean;
       Tag: string;
       TextContent: string;
-      PoolStack: System.Collections.Generic.Stack<ReactUnity.IPoolableComponent>;
+      PoolStack: ReactUnity.PoolStack;
+      PoolHint: string;
       IsPseudoElement: boolean;
       ResolvedName: string;
       ClassName: string;
@@ -9740,7 +9835,8 @@ export declare namespace ReactUnity {
       Destroyed: boolean;
       Tag: string;
       TextContent: string;
-      PoolStack: System.Collections.Generic.Stack<ReactUnity.IPoolableComponent>;
+      PoolStack: ReactUnity.PoolStack;
+      PoolHint: string;
       IsPseudoElement: boolean;
       ResolvedName: string;
       ClassName: string;
@@ -9838,7 +9934,8 @@ export declare namespace ReactUnity {
       Destroyed: boolean;
       Tag: string;
       TextContent: string;
-      PoolStack: System.Collections.Generic.Stack<ReactUnity.IPoolableComponent>;
+      PoolStack: ReactUnity.PoolStack;
+      PoolHint: string;
       IsPseudoElement: boolean;
       ResolvedName: string;
       ClassName: string;
@@ -9942,7 +10039,8 @@ export declare namespace ReactUnity {
       Destroyed: boolean;
       Tag: string;
       TextContent: string;
-      PoolStack: System.Collections.Generic.Stack<ReactUnity.IPoolableComponent>;
+      PoolStack: ReactUnity.PoolStack;
+      PoolHint: string;
       IsPseudoElement: boolean;
       ResolvedName: string;
       ClassName: string;
@@ -10043,7 +10141,8 @@ export declare namespace ReactUnity {
       Destroyed: boolean;
       Tag: string;
       TextContent: string;
-      PoolStack: System.Collections.Generic.Stack<ReactUnity.IPoolableComponent>;
+      PoolStack: ReactUnity.PoolStack;
+      PoolHint: string;
       IsPseudoElement: boolean;
       ResolvedName: string;
       ClassName: string;
@@ -10063,9 +10162,9 @@ export declare namespace ReactUnity {
       ScrollWidth: number;
       ScrollHeight: number;
       IsScrollContainer: boolean;
+      Revive(): boolean;
       SetProperty(propertyName: string, value: any): void;
       Pool(): boolean;
-      Revive(): boolean;
       AddEventListener(eventName: string, fun: ReactUnity.Helpers.Callback): (() => void);
       SetParent(newParent: ReactUnity.IContainerComponent, relativeTo?: ReactUnity.IReactComponent, insertAfter?: boolean): void;
       UpdateBackgroundGraphic(updateLayout: boolean, updateStyle: boolean): ReactUnity.UGUI.Internal.BorderAndBackground;
@@ -10149,7 +10248,8 @@ export declare namespace ReactUnity {
       Destroyed: boolean;
       Tag: string;
       TextContent: string;
-      PoolStack: System.Collections.Generic.Stack<ReactUnity.IPoolableComponent>;
+      PoolStack: ReactUnity.PoolStack;
+      PoolHint: string;
       IsPseudoElement: boolean;
       ResolvedName: string;
       ClassName: string;
@@ -10171,8 +10271,8 @@ export declare namespace ReactUnity {
       IsScrollContainer: boolean;
       SetText(text: string): void;
       SetProperty(property: string, value: any): void;
-      GetLinkInfo(eventData: UnityEngine.EventSystems.PointerEventData): string;
       Revive(): boolean;
+      GetLinkInfo(eventData: UnityEngine.EventSystems.PointerEventData): string;
       Pool(): boolean;
       AddEventListener(eventName: string, fun: ReactUnity.Helpers.Callback): (() => void);
       SetParent(newParent: ReactUnity.IContainerComponent, relativeTo?: ReactUnity.IReactComponent, insertAfter?: boolean): void;
@@ -10256,7 +10356,8 @@ export declare namespace ReactUnity {
       Destroyed: boolean;
       Tag: string;
       TextContent: string;
-      PoolStack: System.Collections.Generic.Stack<ReactUnity.IPoolableComponent>;
+      PoolStack: ReactUnity.PoolStack;
+      PoolHint: string;
       IsPseudoElement: boolean;
       ResolvedName: string;
       ClassName: string;
@@ -10278,8 +10379,8 @@ export declare namespace ReactUnity {
       IsScrollContainer: boolean;
       SetText(text: string): void;
       SetProperty(property: string, value: any): void;
-      GetLinkInfo(eventData: UnityEngine.EventSystems.PointerEventData): string;
       Revive(): boolean;
+      GetLinkInfo(eventData: UnityEngine.EventSystems.PointerEventData): string;
       Pool(): boolean;
       AddEventListener(eventName: string, fun: ReactUnity.Helpers.Callback): (() => void);
       SetParent(newParent: ReactUnity.IContainerComponent, relativeTo?: ReactUnity.IReactComponent, insertAfter?: boolean): void;
@@ -10361,7 +10462,8 @@ export declare namespace ReactUnity {
       Destroyed: boolean;
       Tag: string;
       TextContent: string;
-      PoolStack: System.Collections.Generic.Stack<ReactUnity.IPoolableComponent>;
+      PoolStack: ReactUnity.PoolStack;
+      PoolHint: string;
       IsPseudoElement: boolean;
       ResolvedName: string;
       ClassName: string;
@@ -10460,7 +10562,8 @@ export declare namespace ReactUnity {
       Destroyed: boolean;
       Tag: string;
       TextContent: string;
-      PoolStack: System.Collections.Generic.Stack<ReactUnity.IPoolableComponent>;
+      PoolStack: ReactUnity.PoolStack;
+      PoolHint: string;
       IsPseudoElement: boolean;
       ResolvedName: string;
       ClassName: string;
@@ -10564,7 +10667,8 @@ export declare namespace ReactUnity {
       Destroyed: boolean;
       Tag: string;
       TextContent: string;
-      PoolStack: System.Collections.Generic.Stack<ReactUnity.IPoolableComponent>;
+      PoolStack: ReactUnity.PoolStack;
+      PoolHint: string;
       IsPseudoElement: boolean;
       ResolvedName: string;
       ClassName: string;
@@ -10586,8 +10690,8 @@ export declare namespace ReactUnity {
       IsScrollContainer: boolean;
       VideoPlayer: UnityEngine.Video.VideoPlayer;
       SetProperty(propertyName: string, value: any): void;
-      SetDimensions(width: number, height: number): void;
       Pool(): boolean;
+      SetDimensions(width: number, height: number): void;
       Revive(): boolean;
       AddEventListener(eventName: string, fun: ReactUnity.Helpers.Callback): (() => void);
       SetParent(newParent: ReactUnity.IContainerComponent, relativeTo?: ReactUnity.IReactComponent, insertAfter?: boolean): void;
@@ -10781,9 +10885,9 @@ export declare namespace ReactUnity {
       FlushCommands(serializedCommands?: string): void;
       CreateText(tag?: string, text?: string, poolKey?: string): ReactUnity.ITextComponent;
       CreateDefaultComponent(tag: string, text: string, poolKey?: string): ReactUnity.IReactComponent;
-      CreateComponent(tag: string, text: string, poolKey?: string): ReactUnity.IReactComponent;
+      CreateComponent(tag: string, text: string, poolKey?: string, poolHint?: string): ReactUnity.IReactComponent;
       CreatePseudoComponent(tag: string, poolKey?: string): ReactUnity.IReactComponent;
-      PoolComponent(cmp: ReactUnity.IPoolableComponent, pool: System.Collections.Generic.Stack<ReactUnity.IPoolableComponent>): void;
+      PoolComponent(cmp: ReactUnity.IPoolableComponent, pool: ReactUnity.PoolStack): boolean;
       Equals(obj: any): boolean;
       GetHashCode(): number;
       GetType(): System.Type;
@@ -11453,10 +11557,10 @@ export declare namespace ReactUnity {
         constructor();
         Smoothness: number;
         SmoothBehavior: boolean;
+        BehaviorSmoothness: number;
         OverscrollX: ReactUnity.Types.OverscrollBehavior;
         OverscrollY: ReactUnity.Types.OverscrollBehavior;
         Component: ReactUnity.UGUI.ScrollComponent;
-        BehaviorSmoothness: number;
         FindSnapTarget?: ((arg1: UnityEngine.Vector2, arg2: UnityEngine.Vector2) => UnityEngine.Vector2 | undefined);
         WheelDirectionTransposed: boolean;
         ClientWidth: number;
@@ -13056,13 +13160,98 @@ export declare namespace ReactUnity {
       }
     }
     export namespace Internal {
+      export interface IBackdropGrabber {
+        CanGrab(owner: any, cam: UnityEngine.Camera): boolean;
+        Schedule(owner: any, cam: UnityEngine.Camera, layer: number, surfaces: System.Collections.Generic.IReadOnlyList<UnityEngine.RenderTexture>, count: number): void;
+        Cancel(owner: any, cam: UnityEngine.Camera): void;
+      }
+      export class BackdropGrab {
+        static Grabber: ReactUnity.UGUI.Internal.IBackdropGrabber;
+        static Enabled: boolean;
+        Equals(obj: any): boolean;
+        GetHashCode(): number;
+        GetType(): System.Type;
+        ToString(): string;
+      }
+      export class BackdropSlice {
+        constructor();
+        Slice: number;
+        PopSlice: number;
+        destroyCancellationToken: System.Threading.CancellationToken;
+        useGUILayout: boolean;
+        didStart: boolean;
+        didAwake: boolean;
+        runInEditMode: boolean;
+        enabled: boolean;
+        isActiveAndEnabled: boolean;
+        transform: UnityEngine.Transform;
+        transformHandle: UnityEngine.TransformHandle;
+        gameObject: UnityEngine.GameObject;
+        tag: string;
+        name: string;
+        hideFlags: UnityEngine.HideFlags;
+        static BaseQueue: number;
+        GetModifiedMaterial(baseMaterial: UnityEngine.Material): UnityEngine.Material;
+        IsInvoking(): boolean;
+        CancelInvoke(): void;
+        Invoke(methodName: string, time: number): void;
+        InvokeRepeating(methodName: string, time: number, repeatRate: number): void;
+        CancelInvoke(methodName: string): void;
+        IsInvoking(methodName: string): boolean;
+        StartCoroutine(methodName: string): UnityEngine.Coroutine;
+        StartCoroutine(methodName: string, value: any): UnityEngine.Coroutine;
+        StartCoroutine(routine: System.Collections.IEnumerator): UnityEngine.Coroutine;
+        StartCoroutine_Auto(routine: System.Collections.IEnumerator): UnityEngine.Coroutine;
+        StopCoroutine(routine: System.Collections.IEnumerator): void;
+        StopCoroutine(routine: UnityEngine.Coroutine): void;
+        StopCoroutine(methodName: string): void;
+        StopAllCoroutines(): void;
+        GetComponent(type: System.Type): UnityEngine.Component;
+        GetComponent(type: string): UnityEngine.Component;
+        GetComponentInChildren(t: System.Type, includeInactive: boolean): UnityEngine.Component;
+        GetComponentInChildren(t: System.Type): UnityEngine.Component;
+        GetComponentsInChildren(t: System.Type, includeInactive: boolean): UnityEngine.Component[];
+        GetComponentsInChildren(t: System.Type): UnityEngine.Component[];
+        GetComponentInParent(t: System.Type, includeInactive: boolean): UnityEngine.Component;
+        GetComponentInParent(t: System.Type): UnityEngine.Component;
+        GetComponentsInParent(t: System.Type, includeInactive: boolean): UnityEngine.Component[];
+        GetComponentsInParent(t: System.Type): UnityEngine.Component[];
+        GetComponents(type: System.Type): UnityEngine.Component[];
+        GetComponents(type: System.Type, results: UnityEngine.Component[]): void;
+        GetComponentIndex(): number;
+        CompareTag(tag: string): boolean;
+        CompareTag(tag: UnityEngine.TagHandle): boolean;
+        SendMessageUpwards(methodName: string, value: any, options: UnityEngine.SendMessageOptions): void;
+        SendMessageUpwards(methodName: string, value: any): void;
+        SendMessageUpwards(methodName: string): void;
+        SendMessageUpwards(methodName: string, options: UnityEngine.SendMessageOptions): void;
+        SendMessage(methodName: string, value: any): void;
+        SendMessage(methodName: string): void;
+        SendMessage(methodName: string, value: any, options: UnityEngine.SendMessageOptions): void;
+        SendMessage(methodName: string, options: UnityEngine.SendMessageOptions): void;
+        BroadcastMessage(methodName: string, parameter: any, options: UnityEngine.SendMessageOptions): void;
+        BroadcastMessage(methodName: string, parameter: any): void;
+        BroadcastMessage(methodName: string): void;
+        BroadcastMessage(methodName: string, options: UnityEngine.SendMessageOptions): void;
+        GetEntityId(): UnityEngine.EntityId;
+        GetInstanceID(): number;
+        GetHashCode(): number;
+        Equals(other: any): boolean;
+        ToString(): string;
+        GetType(): System.Type;
+      }
       export interface IBackdropReader {
         BackdropRenderer: UnityEngine.CanvasRenderer;
+        BackdropBleed: number;
         SetBackdrop(backdrop: UnityEngine.Texture): void;
       }
       export class BackdropPass {
         constructor();
-        Render(cam: UnityEngine.Camera, root: UnityEngine.Transform, readers: ReactUnity.UGUI.Internal.IBackdropReader[], width: number, height: number): void;
+        RenderCount: number;
+        Skip: UnityEngine.Transform;
+        Render(cam: UnityEngine.Camera, root: UnityEngine.Transform, readers: ReactUnity.UGUI.Internal.IBackdropReader[], width: number, height: number, stale?: boolean[]): void;
+        Grab(cam: UnityEngine.Camera, root: UnityEngine.Transform, readers: ReactUnity.UGUI.Internal.IBackdropReader[], width: number, height: number): boolean;
+        StopGrab(): void;
         Release(): void;
         static ComparePaintOrder(a: ReactUnity.UGUI.Internal.IBackdropReader, b: ReactUnity.UGUI.Internal.IBackdropReader): number;
         Equals(obj: any): boolean;
@@ -13073,6 +13262,7 @@ export declare namespace ReactUnity {
       export class BackdropSurface {
         constructor();
         static Required: boolean;
+        RenderCount: number;
         destroyCancellationToken: System.Threading.CancellationToken;
         useGUILayout: boolean;
         didStart: boolean;
@@ -13087,6 +13277,7 @@ export declare namespace ReactUnity {
         name: string;
         hideFlags: UnityEngine.HideFlags;
         Context: ReactUnity.UGUI.UGUIContext;
+        NoteRepaint(graphic: UnityEngine.UI.Graphic): void;
         Register(reader: ReactUnity.UGUI.Internal.IBackdropReader): void;
         Unregister(reader: ReactUnity.UGUI.Internal.IBackdropReader): void;
         CollectFor(group: ReactUnity.UGUI.Internal.ElementFilter, into: ReactUnity.UGUI.Internal.IBackdropReader[]): void;
@@ -13137,6 +13328,21 @@ export declare namespace ReactUnity {
         Equals(other: any): boolean;
         ToString(): string;
         GetType(): System.Type;
+      }
+      export class BackdropWatch {
+        constructor();
+        static All: number;
+        static None: number;
+        Poll(root: UnityEngine.Transform, cam: UnityEngine.Camera, scenery?: boolean): void;
+        Stale(index: number, rect: UnityEngine.Rect): boolean;
+        IndexReaders(readers: ReactUnity.UGUI.Internal.IBackdropReader[], into: number[]): void;
+        ReaderRect(cam: UnityEngine.Camera, reader: ReactUnity.UGUI.Internal.IBackdropReader): UnityEngine.Rect;
+        NoteRepaint(graphic: UnityEngine.UI.Graphic): void;
+        Reset(): void;
+        Equals(obj: any): boolean;
+        GetHashCode(): number;
+        GetType(): System.Type;
+        ToString(): string;
       }
       export class BackgroundClipBox {
         Clips: boolean;
@@ -13303,6 +13509,80 @@ export declare namespace ReactUnity {
         ToString(): string;
         GetType(): System.Type;
       }
+      export class CaptureRectMask2D {
+        constructor();
+        padding: UnityEngine.Vector4;
+        softness: UnityEngine.Vector2Int;
+        canvasRect: UnityEngine.Rect;
+        rectTransform: UnityEngine.RectTransform;
+        destroyCancellationToken: System.Threading.CancellationToken;
+        useGUILayout: boolean;
+        didStart: boolean;
+        didAwake: boolean;
+        runInEditMode: boolean;
+        enabled: boolean;
+        isActiveAndEnabled: boolean;
+        transform: UnityEngine.Transform;
+        transformHandle: UnityEngine.TransformHandle;
+        gameObject: UnityEngine.GameObject;
+        tag: string;
+        name: string;
+        hideFlags: UnityEngine.HideFlags;
+        PerformClipping(): void;
+        IsRaycastLocationValid(sp: UnityEngine.Vector2, eventCamera: UnityEngine.Camera): boolean;
+        UpdateClipSoftness(): void;
+        AddClippable(clippable: UnityEngine.UI.IClippable): void;
+        RemoveClippable(clippable: UnityEngine.UI.IClippable): void;
+        IsActive(): boolean;
+        IsDestroyed(): boolean;
+        IsInvoking(): boolean;
+        CancelInvoke(): void;
+        Invoke(methodName: string, time: number): void;
+        InvokeRepeating(methodName: string, time: number, repeatRate: number): void;
+        CancelInvoke(methodName: string): void;
+        IsInvoking(methodName: string): boolean;
+        StartCoroutine(methodName: string): UnityEngine.Coroutine;
+        StartCoroutine(methodName: string, value: any): UnityEngine.Coroutine;
+        StartCoroutine(routine: System.Collections.IEnumerator): UnityEngine.Coroutine;
+        StartCoroutine_Auto(routine: System.Collections.IEnumerator): UnityEngine.Coroutine;
+        StopCoroutine(routine: System.Collections.IEnumerator): void;
+        StopCoroutine(routine: UnityEngine.Coroutine): void;
+        StopCoroutine(methodName: string): void;
+        StopAllCoroutines(): void;
+        GetComponent(type: System.Type): UnityEngine.Component;
+        GetComponent(type: string): UnityEngine.Component;
+        GetComponentInChildren(t: System.Type, includeInactive: boolean): UnityEngine.Component;
+        GetComponentInChildren(t: System.Type): UnityEngine.Component;
+        GetComponentsInChildren(t: System.Type, includeInactive: boolean): UnityEngine.Component[];
+        GetComponentsInChildren(t: System.Type): UnityEngine.Component[];
+        GetComponentInParent(t: System.Type, includeInactive: boolean): UnityEngine.Component;
+        GetComponentInParent(t: System.Type): UnityEngine.Component;
+        GetComponentsInParent(t: System.Type, includeInactive: boolean): UnityEngine.Component[];
+        GetComponentsInParent(t: System.Type): UnityEngine.Component[];
+        GetComponents(type: System.Type): UnityEngine.Component[];
+        GetComponents(type: System.Type, results: UnityEngine.Component[]): void;
+        GetComponentIndex(): number;
+        CompareTag(tag: string): boolean;
+        CompareTag(tag: UnityEngine.TagHandle): boolean;
+        SendMessageUpwards(methodName: string, value: any, options: UnityEngine.SendMessageOptions): void;
+        SendMessageUpwards(methodName: string, value: any): void;
+        SendMessageUpwards(methodName: string): void;
+        SendMessageUpwards(methodName: string, options: UnityEngine.SendMessageOptions): void;
+        SendMessage(methodName: string, value: any): void;
+        SendMessage(methodName: string): void;
+        SendMessage(methodName: string, value: any, options: UnityEngine.SendMessageOptions): void;
+        SendMessage(methodName: string, options: UnityEngine.SendMessageOptions): void;
+        BroadcastMessage(methodName: string, parameter: any, options: UnityEngine.SendMessageOptions): void;
+        BroadcastMessage(methodName: string, parameter: any): void;
+        BroadcastMessage(methodName: string): void;
+        BroadcastMessage(methodName: string, options: UnityEngine.SendMessageOptions): void;
+        GetEntityId(): UnityEngine.EntityId;
+        GetInstanceID(): number;
+        GetHashCode(): number;
+        Equals(other: any): boolean;
+        ToString(): string;
+        GetType(): System.Type;
+      }
       export class ClipPathRaycastFilter {
         constructor();
         destroyCancellationToken: System.Threading.CancellationToken;
@@ -13372,6 +13652,114 @@ export declare namespace ReactUnity {
         ToString(): string;
         GetType(): System.Type;
       }
+      export class ClipPathStencil {
+        constructor();
+        onCullStateChanged: UnityEngine.UI.MaskableGraphic_CullStateChangedEvent;
+        maskable: boolean;
+        isMaskingGraphic: boolean;
+        color: UnityEngine.Color;
+        raycastTarget: boolean;
+        raycastPadding: UnityEngine.Vector4;
+        depth: number;
+        rectTransform: UnityEngine.RectTransform;
+        canvas: UnityEngine.Canvas;
+        canvasRenderer: UnityEngine.CanvasRenderer;
+        defaultMaterial: UnityEngine.Material;
+        material: UnityEngine.Material;
+        materialForRendering: UnityEngine.Material;
+        mainTexture: UnityEngine.Texture;
+        destroyCancellationToken: System.Threading.CancellationToken;
+        useGUILayout: boolean;
+        didStart: boolean;
+        didAwake: boolean;
+        runInEditMode: boolean;
+        enabled: boolean;
+        isActiveAndEnabled: boolean;
+        transform: UnityEngine.Transform;
+        transformHandle: UnityEngine.TransformHandle;
+        gameObject: UnityEngine.GameObject;
+        tag: string;
+        name: string;
+        hideFlags: UnityEngine.HideFlags;
+        GetModifiedMaterial(baseMaterial: UnityEngine.Material): UnityEngine.Material;
+        Cull(clipRect: UnityEngine.Rect, validRect: boolean): void;
+        SetClipRect(clipRect: UnityEngine.Rect, validRect: boolean): void;
+        SetClipSoftness(clipSoftness: UnityEngine.Vector2): void;
+        RecalculateClipping(): void;
+        RecalculateMasking(): void;
+        Raycast(sp: UnityEngine.Vector2, eventCamera: UnityEngine.Camera): boolean;
+        SetAllDirty(): void;
+        SetLayoutDirty(): void;
+        SetVerticesDirty(): void;
+        SetMaterialDirty(): void;
+        SetRaycastDirty(): void;
+        OnCullingChanged(): void;
+        Rebuild(update: UnityEngine.UI.CanvasUpdate): void;
+        LayoutComplete(): void;
+        GraphicUpdateComplete(): void;
+        OnRebuildRequested(): void;
+        SetNativeSize(): void;
+        PixelAdjustPoint(point: UnityEngine.Vector2): UnityEngine.Vector2;
+        GetPixelAdjustedRect(): UnityEngine.Rect;
+        CrossFadeColor(targetColor: UnityEngine.Color, duration: number, ignoreTimeScale: boolean, useAlpha: boolean): void;
+        CrossFadeColor(targetColor: UnityEngine.Color, duration: number, ignoreTimeScale: boolean, useAlpha: boolean, useRGB: boolean): void;
+        CrossFadeAlpha(alpha: number, duration: number, ignoreTimeScale: boolean): void;
+        RegisterDirtyLayoutCallback(action: (() => void)): void;
+        UnregisterDirtyLayoutCallback(action: (() => void)): void;
+        RegisterDirtyVerticesCallback(action: (() => void)): void;
+        UnregisterDirtyVerticesCallback(action: (() => void)): void;
+        RegisterDirtyMaterialCallback(action: (() => void)): void;
+        UnregisterDirtyMaterialCallback(action: (() => void)): void;
+        IsActive(): boolean;
+        IsDestroyed(): boolean;
+        IsInvoking(): boolean;
+        CancelInvoke(): void;
+        Invoke(methodName: string, time: number): void;
+        InvokeRepeating(methodName: string, time: number, repeatRate: number): void;
+        CancelInvoke(methodName: string): void;
+        IsInvoking(methodName: string): boolean;
+        StartCoroutine(methodName: string): UnityEngine.Coroutine;
+        StartCoroutine(methodName: string, value: any): UnityEngine.Coroutine;
+        StartCoroutine(routine: System.Collections.IEnumerator): UnityEngine.Coroutine;
+        StartCoroutine_Auto(routine: System.Collections.IEnumerator): UnityEngine.Coroutine;
+        StopCoroutine(routine: System.Collections.IEnumerator): void;
+        StopCoroutine(routine: UnityEngine.Coroutine): void;
+        StopCoroutine(methodName: string): void;
+        StopAllCoroutines(): void;
+        GetComponent(type: System.Type): UnityEngine.Component;
+        GetComponent(type: string): UnityEngine.Component;
+        GetComponentInChildren(t: System.Type, includeInactive: boolean): UnityEngine.Component;
+        GetComponentInChildren(t: System.Type): UnityEngine.Component;
+        GetComponentsInChildren(t: System.Type, includeInactive: boolean): UnityEngine.Component[];
+        GetComponentsInChildren(t: System.Type): UnityEngine.Component[];
+        GetComponentInParent(t: System.Type, includeInactive: boolean): UnityEngine.Component;
+        GetComponentInParent(t: System.Type): UnityEngine.Component;
+        GetComponentsInParent(t: System.Type, includeInactive: boolean): UnityEngine.Component[];
+        GetComponentsInParent(t: System.Type): UnityEngine.Component[];
+        GetComponents(type: System.Type): UnityEngine.Component[];
+        GetComponents(type: System.Type, results: UnityEngine.Component[]): void;
+        GetComponentIndex(): number;
+        CompareTag(tag: string): boolean;
+        CompareTag(tag: UnityEngine.TagHandle): boolean;
+        SendMessageUpwards(methodName: string, value: any, options: UnityEngine.SendMessageOptions): void;
+        SendMessageUpwards(methodName: string, value: any): void;
+        SendMessageUpwards(methodName: string): void;
+        SendMessageUpwards(methodName: string, options: UnityEngine.SendMessageOptions): void;
+        SendMessage(methodName: string, value: any): void;
+        SendMessage(methodName: string): void;
+        SendMessage(methodName: string, value: any, options: UnityEngine.SendMessageOptions): void;
+        SendMessage(methodName: string, options: UnityEngine.SendMessageOptions): void;
+        BroadcastMessage(methodName: string, parameter: any, options: UnityEngine.SendMessageOptions): void;
+        BroadcastMessage(methodName: string, parameter: any): void;
+        BroadcastMessage(methodName: string): void;
+        BroadcastMessage(methodName: string, options: UnityEngine.SendMessageOptions): void;
+        GetEntityId(): UnityEngine.EntityId;
+        GetInstanceID(): number;
+        GetHashCode(): number;
+        Equals(other: any): boolean;
+        ToString(): string;
+        GetType(): System.Type;
+      }
       export class ElementFilter {
         constructor();
         Definition: ReactUnity.Types.FilterDefinition;
@@ -13381,8 +13769,11 @@ export declare namespace ReactUnity {
         Perspective: number;
         PerspectiveOrigin: ReactUnity.Types.YogaValue2;
         HasMask: boolean;
+        CapturesFlat: boolean;
         RenderCount: number;
+        InnerBackdropRenderCount: number;
         BackdropRenderer: UnityEngine.CanvasRenderer;
+        BackdropBleed: number;
         destroyCancellationToken: System.Threading.CancellationToken;
         useGUILayout: boolean;
         didStart: boolean;
@@ -13398,7 +13789,7 @@ export declare namespace ReactUnity {
         hideFlags: UnityEngine.HideFlags;
         static Create(cmp: ReactUnity.UGUI.UGUIComponent, definition: ReactUnity.Types.FilterDefinition, blendMode: ReactUnity.Types.BackgroundBlendMode, isolated: boolean, clipShape: ReactUnity.Types.ClipPath): ReactUnity.UGUI.Internal.ElementFilter;
         SetMask(images: ReactUnity.Types.ICssValueList<ReactUnity.Types.ImageDefinition>, positionsX: ReactUnity.Types.ICssValueList<Yoga.YogaValue>, positionsY: ReactUnity.Types.ICssValueList<Yoga.YogaValue>, sizes: ReactUnity.Types.ICssValueList<ReactUnity.Types.BackgroundSize>, repeatXs: ReactUnity.Types.ICssValueList<ReactUnity.Types.BackgroundRepeat>, repeatYs: ReactUnity.Types.ICssValueList<ReactUnity.Types.BackgroundRepeat>, mode: ReactUnity.Types.MaskMode): void;
-        Detach(): void;
+        Detach(immediate?: boolean): void;
         SetBackdrop(backdrop: UnityEngine.Texture): void;
         Invalidate(): void;
         IsInvoking(): boolean;
@@ -13524,9 +13915,9 @@ export declare namespace ReactUnity {
       }
       export class FilterRaycaster {
         constructor();
+        eventCamera: UnityEngine.Camera;
         sortOrderPriority: number;
         renderOrderPriority: number;
-        eventCamera: UnityEngine.Camera;
         ignoreReversedGraphics: boolean;
         blockingObjects: UnityEngine.UI.GraphicRaycaster_BlockingObjects;
         blockingMask: UnityEngine.LayerMask;
@@ -13618,6 +14009,76 @@ export declare namespace ReactUnity {
         Graphic: UnityEngine.UI.Graphic;
         Image: ReactUnity.UGUI.Shapes.WebRect;
         static Create(go: UnityEngine.GameObject, ctx: ReactUnity.ReactContext): ReactUnity.UGUI.Internal.MaskAndImage;
+        IsInvoking(): boolean;
+        CancelInvoke(): void;
+        Invoke(methodName: string, time: number): void;
+        InvokeRepeating(methodName: string, time: number, repeatRate: number): void;
+        CancelInvoke(methodName: string): void;
+        IsInvoking(methodName: string): boolean;
+        StartCoroutine(methodName: string): UnityEngine.Coroutine;
+        StartCoroutine(methodName: string, value: any): UnityEngine.Coroutine;
+        StartCoroutine(routine: System.Collections.IEnumerator): UnityEngine.Coroutine;
+        StartCoroutine_Auto(routine: System.Collections.IEnumerator): UnityEngine.Coroutine;
+        StopCoroutine(routine: System.Collections.IEnumerator): void;
+        StopCoroutine(routine: UnityEngine.Coroutine): void;
+        StopCoroutine(methodName: string): void;
+        StopAllCoroutines(): void;
+        GetComponent(type: System.Type): UnityEngine.Component;
+        GetComponent(type: string): UnityEngine.Component;
+        GetComponentInChildren(t: System.Type, includeInactive: boolean): UnityEngine.Component;
+        GetComponentInChildren(t: System.Type): UnityEngine.Component;
+        GetComponentsInChildren(t: System.Type, includeInactive: boolean): UnityEngine.Component[];
+        GetComponentsInChildren(t: System.Type): UnityEngine.Component[];
+        GetComponentInParent(t: System.Type, includeInactive: boolean): UnityEngine.Component;
+        GetComponentInParent(t: System.Type): UnityEngine.Component;
+        GetComponentsInParent(t: System.Type, includeInactive: boolean): UnityEngine.Component[];
+        GetComponentsInParent(t: System.Type): UnityEngine.Component[];
+        GetComponents(type: System.Type): UnityEngine.Component[];
+        GetComponents(type: System.Type, results: UnityEngine.Component[]): void;
+        GetComponentIndex(): number;
+        CompareTag(tag: string): boolean;
+        CompareTag(tag: UnityEngine.TagHandle): boolean;
+        SendMessageUpwards(methodName: string, value: any, options: UnityEngine.SendMessageOptions): void;
+        SendMessageUpwards(methodName: string, value: any): void;
+        SendMessageUpwards(methodName: string): void;
+        SendMessageUpwards(methodName: string, options: UnityEngine.SendMessageOptions): void;
+        SendMessage(methodName: string, value: any): void;
+        SendMessage(methodName: string): void;
+        SendMessage(methodName: string, value: any, options: UnityEngine.SendMessageOptions): void;
+        SendMessage(methodName: string, options: UnityEngine.SendMessageOptions): void;
+        BroadcastMessage(methodName: string, parameter: any, options: UnityEngine.SendMessageOptions): void;
+        BroadcastMessage(methodName: string, parameter: any): void;
+        BroadcastMessage(methodName: string): void;
+        BroadcastMessage(methodName: string, options: UnityEngine.SendMessageOptions): void;
+        GetEntityId(): UnityEngine.EntityId;
+        GetInstanceID(): number;
+        GetHashCode(): number;
+        Equals(other: any): boolean;
+        ToString(): string;
+        GetType(): System.Type;
+      }
+      export class PlaneWarp {
+        constructor();
+        Warping: boolean;
+        destroyCancellationToken: System.Threading.CancellationToken;
+        useGUILayout: boolean;
+        didStart: boolean;
+        didAwake: boolean;
+        runInEditMode: boolean;
+        enabled: boolean;
+        isActiveAndEnabled: boolean;
+        transform: UnityEngine.Transform;
+        transformHandle: UnityEngine.TransformHandle;
+        gameObject: UnityEngine.GameObject;
+        tag: string;
+        name: string;
+        hideFlags: UnityEngine.HideFlags;
+        Set(point: UnityEngine.Vector3, axisS: UnityEngine.Vector3, axisT: UnityEngine.Vector3, region: UnityEngine.Rect, polygon: UnityEngine.Vector2[], eye: UnityEngine.Vector2, perspective: number): void;
+        Clear(): void;
+        ModifyMesh(vh: UnityEngine.UI.VertexHelper): void;
+        ModifyMesh(mesh: UnityEngine.Mesh): void;
+        IsActive(): boolean;
+        IsDestroyed(): boolean;
         IsInvoking(): boolean;
         CancelInvoke(): void;
         Invoke(methodName: string, time: number): void;
@@ -13907,6 +14368,7 @@ export declare namespace ReactUnity {
         materialForRendering: UnityEngine.Material;
         Surface: ReactUnity.UGUI.Internal.BackdropSurface;
         BackdropRenderer: UnityEngine.CanvasRenderer;
+        BackdropBleed: number;
         sprite: UnityEngine.Sprite;
         overrideSprite: UnityEngine.Sprite;
         type: UnityEngine.UI.Image_Type;
@@ -14279,6 +14741,7 @@ export declare namespace ReactUnity {
         constructor();
         Surface: ReactUnity.UGUI.Internal.BackdropSurface;
         BackdropRenderer: UnityEngine.CanvasRenderer;
+        BackdropBleed: number;
         materialForRendering: UnityEngine.Material;
         IsBackdrop: boolean;
         Definition: ReactUnity.Types.FilterDefinition;
@@ -14706,6 +15169,7 @@ export declare namespace ReactUnity {
         Offset: UnityEngine.Vector2;
         Blur: number;
         Spread: number;
+        ValueEquals(other: ReactUnity.UGUI.Shapes.WebShadowProperties): boolean;
         Equals(obj: any): boolean;
         GetHashCode(): number;
         GetType(): System.Type;
@@ -15220,7 +15684,8 @@ export declare namespace ReactUnity {
       Destroyed: boolean;
       Tag: string;
       TextContent: string;
-      PoolStack: System.Collections.Generic.Stack<ReactUnity.IPoolableComponent>;
+      PoolStack: ReactUnity.PoolStack;
+      PoolHint: string;
       IsPseudoElement: boolean;
       ResolvedName: string;
       ClassName: string;
@@ -15312,7 +15777,8 @@ export declare namespace ReactUnity {
       Destroyed: boolean;
       Tag: string;
       TextContent: string;
-      PoolStack: System.Collections.Generic.Stack<ReactUnity.IPoolableComponent>;
+      PoolStack: ReactUnity.PoolStack;
+      PoolHint: string;
       IsPseudoElement: boolean;
       ResolvedName: string;
       ClassName: string;
@@ -15408,7 +15874,8 @@ export declare namespace ReactUnity {
       Destroyed: boolean;
       Tag: string;
       TextContent: string;
-      PoolStack: System.Collections.Generic.Stack<ReactUnity.IPoolableComponent>;
+      PoolStack: ReactUnity.PoolStack;
+      PoolHint: string;
       IsPseudoElement: boolean;
       ResolvedName: string;
       ClassName: string;
@@ -15506,7 +15973,8 @@ export declare namespace ReactUnity {
       Destroyed: boolean;
       Tag: string;
       TextContent: string;
-      PoolStack: System.Collections.Generic.Stack<ReactUnity.IPoolableComponent>;
+      PoolStack: ReactUnity.PoolStack;
+      PoolHint: string;
       IsPseudoElement: boolean;
       ResolvedName: string;
       ClassName: string;
@@ -15600,7 +16068,8 @@ export declare namespace ReactUnity {
       Destroyed: boolean;
       Tag: string;
       TextContent: string;
-      PoolStack: System.Collections.Generic.Stack<ReactUnity.IPoolableComponent>;
+      PoolStack: ReactUnity.PoolStack;
+      PoolHint: string;
       IsPseudoElement: boolean;
       ResolvedName: string;
       ClassName: string;
@@ -15690,7 +16159,8 @@ export declare namespace ReactUnity {
       Destroyed: boolean;
       Tag: string;
       TextContent: string;
-      PoolStack: System.Collections.Generic.Stack<ReactUnity.IPoolableComponent>;
+      PoolStack: ReactUnity.PoolStack;
+      PoolHint: string;
       IsPseudoElement: boolean;
       ResolvedName: string;
       ClassName: string;
@@ -15780,7 +16250,8 @@ export declare namespace ReactUnity {
       Destroyed: boolean;
       Tag: string;
       TextContent: string;
-      PoolStack: System.Collections.Generic.Stack<ReactUnity.IPoolableComponent>;
+      PoolStack: ReactUnity.PoolStack;
+      PoolHint: string;
       IsPseudoElement: boolean;
       ResolvedName: string;
       ClassName: string;
@@ -15871,7 +16342,8 @@ export declare namespace ReactUnity {
       Destroyed: boolean;
       Tag: string;
       TextContent: string;
-      PoolStack: System.Collections.Generic.Stack<ReactUnity.IPoolableComponent>;
+      PoolStack: ReactUnity.PoolStack;
+      PoolHint: string;
       IsPseudoElement: boolean;
       ResolvedName: string;
       ClassName: string;
@@ -15960,7 +16432,8 @@ export declare namespace ReactUnity {
       Destroyed: boolean;
       Tag: string;
       TextContent: string;
-      PoolStack: System.Collections.Generic.Stack<ReactUnity.IPoolableComponent>;
+      PoolStack: ReactUnity.PoolStack;
+      PoolHint: string;
       IsPseudoElement: boolean;
       ResolvedName: string;
       ClassName: string;
@@ -16053,7 +16526,8 @@ export declare namespace ReactUnity {
       Destroyed: boolean;
       Tag: string;
       TextContent: string;
-      PoolStack: System.Collections.Generic.Stack<ReactUnity.IPoolableComponent>;
+      PoolStack: ReactUnity.PoolStack;
+      PoolHint: string;
       IsPseudoElement: boolean;
       ResolvedName: string;
       ClassName: string;
@@ -16144,7 +16618,8 @@ export declare namespace ReactUnity {
       Destroyed: boolean;
       Tag: string;
       TextContent: string;
-      PoolStack: System.Collections.Generic.Stack<ReactUnity.IPoolableComponent>;
+      PoolStack: ReactUnity.PoolStack;
+      PoolHint: string;
       IsPseudoElement: boolean;
       ResolvedName: string;
       ClassName: string;
@@ -16236,7 +16711,8 @@ export declare namespace ReactUnity {
       Destroyed: boolean;
       Tag: string;
       TextContent: string;
-      PoolStack: System.Collections.Generic.Stack<ReactUnity.IPoolableComponent>;
+      PoolStack: ReactUnity.PoolStack;
+      PoolHint: string;
       IsPseudoElement: boolean;
       ResolvedName: string;
       ClassName: string;
@@ -16327,7 +16803,8 @@ export declare namespace ReactUnity {
       Destroyed: boolean;
       Tag: string;
       TextContent: string;
-      PoolStack: System.Collections.Generic.Stack<ReactUnity.IPoolableComponent>;
+      PoolStack: ReactUnity.PoolStack;
+      PoolHint: string;
       IsPseudoElement: boolean;
       ResolvedName: string;
       ClassName: string;
@@ -16424,7 +16901,8 @@ export declare namespace ReactUnity {
       Destroyed: boolean;
       Tag: string;
       TextContent: string;
-      PoolStack: System.Collections.Generic.Stack<ReactUnity.IPoolableComponent>;
+      PoolStack: ReactUnity.PoolStack;
+      PoolHint: string;
       IsPseudoElement: boolean;
       ResolvedName: string;
       ClassName: string;
@@ -16512,7 +16990,8 @@ export declare namespace ReactUnity {
       Destroyed: boolean;
       Tag: string;
       TextContent: string;
-      PoolStack: System.Collections.Generic.Stack<ReactUnity.IPoolableComponent>;
+      PoolStack: ReactUnity.PoolStack;
+      PoolHint: string;
       IsPseudoElement: boolean;
       ResolvedName: string;
       ClassName: string;
@@ -16608,7 +17087,8 @@ export declare namespace ReactUnity {
       Destroyed: boolean;
       Tag: string;
       TextContent: string;
-      PoolStack: System.Collections.Generic.Stack<ReactUnity.IPoolableComponent>;
+      PoolStack: ReactUnity.PoolStack;
+      PoolHint: string;
       IsPseudoElement: boolean;
       ResolvedName: string;
       ClassName: string;
@@ -16698,7 +17178,8 @@ export declare namespace ReactUnity {
       Destroyed: boolean;
       Tag: string;
       TextContent: string;
-      PoolStack: System.Collections.Generic.Stack<ReactUnity.IPoolableComponent>;
+      PoolStack: ReactUnity.PoolStack;
+      PoolHint: string;
       IsPseudoElement: boolean;
       ResolvedName: string;
       ClassName: string;
@@ -16791,7 +17272,8 @@ export declare namespace ReactUnity {
       Destroyed: boolean;
       Tag: string;
       TextContent: string;
-      PoolStack: System.Collections.Generic.Stack<ReactUnity.IPoolableComponent>;
+      PoolStack: ReactUnity.PoolStack;
+      PoolHint: string;
       IsPseudoElement: boolean;
       ResolvedName: string;
       ClassName: string;
@@ -16887,7 +17369,8 @@ export declare namespace ReactUnity {
       Destroyed: boolean;
       Tag: string;
       TextContent: string;
-      PoolStack: System.Collections.Generic.Stack<ReactUnity.IPoolableComponent>;
+      PoolStack: ReactUnity.PoolStack;
+      PoolHint: string;
       IsPseudoElement: boolean;
       ResolvedName: string;
       ClassName: string;
@@ -16977,7 +17460,8 @@ export declare namespace ReactUnity {
       Destroyed: boolean;
       Tag: string;
       TextContent: string;
-      PoolStack: System.Collections.Generic.Stack<ReactUnity.IPoolableComponent>;
+      PoolStack: ReactUnity.PoolStack;
+      PoolHint: string;
       IsPseudoElement: boolean;
       ResolvedName: string;
       ClassName: string;
@@ -17341,9 +17825,9 @@ export declare namespace ReactUnity {
       FlushCommands(serializedCommands?: string): void;
       CreateText(tag?: string, text?: string, poolKey?: string): ReactUnity.ITextComponent;
       CreateDefaultComponent(tag: string, text: string, poolKey?: string): ReactUnity.IReactComponent;
-      CreateComponent(tag: string, text: string, poolKey?: string): ReactUnity.IReactComponent;
+      CreateComponent(tag: string, text: string, poolKey?: string, poolHint?: string): ReactUnity.IReactComponent;
       CreatePseudoComponent(tag: string, poolKey?: string): ReactUnity.IReactComponent;
-      PoolComponent(cmp: ReactUnity.IPoolableComponent, pool: System.Collections.Generic.Stack<ReactUnity.IPoolableComponent>): void;
+      PoolComponent(cmp: ReactUnity.IPoolableComponent, pool: ReactUnity.PoolStack): boolean;
       Equals(obj: any): boolean;
       GetHashCode(): number;
       GetType(): System.Type;

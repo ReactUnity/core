@@ -60,7 +60,8 @@ namespace ReactUnity
         public List<RuleTreeNode<StyleData>> BeforeRules { get; }
         public List<RuleTreeNode<StyleData>> AfterRules { get; }
         public string Content { get; }
-        public Stack<IPoolableComponent> PoolStack { get; set; }
+        public PoolStack PoolStack { get; set; }
+        public string PoolHint => null;
 
         public void ApplyLayoutStyles() { }
         public void ResolveStyle(bool recursive = false) { }

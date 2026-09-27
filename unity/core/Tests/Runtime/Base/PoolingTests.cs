@@ -429,6 +429,36 @@ namespace ReactUnity.Tests
             Assert.AreNotSame(pooled, Ref(900005), "an empty key is pool={false}");
         }
 
+        [UGUITest(Pooling = All)]
+        public IEnumerator ASpareThatHadTheClassNameIsPreferred()
+        {
+            yield return null;
+            IReactComponent Ref(int id) => (IReactComponent) Context.GetRef(id);
+
+            Context.FlushCommands("[[0,900001,\"view\",{\"p\":{\"className\":\"a\"}},null],[0,900002,\"view\",{\"p\":{\"className\":\"b\"}},null]]");
+            var a = Ref(900001);
+            var b = Ref(900002);
+            a.Destroy();
+            b.Destroy();
+
+            Context.FlushCommands("[[0,900003,\"view\",{\"p\":{\"className\":\"a\"}},null]]");
+            Assert.AreSame(a, Ref(900003), "the spare that was a should come back, though b is the latest");
+            Assert.AreEqual("a", Ref(900003).ClassName);
+            a.Destroy();
+
+            Context.FlushCommands("[[\"c\",{\"r\":900004,\"t\":\"view\",\"k\":null,\"p\":{\"className\":\"b\"}}]]");
+            Assert.AreSame(b, Ref(900004), "legacy create");
+            b.Destroy();
+
+            Context.FlushCommands("[[0,900005,\"view\",{\"p\":{\"className\":\"c\"}},null]]");
+            Assert.AreSame(b, Ref(900005), "with no match, the latest spare");
+            Assert.AreEqual("c", Ref(900005).ClassName);
+
+            Context.FlushCommands("[[0,900006,\"view\",null,null]]");
+            Assert.AreSame(a, Ref(900006), "a spare is still reused by an element with no class");
+            Assert.AreEqual("", Ref(900006).ClassName);
+        }
+
         [UGUITest(Pooling = All, Script = Head + "<portal target={g.target} />" + Mid + "null" + Tail)]
         public IEnumerator DisposingDestroysAPortalInsteadOfPoolingIt()
         {

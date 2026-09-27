@@ -124,6 +124,15 @@ namespace ReactUnity
         // No `pool` prop is a null key, which the context resolves by its pooling type; `pool={false}` is "".
         static string PoolKey(object value) => value == null ? null : ToStr(value);
 
+        IReactComponent CreateElement(string type, object props, string poolKey)
+        {
+            // Only this path sees className before creating, so a spare that had it can be picked.
+            var hint = props is JsonObject o && o["p"] is JsonObject p ? (p["className"] ?? p["class"]) as string : null;
+            var el = CreateComponent(type, null, poolKey, hint);
+            ReactUnityBridge.Instance.applyUpdate(el, MultiEnumerator(props), type);
+            return el;
+        }
+
         public void FlushCommands(string serializedCommands = null)
         {
             using (ReactProfiling.FlushCommands.Auto())
@@ -156,7 +165,7 @@ namespace ReactUnity
                             var type = StrAt(cmd, 2);
                             var props = At(cmd, 3);
                             var poolKey = PoolKey(At(cmd, 4));
-                            var el = ReactUnityBridge.Instance.createElement(type, null, Host, MultiEnumerator(props), poolKey);
+                            var el = CreateElement(type, props, poolKey);
                             if (refId > 0)
                             {
                                 SetRef(refId, el);
@@ -235,7 +244,7 @@ namespace ReactUnity
                             var refId = ToInt(val["r"]);
                             var type = StrAt(val, "t");
                             var poolKey = PoolKey(val["k"]);
-                            var el = ReactUnityBridge.Instance.createElement(type, null, Host, MultiEnumerator(val), poolKey);
+                            var el = CreateElement(type, val, poolKey);
                             if (refId > 0)
                             {
                                 SetRef(refId, el);

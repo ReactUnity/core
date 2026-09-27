@@ -50,6 +50,7 @@ namespace ReactUnity.UGUI.Internal
         public List<WebShadow> ShadowGraphics { get; private set; }
         // Disabled, in the order they left ShadowGraphics, so popping one keeps the list in sibling order.
         private Stack<WebShadow> spareShadows;
+        private const int MaxSpareShadows = 2;
         public List<WebBackgroundImage> BackgroundGraphics { get; private set; }
 
         private WebOutlineSizes borderSize;
@@ -728,15 +729,19 @@ namespace ReactUnity.UGUI.Internal
                 else return;
             }
 
-            // Surplus shadows are parked rather than destroyed: a pooled element is reused in another
-            // role on almost every remount, and rebuilding its shadows cost more than restyling it.
+            // A few surplus shadows are parked for a pooled element's next role. Past the cap they are
+            // destroyed, or every pooled view keeps the most shadows any role ever gave it.
             while (ShadowGraphics.Count > validCount)
             {
                 var last = ShadowGraphics.Count - 1;
                 var sd = ShadowGraphics[last];
                 ShadowGraphics.RemoveAt(last);
-                sd.enabled = false;
-                (spareShadows ??= new Stack<WebShadow>()).Push(sd);
+                if ((spareShadows ??= new Stack<WebShadow>()).Count < MaxSpareShadows)
+                {
+                    sd.enabled = false;
+                    spareShadows.Push(sd);
+                }
+                else DestroyImmediate(sd.gameObject);
             }
 
             while (ShadowGraphics.Count < validCount)

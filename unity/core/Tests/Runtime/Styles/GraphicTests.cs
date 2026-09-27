@@ -93,6 +93,21 @@ namespace ReactUnity.Tests
             Assert.AreEqual(UnityEngine.Color.black, shadows[1].color, "drawing the first CSS shadow, which the last graphic holds");
         }
 
+        [UGUITest(Script = BaseScript, Style = BaseStyle)]
+        public IEnumerator OnlyAFewSurplusShadowsAreParked()
+        {
+            View.Style["box-shadow"] = "0 0 1px red, 0 0 2px red, 0 0 3px red, 0 0 4px red, 0 0 5px red";
+            yield return null;
+            Assert.AreEqual(5, View.BorderAndBackground.ShadowGraphics.Count);
+
+            View.Style["box-shadow"] = "none";
+            yield return null;
+
+            var kept = View.GameObject.GetComponentsInChildren<UGUI.Shapes.WebShadow>(true);
+            Assert.AreEqual(2, kept.Length, "the rest should be destroyed");
+            foreach (var sd in kept) Assert.IsFalse(sd.enabled);
+        }
+
         const string BorderStyle = @"
             #test {
                 background-color: white;
