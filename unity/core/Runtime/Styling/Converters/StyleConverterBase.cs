@@ -63,6 +63,13 @@ namespace ReactUnity.Styling.Converters
             return false;
         }
 
+        // A var() hands its text to the converter on every read, so each converter keeps what it parsed.
+        private const int ParseCacheLimit = 1024;
+        private Dictionary<string, IComputedValue> parsed;
+
+        /// <summary>Whether parsing a string always gives the same result, which lets it be cached.</summary>
+        protected virtual bool ParsesArePure => true;
+
         public bool TryParse(string value, out IComputedValue result)
         {
             if (string.IsNullOrWhiteSpace(value))
@@ -71,6 +78,21 @@ namespace ReactUnity.Styling.Converters
                 return false;
             }
 
+            if (!ParsesArePure) return ParseUncached(value, out result);
+
+            if (parsed == null) parsed = new Dictionary<string, IComputedValue>();
+            else if (parsed.TryGetValue(value, out result)) return result != null;
+
+            var success = ParseUncached(value, out result);
+            if (success && result == null) return true;
+
+            if (parsed.Count >= ParseCacheLimit) parsed.Clear();
+            parsed[value] = success ? result : null;
+            return success;
+        }
+
+        private bool ParseUncached(string value, out IComputedValue result)
+        {
             if (ParserHelpers.TryParseVariables(value, out result)) return true;
 
             var fns = AllowedFunctions;

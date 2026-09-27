@@ -60,6 +60,54 @@ namespace ReactUnity.Styling
             }
         }
 
+        /// <summary>
+        /// The timing properties read on every tick. Each read of one declared through a var() builds
+        /// a fresh list, so they are read once per <see cref="Current"/> and parent style instead.
+        /// </summary>
+        private class TransitionTiming
+        {
+            public ICssValueList<float> TransitionDuration;
+            public ICssValueList<float> TransitionDelay;
+            public ICssValueList<TimingFunction> TransitionTimingFunction;
+            public ICssValueList<AnimationPlayState> TransitionPlayState;
+
+            public TransitionTiming(NodeStyle style)
+            {
+                TransitionDuration = style.GetStyleValue(StyleProperties.transitionDuration);
+                TransitionDelay = style.GetStyleValue(StyleProperties.transitionDelay);
+                TransitionTimingFunction = style.GetStyleValue(StyleProperties.transitionTimingFunction);
+                TransitionPlayState = style.GetStyleValue(StyleProperties.transitionPlayState);
+            }
+        }
+
+        private class AnimationTiming
+        {
+            public ICssValueList<float> AnimationDelay;
+            public ICssValueList<AnimationDirection> AnimationDirection;
+            public ICssValueList<float> AnimationDuration;
+            public ICssValueList<AnimationFillMode> AnimationFillMode;
+            public ICssValueList<int> AnimationIterationCount;
+            public ICssValueList<AnimationPlayState> AnimationPlayState;
+            public ICssValueList<TimingFunction> AnimationTimingFunction;
+            public ICssValueList<AnimationTimeline> AnimationTimeline;
+            public ICssValueList<AnimationRangeBoundary> AnimationRangeStart;
+            public ICssValueList<AnimationRangeBoundary> AnimationRangeEnd;
+
+            public AnimationTiming(NodeStyle style)
+            {
+                AnimationDelay = style.animationDelay;
+                AnimationDirection = style.animationDirection;
+                AnimationDuration = style.animationDuration;
+                AnimationFillMode = style.animationFillMode;
+                AnimationIterationCount = style.animationIterationCount;
+                AnimationPlayState = style.animationPlayState;
+                AnimationTimingFunction = style.animationTimingFunction;
+                AnimationTimeline = style.animationTimeline;
+                AnimationRangeStart = style.animationRangeStart;
+                AnimationRangeEnd = style.animationRangeEnd;
+            }
+        }
+
         private class AudioState
         {
             public bool Loaded;
@@ -98,6 +146,9 @@ namespace ReactUnity.Styling
         private bool audioRunning;
         private float audioStartTime;
 
+        private TransitionTiming transitionTiming;
+        private AnimationTiming animationTiming;
+
         private bool shouldUpdate;
         private bool shouldUpdateWithLayout;
         private bool shouldUpdateFully;
@@ -123,6 +174,8 @@ namespace ReactUnity.Styling
         {
             Previous = Active ?? Current;
             Current = newStyle;
+            transitionTiming = null;
+            animationTiming = null;
             RecalculateActive();
         }
 
@@ -185,6 +238,8 @@ namespace ReactUnity.Styling
             Previous = null;
             Current = null;
             Active = null;
+            transitionTiming = null;
+            animationTiming = null;
 
             propertyTransitionStates = null;
             activeTransitions = null;
@@ -267,10 +322,11 @@ namespace ReactUnity.Styling
                     // Use this condition to fetch values of duration etc.
                     if (finished)
                     {
-                        duration = Current.GetStyleValue(StyleProperties.transitionDuration);
-                        delay = Current.GetStyleValue(StyleProperties.transitionDelay);
-                        easing = Current.GetStyleValue(StyleProperties.transitionTimingFunction);
-                        playState = Current.GetStyleValue(StyleProperties.transitionPlayState);
+                        var snapshot = transitionTiming ?? (transitionTiming = new TransitionTiming(Current));
+                        duration = snapshot.TransitionDuration;
+                        delay = snapshot.TransitionDelay;
+                        easing = snapshot.TransitionTimingFunction;
+                        playState = snapshot.TransitionPlayState;
                         finished = false;
                     }
 
@@ -462,16 +518,17 @@ namespace ReactUnity.Styling
             if (activeAnimations == null || activeAnimations.Count == 0) return true;
 
             var name = activeAnimations;
-            var delay = Current.animationDelay;
-            var direction = Current.animationDirection;
-            var duration = Current.animationDuration;
-            var fillMode = Current.animationFillMode;
-            var iterationCount = Current.animationIterationCount;
-            var playState = Current.animationPlayState;
-            var timingFunction = Current.animationTimingFunction;
-            var timeline = Current.animationTimeline;
-            var rangeStart = Current.animationRangeStart;
-            var rangeEnd = Current.animationRangeEnd;
+            var snapshot = animationTiming ?? (animationTiming = new AnimationTiming(Current));
+            var delay = snapshot.AnimationDelay;
+            var direction = snapshot.AnimationDirection;
+            var duration = snapshot.AnimationDuration;
+            var fillMode = snapshot.AnimationFillMode;
+            var iterationCount = snapshot.AnimationIterationCount;
+            var playState = snapshot.AnimationPlayState;
+            var timingFunction = snapshot.AnimationTimingFunction;
+            var timeline = snapshot.AnimationTimeline;
+            var rangeStart = snapshot.AnimationRangeStart;
+            var rangeEnd = snapshot.AnimationRangeEnd;
 
             var length = name.Count;
 
@@ -851,6 +908,9 @@ namespace ReactUnity.Styling
 
         void ParentUpdated(NodeStyle active, bool hasLayout)
         {
+            // An inherited variable may be what the timing properties read.
+            transitionTiming = null;
+            animationTiming = null;
             Active?.UpdateParent(active);
             OnUpdate?.Invoke(Active, false);
         }
