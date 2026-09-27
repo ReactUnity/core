@@ -23,7 +23,7 @@ namespace ReactUnity.Styling.Computed
             if (val == null) return null;
             if (val is float f) val = f * Ratio;
 
-            return converter.Convert(val);
+            return converter.ConvertResolved(val);
         }
     }
 }

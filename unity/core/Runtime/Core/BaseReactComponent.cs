@@ -535,7 +535,7 @@ namespace ReactUnity
             List<RuleTreeNode<StyleData>> matchingRules;
             if (Tag == "_before") matchingRules = Parent.BeforeRules;
             else if (Tag == "_after") matchingRules = Parent.AfterRules;
-            else using (ReactProfiling.MatchRules.Auto()) matchingRules = Context.Style.StyleTree.GetMatchingRules(this).ToList();
+            else using (ReactProfiling.MatchRules.Auto()) matchingRules = Context.Style.StyleTree.MatchRules(this);
 
             // Inline styles sit below every !important rule and above the rest; with no rest, that is the end.
             var importantIndex = matchingRules.FindIndex(x => x.Specifity <= RuleHelpers.ImportantSpecifity);
@@ -575,7 +575,7 @@ namespace ReactUnity
                     // The subtree matches its rules again now, and whatever still reads this element as its container says so.
                     if (query != null) query.TracksSize = query.TracksScroll = query.HasStyleDependents = false;
 
-                    BeforeRules = Context.Style.StyleTree.GetMatchingBefore(this).ToList();
+                    BeforeRules = Context.Style.StyleTree.MatchBefore(this);
                     if (BeforeRules.Count > 0 &&
                         BeforeRules.Any(x => x.Data.Rules.Any(y => y.ContainsKey(StyleProperties.content))))
                         AddBefore();
@@ -590,7 +590,7 @@ namespace ReactUnity
                         if (child.Destroyed) i--;
                     }
 
-                    AfterRules = Context.Style.StyleTree.GetMatchingAfter(this).ToList();
+                    AfterRules = Context.Style.StyleTree.MatchAfter(this);
                     if (AfterRules.Count > 0 &&
                         AfterRules.Any(x => x.Data.Rules.Any(y => y.ContainsKey(StyleProperties.content))))
                         AddAfter();

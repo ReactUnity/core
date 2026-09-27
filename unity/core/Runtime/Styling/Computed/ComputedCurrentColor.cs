@@ -17,7 +17,7 @@ namespace ReactUnity.Styling.Computed
             var val = st == null ? (object) Color.black : st.GetResolvedValue(StyleProperties.color, fromChild);
             if (val == null) return null;
 
-            return converter.Convert(val);
+            return converter.ConvertResolved(val);
         }
     }
 }

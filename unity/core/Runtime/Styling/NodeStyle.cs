@@ -24,6 +24,8 @@ namespace ReactUnity.Styling
         private Dictionary<IStyleProperty, IStyleProperty> Logical;
         // Set while resolving when a value read state outside the cascade, which no cache clear would follow.
         private static bool readLiveState;
+        // Set once an `inherit` or `unset` has read the parent, which a compositor-only parent update may then have moved.
+        private bool readsParent;
         // The declaration blocks merged on first read, each property keeping the first block's value,
         // so a read is one lookup rather than one per block. Merged again once an inline block is written.
         private PropertyTable declared;
@@ -220,34 +222,50 @@ namespace ReactUnity.Styling
         }
 
         /// <summary>
+        /// A parent update that moved nothing but compositor properties. None of them inherit, so only an
+        /// explicit <c>inherit</c> reads them off the parent, and a style that never met one keeps its cache.
+        /// </summary>
+        internal void UpdateParentCompositor(NodeStyle parent)
+        {
+            if (Parent != parent || readsParent)
+            {
+                UpdateParent(parent);
+                return;
+            }
+            Fallback?.UpdateParentCompositor(parent);
+        }
+
+        // Nothing resolves against these, so a transition writing them each frame keeps the rest resolved.
+        private static bool IsolatedWrite(IStyleProperty prop) =>
+            ReferenceEquals(prop, StyleProperties.opacity) || ReferenceEquals(prop, StyleProperties.translate)
+            || ReferenceEquals(prop, StyleProperties.rotate) || ReferenceEquals(prop, StyleProperties.scale);
+
+        /// <summary>
         /// Called by a computed value that reads something outside the cascade -- a prop, a viewport or
         /// container size, a font still loading -- so that neither it nor what it feeds into is cached.
         /// </summary>
         internal static void MarkLiveRead() => readLiveState = true;
 
-        public object GetRawStyleValue(IStyleProperty prop, bool fromChild = false, NodeStyle activeStyle = null)
+        public object GetRawStyleValue(IStyleProperty prop, bool fromChild = false, NodeStyle activeStyle = null) =>
+            GetRawStyleValue(prop, PropertyTable.SlotOf(prop), fromChild, activeStyle);
+
+        private object GetRawStyleValue(IStyleProperty prop, int slot, bool fromChild, NodeStyle activeStyle)
         {
             if (fromChild) HasInheritedChanges = true;
 
-            if (Cache.TryGetValue(prop, out var cached)) return cached;
+            var cached = Cache.Get(prop, slot);
+            if (cached != null) return PropertyTable.Unwrap(cached);
 
-            if (
-                !StyleMap.TryGetValue(prop, out var value) &&
-                !CssTryGetValue(prop, out value))
-            {
-                if (Fallback != null)
-                {
-                    value = Fallback.GetRawStyleValue(prop, fromChild, this);
-                }
-                else if (prop.inherited)
-                {
-                    value = Parent?.GetRawStyleValue(prop, true) ?? prop?.defaultValue;
-                }
-                else value = prop?.defaultValue;
-            }
+            var value = StyleMap.Get(prop, slot);
+            if (value == null) value = CssGet(prop, slot);
+
+            if (value != null) value = PropertyTable.Unwrap(value);
+            else if (Fallback != null) value = Fallback.GetRawStyleValue(prop, slot, fromChild, this);
+            else if (prop.inherited) value = Parent?.GetRawStyleValue(prop, slot, true, null) ?? prop.defaultValue;
+            else value = prop.defaultValue;
 
             var result = GetStyleValueSpecial(value, prop, activeStyle ?? this) ?? prop?.defaultValue;
-            Cache.Set(prop, result);
+            Cache.Set(prop, slot, result);
             return result;
         }
 
@@ -258,10 +276,11 @@ namespace ReactUnity.Styling
         /// </summary>
         public object GetOwnStyleValue(IStyleProperty prop)
         {
-            if (!StyleMap.TryGetValue(prop, out var value) && !CssTryGetValue(prop, out value))
-                return Fallback?.GetOwnStyleValue(prop);
+            var slot = PropertyTable.SlotOf(prop);
+            var value = StyleMap.Get(prop, slot) ?? CssGet(prop, slot);
+            if (value == null) return Fallback?.GetOwnStyleValue(prop);
 
-            return GetStyleValueSpecial(value, prop, this);
+            return GetStyleValueSpecial(PropertyTable.Unwrap(value), prop, this);
         }
 
         private object GetStyleValueSpecial(object value, IStyleProperty prop, NodeStyle activeStyle)
@@ -270,10 +289,10 @@ namespace ReactUnity.Styling
             if (value is CssKeyword ck)
             {
                 if (ck == CssKeyword.NoKeyword) return null;
-                else if (ck == CssKeyword.Inherit) return Parent?.GetRawStyleValue(prop, true);
+                else if (ck == CssKeyword.Inherit) return ReadParent(prop, activeStyle);
                 else if (ck == CssKeyword.Unset)
                 {
-                    if (prop != null && prop.inherited) return Parent?.GetRawStyleValue(prop, true);
+                    if (prop != null && prop.inherited) return ReadParent(prop, activeStyle);
                     return prop?.defaultValue;
                 }
                 else if (ck == CssKeyword.Auto || ck == CssKeyword.None || ck == CssKeyword.Initial || ck == CssKeyword.Default)
@@ -283,15 +302,23 @@ namespace ReactUnity.Styling
             }
             return value;
         }
-        public T GetStyleValue<T>(StyleProperty<T> prop, bool convert = false) => GetStyleValue<T>(prop as IStyleProperty, convert);
-
-        public T GetStyleValue<T>(IStyleProperty prop, bool convert = false)
+        private object ReadParent(IStyleProperty prop, NodeStyle activeStyle)
         {
-            var value = GetRawStyleValue(prop);
+            readsParent = true;
+            if (activeStyle != null) activeStyle.readsParent = true;
+            return Parent?.GetRawStyleValue(prop, true);
+        }
 
-            var converter = prop is VariableProperty ? AllConverters.RawConverter : prop;
+        public T GetStyleValue<T>(StyleProperty<T> prop, bool convert = false) => GetStyleValue<T>(prop, prop.slot, prop, convert);
 
-            if (value is IComputedValue dd) value = Resolve(dd, prop, converter);
+        public T GetStyleValue<T>(IStyleProperty prop, bool convert = false) =>
+            GetStyleValue<T>(prop, PropertyTable.SlotOf(prop), prop is VariableProperty ? AllConverters.RawConverter : prop, convert);
+
+        private T GetStyleValue<T>(IStyleProperty prop, int slot, IStyleConverter converter, bool convert)
+        {
+            var value = GetRawStyleValue(prop, slot, false, null);
+
+            if (value is IComputedValue dd) value = Resolve(dd, prop, slot, converter);
 
             if (value == null)
             {
@@ -330,20 +357,22 @@ namespace ReactUnity.Styling
         /// <summary>A property's value on this node, resolved but not converted to its type, as a computed value reads it.</summary>
         internal object GetResolvedValue(IStyleProperty prop, bool fromChild = false)
         {
-            var value = GetRawStyleValue(prop, fromChild);
-            return value is IComputedValue computed ? Resolve(computed, prop, prop is VariableProperty ? AllConverters.RawConverter : prop) : value;
+            var slot = PropertyTable.SlotOf(prop);
+            var value = GetRawStyleValue(prop, slot, fromChild, null);
+            return value is IComputedValue computed ? Resolve(computed, prop, slot, prop is VariableProperty ? AllConverters.RawConverter : prop) : value;
         }
 
-        private object Resolve(IComputedValue computed, IStyleProperty prop, IStyleConverter converter)
+        private object Resolve(IComputedValue computed, IStyleProperty prop, int slot, IStyleConverter converter)
         {
-            if (Resolved.TryGetValue(prop, out var hit)) return hit;
+            var hit = Resolved.Get(prop, slot);
+            if (hit != null) return PropertyTable.Unwrap(hit);
 
             var outer = readLiveState;
             readLiveState = false;
             try
             {
                 var value = computed.ResolveValue(prop, this, converter);
-                if (!readLiveState) Resolved.Set(prop, value);
+                if (!readLiveState) Resolved.Set(prop, slot, value);
                 return value;
             }
             finally { readLiveState |= outer; }
@@ -358,22 +387,25 @@ namespace ReactUnity.Styling
 
         public void SetStyleValue(IStyleProperty prop, object value)
         {
-            if (!StyleMap.TryGetValue(prop, out var currentValue))
-            {
-                if (value == null) return;
-            }
+            var slot = PropertyTable.SlotOf(prop);
+            var currentValue = StyleMap.Get(prop, slot);
+            if (currentValue == null && value == null) return;
 
-            var changed = currentValue != value;
+            var changed = PropertyTable.Unwrap(currentValue) != value;
 
             if (changed)
             {
-                if (value == null) StyleMap.Remove(prop);
-                else StyleMap.Set(prop, value);
+                if (value == null) StyleMap.Remove(prop, slot);
+                else StyleMap.Set(prop, slot, value);
 
-                Cache.Remove(prop);
-                // Anything else may be resolved against it, as an em is against font-size.
-                Resolved.Clear();
-                Logical?.Clear();
+                Cache.Remove(prop, slot);
+                if (IsolatedWrite(prop)) Resolved.Remove(prop, slot);
+                else
+                {
+                    // Anything else may be resolved against it, as an em is against font-size.
+                    Resolved.Clear();
+                    Logical?.Clear();
+                }
                 if (prop.inherited) HasInheritedChanges = true;
             }
         }
@@ -385,9 +417,10 @@ namespace ReactUnity.Styling
 
         public bool HasValue(IStyleProperty prop)
         {
-            return StyleMap.ContainsKey(prop) ||
-                CssHasValue(prop) ||
-                (Fallback != null && Fallback.HasValue(prop));
+            var slot = PropertyTable.SlotOf(prop);
+            for (var style = this; style != null; style = style.Fallback)
+                if (style.StyleMap.Get(prop, slot) != null || style.CssHasValue(prop, slot)) return true;
+            return false;
         }
 
         /// <summary>
@@ -433,23 +466,39 @@ namespace ReactUnity.Styling
             }
         }
 
-        private bool CssTryGetValue(IStyleProperty prop, out object res)
+        /// <summary>The declared value as a table entry: null when nothing declares it, <see cref="PropertyTable.Unwrap"/> otherwise.</summary>
+        private object CssGet(IStyleProperty prop, int slot)
         {
-            if (!EnsureDeclared() || !declared.TryGetValue(prop, out res))
+            if (CssStyles == null) return null;
+
+            object res;
+            if (slot < 0)
             {
+                // Custom properties are walked rather than merged: every element declares dozens of
+                // Tailwind's --tw-* and reads few of them, and the blocks are the live declarations.
                 res = null;
-                return false;
+                var found = false;
+                for (int i = 0; i < CssStyles.Count && !found; i++) found = CssStyles[i].TryGetValue(prop, out res);
+                if (!found) return null;
+                if (IsRevertLayer(res)) res = NeedsWalk;
+            }
+            else
+            {
+                EnsureDeclared();
+                res = declared.GetSlot(slot);
+                if (res == null) return null;
             }
 
-            return res != NeedsWalk || WalkDeclarations(prop, out res);
+            if (res != NeedsWalk) return res ?? PropertyTable.StoredNull;
+            return WalkDeclarations(prop, out res) ? res ?? PropertyTable.StoredNull : null;
         }
 
-        // Whether there are declarations at all, merging them again if an inline block was written since.
-        private bool EnsureDeclared()
+        // Merges the built-in properties declared, again if an inline block was written since.
+        private void EnsureDeclared()
         {
-            if (CssStyles == null) return false;
+            if (declaredBuilt && liveBlocks.Length == 0) return;
             var stamp = BlockVersions();
-            if (declaredBuilt && stamp == declaredStamp) return true;
+            if (declaredBuilt && stamp == declaredStamp) return;
             declaredStamp = stamp;
             declaredBuilt = true;
 
@@ -457,13 +506,23 @@ namespace ReactUnity.Styling
             for (int i = 0; i < CssStyles.Count; i++)
             {
                 var dic = CssStyles[i];
-                if (dic is Dictionary<IStyleProperty, object> concrete)
+                if (dic.Count == 0) continue;
+                if (dic is StyleRecord record)
+                {
+                    var n = record.Slotted(out var slots, out var values);
+                    for (int j = 0; j < n; j++)
+                    {
+                        var slot = slots[j];
+                        if (declared.GetSlot(slot) != null) continue;
+                        var value = values[j];
+                        declared.SetSlot(slot, IsRevertLayer(value) ? NeedsWalk : value);
+                    }
+                }
+                else if (dic is Dictionary<IStyleProperty, object> concrete)
                     foreach (var kv in concrete) Merge(ref declared, kv.Key, kv.Value);
                 else
                     foreach (var kv in dic) Merge(ref declared, kv.Key, kv.Value);
             }
-
-            return true;
         }
 
         // Only an inline block is written after it is built, and every write bumps its version, so
@@ -485,7 +544,8 @@ namespace ReactUnity.Styling
 
         private static void Merge(ref PropertyTable merged, IStyleProperty key, object value)
         {
-            if (!merged.ContainsKey(key)) merged.Set(key, IsRevertLayer(value) ? NeedsWalk : value);
+            var slot = PropertyTable.SlotOf(key);
+            if (slot >= 0 && merged.GetSlot(slot) == null) merged.Set(key, slot, IsRevertLayer(value) ? NeedsWalk : value);
         }
 
         private bool WalkDeclarations(IStyleProperty prop, out object res)
@@ -529,56 +589,63 @@ namespace ReactUnity.Styling
             (value is ComputedKeyword ck && ck.Keyword == CssKeyword.RevertLayer) ||
             (value is CssKeyword raw && raw == CssKeyword.RevertLayer);
 
-        private bool CssHasValue(IStyleProperty prop) => EnsureDeclared() && declared.ContainsKey(prop);
+        private bool CssHasValue(IStyleProperty prop, int slot) => CssStyles != null && CssGet(prop, slot) != null;
 
         /// <summary>
         /// A per-property table: an array indexed by slot for the built-in properties, where a dictionary
         /// cost several times as much per lookup, and a dictionary only for custom properties, which have none.
         /// A mutable struct, so it is only ever used through the field that holds it.
         /// </summary>
+        /// <remarks>
+        /// An entry is null when absent and <see cref="StoredNull"/> for a stored null, and the slot is
+        /// passed in, found once per read: an out parameter costs Mono a write barrier on every probe.
+        /// </remarks>
         private struct PropertyTable
         {
-            // What a slot holds for a stored null, since an empty slot is null.
-            private static readonly object StoredNull = new object();
+            public static readonly object StoredNull = new object();
 
             private object[] slots;
             private Dictionary<IStyleProperty, object> custom;
             private bool dirty;
 
-            public bool TryGetValue(IStyleProperty prop, out object value)
-            {
-                if (prop is IStyleSlot s)
-                {
-                    var i = s.Slot;
-                    var entry = slots != null && i < slots.Length ? slots[i] : null;
-                    value = ReferenceEquals(entry, StoredNull) ? null : entry;
-                    return entry != null;
-                }
+            public static int SlotOf(IStyleProperty prop) => prop is IStyleSlot s ? s.Slot : -1;
 
-                if (custom != null) return custom.TryGetValue(prop, out value);
-                value = null;
-                return false;
+            [System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
+            public static object Unwrap(object entry) => ReferenceEquals(entry, StoredNull) ? null : entry;
+
+            [System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
+            public object GetSlot(int slot) => slots != null && (uint) slot < (uint) slots.Length ? slots[slot] : null;
+
+            public object Get(IStyleProperty prop, int slot)
+            {
+                if (slot >= 0) return slots != null && slot < slots.Length ? slots[slot] : null;
+                if (custom == null || !custom.TryGetValue(prop, out var value)) return null;
+                return value ?? StoredNull;
             }
 
-            public bool ContainsKey(IStyleProperty prop) => TryGetValue(prop, out _);
-
-            public void Set(IStyleProperty prop, object value)
+            public void Set(IStyleProperty prop, int slot, object value)
             {
                 dirty = true;
-                if (prop is IStyleSlot s)
+                if (slot >= 0)
                 {
-                    var i = s.Slot;
-                    if (slots == null || i >= slots.Length) System.Array.Resize(ref slots, System.Math.Max(i + 1, StyleSlots.Count));
-                    slots[i] = value ?? StoredNull;
+                    if (slots == null || slot >= slots.Length) System.Array.Resize(ref slots, System.Math.Max(slot + 1, StyleSlots.Count));
+                    slots[slot] = value ?? StoredNull;
                 }
                 else (custom ??= new Dictionary<IStyleProperty, object>())[prop] = value;
             }
 
-            public void Remove(IStyleProperty prop)
+            public void SetSlot(int slot, object value)
             {
-                if (prop is IStyleSlot s)
+                dirty = true;
+                if (slots == null || slot >= slots.Length) System.Array.Resize(ref slots, System.Math.Max(slot + 1, StyleSlots.Count));
+                slots[slot] = value ?? StoredNull;
+            }
+
+            public void Remove(IStyleProperty prop, int slot)
+            {
+                if (slot >= 0)
                 {
-                    if (slots != null && s.Slot < slots.Length) slots[s.Slot] = null;
+                    if (slots != null && slot < slots.Length) slots[slot] = null;
                 }
                 else custom?.Remove(prop);
             }

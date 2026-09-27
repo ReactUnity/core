@@ -11,7 +11,20 @@ namespace ReactUnity.Styling.Converters
         string Stringify(object value);
     }
 
-    public class StyleConverterBase : IStyleConverter
+    /// <summary>A converter that can hand a resolved value on without wrapping it; see <see cref="StyleConverterBase.ConvertResolved"/>.</summary>
+    internal interface IConvertsResolved
+    {
+        object ConvertResolved(object value);
+    }
+
+    internal static class ConverterExtensions
+    {
+        /// <summary>What <see cref="IStyleConverter.Convert"/> resolves to, skipping the constant it wraps an already typed value in.</summary>
+        public static object ConvertResolved(this IStyleConverter converter, object value) =>
+            converter is IConvertsResolved fast ? fast.ConvertResolved(value) : converter.Convert(value);
+    }
+
+    public class StyleConverterBase : IStyleConverter, IConvertsResolved
     {
         static private HashSet<string> DefaultAllowedFunctions = new HashSet<string> { "var" };
         protected virtual HashSet<string> AllowedFunctions => DefaultAllowedFunctions;
@@ -39,7 +52,7 @@ namespace ReactUnity.Styling.Converters
 
             if (value is string s) return TryParse(s, out result);
 
-            if (TargetType != null && TargetType.IsAssignableFrom(value.GetType()))
+            if (IsTarget(value))
             {
                 result = StylingUtils.CreateComputed(value);
                 return true;
@@ -55,6 +68,32 @@ namespace ReactUnity.Styling.Converters
 
             return ConvertInternal(value, out result);
         }
+
+        // IsAssignableFrom is a reflection call under Mono, and a converter meets few types.
+        private Type lastType;
+        private bool lastAssignable;
+
+        private bool IsTarget(object value)
+        {
+            var target = TargetType;
+            if (target == null) return false;
+            var type = value.GetType();
+            if (type == target) return true;
+            if (type != lastType)
+            {
+                lastAssignable = target.IsAssignableFrom(type);
+                lastType = type;
+            }
+            return lastAssignable;
+        }
+
+        /// <summary>
+        /// A value a computed value resolved to, as <see cref="Convert"/> would hand it on -- itself when
+        /// it is already the target type, rather than wrapped in a constant for the caller to unwrap.
+        /// </summary>
+        public object ConvertResolved(object value) => IsResolvedTarget(value) ? value : Convert(value);
+
+        internal bool IsResolvedTarget(object value) => value != null && !(value is string) && IsTarget(value);
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         protected virtual bool ConvertInternal(object value, out IComputedValue result)
@@ -73,6 +112,9 @@ namespace ReactUnity.Styling.Converters
         /// </summary>
         internal virtual bool ParsesArePure => true;
 
+        /// <summary>Whether a converter whose parses are not pure may still share this one, which holds no asset.</summary>
+        internal virtual bool IsShareable(IComputedValue result) => result is ComputedVariable;
+
         public bool TryParse(string value, out IComputedValue result)
         {
             if (string.IsNullOrWhiteSpace(value))
@@ -81,13 +123,12 @@ namespace ReactUnity.Styling.Converters
                 return false;
             }
 
-            if (!ParsesArePure) return ParseUncached(value, out result);
-
             if (parsed == null) parsed = new Dictionary<string, IComputedValue>();
             else if (parsed.TryGetValue(value, out result)) return result != null;
 
             var success = ParseUncached(value, out result);
             if (success && result == null) return true;
+            if (!ParsesArePure && !(success && IsShareable(result))) return success;
 
             if (parsed.Count >= ParseCacheLimit) parsed.Clear();
             parsed[value] = success ? result : null;

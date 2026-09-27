@@ -47,6 +47,50 @@ namespace ReactUnity.Styling.Rules
 
         public static Regex SplitSelectorRegex = new Regex("\\s+");
 
+        /// <summary>What <c>SplitSelectorRegex.Split(value, count)</c> gives, for a value with no leading whitespace, without the regex.</summary>
+        internal static string[] SplitOnWhitespace(string value, int count)
+        {
+            var parts = new List<string>(Math.Min(count, 4));
+            var start = 0;
+
+            for (int i = 0; i < value.Length && parts.Count < count - 1; i++)
+            {
+                if (!char.IsWhiteSpace(value[i])) continue;
+                var end = i;
+                while (i + 1 < value.Length && char.IsWhiteSpace(value[i + 1])) i++;
+                parts.Add(value.Substring(start, end - start));
+                start = i + 1;
+            }
+
+            parts.Add(value.Substring(start));
+            return parts.ToArray();
+        }
+
+        /// <summary>Each run of whitespace as one space, as <c>SplitSelectorRegex.Replace(value, " ")</c> gives.</summary>
+        internal static string CollapseWhitespace(string value)
+        {
+            StringBuilder sb = null;
+            for (int i = 0; i < value.Length; i++)
+            {
+                var ch = value[i];
+                if (!char.IsWhiteSpace(ch))
+                {
+                    sb?.Append(ch);
+                    continue;
+                }
+
+                var end = i;
+                while (end + 1 < value.Length && char.IsWhiteSpace(value[end + 1])) end++;
+                if (sb == null && end == i && ch == ' ') continue;
+
+                if (sb == null) sb = new StringBuilder(value, 0, i, value.Length);
+                sb.Append(' ');
+                i = end;
+            }
+
+            return sb?.ToString() ?? value;
+        }
+
         // Stands in for a space inside `[...]` or `(...)` while the selector is split on whitespace,
         // so `[data-x="a b"]`, `:not(.a, .b)` and `:has(> .a .b)` reach ParseSelector in one piece.
         private const char InnerSpace = '\u0003';
@@ -755,7 +799,7 @@ namespace ReactUnity.Styling.Rules
                 }
             }
 
-            return SplitSelectorRegex.Replace(spaced.ToString().Trim(), " ");
+            return CollapseWhitespace(spaced.ToString().Trim());
         }
 
         /// <summary>The marks <see cref="ExpandMatchesAny"/> leaves around an inlined <c>:where()</c>, taken out.</summary>

@@ -173,7 +173,7 @@ namespace ReactUnity.Styling
         public bool CompositorOnly { get; private set; }
 
         // Direction is a layout property, but it also picks which physical side a logical border colour or radius paints.
-        static bool IsCompositorProperty(IStyleProperty sp) =>
+        internal static bool IsCompositorProperty(IStyleProperty sp) =>
             (sp is ILayoutProperty && !ReferenceEquals(sp, LayoutProperties.StyleDirection)) || sp == StyleProperties.translate
             || sp == StyleProperties.rotate || sp == StyleProperties.scale || sp == StyleProperties.opacity;
 
@@ -953,14 +953,19 @@ namespace ReactUnity.Styling
 
         void ParentUpdated(NodeStyle active, bool hasLayout)
         {
-            // An inherited variable may be what the timing properties read.
-            transitionTiming = null;
-            animationTiming = null;
-            Active?.UpdateParent(active);
-
             // A child sees a compositor-only change only through `inherit` on those same properties, so it
             // has no more to apply than that -- and nothing at all, nor its subtree, while they resolve the same.
             var fromCompositor = Parent?.CompositorOnly == true;
+
+            if (fromCompositor) Active?.UpdateParentCompositor(active);
+            else
+            {
+                // An inherited variable may be what the timing properties read.
+                transitionTiming = null;
+                animationTiming = null;
+                Active?.UpdateParent(active);
+            }
+
             if (!fromCompositor) compositorSeen = false;
             else if (Active != null && !CompositorValuesChanged()) return;
 

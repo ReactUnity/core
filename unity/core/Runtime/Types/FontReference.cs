@@ -251,6 +251,15 @@ namespace ReactUnity.Types
                 return base.ConvertInternal(value, out result);
             }
 
+            // A list of family names is resolved per context when read; only a url entry holds an asset.
+            internal override bool IsShareable(IComputedValue result)
+            {
+                if (!(result is ComputedFontFamily family)) return base.IsShareable(result);
+                for (int i = 0; i < family.Entries.Count; i++)
+                    if (family.Entries[i] is FontReference) return false;
+                return true;
+            }
+
             protected override object FromObject(AssetReferenceType type, object obj) => new FontReference(type, obj);
             protected override object FromUrl(Url url) => new FontReference(url);
 

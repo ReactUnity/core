@@ -18,6 +18,31 @@ namespace ReactUnity.Styling.Rules
     public class StyleRecord : Dictionary<IStyleProperty, object>
     {
         public CascadeLayer Layer;
+
+        private int[] slots;
+        private object[] values;
+
+        /// <summary>The built-in properties as parallel arrays, built on first merge: a record is not written once converted.</summary>
+        internal int Slotted(out int[] slots, out object[] values)
+        {
+            if (this.slots == null)
+            {
+                var s = new List<int>(Count);
+                var v = new List<object>(Count);
+                foreach (var kv in this)
+                {
+                    var slot = kv.Key is IStyleSlot ss ? ss.Slot : -1;
+                    if (slot < 0) continue;
+                    s.Add(slot);
+                    v.Add(kv.Value);
+                }
+                this.values = v.ToArray();
+                this.slots = s.ToArray();
+            }
+            slots = this.slots;
+            values = this.values;
+            return slots.Length;
+        }
     }
 
     public class StyleTree : RuleTree<StyleData>
@@ -133,6 +158,11 @@ namespace ReactUnity.Styling.Rules
         public IEnumerable<RuleTreeNode<T>> GetMatchingBefore(IReactComponent component) => Match(BeforeNodes, component);
         public IEnumerable<RuleTreeNode<T>> GetMatchingAfter(IReactComponent component) => Match(AfterNodes, component);
 
+        // The same, as the fresh list each already is, for callers that would otherwise copy it.
+        internal List<RuleTreeNode<T>> MatchRules(IReactComponent component) => Match(LeafNodes, component, true);
+        internal List<RuleTreeNode<T>> MatchBefore(IReactComponent component) => Match(BeforeNodes, component);
+        internal List<RuleTreeNode<T>> MatchAfter(IReactComponent component) => Match(AfterNodes, component);
+
         /// <summary>Whether a leaf takes part in matching at all.</summary>
         protected virtual bool Eligible(RuleTreeNode<T> leaf) => true;
 
@@ -148,12 +178,12 @@ namespace ReactUnity.Styling.Rules
             var matched = new List<RuleTreeNode<T>>();
             List<int> proximities = null;
 
-            var candidates = indexed ? Candidates(component) : null;
-            var count = candidates?.Count ?? leaves.Count;
+            var count = leaves.Count;
+            var candidates = indexed ? Candidates(component, out count) : null;
 
             for (int c = 0; c < count; c++)
             {
-                var leaf = leaves[candidates?[c] ?? c];
+                var leaf = leaves[candidates != null ? candidates[c] : c];
                 if (!Eligible(leaf) || !leaf.Matches(component, leaf.Scope, out var proximity)) continue;
 
                 if (proximity != RuleScope.NoProximity && proximities == null)
@@ -166,11 +196,7 @@ namespace ReactUnity.Styling.Rules
                 if (proximities != null) proximities.Add(proximity);
             }
 
-            if (candidates != null)
-            {
-                candidates.Clear();
-                candidateScratch = candidates;
-            }
+            if (candidates != null) candidateScratch = candidates;
 
             if (proximities == null) return matched;
 
@@ -197,30 +223,51 @@ namespace ReactUnity.Styling.Rules
         }
 
         private LeafIndex leafIndex;
-        private List<int> candidateScratch;
+        private int[] candidateScratch;
 
         /// <summary>Drops the index after <see cref="LeafNodes"/> gained a leaf or was sorted again.</summary>
         protected void LeavesChanged() => leafIndex = null;
 
         // Sorted positions, so the matches come out in the list's cascade order.
-        private List<int> Candidates(IReactComponent component)
+        private int[] Candidates(IReactComponent component, out int count)
         {
             var index = leafIndex;
             if (index == null || index.Count != LeafNodes.Count) index = leafIndex = BuildIndex(LeafNodes);
 
             // Taken rather than shared, in case matching one rule matches another.
-            var result = candidateScratch ?? new List<int>();
+            var result = candidateScratch ?? new int[64];
             candidateScratch = null;
+            count = 0;
 
-            result.AddRange(index.Unkeyed);
-            if (component.Id != null && index.Ids.TryGetValue(component.Id, out var byId)) result.AddRange(byId);
-            if (component.Tag != null && index.Tags.TryGetValue(component.Tag, out var byTag)) result.AddRange(byTag);
+            Append(ref result, ref count, index.Unkeyed);
+            if (component.Id != null && index.Ids.TryGetValue(component.Id, out var byId)) Append(ref result, ref count, byId);
+            if (component.Tag != null && index.Tags.TryGetValue(component.Tag, out var byTag)) Append(ref result, ref count, byTag);
             if (component.ClassList != null && index.Classes.Count > 0)
                 foreach (var cls in component.ClassList)
-                    if (index.Classes.TryGetValue(cls, out var byClass)) result.AddRange(byClass);
+                    if (index.Classes.TryGetValue(cls, out var byClass)) Append(ref result, ref count, byClass);
 
-            result.Sort();
+            // A few sorted runs end to end, which an insertion sort takes nearly in one pass; List.Sort
+            // compared through an interface call each time.
+            for (int i = 1; i < count; i++)
+            {
+                var value = result[i];
+                var j = i - 1;
+                while (j >= 0 && result[j] > value)
+                {
+                    result[j + 1] = result[j];
+                    j--;
+                }
+                result[j + 1] = value;
+            }
+
             return result;
+        }
+
+        private static void Append(ref int[] buffer, ref int count, List<int> positions)
+        {
+            if (count + positions.Count > buffer.Length) System.Array.Resize(ref buffer, System.Math.Max(buffer.Length * 2, count + positions.Count));
+            positions.CopyTo(buffer, count);
+            count += positions.Count;
         }
 
         private static LeafIndex BuildIndex(List<RuleTreeNode<T>> leaves)

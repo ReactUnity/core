@@ -29,7 +29,7 @@ namespace ReactUnity.Styling
         }
     }
 
-    public class StyleProperty<T> : IStyleProperty, IStyleSlot
+    public class StyleProperty<T> : IStyleProperty, IStyleSlot, IConvertsResolved
     {
         public string name { get; private set; }
         public Type type { get; private set; }
@@ -41,7 +41,7 @@ namespace ReactUnity.Styling
         public List<IStyleProperty> ModifiedProperties { get; }
         // Hashed once: a read probes every declaration block the element matched, and Mono hashes a string anew each time.
         private readonly int hash;
-        private readonly int slot;
+        internal readonly int slot;
         int IStyleSlot.Slot => slot;
         public StyleProperty(string name, object initialValue = null, bool transitionable = false, bool inherited = false, StyleConverterBase converter = null)
         {
@@ -71,6 +71,10 @@ namespace ReactUnity.Styling
 
             return converted;
         }
+        // Convert is an identity wrap for a value of this type that the converter takes as its own.
+        object IConvertsResolved.ConvertResolved(object value) =>
+            converter.IsResolvedTarget(value) && value.GetType() == type ? value : (object) Convert(value);
+
         public string Stringify(object value) => converter.Stringify(value);
 
         public bool CanHandleKeyword(CssKeyword keyword) => true;

@@ -10,7 +10,8 @@ namespace ReactUnity.Styling
     {
         public static readonly Dictionary<string, IStyleProperty> PropertyMap = new Dictionary<string, IStyleProperty>(StringComparer.OrdinalIgnoreCase);
         public static readonly HashSet<IStyleProperty> TransitionableProperties = new HashSet<IStyleProperty>();
-        private static readonly Dictionary<string, VariableProperty> VariableProperties = new Dictionary<string, VariableProperty>(StringComparer.OrdinalIgnoreCase);
+        // Custom property names are case-sensitive, as VariableProperty's equality is.
+        private static readonly Dictionary<string, VariableProperty> VariableProperties = new Dictionary<string, VariableProperty>(StringComparer.Ordinal);
         public static readonly List<IStyleProperty> AllProperties;
 
         static CssProperties()
@@ -31,13 +32,19 @@ namespace ReactUnity.Styling
 
         public static IStyleProperty GetProperty(string name)
         {
-            if (name.FastStartsWith("--"))
-            {
-                if (VariableProperties.TryGetValue(name, out var val)) return val;
-                return VariableProperties[name] = new VariableProperty(name);
-            }
+            if (name.FastStartsWith("--")) return GetVariable(name);
             if (PropertyMap.TryGetValue(StripVendorPrefix(name), out var style)) return style;
             return null;
+        }
+
+        /// <summary>
+        /// The one instance for a custom property name, so a declaration block probed for it compares
+        /// references instead of names.
+        /// </summary>
+        internal static VariableProperty GetVariable(string name)
+        {
+            if (VariableProperties.TryGetValue(name, out var val)) return val;
+            return VariableProperties[name] = new VariableProperty(name);
         }
 
         // Every declaration of a sheet looks its name up, and a case-insensitive map folds each character to hash it.

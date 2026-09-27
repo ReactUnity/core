@@ -71,6 +71,8 @@ namespace ReactUnity.Styling.Converters
         {
             result = null;
             if (string.IsNullOrWhiteSpace(val)) return false;
+            // Only a lowercase `var` is taken below, and most values have none to find.
+            if (val.IndexOf("var", System.StringComparison.Ordinal) < 0) return false;
 
             val = val.Trim();
 
@@ -374,8 +376,27 @@ namespace ReactUnity.Styling.Converters
         }
 
 
+        // Every value parsed asks, and Enum.TryParse reflects over the enum each time under Mono.
+        private static readonly Dictionary<string, CssKeyword> KeywordNames = BuildKeywordNames();
+
+        private static Dictionary<string, CssKeyword> BuildKeywordNames()
+        {
+            var names = new Dictionary<string, CssKeyword>(StringComparer.OrdinalIgnoreCase);
+            foreach (CssKeyword keyword in Enum.GetValues(typeof(CssKeyword)))
+                if (keyword != CssKeyword.NoKeyword) names[keyword.ToString()] = keyword;
+            names["revert-layer"] = CssKeyword.RevertLayer;
+            return names;
+        }
+
         public static bool TryParseKeyword(string value, out CssKeyword keyword)
         {
+            // Enum.TryParse ORs a comma list together, which only the slow path below reproduces.
+            if (value != null && value.IndexOf(',') < 0)
+            {
+                if (!KeywordNames.TryGetValue(value.Trim(), out keyword)) keyword = CssKeyword.NoKeyword;
+                return keyword != CssKeyword.NoKeyword;
+            }
+
             if (value == null || int.TryParse(value, out _))
             {
                 keyword = CssKeyword.NoKeyword;

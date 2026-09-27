@@ -81,7 +81,8 @@ namespace ReactUnity.Styling
 
         public static bool TryCall(string expression, out object result, HashSet<string> allowed = null, StyleConverterBase converter = null)
         {
-            if (string.IsNullOrWhiteSpace(expression))
+            // Not a call without a parenthesis, which most values are; parsing one to find that out allocates.
+            if (string.IsNullOrWhiteSpace(expression) || expression.IndexOf('(') < 0)
             {
                 result = null;
                 return false;

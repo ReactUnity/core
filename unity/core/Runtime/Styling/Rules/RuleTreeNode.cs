@@ -143,7 +143,7 @@ namespace ReactUnity.Styling.Rules
             var hasRelative = shadowParent || directParent || directSibling || sibling || important;
             var selfIndex = hasRelative ? 1 : 0;
 
-            var selectorSplit = RuleHelpers.SplitSelectorRegex.Split(selector.Trim(), selfIndex + 2);
+            var selectorSplit = RuleHelpers.SplitOnWhitespace(selector.Trim(), selfIndex + 2);
             var selectorSelf = selectorSplit.Length > selfIndex ? selectorSplit[selfIndex] : null;
             var selectorOther = selectorSplit.Length > selfIndex + 1 ? selectorSplit[selfIndex + 1] : null;
             var hasChild = !string.IsNullOrWhiteSpace(selectorOther);
