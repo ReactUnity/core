@@ -29,6 +29,7 @@ namespace ReactUnity.Styling.Computed
 
         public object GetValue(IStyleProperty prop, NodeStyle style, IStyleConverter converter)
         {
+            NodeStyle.MarkLiveRead();
             switch (Type)
             {
                 case Axis.Inline: return Measure(style, false) * Ratio;

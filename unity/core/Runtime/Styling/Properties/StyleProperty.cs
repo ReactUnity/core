@@ -6,7 +6,30 @@ using ReactUnity.Styling.Converters;
 
 namespace ReactUnity.Styling
 {
-    public class StyleProperty<T> : IStyleProperty
+    /// <summary>A property's index into a node's per-property tables.</summary>
+    internal interface IStyleSlot
+    {
+        int Slot { get; }
+    }
+
+    internal static class StyleSlots
+    {
+        // By name, since two properties of one name are equal keys and so must share an entry.
+        private static readonly Dictionary<string, int> byName = new Dictionary<string, int>();
+
+        public static int Count { get { lock (byName) return byName.Count; } }
+
+        public static int For(string name)
+        {
+            lock (byName)
+            {
+                if (!byName.TryGetValue(name, out var slot)) byName[name] = slot = byName.Count;
+                return slot;
+            }
+        }
+    }
+
+    public class StyleProperty<T> : IStyleProperty, IStyleSlot
     {
         public string name { get; private set; }
         public Type type { get; private set; }
@@ -18,11 +41,14 @@ namespace ReactUnity.Styling
         public List<IStyleProperty> ModifiedProperties { get; }
         // Hashed once: a read probes every declaration block the element matched, and Mono hashes a string anew each time.
         private readonly int hash;
+        private readonly int slot;
+        int IStyleSlot.Slot => slot;
         public StyleProperty(string name, object initialValue = null, bool transitionable = false, bool inherited = false, StyleConverterBase converter = null)
         {
             this.type = typeof(T);
             this.name = name;
             hash = name.GetHashCode();
+            slot = StyleSlots.For(name);
             this.defaultValue = initialValue;
             this.transitionable = transitionable;
             this.inherited = inherited;

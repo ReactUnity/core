@@ -529,8 +529,9 @@ namespace ReactUnity.UGUI
 
             var origin = style.transformOrigin;
             var rect = RectTransform.sizeDelta;
-            var pivotX = origin.X.Unit == YogaUnit.Percent ? (origin.X.Value / 100) : origin.X.Unit == YogaUnit.Point ? (origin.X.Value / rect.x) : 0.5f;
-            var pivotY = origin.Y.Unit == YogaUnit.Percent ? (origin.Y.Value / 100) : origin.Y.Unit == YogaUnit.Point ? (origin.Y.Value / rect.y) : 0.5f;
+            // A point origin on an element not laid out yet would divide by zero, and a NaN pivot is a NaN position.
+            var pivotX = origin.X.Unit == YogaUnit.Percent ? (origin.X.Value / 100) : origin.X.Unit == YogaUnit.Point ? (rect.x != 0 ? origin.X.Value / rect.x : 0) : 0.5f;
+            var pivotY = origin.Y.Unit == YogaUnit.Percent ? (origin.Y.Value / 100) : origin.Y.Unit == YogaUnit.Point ? (rect.y != 0 ? origin.Y.Value / rect.y : 0) : 0.5f;
             var pivot = new Vector2(pivotX, 1 - pivotY);
             Vector3 deltaPosition = RectTransform.pivot - pivot;    // get change in pivot
             deltaPosition.Scale(RectTransform.rect.size);           // apply sizing

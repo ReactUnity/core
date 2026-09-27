@@ -13,9 +13,9 @@ namespace ReactUnity.Styling.Computed
             var fromChild = ReferenceEquals(prop, StyleProperties.color);
             if (fromChild) st = style?.Parent;
 
-            var val = st?.GetRawStyleValue(StyleProperties.color, fromChild) ?? Color.black;
+            // Resolved on the node it comes from, which has usually resolved it already.
+            var val = st == null ? (object) Color.black : st.GetResolvedValue(StyleProperties.color, fromChild);
             if (val == null) return null;
-            if (val is IComputedValue d) val = d.ResolveValue(StyleProperties.color, st, StyleProperties.color);
 
             return converter.Convert(val);
         }

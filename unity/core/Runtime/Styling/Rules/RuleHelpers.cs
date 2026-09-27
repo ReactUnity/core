@@ -354,8 +354,9 @@ namespace ReactUnity.Styling.Rules
         {
             var dic = new StyleRecord();
 
-            foreach (var item in rule.Where(x => important == x.IsImportant))
+            foreach (var item in rule)
             {
+                if (item.IsImportant != important) continue;
                 var md = CssProperties.GetKey(item.Name);
                 md?.Modify(dic, item.Value);
             }

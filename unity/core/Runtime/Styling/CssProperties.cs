@@ -40,11 +40,21 @@ namespace ReactUnity.Styling
             return null;
         }
 
+        // Every declaration of a sheet looks its name up, and a case-insensitive map folds each character to hash it.
+        private static readonly Dictionary<string, IStyleKey> Keys = new Dictionary<string, IStyleKey>(StringComparer.Ordinal);
+        private const int KeysLimit = 4096;
+
         public static IStyleKey GetKey(string name)
         {
-            var prop = AllShorthands.GetShorthand(StripVendorPrefix(name));
-            if (prop == null) return GetProperty(name);
-            return prop;
+            if (Keys.TryGetValue(name, out var known)) return known;
+
+            IStyleKey key = AllShorthands.GetShorthand(StripVendorPrefix(name));
+            if (key == null) key = GetProperty(name);
+            // An unknown name is not kept, since PropertyMap is public and may yet learn it.
+            if (key == null) return null;
+
+            if (Keys.Count >= KeysLimit) Keys.Clear();
+            return Keys[name] = key;
         }
 
         // `-webkit-line-clamp` is what Tailwind's `line-clamp-*` emits, and `-webkit-text-stroke` is

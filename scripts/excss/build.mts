@@ -27,6 +27,8 @@
  *   8  `:host` and `:host(...)`, which neither the pseudo-class factory nor the function table
  *      had, so both fell out as invalid and took their whole selector list with them --
  *      `:root,:host{...}`, how Tailwind v4 opens its theme block, lost the `:root` half too.
+ *   9  a string source keeps its text instead of rebuilding it on every read, which made each
+ *      rule's `StylesheetText` copy the entire sheet first -- quadratic in the sheet's size.
  *
  * Why a submodule rather than a ref in this file: the pin then lives in one place git already
  * tracks, and the source is at hand when a parser bug needs reading. Point the submodule back

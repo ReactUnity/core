@@ -153,6 +153,13 @@ namespace ReactUnity.Styling
         private bool shouldUpdateWithLayout;
         private bool shouldUpdateFully;
 
+        // The compositor values last passed on for a compositor-only parent update, while nothing else has been since.
+        private bool compositorSeen;
+        private float seenOpacity;
+        private YogaValue2 seenTranslate;
+        private UnityEngine.Vector3 seenRotate;
+        private UnityEngine.Vector3 seenScale;
+
         /// <summary>
         /// True while <see cref="OnUpdate"/> announces a change to nothing but <c>translate</c>,
         /// <c>rotate</c>, <c>scale</c>, <c>opacity</c> and layout properties -- which the element can
@@ -160,9 +167,10 @@ namespace ReactUnity.Styling
         /// </summary>
         public bool CompositorOnly { get; private set; }
 
+        // Direction is a layout property, but it also picks which physical side a logical border colour or radius paints.
         static bool IsCompositorProperty(IStyleProperty sp) =>
-            sp is ILayoutProperty || sp == StyleProperties.translate || sp == StyleProperties.rotate
-            || sp == StyleProperties.scale || sp == StyleProperties.opacity;
+            (sp is ILayoutProperty && !ReferenceEquals(sp, LayoutProperties.StyleDirection)) || sp == StyleProperties.translate
+            || sp == StyleProperties.rotate || sp == StyleProperties.scale || sp == StyleProperties.opacity;
 
 
         public StyleState(ReactContext context)
@@ -176,6 +184,7 @@ namespace ReactUnity.Styling
             Current = newStyle;
             transitionTiming = null;
             animationTiming = null;
+            compositorSeen = false;
             RecalculateActive();
         }
 
@@ -198,11 +207,12 @@ namespace ReactUnity.Styling
                 var switchTransitions = hasTransition && activeTransitions != transition;
                 var switchAnimations = hasAnimation && activeAnimations != animation;
 
+                // A style change can start a transition, or step an animation, that had already settled.
                 if (switchTransitions) StartTransitions(transition);
-                else UpdateTransitions();
+                else if (!UpdateTransitions()) transitionRunning = true;
 
                 if (switchAnimations) StartAnimations(animation);
-                else UpdateAnimations();
+                else if (!UpdateAnimations()) animationRunning = true;
             }
             else
             {
@@ -221,6 +231,7 @@ namespace ReactUnity.Styling
             if (audioRunning) UpdateAudio();
             if (shouldUpdate)
             {
+                compositorSeen = false;
                 CompositorOnly = !shouldUpdateFully;
                 shouldUpdate = false;
                 try { OnUpdate?.Invoke(Active, shouldUpdateWithLayout); }
@@ -240,6 +251,7 @@ namespace ReactUnity.Styling
             Active = null;
             transitionTiming = null;
             animationTiming = null;
+            compositorSeen = false;
 
             propertyTransitionStates = null;
             activeTransitions = null;
@@ -295,12 +307,12 @@ namespace ReactUnity.Styling
         {
             if (activeTransitions == null || activeTransitions.Count == 0) return true;
 
-            // If there is not a previous state, no need to continue anymore
-            // But transitions may not be finished so return false
-            if (Previous == null) return false;
+            // Nothing to run from without a previous style; the next style change starts it again.
+            if (Previous == null) return true;
 
             var updated = false;
-            var finished = true;
+            var running = false;
+            var timed = false;
             var hasLayout = false;
             var currentTime = getTime();
             var prop = activeTransitions;
@@ -320,14 +332,14 @@ namespace ReactUnity.Styling
                     if (sp == null) continue;
 
                     // Use this condition to fetch values of duration etc.
-                    if (finished)
+                    if (!timed)
                     {
                         var snapshot = transitionTiming ?? (transitionTiming = new TransitionTiming(Current));
                         duration = snapshot.TransitionDuration;
                         delay = snapshot.TransitionDelay;
                         easing = snapshot.TransitionTimingFunction;
                         playState = snapshot.TransitionPlayState;
-                        finished = false;
+                        timed = true;
                     }
 
                     var prevValue = Previous.GetRawStyleValue(sp);
@@ -423,6 +435,7 @@ namespace ReactUnity.Styling
                     state.ToValue = curValue;
                     state.Ratio = ratio;
                     state.LastUpdatedAt = currentTime;
+                    if (ratio < 1) running = true;
 
                     if (ratio > 0 && previousRatio == 0) OnEvent?.Invoke("onTransitionStart", state.CreateEvent());
                     if (ratio == 1 && previousRatio < 1) OnEvent?.Invoke("onTransitionEnd", state.CreateEvent());
@@ -440,6 +453,8 @@ namespace ReactUnity.Styling
                 }
             }
 
+            // Settled once every property has reached its value, where it used to be polled every frame for good.
+            var finished = !running;
             if (finished) StopTransitions(false);
 
             if (updated)
@@ -912,7 +927,35 @@ namespace ReactUnity.Styling
             transitionTiming = null;
             animationTiming = null;
             Active?.UpdateParent(active);
-            OnUpdate?.Invoke(Active, false);
+
+            // A child sees a compositor-only change only through `inherit` on those same properties, so it
+            // has no more to apply than that -- and nothing at all, nor its subtree, while they resolve the same.
+            var fromCompositor = Parent?.CompositorOnly == true;
+            if (!fromCompositor) compositorSeen = false;
+            else if (Active != null && !CompositorValuesChanged()) return;
+
+            var compositorOnly = CompositorOnly;
+            CompositorOnly = fromCompositor;
+            try { OnUpdate?.Invoke(Active, false); }
+            finally { CompositorOnly = compositorOnly; }
+        }
+
+        // Resolved rather than raw: an `inherit` is one keyword object whatever the parent's value.
+        private bool CompositorValuesChanged()
+        {
+            var opacity = Active.opacity;
+            var translate = Active.translate;
+            var rotate = Active.rotate;
+            var scale = Active.scale;
+
+            var changed = !compositorSeen || opacity != seenOpacity || !translate.Equals(seenTranslate) || rotate != seenRotate || scale != seenScale;
+
+            compositorSeen = true;
+            seenOpacity = opacity;
+            seenTranslate = translate;
+            seenRotate = rotate;
+            seenScale = scale;
+            return changed;
         }
     }
 }

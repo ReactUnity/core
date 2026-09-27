@@ -29,6 +29,8 @@ namespace ReactUnity.Styling.Computed
         public object GetValue(IStyleProperty prop, NodeStyle style, IStyleConverter converter)
         {
             var size = 0f;
+            // The viewport is read live; a rem is the root's font-size, which a change there clears.
+            if (Type != RootValueType.Rem) NodeStyle.MarkLiveRead();
 
             switch (Type)
             {
