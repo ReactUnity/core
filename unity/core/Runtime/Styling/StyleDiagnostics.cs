@@ -22,6 +22,10 @@ namespace ReactUnity.Styling
         // warning a frame is noise rather than a diagnostic.
         private static readonly HashSet<string> seen = new HashSet<string>();
 
+        // Once per play session: with domain reload off, statics outlive it.
+        [UnityEngine.RuntimeInitializeOnLoadMethod(UnityEngine.RuntimeInitializeLoadType.SubsystemRegistration)]
+        private static void ResetSeen() => seen.Clear();
+
         [ThreadStatic] private static int probing;
 #endif
 

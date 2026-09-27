@@ -7,6 +7,10 @@ namespace ReactUnity.Helpers
     {
         static Dictionary<string, bool> Warned = new Dictionary<string, bool>();
 
+        // Once per play session: with domain reload off, statics outlive it.
+        [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
+        static void ResetAll() => Warned.Clear();
+
         public static bool WarnOnce(string warningName, string warningText)
         {
             if (!Warned.TryGetValue(warningName, out var warned)) warned = false;

@@ -49,6 +49,10 @@ namespace ReactUnity.Styling
 
         private static readonly HashSet<string> Warned = new HashSet<string>();
 
+        // Once per play session: with domain reload off, statics outlive it.
+        [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
+        private static void ResetWarnings() => Warned.Clear();
+
         // A pseudo-class this engine does not have parses as a custom state and then never matches,
         // which is indistinguishable from a rule that is simply wrong. Once per name is enough.
         private static void WarnUnknownState(string state)

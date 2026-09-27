@@ -70,10 +70,20 @@ namespace ReactUnity.Styling.Shorthands
         private const int ExpandCacheLimit = 256;
         private Dictionary<string, Dictionary<IStyleProperty, object>> expanded;
 
+        /// <summary>Whether an expansion can be shared; see <see cref="StyleConverterBase.ParsesArePure"/>.</summary>
+        internal virtual bool ExpandsArePure => true;
+
         /// <summary>The longhands <paramref name="value"/> sets, shared between callers and not to be modified.</summary>
         internal Dictionary<IStyleProperty, object> Expand(string value)
         {
             if (value == null) return null;
+            if (!ExpandsArePure)
+            {
+                var own = new Dictionary<IStyleProperty, object>();
+                Modify(own, value);
+                return own;
+            }
+
             if (expanded == null) expanded = new Dictionary<string, Dictionary<IStyleProperty, object>>();
             else if (expanded.TryGetValue(value, out var cached)) return cached;
 

@@ -46,6 +46,8 @@ namespace ReactUnity.Types
 
         public class Converter : TypedStyleConverterBase<Cursor>
         {
+            internal override bool ParsesArePure => false;
+
             public override bool HandleKeyword(CssKeyword keyword, out IComputedValue result)
             {
                 if (keyword == CssKeyword.None) return Constant(None, out result);

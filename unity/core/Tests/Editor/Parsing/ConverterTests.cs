@@ -656,5 +656,36 @@ namespace ReactUnity.Tests.Editor
             collection["cursor"] = "default";
             Assert.AreEqual(Types.Cursor.Default, style.cursor?.Get(0));
         }
+
+        // A reference keeps the asset the first context loaded, so sharing one leaks it into the next.
+        [Test]
+        public void AssetReferencesAreNotSharedBetweenParses()
+        {
+            var converters = new StyleConverterBase[] {
+                AllConverters.SpriteReferenceConverter,
+                AllConverters.FontReferenceConverter,
+                AllConverters.AudioReferenceConverter,
+                AllConverters.ImageDefinitionConverter,
+                new CssValueList<ImageDefinition>.Converter(AllConverters.ImageDefinitionConverter),
+                AllConverters.CursorConverter,
+            };
+
+            foreach (var converter in converters)
+            {
+                Assert.IsTrue(converter.TryParse("url(res:a)", out var first), converter.GetType().FullName);
+                Assert.IsTrue(converter.TryParse("url(res:a)", out var second), converter.GetType().FullName);
+                Assert.AreNotSame(first, second, converter.GetType().FullName);
+            }
+
+            foreach (var name in new[] { "font", "background", "mask", "borderImage", "audio" })
+            {
+                var shorthand = Styling.Shorthands.AllShorthands.Map[name];
+                Assert.AreNotSame(shorthand.Expand("url(res:a)"), shorthand.Expand("url(res:a)"), name);
+            }
+
+            Assert.IsTrue(AllConverters.ColorConverter.TryParse("#123456", out var color));
+            Assert.IsTrue(AllConverters.ColorConverter.TryParse("#123456", out var again));
+            Assert.AreSame(color, again, "a pure parse is still cached");
+        }
     }
 }

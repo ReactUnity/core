@@ -8,6 +8,8 @@ namespace ReactUnity.Styling.Shorthands
 {
     internal class MaskShorthand : StyleShorthand
     {
+        internal override bool ExpandsArePure => false;
+
         private static StyleConverterBase RepeatConverter = AllConverters.Get<BackgroundRepeat>();
         private static StyleConverterBase ModeConverter = AllConverters.Get<MaskMode>();
 

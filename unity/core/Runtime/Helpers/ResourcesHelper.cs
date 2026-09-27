@@ -6,20 +6,20 @@ namespace ReactUnity.Helpers
     internal static class ResourcesHelper
     {
         private static Sprite checkSprite;
-        public static Sprite CheckSprite => checkSprite = checkSprite ??
-            Resources.Load<Sprite>("ReactUnity/sprites/check");
+        public static Sprite CheckSprite => checkSprite ? checkSprite : (checkSprite =
+            Resources.Load<Sprite>("ReactUnity/sprites/check"));
 
         private static TextAsset useragentStylesheet;
-        public static TextAsset UseragentStylesheet => useragentStylesheet = useragentStylesheet ??
-            Resources.Load<TextAsset>("ReactUnity/styles/ugui/useragent");
+        public static TextAsset UseragentStylesheet => useragentStylesheet ? useragentStylesheet : (useragentStylesheet =
+            Resources.Load<TextAsset>("ReactUnity/styles/ugui/useragent"));
 
         private static Material backgroundImageMaterial;
-        public static Material BackgroundImageMaterial => backgroundImageMaterial = backgroundImageMaterial ??
-            Resources.Load<Material>("ReactUnity/materials/BackgroundImage");
+        public static Material BackgroundImageMaterial => backgroundImageMaterial ? backgroundImageMaterial : (backgroundImageMaterial =
+            Resources.Load<Material>("ReactUnity/materials/BackgroundImage"));
 
         private static Material backdropFilterMaterial;
-        public static Material BackdropFilterMaterial => backdropFilterMaterial = backdropFilterMaterial ??
-            Resources.Load<Material>("ReactUnity/materials/BackdropFilter");
+        public static Material BackdropFilterMaterial => backdropFilterMaterial ? backdropFilterMaterial : (backdropFilterMaterial =
+            Resources.Load<Material>("ReactUnity/materials/BackdropFilter"));
 
         private static readonly Dictionary<int, Material> backgroundBlendMaterials = new Dictionary<int, Material>();
 
@@ -59,8 +59,8 @@ namespace ReactUnity.Helpers
         }
 
         private static Shader clippedImageShader;
-        public static Shader ClippedImageShader => clippedImageShader = clippedImageShader ??
-            Resources.Load<Shader>("ReactUnity/shaders/ClippedImage");
+        public static Shader ClippedImageShader => clippedImageShader ? clippedImageShader : (clippedImageShader =
+            Resources.Load<Shader>("ReactUnity/shaders/ClippedImage"));
 
         private static Material clippedImageMaterial;
 
@@ -79,15 +79,16 @@ namespace ReactUnity.Helpers
         }
 
         private static Texture2D borderTexture;
-        public static Texture2D BorderTexture => borderTexture = borderTexture ??
-            Resources.Load<Texture2D>("ReactUnity/sprites/border");
+        public static Texture2D BorderTexture => borderTexture ? borderTexture : (borderTexture =
+            Resources.Load<Texture2D>("ReactUnity/sprites/border"));
 
 
         private static Dictionary<string, TextAsset> Polyfills = new Dictionary<string, TextAsset>();
 
         public static string GetPolyfill(string name)
         {
-            if (Polyfills.TryGetValue(name, out var asset)) return asset.text;
+            // Unity's own null check: with domain reload off this outlives a reimport that destroys the asset.
+            if (Polyfills.TryGetValue(name, out var asset) && asset) return asset.text;
             var loaded = Resources.Load<TextAsset>("ReactUnity/polyfills/" + name);
 
             if (loaded == null) throw new System.Exception($"Polyfill {name} does not exist");

@@ -70,6 +70,8 @@ namespace ReactUnity.Types
 
             CssFourDirectional<T> DefaultValue;
 
+            internal override bool ParsesArePure => BaseConverter.ParsesArePure;
+
             public Converter(StyleConverterBase baseConverter = null)
             {
                 BaseConverter = baseConverter ?? AllConverters.Get<T>();

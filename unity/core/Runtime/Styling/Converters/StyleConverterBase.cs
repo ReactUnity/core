@@ -67,8 +67,11 @@ namespace ReactUnity.Styling.Converters
         private const int ParseCacheLimit = 1024;
         private Dictionary<string, IComputedValue> parsed;
 
-        /// <summary>Whether parsing a string always gives the same result, which lets it be cached.</summary>
-        protected virtual bool ParsesArePure => true;
+        /// <summary>
+        /// Whether parsing a string always gives the same result, which lets it be cached. Not for an
+        /// asset reference: it resolves against the first context to load it and keeps that asset.
+        /// </summary>
+        internal virtual bool ParsesArePure => true;
 
         public bool TryParse(string value, out IComputedValue result)
         {

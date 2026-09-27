@@ -6,6 +6,8 @@ namespace ReactUnity.Styling.Shorthands
 {
     internal class AudioShorthand : StyleShorthand
     {
+        internal override bool ExpandsArePure => false;
+
         public override List<IStyleProperty> ModifiedProperties { get; } = new List<IStyleProperty>
         {
             StyleProperties.audioClip,

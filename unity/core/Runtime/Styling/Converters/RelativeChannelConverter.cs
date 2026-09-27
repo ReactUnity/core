@@ -21,7 +21,7 @@ namespace ReactUnity.Styling.Converters
         }
 
         // One is made per relative color, so a cache would only ever hold that color's channels.
-        protected override bool ParsesArePure => false;
+        internal override bool ParsesArePure => false;
 
         protected override bool ParseInternal(string value, out IComputedValue result)
         {
