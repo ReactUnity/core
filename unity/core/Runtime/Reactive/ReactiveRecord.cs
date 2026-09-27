@@ -22,6 +22,12 @@ namespace ReactUnity.Reactive
 
         internal event Action<TKey, T, ReactiveDictionary<TKey, T>> changed;
 
+        /// <summary>Bumped by every write, notified or not, so a reader holding a copy can tell it is stale.</summary>
+        internal int Version { get; private set; }
+
+        /// <summary>For a subclass that writes <see cref="collection"/> directly.</summary>
+        protected void Touch() => Version++;
+
         public T this[TKey key]
         {
             get => RetrieveValue(key);
@@ -55,24 +61,28 @@ namespace ReactUnity.Reactive
         public void Add(TKey key, T value)
         {
             collection.Add(key, value);
+            Version++;
             Change(key, value);
         }
 
         public void Add(KeyValuePair<TKey, T> item)
         {
             collection.Add(item.Key, item.Value);
+            Version++;
             Change(item.Key, item.Value);
         }
 
         public void Clear()
         {
             collection.Clear();
+            Version++;
             Change(default, default);
         }
 
         public void ClearWithoutNotify()
         {
             collection.Clear();
+            Version++;
         }
 
 
@@ -89,13 +99,16 @@ namespace ReactUnity.Reactive
         public bool Remove(TKey key)
         {
             var res = collection.Remove(key);
+            if (res) Version++;
             if (res) Change(key, default);
             return res;
         }
 
         public bool RemoveWithoutNotify(TKey key)
         {
-            return collection.Remove(key);
+            var res = collection.Remove(key);
+            if (res) Version++;
+            return res;
         }
 
         public bool TryGetValue(TKey key, out T value)
@@ -115,7 +128,9 @@ namespace ReactUnity.Reactive
 
         bool ICollection<KeyValuePair<TKey, T>>.Remove(KeyValuePair<TKey, T> item)
         {
-            return (collection as ICollection<KeyValuePair<TKey, T>>).Remove(item);
+            var res = (collection as ICollection<KeyValuePair<TKey, T>>).Remove(item);
+            if (res) Version++;
+            return res;
         }
 
         bool ICollection<KeyValuePair<TKey, T>>.Contains(KeyValuePair<TKey, T> item)
@@ -163,6 +178,7 @@ namespace ReactUnity.Reactive
         protected virtual void SaveValue(TKey key, T value, bool notify)
         {
             collection[key] = value;
+            Version++;
             if (notify) Change(key, value);
         }
 

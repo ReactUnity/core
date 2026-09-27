@@ -17,6 +17,14 @@ namespace ReactUnity.Styling
         private List<IDictionary<IStyleProperty, object>> CssStyles;
         private NodeStyle Fallback;
         private Dictionary<IStyleProperty, object> Cache;
+        // The declaration blocks merged on first read, each property keeping the first block's value,
+        // so a read is one lookup rather than one per block. Merged again once an inline block is written.
+        private Dictionary<IStyleProperty, object> declared;
+        private int declaredStamp;
+        // What a merged entry holds when the winning declaration is a revert-layer, which only the walk resolves.
+        private static readonly object NeedsWalk = new object();
+        // An element's style ends up caching about a hundred properties; sized for that rather than grown to it.
+        private const int ElementCacheCapacity = 128;
 
         public bool HasInheritedChanges { get; private set; } = false;
 
@@ -199,13 +207,14 @@ namespace ReactUnity.Styling
             Parent = parent;
             Fallback?.UpdateParent(parent);
             Cache?.Clear();
+            declared = null;
         }
 
         public object GetRawStyleValue(IStyleProperty prop, bool fromChild = false, NodeStyle activeStyle = null)
         {
             if (fromChild) HasInheritedChanges = true;
 
-            if (Cache == null) Cache = new Dictionary<IStyleProperty, object>();
+            if (Cache == null) Cache = new Dictionary<IStyleProperty, object>(Component != null ? ElementCacheCapacity : 0);
             else if (Cache.TryGetValue(prop, out var cached)) return cached;
 
             object value;
@@ -379,12 +388,59 @@ namespace ReactUnity.Styling
 
         private bool CssTryGetValue(IStyleProperty prop, out object res)
         {
-            if (CssStyles == null)
+            var merged = Declared;
+            if (merged == null || !merged.TryGetValue(prop, out res))
             {
                 res = null;
                 return false;
             }
 
+            return res != NeedsWalk || WalkDeclarations(prop, out res);
+        }
+
+        private Dictionary<IStyleProperty, object> Declared
+        {
+            get
+            {
+                if (CssStyles == null) return null;
+                var stamp = BlockVersions();
+                if (declared != null && stamp == declaredStamp) return declared;
+                declaredStamp = stamp;
+
+                var total = 0;
+                for (int i = 0; i < CssStyles.Count; i++) total += CssStyles[i].Count;
+
+                var merged = new Dictionary<IStyleProperty, object>(total);
+                for (int i = 0; i < CssStyles.Count; i++)
+                {
+                    var dic = CssStyles[i];
+                    if (dic is Dictionary<IStyleProperty, object> concrete)
+                        foreach (var kv in concrete) Merge(merged, kv.Key, kv.Value);
+                    else
+                        foreach (var kv in dic) Merge(merged, kv.Key, kv.Value);
+                }
+
+                return declared = merged;
+            }
+        }
+
+        // Only an inline block is written after it is built, and every write bumps its version, so
+        // the sum moves whenever one of them does.
+        private int BlockVersions()
+        {
+            var sum = 0;
+            for (int i = 0; i < CssStyles.Count; i++)
+                if (CssStyles[i] is Reactive.ReactiveDictionary<IStyleProperty, object> live) sum += live.Version;
+            return sum;
+        }
+
+        private static void Merge(Dictionary<IStyleProperty, object> merged, IStyleProperty key, object value)
+        {
+            if (!merged.ContainsKey(key)) merged[key] = IsRevertLayer(value) ? NeedsWalk : value;
+        }
+
+        private bool WalkDeclarations(IStyleProperty prop, out object res)
+        {
             // The layers a `revert-layer` declaration took out of the cascade. Their declarations
             // are all passed over, which is what rolling a layer back means: the winner becomes
             // whatever would have won had the layer never been declared at all.
@@ -424,15 +480,6 @@ namespace ReactUnity.Styling
             (value is ComputedKeyword ck && ck.Keyword == CssKeyword.RevertLayer) ||
             (value is CssKeyword raw && raw == CssKeyword.RevertLayer);
 
-        private bool CssHasValue(IStyleProperty prop)
-        {
-            if (CssStyles == null) return false;
-            for (int i = 0; i < CssStyles.Count; i++)
-            {
-                var dic = CssStyles[i];
-                if (dic.ContainsKey(prop)) return true;
-            }
-            return false;
-        }
+        private bool CssHasValue(IStyleProperty prop) => Declared?.ContainsKey(prop) == true;
     }
 }

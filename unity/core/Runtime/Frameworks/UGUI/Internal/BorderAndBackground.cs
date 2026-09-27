@@ -48,6 +48,8 @@ namespace ReactUnity.UGUI.Internal
         private WebRect insetShadowGraphic;
 
         public List<WebShadow> ShadowGraphics { get; private set; }
+        // Disabled, in the order they left ShadowGraphics, so popping one keeps the list in sibling order.
+        private Stack<WebShadow> spareShadows;
         public List<WebBackgroundImage> BackgroundGraphics { get; private set; }
 
         private WebOutlineSizes borderSize;
@@ -176,7 +178,7 @@ namespace ReactUnity.UGUI.Internal
         {
             if (root) return root;
 
-            var rootObj = Context.CreateNativeObject("[GraphicRoot]", typeof(RectTransform), typeof(WebRect));
+            var rootObj = CreateChild("[GraphicRoot]", transform as RectTransform, 0, typeof(WebRect));
 
             rootGraphic = rootObj.GetComponent<WebRect>();
             rootGraphic.raycastTarget = false;
@@ -185,7 +187,6 @@ namespace ReactUnity.UGUI.Internal
             rootMask = rootObj.AddComponent<Mask>();
             rootMask.showMaskGraphic = false;
             root = rootObj.transform as RectTransform;
-            FullStretch(root, transform as RectTransform, 0);
 
             return root;
         }
@@ -194,9 +195,8 @@ namespace ReactUnity.UGUI.Internal
         {
             if (shadowRoot) return shadowRoot;
 
-            var sr = Context.CreateNativeObject("[Shadows]", typeof(RectTransform));
+            var sr = CreateChild("[Shadows]", Root, 0);
             shadowRoot = sr.transform as RectTransform;
-            FullStretch(shadowRoot, Root, 0);
             KeepInsetShadowsLast();
 
             return shadowRoot;
@@ -211,18 +211,19 @@ namespace ReactUnity.UGUI.Internal
         {
             if (insetShadowRoot) return insetShadowRoot;
 
-            var obj = Context.CreateNativeObject("[InsetShadows]", typeof(RectTransform), typeof(WebRect));
+            // Above the background, as CSS paints an inset shadow, and above nothing else here.
+            var obj = CreateChild("[InsetShadows]", Root, -1, typeof(WebRect));
 
             insetShadowGraphic = obj.GetComponent<WebRect>();
             insetShadowGraphic.raycastTarget = false;
             if (borderGraphic) borderGraphic.InsetBorder = insetShadowGraphic;
+            // With no border, the padding box's corners are the border box's own.
+            else insetShadowGraphic.Rounding = new WebRoundingProperties(borderRadius);
 
             var mask = obj.AddComponent<Mask>();
             mask.showMaskGraphic = false;
 
             insetShadowRoot = obj.transform as RectTransform;
-            // Above the background, as CSS paints an inset shadow, and above nothing else here.
-            FullStretch(insetShadowRoot, Root);
 
             BorderSize = BorderSize;
 
@@ -240,7 +241,7 @@ namespace ReactUnity.UGUI.Internal
         {
             if (backdrop) return backdrop;
 
-            var bg = Context.CreateNativeObject("[Backdrop]", typeof(RectTransform), typeof(WebFilter));
+            var bg = CreateChild("[Backdrop]", Root, backgroundRoot ? backgroundRoot.GetSiblingIndex() : 1, typeof(WebFilter));
 
             backdrop = bg.transform as RectTransform;
 
@@ -248,7 +249,6 @@ namespace ReactUnity.UGUI.Internal
             BackdropFilter.MaskRoot = transform;
             if (BackdropSurface.Required) BackdropFilter.Surface = Context.BackdropSurface;
 
-            FullStretch(backdrop, Root, backgroundRoot ? backgroundRoot.GetSiblingIndex() : 1);
             KeepInsetShadowsLast();
 
             return backdrop;
@@ -258,12 +258,11 @@ namespace ReactUnity.UGUI.Internal
         {
             if (backgroundRoot) return backgroundRoot;
 
-            var bg = Context.CreateNativeObject("[Background]", typeof(RectTransform), typeof(RawImage));
+            var bg = CreateChild("[Background]", Root, 2, typeof(RawImage));
             var bgImage = bg.GetComponent<RawImage>();
             bgImage.color = Color.clear;
 
             backgroundRoot = bg.transform as RectTransform;
-            FullStretch(backgroundRoot, Root, 2);
             KeepInsetShadowsLast();
 
             return backgroundRoot;
@@ -273,12 +272,13 @@ namespace ReactUnity.UGUI.Internal
         {
             if (borderRoot) return borderRoot;
 
-            var border = Context.CreateNativeObject("[Border]", typeof(RectTransform), typeof(WebBorder));
+            var border = CreateChild("[Border]", transform as RectTransform, root != null ? 1 : 0, typeof(WebBorder));
             borderGraphic = border.GetComponent<WebBorder>();
+            // Made when a width first appears, which can be after the radii were set.
+            borderGraphic.Rounding = new WebRoundingProperties(borderRadius);
             borderGraphic.InsetBorder = insetShadowGraphic;
 
             borderRoot = border.transform as RectTransform;
-            FullStretch(borderRoot, transform as RectTransform, root != null ? 1 : 0);
 
             // Refresh border properties
             BorderSize = BorderSize;
@@ -292,15 +292,12 @@ namespace ReactUnity.UGUI.Internal
         {
             if (borderImageRoot) return borderImageRoot;
 
-            var border = Context.CreateNativeObject("[BorderImage]", typeof(RectTransform), typeof(WebBorderImage));
+            var ind = (root != null ? 1 : 0) + (borderRoot != null ? 1 : 0);
+            var border = CreateChild("[BorderImage]", transform as RectTransform, ind, typeof(WebBorderImage));
             borderImage = border.GetComponent<WebBorderImage>();
             borderImage.Context = Context;
 
             borderImageRoot = border.transform as RectTransform;
-
-            var ind = (root != null ? 1 : 0) + (borderRoot != null ? 1 : 0);
-
-            FullStretch(borderImageRoot, transform as RectTransform, ind);
 
             return borderImageRoot;
         }
@@ -309,14 +306,11 @@ namespace ReactUnity.UGUI.Internal
         {
             if (outlineRoot) return outlineRoot;
 
-            var outline = Context.CreateNativeObject("[Outline]", typeof(RectTransform), typeof(WebBorder));
+            var ind = (root != null ? 1 : 0) + (borderRoot != null ? 1 : 0) + (borderImageRoot != null ? 1 : 0);
+            var outline = CreateChild("[Outline]", transform as RectTransform, ind, typeof(WebBorder));
             outlineGraphic = outline.GetComponent<WebBorder>();
 
             outlineRoot = outline.transform as RectTransform;
-
-            var ind = (root != null ? 1 : 0) + (borderRoot != null ? 1 : 0) + (borderImageRoot != null ? 1 : 0);
-
-            FullStretch(outlineRoot, transform as RectTransform, ind);
 
             return outlineRoot;
         }
@@ -451,14 +445,12 @@ namespace ReactUnity.UGUI.Internal
             borderRadius[3] = bl;
             var v = borderRadius;
 
-            if (!borderGraphic)
-            {
-                var hasRounding = !tl.IsZero() || !tr.IsZero() || !br.IsZero() || !bl.IsZero();
-                if (hasRounding) EnsureBorderRoot();
-            }
-
+            // No [Border] for the radii alone: the mask on [GraphicRoot] rounds the background, and a
+            // border made later takes them from here.
             if (borderGraphic)
                 borderGraphic.Rounding = new WebRoundingProperties(v);
+            else if (insetShadowGraphic)
+                insetShadowGraphic.Rounding = new WebRoundingProperties(v);
 
             if (outlineGraphic)
                 outlineGraphic.Rounding = new WebRoundingProperties(v);
@@ -736,24 +728,26 @@ namespace ReactUnity.UGUI.Internal
                 else return;
             }
 
-            var diff = ShadowGraphics.Count - validCount;
-
-            if (diff > 0)
+            // Surplus shadows are parked rather than destroyed: a pooled element is reused in another
+            // role on almost every remount, and rebuilding its shadows cost more than restyling it.
+            while (ShadowGraphics.Count > validCount)
             {
-                for (int i = diff - 1; i >= 0; i--)
-                {
-                    var sd = ShadowGraphics[validCount + i];
-
-                    ShadowGraphics.RemoveAt(validCount + i);
-                    DestroyImmediate(sd.gameObject);
-                }
+                var last = ShadowGraphics.Count - 1;
+                var sd = ShadowGraphics[last];
+                ShadowGraphics.RemoveAt(last);
+                sd.enabled = false;
+                (spareShadows ??= new Stack<WebShadow>()).Push(sd);
             }
-            else if (diff < 0)
+
+            while (ShadowGraphics.Count < validCount)
             {
-                for (int i = -diff - 1; i >= 0; i--)
+                if (spareShadows != null && spareShadows.Count > 0)
                 {
-                    CreateShadow();
+                    var sd = spareShadows.Pop();
+                    sd.enabled = true;
+                    ShadowGraphics.Add(sd);
                 }
+                else CreateShadow();
             }
 
             var len = ShadowGraphics.Count;
@@ -788,17 +782,16 @@ namespace ReactUnity.UGUI.Internal
 
         private void CreateShadow()
         {
-            var sd = Context.CreateNativeObject("[Shadow]", typeof(RectTransform), typeof(WebShadow));
+            var sd = CreateChild("[Shadow]", ShadowRoot, -1, typeof(WebShadow));
             var img = sd.GetComponent<WebShadow>();
             img.MaskRoot = transform;
             img.raycastTarget = false;
             ShadowGraphics.Add(img);
-            FullStretch(sd.transform as RectTransform, ShadowRoot);
         }
 
         private void CreateBackgroundImage()
         {
-            var sd = Context.CreateNativeObject("[BackgroundImage]", typeof(RectTransform), typeof(WebBackgroundImage));
+            var sd = CreateChild("[BackgroundImage]", BackgroundRoot, -1, typeof(WebBackgroundImage));
             var img = sd.GetComponent<WebBackgroundImage>();
             img.color = Color.clear;
             img.Context = Context;
@@ -806,7 +799,18 @@ namespace ReactUnity.UGUI.Internal
             // for itself -- here it is only told where to go when it does.
             if (BackdropSurface.Required) img.Surface = Context.BackdropSurface;
             BackgroundGraphics.Add(img);
-            FullStretch(sd.transform as RectTransform, BackgroundRoot);
+        }
+
+        /// <summary>
+        /// Made under its parent and only then given its components, so no graphic is enabled at the
+        /// scene root and moved: each move re-finds its canvas and rebuilds its material.
+        /// </summary>
+        private GameObject CreateChild(string name, RectTransform parent, int index, params System.Type[] components)
+        {
+            var go = Context.CreateNativeObject(name, typeof(RectTransform));
+            FullStretch(go.transform as RectTransform, parent, index);
+            for (int i = 0; i < components.Length; i++) go.AddComponent(components[i]);
+            return go;
         }
 
         static void FullStretch(RectTransform child, RectTransform parent, int index = -1)

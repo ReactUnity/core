@@ -1320,7 +1320,8 @@ namespace ReactUnity.UGUI.Internal
             for (var t = c.transform; t; t = t.parent)
             {
                 if (t.TryGetComponent<CanvasGroup>(out var group) && group.alpha < 1f) return null;
-                if (t.TryGetComponent<Mask>(out _) || t.TryGetComponent<RectMask2D>(out _)) return null;
+                // A disabled mask clips nothing, and a parked clip stencil or overflow mask leaves one.
+                if ((t.TryGetComponent<Mask>(out var mask) && mask.enabled) || t.TryGetComponent<RectMask2D>(out _)) return null;
                 if (t == self) break;
             }
             return inner;

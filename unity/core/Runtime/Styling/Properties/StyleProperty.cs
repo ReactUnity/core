@@ -16,10 +16,13 @@ namespace ReactUnity.Styling
         public StyleConverterBase converter;
         public virtual bool affectsLayout => false;
         public List<IStyleProperty> ModifiedProperties { get; }
+        // Hashed once: a read probes every declaration block the element matched, and Mono hashes a string anew each time.
+        private readonly int hash;
         public StyleProperty(string name, object initialValue = null, bool transitionable = false, bool inherited = false, StyleConverterBase converter = null)
         {
             this.type = typeof(T);
             this.name = name;
+            hash = name.GetHashCode();
             this.defaultValue = initialValue;
             this.transitionable = transitionable;
             this.inherited = inherited;
@@ -48,8 +51,8 @@ namespace ReactUnity.Styling
 
         public static bool operator ==(StyleProperty<T> left, StyleProperty<T> right) => left.name == right.name;
         public static bool operator !=(StyleProperty<T> left, StyleProperty<T> right) => left.name != right.name;
-        public override int GetHashCode() => name.GetHashCode();
-        public override bool Equals(object obj) => obj is IStyleProperty v && v.name == name;
+        public override int GetHashCode() => hash;
+        public override bool Equals(object obj) => ReferenceEquals(this, obj) || obj is IStyleProperty v && v.name == name;
 
         public object GetStyle(NodeStyle style) => style.GetStyleValue(this);
 

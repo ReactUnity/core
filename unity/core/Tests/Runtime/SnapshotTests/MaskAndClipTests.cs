@@ -39,7 +39,8 @@ namespace ReactUnity.Tests
 
         private UGUIComponent View => Q("#test");
 
-        private ClipPathStencil Stencil => View.GameObject.GetComponent<ClipPathStencil>();
+        // A stencil the clip no longer needs is parked, disabled, rather than destroyed.
+        private ClipPathStencil Stencil => View.GameObject.TryGetComponent<ClipPathStencil>(out var s) && s.enabled ? s : null;
 
         public MaskAndClipTests(JavascriptEngineType engineType) : base(engineType) { }
 
@@ -480,6 +481,58 @@ namespace ReactUnity.Tests
             Assert.NotNull(View.ElementFilter, "going back to auto should bring the capture back");
             Assert.IsNull(Stencil, "without leaving the stencil behind");
             Assert.Less(Coverage(SampleAt(20, 20)), 0.2f, "and the corner stays cut");
+        }
+
+        [UGUITest(Script = BaseScript, Style = BaseStyle)]
+        public IEnumerator AParkedStencilComesBackWhenTheClipDoes()
+        {
+            View.Style["shape-rendering"] = "crispEdges";
+            View.Style["clip-path"] = "circle(50%)";
+            yield return null;
+            yield return null;
+            yield return null;
+
+            var first = Stencil;
+            Assert.NotNull(first);
+
+            View.Style["clip-path"] = null;
+            yield return null;
+            yield return null;
+            yield return null;
+
+            Assert.IsNull(Stencil, "no clip, so nothing should be cutting");
+            Assert.Greater(Coverage(SampleAt(20, 20)), 0.7f, "and the corner should be painted again");
+
+            View.Style["clip-path"] = "circle(50%)";
+            yield return null;
+            yield return null;
+            yield return null;
+
+            Assert.AreSame(first, Stencil, "the parked stencil should be the one that comes back");
+            Assert.Less(Coverage(SampleAt(20, 20)), 0.2f, "and it should cut the corner as before");
+        }
+
+        [UGUITest(Script = BaseScript, Style = BaseStyle)]
+        public IEnumerator AnOverflowMaskTakesAParkedStencilsSlot()
+        {
+            View.Style["shape-rendering"] = "crispEdges";
+            View.Style["clip-path"] = "circle(50%)";
+            yield return null;
+            yield return null;
+
+            View.Style["clip-path"] = null;
+            yield return null;
+            yield return null;
+            Assert.IsNull(Stencil);
+
+            View.Style["overflow"] = "hidden";
+            yield return null;
+            yield return null;
+            yield return null;
+
+            Assert.IsFalse(View.GameObject.TryGetComponent<ClipPathStencil>(out _), "the overflow mask needs the element's one graphic");
+            Assert.NotNull(View.OverflowMask);
+            Assert.Greater(Coverage(SampleAt(20, 20)), 0.7f, "a square overflow clip keeps the corner");
         }
 
         [UGUITest(Script = NestedScript, Style = BaseStyle)]

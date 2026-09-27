@@ -66,7 +66,12 @@ namespace ReactUnity.UGUI.Internal
         private readonly List<CanvasRenderer> walked = new List<CanvasRenderer>();
         private readonly List<CanvasRenderer> walkedReaders = new List<CanvasRenderer>();
         private readonly List<CanvasRenderer> bare = new List<CanvasRenderer>();
+        private readonly List<CanvasRenderer> skipped = new List<CanvasRenderer>();
         private Camera grabCamera;
+
+        /// <summary>A subtree the grab walk leaves out: the element pool, which is inactive and never drawn,
+        /// and whose elements are reparented on their way back -- which changes the walk anyway.</summary>
+        public Transform Skip;
         private int purgeCountdown;
 
         /// <summary>Off gives every reader a render of its own. For tests.</summary>
@@ -223,6 +228,7 @@ namespace ReactUnity.UGUI.Internal
 
             tail.Clear();
             root.GetComponentsInChildren(true, tail);
+            DropPooled();
             if (Unchanged(readers))
             {
                 tail.Clear();
@@ -296,6 +302,19 @@ namespace ReactUnity.UGUI.Internal
                 return false;
             }
             return true;
+        }
+
+        // A subtree is one run of a depth-first walk, so it comes out in one piece.
+        void DropPooled()
+        {
+            if (!Skip) return;
+            skipped.Clear();
+            Skip.GetComponentsInChildren(true, skipped);
+            var n = skipped.Count;
+
+            var from = n > 0 ? tail.IndexOf(skipped[0]) : -1;
+            if (from >= 0 && from + n <= tail.Count && ReferenceEquals(tail[from + n - 1], skipped[n - 1])) tail.RemoveRange(from, n);
+            skipped.Clear();
         }
 
         BackdropSlice Readd(CanvasRenderer cr, BackdropSlice old)
@@ -619,6 +638,7 @@ namespace ReactUnity.UGUI.Internal
             }
 
             var root = Context.RootCanvas.transform;
+            pass.Skip = Context.PoolRoot;
 
             // A grab costs a copy per reader, so there is nothing to save by watching the page.
             if (pass.Grab(cam, root, onScreen, cam.pixelWidth, cam.pixelHeight))

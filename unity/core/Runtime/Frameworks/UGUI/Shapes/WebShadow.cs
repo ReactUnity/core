@@ -104,6 +104,8 @@ namespace ReactUnity.UGUI.Shapes
             get => rounding;
             set
             {
+                // Re-applied on every restyle and relayout of the element, moved or not.
+                if (rounding != null && rounding.ValueEquals(value)) return;
                 rounding = value;
                 SetVerticesDirty();
             }
@@ -117,6 +119,7 @@ namespace ReactUnity.UGUI.Shapes
             get => shadow;
             set
             {
+                if (shadow != null && shadow.ValueEquals(value)) return;
                 shadow = value;
                 SetVerticesDirty();
                 SetMaterialDirty();
@@ -128,6 +131,7 @@ namespace ReactUnity.UGUI.Shapes
             get => base.color;
             set
             {
+                if (base.color == value) return;
                 base.color = value;
                 SetVerticesDirty();
             }

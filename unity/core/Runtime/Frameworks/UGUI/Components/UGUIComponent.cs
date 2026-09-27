@@ -623,7 +623,7 @@ namespace ReactUnity.UGUI
             if (mask == null)
             {
                 // The stencil clip holds the one graphic the mask needs; SetFilter moves the clip to the capture.
-                ClipPathStencil.Set(this, null);
+                ClipPathStencil.Remove(this);
                 mask = OverflowMask = MaskAndImage.Create(GameObject, Context);
             }
 

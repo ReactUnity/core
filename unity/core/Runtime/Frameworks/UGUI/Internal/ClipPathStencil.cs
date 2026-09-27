@@ -81,8 +81,8 @@ namespace ReactUnity.UGUI.Internal
 
             if (clip == null)
             {
-                if (current) current.Remove();
-                cmp.ClipStencil = null;
+                // Parked, not destroyed: a pooled element changes role on nearly every remount.
+                if (current && current.enabled) current.Park();
                 return;
             }
 
@@ -93,6 +93,12 @@ namespace ReactUnity.UGUI.Internal
                 current.mask = cmp.GameObject.AddComponent<Mask>();
                 current.mask.showMaskGraphic = false;
                 current.hit = cmp.GameObject.AddComponent<ClipPathRaycastFilter>();
+            }
+            else if (!current.enabled)
+            {
+                current.enabled = true;
+                if (current.mask) current.mask.enabled = true;
+                if (current.hit) current.hit.enabled = true;
             }
 
             current.component = cmp;
@@ -105,14 +111,32 @@ namespace ReactUnity.UGUI.Internal
         }
 
         /// <summary>
-        /// Takes the graphic and its mask off together, and at once: Mask caches the graphic it found, so it
+        /// Takes the stencil off <paramref name="cmp"/> for good, for the overflow mask that wants its graphic
+        /// slot. The graphic and its mask go together and at once: Mask caches the graphic it found, so it
         /// cannot outlive it, and the overflow mask may want the slot in the same style pass.
         /// </summary>
-        internal void Remove()
+        internal static void Remove(UGUIComponent cmp)
         {
-            if (mask) DestroyImmediate(mask);
-            if (hit) DestroyImmediate(hit);
-            DestroyImmediate(this);
+            var current = cmp.ClipStencil;
+            cmp.ClipStencil = null;
+            if (!current) return;
+
+            if (current.mask) DestroyImmediate(current.mask);
+            if (current.hit) DestroyImmediate(current.hit);
+            DestroyImmediate(current);
+        }
+
+        void Park()
+        {
+            // The shape goes too, so the one that comes back is always new and rebuilds the mesh.
+            shape = ClipPath.None;
+            if (hit)
+            {
+                hit.Shape = ClipPath.None;
+                hit.enabled = false;
+            }
+            if (mask) mask.enabled = false;
+            enabled = false;
         }
 
         protected override void OnPopulateMesh(VertexHelper vh)
