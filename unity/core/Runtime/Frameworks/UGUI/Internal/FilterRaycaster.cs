@@ -46,7 +46,9 @@ namespace ReactUnity.UGUI.Internal
             get
             {
                 var root = Composite && Composite.canvas ? Composite.canvas.rootCanvas : null;
-                var outer = root ? root.GetComponent<FilterRaycaster>() : null;
+                // TryGetComponent: a miss through GetComponent builds an error message in the editor,
+                // and the page's own root misses on every raycast and every eventCamera read.
+                if (!root || !root.TryGetComponent<FilterRaycaster>(out var outer)) return null;
                 return outer != this ? outer : null;
             }
         }
@@ -174,11 +176,18 @@ namespace ReactUnity.UGUI.Internal
             }
             else viewer = ViewportCamera;
 
+            var camera = CaptureCamera;
+            var warped = Composite.TryGetComponent<PlaneWarp>(out var warp) && warp.Warping;
+
+            // A point off the composite fails the viewport test below anyway, and every filter on the page
+            // is asked every frame -- so rule it out before walking the ancestor chain for it.
+            if (camera && !warped && !RectTransformUtility.RectangleContainsScreenPoint(Composite.rectTransform, screen, viewer))
+                return false;
+
             // Asking the composite runs the ancestor chain the reparent removed.
             if (!Composite.Raycast(screen, viewer)) return false;
 
-            var camera = CaptureCamera;
-            if (Composite.TryGetComponent<PlaneWarp>(out var warp) && warp.Warping)
+            if (warped)
             {
                 // A warped composite is no linear stretch of its capture, so the point goes back
                 // through the projection onto the plane the capture was taken of.

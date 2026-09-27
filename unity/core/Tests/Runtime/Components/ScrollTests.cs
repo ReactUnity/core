@@ -493,5 +493,62 @@ namespace ReactUnity.Tests
             Assert.AreEqual(200, Scroll.ScrollWidth, 1);
             Assert.AreEqual(200, Scroll.ScrollHeight, 1);
         }
+
+        const string RowsScript = @"
+            function App() {
+                return <scroll>
+                    <view>{Array.from({ length: 20 }, (_, i) => <view key={i} className='row' />)}</view>
+                </scroll>;
+            }
+        ";
+
+        const string RowsStyle = @"
+            scroll { height: 200px; width: 200px; }
+            scroll > view { flex-shrink: 0; }
+            .row { height: 50px; flex-shrink: 0; background-color: red; }
+        ";
+
+        static bool Culled(UGUIComponent row)
+        {
+            var graphics = row.GameObject.GetComponentsInChildren<MaskableGraphic>(true);
+            Assert.IsNotEmpty(graphics);
+            foreach (var graphic in graphics) if (!graphic.canvasRenderer.cull) return false;
+            return true;
+        }
+
+        [UGUITest(Script = RowsScript, Style = RowsStyle)]
+        public IEnumerator ViewportSkipsClippingWhenIdleButCullsWhatMoves()
+        {
+            yield return null;
+            yield return null;
+            var rows = QA(".row");
+            Assert.IsFalse(Culled(rows[0]));
+            Assert.IsTrue(Culled(rows[5]));
+
+            var skipped = UGUI.Internal.CaptureRectMask2D.SkippedCount;
+            yield return null;
+            yield return null;
+            Assert.Greater(UGUI.Internal.CaptureRectMask2D.SkippedCount, skipped);
+
+            // The rows move while the viewport stays put, so only their own placement says to clip.
+            rows[0].Style.Set("height", 0);
+            rows[1].Style.Set("height", 0);
+            yield return null;
+            yield return null;
+            Assert.IsFalse(Culled(rows[5]));
+            Assert.IsTrue(Culled(rows[12]));
+
+            Scroll.ScrollTop = 500;
+            yield return null;
+            yield return null;
+            Assert.IsTrue(Culled(rows[5]));
+            Assert.IsFalse(Culled(rows[13]));
+
+            Scroll.ScrollTop = 0;
+            yield return null;
+            yield return null;
+            Assert.IsFalse(Culled(rows[5]));
+            Assert.IsTrue(Culled(rows[13]));
+        }
     }
 }

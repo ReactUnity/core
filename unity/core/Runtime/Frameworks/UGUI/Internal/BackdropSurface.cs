@@ -226,9 +226,7 @@ namespace ReactUnity.UGUI.Internal
                 QueueVariants.Purge();
             }
 
-            tail.Clear();
-            root.GetComponentsInChildren(true, tail);
-            DropPooled();
+            CollectUnpooled(root);
             if (Unchanged(readers))
             {
                 tail.Clear();
@@ -304,16 +302,31 @@ namespace ReactUnity.UGUI.Internal
             return true;
         }
 
-        // A subtree is one run of a depth-first walk, so it comes out in one piece.
-        void DropPooled()
+        /// <summary>The canvas's renderers in paint order, less the pool's. The pool is walked around
+        /// rather than through: it holds a third of a settled page's renderers, and this runs every frame.</summary>
+        void CollectUnpooled(Transform root)
         {
-            if (!Skip) return;
-            skipped.Clear();
-            Skip.GetComponentsInChildren(true, skipped);
-            var n = skipped.Count;
+            tail.Clear();
+            if (!Skip || Skip == root || !Skip.IsChildOf(root)) root.GetComponentsInChildren(true, tail);
+            else CollectAround(root);
+        }
 
-            var from = n > 0 ? tail.IndexOf(skipped[0]) : -1;
-            if (from >= 0 && from + n <= tail.Count && ReferenceEquals(tail[from + n - 1], skipped[n - 1])) tail.RemoveRange(from, n);
+        void CollectAround(Transform node)
+        {
+            node.GetComponents(skipped);
+            tail.AddRange(skipped);
+
+            for (int i = 0; i < node.childCount; i++)
+            {
+                var child = node.GetChild(i);
+                if (child == Skip) continue;
+                if (Skip.IsChildOf(child)) CollectAround(child);
+                else
+                {
+                    child.GetComponentsInChildren(true, skipped);
+                    tail.AddRange(skipped);
+                }
+            }
             skipped.Clear();
         }
 

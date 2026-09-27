@@ -208,7 +208,8 @@ namespace ReactUnity
             // transition that end starts gets created late and timed from the wrong instant.
             if (markedStyleResolve) using (ReactProfiling.ResolveStyle.Auto()) ResolveStyle(markedStyleResolveRecursive, false);
 
-            using (ReactProfiling.StyleStateUpdate.Auto()) StyleState.Update();
+            // Most elements are settled, and a marker per element per frame costs more than their update.
+            if (StyleState.HasWork) using (ReactProfiling.StyleStateUpdate.Auto()) StyleState.Update();
             if (markedForStyleApply) using (ReactProfiling.ApplyStyles.Auto()) ApplyStyles(markedForFullStyleApply);
             if (markedForLayoutApply) using (ReactProfiling.ApplyLayoutStyles.Auto()) ApplyLayoutStyles();
             ComputedStyle.MarkChangesSeen();

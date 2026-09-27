@@ -20,6 +20,11 @@ namespace ReactUnity.Styling
             public float ElapsedTimeSinceRun = 0;
             public bool Ended = false;
             public int Cycle = 0;
+            public bool DelayPassed;
+
+            // The style its values were last written into, and whether they were still moving then.
+            public NodeStyle AppliedTo;
+            public bool KeepsRunning;
 
             public KeyframeList Keyframes;
 
@@ -223,6 +228,9 @@ namespace ReactUnity.Styling
 
             RecalculateAudio();
         }
+
+        /// <summary>Whether <see cref="Update"/> has anything to do.</summary>
+        public bool HasWork => transitionRunning || animationRunning || audioRunning || shouldUpdate;
 
         public void Update()
         {
@@ -552,6 +560,8 @@ namespace ReactUnity.Styling
             var hasLayout = false;
 
             var currentTime = getTime();
+            // A later animation wins a property both set, so once one has written none after it may skip.
+            var wrote = false;
 
             for (int ind = 0; ind < length; ind++)
             {
@@ -669,7 +679,20 @@ namespace ReactUnity.Styling
                     state.Ratio = 0;
                     state.Cycle = 0;
                     state.LastUpdatedAt = currentTime;
+                    state.AppliedTo = null;
                     finished = false;
+                    wrote = true;
+                    continue;
+                }
+
+                // Standing still -- a scroll-driven animation over a scroller at rest, or a paused one -- so
+                // Active already holds what this would write. Writing it again marks the element changed
+                // anyway, as every interpolation is a new object, and restyled it every frame.
+                if (!wrote && !transitionRunning && ReferenceEquals(state.AppliedTo, Active) && ratio == state.Ratio &&
+                    ended == state.Ended && cycle == state.Cycle && delayPassed == state.DelayPassed)
+                {
+                    state.LastUpdatedAt = currentTime;
+                    if (state.KeepsRunning) finished = false;
                     continue;
                 }
 
@@ -680,6 +703,10 @@ namespace ReactUnity.Styling
                 state.LastUpdatedAt = currentTime;
                 state.Ended = ended;
                 state.Cycle = cycle;
+                state.DelayPassed = delayPassed;
+                state.AppliedTo = Active;
+                var running = false;
+                wrote = true;
 
                 if ((ratio > 0 && previousRatio == 0) || (previousEnded && !ended)) OnEvent?.Invoke("onAnimationStart", state.CreateEvent());
                 if (ratio != previousRatio && ended) OnEvent?.Invoke("onAnimationEnd", state.CreateEvent());
@@ -693,7 +720,7 @@ namespace ReactUnity.Styling
 
                     if (ended || !delayPassed)
                     {
-                        if (!delayPassed) finished = false;
+                        if (!delayPassed) running = true;
 
                         if ((fm == AnimationFillMode.Forwards && ended)
                             || (fm == AnimationFillMode.Backwards && !delayPassed)
@@ -735,7 +762,7 @@ namespace ReactUnity.Styling
 
                         if (highKf == null && lowKf == null) continue;
 
-                        finished = false;
+                        running = true;
 
                         lowKf = lowKf ?? steps[0];
                         highKf = highKf ?? steps[stepCount];
@@ -766,6 +793,9 @@ namespace ReactUnity.Styling
                         RecalculateAudio();
                     }
                 }
+
+                state.KeepsRunning = running;
+                if (running) finished = false;
             }
 
             if (finished) StopAnimations(false);
