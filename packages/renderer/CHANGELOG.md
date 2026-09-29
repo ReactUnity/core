@@ -1,3 +1,29 @@
+## @reactunity/renderer@0.26.0
+
+### `flushSync` works again
+
+`flushSync` from `@reactunity/renderer` threw `TypeError: not a function` on every call. It called
+the reconciler's `flushSync`, which react-reconciler 0.33 renamed to `flushSyncFromReconciler`, and
+the reconciler's typings still declare the old name, so nothing caught it. It now commits the
+updates its callback schedules before it returns, including on roots rendered with
+`disableBatchRendering`.
+
+### `clip-path` can be cut with the stencil, and `shape-rendering` chooses when
+
+A `clip-path` rendered its element off screen and composited it back through the shape: an
+antialiased edge, a render target per element, and a camera render whenever anything inside changed.
+A plain rectangle -- `inset()`, `rect()` or `xywh()` without `round`, or a bare geometry box -- is now
+cut with the stencil instead, as `overflow: hidden` is, since an axis-aligned edge loses nothing.
+
+The new, inherited `shape-rendering` property extends that: `optimizeSpeed` or `crispEdges` cuts rounded
+boxes, circles, ellipses and simple polygons with the stencil too, with an aliased edge.
+`geometricPrecision` keeps even a rectangle on the antialiased path.
+
+- An element that needs the render anyway (`filter`, `mix-blend-mode`, `mask-image`, `perspective`,
+  `isolation: isolate`), or that also has `overflow: hidden`, keeps its clip on the render.
+- A stencil clip does not isolate a descendant's `mix-blend-mode`; `isolation: isolate` restores that.
+- Hit testing follows the shape either way.
+
 ## @reactunity/renderer@0.25.0
 
 ### Logical borders and sizing
