@@ -108,8 +108,11 @@ jobs:
       # No restore-keys, deliberately: a prefix fallback would restore the newest older entry
       # on a miss, which is precisely the poisoned one you are trying to get away from. A key
       # change pays a cold import instead, which is the point.
-      - name: Cache Unity Library
-        uses: actions/cache@v6
+      #
+      # Restore and save are split so a failing job still saves (see "Save Unity Library").
+      - name: Restore Unity Library
+        id: restore-library
+        uses: actions/cache/restore@v6
         with:
           path: tests/Library
           key: Library-${{ matrix.unity.version }}-${{ matrix.platform || 'ubuntu-latest' }}-${{ hashFiles('tests/Packages/manifest.json', 'tests/Packages/packages-lock.json') }}
@@ -147,6 +150,21 @@ jobs:
           customParameters: >-
             -assemblyNames ${{ matrix.suite.assemblies }}
             ${{ (contains(github.event.head_commit.message, '[snapshots]') || github.event.inputs.overwrite-snapshots == 'true') && '-reactOverwriteSnapshots' || '' }}
+
+      # Saved whether or not the tests passed. actions/cache only saves from a successful job,
+      # so once a manifest change forced a cold import, a red suite kept every later run cold
+      # too -- and a cold import (~140 s since URP) is where 6000.0.51f1 loses its license
+      # (`com.unity.editor.headless` not found, exit 198) before any test runs. A key is never
+      # overwritten, so this only decides the first save per manifest; compiled script
+      # assemblies are the sign the import finished rather than died partway.
+      - name: Save Unity Library
+        if: >
+          !cancelled() && steps.restore-library.outputs.cache-hit != 'true' &&
+          hashFiles('tests/Library/ScriptAssemblies/*.dll') != ''
+        uses: actions/cache/save@v6
+        with:
+          path: tests/Library
+          key: ${{ steps.restore-library.outputs.cache-primary-key }}
 
       # Never on a pull request: checkout leaves a detached merge commit there, so there is
       # no branch to push to. Overwrite mode cannot switch on for that event anyway -- it
