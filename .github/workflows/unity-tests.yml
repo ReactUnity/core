@@ -138,7 +138,14 @@ jobs:
           UNITY_LICENSE: ${{ secrets[matrix.unity.license || 'UNITY_LICENSE'] }}
           UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
           UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
+          # Activate with the account, not the .ulf. game-ci CLI 0.1.57+ tries the file first and
+          # falls back only on a machine-binding error; on 6000.0.51f1 the file "activates", then
+          # the editor finds no `com.unity.editor.headless` entitlement and exits 198 before any
+          # test runs. The CLI reads GAME_CI_* for options the action has no input for.
+          GAME_CI_UNITY_LICENSING_METHOD: personal
         with:
+          # Pinned because `latest` is how the licensing change above arrived unannounced.
+          cliVersion: v0.1.69
           projectPath: tests
           githubToken: ${{ secrets.GITHUB_TOKEN }}
           checkName: ${{ matrix.suite.name }} ${{ matrix.unity.version }}
@@ -153,10 +160,9 @@ jobs:
 
       # Saved whether or not the tests passed. actions/cache only saves from a successful job,
       # so once a manifest change forced a cold import, a red suite kept every later run cold
-      # too -- and a cold import (~140 s since URP) is where 6000.0.51f1 loses its license
-      # (`com.unity.editor.headless` not found, exit 198) before any test runs. A key is never
-      # overwritten, so this only decides the first save per manifest; compiled script
-      # assemblies are the sign the import finished rather than died partway.
+      # too (~140 s of import per run since URP). A key is never overwritten, so this only
+      # decides the first save per manifest; compiled script assemblies are the sign the import
+      # finished rather than died partway.
       - name: Save Unity Library
         if: >
           !cancelled() && steps.restore-library.outputs.cache-hit != 'true' &&
