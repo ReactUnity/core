@@ -21,6 +21,7 @@ namespace ReactUnity.Styling
             {
                 var normalizedValue = key.Convert(value);
                 collection[key] = normalizedValue;
+                Touch();
                 if (notify) Change(key, normalizedValue);
             }
         }
@@ -37,6 +38,7 @@ namespace ReactUnity.Styling
             var prop = CssProperties.GetKey(key);
             if (prop == null) return;
             var mod = prop.Modify(collection, value);
+            Touch();
 
             if (notify && mod != null)
             {

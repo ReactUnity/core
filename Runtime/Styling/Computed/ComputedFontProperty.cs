@@ -31,7 +31,9 @@ namespace ReactUnity.Styling.Computed
             var value = 1f;
             var found = false;
 
-            if (fontReference.IsCached)
+            // A font still loading answers with a fallback, and nothing restyles once it arrives.
+            if (!fontReference.IsCached) NodeStyle.MarkLiveRead();
+            else
             {
 #if REACT_TMP
                 var tmpFont = fontReference.CachedValue?.TmpFontAsset;
@@ -155,11 +157,8 @@ namespace ReactUnity.Styling.Computed
             var fromChild = ReferenceEquals(prop, StyleProperties.fontSize);
             if (fromChild) st = style?.Parent;
 
-            var val = st?.GetRawStyleValue(StyleProperties.fontSize, fromChild);
-
+            var val = st?.GetResolvedValue(StyleProperties.fontSize, fromChild);
             if (val == null) return ComputedRootRelative.DefaultFontSize;
-
-            if (val is IComputedValue d) val = d.ResolveValue(StyleProperties.fontSize, st, StyleProperties.fontSize.converter);
             if (val is float f) return f;
 
             return ComputedRootRelative.DefaultFontSize;
@@ -172,11 +171,8 @@ namespace ReactUnity.Styling.Computed
                 style = style.Context.Host.ComputedStyle;
             }
 
-            var val = style?.GetRawStyleValue(StyleProperties.fontFamily);
-
+            var val = style?.GetResolvedValue(StyleProperties.fontFamily);
             if (val == null) return FontReference.None;
-
-            if (val is IComputedValue d) val = d.ResolveValue(StyleProperties.fontFamily, style, StyleProperties.fontFamily.converter);
             if (val is FontReference f) return f;
 
             return FontReference.None;

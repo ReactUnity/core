@@ -33,6 +33,7 @@ namespace ReactUnity.Styling.Computed
                 // per CSS Cascade 5 means it rolls back past this origin instead.
                 case CssKeyword.RevertLayer:
                     // Not every framework has one -- UIToolkit has nothing to read a value back from.
+                    NodeStyle.MarkLiveRead();
                     return style?.RevertCalculator?.GetRevertValue(prop, style, converter);
                 default:
                     return null;

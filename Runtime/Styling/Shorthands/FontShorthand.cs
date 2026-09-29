@@ -8,6 +8,8 @@ namespace ReactUnity.Styling.Shorthands
 {
     internal class FontShorthand : StyleShorthand
     {
+        internal override bool ExpandsArePure => false;
+
         private static StyleConverterBase WeightConverter = AllConverters.Get<FontWeight>();
         private static StyleConverterBase StylesConverter = AllConverters.Get<FontStyles>();
 

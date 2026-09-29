@@ -197,6 +197,38 @@ namespace ReactUnity.Tests
 
 
         [UGUITest(Script = BaseScript, Style = BaseStyle)]
+        public IEnumerator HeldAnimationSurvivesAnUnrelatedRestyle()
+        {
+            var cmp = Q("#test") as UGUI.ContainerComponent;
+            var rt = cmp.RectTransform;
+
+            // A paused or finished animation skips re-applying frames that would write the same
+            // value -- which must not skip the frame a restyle replaces the style it wrote into.
+            cmp.Style.Set("animation", "growWidth 1s 400ms linear both");
+            yield return null;
+            yield return AdvanceTime(0.5f);
+            Assert.AreEqual(140, rt.rect.width);
+
+            cmp.Style.Set("animation-play-state", "paused");
+            yield return AdvanceTime(0.5f);
+            cmp.Style.Set("height", 50);
+            yield return AdvanceTime(0.2f);
+            Assert.AreEqual(140, rt.rect.width);
+            Assert.AreEqual(50, rt.rect.height);
+
+            cmp.Style.Set("animation-play-state", null);
+            yield return AdvanceTime(1f);
+            Assert.AreEqual(500, rt.rect.width);
+
+            cmp.Style.Set("height", 60);
+            yield return AdvanceTime(0.2f);
+            Assert.AreEqual(500, rt.rect.width);
+            Assert.AreEqual(60, rt.rect.height);
+        }
+
+
+
+        [UGUITest(Script = BaseScript, Style = BaseStyle)]
         public IEnumerator AnimationShouldWorkOnVisualStyles()
         {
             var view = (Q("#test") as UGUI.ContainerComponent);

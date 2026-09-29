@@ -256,7 +256,9 @@ namespace ReactUnity.UGUI
         public override bool Pool()
         {
             if (!base.Pool()) return false;
+            // The scrollbar went to the pool with the rest of the subtree, and may be handed to someone else.
             VerticalScrollbar = null;
+            InputField.verticalScrollbar = null;
 
             return true;
         }
@@ -266,6 +268,12 @@ namespace ReactUnity.UGUI
             if (!base.Revive()) return false;
 
             SetupContents();
+            InputField.characterLimit = 0;
+            InputField.lineLimit = 0;
+            InputField.richText = true;
+            // Last, because Standard is what puts the input type, keyboard and validation back.
+            InputField.lineType = TMP_InputField.LineType.SingleLine;
+            InputField.contentType = TMP_InputField.ContentType.Standard;
             Value = string.Empty;
             Placeholder = string.Empty;
             Disabled = false;

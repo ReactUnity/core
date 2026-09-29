@@ -8,6 +8,8 @@ namespace ReactUnity.Styling.Shorthands
 {
     internal class BorderImageShorthand : StyleShorthand
     {
+        internal override bool ExpandsArePure => false;
+
         private static StyleConverterBase SourceConverter = AllConverters.Get<ImageDefinition>();
         private static StyleConverterBase SliceConverter = AllConverters.Get<BorderImageSlice>();
         private static StyleConverterBase RepeatConverter = new CssFourDirectional<BackgroundRepeat>.Converter();

@@ -18,9 +18,7 @@ namespace ReactUnity.UGUI
                 if (value != horizontal)
                 {
                     horizontal = value;
-                    Data["horizontal"] = value;
-                    Data["vertical"] = !value;
-                    Data["direction"] = value ? "horizontal" : "vertical";
+                    SetDirectionData();
                     RefreshName();
                     UpdatePosition();
                 }
@@ -61,10 +59,14 @@ namespace ReactUnity.UGUI
             Scrollbar = AddComponent<Scrollbar>();
 
             SetupContents();
+            SetDirectionData();
+        }
 
-            Data["horizontal"] = false;
-            Data["vertical"] = true;
-            Data["direction"] = "vertical";
+        private void SetDirectionData()
+        {
+            Data["horizontal"] = horizontal;
+            Data["vertical"] = !horizontal;
+            Data["direction"] = horizontal ? "horizontal" : "vertical";
         }
 
         private void SetupContents()
@@ -184,8 +186,12 @@ namespace ReactUnity.UGUI
         {
             if (!base.Revive()) return false;
 
-            Horizontal = false;
-            Inverted = false;
+            // Assigned directly: the base cleared Data, and a setter that sees no change would not put it back.
+            horizontal = false;
+            inverted = false;
+            SetDirectionData();
+            RefreshName();
+            UpdatePosition();
             SetupContents();
 
             return true;

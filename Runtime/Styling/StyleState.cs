@@ -20,6 +20,11 @@ namespace ReactUnity.Styling
             public float ElapsedTimeSinceRun = 0;
             public bool Ended = false;
             public int Cycle = 0;
+            public bool DelayPassed;
+
+            // The style its values were last written into, and whether they were still moving then.
+            public NodeStyle AppliedTo;
+            public bool KeepsRunning;
 
             public KeyframeList Keyframes;
 
@@ -57,6 +62,54 @@ namespace ReactUnity.Styling
                     ElapsedTime = Duration * Ratio,
                     PropertyName = PropertyName,
                 };
+            }
+        }
+
+        /// <summary>
+        /// The timing properties read on every tick. Each read of one declared through a var() builds
+        /// a fresh list, so they are read once per <see cref="Current"/> and parent style instead.
+        /// </summary>
+        private class TransitionTiming
+        {
+            public ICssValueList<float> TransitionDuration;
+            public ICssValueList<float> TransitionDelay;
+            public ICssValueList<TimingFunction> TransitionTimingFunction;
+            public ICssValueList<AnimationPlayState> TransitionPlayState;
+
+            public TransitionTiming(NodeStyle style)
+            {
+                TransitionDuration = style.GetStyleValue(StyleProperties.transitionDuration);
+                TransitionDelay = style.GetStyleValue(StyleProperties.transitionDelay);
+                TransitionTimingFunction = style.GetStyleValue(StyleProperties.transitionTimingFunction);
+                TransitionPlayState = style.GetStyleValue(StyleProperties.transitionPlayState);
+            }
+        }
+
+        private class AnimationTiming
+        {
+            public ICssValueList<float> AnimationDelay;
+            public ICssValueList<AnimationDirection> AnimationDirection;
+            public ICssValueList<float> AnimationDuration;
+            public ICssValueList<AnimationFillMode> AnimationFillMode;
+            public ICssValueList<int> AnimationIterationCount;
+            public ICssValueList<AnimationPlayState> AnimationPlayState;
+            public ICssValueList<TimingFunction> AnimationTimingFunction;
+            public ICssValueList<AnimationTimeline> AnimationTimeline;
+            public ICssValueList<AnimationRangeBoundary> AnimationRangeStart;
+            public ICssValueList<AnimationRangeBoundary> AnimationRangeEnd;
+
+            public AnimationTiming(NodeStyle style)
+            {
+                AnimationDelay = style.animationDelay;
+                AnimationDirection = style.animationDirection;
+                AnimationDuration = style.animationDuration;
+                AnimationFillMode = style.animationFillMode;
+                AnimationIterationCount = style.animationIterationCount;
+                AnimationPlayState = style.animationPlayState;
+                AnimationTimingFunction = style.animationTimingFunction;
+                AnimationTimeline = style.animationTimeline;
+                AnimationRangeStart = style.animationRangeStart;
+                AnimationRangeEnd = style.animationRangeEnd;
             }
         }
 
@@ -98,8 +151,31 @@ namespace ReactUnity.Styling
         private bool audioRunning;
         private float audioStartTime;
 
+        private TransitionTiming transitionTiming;
+        private AnimationTiming animationTiming;
+
         private bool shouldUpdate;
         private bool shouldUpdateWithLayout;
+        private bool shouldUpdateFully;
+
+        // The compositor values last passed on for a compositor-only parent update, while nothing else has been since.
+        private bool compositorSeen;
+        private float seenOpacity;
+        private YogaValue2 seenTranslate;
+        private UnityEngine.Vector3 seenRotate;
+        private UnityEngine.Vector3 seenScale;
+
+        /// <summary>
+        /// True while <see cref="OnUpdate"/> announces a change to nothing but <c>translate</c>,
+        /// <c>rotate</c>, <c>scale</c>, <c>opacity</c> and layout properties -- which the element can
+        /// apply by moving, fading and laying out again, without restyling anything it draws.
+        /// </summary>
+        public bool CompositorOnly { get; private set; }
+
+        // Direction is a layout property, but it also picks which physical side a logical border colour or radius paints.
+        internal static bool IsCompositorProperty(IStyleProperty sp) =>
+            (sp is ILayoutProperty && !ReferenceEquals(sp, LayoutProperties.StyleDirection)) || sp == StyleProperties.translate
+            || sp == StyleProperties.rotate || sp == StyleProperties.scale || sp == StyleProperties.opacity;
 
 
         public StyleState(ReactContext context)
@@ -111,6 +187,9 @@ namespace ReactUnity.Styling
         {
             Previous = Active ?? Current;
             Current = newStyle;
+            transitionTiming = null;
+            animationTiming = null;
+            compositorSeen = false;
             RecalculateActive();
         }
 
@@ -133,11 +212,12 @@ namespace ReactUnity.Styling
                 var switchTransitions = hasTransition && activeTransitions != transition;
                 var switchAnimations = hasAnimation && activeAnimations != animation;
 
+                // A style change can start a transition, or step an animation, that had already settled.
                 if (switchTransitions) StartTransitions(transition);
-                else UpdateTransitions();
+                else if (!UpdateTransitions()) transitionRunning = true;
 
                 if (switchAnimations) StartAnimations(animation);
-                else UpdateAnimations();
+                else if (!UpdateAnimations()) animationRunning = true;
             }
             else
             {
@@ -149,6 +229,9 @@ namespace ReactUnity.Styling
             RecalculateAudio();
         }
 
+        /// <summary>Whether <see cref="Update"/> has anything to do.</summary>
+        public bool HasWork => transitionRunning || animationRunning || audioRunning || shouldUpdate;
+
         public void Update()
         {
             if (transitionRunning) UpdateTransitions();
@@ -156,9 +239,16 @@ namespace ReactUnity.Styling
             if (audioRunning) UpdateAudio();
             if (shouldUpdate)
             {
-                OnUpdate?.Invoke(Active, shouldUpdateWithLayout);
+                compositorSeen = false;
+                CompositorOnly = !shouldUpdateFully;
                 shouldUpdate = false;
-                shouldUpdateWithLayout = false;
+                try { OnUpdate?.Invoke(Active, shouldUpdateWithLayout); }
+                finally
+                {
+                    CompositorOnly = false;
+                    shouldUpdateWithLayout = false;
+                    shouldUpdateFully = false;
+                }
             }
         }
 
@@ -167,6 +257,9 @@ namespace ReactUnity.Styling
             Previous = null;
             Current = null;
             Active = null;
+            transitionTiming = null;
+            animationTiming = null;
+            compositorSeen = false;
 
             propertyTransitionStates = null;
             activeTransitions = null;
@@ -183,6 +276,7 @@ namespace ReactUnity.Styling
 
             shouldUpdate = false;
             shouldUpdateWithLayout = false;
+            shouldUpdateFully = false;
         }
 
         #region Transitions
@@ -221,12 +315,12 @@ namespace ReactUnity.Styling
         {
             if (activeTransitions == null || activeTransitions.Count == 0) return true;
 
-            // If there is not a previous state, no need to continue anymore
-            // But transitions may not be finished so return false
-            if (Previous == null) return false;
+            // Nothing to run from without a previous style; the next style change starts it again.
+            if (Previous == null) return true;
 
             var updated = false;
-            var finished = true;
+            var running = false;
+            var timed = false;
             var hasLayout = false;
             var currentTime = getTime();
             var prop = activeTransitions;
@@ -246,13 +340,14 @@ namespace ReactUnity.Styling
                     if (sp == null) continue;
 
                     // Use this condition to fetch values of duration etc.
-                    if (finished)
+                    if (!timed)
                     {
-                        duration = Current.GetStyleValue(StyleProperties.transitionDuration);
-                        delay = Current.GetStyleValue(StyleProperties.transitionDelay);
-                        easing = Current.GetStyleValue(StyleProperties.transitionTimingFunction);
-                        playState = Current.GetStyleValue(StyleProperties.transitionPlayState);
-                        finished = false;
+                        var snapshot = transitionTiming ?? (transitionTiming = new TransitionTiming(Current));
+                        duration = snapshot.TransitionDuration;
+                        delay = snapshot.TransitionDelay;
+                        easing = snapshot.TransitionTimingFunction;
+                        playState = snapshot.TransitionPlayState;
+                        timed = true;
                     }
 
                     var prevValue = Previous.GetRawStyleValue(sp);
@@ -348,6 +443,7 @@ namespace ReactUnity.Styling
                     state.ToValue = curValue;
                     state.Ratio = ratio;
                     state.LastUpdatedAt = currentTime;
+                    if (ratio < 1) running = true;
 
                     if (ratio > 0 && previousRatio == 0) OnEvent?.Invoke("onTransitionStart", state.CreateEvent());
                     if (ratio == 1 && previousRatio < 1) OnEvent?.Invoke("onTransitionEnd", state.CreateEvent());
@@ -359,12 +455,14 @@ namespace ReactUnity.Styling
                         activeValue = Interpolater.Interpolate(prevValue, curValue, ratio, easing.Get(i) ?? TimingFunctions.Default);
                     }
 
-                    updated = updated || (Active.GetRawStyleValue(sp) != activeValue);
+                    Track(sp, activeValue, ref updated);
                     hasLayout = hasLayout || sp.affectsLayout;
                     Active.SetStyleValue(sp, activeValue);
                 }
             }
 
+            // Settled once every property has reached its value, where it used to be polled every frame for good.
+            var finished = !running;
             if (finished) StopTransitions(false);
 
             if (updated)
@@ -377,6 +475,16 @@ namespace ReactUnity.Styling
         }
 
         #endregion
+
+        /// <summary>Notes whether setting <paramref name="value"/> changes anything, and whether the change
+        /// is one only the compositor needs to hear about.</summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private void Track(IStyleProperty sp, object value, ref bool updated)
+        {
+            if (Active.GetRawStyleValue(sp) == value) return;
+            updated = true;
+            if (!IsCompositorProperty(sp)) shouldUpdateFully = true;
+        }
 
 
         #region Animations
@@ -433,16 +541,17 @@ namespace ReactUnity.Styling
             if (activeAnimations == null || activeAnimations.Count == 0) return true;
 
             var name = activeAnimations;
-            var delay = Current.animationDelay;
-            var direction = Current.animationDirection;
-            var duration = Current.animationDuration;
-            var fillMode = Current.animationFillMode;
-            var iterationCount = Current.animationIterationCount;
-            var playState = Current.animationPlayState;
-            var timingFunction = Current.animationTimingFunction;
-            var timeline = Current.animationTimeline;
-            var rangeStart = Current.animationRangeStart;
-            var rangeEnd = Current.animationRangeEnd;
+            var snapshot = animationTiming ?? (animationTiming = new AnimationTiming(Current));
+            var delay = snapshot.AnimationDelay;
+            var direction = snapshot.AnimationDirection;
+            var duration = snapshot.AnimationDuration;
+            var fillMode = snapshot.AnimationFillMode;
+            var iterationCount = snapshot.AnimationIterationCount;
+            var playState = snapshot.AnimationPlayState;
+            var timingFunction = snapshot.AnimationTimingFunction;
+            var timeline = snapshot.AnimationTimeline;
+            var rangeStart = snapshot.AnimationRangeStart;
+            var rangeEnd = snapshot.AnimationRangeEnd;
 
             var length = name.Count;
 
@@ -451,6 +560,8 @@ namespace ReactUnity.Styling
             var hasLayout = false;
 
             var currentTime = getTime();
+            // A later animation wins a property both set, so once one has written none after it may skip.
+            var wrote = false;
 
             for (int ind = 0; ind < length; ind++)
             {
@@ -558,7 +669,7 @@ namespace ReactUnity.Styling
                         if (sp == null) continue;
 
                         var unanimated = Current.GetRawStyleValue(sp);
-                        updated = updated || (Active.GetRawStyleValue(sp) != unanimated);
+                        Track(sp, unanimated, ref updated);
                         hasLayout = hasLayout || sp.affectsLayout;
                         Active.SetStyleValue(sp, unanimated);
                     }
@@ -568,7 +679,20 @@ namespace ReactUnity.Styling
                     state.Ratio = 0;
                     state.Cycle = 0;
                     state.LastUpdatedAt = currentTime;
+                    state.AppliedTo = null;
                     finished = false;
+                    wrote = true;
+                    continue;
+                }
+
+                // Standing still -- a scroll-driven animation over a scroller at rest, or a paused one -- so
+                // Active already holds what this would write. Writing it again marks the element changed
+                // anyway, as every interpolation is a new object, and restyled it every frame.
+                if (!wrote && !transitionRunning && ReferenceEquals(state.AppliedTo, Active) && ratio == state.Ratio &&
+                    ended == state.Ended && cycle == state.Cycle && delayPassed == state.DelayPassed)
+                {
+                    state.LastUpdatedAt = currentTime;
+                    if (state.KeepsRunning) finished = false;
                     continue;
                 }
 
@@ -579,6 +703,10 @@ namespace ReactUnity.Styling
                 state.LastUpdatedAt = currentTime;
                 state.Ended = ended;
                 state.Cycle = cycle;
+                state.DelayPassed = delayPassed;
+                state.AppliedTo = Active;
+                var running = false;
+                wrote = true;
 
                 if ((ratio > 0 && previousRatio == 0) || (previousEnded && !ended)) OnEvent?.Invoke("onAnimationStart", state.CreateEvent());
                 if (ratio != previousRatio && ended) OnEvent?.Invoke("onAnimationEnd", state.CreateEvent());
@@ -592,7 +720,7 @@ namespace ReactUnity.Styling
 
                     if (ended || !delayPassed)
                     {
-                        if (!delayPassed) finished = false;
+                        if (!delayPassed) running = true;
 
                         if ((fm == AnimationFillMode.Forwards && ended)
                             || (fm == AnimationFillMode.Backwards && !delayPassed)
@@ -634,7 +762,7 @@ namespace ReactUnity.Styling
 
                         if (highKf == null && lowKf == null) continue;
 
-                        finished = false;
+                        running = true;
 
                         lowKf = lowKf ?? steps[0];
                         highKf = highKf ?? steps[stepCount];
@@ -656,7 +784,7 @@ namespace ReactUnity.Styling
                         else activeValue = highValue;
                     }
 
-                    updated = updated || (Active.GetRawStyleValue(sp) != activeValue);
+                    Track(sp, activeValue, ref updated);
                     hasLayout = hasLayout || sp.affectsLayout;
                     Active.SetStyleValue(sp, activeValue);
 
@@ -665,6 +793,9 @@ namespace ReactUnity.Styling
                         RecalculateAudio();
                     }
                 }
+
+                state.KeepsRunning = running;
+                if (running) finished = false;
             }
 
             if (finished) StopAnimations(false);
@@ -822,8 +953,44 @@ namespace ReactUnity.Styling
 
         void ParentUpdated(NodeStyle active, bool hasLayout)
         {
-            Active?.UpdateParent(active);
-            OnUpdate?.Invoke(Active, false);
+            // A child sees a compositor-only change only through `inherit` on those same properties, so it
+            // has no more to apply than that -- and nothing at all, nor its subtree, while they resolve the same.
+            var fromCompositor = Parent?.CompositorOnly == true;
+
+            if (fromCompositor) Active?.UpdateParentCompositor(active);
+            else
+            {
+                // An inherited variable may be what the timing properties read.
+                transitionTiming = null;
+                animationTiming = null;
+                Active?.UpdateParent(active);
+            }
+
+            if (!fromCompositor) compositorSeen = false;
+            else if (Active != null && !CompositorValuesChanged()) return;
+
+            var compositorOnly = CompositorOnly;
+            CompositorOnly = fromCompositor;
+            try { OnUpdate?.Invoke(Active, false); }
+            finally { CompositorOnly = compositorOnly; }
+        }
+
+        // Resolved rather than raw: an `inherit` is one keyword object whatever the parent's value.
+        private bool CompositorValuesChanged()
+        {
+            var opacity = Active.opacity;
+            var translate = Active.translate;
+            var rotate = Active.rotate;
+            var scale = Active.scale;
+
+            var changed = !compositorSeen || opacity != seenOpacity || !translate.Equals(seenTranslate) || rotate != seenRotate || scale != seenScale;
+
+            compositorSeen = true;
+            seenOpacity = opacity;
+            seenTranslate = translate;
+            seenRotate = rotate;
+            seenScale = scale;
+            return changed;
         }
     }
 }

@@ -23,8 +23,7 @@
     "overrideReferences": true,
     "precompiledReferences": [
         "Jint.dll",
-        "ClearScript.Core.dll",
-        "Newtonsoft.Json.dll"
+        "ClearScript.Core.dll"
     ],
     "autoReferenced": true,
     "defineConstraints": [],

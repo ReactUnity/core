@@ -24,7 +24,7 @@ namespace ReactUnity.Styling.Functions
             var isProperty = CssFunctions.TryCall(fallback, out var res, Allowed, null);
             var resFallback = isProperty ? res : fallback;
 
-            return new ComputedVariable(new VariableProperty(varName), resFallback);
+            return new ComputedVariable(CssProperties.GetVariable(varName), resFallback);
         }
 
         public bool CanHandleArguments(int count, string name, string[] args) => count >= 1;

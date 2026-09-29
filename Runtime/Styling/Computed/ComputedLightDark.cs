@@ -31,6 +31,7 @@ namespace ReactUnity.Styling.Computed
             if (scheme == ColorScheme.Dark) return true;
             if (scheme == ColorScheme.Light) return false;
 
+            NodeStyle.MarkLiveRead();
             var preferred = style.Context?.MediaProvider?.GetValue("prefers-color-scheme");
             return string.Equals(preferred, "dark", System.StringComparison.OrdinalIgnoreCase);
         }

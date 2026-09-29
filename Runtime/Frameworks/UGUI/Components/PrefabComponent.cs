@@ -173,6 +173,12 @@ namespace ReactUnity.UGUI
             }
         }
 
+        public override bool Pool()
+        {
+            DetachInstance();
+            return base.Pool();
+        }
+
         protected override void DestroySelf()
         {
             DetachInstance();

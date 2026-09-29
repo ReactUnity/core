@@ -44,6 +44,8 @@ namespace ReactUnity.Types
 
             private static StyleConverterBase SpriteConverter = AllConverters.SpriteReferenceConverter;
 
+            internal override bool ParsesArePure => false;
+
             public override bool HandleKeyword(CssKeyword keyword, out IComputedValue result)
             {
                 if (keyword == CssKeyword.None) return Constant(NoImage, out result);

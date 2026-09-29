@@ -19,14 +19,11 @@ namespace ReactUnity.Styling.Computed
             var fromChild = ReferenceEquals(prop, StyleProperties.fontSize);
             if (fromChild) st = style?.Parent;
 
-            var val = st?.GetRawStyleValue(StyleProperties.fontSize, fromChild);
-
+            var val = st?.GetResolvedValue(StyleProperties.fontSize, fromChild);
             if (val == null) return null;
-
-            if (val is IComputedValue d) val = d.ResolveValue(StyleProperties.fontSize, st, converter);
             if (val is float f) val = f * Ratio;
 
-            return converter.Convert(val);
+            return converter.ConvertResolved(val);
         }
     }
 }

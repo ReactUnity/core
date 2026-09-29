@@ -11,7 +11,7 @@ namespace ReactUnity.UGUI.Behaviours
     [SelectionBase]
     [AddComponentMenu("")]
     [DefaultExecutionOrder(-10)]
-    public class ReactElement : MonoBehaviour
+    public class ReactElement : MonoBehaviour, ITicked
     {
         private RectTransform rt;
         public YogaNode Layout { get; internal set; }
@@ -70,12 +70,17 @@ namespace ReactUnity.UGUI.Behaviours
         }
 
 
+        int ITicked.TickIndex { get; set; } = -1;
+
         private void OnEnable()
         {
             rt = transform as RectTransform;
             IsVisible = false;
             firstTime = true;
+            ReactElementTicker.Group.Add(this);
         }
+
+        private void OnDisable() => ReactElementTicker.Group.Remove(this);
 
         private void Start()
         {
@@ -86,7 +91,8 @@ namespace ReactUnity.UGUI.Behaviours
             }
         }
 
-        private void LateUpdate()
+        // Its LateUpdate, called by ReactElementTicker.
+        void ITicked.Tick()
         {
             if (Layout == null)
             {

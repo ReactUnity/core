@@ -10,7 +10,7 @@ namespace ReactUnity.Styling.Converters
 {
     public class FloatConverter : TypedStyleConverterBase<float>
     {
-        private static HashSet<string> DefaultAllowedFunctions = new HashSet<string>(StringComparer.InvariantCultureIgnoreCase) {
+        private static HashSet<string> DefaultAllowedFunctions = new HashSet<string>(StringComparer.OrdinalIgnoreCase) {
             "calc", "min", "max", "clamp",
             "round", "mod", "rem", "abs", "sign",
             "sin", "cos", "tan", "asin", "acos", "atan", "atan2",
@@ -19,7 +19,7 @@ namespace ReactUnity.Styling.Converters
         protected override HashSet<string> AllowedFunctions => DefaultAllowedFunctions;
 
         // The numeric constants calc() knows. Only where a bare number is allowed at all, since they are one.
-        private static readonly Dictionary<string, float> MathConstants = new Dictionary<string, float>(StringComparer.InvariantCultureIgnoreCase)
+        private static readonly Dictionary<string, float> MathConstants = new Dictionary<string, float>(StringComparer.OrdinalIgnoreCase)
         {
             { "pi", Mathf.PI },
             { "e", (float) Math.E },

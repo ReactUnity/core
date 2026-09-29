@@ -123,7 +123,16 @@ namespace ReactUnity.Styling
             Parsed = parsed;
         }
 
-        private static readonly Regex MediaConditionRegex = new Regex(@"@media\s*([^\{]*){.*");
+        // What `@media\s*([^{]*){` captures. A regex read the whole block for its trailing `.*`.
+        private static string MediaCondition(string text)
+        {
+            var at = text.IndexOf("@media", StringComparison.Ordinal);
+            if (at < 0) return null;
+            var start = at + 6;
+            while (start < text.Length && char.IsWhiteSpace(text[start])) start++;
+            var brace = text.IndexOf('{', start);
+            return brace < 0 ? null : text.Substring(start, brace - start);
+        }
 
         // Document-wide, so a layer name is the same layer in every sheet.
         private CascadeLayers Layers => Context.Layers;
@@ -216,12 +225,10 @@ namespace ReactUnity.Styling
             {
                 if (child is IMediaRule mediaRule)
                 {
-                    var match = MediaConditionRegex.Match(mediaRule.StylesheetText.Text);
-
-                    if (match.Groups.Count < 2) continue;
+                    var condition = MediaCondition(mediaRule.StylesheetText.Text);
+                    if (condition == null) continue;
 
                     // A nested @media matches only when both conditions do, same as joining them with "and".
-                    var condition = match.Groups[1].Value;
                     if (!string.IsNullOrWhiteSpace(mediaCondition)) condition = mediaCondition.Trim() + " and " + condition.Trim();
 
                     var mql = MediaQueryList.Create(Context.MediaProvider, condition, Context.Context);

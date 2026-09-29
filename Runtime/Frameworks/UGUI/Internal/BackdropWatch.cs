@@ -70,9 +70,10 @@ namespace ReactUnity.UGUI.Internal
 
         /// <summary>
         /// Works out what the camera will draw differently this frame. Ask <see cref="Stale"/> about
-        /// each reader afterwards.
+        /// each reader afterwards. <paramref name="scenery"/> off skips locating the scene, for a camera
+        /// parked where nothing but its own surface can be.
         /// </summary>
-        public void Poll(Transform root, Camera cam)
+        public void Poll(Transform root, Camera cam, bool scenery = true)
         {
             viewProjection = cam.projectionMatrix * cam.worldToCameraMatrix;
             viewport = new Vector2(cam.pixelWidth, cam.pixelHeight);
@@ -126,7 +127,8 @@ namespace ReactUnity.UGUI.Internal
 
             rebuilt.Clear();
             PollFades(root, resettled);
-            LocateScenery(cam);
+            if (scenery) LocateScenery(cam);
+            else this.scenery.Clear();
         }
 
         /// <summary>

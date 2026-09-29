@@ -368,7 +368,7 @@ namespace ReactUnity.Styling.Rules
             skin = UnityEditor.EditorGUIUtility.isProSkin ? "dark" : "light";
 #endif
 
-            var values = new Dictionary<string, string>(StringComparer.InvariantCultureIgnoreCase) {
+            var values = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase) {
                 { "framework", framework },
                 // What `(prefers-color-scheme: dark)` and `(prefers-reduced-motion: reduce)` read. Unity
                 // has no OS-level signal for either, so outside the Editor these are defaults an app
@@ -379,7 +379,7 @@ namespace ReactUnity.Styling.Rules
             if (skin != null) values["skin"] = skin;
 
             return new DefaultMediaProvider(type, null, values,
-                new HashSet<string>(StringComparer.InvariantCultureIgnoreCase)
+                new HashSet<string>(StringComparer.OrdinalIgnoreCase)
                 {
                     type,
                     framework,

@@ -5,7 +5,6 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text;
-using Newtonsoft.Json;
 using ReactUnity.Helpers;
 using ReactUnity.Helpers.TypescriptUtils;
 using ReactUnity.Reactive;
@@ -176,7 +175,7 @@ namespace ReactUnity.Editor.Developer
                                     x.GetIndexParameters().Length == 0 &&
                                     !(!AllowPointer && x.PropertyType.IsPointer) &&
                                     (x.GetCustomAttribute<TypescriptExclude>() == null) &&
-                                    (x.GetCustomAttribute<JsonIgnoreAttribute>() == null) &&
+                                    !HasJsonIgnore(x) &&
                                     ((x.GetCustomAttribute<TypescriptInclude>() != null) || (x.GetGetMethod()?.IsPublic ?? false) || (x.GetSetMethod()?.IsPublic ?? false))
                                     )
                         .GroupBy(x => x.Name)
@@ -186,7 +185,7 @@ namespace ReactUnity.Editor.Developer
                         .Where(x => !x.IsSpecialName &&
                                     !(!AllowPointer && x.FieldType.IsPointer) &&
                                     (x.GetCustomAttribute<TypescriptExclude>() == null) &&
-                                    (x.GetCustomAttribute<JsonIgnoreAttribute>() == null) &&
+                                    !HasJsonIgnore(x) &&
                                     ((x.GetCustomAttribute<TypescriptInclude>() != null) || x.IsPublic)
                                     );
 
@@ -197,7 +196,7 @@ namespace ReactUnity.Editor.Developer
                                     (!x.IsStatic || x.IsPublic) &&
                                     !x.GetParameters().Any(p => p.ParameterType.IsByRef || (!AllowPointer && p.ParameterType.IsPointer)) &&
                                     (x.GetCustomAttribute<TypescriptExclude>() == null) &&
-                                    (x.GetCustomAttribute<JsonIgnoreAttribute>() == null) &&
+                                    !HasJsonIgnore(x) &&
                                     ((x.GetCustomAttribute<TypescriptInclude>() != null) || x.IsPublic ||
                                         (IncludeExterns && x.IsStatic && x.GetMethodBody() == null))
                                     );
@@ -292,7 +291,7 @@ namespace ReactUnity.Editor.Developer
               !fullName.Contains("<") &&
               (allowGeneric || !t.IsGenericType || t.IsEnum) &&
               (t.GetCustomAttribute<TypescriptExclude>() == null) &&
-              (t.GetCustomAttribute<JsonIgnoreAttribute>() == null) &&
+              !HasJsonIgnore(t) &&
               ((t.GetCustomAttribute<TypescriptInclude>() != null) ||
                   (IncludedNamespaces == null || IncludedNamespaces.Any(x => fullName.FastStartsWith(x + "."))) &&
                   (ExcludedNamespaces == null || !ExcludedNamespaces.Any(x => (t.Namespace ?? "").FastStartsWith(x))) &&
@@ -403,10 +402,16 @@ namespace ReactUnity.Editor.Developer
 
         string getMemberName(MemberInfo info, bool allowQuoting = true)
         {
-            var prop = info.GetCustomAttribute<JsonPropertyAttribute>();
-            var name = prop?.PropertyName ?? info.Name;
+            var prop = FindAttribute(info, "Newtonsoft.Json.JsonPropertyAttribute");
+            var name = prop?.GetType().GetProperty("PropertyName")?.GetValue(prop) as string ?? info.Name;
             return escapePropertyName(name, allowQuoting);
         }
+
+        // Newtonsoft's attributes are matched by name, so the generator honours them without referencing it.
+        static bool HasJsonIgnore(MemberInfo info) => FindAttribute(info, "Newtonsoft.Json.JsonIgnoreAttribute") != null;
+
+        static Attribute FindAttribute(MemberInfo info, string fullName) =>
+            Attribute.GetCustomAttributes(info, true).FirstOrDefault(x => x.GetType().FullName == fullName);
 
         string escapePropertyName(string originalName, bool allowQuoting = true)
         {

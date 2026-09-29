@@ -66,6 +66,34 @@ namespace ReactUnity.Styling.Shorthands
             return ModifyInternal(collection, value);
         }
 
+        // A var() inside a shorthand hands its text over on every read, so each expansion is kept.
+        private const int ExpandCacheLimit = 256;
+        private Dictionary<string, Dictionary<IStyleProperty, object>> expanded;
+
+        /// <summary>Whether an expansion can be shared; see <see cref="StyleConverterBase.ParsesArePure"/>.</summary>
+        internal virtual bool ExpandsArePure => true;
+
+        /// <summary>The longhands <paramref name="value"/> sets, shared between callers and not to be modified.</summary>
+        internal Dictionary<IStyleProperty, object> Expand(string value)
+        {
+            if (value == null) return null;
+            if (!ExpandsArePure)
+            {
+                var own = new Dictionary<IStyleProperty, object>();
+                Modify(own, value);
+                return own;
+            }
+
+            if (expanded == null) expanded = new Dictionary<string, Dictionary<IStyleProperty, object>>();
+            else if (expanded.TryGetValue(value, out var cached)) return cached;
+
+            var collection = new Dictionary<IStyleProperty, object>();
+            Modify(collection, value);
+
+            if (expanded.Count >= ExpandCacheLimit) expanded.Clear();
+            return expanded[value] = collection;
+        }
+
         protected abstract List<IStyleProperty> ModifyInternal(IDictionary<IStyleProperty, object> collection, object value);
     }
 }

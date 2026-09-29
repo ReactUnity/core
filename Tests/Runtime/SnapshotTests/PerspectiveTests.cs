@@ -52,6 +52,15 @@ namespace ReactUnity.Tests
         /// </remarks>
         static bool CardCovers(int x, int fromTop)
         {
+            // The React canvas puts the root in the top-left, so coordinates are given from there
+            // and flipped into the framebuffer's bottom-up space here.
+            Color c = CaptureScreen()[(Screen.height - fromTop) * Screen.width + x];
+            Debug.Log($"[perspective] ({x},{fromTop}) rgba({c.r:F2},{c.g:F2},{c.b:F2},{c.a:F2})");
+            return c.g < 0.4f;
+        }
+
+        static Color32[] CaptureScreen()
+        {
             var cam = Camera.main;
             var rt = new RenderTexture(Screen.width, Screen.height, 24);
             cam.targetTexture = rt;
@@ -65,16 +74,35 @@ namespace ReactUnity.Tests
             tex.Apply();
             RenderTexture.active = prev;
 
-            // The React canvas puts the root in the top-left, so coordinates are given from there
-            // and flipped into the framebuffer's bottom-up space here.
-            var c = tex.GetPixel(x, Screen.height - fromTop);
-
+            var pixels = tex.GetPixels32();
             Object.DestroyImmediate(tex);
             rt.Release();
             Object.DestroyImmediate(rt);
+            return pixels;
+        }
 
-            Debug.Log($"[perspective] ({x},{fromTop}) rgba({c.r:F2},{c.g:F2},{c.b:F2},{c.a:F2})");
-            return c.g < 0.4f;
+        /// <summary>
+        /// The warp resamples a capture where the frustum rasterized the subtree itself, so the two
+        /// only agree to within an edge's antialiasing -- which is a few pixels, not a misplaced card.
+        /// </summary>
+        static void AssertMatchesFrustum(Color32[] flat, Color32[] frustum, string what)
+        {
+            Assert.AreEqual(flat.Length, frustum.Length);
+
+            long sum = 0;
+            int differing = 0;
+            for (int i = 0; i < flat.Length; i++)
+            {
+                Color32 a = flat[i], b = frustum[i];
+                var d = Mathf.Max(Mathf.Abs(a.r - b.r), Mathf.Max(Mathf.Abs(a.g - b.g), Mathf.Abs(a.b - b.b)));
+                sum += d;
+                if (d > 32) differing++;
+            }
+
+            var mean = (float) sum / flat.Length;
+            Debug.Log($"[perspective {what}] mean channel difference {mean:F3}, {differing}/{flat.Length} pixels off by more than 32");
+            Assert.Less(mean, 0.5f, "the warp should draw what the frustum drew");
+            Assert.Less(differing, 400, "and disagree only along the edges");
         }
 
         // Three frames: one for the style to resolve, one for the filter's LateUpdate to capture,
@@ -273,6 +301,116 @@ namespace ReactUnity.Tests
 
             // The stage's box stops 60 above its centre and the near edge of the card reaches 70.
             Assert.IsTrue(CardCovers(CentreX - 40, CentreY - 65), "the lean survives the box");
+        }
+
+        // Detail across the card, so a warp that put the texture in the wrong place would show.
+        const string PlaneStyle = BaseStyle + @"
+            #card {
+                background-image: linear-gradient(to right, red, blue);
+                border-radius: 16px;
+            }
+        ";
+
+        /// <summary>
+        /// A subtree lying in one plane is only warped by a projection, so it is captured face-on,
+        /// with the batch, and warped onto the composite -- which has to draw what the frustum drew.
+        /// </summary>
+        [UGUITest(Script = BaseScript, Style = PlaneStyle)]
+        public IEnumerator AFlatPlaneWarpsWhatTheFrustumWouldDraw()
+        {
+            yield return Settle();
+
+            Stage.Style.Set("perspective", "300px");
+            Card.Style.Set("transform", "rotateY(40deg) rotateX(20deg)");
+            yield return Settle();
+
+            Assert.IsTrue(Stage.ElementFilter.CapturesFlat, "one card is one plane");
+            var warped = CaptureScreen();
+
+            ElementFilter.FlatPlanes = false;
+            try
+            {
+                Stage.ElementFilter.Invalidate();
+                yield return Settle();
+
+                Assert.IsFalse(Stage.ElementFilter.CapturesFlat);
+                AssertMatchesFrustum(warped, CaptureScreen(), "flat");
+            }
+            finally
+            {
+                ElementFilter.FlatPlanes = true;
+            }
+        }
+
+        /// <summary>
+        /// Nearer the eye than half the distance, the face-on capture would be magnified past twice
+        /// its resolution -- so that plane goes through the frustum, which draws it at the screen's.
+        /// </summary>
+        [UGUITest(Script = BaseScript, Style = PlaneStyle)]
+        public IEnumerator APlaneMagnifiedPastTwiceGoesThroughTheFrustum()
+        {
+            yield return Settle();
+
+            Stage.Style.Set("perspective", "300px");
+            Card.Style.Set("transform", "translateZ(100px)");
+            yield return Settle();
+            Assert.IsTrue(Stage.ElementFilter.CapturesFlat, "half again as large is captured denser");
+
+            Card.Style.Set("transform", "translateZ(200px)");
+            yield return Settle();
+            Assert.IsFalse(Stage.ElementFilter.CapturesFlat, "three times as large is not");
+            Assert.IsTrue(CardCovers(CentreX + 100, CentreY), "and is still drawn that large");
+        }
+
+        /// <summary>
+        /// When the plane is nothing but another filter's composite, its capture is already the plane
+        /// face-on, so the outer filter draws that texture through its warp and takes no capture at
+        /// all. The inner filter's mask has to survive the trip.
+        /// </summary>
+        [UGUITest(Script = @"
+            export default function App() {
+                return <view id='stage'><view id='card'><view id='dot' /></view></view>;
+            }
+", Style = PlaneStyle + @"
+            #card { mask-image: linear-gradient(black, transparent); }
+            #dot { width: 40px; height: 40px; background-color: green; }
+        ")]
+        public IEnumerator AFilterOnThePlaneIsDrawnStraightThrough()
+        {
+            yield return Settle();
+
+            Stage.Style.Set("perspective", "300px");
+            Card.Style.Set("transform", "rotateX(35deg)");
+            yield return Settle();
+
+            var stage = Stage.ElementFilter;
+            var card = Card.ElementFilter;
+            Assert.IsTrue(stage.CapturesFlat);
+
+            var stageRenders = stage.RenderCount;
+            var cardRenders = card.RenderCount;
+            Q("#dot").Style.Set("background-color", "yellow");
+            yield return Settle();
+
+            Assert.Greater(card.RenderCount, cardRenders, "the card captures its own subtree again");
+            Assert.AreEqual(stageRenders, stage.RenderCount, "and the stage draws that capture without taking one");
+            Assert.IsTrue(CardCovers(CentreX + 30, CentreY - 30), "the card is drawn");
+            Assert.IsFalse(CardCovers(CentreX + 30, CentreY + 50), "and faded out by its mask");
+            var through = CaptureScreen();
+
+            ElementFilter.FlatPlanes = false;
+            try
+            {
+                stage.Invalidate();
+                yield return Settle();
+                Assert.IsFalse(stage.CapturesFlat);
+                Assert.Greater(stage.RenderCount, stageRenders, "the frustum takes a capture of its own");
+                AssertMatchesFrustum(through, CaptureScreen(), "through");
+            }
+            finally
+            {
+                ElementFilter.FlatPlanes = true;
+            }
         }
     }
 }

@@ -6,8 +6,7 @@ using UnityEngine;
 
 namespace ReactUnity.UGUI.Measurers
 {
-    [DefaultExecutionOrder(-8)]
-    public class TextMeasurer : MonoBehaviour
+    public class TextMeasurer : MonoBehaviour, Behaviours.ITicked
     {
         private TextMeshProUGUI tmpro;
         // The glyphs live on a child of the element, not on the object this measurer is on.
@@ -23,15 +22,25 @@ namespace ReactUnity.UGUI.Measurers
         private float preferredWidth = 0;
         private float preferredHeight = 0;
 
+        int Behaviours.ITicked.TickIndex { get; set; } = -1;
+
         void Start()
         {
             if (Layout == null) enabled = false;
         }
 
-        private void Update()
+        void OnEnable() => Behaviours.TextMeasurerTicker.Group.Add(this);
+
+        void OnDisable() => Behaviours.TextMeasurerTicker.Group.Remove(this);
+
+        // Its Update, called by TextMeasurerTicker.
+        void Behaviours.ITicked.Tick()
         {
-            var nw = Text.preferredWidth;
-            var nh = Text.preferredHeight;
+            // Ticked from OnEnable on, which can be before the glyph child exists.
+            var text = Text;
+            if (!text) return;
+            var nw = text.preferredWidth;
+            var nh = text.preferredHeight;
 
             if (preferredWidth != nw || preferredHeight != nh)
             {

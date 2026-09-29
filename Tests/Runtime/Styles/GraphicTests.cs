@@ -67,6 +67,47 @@ namespace ReactUnity.Tests
             //Assert.AreEqual(Color.black, sh1.Shadow.color);
         }
 
+        [UGUITest(Script = BaseScript, Style = BaseStyle)]
+        public IEnumerator ASurplusShadowIsParkedAndReused()
+        {
+            View.Style["box-shadow"] = "0 0 20px black, 3px 4px red";
+            yield return null;
+
+            var shadows = View.BorderAndBackground.ShadowGraphics;
+            Assert.AreEqual(2, shadows.Count);
+            var second = shadows[1];
+
+            View.Style["box-shadow"] = "0 0 20px black";
+            yield return null;
+
+            Assert.AreEqual(1, shadows.Count);
+            Assert.IsTrue(second, "a shadow the style dropped should be kept");
+            Assert.IsFalse(second.enabled, "but not drawn");
+
+            View.Style["box-shadow"] = "0 0 20px black, 3px 4px blue";
+            yield return null;
+
+            Assert.AreEqual(2, shadows.Count);
+            Assert.AreSame(second, shadows[1], "and should be the one that comes back");
+            Assert.IsTrue(second.enabled);
+            Assert.AreEqual(UnityEngine.Color.black, shadows[1].color, "drawing the first CSS shadow, which the last graphic holds");
+        }
+
+        [UGUITest(Script = BaseScript, Style = BaseStyle)]
+        public IEnumerator OnlyAFewSurplusShadowsAreParked()
+        {
+            View.Style["box-shadow"] = "0 0 1px red, 0 0 2px red, 0 0 3px red, 0 0 4px red, 0 0 5px red";
+            yield return null;
+            Assert.AreEqual(5, View.BorderAndBackground.ShadowGraphics.Count);
+
+            View.Style["box-shadow"] = "none";
+            yield return null;
+
+            var kept = View.GameObject.GetComponentsInChildren<UGUI.Shapes.WebShadow>(true);
+            Assert.AreEqual(2, kept.Length, "the rest should be destroyed");
+            foreach (var sd in kept) Assert.IsFalse(sd.enabled);
+        }
+
         const string BorderStyle = @"
             #test {
                 background-color: white;

@@ -56,6 +56,11 @@ namespace ReactUnity.Helpers
             name = null;
         }
 
+        internal override void OnSilentChange()
+        {
+            name = null;
+        }
+
         internal override void OnAfterChange()
         {
             base.OnAfterChange();

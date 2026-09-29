@@ -120,7 +120,7 @@ namespace ReactUnity.Styling
         public static readonly LayoutProperty<YogaValue> RowGap = new LayoutProperty<YogaValue>("RowGap", true);
         public static readonly LayoutProperty<YogaValue> ColumnGap = new LayoutProperty<YogaValue>("ColumnGap", true);
 
-        public static Dictionary<string, ILayoutProperty> PropertyMap = new Dictionary<string, ILayoutProperty>(StringComparer.InvariantCultureIgnoreCase)
+        public static Dictionary<string, ILayoutProperty> PropertyMap = new Dictionary<string, ILayoutProperty>(StringComparer.OrdinalIgnoreCase)
         {
             { "flexDirection", FlexDirection },
             { "justifyContent", JustifyContent },

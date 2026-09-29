@@ -15,7 +15,7 @@ namespace ReactUnity.Styling.Functions
     {
         public string Name { get; } = "round";
 
-        internal static readonly Dictionary<string, ComputedMath.Op> Ops = new Dictionary<string, ComputedMath.Op>(StringComparer.InvariantCultureIgnoreCase)
+        internal static readonly Dictionary<string, ComputedMath.Op> Ops = new Dictionary<string, ComputedMath.Op>(StringComparer.OrdinalIgnoreCase)
         {
             { "round", ComputedMath.Op.Round },
             { "mod", ComputedMath.Op.Mod },
@@ -36,7 +36,7 @@ namespace ReactUnity.Styling.Functions
             { "exp", ComputedMath.Op.Exp },
         };
 
-        private static readonly Dictionary<string, ComputedMath.Rounding> Strategies = new Dictionary<string, ComputedMath.Rounding>(StringComparer.InvariantCultureIgnoreCase)
+        private static readonly Dictionary<string, ComputedMath.Rounding> Strategies = new Dictionary<string, ComputedMath.Rounding>(StringComparer.OrdinalIgnoreCase)
         {
             { "nearest", ComputedMath.Rounding.Nearest },
             { "up", ComputedMath.Rounding.Up },

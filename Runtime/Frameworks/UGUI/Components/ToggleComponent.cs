@@ -96,5 +96,15 @@ namespace ReactUnity.UGUI
         {
             Toggle.isOn = !Toggle.isOn;
         }
+
+        public override bool Revive()
+        {
+            if (!base.Revive()) return false;
+            Value = null;
+            Toggle.SetIsOnWithoutNotify(false);
+            Toggle.interactable = true;
+            indeterminate = false;
+            return true;
+        }
     }
 }

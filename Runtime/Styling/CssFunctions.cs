@@ -27,7 +27,7 @@ namespace ReactUnity.Styling
         public static ICssFunction RadialGradient = new RadialGradientFunction();
         public static ICssFunction ConicGradient = new ConicGradientFunction();
 
-        private static Dictionary<string, ICssFunction> Functions = new Dictionary<string, ICssFunction>(StringComparer.InvariantCultureIgnoreCase)
+        private static Dictionary<string, ICssFunction> Functions = new Dictionary<string, ICssFunction>(StringComparer.OrdinalIgnoreCase)
         {
             { "calc", Calc },
             { "min", MinMax },
@@ -81,7 +81,8 @@ namespace ReactUnity.Styling
 
         public static bool TryCall(string expression, out object result, HashSet<string> allowed = null, StyleConverterBase converter = null)
         {
-            if (string.IsNullOrWhiteSpace(expression))
+            // Not a call without a parenthesis, which most values are; parsing one to find that out allocates.
+            if (string.IsNullOrWhiteSpace(expression) || expression.IndexOf('(') < 0)
             {
                 result = null;
                 return false;

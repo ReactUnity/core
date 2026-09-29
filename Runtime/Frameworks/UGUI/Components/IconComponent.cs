@@ -99,6 +99,13 @@ namespace ReactUnity.UGUI
             ApplyText(AppliedText);
         }
 
+        public override bool Revive()
+        {
+            if (!base.Revive()) return false;
+            ApplySet(null);
+            return true;
+        }
+
         public override void SetProperty(string propertyName, object value)
         {
             if (propertyName == "set") ApplySet(value);

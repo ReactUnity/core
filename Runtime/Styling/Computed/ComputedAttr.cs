@@ -27,6 +27,7 @@ namespace ReactUnity.Styling.Computed
 
         public object GetValue(IStyleProperty prop, NodeStyle style, IStyleConverter converter)
         {
+            NodeStyle.MarkLiveRead();
             var component = style?.Component;
             // A pseudo-element has no props of its own; attr() reads the element it belongs to.
             if (component != null && component.IsPseudoElement) component = component.Parent;

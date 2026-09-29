@@ -39,7 +39,8 @@ namespace ReactUnity
         public bool Destroyed { get; private set; }
         public string Tag { get; private set; } = "";
         public string TextContent => new TextContentVisitor().Get(this);
-        public Stack<IPoolableComponent> PoolStack { get; set; }
+        public PoolStack PoolStack { get; set; }
+        public string PoolHint { get; private set; }
 
         private bool isPseudoElement;
         public bool IsPseudoElement
@@ -156,8 +157,14 @@ namespace ReactUnity
 
         private bool markedStyleResolve = true;
         private bool markedForStyleApply = true;
+        // False while every update since the last apply only changed layout, transform or opacity.
+        private bool markedForFullStyleApply = true;
         private bool markedForLayoutApply = true;
         private bool markedStyleResolveRecursive = true;
+        // False while every mark since the last resolve came from selector state (a class, a sibling
+        // arriving), which cannot change a style whose matched declarations came out the same.
+        private bool markedStyleRecompute = true;
+        private List<IDictionary<IStyleProperty, object>> resolvedDeclarations;
         private float stateUpdateTime;
         protected Dictionary<string, List<Callback>> BaseEventHandlers = new Dictionary<string, List<Callback>>();
         protected Dictionary<string, Action> EventHandlerRemovers = new Dictionary<string, Action>();
@@ -194,16 +201,17 @@ namespace ReactUnity
             if (Destroyed) return;
             // Resolve first: ApplyEnterLeave reads stateDuration off ComputedStyle, and only a
             // resolve puts the :enter/:leave block's own value there.
-            if (markedStyleResolve) ResolveStyle(markedStyleResolveRecursive);
+            if (markedStyleResolve) using (ReactProfiling.ResolveStyle.Auto()) ResolveStyle(markedStyleResolveRecursive, false);
             ApplyEnterLeave();
             if (Destroyed) return;
             // Ending a state marks another resolve. Take it now rather than next update, or the
             // transition that end starts gets created late and timed from the wrong instant.
-            if (markedStyleResolve) ResolveStyle(markedStyleResolveRecursive);
+            if (markedStyleResolve) using (ReactProfiling.ResolveStyle.Auto()) ResolveStyle(markedStyleResolveRecursive, false);
 
-            StyleState.Update();
-            if (markedForStyleApply) ApplyStyles();
-            if (markedForLayoutApply) ApplyLayoutStyles();
+            // Most elements are settled, and a marker per element per frame costs more than their update.
+            if (StyleState.HasWork) using (ReactProfiling.StyleStateUpdate.Auto()) StyleState.Update();
+            if (markedForStyleApply) using (ReactProfiling.ApplyStyles.Auto()) ApplyStyles(markedForFullStyleApply);
+            if (markedForLayoutApply) using (ReactProfiling.ApplyLayoutStyles.Auto()) ApplyLayoutStyles();
             ComputedStyle.MarkChangesSeen();
         }
 
@@ -227,12 +235,27 @@ namespace ReactUnity
         {
             markedStyleResolveRecursive = markedStyleResolveRecursive || recursive;
             markedStyleResolve = true;
+            markedStyleRecompute = true;
+        }
+
+        /// <summary>Matches the element's rules again, keeping its style if they come out the same.</summary>
+        private void MarkForStyleRematch(bool recursive)
+        {
+            markedStyleResolveRecursive = markedStyleResolveRecursive || recursive;
+            markedStyleResolve = true;
+        }
+
+        private static void MarkForStyleRematch(IReactComponent component, bool recursive)
+        {
+            if (component is BaseReactComponent<ContextType> b) b.MarkForStyleRematch(recursive);
+            else component.MarkForStyleResolving(recursive);
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         protected void MarkForStyleApply(bool hasLayout)
         {
             markedForStyleApply = true;
+            markedForFullStyleApply = true;
             markedForLayoutApply = markedForLayoutApply || hasLayout;
         }
 
@@ -263,9 +286,9 @@ namespace ReactUnity
             Entering = false;
             Leaving = false;
             Destroyed = true;
-            var pr = Parent;
+            // SetParent marks the parent for a resolve on its next update. Resolving it here as well
+            // re-resolved every remaining sibling per removal, so unmounting a list was quadratic.
             SetParent(null);
-            pr?.ResolveStyle(true);
 
             if (recursive && IsContainer)
             {
@@ -284,14 +307,7 @@ namespace ReactUnity
                 InlineStylesheet = null;
             }
 
-            if (PoolStack != null)
-            {
-                Context.PoolComponent(this, PoolStack);
-            }
-            else
-            {
-                DestroySelf();
-            }
+            if (PoolStack == null || !Context.PoolComponent(this, PoolStack)) DestroySelf();
         }
 
         public virtual bool Pool()
@@ -304,6 +320,8 @@ namespace ReactUnity
             Style.ClearWithoutNotify();
             Data.ClearWithoutNotify();
             ClassList.ClearWithoutNotify();
+            PoolHint = null;
+            CustomProperties?.Clear();
             name = null;
             Id = null;
 
@@ -312,8 +330,11 @@ namespace ReactUnity
             Destroyed = false;
             markedStyleResolve = true;
             markedForStyleApply = true;
+            markedForFullStyleApply = true;
             markedForLayoutApply = true;
             markedStyleResolveRecursive = true;
+            markedStyleRecompute = true;
+            resolvedDeclarations = null;
             UpdatedThisFrame = false;
 
 
@@ -349,7 +370,7 @@ namespace ReactUnity
                 }
 
                 Parent.UnregisterChild(this);
-                Parent.MarkForStyleResolvingWithSiblings(true);
+                MarkChildListChanged(Parent);
                 ParentIndex = -1;
             }
 
@@ -382,7 +403,33 @@ namespace ReactUnity
             }
 
             StyleState.SetParent(newParent?.StyleState);
-            newParent?.MarkForStyleResolvingWithSiblings(true);
+
+            if (newParent != null)
+            {
+                // Its ancestors are new, and every descendant selector below it reads them.
+                MarkForStyleRematch(true);
+                MarkChildListChanged(newParent);
+            }
+        }
+
+        /// <summary>
+        /// A child arrived or left. Only the parent's <c>:empty</c> and the siblings' positions can
+        /// read that, so they are matched again only when some rule does.
+        /// </summary>
+        private void MarkChildListChanged(IContainerComponent parent)
+        {
+            var tree = Context.Style.StyleTree;
+
+            if (tree.ContainsEmptySelector || !(parent is BaseReactComponent<ContextType> p))
+            {
+                parent.MarkForStyleResolvingWithSiblings(true);
+                return;
+            }
+
+            if (tree.ReadsSiblingPosition && parent.Children != null)
+                foreach (var child in parent.Children) MarkForStyleRematch(child, tree.ReadsSiblingsDeep);
+
+            if (tree.ContainsHasSelector) p.MarkHasAnchors();
         }
 
 
@@ -443,7 +490,7 @@ namespace ReactUnity
                     return;
                 case "class":
                 case "className":
-                    ClassName = value?.ToString();
+                    ClassName = PoolHint = value?.ToString();
                     return;
                 case "style":
                     if (InlineStylesheet != null)
@@ -475,16 +522,20 @@ namespace ReactUnity
 
         #region Style / Layout
 
-        public virtual void ResolveStyle(bool recursive = false)
+        public virtual void ResolveStyle(bool recursive = false) => ResolveStyle(recursive, true);
+
+        private void ResolveStyle(bool recursive, bool recompute)
         {
             if (Destroyed) return;
+            recompute = recompute || markedStyleRecompute;
             markedStyleResolve = false;
             markedStyleResolveRecursive = false;
+            markedStyleRecompute = false;
 
             List<RuleTreeNode<StyleData>> matchingRules;
             if (Tag == "_before") matchingRules = Parent.BeforeRules;
             else if (Tag == "_after") matchingRules = Parent.AfterRules;
-            else matchingRules = Context.Style.StyleTree.GetMatchingRules(this).ToList();
+            else using (ReactProfiling.MatchRules.Auto()) matchingRules = Context.Style.StyleTree.MatchRules(this);
 
             // Inline styles sit below every !important rule and above the rest; with no rest, that is the end.
             var importantIndex = matchingRules.FindIndex(x => x.Specifity <= RuleHelpers.ImportantSpecifity);
@@ -495,14 +546,23 @@ namespace ReactUnity
             cssStyles.Add(Style);
             for (int i = importantIndex; i < matchingRules.Count; i++) cssStyles.AddRange(matchingRules[i].Data?.Rules);
 
-            var resolvedStyle = new NodeStyle(Context, null, cssStyles, RevertCalculator, this);
-            resolvedStyle.UpdateParent(Parent?.ComputedStyle);
+            // The same declarations under the same parent style resolve to the style already applied, so
+            // a rematch that changed nothing costs no restyle -- and does not restart its transitions.
+            var current = StyleState.Current;
+            var unchanged = !recompute && current != null && current.Parent == Parent?.ComputedStyle && SameDeclarations(cssStyles);
 
-            // The root's color-scheme is the page's, and so is what prefers-color-scheme defaults to.
-            if (this is IHostComponent) Context.Style.SeedColorScheme(resolvedStyle.colorScheme);
+            if (!unchanged)
+            {
+                resolvedDeclarations = cssStyles;
+                var resolvedStyle = new NodeStyle(Context, null, cssStyles, RevertCalculator, this);
+                resolvedStyle.UpdateParent(Parent?.ComputedStyle);
 
-            StyleState.SetCurrent(resolvedStyle);
-            MarkForStyleApply(true);
+                // The root's color-scheme is the page's, and so is what prefers-color-scheme defaults to.
+                if (this is IHostComponent) Context.Style.SeedColorScheme(resolvedStyle.colorScheme);
+
+                StyleState.SetCurrent(resolvedStyle);
+                MarkForStyleApply(true);
+            }
 
             if (IsContainer)
             {
@@ -515,7 +575,7 @@ namespace ReactUnity
                     // The subtree matches its rules again now, and whatever still reads this element as its container says so.
                     if (query != null) query.TracksSize = query.TracksScroll = query.HasStyleDependents = false;
 
-                    BeforeRules = Context.Style.StyleTree.GetMatchingBefore(this).ToList();
+                    BeforeRules = Context.Style.StyleTree.MatchBefore(this);
                     if (BeforeRules.Count > 0 &&
                         BeforeRules.Any(x => x.Data.Rules.Any(y => y.ContainsKey(StyleProperties.content))))
                         AddBefore();
@@ -525,11 +585,12 @@ namespace ReactUnity
                     for (int i = 0; i < Children.Count; i++)
                     {
                         var child = Children[i];
-                        child.ResolveStyle(true);
+                        if (child is BaseReactComponent<ContextType> b) b.ResolveStyle(true, recompute);
+                        else child.ResolveStyle(true);
                         if (child.Destroyed) i--;
                     }
 
-                    AfterRules = Context.Style.StyleTree.GetMatchingAfter(this).ToList();
+                    AfterRules = Context.Style.StyleTree.MatchAfter(this);
                     if (AfterRules.Count > 0 &&
                         AfterRules.Any(x => x.Data.Rules.Any(y => y.ContainsKey(StyleProperties.content))))
                         AddAfter();
@@ -539,31 +600,39 @@ namespace ReactUnity
             }
         }
 
+        private bool SameDeclarations(List<IDictionary<IStyleProperty, object>> declarations)
+        {
+            var previous = resolvedDeclarations;
+            if (previous == null || previous.Count != declarations.Count) return false;
+            for (int i = 0; i < declarations.Count; i++)
+                if (!ReferenceEquals(previous[i], declarations[i])) return false;
+            return true;
+        }
+
         public void MarkForStyleResolvingWithSiblings(bool recursive)
         {
             // The host has no parent to find siblings through, but it is still an element with children:
             // `:root.dark` has to see the class the host just gained, and `:first-child` among the
             // top-level elements has to see one of them arrive. Returning here left both as they started.
-            if (Parent == null)
+            // Selector state changed, not a declaration, so everything marked here is a rematch.
+            var tree = Context.Style.StyleTree;
+
+            if (Parent?.Children == null || !tree.ReadsSiblingState)
             {
-                MarkForStyleResolving(recursive);
-                return;
+                MarkForStyleRematch(recursive);
+            }
+            else
+            {
+                var resolve = false;
+                foreach (var child in Parent.Children)
+                {
+                    if (child == this) MarkForStyleRematch(recursive);
+                    else if (resolve) MarkForStyleRematch(child, recursive && tree.ReadsSiblingsDeep);
+                    resolve = resolve || child == this;
+                }
             }
 
-            if (Parent.Children == null)
-            {
-                MarkForStyleResolving(recursive);
-                return;
-            }
-
-            var resolve = false;
-            foreach (var child in Parent.Children)
-            {
-                resolve = resolve || child == this;
-                if (resolve) child.MarkForStyleResolving(recursive);
-            }
-
-            if (Context.Style.StyleTree.ContainsHasSelector) MarkHasAnchors();
+            if (tree.ContainsHasSelector) MarkHasAnchors();
         }
 
         /// <summary>
@@ -606,13 +675,22 @@ namespace ReactUnity
         protected abstract void ApplyLayoutStylesSelf();
         public abstract bool UpdateOrder(int prev, int current);
 
-        public void ApplyStyles()
+        public void ApplyStyles() => ApplyStyles(true);
+
+        private void ApplyStyles(bool full)
         {
             markedForStyleApply = false;
+            markedForFullStyleApply = false;
             ApplyEnterLeave();
             if (Destroyed) return;
-            ApplyStylesSelf();
+            if (full) ApplyStylesSelf();
+            else ApplyCompositorStylesSelf();
         }
+
+        /// <summary>What an update that only moved <c>translate</c>, <c>rotate</c>, <c>scale</c>,
+        /// <c>opacity</c> or layout properties has to apply, besides the layout pass. Everything else in
+        /// the style is as it was last applied.</summary>
+        protected virtual void ApplyCompositorStylesSelf() => ApplyStylesSelf();
 
         private void ApplyEnterLeave()
         {
@@ -661,7 +739,12 @@ namespace ReactUnity
 
         private void OnStylesUpdated(NodeStyle obj, bool hasLayout)
         {
-            MarkForStyleApply(hasLayout);
+            if (!StyleState.CompositorOnly) MarkForStyleApply(hasLayout);
+            else
+            {
+                markedForStyleApply = true;
+                markedForLayoutApply = markedForLayoutApply || hasLayout;
+            }
         }
 
         protected void RefreshName() => ApplyName(ResolvedName);

@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using ReactUnity.Styling.Converters;
 using ReactUnity.Styling.Shorthands;
 
@@ -19,10 +18,9 @@ namespace ReactUnity.Styling.Computed
         {
             var varValue = Variable.ResolveValue(prop, style, ComputedStringTemplate.VariableStringConverter) as string;
 
-            var collection = new Dictionary<IStyleProperty, object>();
-            Shorthand.Modify(collection, varValue);
+            var expanded = Shorthand.Expand(varValue);
 
-            if (collection.TryGetValue(prop, out var val)) return val;
+            if (expanded != null && expanded.TryGetValue(prop, out var val)) return val;
             return null;
         }
 

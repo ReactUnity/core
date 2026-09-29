@@ -40,6 +40,18 @@ namespace ReactUnity.UGUI
             }
         }
 
+        public override bool Pool()
+        {
+            VideoPlayer.Stop();
+            VideoPlayer.source = VideoSource.VideoClip;
+            VideoPlayer.clip = null;
+            VideoPlayer.url = null;
+            if (!base.Pool()) return false;
+            // Resizing to 1x1 may have replaced the texture.
+            VideoPlayer.targetTexture = RenderTexture;
+            return true;
+        }
+
         private void SetSource(VideoReference source)
         {
             source?.Get(Context, (res) => {

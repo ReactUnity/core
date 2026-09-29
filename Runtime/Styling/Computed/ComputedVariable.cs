@@ -34,7 +34,7 @@ namespace ReactUnity.Styling.Computed
 
             if (val is IComputedValue d) val = d.ResolveValue(prop, style, converter);
 
-            return converter.Convert(val);
+            return converter.ConvertResolved(val);
         }
     }
 }

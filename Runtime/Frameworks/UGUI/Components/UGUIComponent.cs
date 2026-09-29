@@ -20,6 +20,7 @@ namespace ReactUnity.UGUI
         public ReactElement Component { get; private set; }
         public BorderAndBackground BorderAndBackground { get; protected set; }
         public MaskAndImage OverflowMask { get; protected set; }
+        internal ClipPathStencil ClipStencil { get; set; }
         public ElementFilter ElementFilter { get; protected set; }
         public BackfaceCuller BackfaceCuller { get; protected set; }
 
@@ -78,14 +79,15 @@ namespace ReactUnity.UGUI
         protected UGUIComponent(UGUIContext context, string tag = "", bool isContainer = true) : base(context, tag, isContainer)
         {
             RevertCalculator = new UGUIRevertCalculator(this);
-            GameObject = context.CreateNativeObject(DefaultName);
-            RectTransform = AddComponent<RectTransform>();
+            // Components passed to the constructor, since adding a RectTransform later replaces the Transform.
+            GameObject = context.CreateNativeObject(DefaultName, typeof(RectTransform), typeof(ReactElement));
+            RectTransform = (RectTransform) GameObject.transform;
 
             RectTransform.anchorMin = Vector2.up;
             RectTransform.anchorMax = Vector2.up;
             RectTransform.pivot = Vector2.up;
 
-            Component = AddComponent<ReactElement>();
+            Component = GameObject.GetComponent<ReactElement>();
             Component.Layout = Layout;
             Component.Component = this;
 
@@ -113,6 +115,9 @@ namespace ReactUnity.UGUI
             if (!RectTransform) return false;
 
             RectTransform.SetParent(Context.OffscreenRoot, false);
+            GameObject.SetActive(true);
+            inheritedEventViewport = null;
+            EventViewport = null;
             return true;
         }
 
@@ -120,6 +125,11 @@ namespace ReactUnity.UGUI
         {
             if (!base.Pool()) return false;
             if (!RectTransform) return false;
+
+            // The filter holds the element on its surface and a composite in the old parent, and would
+            // put the element back there on its next Detach -- whoever reuses it.
+            if (ElementFilter) ElementFilter.Detach(true);
+            ElementFilter = null;
 
             RectTransform.SetParent(Context.PoolRoot, false);
             return true;
@@ -278,6 +288,15 @@ namespace ReactUnity.UGUI
             SetFilter();
         }
 
+        protected override void ApplyCompositorStylesSelf()
+        {
+            ResolveTransform();
+            // Opacity, and the back face a rotation may have turned towards the viewer.
+            ResolveBackface();
+            // An isolated group is only skipped while it is opaque.
+            if (ComputedStyle.isolation == Isolation.Isolate) SetFilter();
+        }
+
         protected void SetFilter()
         {
             var filter = ComputedStyle.filter;
@@ -313,7 +332,14 @@ namespace ReactUnity.UGUI
             var perspective = ComputedStyle.perspective;
             var projects = perspective > 0;
 
-            if (!hasFilter && !hasBlend && !isolated && !stacksBackgroundBlends && !hasMask && !hasClip && !projects)
+            var captures = hasFilter || hasBlend || (isolated && !IsolationIsMoot()) || stacksBackgroundBlends || hasMask || projects;
+
+            // A clip on its own can usually be cut with the stencil instead, which costs no render.
+            var stencilled = hasClip && !captures && !ClipsOverflow(ComputedStyle) && ClipPathStencil.CanCut(this, clipShape);
+            ClipPathStencil.Set(this, stencilled ? clipShape : null);
+            if (stencilled) hasClip = false;
+
+            if (!captures && !hasClip)
             {
                 if (ElementFilter) ElementFilter.Detach();
                 ElementFilter = null;
@@ -337,6 +363,21 @@ namespace ReactUnity.UGUI
             ElementFilter.SetMask(maskImages, ComputedStyle.maskPositionX, ComputedStyle.maskPositionY,
                 ComputedStyle.maskSize, ComputedStyle.maskRepeatX, ComputedStyle.maskRepeatY,
                 ComputedStyle.maskMode.Get(0));
+        }
+
+        /// <summary>
+        /// Whether an isolated group would hold the same pixels as the page, so capturing it changes
+        /// nothing. Only a blending descendant can tell, and an opaque background under an overflow clip
+        /// already covers everything it can read. (A <c>backdrop-filter</c> reads through isolation anyway.)
+        /// </summary>
+        bool IsolationIsMoot()
+        {
+            var computed = ComputedStyle;
+            if (!ClipsOverflow(computed) || !computed.visibility || computed.opacity < 1 || computed.backgroundColor.a < 1) return false;
+
+            // The colour is clipped by the bottom layer's box, and the overflow clip is the padding box.
+            var clip = computed.backgroundClip.Get(Mathf.Max(0, (computed.backgroundImage?.Count ?? 0) - 1));
+            return clip == BackgroundBox.BorderBox || clip == BackgroundBox.PaddingBox;
         }
 
         /// <summary>
@@ -488,8 +529,9 @@ namespace ReactUnity.UGUI
 
             var origin = style.transformOrigin;
             var rect = RectTransform.sizeDelta;
-            var pivotX = origin.X.Unit == YogaUnit.Percent ? (origin.X.Value / 100) : origin.X.Unit == YogaUnit.Point ? (origin.X.Value / rect.x) : 0.5f;
-            var pivotY = origin.Y.Unit == YogaUnit.Percent ? (origin.Y.Value / 100) : origin.Y.Unit == YogaUnit.Point ? (origin.Y.Value / rect.y) : 0.5f;
+            // A point origin on an element not laid out yet would divide by zero, and a NaN pivot is a NaN position.
+            var pivotX = origin.X.Unit == YogaUnit.Percent ? (origin.X.Value / 100) : origin.X.Unit == YogaUnit.Point ? (rect.x != 0 ? origin.X.Value / rect.x : 0) : 0.5f;
+            var pivotY = origin.Y.Unit == YogaUnit.Percent ? (origin.Y.Value / 100) : origin.Y.Unit == YogaUnit.Point ? (rect.y != 0 ? origin.Y.Value / rect.y : 0) : 0.5f;
             var pivot = new Vector2(pivotX, 1 - pivotY);
             Vector3 deltaPosition = RectTransform.pivot - pivot;    // get change in pivot
             deltaPosition.Scale(RectTransform.rect.size);           // apply sizing
@@ -574,18 +616,26 @@ namespace ReactUnity.UGUI
         {
             var computed = ComputedStyle;
             var mask = OverflowMask;
-            // A mask clips both axes, so hiding one axis clips the other too -- the closest a RectMask2D gets.
-            var hasMask = StylingHelpers.GetStyleEnumCustom(computed, LayoutProperties.Overflow) == YogaOverflow.Hidden
-                || computed.overflowX == YogaOverflow.Hidden || computed.overflowY == YogaOverflow.Hidden;
+            var hasMask = ClipsOverflow(computed);
 
             // Mask is not defined and there is no need for it
             if (!hasMask && mask == null) return;
 
-            if (mask == null) mask = OverflowMask = MaskAndImage.Create(GameObject, Context);
+            if (mask == null)
+            {
+                // The stencil clip holds the one graphic the mask needs; SetFilter moves the clip to the capture.
+                ClipPathStencil.Remove(this);
+                mask = OverflowMask = MaskAndImage.Create(GameObject, Context);
+            }
 
             mask.SetEnabled(hasMask);
             mask.SetBorderRadius(computed.borderTopLeftRadius, computed.borderTopRightRadius, computed.borderBottomRightRadius, computed.borderBottomLeftRadius);
         }
+
+        // A mask clips both axes, so hiding one axis clips the other too -- the closest a RectMask2D gets.
+        static bool ClipsOverflow(NodeStyle computed) =>
+            StylingHelpers.GetStyleEnumCustom(computed, LayoutProperties.Overflow) == YogaOverflow.Hidden
+            || computed.overflowX == YogaOverflow.Hidden || computed.overflowY == YogaOverflow.Hidden;
 
         private void SetCursor()
         {

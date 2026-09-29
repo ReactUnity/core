@@ -11,8 +11,8 @@ namespace ReactUnity.Styling.Converters
 
         public BoolConverter(string[] truthyValues, string[] falsyValues)
         {
-            this.truthyValues = new HashSet<string>(truthyValues ?? new string[0], StringComparer.InvariantCultureIgnoreCase);
-            this.falsyValues = new HashSet<string>(falsyValues ?? new string[0], StringComparer.InvariantCultureIgnoreCase);
+            this.truthyValues = new HashSet<string>(truthyValues ?? new string[0], StringComparer.OrdinalIgnoreCase);
+            this.falsyValues = new HashSet<string>(falsyValues ?? new string[0], StringComparer.OrdinalIgnoreCase);
         }
 
         protected override bool ParseInternal(string value, out IComputedValue result)

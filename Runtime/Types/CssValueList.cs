@@ -77,6 +77,8 @@ namespace ReactUnity.Types
 
             CssValueList<T> DefaultList;
 
+            internal override bool ParsesArePure => BaseConverter.ParsesArePure;
+
             public Converter(StyleConverterBase baseConverter = null)
             {
                 BaseConverter = baseConverter ?? AllConverters.Get<T>();

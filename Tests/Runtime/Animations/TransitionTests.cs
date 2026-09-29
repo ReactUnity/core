@@ -114,6 +114,33 @@ namespace ReactUnity.Tests
             Assert.AreEqual(500, rt.rect.width);
         }
 
+        // The transition is declared once, so both changes run under the same list: a settled
+        // transition stops being polled, and the second change has to start it again.
+        [UGUITest(Script = BaseScript, Style = @"
+            #test { width: 100px; transition: width 1s linear; }
+            #test.started { width: 500px; }
+        ")]
+        public IEnumerator SettledTransitionRunsAgain()
+        {
+            var rt = (Q("#test") as UGUI.ContainerComponent).RectTransform;
+            Assert.AreEqual(100, rt.rect.width);
+
+            Globals["started"] = true;
+            yield return null;
+            yield return AdvanceTime(0.5f);
+            Assert.AreEqual(300, rt.rect.width, 1);
+            yield return AdvanceTime(1f);
+            Assert.AreEqual(500, rt.rect.width);
+
+            yield return AdvanceTime(1f);
+            Globals["started"] = false;
+            yield return null;
+            yield return AdvanceTime(0.5f);
+            Assert.AreEqual(300, rt.rect.width, 1);
+            yield return AdvanceTime(1f);
+            Assert.AreEqual(100, rt.rect.width);
+        }
+
         [UGUITest(Script = BaseScript, Style = BaseStyle)]
         public IEnumerator TransitionShouldWorkOnVisualStyles()
         {

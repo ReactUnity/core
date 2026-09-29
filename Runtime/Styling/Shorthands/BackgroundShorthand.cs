@@ -9,6 +9,8 @@ namespace ReactUnity.Styling.Shorthands
 {
     internal class BackgroundShorthand : StyleShorthand
     {
+        internal override bool ExpandsArePure => false;
+
         private static StyleConverterBase RepeatConverter = AllConverters.Get<BackgroundRepeat>();
         private static StyleConverterBase BoxConverter = AllConverters.Get<BackgroundBox>();
 

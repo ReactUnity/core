@@ -8,9 +8,10 @@ namespace ReactUnity.Styling
 {
     public static class CssProperties
     {
-        public static readonly Dictionary<string, IStyleProperty> PropertyMap = new Dictionary<string, IStyleProperty>(StringComparer.InvariantCultureIgnoreCase);
+        public static readonly Dictionary<string, IStyleProperty> PropertyMap = new Dictionary<string, IStyleProperty>(StringComparer.OrdinalIgnoreCase);
         public static readonly HashSet<IStyleProperty> TransitionableProperties = new HashSet<IStyleProperty>();
-        private static readonly Dictionary<string, VariableProperty> VariableProperties = new Dictionary<string, VariableProperty>(StringComparer.InvariantCultureIgnoreCase);
+        // Custom property names are case-sensitive, as VariableProperty's equality is.
+        private static readonly Dictionary<string, VariableProperty> VariableProperties = new Dictionary<string, VariableProperty>(StringComparer.Ordinal);
         public static readonly List<IStyleProperty> AllProperties;
 
         static CssProperties()
@@ -31,20 +32,36 @@ namespace ReactUnity.Styling
 
         public static IStyleProperty GetProperty(string name)
         {
-            if (name.FastStartsWith("--"))
-            {
-                if (VariableProperties.TryGetValue(name, out var val)) return val;
-                return VariableProperties[name] = new VariableProperty(name);
-            }
+            if (name.FastStartsWith("--")) return GetVariable(name);
             if (PropertyMap.TryGetValue(StripVendorPrefix(name), out var style)) return style;
             return null;
         }
 
+        /// <summary>
+        /// The one instance for a custom property name, so a declaration block probed for it compares
+        /// references instead of names.
+        /// </summary>
+        internal static VariableProperty GetVariable(string name)
+        {
+            if (VariableProperties.TryGetValue(name, out var val)) return val;
+            return VariableProperties[name] = new VariableProperty(name);
+        }
+
+        // Every declaration of a sheet looks its name up, and a case-insensitive map folds each character to hash it.
+        private static readonly Dictionary<string, IStyleKey> Keys = new Dictionary<string, IStyleKey>(StringComparer.Ordinal);
+        private const int KeysLimit = 4096;
+
         public static IStyleKey GetKey(string name)
         {
-            var prop = AllShorthands.GetShorthand(StripVendorPrefix(name));
-            if (prop == null) return GetProperty(name);
-            return prop;
+            if (Keys.TryGetValue(name, out var known)) return known;
+
+            IStyleKey key = AllShorthands.GetShorthand(StripVendorPrefix(name));
+            if (key == null) key = GetProperty(name);
+            // An unknown name is not kept, since PropertyMap is public and may yet learn it.
+            if (key == null) return null;
+
+            if (Keys.Count >= KeysLimit) Keys.Clear();
+            return Keys[name] = key;
         }
 
         // `-webkit-line-clamp` is what Tailwind's `line-clamp-*` emits, and `-webkit-text-stroke` is

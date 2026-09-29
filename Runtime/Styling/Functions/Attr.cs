@@ -18,7 +18,7 @@ namespace ReactUnity.Styling.Functions
         public string Name { get; } = "attr";
 
         // The type keywords of CSS Values 4, all of which mean "parse it as the property does".
-        private static readonly HashSet<string> TypeKeywords = new HashSet<string>(StringComparer.InvariantCultureIgnoreCase)
+        private static readonly HashSet<string> TypeKeywords = new HashSet<string>(StringComparer.OrdinalIgnoreCase)
         {
             "number", "integer", "length", "angle", "time", "frequency", "percentage", "color", "url", "flex", "ident",
         };

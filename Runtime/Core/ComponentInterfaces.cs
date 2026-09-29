@@ -142,7 +142,9 @@ namespace ReactUnity
 
     public interface IPoolableComponent : IReactComponent
     {
-        Stack<IPoolableComponent> PoolStack { get; set; }
+        PoolStack PoolStack { get; set; }
+        /// <summary>The <c>className</c> prop this component last had, which files it in its pool.</summary>
+        string PoolHint { get; }
         bool Pool();
         bool Revive();
     }

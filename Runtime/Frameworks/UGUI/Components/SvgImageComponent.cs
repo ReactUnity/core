@@ -44,6 +44,13 @@ namespace ReactUnity.UGUI
             Replaced.Measurer.Sprite = sprite;
         }
 
+        public override bool Revive()
+        {
+            if (!base.Revive()) return false;
+            Image.preserveAspect = false;
+            return true;
+        }
+
         public override void SetProperty(string propertyName, object value)
         {
             if (propertyName == "preserveAspect")

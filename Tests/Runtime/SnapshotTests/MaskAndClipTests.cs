@@ -1,10 +1,13 @@
 using System.Collections;
+using System.Collections.Generic;
 using System.Text;
 using NUnit.Framework;
 using ReactUnity.Scripting;
 using ReactUnity.Types;
 using ReactUnity.UGUI;
+using ReactUnity.UGUI.Internal;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 namespace ReactUnity.Tests
 {
@@ -28,7 +31,16 @@ namespace ReactUnity.Tests
             }
         ";
 
+        const string NestedScript = @"
+            function App() {
+                return <view id='wrap'><view id='test'></view></view>;
+            }
+";
+
         private UGUIComponent View => Q("#test");
+
+        // A stencil the clip no longer needs is parked, disabled, rather than destroyed.
+        private ClipPathStencil Stencil => View.GameObject.TryGetComponent<ClipPathStencil>(out var s) && s.enabled ? s : null;
 
         public MaskAndClipTests(JavascriptEngineType engineType) : base(engineType) { }
 
@@ -182,7 +194,8 @@ namespace ReactUnity.Tests
             yield return null;
             yield return null;
 
-            Assert.NotNull(View.ElementFilter, "a clip should have created the offscreen composite");
+            Assert.IsNull(View.ElementFilter, "a plain box loses nothing to the stencil, so it should not be captured");
+            Assert.NotNull(Stencil, "and should be cut with the stencil instead");
 
             var kept = SampleAt(40, 100);
             var cut = SampleAt(160, 100);
@@ -295,6 +308,8 @@ namespace ReactUnity.Tests
         [UGUITest(Script = BaseScript, Style = BaseStyle)]
         public IEnumerator TheTwoClipTransportsPutTheEdgeInTheSamePlace()
         {
+            // Kept off the stencil, so both edges are the capture's.
+            View.Style["shape-rendering"] = "geometricPrecision";
             View.Style["clip-path"] = "inset(0 50% 0 0)";
             yield return null;
             yield return null;
@@ -429,6 +444,204 @@ namespace ReactUnity.Tests
             Assert.Less(Coverage(bottom), 0.2f, "the same half's masked-out end should not");
             Assert.Less(Coverage(clipped), 0.2f, "and the clipped half should be gone whatever the mask says");
         }
+
+        [UGUITest(Script = BaseScript, Style = BaseStyle)]
+        public IEnumerator ACrispCurveIsCutWithTheStencil()
+        {
+            View.Style["clip-path"] = "circle(50%)";
+            yield return null;
+            yield return null;
+            yield return null;
+
+            Assert.NotNull(View.ElementFilter, "a curve keeps its antialiased capture by default");
+            Assert.IsNull(Stencil);
+
+            View.Style["shape-rendering"] = "crispEdges";
+            yield return null;
+            yield return null;
+            yield return null;
+
+            Assert.IsNull(View.ElementFilter, "crispEdges should trade the capture for the stencil");
+            Assert.NotNull(Stencil);
+
+            var centre = SampleAt(100, 100);
+            var top = SampleAt(100, 4);
+            var corner = SampleAt(20, 20);
+            Debug.Log($"[CLIP stencil circle] centre={Describe(centre)} top={Describe(top)} corner={Describe(corner)}");
+
+            Assert.Greater(Coverage(centre), 0.7f, "the middle of the circle should survive");
+            Assert.Greater(Coverage(top), 0.7f, "and so should its top, just inside the edge");
+            Assert.Less(Coverage(corner), 0.2f, "a corner is outside the circle");
+
+            View.Style["shape-rendering"] = null;
+            yield return null;
+            yield return null;
+            yield return null;
+
+            Assert.NotNull(View.ElementFilter, "going back to auto should bring the capture back");
+            Assert.IsNull(Stencil, "without leaving the stencil behind");
+            Assert.Less(Coverage(SampleAt(20, 20)), 0.2f, "and the corner stays cut");
+        }
+
+        [UGUITest(Script = BaseScript, Style = BaseStyle)]
+        public IEnumerator AParkedStencilComesBackWhenTheClipDoes()
+        {
+            View.Style["shape-rendering"] = "crispEdges";
+            View.Style["clip-path"] = "circle(50%)";
+            yield return null;
+            yield return null;
+            yield return null;
+
+            var first = Stencil;
+            Assert.NotNull(first);
+
+            View.Style["clip-path"] = null;
+            yield return null;
+            yield return null;
+            yield return null;
+
+            Assert.IsNull(Stencil, "no clip, so nothing should be cutting");
+            Assert.Greater(Coverage(SampleAt(20, 20)), 0.7f, "and the corner should be painted again");
+
+            View.Style["clip-path"] = "circle(50%)";
+            yield return null;
+            yield return null;
+            yield return null;
+
+            Assert.AreSame(first, Stencil, "the parked stencil should be the one that comes back");
+            Assert.Less(Coverage(SampleAt(20, 20)), 0.2f, "and it should cut the corner as before");
+        }
+
+        [UGUITest(Script = BaseScript, Style = BaseStyle)]
+        public IEnumerator AnOverflowMaskTakesAParkedStencilsSlot()
+        {
+            View.Style["shape-rendering"] = "crispEdges";
+            View.Style["clip-path"] = "circle(50%)";
+            yield return null;
+            yield return null;
+
+            View.Style["clip-path"] = null;
+            yield return null;
+            yield return null;
+            Assert.IsNull(Stencil);
+
+            View.Style["overflow"] = "hidden";
+            yield return null;
+            yield return null;
+            yield return null;
+
+            Assert.IsFalse(View.GameObject.TryGetComponent<ClipPathStencil>(out _), "the overflow mask needs the element's one graphic");
+            Assert.NotNull(View.OverflowMask);
+            Assert.Greater(Coverage(SampleAt(20, 20)), 0.7f, "a square overflow clip keeps the corner");
+        }
+
+        [UGUITest(Script = NestedScript, Style = BaseStyle)]
+        public IEnumerator ShapeRenderingIsInheritedFromAnAncestor()
+        {
+            Q("#wrap").Style["shape-rendering"] = "optimizeSpeed";
+            View.Style["clip-path"] = "inset(0 round 40px)";
+            yield return null;
+            yield return null;
+            yield return null;
+
+            Assert.IsNull(View.ElementFilter, "the ancestor's optimizeSpeed should reach the clip");
+            Assert.NotNull(Stencil);
+
+            var centre = SampleAt(100, 100);
+            var edge = SampleAt(100, 4);
+            var corner = SampleAt(4, 4);
+            Debug.Log($"[CLIP stencil rounded] centre={Describe(centre)} edge={Describe(edge)} corner={Describe(corner)}");
+
+            Assert.Greater(Coverage(centre), 0.7f);
+            Assert.Greater(Coverage(edge), 0.7f, "a straight edge between the corners is kept");
+            Assert.Less(Coverage(corner), 0.2f, "and the rounded corner is cut");
+        }
+
+        [UGUITest(Script = BaseScript, Style = BaseStyle)]
+        public IEnumerator ACrispConcavePolygonIsCutAlongItsNotch()
+        {
+            // An L: the bottom-left quadrant is missing, which a fan from the wrong vertex would cover.
+            View.Style["shape-rendering"] = "crispEdges";
+            View.Style["clip-path"] = "polygon(0 0, 100% 0, 100% 100%, 50% 100%, 50% 50%, 0 50%)";
+            yield return null;
+            yield return null;
+            yield return null;
+
+            Assert.IsNull(View.ElementFilter);
+            Assert.NotNull(Stencil);
+
+            var notch = SampleAt(50, 150);
+            var foot = SampleAt(150, 150);
+            var arm = SampleAt(50, 50);
+            Debug.Log($"[CLIP stencil polygon] notch={Describe(notch)} foot={Describe(foot)} arm={Describe(arm)}");
+
+            Assert.Less(Coverage(notch), 0.2f, "the notch is outside the polygon");
+            Assert.Greater(Coverage(foot), 0.7f);
+            Assert.Greater(Coverage(arm), 0.7f);
+        }
+
+        [UGUITest(Script = BaseScript, Style = BaseStyle)]
+        public IEnumerator APointerInAStencilledCornerMissesTheElement()
+        {
+            View.Style["shape-rendering"] = "crispEdges";
+            View.Style["clip-path"] = "circle(50%)";
+            View.Style["pointer-events"] = "all";
+            yield return null;
+            yield return null;
+            yield return null;
+
+            Assert.NotNull(Stencil);
+
+            var ownEventSystem = !EventSystem.current;
+            var es = EventSystem.current ?? new GameObject("[ClipTestEventSystem]").AddComponent<EventSystem>();
+
+            bool Hits(Vector2 local)
+            {
+                var rt = View.RectTransform;
+                var world = rt.TransformPoint(new Vector2(rt.rect.xMin + local.x, rt.rect.yMax - local.y));
+                var point = RectTransformUtility.WorldToScreenPoint(CanvasCmp.worldCamera, world);
+                var results = new List<RaycastResult>();
+                es.RaycastAll(new PointerEventData(es) { position = point }, results);
+                return results.Exists(r => r.gameObject && r.gameObject.transform.IsChildOf(rt));
+            }
+
+            var centre = Hits(new Vector2(100, 100));
+            var corner = Hits(new Vector2(8, 8));
+            Debug.Log($"[CLIP stencil hit] centre={centre} corner={corner}");
+
+            if (ownEventSystem) Object.DestroyImmediate(es.gameObject);
+
+            Assert.IsTrue(centre, "the middle of the circle should take the pointer");
+            Assert.IsFalse(corner, "the cut-away corner should not");
+        }
+
+        [UGUITest(Script = BaseScript, Style = BaseStyle)]
+        public IEnumerator AnOverflowMaskTakesTheClipBackToTheCapture()
+        {
+            View.Style["clip-path"] = "inset(0 50% 0 0)";
+            yield return null;
+            yield return null;
+            yield return null;
+
+            Assert.NotNull(Stencil, "sanity: the box starts on the stencil");
+
+            // The element has one graphic for a mask to draw, and overflow takes it.
+            View.Style["overflow"] = "hidden";
+            yield return null;
+            yield return null;
+            yield return null;
+
+            Assert.IsNull(Stencil);
+            Assert.NotNull(View.ElementFilter, "the clip should move to the capture");
+
+            var kept = SampleAt(40, 100);
+            var cut = SampleAt(160, 100);
+            Debug.Log($"[CLIP overflow] kept={Describe(kept)} cut={Describe(cut)}");
+
+            Assert.Greater(Coverage(kept), 0.7f);
+            Assert.Less(Coverage(cut), 0.2f);
+        }
+
 
         [UGUITest(Script = BaseScript, Style = BaseStyle)]
         public IEnumerator NeitherOneLeavesTheCompositeBehind()
