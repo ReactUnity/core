@@ -68,11 +68,13 @@ Not on CI by design — it needs a C++ toolchain and the IL2CPP module on the ru
 pnpm unity test tests --platform PlayMode --assemblies ReactUnity.Tests.Performance --filter ReactUnity.Tests.Performance.ScriptingBenchmarks
 ```
 
-~40 s. Each test's samples are a `##performancetestresult2:` JSON line in its `<output>` in `Logs/unity/tests-PlayMode.xml`. A method name after the class matches nothing, because of the `(Auto)` fixture suffix. The medians on QuickJS `v0.17.0-reactunity.1` (6000.6, Windows Editor) are:
+~40 s. Each test's samples are a `##performancetestresult2:` JSON line in its `<output>` in `Logs/unity/tests-PlayMode.xml`. A method name after the class matches nothing, because of the `(Auto)` fixture suffix. The medians on QuickJS `v0.17.0-gkurt.1` (6000.6, Windows Editor) are:
 
-- mounting the list 650 ms, updating it 90 ms, unmounting it 100 ms
-- Sucrase transform 170 ms, 20000 JS→C# calls 73 ms
-- React tree depth 32, plain JS recursion 152
+- mounting the list 285 ms, updating it 67 ms, unmounting it 128 ms
+- Sucrase transform 154 ms, 20000 JS→C# calls 70 ms, 5000-command JSON round trip 4.7 ms
+- React tree depth 32, plain JS recursion 151
+
+To compare two engine builds, alternate them (old, new, old, new…) rather than running each back to back — run-to-run drift is the same size as a small real change.
 
 Unmounting was 5.8 s until `Destroy` stopped re-resolving the parent's whole subtree per removed child. A number that moves by that much is a bug, not noise.
 

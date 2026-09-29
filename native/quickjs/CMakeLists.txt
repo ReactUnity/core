@@ -22,11 +22,11 @@ project(reactunity-quickjs LANGUAGES C)
 # module loader needs, a fix for the module status guard that made asynchronous loading
 # able to splice a link pass into a running evaluation, and the fork's interpreter and
 # runtime performance work -- none of it upstream yet (see MIGRATION.md). The fork's
-# integration branch is `next`; the commit is tagged v0.17.0-reactunity.1, so it cannot be
+# integration branch is `next`; the commit is tagged v0.17.0-gkurt.1, so it cannot be
 # lost to a rebase or GC. The SHA rather than the tag name is what is pinned here, because a
 # tag can be moved and a SHA cannot.
 set(QJS_REPOSITORY "https://github.com/gkurt/quickjs.git" CACHE STRING "quickjs-ng remote")
-set(QJS_COMMIT "3ece3573ccc6c3a643ba5677be673c86e599e078" CACHE STRING "pinned quickjs-ng commit (v0.17.0-reactunity.1)")
+set(QJS_COMMIT "b8eadae534b4c96e37710c0c8fb3102adbaefdd5" CACHE STRING "pinned quickjs-ng commit (v0.17.0-gkurt.1)")
 
 include(FetchContent)
 

@@ -166,7 +166,7 @@ if the `.csproj` files are missing.
 ## What it links
 
 quickjs-ng is fetched by CMake, never vendored, and pinned to a **commit** — `QJS_COMMIT` in
-[CMakeLists.txt](CMakeLists.txt), tagged `v0.17.0-reactunity.1` on the fork so it cannot be lost to
+[CMakeLists.txt](CMakeLists.txt), tagged `v0.17.0-gkurt.1` on the fork so it cannot be lost to
 a rebase or GC. The SHA rather than the tag name is what is pinned, because a tag can be moved and a
 SHA cannot. It points at a fork because two things are not upstream yet: the asynchronous module
 loader (`JS_SetModuleLoaderFuncAsync`, `JS_FulfillModuleLoad`, `JS_RejectModuleLoad`,
