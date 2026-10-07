@@ -129,110 +129,60 @@ namespace ReactUnity.Styling.Animations
         [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
         public static class CubicBezier
         {
-            const float NEWTON_ITERATIONS = 4f;
-            const float NEWTON_MIN_SLOPE = 0.001f;
-            const float SUBDIVISION_PRECISION = 0.0000001f;
-            const float SUBDIVISION_MAX_ITERATIONS = 10f;
-            const int kSplineTableSize = 11;
-            const float kSampleStepSize = 1f / (kSplineTableSize - 1f);
-
             public static float Linear(float value, float start = 0, float end = 1)
             {
                 return Mathf.Lerp(start, end, value);
             }
 
-            static float A(float aA1, float aA2) { return 1f - 3 * aA2 + 3 * aA1; }
-            static float B(float aA1, float aA2) { return 3 * aA2 - 6 * aA1; }
-            static float C(float aA1) { return 3 * aA1; }
-            static float calcBezier(float aT, float aA1, float aA2) { return ((A(aA1, aA2) * aT + B(aA1, aA2)) * aT + C(aA1)) * aT; }
-            static float getSlope(float aT, float aA1, float aA2) { return 3 * A(aA1, aA2) * aT * aT + 2 * B(aA1, aA2) * aT + C(aA1); }
-
-
-            static float binarySubdivide(float aX, float aA, float aB, float mX1, float mX2)
+            // Solves x(t) = ((2a * t + 3b) * t + 3c) * t = x for t, with x in (0, 1):
+            // u = 1/t is the largest real root of x·u³ − 3c·u² − 3b·u − 2a = 0
+            static double solveTForX(double x, double a, double b, double c)
             {
-                var currentX = 0f;
-                var currentT = 0f;
-                var i = 0;
-                do
+                var j = 1 / Math.Max(c, Math.Sqrt(x));
+                var k = x * j;
+                var l = k * j;
+                var s = c * j;
+                var q = b * l;
+                var m = s * s + q;
+                var h = -s * (s * s + 1.5 * q) - a * k * l;
+                var D = h * h - m * m * m;
+                double v;
+                if (m == 0 || D > 1e-12 * h * h)
                 {
-                    currentT = aA + (aB - aA) / 2f;
-                    currentX = calcBezier(currentT, mX1, mX2) - aX;
-                    if (currentX > 0.0)
-                    {
-                        aB = currentT;
-                    }
-                    else
-                    {
-                        aA = currentT;
-                    }
-                } while (Math.Abs(currentX) > SUBDIVISION_PRECISION && ++i < SUBDIVISION_MAX_ITERATIONS);
-                return currentT;
-            }
-
-            static float newtonRaphsonIterate(float aX, float aGuessT, float mX1, float mX2)
-            {
-                for (var i = 0; i < NEWTON_ITERATIONS; ++i)
-                {
-                    var currentSlope = getSlope(aGuessT, mX1, mX2);
-                    if (currentSlope == 0f)
-                    {
-                        return aGuessT;
-                    }
-                    var currentX = calcBezier(aGuessT, mX1, mX2) - aX;
-                    aGuessT -= currentX / currentSlope;
+                    // one real root (Cardano)
+                    var U = -Math.Cbrt(h < 0 ? h - Math.Sqrt(D) : h + Math.Sqrt(D));
+                    v = U + m / U;
+                    if (double.IsNaN(v)) v = 0; // triple root (m = h = 0)
                 }
-                return aGuessT;
+                else
+                {
+                    // three real roots, take the largest
+                    var r = Math.Sqrt(m);
+                    v = 2 * r * Math.Cos(Math.Acos(Math.Max(-1, Math.Min(1, -h / (m * r)))) / 3);
+                }
+                return Math.Min(1, k / (v + s));
             }
 
             public static TimingFunction Create(float mX1, float mY1, float mX2, float mY2)
             {
                 if (mX1 == mY1 && mX2 == mY2) return Linear;
 
-                // Precompute samples table
-                var sampleValues = new float[kSplineTableSize];
-                for (var i = 0; i < kSplineTableSize; ++i)
-                {
-                    sampleValues[i] = calcBezier(i * kSampleStepSize, mX1, mX2);
-                }
-
-                float getTForX(float aX)
-                {
-                    var intervalStart = 0f;
-                    var currentSample = 1;
-                    var lastSample = kSplineTableSize - 1;
-
-                    for (; currentSample != lastSample && sampleValues[currentSample] <= aX; ++currentSample)
-                    {
-                        intervalStart += kSampleStepSize;
-                    }
-                    --currentSample;
-
-                    // Interpolate to provide an initial guess for t
-                    var dist = (aX - sampleValues[currentSample]) / (sampleValues[currentSample + 1] - sampleValues[currentSample]);
-                    var guessForT = intervalStart + dist * kSampleStepSize;
-
-                    var initialSlope = getSlope(guessForT, mX1, mX2);
-                    if (initialSlope >= NEWTON_MIN_SLOPE)
-                    {
-                        return newtonRaphsonIterate(aX, guessForT, mX1, mX2);
-                    }
-                    else if (initialSlope == 0.0)
-                    {
-                        return guessForT;
-                    }
-                    else
-                    {
-                        return binarySubdivide(aX, intervalStart, intervalStart + kSampleStepSize, mX1, mX2);
-                    }
-                }
+                // x(t) = ((2a * t + 3b) * t + 3c) * t, y(t) = ((ay * t + by) * t + cy) * t
+                double a = (3.0 * mX1 - 3.0 * mX2 + 1) / 2;
+                double b = mX2 - 2.0 * mX1;
+                double c = mX1;
+                double ay = 3.0 * mY1 - 3.0 * mY2 + 1;
+                double by = 3.0 * (mY2 - 2.0 * mY1);
+                double cy = 3.0 * mY1;
 
                 return delegate (float value, float start, float end) {
-                    // Because JavaScript number are imprecise, we should guarantee the extremes are right.
-                    if (value == 0 || value == 1)
+                    // value outside (0, 1) saturates to 0 / 1
+                    if (!(value > 0 && value < 1))
                     {
                         return Linear(value, start, end);
                     }
-                    return Linear(calcBezier(getTForX(value), mY1, mY2), start, end);
+                    var t = solveTForX(value, a, b, c);
+                    return Linear((float) (((ay * t + by) * t + cy) * t), start, end);
                 };
             }
         }
