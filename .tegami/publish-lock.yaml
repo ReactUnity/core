@@ -1,9 +1,6 @@
 core:changelogs:
-  - content: "---\npackages:\n  npm:@reactunity/renderer:\n    type: patch\n---\n\n### `flushSync` works again\n\n`flushSync` from `@reactunity/renderer` threw `TypeError: not a function` on every call. It called\nthe reconciler's `flushSync`, which react-reconciler 0.33 renamed to `flushSyncFromReconciler`, and\nthe reconciler's typings still declare the old name, so nothing caught it. It now commits the\nupdates its callback schedules before it returns, including on roots rendered with\n`disableBatchRendering`.\n"
-    filename: 2026-09-25-flushsync.md
-    v: 0.0.0
-  - content: "---\npackages:\n  upm:com.reactunity.core:\n    type: minor\n  npm:@reactunity/renderer:\n    type: minor\n---\n\n### `clip-path` can be cut with the stencil, and `shape-rendering` chooses when\n\nA `clip-path` rendered its element off screen and composited it back through the shape: an\nantialiased edge, a render target per element, and a camera render whenever anything inside changed.\nA plain rectangle -- `inset()`, `rect()` or `xywh()` without `round`, or a bare geometry box -- is now\ncut with the stencil instead, as `overflow: hidden` is, since an axis-aligned edge loses nothing.\n\nThe new, inherited `shape-rendering` property extends that: `optimizeSpeed` or `crispEdges` cuts rounded\nboxes, circles, ellipses and simple polygons with the stencil too, with an aliased edge.\n`geometricPrecision` keeps even a rectangle on the antialiased path.\n\n- An element that needs the render anyway (`filter`, `mix-blend-mode`, `mask-image`, `perspective`,\n  `isolation: isolate`), or that also has `overflow: hidden`, keeps its clip on the render.\n- A stencil clip does not isolate a descendant's `mix-blend-mode`; `isolation: isolate` restores that.\n- Hit testing follows the shape either way.\n"
-    filename: 2026-09-27-stencil-clip-path.md
+  - content: "---\npackages:\n  upm:com.reactunity.core:\n    type: patch\n  npm:@reactunity/renderer:\n    type: patch\n---\n\n### `new URL(path, base)` accepts a URL object as the base\n\n`URL` only took a string base, so passing a `URL` instance threw `no overload method matched for\nURL.constructor` on QuickJS and a missing-constructor error on ClearScript. Jint already accepted\nit. react-router 8.3.1 resolves every `navigate()` target against `history.createURL('/')`, so every\n`useNavigate` call failed on those two engines. A `URL` base now resolves the same way as its `href`.\n"
+    filename: 2026-11-02-url-object-base.md
     v: 0.0.0
 core:packages:
   - id: npm:@reactunity/monorepo
@@ -13,8 +10,7 @@ core:packages:
   - id: npm:@reactunity/material
     updated: true
   - changelogIds:
-      - 2026-09-25-flushsync.md
-      - 2026-09-27-stencil-clip-path.md
+      - 2026-11-02-url-object-base.md
     id: npm:@reactunity/renderer
     updated: true
   - id: npm:@reactunity/scripts
