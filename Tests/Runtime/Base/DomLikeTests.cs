@@ -55,5 +55,18 @@ namespace ReactUnity.Tests
             d5 = view.Data.GetValueOrDefault("d5");
             Assert.AreEqual(19, d5);
         }
+
+        [UGUITest]
+        public IEnumerator UrlAcceptsUrlObjectAsBase()
+        {
+            yield return null;
+
+            // What react-router 8.3.1 does on every navigate: resolve against history.createURL('/').
+            var href = Context.Script.Engine.Evaluate("new URL('/about?a=1#h', new URL('/', 'http://localhost')).href");
+            Assert.AreEqual("http://localhost/about?a=1#h", href?.ToString());
+
+            href = Context.Script.Engine.Evaluate("new URL('b', 'http://localhost/a/').href");
+            Assert.AreEqual("http://localhost/a/b", href?.ToString());
+        }
     }
 }
