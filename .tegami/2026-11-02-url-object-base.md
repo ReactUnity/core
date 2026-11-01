@@ -2,6 +2,8 @@
 packages:
   upm:com.reactunity.core:
     type: patch
+  npm:@reactunity/renderer:
+    type: patch
 ---
 
 ### `new URL(path, base)` accepts a URL object as the base
