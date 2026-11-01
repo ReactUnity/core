@@ -48,7 +48,7 @@ namespace ReactUnity.Scripting.DomProxies
         public URLSearchParams searchParams => _searchParams = _searchParams ?? new URLSearchParams(this);
 
 
-        public URL(string url) : this(url, null)
+        public URL(string url) : this(url, (string) null)
         {
         }
 
@@ -56,6 +56,11 @@ namespace ReactUnity.Scripting.DomProxies
         {
             this.baseUrl = baseUrl;
             SetHref(url);
+        }
+
+        // The web accepts a URL object as the base, and react-router 8.3.1 passes one on every navigate.
+        public URL(string url, URL baseUrl) : this(url, baseUrl?.href)
+        {
         }
 
         protected void SetHref(string url)
