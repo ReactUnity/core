@@ -129,6 +129,19 @@ describe('scanModule: top-level bindings', () => {
     assert.deepEqual(bindings('const a = b ? c : d, e = f;'), ['a', 'e']);
   });
 
+  it('collects the names a destructuring pattern binds', () => {
+    // Vite's HMR client, verbatim.
+    assert.deepEqual(bindings('const { HTMLElement = class {} } = globalThis;'), ['HTMLElement']);
+    assert.deepEqual(bindings('const { a, b: c, d = { e: 1 }, ...f } = x;'), ['a', 'c', 'd', 'f']);
+    assert.deepEqual(bindings("let { 'k': a, [k]: b, 2: c } = x;"), ['a', 'b', 'c']);
+    assert.deepEqual(bindings('const [a, , b = [1, 2], ...c] = x;'), ['a', 'b', 'c']);
+    assert.deepEqual(bindings('const { a: { b, c: [d] } } = x, e = 1;'), ['b', 'd', 'e']);
+  });
+
+  it('does not read a class body as a pattern', () => {
+    assert.deepEqual(bindings('export default class { a = 1; }'), []);
+  });
+
   it('does not collect what is declared inside a function', () => {
     assert.deepEqual(bindings('function f() { const URL = 1; }'), ['f']);
   });
@@ -221,6 +234,18 @@ describe('the module graph', () => {
     assert.equal(ns.value, 2);
   });
 
+  it("lets a module import its own namespace, as Vite's React refresh wrapper does", async () => {
+    const ns = await evaluate({
+      root: "export const a = 1;\nexport function keys() { return Object.keys(self).sort().join(); }\nimport * as self from 'root';",
+    });
+
+    assert.equal(ns.keys(), 'a,keys');
+  });
+
+  it('still rejects a self-import that names bindings', async () => {
+    await assert.rejects(evaluate({ root: "import { a } from 'root';\nexport const a = 1;" }), /Circular imports/);
+  });
+
   it('rejects, naming the path, when the graph has a cycle', async () => {
     await assert.rejects(
       evaluate({ root: "import 'a';", a: "import 'b';", b: "import 'a';" }),
@@ -287,6 +312,16 @@ describe('the globals prelude', () => {
   it('gives a module the host globals it mentions', async () => {
     const ns = await evaluate({ root: 'export const answer = UnityBridge.answer;' }, { hostGlobals: { UnityBridge: { answer: 42 } } });
     assert.equal(ns.answer, 42);
+  });
+
+  it('sees a global mentioned only inside a template substitution', async () => {
+    const ns = await evaluate({ root: 'export const seen = `/${UnityBridge.answer}`;' }, { hostGlobals: { UnityBridge: { answer: 42 } } });
+    assert.equal(ns.seen, '/42');
+  });
+
+  it('sees a global mentioned only inside a destructuring default', async () => {
+    const ns = await evaluate({ root: 'export const { seen = [UnityBridge.answer][0] } = {};' }, { hostGlobals: { UnityBridge: { answer: 42 } } });
+    assert.equal(ns.seen, 42);
   });
 
   it('shadows a global the host hid, rather than leaking the realm\'s own', async () => {

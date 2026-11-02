@@ -448,7 +448,10 @@ var UnityJSBPlugin = {
                     if (c === '`')
                         return at + 1;
                     if (c === '$' && source.charAt(at + 1) === '{') {
-                        at = skipBalanced(at + 1);
+                        // A substitution is code, and may be the only place a module names a host global.
+                        var end = skipBalanced(at + 1);
+                        mentionAll(at + 2, end - 1);
+                        at = end;
                         continue;
                     }
                     at++;
@@ -515,6 +518,40 @@ var UnityJSBPlugin = {
                 }
                 return len;
             }
+            /** Records the free names between `from` and `to`, for code a skip would otherwise hide. */
+            function mentionAll(from, to) {
+                var at = from;
+                var dot = false;
+                while (at < to) {
+                    var c = source.charAt(at);
+                    if (c === '/' && (source.charAt(at + 1) === '/' || source.charAt(at + 1) === '*')) {
+                        at = skipTrivia(at);
+                        continue;
+                    }
+                    if (c === '"' || c === '\'') {
+                        at = skipString(at);
+                        dot = false;
+                        continue;
+                    }
+                    if (c === '`') {
+                        at = skipTemplate(at);
+                        dot = false;
+                        continue;
+                    }
+                    if (isIdStart(c) || (c >= '0' && c <= '9')) {
+                        var start = at;
+                        while (at < to && (isIdPart(source.charAt(at)) || (c <= '9' && source.charAt(at) === '.')))
+                            at++;
+                        if (!dot && c > '9')
+                            mentions[source.substring(start, at)] = true;
+                        dot = false;
+                        continue;
+                    }
+                    if (c !== ' ' && c !== '\t' && c !== '\r' && c !== '\n')
+                        dot = c === '.';
+                    at++;
+                }
+            }
             function bind(name) {
                 if (name)
                     bindings[name] = true;
@@ -557,20 +594,31 @@ var UnityJSBPlugin = {
                 }
                 bind(entry);
             }
-            /** An `import ... from '...'` declaration, from just past the keyword. */
-            function readImport(at) {
+            /** An `import ... from '...'` declaration, from just past the keyword at `statement`. */
+            function readImport(at, statement) {
+                // `* as X` is told apart from every other clause, which a self-import needs.
+                var sawStar = false;
+                var namespace = null;
+                var other = false;
                 while (at < len) {
                     at = skipTrivia(at);
                     if (at >= len)
                         return at;
                     var c = source.charAt(at);
-                    if (c === '"' || c === '\'')
-                        return readSpecifier(at);
+                    if (c === '"' || c === '\'') {
+                        var end = readSpecifier(at);
+                        var edit = edits[edits.length - 1];
+                        edit.statement = statement;
+                        if (namespace && !other)
+                            edit.namespace = namespace;
+                        return end;
+                    }
                     if (c === ';')
                         return at + 1;
                     if (c === '{') {
                         var end = skipBalanced(at);
                         readClause(at + 1, end - 1);
+                        other = true;
                         at = end;
                         continue;
                     }
@@ -580,10 +628,17 @@ var UnityJSBPlugin = {
                             at++;
                         var word = source.substring(start, at);
                         // A default import, or the local name of `* as ns`; either way it binds.
-                        if (word !== 'from' && word !== 'as')
+                        if (word !== 'from' && word !== 'as') {
                             bind(word);
+                            if (sawStar)
+                                namespace = word;
+                            else
+                                other = true;
+                        }
                         continue;
                     }
+                    if (c === '*')
+                        sawStar = true;
                     at++;
                 }
                 return at;
@@ -620,6 +675,98 @@ var UnityJSBPlugin = {
                 }
                 return at;
             }
+            /** Past one pattern element's default value: to just after its comma, or to the close. */
+            function skipElement(at, close) {
+                while (at < close) {
+                    var c = source.charAt(at);
+                    if (c === ',')
+                        return at + 1;
+                    if (c === '/' && (source.charAt(at + 1) === '/' || source.charAt(at + 1) === '*')) {
+                        at = skipTrivia(at);
+                        continue;
+                    }
+                    if (c === '"' || c === '\'') {
+                        at = skipString(at);
+                        continue;
+                    }
+                    if (c === '`') {
+                        at = skipTemplate(at);
+                        continue;
+                    }
+                    if (c === '(' || c === '[' || c === '{') {
+                        var end = skipBalanced(at);
+                        mentionAll(at + 1, end - 1);
+                        at = end;
+                        continue;
+                    }
+                    if (isIdStart(c)) {
+                        // A default can name a host global, which the prelude still has to declare.
+                        var start = at;
+                        while (at < close && isIdPart(source.charAt(at)))
+                            at++;
+                        mentions[source.substring(start, at)] = true;
+                        continue;
+                    }
+                    at++;
+                }
+                return close;
+            }
+            /** The names a destructuring pattern at `at` binds, returning the index past it. */
+            function readPattern(at) {
+                var isObject = source.charAt(at) === '{';
+                var end = skipBalanced(at);
+                var close = end - 1;
+                at++;
+                while (at < close) {
+                    at = skipTrivia(at);
+                    if (at >= close)
+                        break;
+                    var c = source.charAt(at);
+                    if (c === ',') {
+                        at++;
+                        continue;
+                    }
+                    if (source.substring(at, at + 3) === '...') {
+                        at = skipTrivia(at + 3);
+                        c = source.charAt(at);
+                    }
+                    else if (isObject) {
+                        // The key. Only a bare one with no `: target` after it is itself the binding.
+                        var key = null;
+                        if (c === '[') {
+                            var keyEnd = skipBalanced(at);
+                            mentionAll(at + 1, keyEnd - 1);
+                            at = keyEnd;
+                        }
+                        else if (c === '"' || c === '\'')
+                            at = skipString(at);
+                        else {
+                            var start = at;
+                            while (at < close && isIdPart(source.charAt(at)))
+                                at++;
+                            key = source.substring(start, at);
+                        }
+                        at = skipTrivia(at);
+                        if (source.charAt(at) !== ':') {
+                            bind(key);
+                            at = skipElement(at, close);
+                            continue;
+                        }
+                        at = skipTrivia(at + 1);
+                        c = source.charAt(at);
+                    }
+                    if (c === '{' || c === '[')
+                        at = readPattern(at);
+                    else if (isIdStart(c)) {
+                        var start = at;
+                        while (at < close && isIdPart(source.charAt(at)))
+                            at++;
+                        bind(source.substring(start, at));
+                    }
+                    at = skipElement(at, close);
+                }
+                return end;
+            }
             while (i < len) {
                 var c = source.charAt(i);
                 if (c === ' ' || c === '\t' || c === '\r' || c === '\n') {
@@ -650,6 +797,14 @@ var UnityJSBPlugin = {
                 }
                 if (c === '`') {
                     i = skipTemplate(i);
+                    afterValue = true;
+                    afterDot = false;
+                    continue;
+                }
+                // Only after let/const: `class {` and `function` never open a pattern here.
+                if (depth === 0 && expectBinding && (declaring === 'let' || declaring === 'const') && (c === '{' || c === '[')) {
+                    i = readPattern(i);
+                    expectBinding = false;
                     afterValue = true;
                     afterDot = false;
                     continue;
@@ -706,7 +861,7 @@ var UnityJSBPlugin = {
                         if (after === '.')
                             continue;
                         if (depth === 0) {
-                            i = readImport(i);
+                            i = readImport(i, start);
                             declaring = null;
                             expectBinding = false;
                         }
@@ -724,9 +879,7 @@ var UnityJSBPlugin = {
                         continue;
                     }
                     if (depth === 0 && declaring && expectBinding) {
-                        // `{a: b}` - a key, not a binding. Patterns are not parsed further, so a
-                        // destructured top-level name is missed, and a prelude that collides with one is a
-                        // loud redeclaration error rather than a silent wrong answer.
+                        // A pattern was read whole above, so a `:` here is not one of its keys; keep the guard anyway.
                         if (source.charAt(skipTrivia(i)) !== ':')
                             bind(word);
                         expectBinding = false;
@@ -841,6 +994,9 @@ var UnityJSBPlugin = {
                     if (!resolved)
                         throw new Error('Could not resolve \'' + edit.specifier + '\' from \'' + record.name + '\'');
                     record.deps[edit.specifier] = resolved;
+                    // Vite's React refresh wrapper gives every module one; assemble() binds it to selfNamespace.
+                    if (resolved === record.name && edit.namespace)
+                        return;
                     // A blob url can only be minted for text that is already final, and a cycle's text
                     // is not: each side needs the other's url first. Reported here, where the path that
                     // closes the cycle is still known, rather than as a deadlocked import.
@@ -857,6 +1013,8 @@ var UnityJSBPlugin = {
                     return record.url;
                 var depUrls = {};
                 Object.keys(record.deps).forEach(function (specifier) {
+                    if (record.deps[specifier] === record.name)
+                        return;
                     depUrls[specifier] = urlFor(records[record.deps[specifier]]);
                 });
                 var url = context.createBlobUrl(assemble(record, depUrls));
@@ -869,6 +1027,15 @@ var UnityJSBPlugin = {
                 var parts = [];
                 var at = 0;
                 record.scan.edits.forEach(function (edit) {
+                    if (edit.specifier !== null && record.deps[edit.specifier] === record.name) {
+                        // A blob cannot name its own url, so the statement becomes a binding. Its newlines
+                        // are kept so no line below it moves.
+                        parts.push(source.substring(at, edit.statement));
+                        parts.push('var ' + edit.namespace + ' = ' + entryOf() + '.selfNamespace(' + JSON.stringify(record.name) + ');');
+                        parts.push(source.substring(edit.statement, edit.end).replace(/[^\n]/g, ''));
+                        at = edit.end;
+                        return;
+                    }
                     parts.push(source.substring(at, edit.start));
                     parts.push(edit.specifier === null
                         ? state.moduleImportHook
@@ -903,7 +1070,7 @@ var UnityJSBPlugin = {
                 // for it, which hoists over the whole module and would leave the initializer below
                 // reading a property of `undefined`. The registry key cannot be shadowed that way
                 // because it is never one of the names declared here.
-                var entry = state.moduleRegistryKey + '[' + context.id + ']';
+                var entry = entryOf();
                 var parts = [];
                 // `var`, not `const`: a module is free to declare `var URL` itself, and two `var`
                 // declarations of one name are legal where two lexical ones are a SyntaxError.
@@ -915,6 +1082,10 @@ var UnityJSBPlugin = {
                 parts.push('import.meta.url = ' + JSON.stringify(record.name) + ';');
                 parts.push('import.meta.main = false;');
                 return parts.join('');
+            }
+            /** The page-level object a generated module reaches this context through. */
+            function entryOf() {
+                return state.moduleRegistryKey + '[' + context.id + ']';
             }
             function release(record) {
                 if (!record)
@@ -980,6 +1151,24 @@ var UnityJSBPlugin = {
                         return code;
                     parts.push(code.substring(at));
                     return parts.join('');
+                },
+                /** Stands in for a module's own namespace, reading the real one once `import()` hands it
+                 *  over. That is after the module evaluates, so a read during evaluation sees it empty. */
+                selfNamespace: function (name) {
+                    var record = records[name];
+                    var namespace = null;
+                    if (record && record.url)
+                        context.importModule(record.url).then(function (ns) { namespace = ns; });
+                    return new Proxy({}, {
+                        get: function (_, key) { return namespace ? namespace[key] : undefined; },
+                        has: function (_, key) { return !!namespace && key in namespace; },
+                        ownKeys: function () { return namespace ? Object.keys(namespace) : []; },
+                        getOwnPropertyDescriptor: function (_, key) {
+                            if (!namespace || typeof key !== 'string' || !(key in namespace))
+                                return undefined;
+                            return { value: namespace[key], writable: true, enumerable: true, configurable: true };
+                        },
+                    });
                 },
                 free: function () {
                     urls.forEach(function (url) { context.revokeBlobUrl(url); });
@@ -1225,7 +1414,7 @@ var UnityJSBPlugin = {
             },
         };
         context.modules = unityJsbState.createModuleRegistry(context);
-        pageRegistry[id] = { globals: globals, dynamicImport: context.modules.dynamicImport };
+        pageRegistry[id] = { globals: globals, dynamicImport: context.modules.dynamicImport, selfNamespace: context.modules.selfNamespace };
         // A script's dynamic imports are rewritten to call this; a module's prelude declares its
         // own, bound to that module's url so a relative specifier resolves against it. A script has
         // no url, and an empty referrer is what sends the host to ReactUnity's own path resolution.
@@ -1833,7 +2022,8 @@ var UnityJSBPlugin = {
     // #region Low level Set
     js_strndup: function (ctx, s, n) {
         var buffer = _malloc(n + 1);
-        _memcpy(buffer, s, n);
+        // Not _memcpy: Unity's Emscripten does not hand it to library code, so it was a ReferenceError.
+        HEAPU8.copyWithin(buffer, s, s + n);
         HEAPU8[buffer + n] = 0;
         return buffer;
     },
