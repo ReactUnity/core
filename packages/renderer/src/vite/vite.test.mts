@@ -5,9 +5,12 @@
 // Node strips the types itself, so there is no build step and no test runner to install.
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
+import http from 'node:http';
+import type { AddressInfo } from 'node:net';
 import os from 'node:os';
 import path from 'node:path';
 import { test } from 'node:test';
+import zlib from 'node:zlib';
 import type { ConfigEnv, Plugin, UserConfig } from 'vite';
 import { cleanOutDir, removeOrphanMetaFiles, unsafeOutDirReason } from './clean.ts';
 import { reactUnity } from './index.ts';
@@ -135,65 +138,121 @@ test('a bare tailwindcss import is aliased, and only the bare one', () => {
   assert.equal(configOf({ tailwind: false })?.resolve, undefined);
 });
 
-/** The previewer plugin, resolved against `publicDir` and wired to a fake dev server. */
-function previewerServer(publicDir: string) {
-  const plugin = reactUnity({ react: false }).find((p) => p && 'name' in p && p.name === 'reactunity:previewer') as Plugin;
-  (plugin.configResolved as (c: unknown) => void)({ base: '/', publicDir });
-
-  const middlewares: ((req: { url: string }, res: unknown, next: () => void) => void)[] = [];
-  const server = { middlewares: { use: (fn: (typeof middlewares)[0]) => middlewares.push(fn) }, printUrls: () => {} };
-  (plugin.configureServer as (s: unknown) => void)(server);
-
-  const request = (url: string) => {
-    const req = { url };
-    const res = { statusCode: 200, headers: {} as Record<string, string>, body: undefined as string | undefined, next: false, req };
-    const reply = {
-      set statusCode(v: number) {
-        res.statusCode = v;
-      },
-      setHeader: (k: string, v: string) => {
-        res.headers[k] = v;
-      },
-      end: (b?: string) => {
-        res.body = b;
-      },
-    };
-    for (const fn of middlewares)
-      fn(req, reply, () => {
-        res.next = true;
-      });
-    return res;
-  };
-
-  return { plugin, middlewares, request };
+/** A Vite root with the given files in it. */
+function viteRoot(files: Record<string, string> = {}) {
+  const root = fs.mkdtempSync(path.join(os.tmpdir(), 'reactunity-vite-'));
+  for (const [name, content] of Object.entries(files)) {
+    fs.mkdirSync(path.dirname(path.join(root, name)), { recursive: true });
+    fs.writeFileSync(path.join(root, name), content);
+  }
+  return root;
 }
 
-test('the dev server serves the previewer, which loads the app from /index.js', () => {
-  const { request } = previewerServer(fs.mkdtempSync(path.join(os.tmpdir(), 'reactunity-vite-')));
+type Middleware = (req: http.IncomingMessage, res: http.ServerResponse, next: () => void) => void;
 
-  const page = request('/previewer/');
-  assert.match(page.headers['Content-Type'], /text\/html/);
-  assert.match(page.body as string, /reactunity\.github\.io\/Unity\/previewer\/\d+\.\d+\.\d+\/Build\//);
+/** The previewer plugin resolved against `root`, its middleware on a real server; `next` answers 599. */
+async function previewerServer(root: string, previewer?: boolean | string) {
+  const plugin = reactUnity({ react: false, previewer }).find((p) => p && 'name' in p && p.name === 'reactunity:previewer') as Plugin;
+  (plugin.configResolved as (c: unknown) => void)({ base: '/', root });
 
-  assert.equal(request('/previewer').headers.Location, '/previewer/');
-  assert.ok(request('/src/index.tsx').next, 'everything else passes through');
+  const middlewares: Middleware[] = [];
+  const warnings: string[] = [];
+  const server = {
+    config: { logger: { warn: (message: string) => warnings.push(message), info: () => {} } },
+    middlewares: { use: (fn: Middleware) => middlewares.push(fn) },
+    printUrls: () => {},
+  };
+  (plugin.configureServer as (s: unknown) => void)(server);
+
+  const http_ = http.createServer((req, res) =>
+    middlewares[0](req, res, () => {
+      res.statusCode = 599;
+      res.end();
+    }),
+  );
+  await new Promise<void>((resolve) => http_.listen(0, '127.0.0.1', resolve));
+  const { port } = http_.address() as AddressInfo;
+
+  const request = (url: string) => fetch(`http://127.0.0.1:${port}${url}`, { redirect: 'manual' });
+  const close = () => new Promise((resolve) => http_.close(resolve));
+
+  return { plugin, request, close, warnings };
+}
+
+test('the dev server serves the hosted previewer, which loads the app from /index.js', async () => {
+  const { request, close } = await previewerServer(viteRoot());
+  try {
+    const page = await request('/previewer/');
+    assert.match(page.headers.get('content-type') as string, /text\/html/);
+    assert.match(await page.text(), /reactunity\.github\.io\/Unity\/previewer\/\d+\.\d+\.\d+\/Build\//);
+
+    assert.equal((await request('/previewer')).headers.get('location'), '/previewer/');
+    assert.equal((await request('/src/index.tsx')).status, 599, 'everything else passes through');
+  } finally {
+    await close();
+  }
 });
 
-test("a project's own public/previewer replaces the hosted one", () => {
-  const publicDir = fs.mkdtempSync(path.join(os.tmpdir(), 'reactunity-vite-'));
-  fs.mkdirSync(path.join(publicDir, 'previewer'));
-  fs.writeFileSync(path.join(publicDir, 'previewer', 'index.html'), '<canvas>');
+test('a previewer/ folder beside the app replaces the hosted one, and stays out of public/', async () => {
+  const root = viteRoot();
+  const { request, close } = await previewerServer(root);
+  try {
+    assert.match(await (await request('/previewer/')).text(), /reactunity\.github\.io/);
 
-  const { request } = previewerServer(publicDir);
-  // Pointed at the file, because Vite serves a public file but answers its folder with the app.
-  const page = request('/previewer/');
-  assert.ok(page.next);
-  assert.equal(page.body, undefined);
-  assert.equal(page.req.url, '/previewer/index.html');
+    // Picked up without a restart.
+    fs.mkdirSync(path.join(root, 'previewer', 'Build'), { recursive: true });
+    fs.writeFileSync(path.join(root, 'previewer', 'index.html'), '<canvas>');
+    fs.writeFileSync(path.join(root, 'previewer', 'Build', 'Previewer.wasm'), 'wasm');
+
+    assert.equal(await (await request('/previewer/')).text(), '<canvas>');
+    const wasm = await request('/previewer/Build/Previewer.wasm');
+    assert.equal(wasm.headers.get('content-type'), 'application/wasm');
+    assert.equal(await wasm.text(), 'wasm');
+
+    // A missing file is a 404, not the app; and nothing outside the folder is reachable.
+    assert.equal((await request('/previewer/Build/missing.js')).status, 404);
+    assert.equal((await request('/previewer/..%2Fpackage.json')).status, 404);
+  } finally {
+    await close();
+  }
 });
 
-test('the root sends a browser to the previewer, and leaves Unity where it is', () => {
-  const { plugin } = previewerServer(fs.mkdtempSync(path.join(os.tmpdir(), 'reactunity-vite-')));
+test('the previewer option names another folder', async () => {
+  const root = viteRoot({ 'unity/web/index.html': '<custom>', 'previewer/index.html': '<default>' });
+  const { request, close, warnings } = await previewerServer(root, 'unity/web');
+  try {
+    assert.equal(await (await request('/previewer/')).text(), '<custom>');
+    assert.deepEqual(warnings, []);
+  } finally {
+    await close();
+  }
+
+  const missing = await previewerServer(root, 'nowhere');
+  try {
+    assert.match(missing.warnings[0], /no index\.html in the previewer folder/);
+    assert.match(await (await missing.request('/previewer/')).text(), /reactunity\.github\.io/);
+  } finally {
+    await missing.close();
+  }
+});
+
+test('a Unity build compressed without its fallback is sent with its encoding', async () => {
+  const root = viteRoot({ 'previewer/index.html': '<canvas>', 'previewer/Build/Previewer.framework.js.gz': '' });
+  fs.writeFileSync(path.join(root, 'previewer', 'Build', 'Previewer.framework.js.gz'), zlib.gzipSync('framework()'));
+  const { request, close } = await previewerServer(root);
+  try {
+    const framework = await request('/previewer/Build/Previewer.framework.js.gz');
+    assert.equal(framework.headers.get('content-encoding'), 'gzip');
+    assert.match(framework.headers.get('content-type') as string, /text\/javascript/);
+    assert.equal(await framework.text(), 'framework()');
+  } finally {
+    await close();
+  }
+});
+
+test('the root sends a browser to the previewer, and leaves Unity where it is', async () => {
+  const { plugin, close } = await previewerServer(viteRoot());
+  await close();
   const [tag] = (plugin.transformIndexHtml as unknown as () => { children: string; injectTo: string }[])();
   assert.equal(tag.injectTo, 'head-prepend');
 

@@ -1,4 +1,5 @@
 import fs from 'node:fs';
+import type { ServerResponse } from 'node:http';
 import path from 'node:path';
 import react from '@vitejs/plugin-react';
 import type { Plugin, PluginOption, UserConfig } from 'vite';
@@ -44,11 +45,12 @@ export interface ReactUnityOptions {
   tailwind?: boolean;
 
   /**
-   * Serve the previewer -- a hosted Unity WebGL player running this app -- at `previewer/` on the
-   * dev server, and send a browser that opens the root there. Default `true`. A project's own
-   * `public/previewer/index.html` is served in its place.
+   * Serve the previewer -- a Unity WebGL player running this app -- at `previewer/` on the dev
+   * server, and send a browser that opens the root there. Default `true`, which uses the hosted
+   * player unless a `previewer/index.html` of your own sits next to the Vite root. A string names
+   * that folder instead, relative to the root; `false` turns the previewer off.
    */
-  previewer?: boolean;
+  previewer?: boolean | string;
 }
 
 const TAILWIND_ENTRY = '@reactunity/renderer/tailwind.css';
@@ -69,13 +71,43 @@ export function reactUnity(options: ReactUnityOptions = {}): PluginOption[] {
     reactOptions === false ? null : react(reactOptions),
     reactUnityConfig(options),
     reactUnityClean(options),
-    options.previewer === false ? null : reactUnityPreviewer(),
+    options.previewer === false ? null : reactUnityPreviewer(options.previewer),
   ];
 }
 
-function reactUnityPreviewer(): Plugin {
+const PREVIEWER_CONTENT_TYPES: Record<string, string> = {
+  '.html': 'text/html; charset=utf-8',
+  '.js': 'text/javascript; charset=utf-8',
+  '.css': 'text/css; charset=utf-8',
+  '.json': 'application/json',
+  '.wasm': 'application/wasm',
+  '.png': 'image/png',
+  '.ico': 'image/x-icon',
+};
+
+/** Sends a file from a WebGL build, or a 404 -- never the app, which Vite would answer with. */
+function sendPreviewerFile(dir: string, relative: string, res: ServerResponse) {
+  let file = path.resolve(dir, decodeURIComponent(relative));
+  if (file !== dir && !file.startsWith(dir + path.sep)) file = '';
+  else if (fs.existsSync(file) && fs.statSync(file).isDirectory()) file = path.join(file, 'index.html');
+
+  if (!file || !fs.existsSync(file)) {
+    res.statusCode = 404;
+    res.end();
+    return;
+  }
+
+  // A Unity build compressed without its decompression fallback needs the header said for it.
+  const encoding = file.endsWith('.gz') ? 'gzip' : file.endsWith('.br') ? 'br' : undefined;
+  const name = encoding ? file.slice(0, file.lastIndexOf('.')) : file;
+  if (encoding) res.setHeader('Content-Encoding', encoding);
+  res.setHeader('Content-Type', PREVIEWER_CONTENT_TYPES[path.extname(name)] ?? 'application/octet-stream');
+  fs.createReadStream(file).pipe(res);
+}
+
+function reactUnityPreviewer(folder: true | string | undefined): Plugin {
   let base = '/';
-  let custom = false;
+  let dir = '';
 
   return {
     name: 'reactunity:previewer',
@@ -83,28 +115,34 @@ function reactUnityPreviewer(): Plugin {
 
     configResolved(config) {
       base = config.base;
-      // The way a `previewer/` folder replaced the hosted one under react-unity-scripts.
-      custom = !!config.publicDir && fs.existsSync(path.join(config.publicDir, PREVIEWER_PATH, 'index.html'));
+      // Beside the app rather than in public/, which a build would copy into the Unity project.
+      dir = path.resolve(config.root, typeof folder === 'string' ? folder : 'previewer');
     },
 
     configureServer(server) {
       const page = base + PREVIEWER_PATH;
+      // Looked up per request, so a build dropped in while the server runs is picked up.
+      const custom = () => fs.existsSync(path.join(dir, 'index.html'));
+
+      if (typeof folder === 'string' && !custom()) {
+        server.config.logger.warn(`[reactunity] no index.html in the previewer folder ${dir}, so the hosted previewer is served.`);
+      }
 
       server.middlewares.use((req, res, next) => {
-        const url = req.url?.split('?')[0];
+        const url = req.url?.split('?')[0] ?? '';
         if (url === page.slice(0, -1)) {
           res.statusCode = 302;
           res.setHeader('Location', page);
           res.end();
-        } else if (url !== page && url !== `${page}index.html`) {
+        } else if (!url.startsWith(page)) {
           next();
-        } else if (custom) {
-          // Vite serves a public file but not a folder's index, and would answer the folder with the app.
-          req.url = `${page}index.html`;
-          next();
-        } else {
+        } else if (custom()) {
+          sendPreviewerFile(dir, url.slice(page.length), res);
+        } else if (url === page || url === `${page}index.html`) {
           res.setHeader('Content-Type', 'text/html; charset=utf-8');
           res.end(previewerHtml());
+        } else {
+          next();
         }
       });
 

@@ -53,9 +53,10 @@ export function previewerHtml(): string {
       </p>
       <p>
         To work offline, or to preview your own Unity scene instead, build a scene with a
-        <code>ReactRendererUGUI</code> whose source is the URL <code>/index.js</code>, and put the
-        output in <code>public/previewer</code>, so that <code>public/previewer/index.html</code> exists.
-        The dev server serves that in place of this page.
+        <code>ReactRendererUGUI</code> whose source is the URL <code>/index.js</code> for WebGL, and
+        put the output in a <code>previewer</code> folder next to your Vite config, so that
+        <code>previewer/index.html</code> exists. The dev server serves that in place of this page.
+        The preset's <code>previewer</code> option can name a different folder.
       </p>
     </div>
   </div>
