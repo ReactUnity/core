@@ -134,3 +134,72 @@ test('a bare tailwindcss import is aliased, and only the bare one', () => {
 
   assert.equal(configOf({ tailwind: false })?.resolve, undefined);
 });
+
+/** The previewer plugin, resolved against `publicDir` and wired to a fake dev server. */
+function previewerServer(publicDir: string) {
+  const plugin = reactUnity({ react: false }).find((p) => p && 'name' in p && p.name === 'reactunity:previewer') as Plugin;
+  (plugin.configResolved as (c: unknown) => void)({ base: '/', publicDir });
+
+  const middlewares: ((req: { url: string }, res: unknown, next: () => void) => void)[] = [];
+  const server = { middlewares: { use: (fn: (typeof middlewares)[0]) => middlewares.push(fn) }, printUrls: () => {} };
+  (plugin.configureServer as (s: unknown) => void)(server);
+
+  const request = (url: string) => {
+    const res = { statusCode: 200, headers: {} as Record<string, string>, body: undefined as string | undefined, next: false };
+    const reply = {
+      set statusCode(v: number) {
+        res.statusCode = v;
+      },
+      setHeader: (k: string, v: string) => {
+        res.headers[k] = v;
+      },
+      end: (b?: string) => {
+        res.body = b;
+      },
+    };
+    for (const fn of middlewares)
+      fn({ url }, reply, () => {
+        res.next = true;
+      });
+    return res;
+  };
+
+  return { plugin, middlewares, request };
+}
+
+test('the dev server serves the previewer, which loads the app from /index.js', () => {
+  const { request } = previewerServer(fs.mkdtempSync(path.join(os.tmpdir(), 'reactunity-vite-')));
+
+  const page = request('/previewer/');
+  assert.match(page.headers['Content-Type'], /text\/html/);
+  assert.match(page.body as string, /reactunity\.github\.io\/Unity\/previewer\/\d+\.\d+\.\d+\/Build\//);
+
+  assert.equal(request('/previewer').headers.Location, '/previewer/');
+  assert.ok(request('/src/index.tsx').next, 'everything else passes through');
+});
+
+test("a project's own public/previewer replaces the hosted one", () => {
+  const publicDir = fs.mkdtempSync(path.join(os.tmpdir(), 'reactunity-vite-'));
+  fs.mkdirSync(path.join(publicDir, 'previewer'));
+  fs.writeFileSync(path.join(publicDir, 'previewer', 'index.html'), '<canvas>');
+
+  assert.equal(previewerServer(publicDir).middlewares.length, 0);
+});
+
+test('the root sends a browser to the previewer, and leaves Unity where it is', () => {
+  const { plugin } = previewerServer(fs.mkdtempSync(path.join(os.tmpdir(), 'reactunity-vite-')));
+  const [tag] = (plugin.transformIndexHtml as unknown as () => { children: string; injectTo: string }[])();
+  assert.equal(tag.injectTo, 'head-prepend');
+
+  const run = (globals: object | undefined) => {
+    const replaced: string[] = [];
+    const location = { replace: (url: string) => replaced.push(url) };
+    // Unity installs Globals; a browser has none.
+    if (globals) new Function('location', 'Globals', tag.children)(location, globals);
+    else new Function('location', tag.children)(location);
+    return replaced;
+  };
+
+  assert.deepEqual(run(undefined), ['/previewer/']);
+  assert.deepEqual(run({}), []);
+});

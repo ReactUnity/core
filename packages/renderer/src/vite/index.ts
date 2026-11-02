@@ -1,7 +1,9 @@
+import fs from 'node:fs';
 import path from 'node:path';
 import react from '@vitejs/plugin-react';
 import type { Plugin, PluginOption, UserConfig } from 'vite';
 import { cleanOutDir, removeOrphanMetaFiles, unsafeOutDirReason } from './clean.ts';
+import { PREVIEWER_PATH, previewerHtml, previewerRedirect } from './previewer.ts';
 import { findUnityProject } from './unity-project.ts';
 
 type ReactOptions = Parameters<typeof react>[0];
@@ -40,6 +42,13 @@ export interface ReactUnityOptions {
    * the rest keep resolving to the package, which is where that entry gets them from.
    */
   tailwind?: boolean;
+
+  /**
+   * Serve the previewer -- a hosted Unity WebGL player running this app -- at `previewer/` on the
+   * dev server, and send a browser that opens the root there. Default `true`. A project's own
+   * `public/previewer/index.html` is served in its place.
+   */
+  previewer?: boolean;
 }
 
 const TAILWIND_ENTRY = '@reactunity/renderer/tailwind.css';
@@ -56,7 +65,57 @@ const TAILWIND_ENTRY = '@reactunity/renderer/tailwind.css';
 export function reactUnity(options: ReactUnityOptions = {}): PluginOption[] {
   const reactOptions = options.react ?? {};
 
-  return [reactOptions === false ? null : react(reactOptions), reactUnityConfig(options), reactUnityClean(options)];
+  return [
+    reactOptions === false ? null : react(reactOptions),
+    reactUnityConfig(options),
+    reactUnityClean(options),
+    options.previewer === false ? null : reactUnityPreviewer(),
+  ];
+}
+
+function reactUnityPreviewer(): Plugin {
+  let base = '/';
+  let custom = false;
+
+  return {
+    name: 'reactunity:previewer',
+    apply: 'serve',
+
+    configResolved(config) {
+      base = config.base;
+      // The way a `previewer/` folder replaced the hosted one under react-unity-scripts.
+      custom = !!config.publicDir && fs.existsSync(path.join(config.publicDir, PREVIEWER_PATH, 'index.html'));
+    },
+
+    configureServer(server) {
+      const page = base + PREVIEWER_PATH;
+
+      if (!custom) {
+        server.middlewares.use((req, res, next) => {
+          const url = req.url?.split('?')[0];
+          if (url === page.slice(0, -1)) {
+            res.statusCode = 302;
+            res.setHeader('Location', page);
+            res.end();
+          } else if (url === page || url === `${page}index.html`) {
+            res.setHeader('Content-Type', 'text/html; charset=utf-8');
+            res.end(previewerHtml());
+          } else next();
+        });
+      }
+
+      const printUrls = server.printUrls;
+      server.printUrls = () => {
+        printUrls();
+        for (const url of server.resolvedUrls?.local ?? [])
+          server.config.logger.info(`  ➜  Previewer: ${new URL(PREVIEWER_PATH, url).href}`);
+      };
+    },
+
+    transformIndexHtml() {
+      return [{ tag: 'script', children: previewerRedirect(base), injectTo: 'head-prepend' }];
+    },
+  };
 }
 
 // Lightning CSS's `Features`. The package is Vite's dependency rather than ours, so the flags are
