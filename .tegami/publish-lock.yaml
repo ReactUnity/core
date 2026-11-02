@@ -1,6 +1,6 @@
 core:changelogs:
-  - content: "---\npackages:\n  npm:@reactunity/renderer:\n    type: minor\n  npm:@reactunity/scripts:\n    type: patch\n---\n\n### The Vite preset has a previewer\n\n`reactUnity()` from `@reactunity/renderer/vite` now serves the previewer at `/previewer/` on the dev\nserver. The previewer is a hosted Unity WebGL player that runs your app in the browser, with no\nEditor open, and Vite's hot reload applies edits to it as you save. The dev server prints its address\nnext to `Local:`. Opening the dev server's root in a browser now redirects there, instead of failing\nwith `Globals is not defined`.\n\nA WebGL build of your own scene in `public/previewer/` is served in its place. Pass\n`previewer: false` to turn the page off.\n\nThe previewer build is new in this release, and the `react-unity-scripts` dev server loads it too.\n"
-    filename: 2026-11-02-vite-previewer.md
+  - content: "---\npackages:\n  npm:@reactunity/renderer:\n    type: patch\n---\n\n### A custom Vite previewer lives in `previewer/`, not `public/previewer/`\n\nThe Vite preset now looks for your own previewer in a `previewer` folder next to your Vite config,\ninstead of in `public/previewer`. Vite copies `public/` into the build, and this preset builds into\nthe Unity project, so a previewer kept there landed in `Assets/Resources/react` on every\n`vite build`. It is now the same folder `react-unity-scripts` reads. Move the folder out of `public/`\nif you already set one up.\n\nThe `previewer` option also takes a folder path, relative to the Vite root, when the build lives\nsomewhere else:\n\n```ts\nreactUnity({ previewer: '../Builds/Previewer' })\n```\n\nThe folder is checked on each request, so a build copied in while the dev server runs is picked up\nwithout a restart. If the folder you name has no `index.html`, the dev server warns at startup and\nfalls back to the hosted previewer. Builds compressed with Gzip or Brotli now load even with\nUnity's decompression fallback off, because the dev server sends the `Content-Encoding` header they\nneed.\n"
+    filename: 2026-11-02-previewer-folder.md
     v: 0.0.0
 core:packages:
   - id: npm:@reactunity/monorepo
@@ -10,12 +10,10 @@ core:packages:
   - id: npm:@reactunity/material
     updated: true
   - changelogIds:
-      - 2026-11-02-vite-previewer.md
+      - 2026-11-02-previewer-folder.md
     id: npm:@reactunity/renderer
     updated: true
-  - changelogIds:
-      - 2026-11-02-vite-previewer.md
-    id: npm:@reactunity/scripts
+  - id: npm:@reactunity/scripts
     updated: true
 npm:packages:
   - id: npm:@reactunity/monorepo
