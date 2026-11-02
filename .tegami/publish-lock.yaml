@@ -1,6 +1,6 @@
 core:changelogs:
-  - content: "---\npackages:\n  upm:com.reactunity.core:\n    type: patch\n  npm:@reactunity/renderer:\n    type: patch\n---\n\n### `new URL(path, base)` accepts a URL object as the base\n\n`URL` only took a string base, so passing a `URL` instance threw `no overload method matched for\nURL.constructor` on QuickJS and a missing-constructor error on ClearScript. Jint already accepted\nit. react-router 8.3.1 resolves every `navigate()` target against `history.createURL('/')`, so every\n`useNavigate` call failed on those two engines. A `URL` base now resolves the same way as its `href`.\n"
-    filename: 2026-11-02-url-object-base.md
+  - content: "---\npackages:\n  npm:@reactunity/renderer:\n    type: minor\n  npm:@reactunity/scripts:\n    type: patch\n---\n\n### The Vite preset has a previewer\n\n`reactUnity()` from `@reactunity/renderer/vite` now serves the previewer at `/previewer/` on the dev\nserver. The previewer is a hosted Unity WebGL player that runs your app in the browser, with no\nEditor open, and Vite's hot reload applies edits to it as you save. The dev server prints its address\nnext to `Local:`. Opening the dev server's root in a browser now redirects there, instead of failing\nwith `Globals is not defined`.\n\nA WebGL build of your own scene in `public/previewer/` is served in its place. Pass\n`previewer: false` to turn the page off.\n\nThe previewer build is new in this release, and the `react-unity-scripts` dev server loads it too.\n"
+    filename: 2026-11-02-vite-previewer.md
     v: 0.0.0
 core:packages:
   - id: npm:@reactunity/monorepo
@@ -10,10 +10,12 @@ core:packages:
   - id: npm:@reactunity/material
     updated: true
   - changelogIds:
-      - 2026-11-02-url-object-base.md
+      - 2026-11-02-vite-previewer.md
     id: npm:@reactunity/renderer
     updated: true
-  - id: npm:@reactunity/scripts
+  - changelogIds:
+      - 2026-11-02-vite-previewer.md
+    id: npm:@reactunity/scripts
     updated: true
 npm:packages:
   - id: npm:@reactunity/monorepo

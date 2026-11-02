@@ -1,3 +1,47 @@
+## 0.27.0
+
+### CSS hot updates work with Vite 8.3
+
+`com.reactunity.core`, `com.reactunity.quickjs`
+
+Vite 8.3 skips an unchanged stylesheet by reading `style.textContent` before it writes it, and the
+`<style>` proxy only had a setter. Every CSS hot update failed with `property getter is null` on
+QuickJS and a missing getter on ClearScript, and on Jint the stylesheet was rewritten every time.
+`textContent` and `styleSheet.cssText` now read back the stylesheet text.
+
+On QuickJS, reading any set-only C# property also threw `property getter is null`. It now reads as
+`undefined`, the way a JavaScript accessor without a getter does.
+
+### The Vite preset has a previewer
+
+`@reactunity/renderer`, `@reactunity/scripts`
+
+`reactUnity()` from `@reactunity/renderer/vite` now serves the previewer at `/previewer/` on the dev
+server. The previewer is a hosted Unity WebGL player that runs your app in the browser, with no
+Editor open, and Vite's hot reload applies edits to it as you save. The dev server prints its address
+next to `Local:`. Opening the dev server's root in a browser now redirects there, instead of failing
+with `Globals is not defined`.
+
+A WebGL build of your own scene in `public/previewer/` is served in its place. Pass
+`previewer: false` to turn the page off.
+
+The previewer build is new in this release, and the `react-unity-scripts` dev server loads it too.
+
+### ES modules load on WebGL
+
+`com.reactunity.quickjs`
+
+On WebGL, every `import` failed with an empty `failed to load module graph:` error. The module name
+normalizer called an Emscripten `_memcpy` that Unity's WebGL toolchain does not expose to plugin
+code. With that fixed, three more things a Vite dev server sends now work:
+
+- A top-level name bound by destructuring, such as Vite's `const { HTMLElement = class {} } = globalThis`,
+  is no longer declared a second time as a host global.
+- A host global used only inside a template substitution or a destructuring default is now available
+  to the module.
+- A module can import its own namespace, which Vite 8's React refresh adds to every module. Other
+  circular imports are still refused on WebGL.
+
 ## 0.26.1
 
 ### `new URL(path, base)` accepts a URL object as the base
