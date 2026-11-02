@@ -1,6 +1,7 @@
 using System.Collections;
 using NUnit.Framework;
 using ReactUnity.Scripting;
+using UnityEngine;
 
 namespace ReactUnity.Tests
 {
@@ -67,6 +68,39 @@ namespace ReactUnity.Tests
 
             href = Context.Script.Engine.Evaluate("new URL('b', 'http://localhost/a/').href");
             Assert.AreEqual("http://localhost/a/b", href?.ToString());
+        }
+
+        [UGUITest]
+        public IEnumerator StyleTextContentCanBeReadBack()
+        {
+            yield return null;
+
+            // Vite 8.3's updateStyle on every CSS hot update.
+            var text = Context.Script.Engine.Evaluate(@"(function () {
+                var style = document.createElement('style');
+                style.textContent = 'view { color: red; }';
+                document.head.appendChild(style);
+                var content = 'view { color: blue; }';
+                if (style.textContent !== content) style.textContent = content;
+                return style.textContent;
+            })()");
+            Assert.AreEqual("view { color: blue; }", text?.ToString());
+
+            yield return null;
+            Assert.AreEqual(Color.blue, Q("view").ComputedStyle.color);
+        }
+
+        [UGUITest]
+        public IEnumerator SetOnlyPropertyReadsAsUndefined()
+        {
+            yield return null;
+
+            // ClearScript's own host binder throws "property get method is unavailable" here.
+            if (EngineType == JavascriptEngineType.ClearScript) yield break;
+
+            Context.Script.Engine.SetGlobal("setOnlyTarget", Host.Layout);
+            var type = Context.Script.Engine.Evaluate("typeof setOnlyTarget.Flex");
+            Assert.AreEqual("undefined", type?.ToString());
         }
     }
 }
