@@ -90,19 +90,23 @@ function reactUnityPreviewer(): Plugin {
     configureServer(server) {
       const page = base + PREVIEWER_PATH;
 
-      if (!custom) {
-        server.middlewares.use((req, res, next) => {
-          const url = req.url?.split('?')[0];
-          if (url === page.slice(0, -1)) {
-            res.statusCode = 302;
-            res.setHeader('Location', page);
-            res.end();
-          } else if (url === page || url === `${page}index.html`) {
-            res.setHeader('Content-Type', 'text/html; charset=utf-8');
-            res.end(previewerHtml());
-          } else next();
-        });
-      }
+      server.middlewares.use((req, res, next) => {
+        const url = req.url?.split('?')[0];
+        if (url === page.slice(0, -1)) {
+          res.statusCode = 302;
+          res.setHeader('Location', page);
+          res.end();
+        } else if (url !== page && url !== `${page}index.html`) {
+          next();
+        } else if (custom) {
+          // Vite serves a public file but not a folder's index, and would answer the folder with the app.
+          req.url = `${page}index.html`;
+          next();
+        } else {
+          res.setHeader('Content-Type', 'text/html; charset=utf-8');
+          res.end(previewerHtml());
+        }
+      });
 
       const printUrls = server.printUrls;
       server.printUrls = () => {

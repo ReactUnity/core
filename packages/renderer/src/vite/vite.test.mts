@@ -145,7 +145,8 @@ function previewerServer(publicDir: string) {
   (plugin.configureServer as (s: unknown) => void)(server);
 
   const request = (url: string) => {
-    const res = { statusCode: 200, headers: {} as Record<string, string>, body: undefined as string | undefined, next: false };
+    const req = { url };
+    const res = { statusCode: 200, headers: {} as Record<string, string>, body: undefined as string | undefined, next: false, req };
     const reply = {
       set statusCode(v: number) {
         res.statusCode = v;
@@ -158,7 +159,7 @@ function previewerServer(publicDir: string) {
       },
     };
     for (const fn of middlewares)
-      fn({ url }, reply, () => {
+      fn(req, reply, () => {
         res.next = true;
       });
     return res;
@@ -183,7 +184,12 @@ test("a project's own public/previewer replaces the hosted one", () => {
   fs.mkdirSync(path.join(publicDir, 'previewer'));
   fs.writeFileSync(path.join(publicDir, 'previewer', 'index.html'), '<canvas>');
 
-  assert.equal(previewerServer(publicDir).middlewares.length, 0);
+  const { request } = previewerServer(publicDir);
+  // Pointed at the file, because Vite serves a public file but answers its folder with the app.
+  const page = request('/previewer/');
+  assert.ok(page.next);
+  assert.equal(page.body, undefined);
+  assert.equal(page.req.url, '/previewer/index.html');
 });
 
 test('the root sends a browser to the previewer, and leaves Unity where it is', () => {
@@ -191,9 +197,9 @@ test('the root sends a browser to the previewer, and leaves Unity where it is', 
   const [tag] = (plugin.transformIndexHtml as unknown as () => { children: string; injectTo: string }[])();
   assert.equal(tag.injectTo, 'head-prepend');
 
-  const run = (globals: object | undefined) => {
+  const run = (globals: object | undefined, pathname = '/') => {
     const replaced: string[] = [];
-    const location = { replace: (url: string) => replaced.push(url) };
+    const location = { pathname, replace: (url: string) => replaced.push(url) };
     // Unity installs Globals; a browser has none.
     if (globals) new Function('location', 'Globals', tag.children)(location, globals);
     else new Function('location', tag.children)(location);
@@ -202,4 +208,6 @@ test('the root sends a browser to the previewer, and leaves Unity where it is', 
 
   assert.deepEqual(run(undefined), ['/previewer/']);
   assert.deepEqual(run({}), []);
+  // A previewer answered with the app must not redirect to itself forever.
+  assert.deepEqual(run(undefined, '/previewer/'), []);
 });

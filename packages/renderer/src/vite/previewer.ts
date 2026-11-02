@@ -16,7 +16,9 @@ export const PREVIEWER_PATH = 'previewer/';
  * no Unity at all and fail on it.
  */
 export function previewerRedirect(base: string): string {
-  return `if (typeof Globals === 'undefined') location.replace(${JSON.stringify(base + PREVIEWER_PATH)});`;
+  const page = JSON.stringify(base + PREVIEWER_PATH);
+  // Never from the previewer itself, so a misrouted previewer cannot become a redirect loop.
+  return `if (typeof Globals === 'undefined' && location.pathname.indexOf(${page}) !== 0) location.replace(${page});`;
 }
 
 /** The previewer page: the hosted WebGL player, loading `/index.js` from this dev server. */

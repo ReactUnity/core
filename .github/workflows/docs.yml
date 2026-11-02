@@ -68,10 +68,11 @@ jobs:
       #     an uncompressed .loader.js, and defaultUnityInstanceName makes <sample>
       #     `injectable`. Same-origin with the site, so no CORS involved.
       #   Unity/previewer/<version>/Build/Previewer.*  (~26 MB) - served to the
-      #     @reactunity/scripts dev server, which is cross-origin. That works because
+      #     @reactunity/scripts dev server and the Vite preset's /previewer/ page, both
+      #     cross-origin. That works because
       #     GitHub Pages sends Access-Control-Allow-Origin: *. It cannot be told to send
       #     Content-Encoding, which is why the three big files are .unityweb -- gzip the
-      #     loader inflates itself. See packages/scripts/config/public/index.html.
+      #     loader inflates itself. See packages/renderer/src/vite/previewer.ts.
       #
       # This deploy runs with clean: true, so anything outside Unity/** is replaced on
       # every run. Dropping the exclude would delete ~52 MB that only exists there and
