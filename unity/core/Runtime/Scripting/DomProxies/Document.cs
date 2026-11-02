@@ -246,6 +246,7 @@ namespace ReactUnity.Scripting.DomProxies
 
             public string cssText
             {
+                get => string.Concat(Proxy.childList);
                 set
                 {
                     Proxy.childList.Clear();
@@ -276,8 +277,10 @@ namespace ReactUnity.Scripting.DomProxies
         public DocumentProxy document;
         public HeadProxy parentNode;
 
+        // Vite 8.3 reads it back to skip an unchanged stylesheet on HMR
         public string textContent
         {
+            get => string.Concat(childList);
             set
             {
                 childList.Clear();
