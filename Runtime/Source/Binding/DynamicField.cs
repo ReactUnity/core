@@ -84,9 +84,10 @@ namespace QuickJS.Binding
         public JSValue GetValue(JSContext ctx, JSValue this_obj)
         {
             var propInfoGetMethod = _propertyInfo.GetGetMethod(true);
+            // A set-only property reads as undefined, like a JS accessor without a getter
             if (propInfoGetMethod == null)
             {
-                throw new NullReferenceException("property getter is null");
+                return JSApi.JS_UNDEFINED;
             }
             if (!propInfoGetMethod.IsPublic && !_type.privateAccess)
             {

@@ -473,7 +473,13 @@ const UnityJSBPlugin: PluginType = {
           const c = source.charAt(at);
           if (c === '\\') { at += 2; continue; }
           if (c === '`') return at + 1;
-          if (c === '$' && source.charAt(at + 1) === '{') { at = skipBalanced(at + 1); continue; }
+          if (c === '$' && source.charAt(at + 1) === '{') {
+            // A substitution is code, and may be the only place a module names a host global.
+            const end = skipBalanced(at + 1);
+            mentionAll(at + 2, end - 1);
+            at = end;
+            continue;
+          }
           at++;
         }
         return len;
@@ -517,6 +523,28 @@ const UnityJSBPlugin: PluginType = {
         return len;
       }
 
+      /** Records the free names between `from` and `to`, for code a skip would otherwise hide. */
+      function mentionAll(from: number, to: number) {
+        let at = from;
+        let dot = false;
+
+        while (at < to) {
+          const c = source.charAt(at);
+          if (c === '/' && (source.charAt(at + 1) === '/' || source.charAt(at + 1) === '*')) { at = skipTrivia(at); continue; }
+          if (c === '"' || c === '\'') { at = skipString(at); dot = false; continue; }
+          if (c === '`') { at = skipTemplate(at); dot = false; continue; }
+          if (isIdStart(c) || (c >= '0' && c <= '9')) {
+            const start = at;
+            while (at < to && (isIdPart(source.charAt(at)) || (c <= '9' && source.charAt(at) === '.'))) at++;
+            if (!dot && c > '9') mentions[source.substring(start, at)] = true;
+            dot = false;
+            continue;
+          }
+          if (c !== ' ' && c !== '\t' && c !== '\r' && c !== '\n') dot = c === '.';
+          at++;
+        }
+      }
+
       function bind(name: string) {
         if (name) bindings[name] = true;
       }
@@ -558,18 +586,30 @@ const UnityJSBPlugin: PluginType = {
         bind(entry);
       }
 
-      /** An `import ... from '...'` declaration, from just past the keyword. */
-      function readImport(at: number) {
+      /** An `import ... from '...'` declaration, from just past the keyword at `statement`. */
+      function readImport(at: number, statement: number) {
+        // `* as X` is told apart from every other clause, which a self-import needs.
+        let sawStar = false;
+        let namespace: string = null;
+        let other = false;
+
         while (at < len) {
           at = skipTrivia(at);
           if (at >= len) return at;
 
           const c = source.charAt(at);
-          if (c === '"' || c === '\'') return readSpecifier(at);
+          if (c === '"' || c === '\'') {
+            const end = readSpecifier(at);
+            const edit = edits[edits.length - 1];
+            edit.statement = statement;
+            if (namespace && !other) edit.namespace = namespace;
+            return end;
+          }
           if (c === ';') return at + 1;
           if (c === '{') {
             const end = skipBalanced(at);
             readClause(at + 1, end - 1);
+            other = true;
             at = end;
             continue;
           }
@@ -578,9 +618,14 @@ const UnityJSBPlugin: PluginType = {
             while (at < len && isIdPart(source.charAt(at))) at++;
             const word = source.substring(start, at);
             // A default import, or the local name of `* as ns`; either way it binds.
-            if (word !== 'from' && word !== 'as') bind(word);
+            if (word !== 'from' && word !== 'as') {
+              bind(word);
+              if (sawStar) namespace = word;
+              else other = true;
+            }
             continue;
           }
+          if (c === '*') sawStar = true;
           at++;
         }
         return at;
@@ -619,6 +664,84 @@ const UnityJSBPlugin: PluginType = {
         return at;
       }
 
+      /** Past one pattern element's default value: to just after its comma, or to the close. */
+      function skipElement(at: number, close: number) {
+        while (at < close) {
+          const c = source.charAt(at);
+          if (c === ',') return at + 1;
+          if (c === '/' && (source.charAt(at + 1) === '/' || source.charAt(at + 1) === '*')) { at = skipTrivia(at); continue; }
+          if (c === '"' || c === '\'') { at = skipString(at); continue; }
+          if (c === '`') { at = skipTemplate(at); continue; }
+          if (c === '(' || c === '[' || c === '{') {
+            const end = skipBalanced(at);
+            mentionAll(at + 1, end - 1);
+            at = end;
+            continue;
+          }
+          if (isIdStart(c)) {
+            // A default can name a host global, which the prelude still has to declare.
+            const start = at;
+            while (at < close && isIdPart(source.charAt(at))) at++;
+            mentions[source.substring(start, at)] = true;
+            continue;
+          }
+          at++;
+        }
+        return close;
+      }
+
+      /** The names a destructuring pattern at `at` binds, returning the index past it. */
+      function readPattern(at: number) {
+        const isObject = source.charAt(at) === '{';
+        const end = skipBalanced(at);
+        const close = end - 1;
+        at++;
+
+        while (at < close) {
+          at = skipTrivia(at);
+          if (at >= close) break;
+          let c = source.charAt(at);
+          if (c === ',') { at++; continue; }
+
+          if (source.substring(at, at + 3) === '...') {
+            at = skipTrivia(at + 3);
+            c = source.charAt(at);
+          } else if (isObject) {
+            // The key. Only a bare one with no `: target` after it is itself the binding.
+            let key: string = null;
+            if (c === '[') {
+              const keyEnd = skipBalanced(at);
+              mentionAll(at + 1, keyEnd - 1);
+              at = keyEnd;
+            } else if (c === '"' || c === '\'') at = skipString(at);
+            else {
+              const start = at;
+              while (at < close && isIdPart(source.charAt(at))) at++;
+              key = source.substring(start, at);
+            }
+
+            at = skipTrivia(at);
+            if (source.charAt(at) !== ':') {
+              bind(key);
+              at = skipElement(at, close);
+              continue;
+            }
+            at = skipTrivia(at + 1);
+            c = source.charAt(at);
+          }
+
+          if (c === '{' || c === '[') at = readPattern(at);
+          else if (isIdStart(c)) {
+            const start = at;
+            while (at < close && isIdPart(source.charAt(at))) at++;
+            bind(source.substring(start, at));
+          }
+          at = skipElement(at, close);
+        }
+
+        return end;
+      }
+
       while (i < len) {
         const c = source.charAt(i);
 
@@ -636,6 +759,15 @@ const UnityJSBPlugin: PluginType = {
 
         if (c === '"' || c === '\'') { i = skipString(i); afterValue = true; afterDot = false; continue; }
         if (c === '`') { i = skipTemplate(i); afterValue = true; afterDot = false; continue; }
+
+        // Only after let/const: `class {` and `function` never open a pattern here.
+        if (depth === 0 && expectBinding && (declaring === 'let' || declaring === 'const') && (c === '{' || c === '[')) {
+          i = readPattern(i);
+          expectBinding = false;
+          afterValue = true;
+          afterDot = false;
+          continue;
+        }
 
         if (c === '(' || c === '[' || c === '{') { depth++; i++; afterValue = false; afterDot = false; continue; }
         if (c === ')' || c === ']' || c === '}') {
@@ -681,7 +813,7 @@ const UnityJSBPlugin: PluginType = {
             // import.meta, which the prelude fills in.
             if (after === '.') continue;
             if (depth === 0) {
-              i = readImport(i);
+              i = readImport(i, start);
               declaring = null;
               expectBinding = false;
             }
@@ -702,9 +834,7 @@ const UnityJSBPlugin: PluginType = {
           }
 
           if (depth === 0 && declaring && expectBinding) {
-            // `{a: b}` - a key, not a binding. Patterns are not parsed further, so a
-            // destructured top-level name is missed, and a prelude that collides with one is a
-            // loud redeclaration error rather than a silent wrong answer.
+            // A pattern was read whole above, so a `:` here is not one of its keys; keep the guard anyway.
             if (source.charAt(skipTrivia(i)) !== ':') bind(word);
             expectBinding = false;
           }
@@ -831,6 +961,9 @@ const UnityJSBPlugin: PluginType = {
 
           record.deps[edit.specifier] = resolved;
 
+          // Vite's React refresh wrapper gives every module one; assemble() binds it to selfNamespace.
+          if (resolved === record.name && edit.namespace) return;
+
           // A blob url can only be minted for text that is already final, and a cycle's text
           // is not: each side needs the other's url first. Reported here, where the path that
           // closes the cycle is still known, rather than as a deadlocked import.
@@ -850,6 +983,7 @@ const UnityJSBPlugin: PluginType = {
 
         const depUrls: Record<string, string> = {};
         Object.keys(record.deps).forEach(function (specifier) {
+          if (record.deps[specifier] === record.name) return;
           depUrls[specifier] = urlFor(records[record.deps[specifier]]);
         });
 
@@ -865,6 +999,16 @@ const UnityJSBPlugin: PluginType = {
         let at = 0;
 
         record.scan.edits.forEach(function (edit) {
+          if (edit.specifier !== null && record.deps[edit.specifier] === record.name) {
+            // A blob cannot name its own url, so the statement becomes a binding. Its newlines
+            // are kept so no line below it moves.
+            parts.push(source.substring(at, edit.statement));
+            parts.push('var ' + edit.namespace + ' = ' + entryOf() + '.selfNamespace(' + JSON.stringify(record.name) + ');');
+            parts.push(source.substring(edit.statement, edit.end).replace(/[^\n]/g, ''));
+            at = edit.end;
+            return;
+          }
+
           parts.push(source.substring(at, edit.start));
           parts.push(edit.specifier === null
             ? state.moduleImportHook
@@ -901,7 +1045,7 @@ const UnityJSBPlugin: PluginType = {
         // for it, which hoists over the whole module and would leave the initializer below
         // reading a property of `undefined`. The registry key cannot be shadowed that way
         // because it is never one of the names declared here.
-        const entry = state.moduleRegistryKey + '[' + context.id + ']';
+        const entry = entryOf();
         const parts: string[] = [];
 
         // `var`, not `const`: a module is free to declare `var URL` itself, and two `var`
@@ -915,6 +1059,11 @@ const UnityJSBPlugin: PluginType = {
         parts.push('import.meta.main = false;');
 
         return parts.join('');
+      }
+
+      /** The page-level object a generated module reaches this context through. */
+      function entryOf() {
+        return state.moduleRegistryKey + '[' + context.id + ']';
       }
 
       function release(record: ModuleRecord) {
@@ -987,6 +1136,24 @@ const UnityJSBPlugin: PluginType = {
 
           parts.push(code.substring(at));
           return parts.join('');
+        },
+
+        /** Stands in for a module's own namespace, reading the real one once `import()` hands it
+         *  over. That is after the module evaluates, so a read during evaluation sees it empty. */
+        selfNamespace(name) {
+          const record = records[name];
+          let namespace: any = null;
+          if (record && record.url) context.importModule(record.url).then(function (ns) { namespace = ns; });
+
+          return new Proxy({}, {
+            get: function (_, key) { return namespace ? namespace[key] : undefined; },
+            has: function (_, key) { return !!namespace && key in namespace; },
+            ownKeys: function () { return namespace ? Object.keys(namespace) : []; },
+            getOwnPropertyDescriptor: function (_, key) {
+              if (!namespace || typeof key !== 'string' || !(key in namespace)) return undefined;
+              return { value: namespace[key], writable: true, enumerable: true, configurable: true };
+            },
+          });
         },
 
         free() {
@@ -1286,7 +1453,7 @@ const UnityJSBPlugin: PluginType = {
     };
 
     context.modules = unityJsbState.createModuleRegistry(context);
-    pageRegistry[id] = { globals: globals, dynamicImport: context.modules.dynamicImport };
+    pageRegistry[id] = { globals: globals, dynamicImport: context.modules.dynamicImport, selfNamespace: context.modules.selfNamespace };
 
     // A script's dynamic imports are rewritten to call this; a module's prelude declares its
     // own, bound to that module's url so a relative specifier resolves against it. A script has
@@ -2044,7 +2211,8 @@ const UnityJSBPlugin: PluginType = {
 
   js_strndup(ctx, s, n) {
     const buffer = _malloc(n + 1);
-    _memcpy(buffer, s, n);
+    // Not _memcpy: Unity's Emscripten does not hand it to library code, so it was a ReferenceError.
+    HEAPU8.copyWithin(buffer, s, s + n);
     HEAPU8[buffer + n] = 0;
     return buffer as IntPtr;
   },

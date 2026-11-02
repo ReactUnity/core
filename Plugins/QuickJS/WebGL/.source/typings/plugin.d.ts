@@ -56,6 +56,10 @@ declare global {
     start: number;
     end: number;
     specifier: string | null;
+    /** For a static import: where its `import` keyword starts. */
+    statement?: number;
+    /** For `import * as X from '...'` and nothing else: `X`. */
+    namespace?: string;
   };
 
   export declare type ModuleScan = {
@@ -85,6 +89,8 @@ declare global {
     dynamicImport: (referrer: string) => (specifier: string) => Promise<any>;
     /** Points a script's dynamic imports at the host loader. */
     rewriteScript: (code: string) => string;
+    /** What a module's import of its own namespace is bound to. */
+    selfNamespace: (name: string) => any;
     free: () => void;
   };
 

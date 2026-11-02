@@ -240,16 +240,18 @@ the normalizer resolved, which is the same value `MetaTrampoline` would have wri
 text that is already final, and a cycle's is not — each side needs the other's url first. It is
 reported where the path that closes it is still known (`Circular imports are not supported on WebGL:
 a -> b -> a`) rather than left as a deadlocked import. Bundler output does not contain ESM cycles;
-hand-written module graphs can.
+hand-written module graphs can. The one exception is a module importing its own namespace
+(`import * as self from '<itself>'`), which Vite 8's React refresh wrapper adds to every module: that
+statement becomes a stand-in that reads the real namespace once `import()` hands it over, so it
+reads as empty while the module is still evaluating.
 
-**None of this has run in a WebGL player.** The WebGL build module is not installed on the machine
-this was written on, so what is verified is the scanner and the graph loader, against the generated
-jslib and the platform's own dynamic import — 42 tests in
-`Plugins/QuickJS/WebGL/.source/jsbplugin.test.mjs`, run by CI. What that cannot reach is the C
-boundary: the two new dyncall signatures (`iiiii` for the normalizer, `viiiii` for the loader),
-whether IL2CPP's reverse wrapper passes `JSModuleLoadHandle` as a flattened `i32` the way clang's
-wasm ABI says it should, and whether Unity's WebGL output lets `new Function` and blob-url imports
-through. A player is the only thing that settles those.
+**It has run in a WebGL player since November 2026** — kitchen-sink's `Previewer` scene pointed at a
+Vite dev server, which renders the whole app and hot-reloads an edit. Getting there took three
+fixes the node tests could not have caught: `js_strndup` called an Emscripten `_memcpy` that Unity's
+WebGL toolchain does not hand to library code, so every module resolution threw; the scanner missed
+names bound by a destructuring pattern (Vite's client declares `const { HTMLElement = class {} }`),
+so the prelude redeclared them; and it missed host globals mentioned only inside a template
+substitution. The dyncall signatures and blob-url imports held.
 
 ## Phases
 

@@ -222,7 +222,7 @@ export function createTestContext(state, stubs, { resolve, load, id = 3, hostGlo
   state.contexts[id] = context;
 
   const registry = (globalThis[state.moduleRegistryKey] ||= {});
-  registry[id] = { globals, dynamicImport: context.modules.dynamicImport };
+  registry[id] = { globals, dynamicImport: context.modules.dynamicImport, selfNamespace: context.modules.selfNamespace };
   hostGlobals[state.moduleImportHook] = context.modules.dynamicImport('');
 
   return context;
