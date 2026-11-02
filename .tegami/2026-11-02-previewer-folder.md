@@ -1,7 +1,7 @@
 ---
 packages:
   npm:@reactunity/renderer:
-    type: minor
+    type: patch
 ---
 
 ### A custom Vite previewer lives in `previewer/`, not `public/previewer/`
